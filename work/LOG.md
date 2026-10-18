@@ -43,3 +43,7 @@
 - Same content as v15. Change: figures and program listings are searched in several directories (../figures, figures, ., work/v15/figures; ../code, ../tools, code, tools, ., work/v15/code, work/v15/tools); a missing file gives a boxed note instead of a LaTeX error, so the .tex compiles anywhere, also alone.
 - Tested: in work/v16/manuscript (142 pp., all figures and listings found), alone in an empty directory (91 pp., notes in place of files, no error), inside the zip (no error).
 - Files: work/v16/manuscript/ordinal_prime_cutoff_v16.{tex,txt,pdf}, work/v16/ordinal_prime_cutoff_v16.zip.
+
+## 2026-10-18 17:20 UTC — [claude] — manuscript v17 (ordered by the author) and «sube git»
+- Correction: error figures that were labelled "mean spacings in height" are now given in height and in units of the mean spacing (program work/v17/code/opc_units_v17.py, outputs work/v17/outputs/units_v17.{json,txt}): untouched set R2 0.0331 height = 0.063 spacings, zCasanya 0.0406 = 0.077; block 3 c = 1.30: 0.0128 = 0.024.
+- Files: work/v17/manuscript/ordinal_prime_cutoff_v17.{tex,txt,pdf} (143 pp.), work/v17/ordinal_prime_cutoff_v17.zip; display answer archived in work/display/2026-10-18_v17_entrega.{md,txt}.
