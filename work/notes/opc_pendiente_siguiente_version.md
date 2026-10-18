@@ -34,3 +34,9 @@ opc_second_order_aliasing_check, opc_quotient_second_order_check (+ _train). Cor
 - Pendiente: los cruces (pares cercanos, |S'|/L>1); combinar con R2; término de orden 3 solo cociente.
 - Advertencia (19-10): la elección «solo cociente» se hizo mirando el desfase del paseo frente a los ceros en el test: es una selección a posteriori de términos, no una deducción. El desfase es un solo número complejo; el término aliasado m=1 es un efecto del muestreo en el reloj (de la estadística), no de la cercanía a γ_k. Mientras no se deduzca de la ecuación de los ceros, x^q es heurística. Criterio válido: métricas puntuales (RMS, ley de Gram, separación) con regla fijada antes de abrir el test.
 - Estado (19-10): toda la línea del desfase (puntos 11–12: paseo, centroide, par (71,193), lineal/cuadrático, término cociente) se construyó mirando datos, incluido el test k=1 400 737…2 001 052. Ese test queda QUEMADO para esta línea; nada de ella puede presentarse como predicción ni validación. Las identidades (1+d, Poisson m=1) son exactas pero fueron elegidas como explicación a posteriori. Para validar hace falta: regla escrita y congelada antes, y ceros nuevos no vistos (k > 2 001 052 u otra altura).
+
+### 13. Todo lo numérico de la mejora es exploratorio (19-10)
+- Las reglas y parámetros se eligieron mirando ceros: cortes (8,8,512) de zCasanya, X=16, η=0.1, 6 niveles, umbral 0.1L, forma de R1/R2, continuación c=0.85–1.30.
+- La continuación (y su ajuste task4_fit_b3) se exploró DENTRO del test (bloque 3 y bloques c=0.85/1.00). El test no está intacto.
+- En la próxima versión: retirar «untouched test set»; clasificar todas las cifras de mejora como exploratorias; mantener como resultados solo los teoremas (monotonía certificada, F, H, E).
+- Confirmación: regla congelada por escrito + ceros no vistos (k > 2 001 052 u otra altura).
