@@ -41,3 +41,9 @@ opc_second_order_aliasing_check, opc_quotient_second_order_check (+ _train). Cor
 - En la próxima versión: retirar «untouched test set»; clasificar todas las cifras de mejora como exploratorias; mantener como resultados solo los teoremas (monotonía certificada, F, H, E).
 - Confirmación: regla congelada por escrito + ceros no vistos (k > 2 001 052 u otra altura).
 - Frases de v17 a corregir: tabla de estatus (l. 606) «the untouched indices k > 1 400 736 are used for no choice» — falsa para la continuación; resumen y conclusiones «untouched indices», «improves … in every measure», «selected by validation» (zCasanya: elección del autor; los datos de validación no están en el repo).
+
+### 14. Teorema E: fuera (decisión del autor, 19-10)
+- Se elimina el Teorema E (limsup|τ_k−γ_k| = 2π limsup|S|/log t, cota < 0.60832, constante 0.0964667 / 0.0968160, comparación con Bellotti–Wong) del resumen (E), la introducción, la tabla de estatus, el cuerpo, las conclusiones y las rutas.
+- Los puntos 3, 4 y 5 de esta lista quedan sin objeto.
+- Se mantiene solo la cita externa conocida: limsup|δ_k| ≤ 0.6331 (Bellotti–Wong) como contexto.
+- Revisar referencias cruzadas que dependan de E (backrefs, tooltips, bibliografía usada solo por E: exponent pairs, Bourgain, Backlund…).
