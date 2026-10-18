@@ -42,8 +42,8 @@ opc_second_order_aliasing_check, opc_quotient_second_order_check (+ _train). Cor
 - Confirmación: regla congelada por escrito + ceros no vistos (k > 2 001 052 u otra altura).
 - Frases de v17 a corregir: tabla de estatus (l. 606) «the untouched indices k > 1 400 736 are used for no choice» — falsa para la continuación; resumen y conclusiones «untouched indices», «improves … in every measure», «selected by validation» (zCasanya: elección del autor; los datos de validación no están en el repo).
 
-### 14. Teorema E: fuera (decisión del autor, 19-10)
-- Se elimina el Teorema E (limsup|τ_k−γ_k| = 2π limsup|S|/log t, cota < 0.60832, constante 0.0964667 / 0.0968160, comparación con Bellotti–Wong) del resumen (E), la introducción, la tabla de estatus, el cuerpo, las conclusiones y las rutas.
-- Los puntos 3, 4 y 5 de esta lista quedan sin objeto.
-- Se mantiene solo la cita externa conocida: limsup|δ_k| ≤ 0.6331 (Bellotti–Wong) como contexto.
-- Revisar referencias cruzadas que dependan de E (backrefs, tooltips, bibliografía usada solo por E: exponent pairs, Bourgain, Backlund…).
+### 14. Criterio del autor (19-10): se mantiene todo lo que tenga demostración analítica
+- Teorema E SE MANTIENE (anula la decisión anterior de eliminarlo): la identidad limsup|τ_k−γ_k| = 2π limsup|S|/log t y la cota < 0.60832 (vía Backlund + Bourgain + pares de exponentes) tienen demostración.
+  Presentarlo como cota asintótica (no efectiva), sin compararlo como «mejor» que la cota explícita de Bellotti–Wong; marca de verificación en las fuentes de los exponentes (puntos 3–5 siguen vivos) y novedad por comprobar.
+- Se mantienen: monotonía certificada, Teoremas F y H, identidades (A)–(C), (G), Landau en la recta, ortonormalidad, identidad de la integral con resonancia en p ≈ t/2π.
+- Todo lo numérico (punto 13) pasa a «exploratorio»; las heurísticas (R2 gaussiana, x^q) y lo post hoc (puntos 11–12) no se presentan como resultados.
