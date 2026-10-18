@@ -35,3 +35,6 @@
 - Notation collisions removed in the v14 text (one-step points, sampling points, local scale in the multiplicity proofs, Gram matrix, Bessel frequencies, twisted-sum weights, Fourier transform of the measure, torus function).
 - Pending (stated in the paper): interval-arithmetic certification of the branch condition; references marked % VERIFICAR in the source (Gram 1903, Olds 1970, Platt–Trudgian 2021, PRZZ 2020, Selberg 1942, Turing 1953, Titchmarsh §4.17, França–LeClair location).
 - Build note: elsarticle.cls, lmodern and tracklang were installed in the workspace from the Debian TeX Live 2023 packages (texlive-publishers, lmodern, texlive-plain-generic).
+
+## 2026-10-18 16:40 UTC — [claude] — «sube git»
+- Display answer of the v15 delivery archived verbatim: work/display/2026-10-18_v15_entrega.{md,txt}. All v15 files were already pushed (8a65439).

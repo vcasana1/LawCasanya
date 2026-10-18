@@ -1,0 +1,41 @@
+La v15 está hecha, compilada (142 páginas, sin referencias indefinidas, hover y backrefs regenerados) y subida a `main` en `work/v15` (commit 8a65439), con su entrada en `work/LOG.md`. No está copiada en tu Mac porque el permiso de carpeta caducó sin respuesta; dime cuando estés y la copio a `~/Documents/ChatGPT/Möbius/LawCasanya`.
+
+**Grado de prueba y relevancia.** La introducción abre con una subsección sobre la idea central: los $\tau_k$ más correcciones de primos dan puntos que aproximan los ceros de zeta sin evaluar $\zeta$ y sin usar ningún cero en la construcción. Describe los tres procesos de ajuste (pasos de Newton, raíz certificada, continuación) y dice que las ordenadas solo sirven para medir el error. Después viene una tabla que asigna a cada resultado su estatus y su papel: incondicional, condicional (U, W), teorema de modelo, conjetura, heurística, numérico o ruta.
+
+**Teoría nueva:**
+- **Theorem F.**
+  - Monotonía certificada con la fase sobre potencias de primo $n\le X$; por Kronecker, ningún criterio uniforme en $t$ es mejor.
+  - Raíz por bisección e identidad exacta del residuo.
+  - Continuación sin cambio de rama. Solo exige que las derivadas sean positivas en el segmento entre las dos raíces y no está limitada por $T^{1/2}$.
+- **Coherencia de fase.**
+  - El paseo de los puntos corregidos se descompone exactamente en parte angular y radial, y en modos producto y cociente.
+  - Los modos cociente están acotados con periodo $\log(T/2\pi)/|1+\log(n_1/n_2)|$.
+  - Los modos lentos son los convergentes de $e$ formados por potencias de primo: $8/3$, $11/4$, $19/7$, $193/71$ y $49171/18089$.
+- **Theorem H.**
+  - Una ordenada aislada en la lista es un cero simple en la línea.
+  - Si el error es menor que la mitad de los huecos propios de la construcción, $Z$ cambia de signo entre puntos medios.
+  - Da una cota de proporción y un procedimiento de verificación con los puntos corregidos.
+
+**Números nuevos (todos contra $\gamma_k$, con su programa en el apéndice):**
+
+| Medida | Resultado |
+|---|---|
+| R2 en el 30 % intacto (RMS en altura) | 0.0331, frente a 0.0406 de zCasanya |
+| Continuación con $c=1.30$ en un bloque | 0.0128 |
+| Deriva del paseo | el par (71,193) aporta 14.0 de 16.2 |
+| Ley de Gram corregida, R2 | falla en el 0.019 % de los índices |
+| Ley de Gram clásica | falla en el 24.3 % |
+
+**Conclusiones reescritas.** Terminan con las vías hacia la Casaña Law y las cinco vías hacia RH. La vía 2 no es como te la dije en el chat. Que el error sea menor que medio espaciado de los ceros no basta por sí solo. Lo correcto es el Theorem H: el error en $k-1$, $k$ y $k+1$ tiene que ser menor que la mitad de los huecos de la propia construcción, y entonces la ordenada queda aislada y el cero es simple y está en la línea.
+
+**Colisiones de notación de la v14 corregidas.** $\rho_k$ como punto de un paso, $\varrho_k$, la $\Lambda$ local, $A$, $H$ y $B$ en las pruebas de multiplicidad, la matriz $G$, $\Lambda_{\mathbf j}$, $v_k$, $\mathfrak w_k$, $Z_T$ y la $F$ del toro. Ninguna aparece en las etiquetas de las figuras, y las figuras nuevas conservan sus nombres (R1, R2, E3).
+
+**Pendiente, declarado en el paper:**
+- La condición de rama se ha comprobado muestreando 5 o 3 puntos por segmento, no con aritmética de intervalos.
+- Las referencias marcadas `% VERIFICAR` en el fuente: Gram, Olds, Platt–Trudgian, PRZZ, Selberg 1942, Turing, Titchmarsh §4.17 y dónde aparece la afirmación de França–LeClair.
+
+Para compilar instalé `elsarticle.cls`, `lmodern` y `tracklang` desde los paquetes Debian de TeX Live 2023.
+
+---
+
+Ese aviso es de la compilación que se colgó con el bucle en `\proglisting`. La paré yo, corregí la macro y recompilé desde cero, así que no afecta a lo entregado.
