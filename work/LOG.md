@@ -38,3 +38,8 @@
 
 ## 2026-10-18 16:40 UTC — [claude] — «sube git»
 - Display answer of the v15 delivery archived verbatim: work/display/2026-10-18_v15_entrega.{md,txt}. All v15 files were already pushed (8a65439).
+
+## 2026-10-18 17:05 UTC — [claude] — manuscript v16 (ordered by the author)
+- Same content as v15. Change: figures and program listings are searched in several directories (../figures, figures, ., work/v15/figures; ../code, ../tools, code, tools, ., work/v15/code, work/v15/tools); a missing file gives a boxed note instead of a LaTeX error, so the .tex compiles anywhere, also alone.
+- Tested: in work/v16/manuscript (142 pp., all figures and listings found), alone in an empty directory (91 pp., notes in place of files, no error), inside the zip (no error).
+- Files: work/v16/manuscript/ordinal_prime_cutoff_v16.{tex,txt,pdf}, work/v16/ordinal_prime_cutoff_v16.zip.
