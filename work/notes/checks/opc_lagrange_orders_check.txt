@@ -1,0 +1,21 @@
+zeros (reference)              rms 0.0000 sp | total  +0.859 +0.707i |0.859+0.707j| linear -11.486 -1.094i  quadratic +12.036 +1.639i
+Y=16 Lagrange order 1          rms 0.2086 sp | total  +0.899 +0.875i |0.899+0.875j| linear  +0.865 +0.777i  quadratic  +0.048 +0.089i
+Y=16 Lagrange order 2          rms 0.2007 sp | total  +0.851 +0.812i |0.851+0.812j| linear  +0.808 +0.720i  quadratic  +0.082 +0.077i
+Y=16 Lagrange order 3          rms 0.1990 sp | total  +0.683 +0.842i |0.683+0.842j| linear  +0.791 +0.733i  quadratic  -0.060 +0.059i
+Y=16 Lagrange order 4          rms 0.1988 sp | total  +0.495 +0.802i |0.495+0.802j| linear  +0.790 +0.731i  quadratic  -0.267 -0.001i
+Y=16 Lagrange order 5          rms 0.1989 sp | total  -0.234 +0.777i |-0.234+0.777j| linear  +0.270 +0.702i  quadratic  -0.516 +0.002i
+Y=16 Lagrange order 6          rms 0.1990 sp | total  -0.589 +1.277i |-0.589+1.277j| linear  -0.392 +1.325i  quadratic  -0.214 -0.078i
+  exact root converged at 1.000000; max |order-6 - root| on converged = 8.986e-02
+Y=16 exact root                rms 0.1989 sp | total  +0.304 +1.446i |0.304+1.446j| linear  +0.328 +1.359i  quadratic  -0.009 +0.061i
+Y=dyadic (512) Lagrange order 1 rms 0.1231 sp | total +14.482 +1.905i |14.482+1.905j| linear  +0.866 +0.690i  quadratic +13.747 +1.045i
+Y=dyadic (512) Lagrange order 2 rms 0.1503 sp | total +18.496+17.124i |18.496+17.124j| linear -19.850+13.621i  quadratic +36.955 +4.237i
+Y=dyadic (512) Lagrange order 3 rms 0.2192 sp | total +42.925+35.172i |42.925+35.172j| linear -44.089+33.233i  quadratic +82.216 -0.878i
+Y=dyadic (512) Lagrange order 4 rms 0.2933 sp | total +68.651 -9.011i |68.651-9.011j| linear -49.396-10.002i  quadratic +128.181 -4.026i
+Y=dyadic (512) Lagrange order 5 rms 0.4590 sp | total +89.402 -6.209i |89.402-6.209j| linear +48.375-10.726i  quadratic +74.744+145.598i
+Y=dyadic (512) Lagrange order 6 rms 0.9734 sp | total +244.977-81.933i |244.977-81.933j| linear -157.530-109.752i  quadratic +1257.062+2422.112i
+/home/claude/lawcasanya/work/v17/code/opc_common_v15.py:49: RuntimeWarning: invalid value encountered in log1p
+  h[~small] = (1 + v) * np.log1p(v) - v
+/home/claude/lawcasanya/work/v17/code/opc_common_v15.py:30: RuntimeWarning: invalid value encountered in log
+  return np.log(t / TWO_PI) / TWO_PI
+  exact root converged at 0.997789; max |order-6 - root| on converged = 4.769e+01
+Y=dyadic (512) exact root      rms 0.2353 sp | total +11.641 +0.940i |11.641+0.940j| linear -15.183+12.169i  quadratic +145.579+169.185i

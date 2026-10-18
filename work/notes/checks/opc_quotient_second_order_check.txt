@@ -1,0 +1,6 @@
+check S S' = Q + P: max error 1.08e-09
+zeros                      rms 0.0000 sp  crossings     0 | total  +0.859 +0.707i  |total - zeros|  0.000 | linear  -11.486  -1.094i  quadratic  +12.036  +1.639i
+zCasanya                   rms 0.0771 sp  crossings   274 | total +15.517 -0.647i  |total - zeros| 14.721 | linear   -1.810  +0.235i  quadratic  +17.051  -0.862i
+order 1                    rms 0.1231 sp  crossings  2234 | total +14.482 +1.905i  |total - zeros| 13.676 | linear   +0.866  +0.690i  quadratic  +13.747  +1.045i
+order 2 (full)             rms 0.1503 sp  crossings 12620 | total +18.496+17.124i  |total - zeros| 24.095 | linear  -19.850 +13.621i  quadratic  +36.955  +4.237i
+order 1 + quotient part    rms 0.1066 sp  crossings  4431 | total  +2.293 +2.277i  |total - zeros|  2.126 | linear  -13.481  +0.851i  quadratic  +15.396  +1.062i
