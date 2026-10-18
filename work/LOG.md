@@ -47,3 +47,6 @@
 ## 2026-10-18 17:20 UTC — [claude] — manuscript v17 (ordered by the author) and «sube git»
 - Correction: error figures that were labelled "mean spacings in height" are now given in height and in units of the mean spacing (program work/v17/code/opc_units_v17.py, outputs work/v17/outputs/units_v17.{json,txt}): untouched set R2 0.0331 height = 0.063 spacings, zCasanya 0.0406 = 0.077; block 3 c = 1.30: 0.0128 = 0.024.
 - Files: work/v17/manuscript/ordinal_prime_cutoff_v17.{tex,txt,pdf} (143 pp.), work/v17/ordinal_prime_cutoff_v17.zip; display answer archived in work/display/2026-10-18_v17_entrega.{md,txt}.
+
+## 2026-10-18 18:00 UTC — [claude] — pending list for the next version
+- work/notes/opc_pendiente_siguiente_version.md: explicit Lagrange–Bürmann formula for the corrected points, k-dependent separation criterion with corrected Gram points, envelope constant with best mu(sigma), wording/status corrections, Gram-law failures on 6 blocks and their location at close pairs. No version until the author orders it.

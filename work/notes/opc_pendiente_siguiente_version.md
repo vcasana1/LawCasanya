@@ -1,0 +1,18 @@
+# ordinal_prime_cutoff — pendiente acumulado para la versión siguiente a v17
+
+No crear versión nueva hasta que Doktor lo ordene. Se acumulan aquí correcciones y añadidos (desde 2026-10-18, tras v17).
+
+## Añadidos de contenido
+1. **Fórmula explícita de las tauc (Lagrange–Bürmann), entrada solo τ_k** (k = N0(τ_k)+1/2), corte Y = Y(τ_k) fijo por índice, S = S_{≤Y}, L(t) = log(t/2π)/(2π):
+   τ^c_k = τ_k + Σ_{n≥1} ((−1)^n/n!) ((1/L) d/dτ)^{n−1} [S(τ)^n / L(τ)] |_{τ=τ_k}.
+   Primeros términos: τ_k − S/L + (S S'/L² − S² L'/(2L³)) − (1/(6L)) d/dτ[(1/L) d/dτ(S³/L)] + …, L' = 1/(2π τ_k).
+   Convergencia probada (Rouché): existe r > 0 con Σ_{n≤Y} |a_n| n^{r/L(τ_k)} < r; en altura 1e6 solo cubre Y ≲ 4. Para c ≈ 0.7–1.3 la convergencia no está probada (límite real: punto de rama, la misma condición que la continuación). Enunciar como proposición con esa condición; la composición fija de pasos de Newton (Teorema uniform_iteration) es la otra fórmula explícita, ya probada en media cuadrática.
+2. **Criterio de separación con tolerancia dependiente de k**: puntos de Gram corregidos y_k con F_Y(y_k) = k. Si F_Y es creciente en [γ_k, γ_{k+1}] y |u_k|, |u_{k+1}| < 1/2, entonces γ_k < y_k < γ_{k+1}. Con todos los k hasta T: ordenadas aisladas ⇒ RH y ceros simples hasta T. Tolerancia uniforme en el conteo (1/2), adaptativa en altura vía la pendiente de F_Y. Más fuerte que el Teorema H con puntos medios; prueba elemental.
+3. **Constante del Teorema E con las mejores μ(σ)**: perfil = mínimo de Bourgain + Trudgian–Yang/expdb Tabla 6.2 + (2/13)√10 (1−σ)^{3/2} ⇒ 𝔞 ≤ 0.0964666596, limsup|τ_k − γ_k| ≤ 0.6061179. Verificar las cotas en las fuentes originales (Trudgian–Yang; Heath-Brown) antes de usar. Comprobado además: la geometría de Backlund c = ρ = 1 es óptima bajo ρ ≥ 2c − 1 (malla c ∈ [1, 1.5]).
+
+## Correcciones de redacción / estatus
+4. Teorema E: presentarlo como cota asintótica ineficaz (T0 desconocido), no como récord frente a Bellotti–Wong (que es explícita, válida desde T = e). Desglose: convexidad 0.11481; Weyl lineal 0.10275; BW explícita 0.10076; Bourgain lineal 0.10102; Bourgain + pares 0.0968160; mejores μ 0.0964667.
+5. Proposición explicit_S (0.09783 log T + 0.722 log log T + 13): solo mejora a Bellotti–Wong para log T ≳ 3306 (T ≳ 10^1436); decirlo; constantes aún no recalculadas.
+6. Ley de Gram corregida con c ≥ 1: en los 6 bloques de 10 000 índices hay fallos (c = 0.85: 4; c = 1.00: 2). La frase "none of the block for c ≥ 1" vale solo para el bloque 3; añadir los 6 bloques.
+7. Los 116 fallos de R2 en el 30 % intacto están todos en pares próximos: hueco mínimo normalizado de γ en los fallos mediana 0.055, máximo 0.114 (global: mediana 0.722, cuantil 1 % 0.176); |e_k| en los fallos mediana 0.167 separaciones (global 0.044). Añadir como observación numérica y la heurística de resolución c ≳ κ/s (κ ≈ 0.08 con un solo dato). Requiere programa comprometido (los números de 6 y 7 salieron de comprobaciones ad hoc en la sesión; reescribir como opc_*_v18.py con salida).
+8. Separación para todo k: estado abierto (ni probado posible ni imposible); con c fijo, heurísticamente fallaría en pares con hueco normalizado ≪ κ/c. Corte adaptado por índice (más primos donde x_{k+1} − x_k es pequeño, sin ceros) como ruta; no ejecutado.
