@@ -14,3 +14,9 @@
 - Numerical result, block 3, errors against gamma: RMS 0.0266 / 0.0212 / 0.0164 / 0.0128 for c = 0.85 / 1.00 / 1.15 / 1.30 (zCasanya 0.0403); no crossings; walk end 0.028 at c = 1.30 (clock: 1.87). The maximum error does not decrease (0.17 to 0.21).
 - The fall of e^2 slows: local slopes in log c are -1.57e-3, -1.29e-3, -0.88e-3. The straight line predicted 1.1e-4 at c = 1.30; observed 1.63e-4, so zero error at c ≈ 1.36 is ruled out. A quadratic fit through 4 points gives a floor of e^2 ≈ 3.5e-5 (RMS ≈ 0.006) near c ≈ 1.8. This is a model estimate, not a result.
 - Standing rule from now on: every result Claude prints to the console is also saved as a file in the repository and pushed.
+
+## 2026-10-18 UTC — [claude] — upload protocol (fixed by the author)
+- Files: every file generated (programs, outputs, data, figures, LaTeX/TXT/PDF) is pushed automatically, without waiting for «sube git». Claude → `work/`, ChatGPT → `chatgpt/`.
+- Local copies: Claude mirrors each push to the author's Mac (`~/Documents/ChatGPT/Möbius/LawCasanya`). ChatGPT keeps a working copy in `/mnt/data/`, which is not permanent.
+- «sube git»: publishes the agent's last display answer verbatim (Claude → `work/display/`, ChatGPT → `chatgpt/`), plus any associated files not yet pushed.
+- Neither agent edits the other's area, the frozen data or v14.
