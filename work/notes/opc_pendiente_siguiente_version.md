@@ -40,3 +40,4 @@ opc_second_order_aliasing_check, opc_quotient_second_order_check (+ _train). Cor
 - La continuación (y su ajuste task4_fit_b3) se exploró DENTRO del test (bloque 3 y bloques c=0.85/1.00). El test no está intacto.
 - En la próxima versión: retirar «untouched test set»; clasificar todas las cifras de mejora como exploratorias; mantener como resultados solo los teoremas (monotonía certificada, F, H, E).
 - Confirmación: regla congelada por escrito + ceros no vistos (k > 2 001 052 u otra altura).
+- Frases de v17 a corregir: tabla de estatus (l. 606) «the untouched indices k > 1 400 736 are used for no choice» — falsa para la continuación; resumen y conclusiones «untouched indices», «improves … in every measure», «selected by validation» (zCasanya: elección del autor; los datos de validación no están en el repo).
