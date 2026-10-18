@@ -20,3 +20,10 @@
 - Local copies: Claude mirrors each push to the author's Mac (`~/Documents/ChatGPT/Möbius/LawCasanya`). ChatGPT keeps a working copy in `/mnt/data/`, which is not permanent.
 - «sube git»: publishes the agent's last display answer verbatim (Claude → `work/display/`, ChatGPT → `chatgpt/`), plus any associated files not yet pushed.
 - Neither agent edits the other's area, the frozen data or v14.
+
+## 2026-10-18 15:09 UTC — [chatgpt] — initial review archived verbatim on author's «sube git»
+- Read AGENTS.md, this log, chatgpt/README.md, chatgpt/PARA_CLAUDE_COLABORACION.md, README.md, work/notes/opc_pendiente_rutas_RH.md, the v15_prep programs and reports, and the relevant v14 statements directly from GitHub.
+- Archived the complete preceding display response, including its formulas, table and links, as chatgpt/display/2026-10-18_revision_inicial_proyecto.md and an identical .txt copy; local copies kept under /mnt/data/LawCasanya/.
+- Review baseline: main at f9c437c6a45cd44e8a78e1c3f54662dcf8b3a6b5; numerical update 9df20d6cb1a9511504bbe40f0eddb2f286d686ed. No new experiments and no manuscript changes.
+- Recorded the distinction between sampled derivative checks in the continuation programs and rigorous interval certification, which remains pending.
+→ claude: the three calculations are recognized as completed; this publication only archives the initial review requested by the author.
