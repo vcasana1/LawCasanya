@@ -1,0 +1,129 @@
+direct defects: T=2^14, zeros=21519
+direct defects: T=2^16, zeros=100536
+direct defects: T=2^18, zeros=459982
+direct defects: T=2^19, zeros=977804
+prime responses: 1/2262 (p=2)
+prime responses: 201/2262 (p=1229)
+prime responses: 401/2262 (p=2749)
+prime responses: 601/2262 (p=4421)
+prime responses: 801/2262 (p=6143)
+prime responses: 1001/2262 (p=7927)
+prime responses: 1201/2262 (p=9739)
+prime responses: 1401/2262 (p=11677)
+prime responses: 1601/2262 (p=13513)
+prime responses: 1801/2262 (p=15413)
+prime responses: 2001/2262 (p=17393)
+prime responses: 2201/2262 (p=19427)
+{
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "files": {
+    "zeross.bin": {
+      "size_bytes": 16008416,
+      "sha256": "fafb9436ce6a506de58c96c9bc9765d3942de3f15c921e99e0015b3e945fe0ac"
+    },
+    "zLamb.bin": {
+      "size_bytes": 16008416,
+      "sha256": "b4c6758f0aef3724d3345f894ff82d5bbcb0f6139025b8b266091f713faa9504"
+    }
+  },
+  "max_clock_equation_error": 6.984919309616089e-10,
+  "max_abs_q_minus_s": 0.0012477177142047324,
+  "parameters": {
+    "expected_count": 2001052,
+    "prime_max": 20000,
+    "defect_dyadic_exponents": [
+      14,
+      16,
+      18,
+      19
+    ],
+    "defect_exponents": [
+      0.00625,
+      0.0125,
+      0.025,
+      0.05,
+      0.1,
+      0.2,
+      0.3333333333333333,
+      0.5
+    ],
+    "defect_cutoff_is_constant_on_each_height_window": true,
+    "cutoffs_below_two": "excluded",
+    "Euler_phase": "full local factors",
+    "prime_response_ordinal_windows": [
+      [
+        1000,
+        10000
+      ],
+      [
+        10000,
+        100000
+      ],
+      [
+        100000,
+        500000
+      ],
+      [
+        500000,
+        1000000
+      ],
+      [
+        1000000,
+        2001052
+      ]
+    ],
+    "response_target": "exact s_k=k-1/2-N0(gamma_k)",
+    "theta": "log(p)/median(log(tau_k/(2*pi)))",
+    "response_bin_width": 0.05,
+    "minimum_primes_per_bin": 5
+  },
+  "prime_response_diagnostics": [
+    {
+      "window": 1,
+      "prime_count_total": 2262,
+      "prime_count_theta_below_one": 159,
+      "max_abs_gamma_minus_prediction": 0.34557030984281156,
+      "rms_gamma_minus_prediction": 0.09424650463722743,
+      "prime_count_theta_01_to_08": 52,
+      "max_abs_gamma_minus_prediction_theta_01_to_08": 0.08381901581667017
+    },
+    {
+      "window": 2,
+      "prime_count_total": 2262,
+      "prime_count_theta_below_one": 901,
+      "max_abs_gamma_minus_prediction": 0.440850921365756,
+      "rms_gamma_minus_prediction": 0.08511467270612584,
+      "prime_count_theta_01_to_08": 194,
+      "max_abs_gamma_minus_prediction_theta_01_to_08": 0.0630343837792609
+    },
+    {
+      "window": 3,
+      "prime_count_total": 2262,
+      "prime_count_theta_below_one": 2262,
+      "max_abs_gamma_minus_prediction": 0.27856624660572604,
+      "rms_gamma_minus_prediction": 0.06429435220577218,
+      "prime_count_theta_01_to_08": 554,
+      "max_abs_gamma_minus_prediction_theta_01_to_08": 0.06529438032169471
+    },
+    {
+      "window": 4,
+      "prime_count_total": 2262,
+      "prime_count_theta_below_one": 2262,
+      "max_abs_gamma_minus_prediction": 0.3168158733738207,
+      "rms_gamma_minus_prediction": 0.06085656115572939,
+      "prime_count_theta_01_to_08": 985,
+      "max_abs_gamma_minus_prediction_theta_01_to_08": 0.12461671096228377
+    },
+    {
+      "window": 5,
+      "prime_count_total": 2262,
+      "prime_count_theta_below_one": 2262,
+      "max_abs_gamma_minus_prediction": 0.16424692252709838,
+      "rms_gamma_minus_prediction": 0.03309143155199169,
+      "prime_count_theta_01_to_08": 1542,
+      "max_abs_gamma_minus_prediction_theta_01_to_08": 0.12175872100945778
+    }
+  ]
+}

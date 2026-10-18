@@ -1,0 +1,21 @@
+{
+  "precision_decimal_digits": 70,
+  "clock_difference_max_error": 3.7829321320559875e-16,
+  "direct_clock_max_roundoff_vs_high_precision": 3.6271852129592064e-10,
+  "pasted_stable_formula_max_error": 0.005719302110852314,
+  "phase_max_errors": {
+    "euler_v10_8": 3.081650118306132e-11,
+    "euler_v10_128": 8.10356049788228e-11,
+    "euler_v10_8192": 2.7277143416841053e-10,
+    "power_sharp_8": 1.9457966597508657e-11,
+    "power_sharp_128": 9.025889764477161e-11,
+    "power_sharp_8192": 2.819457613537859e-10
+  },
+  "local_factor_vs_500_powers_max_error": 1.1438499914838385e-66,
+  "longdouble_epsilon": 2.220446049250313e-16,
+  "tested_height_range": [
+    14.521346953065626,
+    1132490.7225876215
+  ],
+  "true_zero_access_guard_test_passed": true
+}

@@ -1,0 +1,532 @@
+[
+  {
+    "id": "c009",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      512
+    ]
+  },
+  {
+    "id": "c113",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c000",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8
+    ]
+  },
+  {
+    "id": "c124",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c001",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      8
+    ]
+  },
+  {
+    "id": "c204",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      128,
+      128,
+      512
+    ]
+  },
+  {
+    "id": "c112",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      128
+    ]
+  },
+  {
+    "id": "c131",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      128,
+      128
+    ]
+  },
+  {
+    "id": "c010",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c011",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      512,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c037",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      512
+    ]
+  },
+  {
+    "id": "c294",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c028",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      8
+    ]
+  },
+  {
+    "id": "c305",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c029",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8
+    ]
+  },
+  {
+    "id": "c351",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8,
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c030",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8,
+      8
+    ]
+  },
+  {
+    "id": "c038",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c039",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      512,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c065",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      512
+    ]
+  },
+  {
+    "id": "c475",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c056",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8
+    ]
+  },
+  {
+    "id": "c486",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c057",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      8
+    ]
+  },
+  {
+    "id": "c566",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      128,
+      128,
+      512
+    ]
+  },
+  {
+    "id": "c474",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      128
+    ]
+  },
+  {
+    "id": "c493",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      8,
+      128,
+      128
+    ]
+  },
+  {
+    "id": "c066",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c067",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      512,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c093",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      512
+    ]
+  },
+  {
+    "id": "c656",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c084",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      8
+    ]
+  },
+  {
+    "id": "c667",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c085",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8
+    ]
+  },
+  {
+    "id": "c713",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8,
+      8,
+      512
+    ]
+  },
+  {
+    "id": "c086",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      8,
+      8,
+      8
+    ]
+  },
+  {
+    "id": "c094",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c095",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      512,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c020",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      32,
+      128
+    ]
+  },
+  {
+    "id": "c003",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      32
+    ]
+  },
+  {
+    "id": "c023",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      128,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c006",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      128
+    ]
+  },
+  {
+    "id": "c022",
+    "window": "euler_v10",
+    "policy": "constant",
+    "cutoffs": [
+      128,
+      512
+    ]
+  },
+  {
+    "id": "c048",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      32,
+      128
+    ]
+  },
+  {
+    "id": "c031",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      32
+    ]
+  },
+  {
+    "id": "c051",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      128,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c034",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      128
+    ]
+  },
+  {
+    "id": "c050",
+    "window": "euler_v10",
+    "policy": "dyadic",
+    "cutoffs": [
+      128,
+      512
+    ]
+  },
+  {
+    "id": "c076",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      32,
+      128
+    ]
+  },
+  {
+    "id": "c059",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      32
+    ]
+  },
+  {
+    "id": "c079",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      128,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c062",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      128
+    ]
+  },
+  {
+    "id": "c078",
+    "window": "power_sharp",
+    "policy": "constant",
+    "cutoffs": [
+      128,
+      512
+    ]
+  },
+  {
+    "id": "c104",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      32,
+      128
+    ]
+  },
+  {
+    "id": "c087",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      32
+    ]
+  },
+  {
+    "id": "c107",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      128,
+      512,
+      512
+    ]
+  },
+  {
+    "id": "c090",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      128
+    ]
+  },
+  {
+    "id": "c106",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "cutoffs": [
+      128,
+      512
+    ]
+  }
+]

@@ -1,0 +1,23 @@
+k, gamma_k (zeross.bin), tau_k, delta_k=tau-gamma, gap to next, normalized gap to next
+258315 175680.155201189 175680.512721900 +0.3575 0.8010 1.3053
+258316 175680.956210354 175681.126401291 +0.1702 0.6929 1.1291
+258317 175681.649131916 175681.740080472 +0.0909 0.0668 0.1088
+258318 175681.715894456 175682.353759444 +0.6379 1.6316 2.6587
+258319 175683.347455659 175682.967438207 -0.3800 0.5181 0.8443
+258320 175683.865589247 175683.581116760 -0.2845 0.4856 0.7914
+258321 175684.351235152 175684.194795104 -0.1564 0.3002 0.4892
+mpmath zetazero(258317) = 175681.64913191624 ; difference with zeross.bin = 2.328e-10
+mpmath zetazero(258318) = 175681.71589445565 ; difference with zeross.bin = -3.492e-10
+mpmath zetazero(258319) = 175683.347455659199 ; difference with zeross.bin = 2.037e-10
+normalized gap (k-1,k) = 0.1088, rank 2371 among 2001051 gaps
+data check: mpmath zetazero(1) - zeross.bin = -2.653e-10
+data check: mpmath zetazero(1000) - zeross.bin = -4.320e-12
+data check: mpmath zetazero(100000) - zeross.bin = 1.892e-10
+data check: mpmath zetazero(1000000) - zeross.bin = -1.164e-10
+data check: mpmath zetazero(2001052) - zeross.bin = -2.328e-10
+S(gamma_k) (midpoint) = 1.039411467
+residual bare clock                             +0.6379
+residual P={2,3,5,7}, B=0.6                     +0.5223
+residual P={p<=61}, B=0.6                       +0.2345
+residual P={p<=1999} (fixed)                    +0.3373
+residual X_k=max(7,(tau_k/2pi)^0.57), B=0.6     +0.2031

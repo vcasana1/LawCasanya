@@ -1,0 +1,23 @@
+{
+  "zeross.bin": {
+    "count": 2001052,
+    "sha256": "fafb9436ce6a506de58c96c9bc9765d3942de3f15c921e99e0015b3e945fe0ac",
+    "matches_paper": true
+  },
+  "zLamb.bin": {
+    "sha256": "b4c6758f0aef3724d3345f894ff82d5bbcb0f6139025b8b266091f713faa9504",
+    "correct_rounding_certified_for_all_k": true,
+    "min_ratio_margin_to_twice_evaluation_error": 1.0000581041496341,
+    "max_evaluation_error_bound": 1.7356446141425508e-12,
+    "indices_decided_by_mpmath_40_digits": 20679,
+    "mpmath_checked_indices": 19900,
+    "mpmath_max_abs_error": 1.163497263925051e-10
+  },
+  "legacy_clock": {
+    "sha256": "b6f2a8d64600951f34ee29c701caff57ffb3c62805d1e1d3be8fa393f24b1252",
+    "is_paper_file": true,
+    "max_abs_difference": 2.3283064365386963e-10,
+    "max_difference_in_ulps": 3.0,
+    "fraction_bitwise_equal": 0.5746762203081179
+  }
+}

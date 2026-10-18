@@ -1,0 +1,45 @@
+envelope: ordinal sandwich holds for all k: True ; displacement envelope holds for all k: True
+envelope (0,1e3]    max delta=0.947861 min delta=-0.993711  min upper=9.1864  max lower=-11.2149  max delta/upper=0.0928  max(-delta)/|lower|=0.0751
+envelope (1e3,1e4]  max delta=0.824603 min delta=-0.833881  min upper=6.9813  max lower=-8.4753  max delta/upper=0.1162  max(-delta)/|lower|=0.0865
+envelope (1e4,1e5]  max delta=0.785835 min delta=-0.781849  min upper=5.6436  max lower=-6.8150  max delta/upper=0.1340  max(-delta)/|lower|=0.1067
+envelope (1e5,5e5]  max delta=0.739740 min delta=-0.762816  min upper=4.9904  max lower=-6.0051  max delta/upper=0.1377  max(-delta)/|lower|=0.1234
+envelope (5e5,1e6]  max delta=0.726355 min delta=-0.693541  min upper=4.7571  max lower=-5.7160  max delta/upper=0.1495  max(-delta)/|lower|=0.1178
+envelope (1e6,K]    max delta=0.695595 min delta=-0.717359  min upper=4.5467  max lower=-5.4553  max delta/upper=0.1489  max(-delta)/|lower|=0.1274
+global max |delta_k| = 0.993711 at k = 34 (gamma = 111.029536)
+accounting (1e3,1e4]  X=    7  <s^2>=0.085195  gain=0.063224  D=0.063984  Cr=0.000760  D-Cr-gain=2.8e-17  v_X=0.066252
+accounting (1e3,1e4]  X=   61  <s^2>=0.085195  gain=0.075868  D=0.085258  Cr=0.009390  D-Cr-gain=1.4e-17  v_X=0.093853
+accounting (1e3,1e4]  X=  401  <s^2>=0.085195  gain=0.067945  D=0.097561  Cr=0.029616  D-Cr-gain=0.0e+00  v_X=0.111486
+accounting (1e3,1e4]  X=  907  <s^2>=0.085195  gain=0.062337  D=0.100483  Cr=0.038146  D-Cr-gain=6.9e-18  v_X=0.117730
+accounting (1e3,1e4]  X= 1999  <s^2>=0.085195  gain=0.055885  D=0.101829  Cr=0.045944  D-Cr-gain=-1.4e-17  v_X=0.123202
+accounting (1e4,1e5]  X=    7  <s^2>=0.098097  gain=0.063878  D=0.063962  Cr=0.000084  D-Cr-gain=1.4e-17  v_X=0.066252
+accounting (1e4,1e5]  X=   61  <s^2>=0.098097  gain=0.084636  D=0.085690  Cr=0.001054  D-Cr-gain=0.0e+00  v_X=0.093853
+accounting (1e4,1e5]  X=  401  <s^2>=0.098097  gain=0.085764  D=0.095806  Cr=0.010041  D-Cr-gain=0.0e+00  v_X=0.111486
+accounting (1e4,1e5]  X=  907  <s^2>=0.098097  gain=0.083512  D=0.099312  Cr=0.015800  D-Cr-gain=1.4e-17  v_X=0.117730
+accounting (1e4,1e5]  X= 1999  <s^2>=0.098097  gain=0.080216  D=0.102907  Cr=0.022691  D-Cr-gain=0.0e+00  v_X=0.123202
+accounting (1e5,5e5]  X=    7  <s^2>=0.106325  gain=0.064185  D=0.064201  Cr=0.000016  D-Cr-gain=0.0e+00  v_X=0.066252
+accounting (1e5,5e5]  X=   61  <s^2>=0.106325  gain=0.086367  D=0.086579  Cr=0.000212  D-Cr-gain=-1.4e-17  v_X=0.093853
+accounting (1e5,5e5]  X=  401  <s^2>=0.106325  gain=0.093276  D=0.096932  Cr=0.003657  D-Cr-gain=0.0e+00  v_X=0.111486
+accounting (1e5,5e5]  X=  907  <s^2>=0.106325  gain=0.092779  D=0.099690  Cr=0.006911  D-Cr-gain=1.4e-17  v_X=0.117730
+accounting (1e5,5e5]  X= 1999  <s^2>=0.106325  gain=0.091379  D=0.101921  Cr=0.010542  D-Cr-gain=1.4e-17  v_X=0.123202
+accounting (5e5,1e6]  X=    7  <s^2>=0.110476  gain=0.064339  D=0.064345  Cr=0.000006  D-Cr-gain=0.0e+00  v_X=0.066252
+accounting (5e5,1e6]  X=   61  <s^2>=0.110476  gain=0.087027  D=0.087119  Cr=0.000092  D-Cr-gain=0.0e+00  v_X=0.093853
+accounting (5e5,1e6]  X=  401  <s^2>=0.110476  gain=0.096264  D=0.097833  Cr=0.001570  D-Cr-gain=0.0e+00  v_X=0.111486
+accounting (5e5,1e6]  X=  907  <s^2>=0.110476  gain=0.096453  D=0.100636  Cr=0.004183  D-Cr-gain=2.8e-17  v_X=0.117730
+accounting (5e5,1e6]  X= 1999  <s^2>=0.110476  gain=0.095789  D=0.102702  Cr=0.006913  D-Cr-gain=-2.8e-17  v_X=0.123202
+accounting (1e6,K]    X=    7  <s^2>=0.113224  gain=0.064441  D=0.064444  Cr=0.000003  D-Cr-gain=-1.4e-17  v_X=0.066252
+accounting (1e6,K]    X=   61  <s^2>=0.113224  gain=0.087434  D=0.087478  Cr=0.000044  D-Cr-gain=-2.8e-17  v_X=0.093853
+accounting (1e6,K]    X=  401  <s^2>=0.113224  gain=0.098011  D=0.098495  Cr=0.000483  D-Cr-gain=0.0e+00  v_X=0.111486
+accounting (1e6,K]    X=  907  <s^2>=0.113224  gain=0.098607  D=0.101389  Cr=0.002782  D-Cr-gain=0.0e+00  v_X=0.117730
+accounting (1e6,K]    X= 1999  <s^2>=0.113224  gain=0.098325  D=0.103474  Cr=0.005149  D-Cr-gain=0.0e+00  v_X=0.123202
+bins top window [0.30,0.35) n=   7  R^g=0.895186  law=0.890860  diff=+0.004326 (se 0.000111)  R^t=0.877866
+bins top window [0.35,0.40) n=  12  R^g=0.855594  law=0.851830  diff=+0.003764 (se 0.000160)  R^t=0.842647
+bins top window [0.40,0.45) n=  16  R^g=0.812595  law=0.808524  diff=+0.004071 (se 0.000260)  R^t=0.807616
+bins top window [0.45,0.50) n=  27  R^g=0.766905  law=0.762862  diff=+0.004043 (se 0.000238)  R^t=0.774910
+bins top window [0.50,0.55) n=  48  R^g=0.712610  law=0.707564  diff=+0.005046 (se 0.000269)  R^t=0.740610
+bins top window [0.55,0.60) n=  77  R^g=0.651830  law=0.645318  diff=+0.006512 (se 0.000401)  R^t=0.708475
+bins top window [0.60,0.65) n= 129  R^g=0.584529  law=0.576085  diff=+0.008444 (se 0.000576)  R^t=0.681460
+bins top window [0.65,0.70) n= 222  R^g=0.507402  law=0.497406  diff=+0.009996 (se 0.000710)  R^t=0.664017
+bins top window [0.70,0.75) n= 368  R^g=0.421797  law=0.409917  diff=+0.011880 (se 0.000926)  R^t=0.652404
+bins top window [0.75,0.80) n= 627  R^g=0.327087  law=0.311953  diff=+0.015134 (se 0.001071)  R^t=0.664173
+bins top window [0.80,0.85) n= 718  R^g=0.239287  law=0.219776  diff=+0.019511 (se 0.001631)  R^t=0.701474
+done

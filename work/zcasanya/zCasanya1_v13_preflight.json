@@ -1,0 +1,250 @@
+{
+  "construction_inputs_opened": [
+    "zLamb.bin",
+    "primoss.bin"
+  ],
+  "true_zero_input_opened": false,
+  "records": 2001052,
+  "tau_first": 14.521346953065626,
+  "tau_last": 1132490.7225876215,
+  "hashes": {
+    "zLamb.bin": "b6f2a8d64600951f34ee29c701caff57ffb3c62805d1e1d3be8fa393f24b1252",
+    "primoss.bin": "231627df6669b3d5c8cbe0520b6970c457d222e464ff9862e343b73f7e3f3a2a",
+    "ordinal_prime_cutoff_v13.tex": "3b3c4c8fa27ce251ef77aba8f2ad86b234f097567f6cd8e00c5220971073f999",
+    "ordinal_prime_cutoff_v13.zip": "b6eca909bc3e047cb35612b88ca57fd001059c1b41ee85cb0947253b1647d501"
+  },
+  "literal_conditions": {
+    "higher_moment_range": "2 <= X <= T^(1/(160 r))",
+    "minimum_T_for_nonempty_range_at_r_1": "2^160",
+    "minimum_T_for_c1_at_most_half": "exp(exp(4))",
+    "Hstar_proved_lower_bound": 102400,
+    "minimum_T_for_one_nonempty_uniform_iteration_from_Hstar": "exp(exp(Hstar))",
+    "log10_log10_of_that_minimum_using_Hstar_102400": 44471.39273120429
+  },
+  "observed_maxima": {
+    "max_H0": 2.6292193529723265,
+    "max_T_to_1_over_160": 1.0905077326652577,
+    "all_higher_moment_ranges_empty_at_r1": true,
+    "all_c1_exceed_half": true,
+    "all_c2_invalid_or_exceed_half": true
+  },
+  "dyadic_blocks_based_only_on_tau_for_diagnostic_purposes": [
+    {
+      "T": 8.0,
+      "records_by_tau_block": 1,
+      "H0": 0.7320993680864453,
+      "H1": -0.31183902548187914,
+      "c1": 1.168732131258307,
+      "c2": null,
+      "T_to_1_over_160": 1.0130813313305227,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 16.0,
+      "records_by_tau_block": 3,
+      "H0": 1.0197814405382262,
+      "H1": 0.019588330354098925,
+      "c1": 0.9902536414560521,
+      "c2": 7.144984486057144,
+      "T_to_1_over_160": 1.0174796921026863,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 32.0,
+      "records_by_tau_block": 10,
+      "H0": 1.242924991852436,
+      "H1": 0.2174674662608206,
+      "c1": 0.8969692188904073,
+      "c2": 2.1443854547012062,
+      "T_to_1_over_160": 1.0218971486541166,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 64.0,
+      "records_by_tau_block": 28,
+      "H0": 1.4252465486463906,
+      "H1": 0.3543448153489274,
+      "c1": 0.8376353573091694,
+      "c2": 1.679913648911772,
+      "T_to_1_over_160": 1.026333783890424,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 128.0,
+      "records_by_tau_block": 69,
+      "H0": 1.5793972284736488,
+      "H1": 0.4570432732828233,
+      "c1": 0.7957090805461862,
+      "c2": 1.4791810667253595,
+      "T_to_1_over_160": 1.0307896810771597,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 256.0,
+      "records_by_tau_block": 167,
+      "H0": 1.7129286210981716,
+      "H1": 0.5382045495293667,
+      "c1": 0.7640651070729249,
+      "c2": 1.3630956055798182,
+      "T_to_1_over_160": 1.0352649238413776,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 512.0,
+      "records_by_tau_block": 390,
+      "H0": 1.830711656754555,
+      "H1": 0.6047047747301844,
+      "c1": 0.7390775773958794,
+      "c2": 1.2859624905452673,
+      "T_to_1_over_160": 1.0397595961732038,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 1024.0,
+      "records_by_tau_block": 893,
+      "H0": 1.9360721724123813,
+      "H1": 0.6606612672981621,
+      "c1": 0.7186860723460716,
+      "c2": 1.2302987335494857,
+      "T_to_1_over_160": 1.0442737824274138,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 2048.0,
+      "records_by_tau_block": 2012,
+      "H0": 2.0313823522167063,
+      "H1": 0.7087165229875978,
+      "c1": 0.7016235576190322,
+      "c2": 1.1878557956832896,
+      "T_to_1_over_160": 1.0488075673250148,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 4096.0,
+      "records_by_tau_block": 4476,
+      "H0": 2.118393729206336,
+      "H1": 0.7506581266005514,
+      "c1": 0.6870631543193221,
+      "c2": 1.1541942454664111,
+      "T_to_1_over_160": 1.0533610359548358,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 8192.0,
+      "records_by_tau_block": 9856,
+      "H0": 2.1984364368798723,
+      "H1": 0.7877463971806813,
+      "c1": 0.6744395707069478,
+      "c2": 1.1266960900963792,
+      "T_to_1_over_160": 1.057934273775125,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 16384.0,
+      "records_by_tau_block": 21519,
+      "H0": 2.2725444090335944,
+      "H1": 0.8209000888075303,
+      "c1": 0.6633516452529564,
+      "c2": 1.103709672787176,
+      "T_to_1_over_160": 1.0625273666151527,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 32768.0,
+      "records_by_tau_block": 46653,
+      "H0": 2.3415372805205457,
+      "H1": 0.8508076711549188,
+      "c1": 0.6535058229333942,
+      "c2": 1.0841373370059437,
+      "T_to_1_over_160": 1.0671404006768237,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 65536.0,
+      "records_by_tau_block": 100536,
+      "H0": 2.4060758016581167,
+      "H1": 0.8779971223172695,
+      "c1": 0.6446817072238418,
+      "c2": 1.067218767163513,
+      "T_to_1_over_160": 1.0717734625362931,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 131072.0,
+      "records_by_tau_block": 215532,
+      "H0": 2.4667004234745518,
+      "H1": 0.9028813966407588,
+      "c1": 0.6367101832312432,
+      "c2": 1.052409228284237,
+      "T_to_1_over_160": 1.0764266391455932,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 262144.0,
+      "records_by_tau_block": 459982,
+      "H0": 2.5238588373145006,
+      "H1": 0.9257890149511017,
+      "c1": 0.6294590322281114,
+      "c2": 1.0393073253746188,
+      "T_to_1_over_160": 1.0811000178342638,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 524288.0,
+      "records_by_tau_block": 977804,
+      "H0": 2.5779260585847763,
+      "H1": 0.9469852224085291,
+      "c1": 0.6228231859166464,
+      "c2": 1.0276101825634474,
+      "T_to_1_over_160": 1.0857936863109918,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    },
+    {
+      "T": 1048576.0,
+      "records_by_tau_block": 161121,
+      "H0": 2.6292193529723265,
+      "H1": 0.9666869781638261,
+      "c1": 0.6167179511049007,
+      "c2": 1.0170845700509545,
+      "T_to_1_over_160": 1.0905077326652577,
+      "higher_moment_cutoff_interval_nonempty_r1": false,
+      "theorem_8_9_c1_at_most_half": false,
+      "theorem_8_9_c2_at_most_half": false
+    }
+  ],
+  "conclusion": "Theorem 8.10 has no nontrivial numerically admissible step on this height range, and its constants do not determine a unique finite-height extension."
+}

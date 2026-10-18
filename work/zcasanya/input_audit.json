@@ -1,0 +1,56 @@
+{
+  "zLamb": {
+    "path": "/Users/vcasana/Documents/\u00b7.\u00b7 MATLAB/\u00b7.\u00b7 bin_unicos/zLamb.bin",
+    "dtype": "<f8",
+    "records": 2001052,
+    "bytes": 16008416,
+    "first": [
+      14.521346953065626,
+      20.655740355699553,
+      25.49267543226431,
+      29.739411632309547,
+      33.624531888500485
+    ],
+    "last": [
+      1132488.6458537495,
+      1132489.1650372471,
+      1132489.684220725,
+      1132490.203404183,
+      1132490.7225876215
+    ],
+    "sha256": "b6f2a8d64600951f34ee29c701caff57ffb3c62805d1e1d3be8fa393f24b1252"
+  },
+  "primes": {
+    "path": "/Users/vcasana/Documents/\u00b7.\u00b7 MATLAB/\u00b7.\u00b7 bin_unicos/primoss.bin",
+    "dtype": "<u8",
+    "records": 455052511,
+    "bytes": 3640420088,
+    "first": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "last": [
+      9999999851,
+      9999999881,
+      9999999929,
+      9999999943,
+      9999999967
+    ],
+    "used_records": 148933,
+    "used_last": 1999993,
+    "prefix_verified_by_sieve": true,
+    "all_records_strictly_increasing": true,
+    "sha256": "79b99094b72787de8c53b3b3a068956587747ef8eec5cba222ca004b95fc5272"
+  },
+  "construction_input_allowlist": [
+    "zLamb.bin",
+    "primoss.bin"
+  ],
+  "no_true_zero_access_guard": true
+}
