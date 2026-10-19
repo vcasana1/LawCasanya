@@ -117,3 +117,7 @@
 - Korolev 2016 read (library 192b): Lemma 3.13, p. S126, bound (c0/56)(c0 k)^{2k} H; Ivic-Korolev 2018 Lemma 12 omits k^{2k}. Remark rem:korolev_uniform corrected to (Ck)^{2k}.
 - Build 47 pp., clean. Files: work/paper1/manuscript/prime_corrected_clock_v8.*, work/paper1/v8/, work/paper1/prime_corrected_clock_v8.zip.
 - Library additions today (author's Mac, LIBRARY TOTAL): 060a Christ 2014, 113a Fujii 1981, 166a Ivic-Korolev 2018, 190a Korolev 2010 Izv, 191a Korolev arXiv:1106.0516, 192a Korolev 2016 Indian J, 192b Korolev 2016 Proc. Steklov, 192c Korolev-Laurincikas 2023.
+
+## 2026-10-19 15:06 UTC — [claude] — Paper I v8 withdrawn (not ordered by the author)
+- The author had not ordered a v8; the v8 package (8fe0f8d) is removed. Current version: v7.
+- The findings stay recorded as pending changes for the next version: work/paper1/pendiente_siguiente_version/patch_pending_claude.py (applies to the v7 source) and source_audit_pending.json. They are: Fujii 1974 p. 225 non-strict hypotheses (v7's "strict" remark is wrong), Fujii 1981 corrections and (alpha'), Korolev 2016 Lemma 3.13 with (c0 k)^{2k} (Ivic-Korolev omit k^{2k}).
