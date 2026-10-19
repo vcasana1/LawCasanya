@@ -61,11 +61,29 @@ TTY = [(F(89, 1282), F(997, 1282)), (F(652397, 9713986), F(7599781, 9713986)),
 END = [(F(1), F(0))]
 M = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
 OUT = sys.argv[2] if len(sys.argv) > 2 else '.'
+HBA = [q for (sg, mu) in hb(M) for q in achain(mu, sg+mu, 25)]
+def Bp(k, l): return (l-F(1, 2), k+F(1, 2))
+def ABA(Mb, J):
+    """A-images (j<=J) of B-images of A-images (j<=J) of Bourgain's and Heath-Brown's pairs, m<=Mb."""
+    base = [B0]+[(mu, sg+mu) for (sg, mu) in hb(Mb)]
+    pairs = set()
+    for p in base:
+        k, l = p
+        for _ in range(J+1):
+            pairs.add((k, l)); k, l = A(k, l)
+    for p in list(pairs):
+        b = Bp(*p)
+        if b[1]-b[0] >= F(1, 2) and b[0] >= 0:
+            k, l = b
+            for _ in range(J+1):
+                pairs.add((k, l)); k, l = A(k, l)
+    return [pt(*p) for p in pairs if p[1]-p[0] >= F(1, 2)]
 cases = {
  'v7: Bourgain + A-process, J=30': hull(achain(*B0, 30)+END),
  'published: Bourgain 2017 + Heath-Brown 2017 chain + A-images': hull([q for q in achain(*B0, 25)]+[q for (sg, mu) in hb(M) for q in achain(mu, sg+mu, 25)]+END),
- 'TY23 hull: Bourgain + TY23 pairs + A-images + Heath-Brown chain': hull([q for p in TY for q in achain(*p, 25)]+hb(M)+END),
- 'TY23 hull + TTY25 new pairs': hull([q for p in TY+TTY for q in achain(*p, 25)]+hb(M)+END),
+ 'published + A-images of B-images of A-images (m <= 300, j <= 10)': hull(ABA(300, 10)+END),
+ 'TY23 hull: Bourgain + TY23 pairs + Heath-Brown chain, all with A-images': hull([q for p in TY for q in achain(*p, 25)]+HBA+END),
+ 'TY23 hull + TTY25 new pairs, all with A-images': hull([q for p in TY+TTY for q in achain(*p, 25)]+HBA+END),
  'Lindelof profile (e = 0 on [1/2,1]): floor of the one-disc method': [(F(1, 2), F(0))]+END,
 }
 out = {}

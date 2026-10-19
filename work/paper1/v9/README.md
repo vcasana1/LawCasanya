@@ -80,6 +80,14 @@ Comparison with França-LeClair and LeClair (read in the originals)
   abstract and conclusions state that the constructions and the constant of
   Theorem E use no evaluation of zeta.
 
+Independent review of the v9 draft (separate agent): no mathematical error in the six fixes
+or the hull theorem; corrections applied — range p_N <= T^{1/2} when Theorems B, D are said to
+concern LeClair's equation (his N(t) < [t^2] is not covered); França-LeClair equation written
+with S*(t_n) and the uniqueness assumption attributed correctly; Lindelof value in closed form
+(sqrt(3)/2 - pi/6)/log 2, disc optimality labelled numerical (5 starts); Heath-Brown Thm 5
+caveat for 1-sigma < 3e-7; A-B-A images computed by the program; M_X instead of sigma_X in
+prop:deformation; Bellotti-Wong row and Montgomery-Vaughan wording.
+
 References added: França-LeClair 2015, LeClair 2021, Heath-Brown 2017,
 Tao-Trudgian-Yang 2025 (preprint), Platt-Trudgian 2021.
 

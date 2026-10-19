@@ -138,3 +138,13 @@
 - Author: v8 had been made and stands ("por error dije que no la hicieras"); v8 files restored from 8fe0f8d.
 - v9 = v8 + six fixes of the external review + Theorem E with published hull (2piC_P < 0.6072889)
   + França-LeClair / LeClair comparison read in originals + table tab:evaluates. Under independent review.
+
+## 2026-10-19 [claude] Paper I v9 (final)
+- v9 = v8 + six external-review fixes + Theorem E with the hull of published exponent pairs
+  (Bourgain 2017, Heath-Brown 2017 Thm 2, A-images): 2piC_P < 0.6072889; preprint pairs (TY23, TTY25)
+  in a remark: 0.6061342, 0.6060224; one-disc Lindelof value (sqrt3/2 - pi/6)/log 2 = 0.49401719...
+- França-LeClair (CNTP 2015) and LeClair (Symmetry 2021 = arXiv:1601.00914v1) read in the originals;
+  LeClair (49) = corrected clock equation with X = p_N up to 1/(48t); Theorems B, D cover p_N <= T^{1/2}.
+- New table tab:evaluates; "evaluates zeta or zeros" column in tab:status.
+- Independent agent review of the changes; its corrections applied. 51 pp., clean build.
+- Files: v9/, manuscript/prime_corrected_clock_v9.{tex,txt,pdf}, prime_corrected_clock_v9.zip.

@@ -246,5 +246,48 @@ T. Tao, T. Trudgian, A. Yang, New exponent pairs, zero density estimates, and ze
 
 \bibitem{Tenenbaum2015}""")
 
+# ================================================================ corrections after the independent review of v9
+# 1. range of Theorems B, D with respect to LeClair's equation
+rep(r"""(B) and (D) are proved statements about that equation at the true ordinates and about explicit corrected points.""",
+    r"""for $p_N\le T^{1/2}$, (B) and (D) are proved statements about that equation at the true ordinates and about explicit corrected points.""")
+rep(r"""Theorem B below is a statement about LeClair's equation at the true ordinates, and Theorem D about explicit corrected points that replace its root finder (Table~\CGref{tab:evaluates}).""",
+    r"""For $p_N\le T^{1/2}$, Theorem B below is a statement about LeClair's equation at the true ordinates, and Theorem D about explicit corrected points that replace its root finder (Table~\CGref{tab:evaluates}); the number of primes $N(t)<N_{\max}(t)=[t^2]$ allowed in \cite[p.~19]{LeClair2021} goes far beyond this range, which is not covered here. The computations of \cite[Table~I]{LeClair2021}, with $N=5\cdot10^6$ at heights $1.4\cdot10^{20}$ and $1.4\cdot10^{21}$, lie inside it.""")
+rep(r"""& LeClair's equation is the corrected clock equation with $X=p_N$, up to $1/(48t)$. Theorem~\CGref{thm:main} gives its mean-square defect at the true ordinates; with a fixed $N$ the defect grows like $(2\pi^2)^{-1}\log\log T$ and is bounded iff $\log p_N\asymp\log T$ (Corollary~\CGref{cor:dichotomy}).""",
+    r"""& LeClair's equation is the corrected clock equation with $X=p_N$, up to $1/(48t)$. For $p_N\le T^{1/2}$, Theorem~\CGref{thm:main} gives its mean-square defect at the true ordinates; with a fixed $N$ the defect grows like $(2\pi^2)^{-1}\log\log T$ (Corollary~\CGref{cor:fixed_cutoff}), and for $N=N(T)$ it is bounded iff $\log p_N\asymp\log T$ (Corollary~\CGref{cor:dichotomy}).""")
+rep(r"""The equation for the $n$-th zero with the first $N$ primes \cite{LeClair2021} is the corrected clock equation; its mean-square defect""",
+    r"""The equation for the $n$-th zero with the first $N$ primes \cite{LeClair2021} is the corrected clock equation; for $p_N\le T^{1/2}$ its mean-square defect""")
+# 2. França--LeClair equation
+rep(r"""that is $\NO(t_n)+S(t_n)=n-\frac12$ up to the terms $O(1/t)$ of Stirling's series, as an equation for the $n$-th zero on the critical line, exact under the assumption that the limit exists for every $t$;""",
+    r"""that is $\NO(t_n)+S^*(t_n)=n-\frac12$ up to the terms $O(1/t)$ of Stirling's series, the limit being $\pi S^*(t_n)$ at a simple zero, as an equation satisfied by the zeros on the critical line (at a simple ordinate it is the identity $\NO(\gamma_k)+S^*(\gamma_k)+\varpi(\gamma_k)/\pi=k-\frac12$ of Section~\CGref{subsec:euler_phase}); under the assumption that this limit exists for every $t$ they conclude that the equation has a unique solution for every $n$ \cite[p.~11]{FrancaLeClair2015};""")
+rep(r"""& Exact under the assumption that $\lim_{\delta\to0^+}\arg\zeta(\frac12+\delta+it)$ exists for every $t$; accuracy shown numerically.\\""",
+    r"""& Satisfied at the zeros on the line; a unique solution for every $n$ under the assumption that $\lim_{\delta\to0^+}\arg\zeta(\frac12+\delta+it)$ exists for every $t$; accuracy shown numerically.\\""")
+# 3. one-disc floor: closed form, numerical status
+rep(r"""With one Backlund disc no exponent profile gives less than $0.4940$ (the Lindel\"of profile), although on the Lindel\"of hypothesis $S(t)=o(\log t)$.""",
+    r"""With the Backlund disc used here no exponent profile gives less than $(\frac{\sqrt3}2-\frac\pi6)/\log2=0.4940\ldots$ (the Lindel\"of profile), and a numerical scan finds no better disc, although on the Lindel\"of hypothesis $S(t)=o(\log t)$.""")
+rep(r"""(c) For the Lindel\"of profile ($\mathfrak e=0$ on $[\frac12,1]$) the right side is $0.0786253$, that is $2\pi\cdot0.0786253=0.4940172$ for the clock: with one disc of Theorem~\CGref{thm:known_backlund} no exponent profile gives less. A numerical scan of the admissible discs, $1<\sigma_\circ<\varrho$ with $\varrho/(\sigma_\circ-\frac12)$ free, finds the infimum at the corner $\sigma_\circ\to1$, $\varrho\to1$ used in the proof, for each of the profiles above (program \texttt{envelope\_disc\_scan\_v9.py}).""",
+    r"""(c) For the Lindel\"of profile ($\mathfrak e=0$ on $[\frac12,1]$) the right side is $C_L=(\frac{\sqrt3}2-\frac\pi6)/(2\pi\log2)=0.07862527\ldots$, that is $2\pi C_L=(\frac{\sqrt3}2-\frac\pi6)/\log2=0.49401719\ldots$ for the clock. Every admissible profile is at least the Lindel\"of profile, so with the disc of the proof no exponent profile gives less. For a general admissible disc, $1<\sigma_\circ<\varrho$, the Lindel\"of profile gives $\bigl(\sqrt{\varrho^2-u^2}-u\arccos(u/\varrho)\bigr)/(2\pi\log(\varrho/u))$ with $u=\sigma_\circ-\frac12$; a numerical scan of the admissible discs (program \texttt{envelope\_disc\_scan\_v9.py}, floating point, several starting points) finds no value below the corner $\sigma_\circ\to1$, $\varrho\to1$ used in the proof, for this and for each of the profiles above; this is a numerical observation, not a proof.""")
+rep(r"""one Backlund disc cannot go below $0.4940$.""",
+    r"""with the disc of the proof, and numerically with any single disc, Backlund's method cannot go below $0.4940$.""")
+# 4. Heath-Brown Thm 5
+rep(r"""of \cite[Thm.~5]{HeathBrown2017} lies above $\mathfrak e_{\mathcal P}$ and changes nothing.""",
+    r"""of \cite[Thm.~5]{HeathBrown2017} lies above $\mathfrak e_{\mathcal P}$ except for $1-\sigma<3\cdot10^{-7}$, beyond the last vertex used, where it would change $C_{\mathcal P}$ by less than $10^{-15}$.""")
+# 5. B-process claim: supported by the program
+rep(r"""and adding the $\mathscr A$-images of these $\mathscr B$-images ($j\le10$, $m\le300$) did not lower the value in our computation.""",
+    r"""and adding the $\mathscr A$-images ($j\le10$) of the $\mathscr B$-images of the $\mathscr A$-images of the pairs with $m\le300$ does not lower the value (same program).""")
+# 7. deformation remainder: M_X
+rep(r"""since $c_1,c_2\le\frac12$ and $\sigma_{X_2}\ll T^{c_2/2}$, so it suffices""",
+    r"""since $c_1,c_2\le\frac12$, $|S_{X_2}|\le\sigma_{X_2}$ and $\mathsf g_2\le M_{X_2}\ll T^{c_2/2}$ \CGeqref{eq:sigma_M_def}, so it suffices""")
+# 8. wording
+rep(r"""(Selberg's approximation, Fujii's moments, the Montgomery--Vaughan inequality, exponent pairs)""",
+    r"""(Selberg's approximation, Fujii's moments, exponent pairs) and on Dirichlet polynomials (the Montgomery--Vaughan inequality)""")
+rep(r"""& Proved for all $T\ge e$: $\limsup|\tau_k-\gamma_k|\le2\pi\cdot0.10076$.\\""",
+    r"""& Proved for all $T\ge e$: $|S(T)|\le0.10076\log T+\ldots$; hence $\limsup|\tau_k-\gamma_k|\le2\pi\cdot0.10076$.\\""")
+rep(r"""Every finite subset of the pairs of Theorem~\CGref{thm:known_exponents} gives an admissible profile;""",
+    r"""Every finite set of pairs of Theorem~\CGref{thm:known_exponents} that contains Bourgain's pair gives an admissible profile;""")
+rep(r"""Python 3 and mpmath 1.3.0 were used.""",
+    r"""Python 3 and mpmath 1.3.0 were used, with numpy and scipy for the disc scan.""")
+rep(r"""Commun. Number Theory Phys. 9 (1) (2015) 1--50,""",
+    r"""Commun. Number Theory Phys. 9 (1) (2015) 1--50 (page numbers of the journal version),""")
+
 TEX.write_text(head + sep + body)
 print('v9 patch applied')

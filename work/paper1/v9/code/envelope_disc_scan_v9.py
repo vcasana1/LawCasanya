@@ -40,9 +40,14 @@ for name, v in cases.items():
     lines.append(name)
     for r in [1, 1.05, 1.1, 1.2, 1.5, 2, 3]:
         lines.append('  sigma_o=1  rho=%.2f   2*pi*a = %.9f' % (r, 2 * np.pi * a(e, 1, r)))
-    res = minimize(lambda p: a(e, p[0], p[1]), [1.0001, 1.2], method='Nelder-Mead',
-                   options={'xatol': 1e-8, 'fatol': 1e-12})
-    lines.append('  minimum over 1 <= sigma_o <= rho: at (%.6f, %.6f), 2*pi*a = %.9f' % (res.x[0], res.x[1], 2 * np.pi * res.fun))
+    corner = a(e, 1, 1)
+    best = None
+    for start in ([1.0001, 1.2], [1.05, 1.1], [1.2, 1.5], [1.5, 2.5], [1.01, 1.02]):
+        res = minimize(lambda p: a(e, p[0], p[1]), start, method='Nelder-Mead',
+                       options={'xatol': 1e-9, 'fatol': 1e-13})
+        if best is None or res.fun < best.fun: best = res
+    lines.append('  corner (1,1): 2*pi*a = %.9f;  best of 5 Nelder-Mead runs: (%.6f, %.6f), 2*pi*a = %.9f;  below corner by more than 1e-7 (quadrature accuracy): %s'
+                 % (2 * np.pi * corner, best.x[0], best.x[1], 2 * np.pi * best.fun, 2*np.pi*(corner - best.fun) > 1e-7))
 text = '\n'.join(lines)
 print(text)
 out = argv[2] if len(argv) > 2 else '.'

@@ -6,7 +6,7 @@ v7: Bourgain + A-process, J=30
   sigma_o=1  rho=1.50   2*pi*a = 0.768915126
   sigma_o=1  rho=2.00   2*pi*a = 0.945548056
   sigma_o=1  rho=3.00   2*pi*a = 1.271454543
-  minimum over 1 <= sigma_o <= rho: at (1.000000, 1.000000), 2*pi*a = 0.608307307
+  corner (1,1): 2*pi*a = 0.608307308;  best of 5 Nelder-Mead runs: (1.000000, 1.000000), 2*pi*a = 0.608307304;  below corner by more than 1e-7 (quadrature accuracy): False
 published: Bourgain 2017 + Heath-Brown 2017 chain + A-images
   sigma_o=1  rho=1.00   2*pi*a = 0.607288873
   sigma_o=1  rho=1.05   2*pi*a = 0.618072958
@@ -15,8 +15,17 @@ published: Bourgain 2017 + Heath-Brown 2017 chain + A-images
   sigma_o=1  rho=1.50   2*pi*a = 0.768678232
   sigma_o=1  rho=2.00   2*pi*a = 0.945416301
   sigma_o=1  rho=3.00   2*pi*a = 1.271389080
-  minimum over 1 <= sigma_o <= rho: at (1.000000, 1.000005), 2*pi*a = 0.607289758
-TY23 hull: Bourgain + TY23 pairs + A-images + Heath-Brown chain
+  corner (1,1): 2*pi*a = 0.607288873;  best of 5 Nelder-Mead runs: (1.000000, 1.000000), 2*pi*a = 0.607288868;  below corner by more than 1e-7 (quadrature accuracy): False
+published + A-images of B-images of A-images (m <= 300, j <= 10)
+  sigma_o=1  rho=1.00   2*pi*a = 0.607288873
+  sigma_o=1  rho=1.05   2*pi*a = 0.618072958
+  sigma_o=1  rho=1.10   2*pi*a = 0.631627599
+  sigma_o=1  rho=1.20   2*pi*a = 0.663041526
+  sigma_o=1  rho=1.50   2*pi*a = 0.768678232
+  sigma_o=1  rho=2.00   2*pi*a = 0.945416301
+  sigma_o=1  rho=3.00   2*pi*a = 1.271389080
+  corner (1,1): 2*pi*a = 0.607288873;  best of 5 Nelder-Mead runs: (1.000000, 1.000000), 2*pi*a = 0.607288868;  below corner by more than 1e-7 (quadrature accuracy): False
+TY23 hull: Bourgain + TY23 pairs + Heath-Brown chain, all with A-images
   sigma_o=1  rho=1.00   2*pi*a = 0.606134203
   sigma_o=1  rho=1.05   2*pi*a = 0.617069952
   sigma_o=1  rho=1.10   2*pi*a = 0.630743665
@@ -24,8 +33,8 @@ TY23 hull: Bourgain + TY23 pairs + A-images + Heath-Brown chain
   sigma_o=1  rho=1.50   2*pi*a = 0.768246726
   sigma_o=1  rho=2.00   2*pi*a = 0.945167873
   sigma_o=1  rho=3.00   2*pi*a = 1.271263600
-  minimum over 1 <= sigma_o <= rho: at (1.000008, 1.000071), 2*pi*a = 0.606149546
-TY23 hull + TTY25 new pairs
+  corner (1,1): 2*pi*a = 0.606134203;  best of 5 Nelder-Mead runs: (1.000000, 1.000000), 2*pi*a = 0.606134201;  below corner by more than 1e-7 (quadrature accuracy): False
+TY23 hull + TTY25 new pairs, all with A-images
   sigma_o=1  rho=1.00   2*pi*a = 0.606022344
   sigma_o=1  rho=1.05   2*pi*a = 0.616976987
   sigma_o=1  rho=1.10   2*pi*a = 0.630664011
@@ -33,7 +42,7 @@ TY23 hull + TTY25 new pairs
   sigma_o=1  rho=1.50   2*pi*a = 0.768210555
   sigma_o=1  rho=2.00   2*pi*a = 0.945147420
   sigma_o=1  rho=3.00   2*pi*a = 1.271253352
-  minimum over 1 <= sigma_o <= rho: at (1.000000, 1.000007), 2*pi*a = 0.606023659
+  corner (1,1): 2*pi*a = 0.606022344;  best of 5 Nelder-Mead runs: (1.000000, 1.000000), 2*pi*a = 0.606022350;  below corner by more than 1e-7 (quadrature accuracy): False
 Lindelof profile (e = 0 on [1/2,1]): floor of the one-disc method
   sigma_o=1  rho=1.00   2*pi*a = 0.494017198
   sigma_o=1  rho=1.05   2*pi*a = 0.520353620
@@ -42,4 +51,4 @@ Lindelof profile (e = 0 on [1/2,1]): floor of the one-disc method
   sigma_o=1  rho=1.50   2*pi*a = 0.727038885
   sigma_o=1  rho=2.00   2*pi*a = 0.921473587
   sigma_o=1  rho=3.00   2*pi*a = 1.259301712
-  minimum over 1 <= sigma_o <= rho: at (1.000000, 1.000000), 2*pi*a = 0.494017198
+  corner (1,1): 2*pi*a = 0.494017198;  best of 5 Nelder-Mead runs: (1.000000, 1.000000), 2*pi*a = 0.494017198;  below corner by more than 1e-7 (quadrature accuracy): False
