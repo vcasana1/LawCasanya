@@ -56,3 +56,13 @@ opc_second_order_aliasing_check, opc_quotient_second_order_check (+ _train). Cor
 - F (monotonía certificada, continuación sin cambio de rama): no encontrado.
 - (19-10) E: las 7 iteraciones del proceso A son arbitrarias. Constante por nº de iteraciones J: J=7 0.0968160063, J=8 0.0968154102, J=12 0.0968151181; cada iteración gana ~1/3 de la anterior; límite ≈ 0.09681511, 2π·límite ≈ 0.608307. Como la cota vale para todo J, enunciar con el ínfimo (J→∞) o decir que J=7 es un truncamiento.
 - (19-10) E, perfil μ(σ): el proceso A sobre el par de Bourgain es un caso particular, peor, de Trudgian–Yang, «Toward optimal exponent pairs» (arXiv:2306.05599): envolvente convexa desde el par de Bourgain cerrada por A, B, C; Thm 2.4 (9 tramos en [1/2, 9/10]), Thm 2.5 (μ(σ) ≤ 0.4865(1−σ)^{3/2}), Thm 2.6 (cerca de σ=1). Bellotti–Wong usan las rectas de Yang = iterados A de (1/2,1/2). Usar el perfil de Trudgian–Yang (debe dar ≈ 0.0964667, verificar) y citarlo; ver también Tao–Trudgian–Yang (arXiv:2501.16779, base de datos de exponentes, nuevos pares).
+
+### 16. Novedad del bloque espectral («Paper II») (19-10)
+- Landau en la recta (thm:landau_line): casi seguro conocido. Ford–Zaharescu (J. reine angew. Math. 579, 2005, Lema 1: Σ x^ρ uniforme en x); paso x^ρ → x^{iγ} con densidad de ceros es estándar (Hlawka, Fujii). Citar; a lo sumo la uniformidad n ≤ t^{1/8} es propia.
+- Sumas en el reloj (lem:clock_equidistribution, prop:resonance, prop:pair_resonance): Kusmin–Landau y fase estacionaria; la resonancia en n ≈ t/2π es el fenómeno de Gram/Riemann–Siegel. Técnica estándar; enunciados propios del reloj. Revisar Korolev 2011/2012 (sumas en puntos de Gram).
+- Casi ortogonalidad (prop:almost_orthogonal) y energía espectral: no encontradas tal cual; consecuencia directa de las sumas anteriores, análogas a gran criba / Montgomery–Vaughan. Novedad baja-moderada.
+- Proyección ⟨s_k sin(γ_k log n)⟩ = a_n/2 (thm:projection): no encontrada; sale de Landau + Selberg. Moderada.
+- Transporte, respuestas calculables, fases de Newton (Bessel): propias, pero solo interesan dentro de la construcción.
+- Representación de dos puntos, núcleo K_θ, ley bajo U y W: el vínculo S² ↔ correlación de pares es clásico (Montgomery, Goldston, Tsang); la ley es condicional.
+- Conclusión: el Paper II aislado es débil. Llevar proyección, término cruzado y casi ortogonalidad al Paper I como lemas; posponer o descartar el resto.
+- Límites de la búsqueda: web/arXiv; sin MathSciNet; sin biblioteca local; Fujii, Korolev y Tsang (∫S(t)S(t+h)) no leídos en el original.
