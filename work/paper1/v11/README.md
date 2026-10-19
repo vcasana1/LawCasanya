@@ -66,6 +66,9 @@ Applied by `tools/patch_v11_claude.py` to a copy of the v10 source.
 - "Open problems" subsection and all Question labels removed; the sentence on uncomputed constants
   kept once (degree of proof).
 - Abstract, intro (items D', D''), tables, conclusions updated.
+- Independent review (separate agent): no mathematical error; wording corrections applied (sign of the
+  m=1 terms, eq:SX_derivative with T∓1, 'better bound for fixed c', tolerance statement, notation
+  G and A_reg, duplicated/stale sentences, B, D, D', D'' in the constants sentence).
 
 ## Changes from v9 to v10 (Claude, 2026-10-19)
 

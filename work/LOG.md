@@ -171,3 +171,7 @@
   author's 7-point review of v10 applied (Fujii (alpha') for 0<h<=1, re-read in 113a; notation);
   ChatGPT hand-off integrated: X <= sqrt(T/2), clock window I_T^tau, tolerance certificate;
   open questions removed. 61 pp., clean build.
+
+## 2026-10-19 [claude] Paper I v11
+- Independent review applied (no mathematical error found; wording/notation). 61 pp., clean build.
+- Files: v11/, manuscript/prime_corrected_clock_v11.{tex,txt,pdf}, prime_corrected_clock_v11.zip.

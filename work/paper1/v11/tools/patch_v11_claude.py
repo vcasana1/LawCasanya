@@ -307,5 +307,41 @@ B_{\rm reg}=\mathscr L(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)-\frac3{4^{4/
 B_{\rm reg}&=\mathscr L(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)-\frac3{4^{4/3}}A^{-1/3}\|\mathbf r\|_2^{4/3},
 \end{split}""")
 
+# ================================================================ after the independent review of v11
+rep(r"""on the same two intervals give $\int_{T-1}^{2T+2}\mathfrak D'^2\ll T(1+\log X)^2$.""",
+    r"""on the same two intervals give $\int_{T-1}^{2T+2}\mathfrak D'^2\ll T(1+\log X)^2$ (the proof of \CGeqref{eq:SX_derivative} uses $X\le T^{1/2}$ only through $X\log X\ll T$, so it applies with $T\mp1$ in place of $T$).""")
+rep(r"""its terms $m=1$ are $\frac1\pi\sum_{Y<p\le X}p^{-1/2}\sin(t\log p)$""",
+    r"""its terms $m=1$ are $-\frac1\pi\sum_{Y<p\le X}p^{-1/2}\sin(t\log p)$""")
+rep(r"""Theorem~\CGref{thm:fixed_cutoff_step} improves the factor $c^2\log\log T$ of Lemma~\CGref{lem:transport} to $1+\log\log\log T$, but it does not give""",
+    r"""Theorem~\CGref{thm:fixed_cutoff_step} replaces the factor $c^2\log\log T$ of Lemma~\CGref{lem:transport} by $1+\log\log\log T$, the better of the two when $c^2\log\log T\ge\log\log\log T$, in particular for fixed $c$; but it does not give""")
+rep(r"""and Theorem~\CGref{thm:fixed_cutoff_step} below improves it to $\ll1+\log\log\log T$ for $c\ge(\log\log T)^{-1/2}$;""",
+    r"""and Theorem~\CGref{thm:fixed_cutoff_step} below gives $\ll1+\log\log\log T$ for $c\ge(\log\log T)^{-1/2}$, the better bound for fixed $c$;""")
+rep(r"""In particular, for every fixed $0<c\le\frac12$ the one-step clock $\tau_k^{T^c}$ has mean-square error""",
+    r"""In particular, for every fixed $0<c\le\frac12$ and $T\ge T_0(c)$ the one-step clock $\tau_k^{T^c}$ has mean-square error""")
+rep(r"""then (a)--(c) of Theorem~\CGref{thm:regularized_clock} hold for these points with $(1+\log(1/c))^2$ replaced by $(1+\log(1/c))^2+\eta_{\rm reg}$ in \CGeqref{eq:regularized_main}, \CGeqref{eq:regularized_tails} and (c), and (d) holds unchanged.""",
+    r"""then (a)--(d) of Theorem~\CGref{thm:regularized_clock} hold for these points, with $(1+\log(1/c))^2$ replaced by $(1+\log(1/c))^2+\eta_{\rm reg}$ in the fourth-moment bounds and in \CGeqref{eq:regularized_tails}, and $1+\log(1/c)$ by $1+\log(1/c)+\sqrt{\eta_{\rm reg}}$ in the second-moment bound; since $\eta_{\rm reg}\le1$, all of them hold with $C$ replaced by $2C$.""")
+rep(r"""$\mathcal K_T$, $\mathcal I_T^\tau$ & piecewise linear functions on the mesh with slopes in $[\frac12\Lambda_T,2\Lambda_T]$; the clock window $\{k:T\le\tau_k<2T\}$\\""",
+    r"""$\mathcal K_T$ & piecewise linear functions on the mesh with slopes in $[\frac12\Lambda_T,2\Lambda_T]$ (Section~\CGref{sec:regularized})\\""")
+rep(r"""$E$, $E_*$, $\eta_{\rm reg}$, $B_{\rm reg}$ & objective of the convex program, its minimum, tolerance, dual lower bound (Proposition~\CGref{prop:tolerance})\\""",
+    r"""$E(\mathbf v)$, $E_*$, $\eta_{\rm reg}$, $B_{\rm reg}$, $\mathsf G$, $A_{\rm reg}$ & objective of the convex program, its minimum, tolerance, dual lower bound, mass matrix, convexity constant: local to Proposition~\CGref{prop:tolerance}\\""")
+rep(r"""\mathbf r&=\nabla E(\mathbf v)+\mathsf D^{\mathsf T}(\boldsymbol\mu_+-\boldsymbol\mu_-),\qquad A=\frac{\mathsf h_T^2}{108\,|\mathsf J_T|},\\
+B_{\rm reg}&=\mathscr L(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)-\frac3{4^{4/3}}A^{-1/3}\|\mathbf r\|_2^{4/3},""",
+    r"""\mathbf r&=\nabla E(\mathbf v)+\mathsf D^{\mathsf T}(\boldsymbol\mu_+-\boldsymbol\mu_-),\qquad A_{\rm reg}=\frac{\mathsf h_T^2}{108\,|\mathsf J_T|},\\
+B_{\rm reg}&=\mathscr L(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)-\frac3{4^{4/3}}A_{\rm reg}^{-1/3}\|\mathbf r\|_2^{4/3},""")
+rep(r"""with the tridiagonal mass matrix $\mathsf M$ of the hat functions, whose diagonal entries are $\frac23\mathsf h_T$ ($\frac13\mathsf h_T$ at the two ends) and whose off-diagonal entries are $\frac16\mathsf h_T$; Gershgorin's theorem gives $\lambda_{\min}(\mathsf M)\ge\frac16\mathsf h_T$. Hence $\frac13\int P_{\mathbf d}^4\ge A\|\mathbf d\|_2^4$. The constraint terms of $\mathscr L$ are linear in $\mathbf v$, so $\mathscr L(\mathbf v+\mathbf d,\boldsymbol\mu_\pm)\ge\mathscr L(\mathbf v,\boldsymbol\mu_\pm)+\mathbf r^{\mathsf T}\mathbf d+A\|\mathbf d\|_2^4\ge\mathscr L(\mathbf v,\boldsymbol\mu_\pm)-\frac3{4^{4/3}}A^{-1/3}\|\mathbf r\|_2^{4/3}=B_{\rm reg}$ for every $\mathbf d$, by minimizing $-\|\mathbf r\|_2s+As^4$ over $s\ge0$.""",
+    r"""with the tridiagonal mass matrix $\mathsf G$ of the hat functions, whose diagonal entries are $\frac23\mathsf h_T$ ($\frac13\mathsf h_T$ at the two ends) and whose off-diagonal entries are $\frac16\mathsf h_T$; Gershgorin's theorem gives $\lambda_{\min}(\mathsf G)\ge\frac16\mathsf h_T$. Hence $\frac13\int P_{\mathbf d}^4\ge A_{\rm reg}\|\mathbf d\|_2^4$. The constraint terms of $\mathscr L$ are linear in $\mathbf v$, so $\mathscr L(\mathbf v+\mathbf d,\boldsymbol\mu_\pm)\ge\mathscr L(\mathbf v,\boldsymbol\mu_\pm)+\mathbf r^{\mathsf T}\mathbf d+A_{\rm reg}\|\mathbf d\|_2^4\ge\mathscr L(\mathbf v,\boldsymbol\mu_\pm)-\frac3{4^{4/3}}A_{\rm reg}^{-1/3}\|\mathbf r\|_2^{4/3}=B_{\rm reg}$ for every $\mathbf d$, by minimizing $-\|\mathbf r\|_2s+A_{\rm reg}s^4$ over $s\ge0$.""")
+rep(r"""and $\int_{\mathsf J_T}P_{\mathbf d}^2=\mathbf d^{\mathsf T}\mathsf M\mathbf d$""", r"""and $\int_{\mathsf J_T}P_{\mathbf d}^2=\mathbf d^{\mathsf T}\mathsf G\mathbf d$""")
+rep(r"""Section~\CGref{sec:conclusions} lists what is open.""", r"""Section~\CGref{sec:conclusions} summarizes the results and their scope.""")
+rep(r"""after $\log^*T+O(1)$ steps the error is $O(1)$ mean spacings, using no ordinate; with a fixed cutoff exponent the one-step clock has error $\ll(1+\log\log\log T)/\log^2T$ (Theorem~\CGref{thm:fixed_cutoff_step}).""",
+    r"""after $\log^*T+O(1)$ steps the error is $O(1)$ mean spacings, using no ordinate.""")
+rep(r"""constants in the $O$-terms of Theorems B--E are absolute but not computed, and the same holds for $T_0$;""",
+    r"""constants in the $O$-terms of Theorems B, D, D$'$ and D$''$ are absolute but not computed, and the same holds for $T_0$;""")
+rep(r"""Theorems B, D and D$'$ are asymptotic statements in mean square (in fourth mean for D$'$) over the zeros with $T<\gamma_k\le2T$;""",
+    r"""Theorems B, D, D$'$ and D$''$ are asymptotic statements in mean square (in fourth mean for D$'$) over the zeros with $T<\gamma_k\le2T$, and for D$'$ also over the window $T\le\tau_k<2T$;""")
+rep(r"""with $h_j\wedge1=\min(h_j,1)$ and $(h_j\wedge1)\log(4T)+3\le8j+3$""", r"""with $h_j\le1$ and $h_j\log(4T)+3\le8j+3$""")
+
+rep(r"""The available transport estimate, Lemma~\CGref{lem:transport}, does not establish this boundedness.""",
+    r"""The available transport estimates, Lemma~\CGref{lem:transport} and Theorem~\CGref{thm:fixed_cutoff_step}, do not establish this boundedness.""")
+
 TEX.write_text(head + sep + body)
 print('v11 patch applied')
