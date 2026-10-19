@@ -127,3 +127,9 @@
 - Same integral (eq:envelope_formula), profile = lower convex hull in (sigma, mu) of mu(l-k) <= k over: Bourgain (13/84,55/84); Trudgian-Yang Lemma 1.1 pairs (4742/38463,...), (18/199,...), (2779/38033,...), (715/10238,...); A-process images; Heath-Brown 2017 pairs (TY23 (1.9)), m <= 3000; optionally Tao-Trudgian-Yang 2025 Thm 20 pairs.
 - Results (certified upper ends): v7 profile 2piC = 0.6083073; TY23 hull 2piC <= 0.6061342; + TTY25 pairs 2piC <= 0.6060224; Bourgain + Heath-Brown chain alone 0.6132885 (worse). Ceiling of the method under Lindelof: 2piC = 0.4940172.
 - To verify before use: Heath-Brown 2017 pairs in the original (only via TY23 (1.9) so far); publication status of TY23 (to appear in Math. Comp. per TTY25) and TTY25 (arXiv).
+
+## 2026-10-19 [claude] pending v8: external review + disc scan
+- Added pendiente_siguiente_version/revision_externa_v8_2026-10-19.md (6 points); all checked against
+  v7 source and confirmed; listed in NOTAS_v8.md. No manuscript version created.
+- envelope/envelope_disc_scan.{py,txt}: optimum of the Backlund disc is v7's corner (1,1);
+  Lindelof value 0.494 is a floor of the one-disc method (LH gives S = o(log t), Titchmarsh 13.6(A)).
