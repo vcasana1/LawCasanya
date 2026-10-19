@@ -50,3 +50,9 @@
 
 ## 2026-10-18 18:00 UTC — [claude] — pending list for the next version
 - work/notes/opc_pendiente_siguiente_version.md: explicit Lagrange–Bürmann formula for the corrected points, k-dependent separation criterion with corrected Gram points, envelope constant with best mu(sigma), wording/status corrections, Gram-law failures on 6 blocks and their location at close pairs. No version until the author orders it.
+
+## 2026-10-19 — [claude] — Paper I (analytic) v1, ordered by the author
+- New self-contained paper from v17, analytic results only: A (defect identity), B (prime-information threshold), C (exact accounting), D (computable clock, log log log T; iteration to O(1) in log*T+O(1) steps), E (envelope, as an asymptotic bound). Removed: certified roots/continuation (F), walk (G), separation (H), prime responses, conditional law, heuristic model, all computations with the zeros, and the explicit-S proposition (no committed interval-arithmetic program).
+- Theorem E restated for J applications of the A-process: C_7 = 0.0968160063…, C_30 = 0.0968151142790…, limsup|τ_k−γ_k| ≤ 0.6083073… < 0.60831; compared with Trudgian's asymptotic 0.1013 (arXiv:1010.4596, §5, checked in source); Trudgian–Yang (arXiv:2306.05599) cited for better μ(σ) profiles, not evaluated.
+- Files: work/paper1/manuscript/prime_corrected_clock_v1.{tex,txt,pdf} (43 pp.), front_p1.tex, back_p1.tex; work/paper1/code/opc_envelope_iterations_p1.py (+ opc_envelope_coefficient_v14.py), outputs/envelope_iterations_p1.{json,txt}; tools/assemble_p1.py, build_p1.sh, make_tips.py, replace_tips.py; zip work/paper1/prime_corrected_clock_v1.zip.
+- Open: novelty of B at the ordinates vs Fujii (not read in the original); explicit constants of the iteration (Question q:explicit).

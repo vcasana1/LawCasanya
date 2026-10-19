@@ -1,0 +1,120 @@
+\begin{document}
+
+\begin{frontmatter}
+\title{A computable prime-corrected Riemann--von Mangoldt clock: an exact defect identity, the prime-information threshold, and the location of the zeros of the Riemann zeta function in mean square}
+\author{Rotkiv Ayn\"asac}
+
+\begin{abstract}
+Let $\gamma_k$ be the ordinates of the nontrivial zeros of the Riemann zeta function, counted with multiplicity, and let $\tau_k$ be the midpoint Riemann--von Mangoldt clock, $\NO(\tau_k)=k-\frac12$. The clock is close to the zeros in height, but the ordinal displacement $s_k=k-\frac12-\NO(\gamma_k)$ has mean square $\frac1{2\pi^2}\log\log T$ (Selberg, Korolev): the clock misplaces almost every zero by an unbounded number of positions. We prove, unconditionally: (A) an exact identity that turns sums of $g(k-\frac12-F(\gamma_k))$ over consecutive ordinates into $dF$-integrals of $g(N-F)$, for every continuous $g$ and every $C^1$ model $F$ of the counting function $N$; (B) for the clock equation corrected by the Euler phase $S_X$ of the primes $p\le X$, the mean square of the ordinal defect at the ordinates is $\frac1{2\pi^2}\log\frac{\log T}{\log X}+O(1+\sqrt{\log\frac{\log T}{\log X}})$ uniformly for $2\le X\le T^{1/2}$, so that it is bounded if and only if $\log X\asymp\log T$; (C) an exact finite-height accounting of the gain of the one-step clock $\tau_k-S_X(\tau_k)/\lL(\tau_k)$, $\lL(t)=\frac1{2\pi}\log\frac t{2\pi}$; (D) with $X=T^{1/\sqrt{\log\log T}}$ the one-step clock, computed from $\tau_k$ and the primes alone, has mean-square error $(\log\log\log T+O(\sqrt{\log\log\log T}))/\log^2T$ in height, against $(2+o(1))\log\log T/\log^2T$ for the clock, and the Newton step iterated $\log^*T+O(1)$ times, with cutoffs depending only on $T$, locates the ordinates with a mean-square error of $O(1)$ mean spacings; the proof rests on an exact moment recursion, on Fujii's moments of $S(t+h)-S(t)$, and on a sampling inequality for maximal functions at points of bounded multiplicity; (E) $\limsup_k|\tau_k-\gamma_k|=2\pi\limsup_t|S(t)|/\log t$, and Backlund's method with the exponent profile generated from Bourgain's exponent pair gives $\limsup_k|\tau_k-\gamma_k|<0.60831$. No zero of the Riemann zeta function is used in the construction of the corrected clocks.
+\end{abstract}
+
+\begin{keyword}
+Riemann zeta function \sep zeros of the Riemann zeta function \sep Riemann--von Mangoldt formula \sep argument of the Riemann zeta function \sep truncated Euler product \sep Newton iteration
+\MSC[2020] 11M06 \sep 11M26
+\end{keyword}
+\end{frontmatter}
+
+\tableofcontents
+
+%======================================================================
+\section{Introduction}
+\label{sec:introduction}
+
+\subsection{The Riemann--von Mangoldt clock and the ordinates}
+\label{subsec:clock_intro}
+Let $\zeta(s)$ be the Riemann zeta function, let $N(T)$ be the number of its nontrivial zeros $\rho=\beta+i\gamma$ with $0<\gamma\le T$, counted with multiplicity, and list their ordinates as $\gamma_1\le\gamma_2\le\cdots$, with multiplicity. Away from ordinates the Riemann--von Mangoldt formula reads \cite[\S\S9.3--9.4]{Titchmarsh1986}
+\begin{equation}
+ N(T)=\NO(T)+\frac1\pi\arg\zeta\Bigl(\frac12+iT\Bigr)+O\Bigl(\frac1T\Bigr),\qquad \NO(T)=\frac{T}{2\pi}\log\frac{T}{2\pi e}+\frac78,
+ \label{eq:intro_rvm}
+\end{equation}
+the argument of the Riemann zeta function being obtained by continuous variation along $2\to2+iT\to\frac12+iT$ from $\arg\zeta(2)=0$. The \emph{midpoint Riemann--von Mangoldt clock} (RvM clock) is the sequence $\tau_k$ defined by
+\begin{equation}
+ \NO(\tau_k)=k-\frac12,\qquad \tau_k=\frac{2\pi\,(k-\frac{11}8)}{W_0\bigl((k-\frac{11}8)/e\bigr)}\qquad(k\ge1),
+ \label{eq:intro_clock}
+\end{equation}
+where $W_0$ is the principal branch of the Lambert function; the Lambert form appears in the work of Fran\c{c}a and LeClair \cite{FrancaLeClair2014,FrancaLeClair2015}. The clock is explicit and lies, in phase, half way between consecutive Gram points. This paper studies its relation to the ordinates $\gamma_k$: in which sense the clock describes them, and how much prime information has to be added to it. The relation is measured in units of zeros by the ordinal displacement and by its prime-corrected version, the \emph{ordinal defect},
+\begin{equation}
+ s_k=k-\frac12-\NO(\gamma_k),\qquad u_k(X)=s_k-S_X(\gamma_k),\qquad S_X(t)=-\frac1\pi\sum_{p\le X}\arg\bigl(1-p^{-1/2-it}\bigr).
+ \label{eq:intro_defect}
+\end{equation}
+$u_k(X)$ measures how well the true ordinate satisfies the corrected clock equation $\NO(t)+S_X(t)=k-\frac12$; $|u_k(X)|<\frac12$ means that the corrected count assigns to $\gamma_k$ its correct index.
+
+\subsection{The approximation of the zeros by the clock and the primes}
+\label{subsec:program}
+The approximation studied here starts from the explicit numbers $\tau_k$ and corrects them with the Euler phase of finitely many primes and prime powers, by one or several Newton steps for the corrected equation $\NO(t)+S_X(t)=k-\frac12$ from $t=\tau_k$, with cutoffs that depend only on the height. Every corrected point is a closed expression in $k$, $\tau_k$ and the primes: the construction evaluates neither the Riemann zeta function nor any of its zeros. The ordinates $\gamma_k$ enter only in the statements, to measure the error. Theorems A and C are exact identities; Theorems B and D are asymptotic statements in mean square over the zeros with $T<\gamma_k\le2T$; Theorem E concerns the worst zero.
+
+\subsection{What is known and only used}
+\label{subsec:known_intro}
+The following facts are quoted with references in Section~\CGref{sec:known_results} and are not reproved.
+\begin{itemize}[leftmargin=1.6em]
+\item The displacement $\delta_k=\tau_k-\gamma_k$ is bounded, and $\limsup_k|\delta_k|\le2\pi\cdot0.10076=0.6331\ldots$, from the explicit bound of Bellotti and Wong for $N(T)-\frac T{2\pi}\log\frac T{2\pi e}$ \cite{BellottiWong2025}, which improves those of Trudgian \cite{Trudgian2014} and of Hasanalizade, Shen and Wong \cite{HasanalizadeShenWong2022}. For large $T$ only, Trudgian proved $|S(T)|\le0.1013\log T$ with Huxley's exponent \cite{Trudgian2010}, which gives $\limsup_k|\delta_k|\le0.6365$.
+\item The ordinal displacement $s_k$ differs by less than $1$ from minus the integer displacement of $\gamma_k$ with respect to the Gram intervals, whose moments are those of a normal variable with variance $\frac1{2\pi^2}\log\log T$, by Selberg's formulae as proved by Korolev \cite{Korolev2012,Korolev2011}. Hence $\langle s_k^2\rangle\sim\frac1{2\pi^2}\log\log T$ and $\langle\delta_k^2\rangle\sim2\log\log T/\log^2T$ over $T<\gamma_k\le2T$.
+\item In $t$-mean, $S(t)=\frac1\pi\arg\zeta(\frac12+it)$ is asymptotically normal (Selberg \cite{Selberg1946a}, Tsang \cite{Tsang1984}), and Selberg's approximation of $S(t)$ by prime sums up to a small power of $T$ holds in $L^{2k}(T,2T)$ \cite{Selberg1946a,Selberg1946b}, in the form proved by Fujii \cite[\S3]{Fujii1974}, together with Fujii's moments of $S(t+h)-S(t)$. These concern $t$-averages, not the ordinates.
+\item LeClair \cite[Sect.~3]{LeClair2021} truncates the Euler product at a number of primes that tends to infinity with the height, and the truncated product is used in the equation of the individual zero with a fixed number of primes ($10^6$ for the $10^{100}$-th zero, \cite[\S XXI, Note added 7]{FrancaLeClair2024}). No error estimate in mean square over the zeros is given there.
+\end{itemize}
+
+\subsection{What this paper adds}
+\label{subsec:main_results}
+Let $\IT=\{k:T<\gamma_k\le2T\}$ and let $\langle\cdot\rangle_{\IT}$ be the mean over $\IT$. Theorems A--E are unconditional. We have not found Theorems A--D in the literature; Theorem E is an application of Backlund's method in the form of \cite{Trudgian2010,Trudgian2014,BellottiWong2025} to exponents of \cite{Bourgain2017,Ivic1985}. Absence from a search is weak evidence and does not establish priority.
+
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2.2em]
+\item \textbf{Exact defect identity} (Theorems~\CGref{thm:identity_general} and \CGref{thm:identity_g}). For every real $C^1$ model $F$ of the counting function, every continuous $g$ with primitive $\mathcal G$, and $u_k=k-\frac12-F(\gamma_k)$, the sum of $\mathcal G(u_k+\frac12)-\mathcal G(u_k-\frac12)$ over consecutive ordinates equals $\int g(N-F)\,dF$ up to two boundary terms. For $g(x)=x^{2j}$ this gives $\sum u_k^{2j}$ ($\frac1{12}$ per zero when $j=1$); for $g(x)=e^{i\xi x}$ it identifies the characteristic function of the empirical law of $u_k$ with a $t$-integral. No hypothesis on the zeros and no monotonicity of $F$ is used.
+\item \textbf{How much prime information the clock needs} (Theorems~\CGref{thm:main} and \CGref{thm:variable_cutoff}). Uniformly for $2\le X\le T^{1/2}$, with $c=\log X/\log T$,
+\begin{equation}
+ \frac1{\#\IT}\sum_{k\in\IT}u_k(X)^2=\frac1{2\pi^2}\log\frac1c+O\Bigl(1+\sqrt{\log(1/c)}\Bigr),
+ \label{eq:intro_main}
+\end{equation}
+and the same holds with the cutoff $X_k=\max(2,(\tau_k/2\pi)^c)$ varying with the index. A fixed set of primes leaves a mean-square defect $\sim(2\pi^2)^{-1}\log\log T$; primes up to $T^c$ keep it bounded; boundedness holds if and only if $\liminf\log X/\log T>0$ (Corollary~\CGref{cor:dichotomy}). Thus the growth of the number of primes asked for in \cite{LeClair2021} is necessary but not sufficient.
+\item \textbf{Exact accounting for the computable clock} (Theorem~\CGref{thm:accounting}). For the one-step clock $\tau_k^X=\tau_k-S_X(\tau_k)/\lL(\tau_k)$, the mean-square gain over any finite set of zeros equals a diagonal prime-response term minus a cross term, with no independence assumption; the residual of $\tau_k^X$ differs from $u_k(X)$ by an explicit transport term and by the exact nonnegative term $\chi_k=\frac{\gamma_k}{2\pi}(\frac{\tau_k}{\gamma_k}-1-\log\frac{\tau_k}{\gamma_k})$.
+\item \textbf{A computable clock that approaches the zeros} (Theorems~\CGref{thm:computable_clock}, \CGref{thm:second_step} and \CGref{thm:uniform_iteration}). For $2\le X\le T^{1/2}$ the residual $r_k(X)=\lL(\tau_k)(\tau_k^X-\gamma_k)$ satisfies $\langle r_k(X)^2\rangle_{\IT}=\frac1{2\pi^2}\log\frac1c+O((1+\sqrt{\log(1/c)})(1+c^2\log\log T))$; the term $c^2\log\log T$ is the transport between $\tau_k$ and $\gamma_k$ (Lemma~\CGref{lem:transport}). With $X=T^{1/\sqrt{\log\log T}}$, or with the cutoff $\tau_k^{1/\sqrt{\log\log\tau_k}}$ read off the clock itself,
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}\bigl(\tau_k^X-\gamma_k\bigr)^2=\frac{\log\log\log T+O(\sqrt{\log\log\log T})}{\log^2T}.
+\label{eq:intro_D}
+\end{equation}
+A second Newton step from $\tau_k^X$, with cutoff $T^{1/\sqrt{\log\log\log T}}$, has mean-square error $(\log\log\log\log T+O(\sqrt{\log\log\log\log T}))/\log^2T$ (Theorem~\CGref{thm:second_step}), and the $m$-th step, with the cutoffs \CGeqref{eq:cutoff_law} depending only on $T$, has error $(H_m+O(\sqrt{H_m}+1))/\log^2T$ with absolute constants, where $H_m$ is an iterated logarithm of $T$ (Theorem~\CGref{thm:uniform_iteration}); after $m^*=\log^*T+O(1)$ steps the error is $O(1)/\log^2T$, that is, $O(1)$ mean spacings in mean square. The proof rests on an exact moment recursion, on a multiplicity bound for the corrected clock points of every level (Theorem~\CGref{thm:multiplicity_all}, from Fujii's moments of $S(t+h)-S(t)$), and on a sampling inequality for maximal functions at points of bounded multiplicity. The second clock preserves the local order and spacing of the RvM clock outside a proportion $O(H_1^{-2})$ of the indices (Proposition~\CGref{prop:deformation}).
+\item \textbf{The pointwise envelope} (Proposition~\CGref{prop:envelope_equivalence} and Theorem~\CGref{thm:envelope}). $\limsup_k|\tau_k-\gamma_k|=2\pi\limsup_{t\to\infty}|S(t)|/\log t$, also for the corrected clocks with $X\le(\log T)^{2-\varepsilon}$; and for every exponent profile $\mathfrak e$ of the Riemann zeta function on $[\frac12,1]$,
+\begin{equation}
+\limsup_{k\to\infty}|\tau_k-\gamma_k|\le\frac1{\log2}\int_0^1\frac{\mathfrak e(\sigma)\,d\sigma}{\sqrt{\sigma(2-\sigma)}},
+\label{eq:intro_E}
+\end{equation}
+$\mathfrak e$ being extended to $[0,\frac12)$ by the functional equation. The profile generated from Bourgain's exponent pair by van der Corput's $A$-process gives $\limsup_k|\tau_k-\gamma_k|<0.60831$, that is $\limsup_t|S(t)|/\log t<0.096816$, against $0.1013$ in \cite{Trudgian2010} (Remark~\CGref{rem:envelope_inputs}). This is an asymptotic bound and does not replace the explicit bounds of \cite{BellottiWong2025}, valid for all $T\ge e$.
+\end{enumerate}
+
+\paragraph{Main finding} The Euler phase of the primes up to a power of the height turns the clock from an approximation in height into an approximation in position. For the bare clock the error in units of zeros, $s_k=\lL(\xi_k)\delta_k$, has mean square $\sim\frac1{2\pi^2}\log\log T$. With $X=T^c$ the error in units of zeros of the corrected clock equation has bounded mean square (Theorem B), so outside a proportion $\ll(1+\log(1/c))/A^2$ of the zeros it is at most $A$; and the computable clock, which uses only $\tau_k$ and the primes, keeps the gain up to the transport between $\tau_k$ and $\gamma_k$ (Theorem D). With $X=T^{1/\sqrt{\log\log T}}$,
+\begin{equation}
+\frac{\langle(\tau_k^X-\gamma_k)^2\rangle_{\IT}}{\langle(\tau_k-\gamma_k)^2\rangle_{\IT}}\sim\frac{\log\log\log T}{2\log\log T}\longrightarrow0,
+\label{eq:intro_ratio}
+\end{equation}
+and in units of zeros the mean square drops from $\frac1{2\pi^2}\log\log T$ to $\frac1{4\pi^2}\log\log\log T$; iterating the Newton step brings it down to $O(1)$. The gain is a statement in mean square; for the worst zero, Proposition~\CGref{prop:envelope_equivalence} shows that no cutoff $X\le(\log T)^{2-\varepsilon}$ changes $\limsup|\tau_k-\gamma_k|$, and the bound \CGeqref{eq:intro_E} comes from the exponents of the Riemann zeta function, not from the primes.
+
+\subsection{Degree of proof}
+\label{subsec:status}
+\emph{Theorem}, \emph{Proposition}, \emph{Lemma} and \emph{Corollary} are proved here unconditionally, from the external results of Section~\CGref{sec:known_results}; \emph{Question} names an open problem. No statement of this paper rests on a computation with the zeros. The only numbers that are not closed expressions are the values of the integral \CGeqref{eq:envelope_formula} for piecewise linear profiles with rational vertices, computed in closed form by the programs of Appendix~\CGref{app:programs}; the constants in the $O$-terms of Theorems B--D are absolute but not computed.
+
+\begin{center}
+\footnotesize
+\begin{longtable}{p{0.40\textwidth}p{0.17\textwidth}p{0.35\textwidth}}
+\caption{Main results: degree of proof and role.}\label{tab:status}\\
+\toprule
+result & status & role\\
+\midrule
+\endfirsthead
+\toprule
+result & status & role\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Theorems~\CGref{thm:identity_general}, \CGref{thm:identity_g} (A) & unconditional & statistics of the errors at the zeros as $t$-integrals\\
+Theorems~\CGref{thm:main}, \CGref{thm:variable_cutoff} (B) & unconditional & bounded error in units of zeros iff $\log X\asymp\log T$\\
+Theorem~\CGref{thm:accounting} (C) & unconditional, exact & finite-height balance of the gain of one correction\\
+Theorems~\CGref{thm:computable_clock}, \CGref{thm:second_step}, \CGref{thm:uniform_iteration} (D) & unconditional & zero-free corrected points with mean-square error $O(1)$ mean spacings\\
+Proposition~\CGref{prop:envelope_equivalence}, Theorem~\CGref{thm:envelope} (E) & unconditional, asymptotic & the worst error of the clock is the extreme size of $S(t)$\\
+Questions~\CGref{q:constant}--\CGref{q:explicit} & open & what remains to be proved\\
+\end{longtable}
+\end{center}
+
+\subsection{Organization}
+Section~\CGref{sec:notation} lists the notation and Section~\CGref{sec:known_results} the external results. Sections~\CGref{sec:identities}--\CGref{sec:computable} prove Theorems A--D, Section~\CGref{sec:iteration} iterates the Newton step uniformly in the number of steps, and Section~\CGref{sec:envelope} proves Theorem E. Section~\CGref{sec:conclusions} lists what is open.
+
+%======================================================================
