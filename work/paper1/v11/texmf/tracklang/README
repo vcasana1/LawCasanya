@@ -1,0 +1,33 @@
+Generic TeX Bundle : tracklang v1.6.8 
+
+Last Modified      : 2026-05-24
+
+Author             : Nicola Talbot  (dickimaw-books.com/contact)
+
+Licence:
+
+This material is subject to the LaTeX Project Public License.
+See http://www.ctan.org/license/lppl1.3 for the details of that license.
+
+Copyright 2014-2026 Nicola Talbot
+
+Description:
+
+The tracklang package is provided for package developers who want a
+simple interface to find out which languages the user has requested
+through packages such as babel and polyglossia.  *This package
+doesn't provide any translations.*  Its purpose is simply to track
+which languages have been requested by the user.
+
+LaTeX usage: \usepackage{tracklang}
+
+TeX usage: \input tracklang
+
+LaTeX code is in tracklang.sty. Generic TeX code is in tracklang.tex.
+
+Related article: "Localisation of TeX documents: tracklang."
+TUGBoat, Volume 37 (2016), No. 3.
+http://www.tug.org/TUGboat/tb37-3/tb117talbot.pdf
+
+See also "Localisation with tracklang.tex
+https://www.dickimaw-books.com/latex/tracklang/

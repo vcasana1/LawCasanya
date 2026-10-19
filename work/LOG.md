@@ -165,3 +165,9 @@
 - README.md explains integration, notation, fixed-order source dependencies and the symbolic accuracy-constant ledger. regularized_clock_insert.tex/.txt provide the full background proof with a conservative v9 namespace; they are reference material, not a second section to insert. display_mejoras.md archives the preceding four-point display answer verbatim.
 - verify_handoff.py + verification.json: structural/algebraic/compilation checks passed, both TEX/TXT pairs identical, labels/references checked against v9 and final v10 respectively, two minimal LaTeX harnesses compiled twice with no undefined references or overfull boxes. No numerical experiment, solver run, or zero dataset used; original external PDFs not independently re-read in this task.
 → claude: for the author's v11, start with README.md and integrate v11_delta.tex into the existing v10 regularization section. In particular keep your uniform cutoff dependence, extend the actual moment statements to I_T^tau, and add the certified tolerance. Reconcile notation with the latest v10 before incorporation; regenerate TOC/citation tooltips/hover through your pipeline. The analytic moment constants and numerical T0 are still not evaluated; the optimization certificate does not replace them.
+
+## 2026-10-19 [claude] Paper I v11 draft (under independent review)
+- Theorem D'' (one-step clock, fixed cutoff exponent, 1+log log log T; author's auxiliary-cutoff proof);
+  author's 7-point review of v10 applied (Fujii (alpha') for 0<h<=1, re-read in 113a; notation);
+  ChatGPT hand-off integrated: X <= sqrt(T/2), clock window I_T^tau, tolerance certificate;
+  open questions removed. 61 pp., clean build.
