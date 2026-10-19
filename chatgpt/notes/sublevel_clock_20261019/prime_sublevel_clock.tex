@@ -1,0 +1,571 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage{booktabs,longtable,enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,backref=page]{hyperref}
+% Standard PDF tooltip widgets, with the same /TU pushbutton mechanism
+% used by pdfcomment. Hyperlinks in the visible reference remain active.
+\newsavebox{\hoverreferencebox}
+\newcounter{hoverreference}
+\newcommand{\pdftooltip}[2]{%
+ \begingroup\leavevmode
+ \sbox{\hoverreferencebox}{#1}%
+ \pdfstringdef\hoverreferencetext{#2}%
+ \pdfannot width \wd\hoverreferencebox
+   height \ht\hoverreferencebox depth \dp\hoverreferencebox {%
+   /Subtype /Widget /TU (\hoverreferencetext)
+   /T (hoverreference \thehoverreference)
+   /C [] /FT /Btn /F 768 /Ff 65536 /H /N /BS << /W 0 >>}%
+ \usebox{\hoverreferencebox}%
+ \endgroup\stepcounter{hoverreference}}
+\hypersetup{pdftitle={An ordered prime clock by sublevel integration},
+ pdfauthor={Rotkiv Aynasac}}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\NO}{N_0}
+\newcommand{\LL}{\mathcal L}
+\newcommand{\Ph}{\mathscr P}
+\newcommand{\Fc}{\mathscr F}
+\newcommand{\Tc}{\mathscr T}
+\newcommand{\Ind}{\mathbf 1}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\hveq}[2]{\pdftooltip{\eqref{#1}}{#2}}
+\newcommand{\hvref}[2]{\pdftooltip{\ref{#1}}{#2}}
+\DeclareMathOperator{\meas}{meas}
+\title{An ordered prime clock by sublevel integration\\
+\large A research note with a deterministic error-transfer inequality}
+\author{Rotkiv Ayn\"asac}
+\date{19 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+A continuous function assembled from the Riemann--von Mangoldt main term and finite Euler phases defines an ordered clock by the measure of its sublevel sets. The construction uses primes and the uncorrected clock alone. It needs no root selection, Newton recurrence, Gaussian model, or observations of zeros. An elementary inequality transfers a fourth moment of a counting-function approximation, together with a third moment of consecutive gaps, to a quadratic error for its sublevel clock. Standard unconditional estimates then give mean-square height error \(O(\log^{-2}T)\). The number of primes is fixed by the fourth-moment proof: the largest integer whose square is at most the dyadic height. The result is asymptotic; it supplies neither a numerical error constant at the available data heights nor individual recovery of every ordinate. No empirical performance or novelty claim is made.
+\end{abstract}
+\tableofcontents
+
+\section{Definitions and the analytic choice of prime budget}
+\label{sec:definition}
+Write the nontrivial zeros of the Riemann zeta function as
+\(\rho_k=\beta_k+i\gamma_k\), with positive ordinates in nondecreasing order,
+counted with multiplicity. No hypothesis on \(\beta_k\) or on multiplicities
+is imposed. Let \(N(t)=\#\{k:0<\gamma_k\le t\}\).
+Put, for \(t>0\),
+\begin{equation}
+ \NO(t)=\frac{t}{2\pi}\left(\log\frac{t}{2\pi}-1\right)+\frac78,
+ \qquad
+ \LL(t)=\NO'(t)=\frac{1}{2\pi}\log\frac{t}{2\pi}.
+ \label{eq:clock}
+\end{equation}
+The RvM clock \(\tau_k>2\pi\) satisfies
+\(\NO(\tau_k)=k-\tfrac12\). The value at zero is defined by continuity,
+\(\NO(0)=7/8\).
+
+Let \(p_1<p_2<\cdots\) be the primes. For an integer \(m\ge0\) define the
+finite-prime phase
+\begin{align}
+ \Ph_m(t)
+ &=-\frac1\pi\sum_{\nu=1}^{m}\sum_{r\ge1}
+       \frac{\sin(rt\log p_\nu)}{r p_\nu^{r/2}} \notag\\
+ &=-\frac1\pi\sum_{\nu=1}^{m}
+ \arctan\!\left(
+  \frac{p_\nu^{-1/2}\sin(t\log p_\nu)}
+       {1-p_\nu^{-1/2}\cos(t\log p_\nu)}
+ \right).
+ \label{eq:primephase}
+\end{align}
+Here \(\Ph_0=0\), and \(\arctan\) has values in
+\((-\pi/2,\pi/2)\). Every denominator in \hveq{eq:primephase}
+{Finite Euler phase; each arctangent denominator is strictly positive.}
+is positive. The displayed formula has no argument-branch ambiguity.
+The series over powers converges absolutely and locally uniformly.
+In particular
+\begin{equation}
+ |\Ph_m(t)|\le \frac14 m .
+ \label{eq:phasebound}
+\end{equation}
+Indeed each local argument has absolute value at most
+\(\arcsin(p_\nu^{-1/2})\le\pi/4\).
+
+For \(j\in\Z\), set
+\begin{equation}
+ m_j=\max\{m\in\Z_{\ge0}:m^2\le2^j\}.
+ \label{eq:budget}
+\end{equation}
+For \(2^j\le t\le2^{j+1}\), let
+\begin{equation}
+ \alpha_j(t)=\frac{t-2^j}{2^j},\qquad
+ \Phi(t)=(1-\alpha_j(t))\Ph_{m_j}(t)
+               +\alpha_j(t)\Ph_{m_{j+1}}(t),\qquad
+ \Fc(t)=\NO(t)+\Phi(t).
+ \label{eq:interpolation}
+\end{equation}
+The two endpoint definitions agree, so that \(\Fc\) is continuous on
+\((0,\infty)\); it extends continuously to zero. This affine interpolation
+is imposed before evaluation at zeros and ensures continuity across the
+dyadic boundaries. It is not selected by a data comparison.
+
+The square in \hveq{eq:budget}
+{Prime budget: the largest nonnegative integer whose square is at most the dyadic height.}
+comes from applying a Dirichlet-polynomial second-moment theorem to the
+\emph{square} of a prime polynomial when bounding its fourth moment.
+The weighted off-diagonal contribution is bounded by a constant times
+\(m_j^2\); requiring \(m_j^2\le2^j\) keeps it of the same order as the
+integration interval. This is a sufficient analytic budget, not a claim
+that larger budgets are impossible or that this choice is optimal.
+
+Define a single map of the uncorrected clock by
+\begin{equation}
+ \boxed{\quad
+ \Tc(\tau)=\int_0^\infty
+        \Ind_{\{\Fc(t)<\NO(\tau)\}}\,dt,\qquad
+ x_k=\Tc(\tau_k).
+ \quad}
+ \label{eq:construction}
+\end{equation}
+The integration variable \(t\) is independent of the input \(\tau\).
+No \(\gamma_k\), value of \(\zeta\), or statistical fit occurs in
+\hveq{eq:construction}
+{The corrected point is the measure of a prime-phase sublevel set.}.
+The method retains every term of the finite Euler factors. It does not
+select a quotient mode, a product mode, or a pair of primes.
+
+\section{Well-defined points and strict order}
+\label{sec:order}
+\begin{proposition}\label{prop:ordered}
+The integral defining \(x_k\) is finite for every \(k\ge1\), and
+\(0<x_k<x_{k+1}\). If \(\tau\ge2\pi e\), the integral in
+\eqref{eq:construction} can be truncated exactly at \(2\tau\).
+Its integrand then uses at most \(\lfloor2\sqrt{\tau}\rfloor\) primes.
+\end{proposition}
+\begin{proof}
+By \eqref{eq:phasebound} and \eqref{eq:budget},
+\begin{equation}
+ |\Phi(t)|\le\frac14\sqrt{2t}.
+ \label{eq:globalphasebound}
+\end{equation}
+Thus \(\Fc(t)\to+\infty\) and every sublevel set at a fixed level is
+bounded. On the block containing \(2\pi\) one has \(m_2=m_3=2\), whence
+\[
+ \Fc(2\pi)\le-\frac18+\frac12=\frac38<\frac12.
+\]
+For each \(k\ge1\), continuity and unboundedness imply that the set
+\(\{t:k-\tfrac12<\Fc(t)<k+\tfrac12\}\) contains a nonempty open interval.
+Consequently
+\[
+ x_{k+1}-x_k
+ =\meas\{t:k-\tfrac12\le\Fc(t)<k+\tfrac12\}>0.
+\]
+The same argument below the first level gives \(x_1>0\).
+
+For \(\tau\ge2\pi e\) and \(t\ge2\tau\), monotonicity of \(\LL\) gives
+\[
+ \NO(t)-\NO(\tau)\ge(t-\tau)\LL(\tau)
+       \ge \frac{t}{4\pi}>\frac{\sqrt{2t}}4,
+\]
+because \(t\ge4\pi e>2\pi^2\). Equation \eqref{eq:globalphasebound}
+therefore gives \(\Fc(t)>\NO(\tau)\). For \(t\le2\tau\),
+the largest budget used in \eqref{eq:interpolation} has square at most
+\(4\tau\).
+\end{proof}
+\begin{proposition}[A finite local correction]\label{prop:localintegral}
+Let \(\tau\ge2\pi e\), put
+\[
+ h(\tau)=\frac{\sqrt{\tau}}{2\LL(\tau/2)},
+\]
+and suppose \(h(\tau)\le\tau/2\). Then the same map is given exactly by
+\begin{equation}
+ \Tc(\tau)=\tau-h(\tau)+
+ \int_{\tau-h(\tau)}^{\tau+h(\tau)}
+       \Ind_{\{\Fc(t)<\NO(\tau)\}}\,dt .
+ \label{eq:localintegral}
+\end{equation}
+The integration radius is fixed by the uniform phase bound, not by zeros.
+\end{proposition}
+\begin{proof}
+On \([\tau/2,2\tau]\), \(|\Phi(t)|\le\sqrt{\tau}/2\), whereas
+\[
+ |\NO(t)-\NO(\tau)|\ge
+       \LL(\tau/2)|t-\tau|.
+\]
+Thus the sublevel indicator agrees with \(\Ind_{\{t<\tau\}}\) outside
+the stated local interval within \([\tau/2,2\tau]\).
+For \(2\pi\le t\le\tau/2\), use
+\(\NO(t)\le\NO(\tau/2)\), \(|\Phi(t)|\le\sqrt{\tau}/4\), and
+\[
+ \NO(\tau)-\NO(\tau/2)
+ \ge\frac{\tau}{2}\LL(\tau/2)\ge\frac{\sqrt{\tau}}2 .
+\]
+For \(0<t<2\pi\), one has \(\NO(t)\le7/8\) and
+\(|\Phi(t)|\le1/2\); this is also below \(\NO(\tau)\) under the
+stated condition. Indeed that condition implies
+\(\sqrt{\tau}\LL(\tau/2)\ge1\); for \(\tau\le4\pi e\) the left side
+is at most \(\sqrt{4\pi e}/(2\pi)<1\), so \(\tau>4\pi e\), and
+\(\NO(\tau)>\NO(4\pi e)=2e\log 2+7/8>11/8\).
+For \(t\ge2\tau\), use Proposition~\ref{prop:ordered}.
+Integration gives \eqref{eq:localintegral}.
+\end{proof}
+\begin{remark}
+This proves strict order without a derivative-sign assumption on \(\Fc\).
+The integral includes all components of a sublevel set. Choosing a root
+of \(\Fc(t)=k-\tfrac12\) is not part of the definition.
+Finite-interval quadrature may be expensive; no computational-speed
+advantage is asserted.
+\end{remark}
+
+\section{A deterministic transfer inequality}
+\label{sec:transfer}
+The next theorem is independent of zeta. It is the part of the argument
+that converts a counting approximation into an approximation of
+individual, ordered locations in mean square.
+
+\begin{lemma}[A finite discrete maximal inequality]\label{lem:discrete}
+For a finite nonnegative sequence \(D=(D_\ell)\), extended by zero to
+\(\Z\), let
+\[
+ (\mathcal MD)_\ell=
+ \sup_{\substack{I\subset\Z\ {\rm finite\ interval}\\\ell\in I}}
+        \frac1{\# I}\sum_{r\in I}D_r.
+\]
+Then
+\begin{equation}
+ \sum_{\ell\in\Z}(\mathcal MD)_\ell^3
+       \le36\sum_{\ell\in\Z}D_\ell^3 .
+ \label{eq:maximal}
+\end{equation}
+\end{lemma}
+\begin{proof}
+The discrete interval covering argument gives
+\(\#\{\mathcal MD>\lambda\}\le3\lambda^{-1}\sum D_\ell\):
+from a finite family of intervals with average above \(\lambda\), choose
+disjoint intervals greedily in decreasing order of length; every
+discarded interval is contained in the threefold enlargement of an
+intersecting chosen interval. Finite truncations, followed by a limit,
+cover the full level set.
+
+Split \(D=D^{\rm low}+D^{\rm high}\), at height \(\lambda/2\).
+Since \(\mathcal MD^{\rm low}\le\lambda/2\),
+\[
+ \#\{\mathcal MD>\lambda\}
+ \le\frac6\lambda\sum_{\ell:D_\ell>\lambda/2}D_\ell.
+\]
+Integration of \(3\lambda^2\) times this inequality gives
+\[
+ \sum(\mathcal MD)^3
+ \le18\sum_\ell D_\ell\int_0^{2D_\ell}\lambda\,d\lambda
+ =36\sum_\ell D_\ell^3.
+\]
+\end{proof}
+
+\begin{theorem}[Sublevel error transfer]\label{thm:transfer}
+Let \((\gamma_k)\) be any nondecreasing sequence, with its right-continuous
+integer counting function \(N\). Let \(a<b\) be nonlocations, put
+\(\ell_0=N(a)\ge1\), \(\ell_1=N(b)\), and
+\(D_\ell=\gamma_{\ell+1}-\gamma_\ell\) for
+\(\ell_0\le\ell\le\ell_1\). Let \(K\) be any subset of
+\(\{\ell_0+1,\dots,\ell_1\}\). For any measurable real \(f\) on \([a,b]\), set
+\[
+ y_k=a+\int_a^b\Ind_{\{f(t)<k-\tfrac12\}}\,dt,\qquad
+ q_f(t)=\left|\left\lfloor f(t)+\tfrac12\right\rfloor-N(t)\right|.
+\]
+Then
+\begin{equation}
+ \boxed{\quad
+ \sum_{k\in K}|y_k-\gamma_k|^2
+ \le2\,36^{1/3}
+       \left(\sum_{\ell=\ell_0}^{\ell_1}D_\ell^3\right)^{1/2}
+       \left(\int_a^b q_f(t)^2(q_f(t)+1)^2\,dt\right)^{1/2}.
+ \quad}
+ \label{eq:transfer}
+\end{equation}
+In particular the last integral is at most
+\(C\int_a^b(1+|f(t)-N(t)|)^4\,dt\), with an absolute constant.
+\end{theorem}
+\begin{proof}
+Let \(E_k\) be the set where the two indicators at level \(k-\tfrac12\),
+for \(f\) and \(N\), disagree. The positive part of their difference is
+supported to the right of \(\gamma_k\), and the negative part to its
+left. If their measures are \(u_k,v_k\), then
+\(y_k-\gamma_k=u_k-v_k\). Among sets of measure \(u\) on a half-line,
+the integral of the distance to its endpoint is at least \(u^2/2\).
+It follows that
+\begin{equation}
+ |y_k-\gamma_k|^2
+ \le u_k^2+v_k^2
+ \le2\int_{E_k}|t-\gamma_k|\,dt.
+ \label{eq:bathtub}
+\end{equation}
+
+If \(N(t)=\ell\), then
+\[
+ |t-\gamma_k|\le (1+|k-\ell|)(\mathcal MD)_\ell.
+\]
+Indeed the intervening consecutive gaps lie in an interval of indices
+containing \(\ell\), of length at most \(1+|k-\ell|\).
+At this \(t\), disagreement is possible only for the \(q_f(t)\)
+integer levels between \(N(t)\) and \(\lfloor f(t)+1/2\rfloor\);
+for each such level \(|k-\ell|\le q_f(t)\). Thus
+\begin{equation}
+ \sum_{k\in K}\Ind_{E_k}(t)|t-\gamma_k|
+ \le(\mathcal MD)_{N(t)}q_f(t)(q_f(t)+1).
+ \label{eq:localbound}
+\end{equation}
+On the cell \((\gamma_\ell,\gamma_{\ell+1})\cap[a,b]\) the index \(N(t)\)
+equals \(\ell\). H\"older's inequality and \eqref{eq:maximal} imply
+\begin{align}
+ \int_a^b(\mathcal MD)_{N(t)}^2\,dt
+ &\le\sum_\ell D_\ell(\mathcal MD)_\ell^2 \notag\\
+ &\le\left(\sum D_\ell^3\right)^{1/3}
+        \left(\sum(\mathcal MD)_\ell^3\right)^{2/3}
+ \le36^{2/3}\sum D_\ell^3.
+ \label{eq:gapweight}
+\end{align}
+Sum \eqref{eq:bathtub}, use \eqref{eq:localbound}, and apply
+Cauchy--Schwarz in \(t\), followed by \eqref{eq:gapweight}.
+Finally \(q_f\le|f-N|+1/2\), proving the last assertion.
+Zero-length gaps and repeated locations cause no difficulty.
+\end{proof}
+
+\section{The analytic inputs and their checked sources}
+\label{sec:inputs}
+Only standard, unconditional estimates are used in the specialization.
+The places actually read in the available PDFs are specified here.
+
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item \emph{Short-prime approximation.}
+With \(S(t)=\pi^{-1}\arg\zeta(1/2+it)\) in the usual counting convention,
+\begin{equation}
+ \int_U^{2U}\left|
+  S(t)+\frac1\pi\sum_{p\le U^{1/200}}\frac{\sin(t\log p)}{\sqrt p}
+ \right|^4dt\ll U.
+ \label{eq:selberginput}
+\end{equation}
+This is the imaginary-part estimate in
+Fazzari--Gerspach--Minelli \cite[p.~7, (3.6)]{FGM}, with \(m=2\),
+after division by \(\pi\). Their text explicitly states it
+unconditionally and attributes it to Selberg--Tsang.
+The number \(1/200\) is used only in this cited input, not as a construction
+parameter.
+
+\item \emph{Mean value of a Dirichlet polynomial.}
+For any finite coefficients \(a_n\),
+\begin{equation}
+ \int_U^{2U}\left|\sum_n a_n n^{-it}\right|^2dt
+ =\sum_n|a_n|^2\bigl(U+O(n)\bigr).
+ \label{eq:mvinput}
+\end{equation}
+See \cite[p.~175, (7.20.1)]{THB}, which states the
+Montgomery--Vaughan theorem.
+
+\item \emph{Third moment of consecutive gaps.}
+\begin{equation}
+ \sum_{0<\gamma_\ell\le V}(\gamma_{\ell+1}-\gamma_\ell)^3
+ \ll \frac{V}{\log^2V}.
+ \label{eq:gapinput}
+\end{equation}
+Read in \cite[p.~246, (9.25.4)]{THB}, with exponent \(3\), using
+\(N(V)\asymp V\log V\). The ordinates there are those of all zeros,
+with multiplicity. This is an unconditional statement in the chapter
+on the general distribution of zeros.
+\end{enumerate}
+
+We also use \(N(t)=\NO(t)+S(t)+O(1/t)\),
+\(S(t)=O(\log t)\), Mertens' prime harmonic sum, and
+\(p_m\asymp m\log m\), in their standard unconditional forms.
+In particular \(\gamma_k-\tau_k=O(1)\) and
+\[
+ \#\mathcal K_T\asymp T\log T,\qquad
+ \mathcal K_T=\{k:T\le\tau_k\le2T\}.
+\]
+These estimates do not assume RH.
+
+\begin{remark}[Source verification boundary]\label{rem:sources}
+The PDF statements cited above, including their hypotheses and their
+unconditional status, have been read, not inferred from a bibliography.
+Tsang's original thesis and Fujii's original 1974/1981 papers have not
+been read for this note. No claim is made to have checked their proofs
+or errata. The cited sources for the estimates used here are (3.6) of
+\cite{FGM} and (7.20.1), (9.25.4) of \cite{THB}.
+\end{remark}
+
+\section{Fourth moment for the constructed counting approximation}
+\label{sec:fourth}
+\begin{lemma}\label{lem:fourth}
+For \(U=2^j\to\infty\),
+\begin{equation}
+ \int_U^{2U}|\Fc(t)-N(t)|^4dt\ll U,
+ \label{eq:fourth}
+\end{equation}
+with an absolute implied constant.
+\end{lemma}
+\begin{proof}
+It suffices to prove the bound for
+\(\NO+\Ph_m-N\), with \(m=m_j\) or \(m_{j+1}\).
+Both satisfy \(m^2\le2U\). Put \(X=p_m\) and \(Y=U^{1/200}\).
+For \(U\) large, \(X\ge Y\), \(\log X\asymp\log U\), and
+\[
+ V_{Y,X}=\sum_{Y<p\le X}\frac1p=O(1)
+\]
+by Mertens' estimate and \(p_m\asymp m\log m\).
+
+Split the difference from the prime sum in \eqref{eq:selberginput}
+into \(r=1\), \(r=2\), and \(r\ge3\) in \eqref{eq:primephase}.
+For \(r=1\), let
+\(\mathscr D_{\rm pr}(t)=\sum_{Y<p\le X}p^{-1/2-it}\).
+Its square has coefficients \(a_n=r(n)/\sqrt n\), where
+\(r(n)\le2\) counts ordered factorizations into two primes of the band.
+Consequently
+\[
+ \sum_n|a_n|^2\le2V_{Y,X}^2=O(1),\qquad
+ \sum_n n|a_n|^2=\sum_n r(n)^2\le2m^2\ll U.
+\]
+Equation \eqref{eq:mvinput}, applied to \(\mathscr D_{\rm pr}^2\), gives
+\(\int_U^{2U}|\mathscr D_{\rm pr}|^4\ll U\).
+Notice that no restriction \(X^2\le U\) was needed: the weighted
+coefficient sum, rather than the largest frequency, fixes the budget.
+
+For \(r=2\), let \(\mathscr D_{\rm sq}(t)=\sum_{p\le X}p^{-1-2it}\).
+The square has coefficients \(b_{v^2}=r(v)/v\). Hence
+\[
+ \sum_n|b_n|^2\le2\left(\sum_p p^{-2}\right)^2=O(1),
+ \qquad
+ \sum_n n|b_n|^2=\sum_v r(v)^2\le2m^2\ll U.
+\]
+The same theorem yields \(\int|\mathscr D_{\rm sq}|^4\ll U\).
+The factor \(1/2\) in the \(r=2\) Euler term is harmless.
+All \(r\ge3\) terms together are bounded, uniformly in \(X,t\), by
+\[
+ \frac1\pi\sum_p\sum_{r\ge3}\frac1{r p^{r/2}}<\infty.
+\]
+Combining these estimates with \eqref{eq:selberginput} and
+\(N-\NO-S=O(1/t)\) proves the claim for each endpoint phase.
+
+Finally \(\Fc-N=(1-\alpha_j)(\NO+\Ph_{m_j}-N)
++\alpha_j(\NO+\Ph_{m_{j+1}}-N)\). Convexity of \(|\cdot|^4\)
+and \(0\le\alpha_j\le1\) give \eqref{eq:fourth}.
+\end{proof}
+
+\section{Guaranteed approach to the ordinates}
+\label{sec:main}
+\begin{theorem}\label{thm:main}
+The points \(x_k=\Tc(\tau_k)\) defined in \eqref{eq:construction}
+are strictly increasing, use only the clock and primes, and satisfy
+\begin{equation}
+ \boxed{\qquad
+ \frac1{\#\mathcal K_T}\sum_{k\in\mathcal K_T}|x_k-\gamma_k|^2
+      \ll \frac1{\log^2T}\qquad(T\to\infty).
+ \qquad}
+ \label{eq:main}
+\end{equation}
+The implied constant is absolute. The assertion is unconditional
+with the standard estimates stated in Section~\ref{sec:inputs};
+no independence or Gaussian assumption is added.
+\end{theorem}
+\begin{proof}
+Order and computability were proved in Proposition~\ref{prop:ordered}.
+Let \(a=T/2\), \(b=3T\), with arbitrarily small endpoint perturbations
+if they are ordinates. For \(k\in\mathcal K_T\), one has
+\(\gamma_k\in(a,b)\) for all sufficiently large \(T\).
+Equations \eqref{eq:globalphasebound} and
+\(N=\NO+O(\log t)\) also show, uniformly in those \(k\), that both
+\(\Fc(t)<k-\tfrac12\) and \(N(t)<k-\tfrac12\) hold on \(0<t<a\),
+and both fail on \(t>b\). Thus
+\[
+ x_k=a+\int_a^b\Ind_{\{\Fc(t)<k-\tfrac12\}}dt,\qquad
+ \gamma_k=a+\int_a^b\Ind_{\{N(t)<k-\tfrac12\}}dt.
+\]
+The interval \([a,b]\) meets a bounded number of dyadic blocks.
+Lemma~\ref{lem:fourth} gives
+\[
+ \int_a^b(1+|\Fc-N|)^4dt\ll T.
+\]
+The gaps in Theorem~\ref{thm:transfer} form a subset of the gaps
+with \(0<\gamma_\ell\le 3T+1\), so \eqref{eq:gapinput} bounds their
+third-power sum by \(O(T/\log^2T)\). Apply
+\hveq{eq:transfer}
+{Deterministic inequality: gap third moment times counting-error fourth moment bounds squared position errors.}
+to obtain
+\[
+ \sum_{k\in\mathcal K_T}|x_k-\gamma_k|^2\ll\frac{T}{\log T}.
+\]
+Division by \(\#\mathcal K_T\asymp T\log T\) proves
+\hveq{eq:main}{Mean-square height error bounded by a constant divided by log(T) squared, without RH.}.
+\end{proof}
+
+\begin{corollary}\label{cor:proportion}
+For every \(A>0\),
+\[
+ \frac{\#\{k\in\mathcal K_T:
+       |x_k-\gamma_k|>A/\log T\}}{\#\mathcal K_T}
+ \le\frac{C}{A^2}
+\]
+for sufficiently large \(T\), with an absolute \(C\).
+\end{corollary}
+\begin{proof}
+Chebyshev's inequality applied to \eqref{eq:main}.
+\end{proof}
+
+\section{What is guaranteed and what remains open}
+\label{sec:limits}
+\begin{itemize}[leftmargin=2em]
+\item The construction, strict order, prime budget, and asymptotic
+mean-square bound are analytic. Numerical comparisons have not been
+used to choose any of them.
+\item The estimate has the scale of a bounded number of mean spacings.
+It is not a proof of \(o(1)\) spacings, an individual error bound for every
+\(k\), or exact recovery of the ordinates.
+\item The absolute constants in \eqref{eq:selberginput} and
+\eqref{eq:gapinput}, and the resulting onset height, are not evaluated.
+Accordingly \eqref{eq:main} is not a certified finite-height accuracy
+claim for the existing binary data.
+\item No comparison against R2, zCasanya, or the quotient-only point is
+asserted at the available heights. The present theorem does not prove
+that adding a quotient correction to one of those constructions helps.
+\item The method is nonlocal in height, although its sole point input is
+\(\tau_k\). It evaluates a sublevel measure of a prime-phase function.
+Its practical cost and certified quadrature deserve a separate study.
+\item Novelty relative to the literature is not established in this note.
+The elementary transfer theorem and its application should receive a
+further mathematical review before incorporation into a manuscript.
+\end{itemize}
+
+\section*{Source and artifact audit}
+\addcontentsline{toc}{section}{Source and artifact audit}
+The local PDFs read were:
+\begin{itemize}[leftmargin=2em]
+\item Titchmarsh--Heath-Brown, the available 1986 second-edition PDF:
+printed pp.~175 and 246; the latter is PDF page 252.
+\item Fazzari--Gerspach--Minelli, arXiv:2507.04150v1, 5 July 2025:
+printed/PDF p.~7, definition (3.1) and estimate (3.6), including the
+unconditional wording.
+\end{itemize}
+Checksums and the boundary of the source verification are recorded in
+the accompanying README. This is a standalone research note, not a new
+version of any manuscript. No numerical experiment with ordinates was
+run for it. The corresponding TXT is byte-identical to this source.
+
+\begin{thebibliography}{9}
+\bibitem{FGM}
+A.~Fazzari, M.~Gerspach and P.~Minelli,
+\emph{Selberg's Central Limit Theorem weighted by linear statistics of
+zeta zeros}, arXiv:2507.04150v1 (2025),
+\href{https://doi.org/10.48550/arXiv.2507.04150}
+{doi:10.48550/arXiv.2507.04150}.
+Equation (3.6) on p.~7 is the short-prime approximation used here.
+
+\bibitem{THB}
+E.~C.~Titchmarsh, revised by D.~R.~Heath-Brown,
+\emph{The Theory of the Riemann Zeta-function}, second edition,
+Clarendon Press, Oxford, 1986.
+Equations (7.20.1), p.~175, and (9.25.4), p.~246.
+
+\end{thebibliography}
+\end{document}

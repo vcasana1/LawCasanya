@@ -1,0 +1,51 @@
+{
+  "checked_on": "2026-10-19",
+  "task_policy": "Analytic construction and proof before numerical confirmation; no zero-data experiment.",
+  "sources": [
+    {
+      "file": "118_Titchmarsh-HeathBrown_1986_Theory_Riemann_Zeta_Function.pdf",
+      "sha256": "4ad89cb2854f7782b0607895d6d7285fdb873c8257c5bf32c7fa48501f3b2244",
+      "checks": [
+        {
+          "printed_page": 175,
+          "equation": "7.20.1",
+          "statement": "Montgomery--Vaughan weighted mean value for finite Dirichlet polynomials",
+          "route": "Full PDF text read; formula identified."
+        },
+        {
+          "printed_page": 246,
+          "pdf_page": 252,
+          "equation": "9.25.4",
+          "statement": "Fixed third moment of all consecutive zero-ordinate gaps, unconditional",
+          "route": "Full PDF text read and page image inspected."
+        }
+      ]
+    },
+    {
+      "file": "031_Fazzari-Gerspach-Minelli_2025_Selberg_CLT_Weighted_Linear_Statistics_Zeta_Zeros.pdf",
+      "sha256": "f187e540cef0a885504ec91b08accb6cf2806040ff738a1e7f20351c5a5bbd0c",
+      "version": "arXiv:2507.04150v1, 2025-07-05",
+      "checks": [
+        {
+          "printed_page": 7,
+          "pdf_page": 7,
+          "equations": [
+            "3.1",
+            "3.6"
+          ],
+          "statement": "Unconditional fourth-moment short-prime approximation of Im log zeta; moment parameter 2, exponent 1/200",
+          "route": "Full PDF text read and page image inspected."
+        }
+      ]
+    }
+  ],
+  "originals_not_read": [
+    "Tsang 1984 thesis",
+    "Fujii 1974 and 1981 papers"
+  ],
+  "novelty_search_performed": false,
+  "core_proof": "Elementary sublevel-transfer inequality, with finite discrete maximal inequality proved in note.",
+  "numerical_accuracy_claims_at_existing_heights": false,
+  "r2_used": false,
+  "quotient_only_filter_used": false
+}
