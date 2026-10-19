@@ -79,3 +79,4 @@ Pendiente: las constantes absolutas no calculadas de la iteración (C_⋆, H^*, 
 ### 18. Paper I analítico v1 hecho (19-10)
 - work/paper1/manuscript/prime_corrected_clock_v1.{tex,txt,pdf}, 43 pp. Contiene A, B, C, D (+ iteración), E (J→30: < 0.60831). Fuera: F, G, H, respuestas, ley condicional, numérica, prop. explícita de S (sin programa de intervalos comprometido).
 - Pendiente para v2 si el autor lo ordena: novedad de B en las ordenadas frente a Fujii (leer original); constantes explícitas de la iteración; nota aparte F+H con aritmética de intervalos.
+- (19-10) Paper I v2 hecho con las correcciones de la revisión del autor (ver LOG). Sigue pendiente: cotejar Fujii 1981 (correcciones a la parte I) con los dos enunciados usados; datos bibliográficos de Fujii 1981 (% VERIFICAR); novedad de B en las ordenadas.
