@@ -1,0 +1,224 @@
+% Preferred integration fragment: supplements the regularized-clock section
+% already present in Claude's final v10, commit c2ffecc309f9503eda8fc12855b6f80725524110.
+% This file does not create or modify a manuscript version.
+% Keep v10's existing Lambda_T, mathsf J_T, mathsf L_T, varsigma_T, mathsf t_i,
+% mathcal K_T, widehat F, widehat x_k: these denote the SAME objects.
+% mathcal K_T is v10's admissible class, NOT a new index set.
+% Use the existing index set mathcal I_T^tau. New labels: reg11:*.
+
+\subsection{A wider cutoff range and clock-defined averaging}
+\label{reg11:range_section}
+
+\begin{lemma}\label{reg11:block_range}
+The conclusion of Lemma~\ref{lem:block_fourth} holds, with absolute
+constants, throughout the wider range
+\begin{equation}
+2\le X\le\sqrt{T/2},\qquad c=\frac{\log X}{\log T}.
+\label{reg11:cutoff_range}
+\end{equation}
+In particular, every fixed $0<c<1/2$ is allowed for sufficiently large $T$.
+\end{lemma}
+
+\begin{proof}
+Use the same covering by intervals $(T',2T']$ with
+$T'\in\{T/2,T,2T\}$ as in Lemma~\ref{lem:block_fourth}.
+The condition needed in \eqref{eq:R_fourth} is $X\le T'^{1/2}$;
+it holds simultaneously on this covering precisely when
+$X\le\sqrt{T/2}$. On each interval,
+\[
+V=\log\frac{\log T'}{\log X}+O(1)
+=\log(1/c)+O(1),
+\]
+with absolute constants, since $\log T'/\log T=1+O(1/\log T)$.
+The $O(1/T)$ remainder in $N-\NO-S$ is harmless. Summing the three
+fourth-moment bounds proves the claim.
+\end{proof}
+
+\begin{theorem}\label{reg11:clock_window}
+In Theorem~\ref{thm:regularized_clock} the range $X\le T^{1/3}$ may
+be replaced by \eqref{reg11:cutoff_range}. Its fourth- and second-moment
+conclusions hold over the clock-defined index set
+$\mathcal I_T^\tau=\{k:T\le\tau_k<2T\}$ as well as over $\IT$:
+\begin{equation}
+\begin{split}
+\left\langle|\widehat u_k|^4\right\rangle_{\mathcal I_T^\tau}
+&\le C(1+\log(1/c))^2,\\
+\left\langle|\widehat x_k-\gamma_k|^4\right\rangle_{\mathcal I_T^\tau}
+&\le\frac{C(1+\log(1/c))^2}{\log^4T},\\
+\left\langle|\widehat x_k-\gamma_k|^2\right\rangle_{\mathcal I_T^\tau}
+&\le\frac{C(1+\log(1/c))}{\log^2T}.
+\end{split}
+\label{reg11:clock_moments}
+\end{equation}
+For every $R>0$,
+\begin{equation}
+\frac{\#\{k\in\mathcal I_T^\tau:
+\Lambda_T|\widehat x_k-\gamma_k|>R\}}{\#\mathcal I_T^\tau}
+\le C(1+\log(1/c))^2R^{-4}.
+\label{reg11:tails}
+\end{equation}
+If $X\le T^{1/4}$, the bounded transport assertion of that theorem
+also holds over $\mathcal I_T^\tau$. The constants in these statements
+are absolute; their dependence on the cutoff is displayed explicitly.
+\end{theorem}
+
+\begin{proof}
+The proof of \eqref{eq:regularized_close} is unchanged after replacing
+Lemma~\ref{lem:block_fourth} by Lemma~\ref{reg11:block_range}. Thus, with
+$W_c=1+\log(1/c)$ for this proof only,
+\[
+\int_{\mathsf J_T}|\widehat F-N|^4\,dt\le C_1T W_c^2.
+\]
+Choose non-ordinate heights $\alpha\in[T/2,3T/4]$ and
+$\beta\in[9T/4,5T/2]$ with
+$|N(\alpha)-\widehat F(\alpha)|,
+|N(\beta)-\widehat F(\beta)|\le(8C_1)^{1/4}W_c^{1/2}$.
+Markov's inequality leaves a set of measure at least $T/8$ in each
+interval, so these choices are possible. Zero counting gives margins
+of size $T\log T$ between their counts and those at $T,2T$.
+All target levels and ordinates for $\IT\cup\mathcal I_T^\tau$ are
+strictly enclosed, for sufficiently large $T$; here
+$|\tau_k-\gamma_k|=O(1)$ and $W_c\ll1+\log\log T$ uniformly since $X\ge2$.
+
+For a Lipschitz model $P$, the chain-rule argument of
+Lemma~\ref{lem:identity_lipschitz} gives the exact endpoint identity
+\begin{equation}
+\begin{split}
+\sum_{\alpha<\gamma_k\le\beta}\Psi_2(k-\tfrac12-P(\gamma_k))
+&=\int_\alpha^\beta(N-P)^4P'\,dt\\
+&\quad+\frac{(N(\beta)-P(\beta))^5-(N(\alpha)-P(\alpha))^5}{5}.
+\end{split}
+\label{reg11:endpoint_identity}
+\end{equation}
+At a multiple ordinate its jump is split into its unit jumps, so no
+simplicity hypothesis is needed. Take $P=\widehat F$, use
+$\Psi_2(u)=u^4+u^2/2+1/80\ge u^4$ and $\widehat F'\le2\Lambda_T$,
+and restrict the nonnegative sum to either desired index set. This gives
+\[
+\sum_{k\in\mathcal I_T^\tau}|\widehat u_k|^4
+\le C T\Lambda_T W_c^2+C W_c^{5/2}.
+\]
+The last term is absorbed uniformly because $W_c\ll1+\log\log T$.
+As $\#\mathcal I_T^\tau\asymp T\Lambda_T$, the first assertion follows.
+The lower slope bound gives
+$|\widehat x_k-\gamma_k|\le2|\widehat u_k|/\Lambda_T$;
+Cauchy--Schwarz gives the second moment, and Markov gives
+\eqref{reg11:tails}.
+
+The same integral argument on the segment joining $\widehat x_k$ to
+$\gamma_k$ gives the uniform localization
+\[
+|\widehat x_k-\gamma_k|^5
+\le C T W_c^2/\Lambda_T^4,
+\]
+also for $k\in\mathcal I_T^\tau$. Apply the proof of part (d) of
+Theorem~\ref{thm:regularized_clock} on this set. Its separation gives
+bounded multiplicity directly: every interval of length
+$\mathfrak b_T=2\pi/\log(3T)$ contains at most three points, so
+$\int\tilde n^2\le3\mathfrak b_T\#\mathcal I_T^\tau$.
+The sampling proof of Lemma~\ref{lem:sampling_rho} applies to this
+clock-defined set as well: its size is $\asymp T\log T$, and the
+localized points have the same containing interval. Consequently
+\[
+\left\langle|S_X(\gamma_k)-S_X(\widehat x_k)|^2\right\rangle_{\mathcal I_T^\tau}
+\le C W_c\frac{(1+\log X)^2}{\log^2T}\le C
+\quad(X\le T^{1/4}).
+\]
+In the last step use $1+\log X\le(1+1/\log2)c\log T$ and
+$c^2(1+\log(1/c))\ll1$.
+\end{proof}
+
+\subsection{A certified tolerance for the finite convex problem}
+\label{reg11:tolerance_section}
+Keep the mesh, slopes and admissible class of Definition~\ref{def:regularized}.
+For a feasible vector $\mathbf v$, let $P_{\mathbf v}$ be its interpolant,
+and abbreviate
+\[
+E(\mathbf v)=\int_{\mathsf J_T}|P_{\mathbf v}-F_X|^4\,dt,
+\qquad E_* =\min_{P_{\mathbf v}\in\mathcal K_T}E(\mathbf v).
+\]
+For a prescribed $0\le\eta_{\mathrm{reg}}\le1$ it suffices to find a feasible
+vector with
+\begin{equation}
+E(\mathbf v)\le E_*+\eta_{\mathrm{reg}}T.
+\label{reg11:objective_tolerance}
+\end{equation}
+Let $\widehat x_k^{(\eta_{\mathrm{reg}})}$ be the inverse levels of this
+interpolant, computed by linear interpolation. The proof above gives,
+uniformly for \eqref{reg11:cutoff_range} and this tolerance range,
+\begin{equation}
+\begin{split}
+\left\langle|\widehat x_k^{(\eta_{\mathrm{reg}})}-\gamma_k|^4
+\right\rangle_{\mathcal I_T^\tau}
+&\le\frac{C((1+\log(1/c))^2+\eta_{\mathrm{reg}})}{\log^4T},\\
+\left\langle|\widehat x_k^{(\eta_{\mathrm{reg}})}-\gamma_k|^2
+\right\rangle_{\mathcal I_T^\tau}
+&\le\frac{C(1+\log(1/c)+\sqrt{\eta_{\mathrm{reg}}})}{\log^2T}.
+\end{split}
+\label{reg11:inexact_moments}
+\end{equation}
+Indeed the sole change in \eqref{eq:regularized_close} is the objective
+excess $\eta_{\mathrm{reg}}T$. Its fourth-power continuous error is at
+most $C T(1+\log(1/c))^2+8\eta_{\mathrm{reg}}T$, and the endpoint proof
+above is uniform because $\eta_{\mathrm{reg}}\le1$.
+
+The following computable lower bound makes the stopping condition
+independent of any zero data or unknown optimum. Let
+$D_{\mathrm{reg}}\mathbf v=(v_{i+1}-v_i)_i$, $h=\varsigma_T$,
+$J=|\mathsf J_T|=5T/2$, $a=\Lambda_T/2$, $b=2\Lambda_T$.
+For nonnegative multipliers $\boldsymbol\mu_+,\boldsymbol\mu_-$ define
+\begin{equation}
+\begin{split}
+\mathscr L_{\mathrm{reg}}(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)
+&=E(\mathbf v)+\boldsymbol\mu_+^{\mathsf T}(D_{\mathrm{reg}}\mathbf v-bh\mathbf1)
++\boldsymbol\mu_-^{\mathsf T}(ah\mathbf1-D_{\mathrm{reg}}\mathbf v),\\
+\mathbf r_{\mathrm{reg}}&=\nabla E(\mathbf v)+D_{\mathrm{reg}}^{\mathsf T}
+(\boldsymbol\mu_+-\boldsymbol\mu_-),\qquad A_{\mathrm{reg}}=\frac{h^2}{108J},\\
+B_{\mathrm{reg}}&=\mathscr L_{\mathrm{reg}}(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)
+-\frac3{4^{4/3}}A_{\mathrm{reg}}^{-1/3}\|\mathbf r_{\mathrm{reg}}\|_2^{4/3}.
+\end{split}
+\label{reg11:certificate}
+\end{equation}
+Then $B_{\mathrm{reg}}\le E_*$. Hence the fully specified inequalities
+\begin{equation}
+P_{\mathbf v}\in\mathcal K_T,\qquad
+\boldsymbol\mu_+,\boldsymbol\mu_-\ge0,\qquad
+E(\mathbf v)-B_{\mathrm{reg}}\le\eta_{\mathrm{reg}}T
+\label{reg11:stopping}
+\end{equation}
+certify \eqref{reg11:objective_tolerance}.
+
+For completeness, the lower bound follows from
+\[
+(x+d)^4-x^4-4x^3d-\tfrac13d^4=6d^2(x+d/3)^2\ge0.
+\]
+If $\mathsf M_{\mathrm{mass}}^{\mathrm{reg}}$ is the nodal mass matrix,
+its tridiagonal entries give
+$\lambda_{\min}(\mathsf M_{\mathrm{mass}}^{\mathrm{reg}})\ge h/6$. Thus
+\[
+\int_{\mathsf J_T}|P_{\mathbf d}|^4
+\ge J^{-1}(\mathbf d^{\mathsf T}\mathsf M_{\mathrm{mass}}^{\mathrm{reg}}\mathbf d)^2
+\ge\frac{h^2}{36J}\|\mathbf d\|_2^4,
+\]
+and
+\[
+\mathscr L_{\mathrm{reg}}(\mathbf v+\mathbf d)\ge
+\mathscr L_{\mathrm{reg}}(\mathbf v)+\mathbf r_{\mathrm{reg}}^{\mathsf T}\mathbf d
++A_{\mathrm{reg}}\|\mathbf d\|_2^4.
+\]
+Minimizing the last two terms gives
+$-3\,4^{-4/3}A_{\mathrm{reg}}^{-1/3}\|\mathbf r_{\mathrm{reg}}\|_2^{4/3}$.
+Weak duality proves the bound. For nodal hat functions
+$\mathsf B_{T,i}^{\mathrm{reg}}(t)$ the gradient is
+$\partial_i E=4\int(P_{\mathbf v}-F_X)^3\mathsf B_{T,i}^{\mathrm{reg}}\,dt$;
+all inputs are known
+from the clock and the prime model. Numerical certification requires
+directed-rounding enclosures of these integrals, gradients and inequalities.
+
+\paragraph{Constants and interpretation.}
+The tolerance certificate controls the error of computing the minimizer;
+it is not a numerical value for the analytic accuracy constant or its
+starting height. Those still require explicit constants in the external
+fixed-order moment estimates. The construction is blockwise in $T$.
+Its slope restrictions impose its bounded spacing range, which is not a
+claim about the fine spacing statistics of zeta zeros.

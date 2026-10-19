@@ -1,0 +1,120 @@
+{
+  "base_commit": "2d8e702855192f2d959f66598a0289c31c4bfb28",
+  "base_tex_sha256": "ad86e5b66b4704fad178ae5fdda51273a64ad19d3245419a36ee5ff0a28882ea",
+  "fragment_sha256": "0c7d07bec89c76378d210be33b6f553bb593cde0b68d6de1ea1590f55bd96527",
+  "target": "Claude integration into v11; no manuscript version created",
+  "new_label_count": 24,
+  "external_v9_references": [
+    "eq:R_fourth",
+    "lem:sampling_rho",
+    "thm:identity_general",
+    "thm:known_fujii_difference",
+    "thm:known_selberg_moments"
+  ],
+  "new_notation_checked": [
+    "\\mathcal C_T^{\\mathrm{reg}}",
+    "\\mathcal J_T^{\\mathrm{reg}}",
+    "\\mathsf m_T^{\\mathrm{reg}}",
+    "\\mathsf h_T^{\\mathrm{reg}}",
+    "\\mathsf t_{T,j}^{\\mathrm{reg}}",
+    "\\mathsf H_T^{\\mathrm{reg}}",
+    "\\widehat F_{T,c}",
+    "\\widehat x_{T,c,k}",
+    "\\widehat u_{T,c,k}",
+    "\\eta_{\\mathrm{reg}}"
+  ],
+  "checks": {
+    "tex_txt_byte_identical": true,
+    "new_labels_unique": true,
+    "labels_namespaced": true,
+    "no_label_collision_with_v9": true,
+    "all_references_resolve_against_v9": true,
+    "no_global_macro_definitions": true,
+    "new_notation_absent_from_v9": true,
+    "existing_clock_window_reused": true,
+    "no_new_Lambda_scale": true,
+    "no_envelope_P_class_reassignment": true,
+    "no_iteration_H_reassignment": true,
+    "environment_nesting": true,
+    "all_environments_closed": true,
+    "quartic_uniform_convexity_identity": true,
+    "sawtooth_fourth_polynomial": true,
+    "dual_residual_stationarity": true,
+    "dual_residual_minimum": true,
+    "comparator_constant_arithmetic": true,
+    "projection_constant_arithmetic": true,
+    "latex_harness_compiles": true,
+    "latex_no_undefined_references": true,
+    "delta_tex_txt_byte_identical": true,
+    "delta_labels_unique_namespaced": true,
+    "delta_no_label_collision_with_v10": true,
+    "delta_references_resolve_against_v10": true,
+    "delta_new_certificate_names_absent_from_v10": true,
+    "delta_reuses_existing_regularization_names": true,
+    "delta_no_obsolete_v10_draft_mesh_names": true,
+    "delta_no_global_macro_definitions": true,
+    "delta_latex_harness_compiles": true,
+    "delta_latex_no_undefined_references": true
+  },
+  "latex": {
+    "passes": 2,
+    "undefined_references": false,
+    "overfull_boxes": 0,
+    "scope": "Minimal article harness with existing v9 reference labels stubbed; not a full v11 build or PDF presentation audit."
+  },
+  "v10_final_inspected": {
+    "commit": "c2ffecc309f9503eda8fc12855b6f80725524110",
+    "path": "work/paper1/v10/manuscript/prime_corrected_clock_v10.tex",
+    "sha256": "0258373673805046dd22ca960e71c37e09f2e1f84629f15a14e5a075c8749120"
+  },
+  "preferred_delta": {
+    "file": "v11_delta.tex",
+    "sha256": "80eaaaae81b47850a30f3ea6f020d4747bd70156c4acbcbc483b9d69922c1126",
+    "labels": [
+      "reg11:range_section",
+      "reg11:block_range",
+      "reg11:cutoff_range",
+      "reg11:clock_window",
+      "reg11:clock_moments",
+      "reg11:tails",
+      "reg11:endpoint_identity",
+      "reg11:tolerance_section",
+      "reg11:objective_tolerance",
+      "reg11:inexact_moments",
+      "reg11:certificate",
+      "reg11:stopping"
+    ],
+    "external_v10_references": [
+      "def:regularized",
+      "eq:R_fourth",
+      "eq:regularized_close",
+      "lem:block_fourth",
+      "lem:identity_lipschitz",
+      "lem:sampling_rho",
+      "thm:regularized_clock"
+    ],
+    "new_certificate_names_checked": [
+      "\\eta_{\\mathrm{reg}}",
+      "D_{\\mathrm{reg}}",
+      "A_{\\mathrm{reg}}",
+      "B_{\\mathrm{reg}}",
+      "\\mathscr L_{\\mathrm{reg}}",
+      "\\mathbf r_{\\mathrm{reg}}",
+      "\\mathsf B_{T,i}^{\\mathrm{reg}}",
+      "\\mathsf M_{\\mathrm{mass}}^{\\mathrm{reg}}"
+    ],
+    "latex": {
+      "passes": 2,
+      "undefined_references": false,
+      "overfull_boxes": 0
+    },
+    "scope": "Supplements v10 existing regularization; keeps its definitions, extends X to sqrt(T/2), adds clock-window moments and certified numerical tolerance."
+  },
+  "source_verification": "Existing formulations in v9 used; original external papers not independently re-read in this task.",
+  "numerical_experiments": "None; no zero dataset or solver used.",
+  "limitations": [
+    "No numerical value for C_D, C_pr(c), analytic accuracy constant, or starting height is supplied.",
+    "Not a proof of bounded transport for the original one-step clock from tau.",
+    "Historical priority not assessed; clock is blockwise in T."
+  ]
+}

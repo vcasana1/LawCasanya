@@ -1,0 +1,428 @@
+% Integration material requested by the author for Claude's v11.
+% This is a section fragment, not a manuscript version.
+% Base inspected: prime_corrected_clock_v9.tex, commit 2d8e702855192f2d959f66598a0289c31c4bfb28.
+% No zero ordinates or zero-dependent parameters enter the construction.
+% New labels use reg:; new local symbols have a reg superscript where needed.
+
+\section{A regularized clock with a fixed prime-cutoff exponent}
+\label{reg:section}
+
+Fix $0<c<1/2$ independently of $T$ and put $X=T^c$.
+The construction in this section uses only $\NO$, the Euler phase $S_X$,
+and deterministic restrictions on the slope of a counting model. It does
+not evaluate $S$ or use ordinates in constructing the points. The estimates
+are unconditional, with constants depending on the fixed exponent $c$.
+They concern a new regularized clock; they do not assert bounded transport
+for the original one-step clock $\tau_k-S_X(\tau_k)/\lL(\tau_k)$.
+
+\subsection{A finite convex construction}
+Set
+\begin{equation}
+\begin{split}
+\mathcal J_T^{\mathrm{reg}}&=[T/2,3T],\qquad
+\mathsf a_T^{\mathrm{reg}}=\tfrac12\lL(T),\qquad
+\mathsf b_T^{\mathrm{reg}}=2\lL(T),\\
+\mathsf m_T^{\mathrm{reg}}&=\left\lceil\tfrac52T\lL(T)\right\rceil,\qquad
+\mathsf h_T^{\mathrm{reg}}=\frac{5T}{2\mathsf m_T^{\mathrm{reg}}},\qquad
+\mathsf t_{T,j}^{\mathrm{reg}}=T/2+j\mathsf h_T^{\mathrm{reg}}quad
+(0\le j\le\mathsf m_T^{\mathrm{reg}}).
+\end{split}
+\label{reg:mesh}
+\end{equation}
+Thus $\mathsf h_T^{\mathrm{reg}}\le1/\lL(T)$.
+For a vector $\mathbf v=(v_0,\ldots,v_{\mathsf m_T^{\mathrm{reg}}})$,
+let $\mathsf p_{\mathbf v,T}^{\mathrm{reg}}$ be its continuous linear
+interpolant on this mesh. Let $\mathcal C_T^{\mathrm{reg}}$ be the set
+of these interpolants satisfying
+\begin{equation}
+\mathsf a_T^{\mathrm{reg}}\mathsf h_T^{\mathrm{reg}}
+\le v_{j+1}-v_j\le
+\mathsf b_T^{\mathrm{reg}}\mathsf h_T^{\mathrm{reg}}
+\quad(0\le j<\mathsf m_T^{\mathrm{reg}}).
+\label{reg:constraints}
+\end{equation}
+Define
+\begin{equation}
+\begin{split}
+\mathscr E_{T,c}^{\mathrm{reg}}(\mathbf v)
+&=\int_{\mathcal J_T^{\mathrm{reg}}}
+\left|\mathsf p_{\mathbf v,T}^{\mathrm{reg}}(t)-F_X(t)\right|^4\,dt,\\
+\widehat F_{T,c}
+&=\underset{P\in\mathcal C_T^{\mathrm{reg}}}{\operatorname{argmin}}
+\int_{\mathcal J_T^{\mathrm{reg}}}|P(t)-F_X(t)|^4\,dt.
+\end{split}
+\label{reg:projection}
+\end{equation}
+The admissible set is nonempty, closed and convex in a finite-dimensional
+space. The objective is coercive and strictly convex: distinct nodal vectors
+give interpolants differing on a set of positive measure. Consequently the
+minimizer exists and is unique.
+
+For indices whose target levels lie in its range, define
+\begin{equation}
+\widehat F_{T,c}(\widehat x_{T,c,k})=k-\tfrac12=\NO(\tau_k).
+\label{reg:clock}
+\end{equation}
+There is at most one solution, since the lower slope is positive. If the
+target lies between the consecutive minimizing values $\widehat v_j$ and
+$\widehat v_{j+1}$, it is given directly by
+\begin{equation}
+\widehat x_{T,c,k}=\mathsf t_{T,j}^{\mathrm{reg}}+
+\mathsf h_T^{\mathrm{reg}}
+\frac{k-\frac12-\widehat v_j}{\widehat v_{j+1}-\widehat v_j}.
+\label{reg:inverse}
+\end{equation}
+No branch choice or Newton recurrence occurs. The interval, mesh and slope
+restrictions are prescribed analytically, before any comparison with zeros.
+
+\subsection{Counting functions with controlled slopes}
+The following proof uses the true count only to exhibit a comparison
+function in the admissible class. This comparison function is not an input
+to \eqref{reg:projection}.
+
+\begin{lemma}\label{reg:count_comparator}
+For all sufficiently large $T$ there exists $P_N\in\mathcal C_T^{\mathrm{reg}}$
+such that
+\begin{equation}
+\int_{\mathcal J_T^{\mathrm{reg}}}|P_N-N|^4\,dt\ll T.
+\label{reg:comparator_bound}
+\end{equation}
+The implied constant is absolute.
+\end{lemma}
+
+\begin{proof}
+For this proof only, abbreviate $a=\mathsf a_T^{\mathrm{reg}}$ and
+$b=\mathsf b_T^{\mathrm{reg}}$ and define
+\[
+\mathsf H_T^{\mathrm{reg}}(t)=
+\sup_{s\in\mathcal J_T^{\mathrm{reg}}}
+\{N(s)+\min(a(t-s),b(t-s))\}.
+\]
+Every function inside the supremum has increments between $a(t_2-t_1)$
+and $b(t_2-t_1)$ for $t_2\ge t_1$. The supremum has the same property;
+it is finite, continuous, and majorizes $N$ on $\mathcal J_T^{\mathrm{reg}}$.
+Its excess over $N(t)$ is the maximum of zero and
+\[
+\sup_{\substack{h\ge0\\t-h\in\mathcal J_T^{\mathrm{reg}}}}
+\{ah-N(t)+N(t-h)\},\qquad
+\sup_{\substack{h\ge0\\t+h\in\mathcal J_T^{\mathrm{reg}}}}
+\{N(t+h)-N(t)-bh\}.
+\]
+For $T$ sufficiently large,
+$3\lL(T)/4\le\NO'(u)\le5\lL(T)/4$ on $[T/3,4T]$.
+For the left increment use $j=\lfloor h\lL(T)\rfloor$;
+for the right increment use $j=\lceil h\lL(T)\rceil$.
+The monotonicity of $N$ and $N=\NO+S+O(1/T)$ give
+\begin{equation}
+0\le\mathsf H_T^{\mathrm{reg}}(t)-N(t)
+\le4+\sup_{j,\,\pm}
+\left(\left|\mathsf D_{T,j}^{\pm,\mathrm{reg}}(t)\right|-j/4\right)_+,
+\label{reg:excess}
+\end{equation}
+where $j\ge1$ and
+$\mathsf D_{T,j}^{\pm,\mathrm{reg}}(t)=S(t\pm j/\lL(T))-S(t)$.
+Each increment is included only when its endpoints are in $[T/3,4T]$.
+Indeed the deterministic drifts are at most $-j/4+1/2$ on the left
+and $-3j/4+2$ on the right, before the $O(1/T)$ remainder.
+One grid extension at an endpoint of $\mathcal J_T^{\mathrm{reg}}$
+stays inside $[T/3,4T]$. The case $j=0$ on the left is at most $1/2$.
+
+Theorem~\ref{thm:known_fujii_difference} with the fixed order $k=4$
+gives, for shifts at most $1$,
+\begin{equation}
+\int_{\Omega_{T,j}^{\pm}}
+|\mathsf D_{T,j}^{\pm,\mathrm{reg}}(t)|^8\,dt
+\le C_{\mathrm D}T\log^4(2+j).
+\label{reg:increment_eighth}
+\end{equation}
+Here $\Omega_{T,j}^{\pm}$ is the subset just described. Its bounded
+dyadic covering has constants independent of $j,T$. For shifts greater
+than $1$, $j>\lL(T)$, and the same estimate follows from
+$|z-w|^8\le2^7(|z|^8+|w|^8)$ and
+Theorem~\ref{thm:known_selberg_moments} with the fixed order $4$:
+the integral is $O(T(\log\log T)^4)$, which is bounded by the right
+side of \eqref{reg:increment_eighth}. Both shifted arguments stay in
+$[T/3,4T]$. No estimate uniform in a growing moment order is used.
+
+For $z\ge0$ and $j\ge1$,
+$(z-j/4)_+^4\le4^4z^8/j^4$.
+The fourth power of a supremum of nonnegative terms is bounded by the
+sum of their fourth powers. Therefore
+\[
+\int_{\mathcal J_T^{\mathrm{reg}}}
+|\mathsf H_T^{\mathrm{reg}}-N|^4\,dt
+\le C_{\mathrm H}T,
+\quad
+C_{\mathrm H}=5120+4096C_{\mathrm D}
+\sum_{j\ge1}\frac{\log^4(2+j)}{j^4}<\infty.
+\]
+Linear interpolation of $\mathsf H_T^{\mathrm{reg}}$ on the prescribed
+mesh preserves the slope restrictions. It changes the function by at
+most $b\mathsf h_T^{\mathrm{reg}}\le2$. Its interpolant is $P_N$, and
+one can take
+\begin{equation}
+C_{\mathrm{cmp}}=8C_{\mathrm H}+320
+\label{reg:comparator_constant}
+\end{equation}
+in \eqref{reg:comparator_bound}.
+\end{proof}
+
+\begin{lemma}\label{reg:continuous_fourth}
+For every fixed $0<c<1/2$ there is $C_{\mathrm{pr}}(c)$ such that
+\begin{equation}
+\int_{\mathcal J_T^{\mathrm{reg}}}|F_{T^c}-N|^4\,dt
+\le C_{\mathrm{pr}}(c)T
+\label{reg:prime_fourth}
+\end{equation}
+for all sufficiently large $T$, and
+\begin{equation}
+\int_{\mathcal J_T^{\mathrm{reg}}}|\widehat F_{T,c}-N|^4\,dt
+\le C_{\mathrm{reg}}(c)T,\qquad
+C_{\mathrm{reg}}(c)=64C_{\mathrm{cmp}}+72C_{\mathrm{pr}}(c).
+\label{reg:projected_fourth}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The continuous fourth-moment bound \eqref{eq:R_fourth}, with the
+$O(1/T)$ remainder in $N-\NO-S$, proves \eqref{reg:prime_fourth}.
+Cover $[T/2,3T]$ by finitely many dyadic intervals. On each of them
+keep the same cutoff $X=T^c$: its exponent relative to that interval
+is $c+O_c(1/\log T)<1/2$, and the corresponding prime variance is
+$O_c(1)$. This is why the assertion is for fixed $c<1/2$.
+By minimality and $|z+w|^4\le8(|z|^4+|w|^4)$,
+\[
+\int|\widehat F_{T,c}-F_X|^4
+\le\int|P_N-F_X|^4
+\le8(C_{\mathrm{cmp}}+C_{\mathrm{pr}}(c))T.
+\]
+A second application of the same inequality gives
+\eqref{reg:projected_fourth} with the stated constant.
+\end{proof}
+
+\subsection{Fourth moments on a clock-defined set of indices}
+\begin{theorem}\label{reg:clock_theorem}
+Fix $0<c<1/2$. For all sufficiently large $T$, every target with
+$k\in\mathcal I_T^\tau=\{k:T\le\tau_k<2T\}$ is in the range of
+$\widehat F_{T,c}$, so \eqref{reg:clock} defines the clock there.
+Writing $\widehat u_{T,c,k}=k-\frac12-\widehat F_{T,c}(\gamma_k)$,
+\begin{equation}
+\left\langle|\widehat u_{T,c,k}|^4\right\rangle_{\mathcal I_T^\tau}
+\ll_c1,\qquad
+\left\langle|\widehat x_{T,c,k}-\gamma_k|^4\right\rangle_{\mathcal I_T^\tau}
+\ll_c\lL(T)^{-4}.
+\label{reg:fourth_clock}
+\end{equation}
+Consequently
+\begin{equation}
+\left\langle|\widehat x_{T,c,k}-\gamma_k|^2\right\rangle_{\mathcal I_T^\tau}
+\ll_c\log^{-2}T,\qquad
+\frac{\#\{k\in\mathcal I_T^\tau:
+\lL(T)|\widehat x_{T,c,k}-\gamma_k|>R\}}
+{\#\mathcal I_T^\tau}\ll_c R^{-4}\quad(R>0).
+\label{reg:second_tail}
+\end{equation}
+For consecutive targets in its range,
+\begin{equation}
+\frac1{2\lL(T)}\le
+\widehat x_{T,c,k+1}-\widehat x_{T,c,k}
+\le\frac2{\lL(T)}.
+\label{reg:gaps}
+\end{equation}
+The same moment estimates hold over $\mathcal I_T$.
+\end{theorem}
+
+\begin{proof}
+Abbreviate $C_{\mathrm{reg}}(c)$ to $C_{\mathrm{reg}}$.
+Equation~\eqref{reg:projected_fourth} supplies non-ordinates
+$\alpha\in[T/2,3T/4]$ and $\beta\in[9T/4,5T/2]$ with
+$|N(\alpha)-\widehat F_{T,c}(\alpha)|,
+|N(\beta)-\widehat F_{T,c}(\beta)|\le(8C_{\mathrm{reg}})^{1/4}$.
+On each of the two intervals, Markov's inequality leaves a set of
+measure at least $T/8$ where this holds, so non-ordinates may be chosen.
+Zero counting gives $N(T)-N(\alpha)\asymp T\log T$ and
+$N(\beta)-N(2T)\asymp T\log T$.
+Thus the target levels of $\mathcal I_T$ lie strictly between
+$\widehat F_{T,c}(\alpha)$ and $\widehat F_{T,c}(\beta)$.
+The same is true for $\mathcal I_T^\tau$, because
+$|\tau_k-\gamma_k|=O(1)$ and their endpoint indices differ from those
+of $\mathcal I_T$ by $O(\log T)$. All corresponding ordinates lie in
+$(\alpha,\beta)$ for large $T$. This proves existence of the required
+roots, using ordinates only in the proof.
+
+For an absolutely continuous increasing function $P$, the exact identity
+of Theorem~\ref{thm:identity_general} has the following endpoint form:
+\begin{equation}
+\begin{split}
+\sum_{\alpha<\gamma_k\le\beta}
+\Psi_2\bigl(k-\tfrac12-P(\gamma_k)\bigr)
+&=\int_\alpha^\beta(N-P)^4P'\,dt\\
+&\quad+\frac{(N(\beta)-P(\beta))^5
+-(N(\alpha)-P(\alpha))^5}{5}.
+\end{split}
+\label{reg:endpoint_identity}
+\end{equation}
+Indeed $(N-P)^5/5$ has derivative $-(N-P)^4P'$ between ordinates;
+at a jump of multiplicity $d$, splitting into $d$ unit jumps gives
+the displayed sum. The chain rule holds for absolutely continuous $P$,
+so the finitely many knots of a linear interpolant cause no extra terms.
+Moreover $\Psi_2(u)=u^4+u^2/2+1/80\ge u^4$.
+
+Apply \eqref{reg:endpoint_identity} with $P=\widehat F_{T,c}$.
+The integral is at most $2\lL(T)C_{\mathrm{reg}}T$ and the endpoint
+term is $O_c(1)$. Nonnegativity allows restriction of the sum to
+either $\mathcal I_T$ or $\mathcal I_T^\tau$.
+Their cardinalities are $\asymp T\lL(T)$, proving the first bound
+of \eqref{reg:fourth_clock}. The lower slope gives
+$|\widehat x_{T,c,k}-\gamma_k|\le
+2|\widehat u_{T,c,k}|/\lL(T)$.
+This proves the fourth-moment bound. Cauchy--Schwarz and Markov's
+inequality give \eqref{reg:second_tail}. The two slope bounds give
+\eqref{reg:gaps} directly.
+\end{proof}
+
+\subsection{Bounded transport with a fixed exponent}
+\begin{theorem}\label{reg:transport_theorem}
+Fix $0<c<1/4$ and $X=T^c$. For the clock just constructed,
+\begin{equation}
+\left\langle\left|
+S_X(\gamma_k)-S_X(\widehat x_{T,c,k})
+\right|^2\right\rangle_{\mathcal I_T^\tau}\ll_c1.
+\label{reg:transport_bound}
+\end{equation}
+The same estimate holds over $\mathcal I_T$.
+\end{theorem}
+
+\begin{proof}
+Let $d=|\widehat x_{T,c,k}-\gamma_k|$. On the interval joining the
+two points, monotonicity of $N$ gives $|N-\widehat F_{T,c}|$ at least
+$\mathsf a_T^{\mathrm{reg}}$ times the distance from $\widehat x_{T,c,k}$.
+For $\widehat x_{T,c,k}>\gamma_k$, use $N(t)\ge k$;
+for $\widehat x_{T,c,k}<\gamma_k$, use $N(t)\le k-1$ before $\gamma_k$.
+These statements remain valid when ordinates repeat. Thus
+\[
+\frac{(\mathsf a_T^{\mathrm{reg}})^4d^5}{5}
+\le\int_{\mathcal J_T^{\mathrm{reg}}}|N-\widehat F_{T,c}|^4\,dt,
+\qquad
+d\ll_c T^{1/5}\lL(T)^{-4/5}<T^{1/2}.
+\]
+The points lie in $[T-2T^{1/2},2T+2T^{1/2}]$ for either index set.
+The gap lower bound \eqref{reg:gaps} supplies the multiplicity bound
+directly: an interval of length $\mathfrak b_T=2\pi/\log(3T)$ contains
+at most three points, since
+$\mathfrak b_T<1/\lL(T)$ and three consecutive gaps span at least
+$3/(2\lL(T))$. Thus $\tilde n\le3$ and
+$\int\tilde n^2\le3\int\tilde n=3\mathfrak b_T\#I$
+for either index set $I$. No near-pair estimate for zeros is needed
+in this step.
+
+Take a smooth cutoff $\varphi$ equal to $1$ on the localized interval,
+supported in $[T/2,3T]$, with $|\varphi'|\ll1/T$, and set
+$g=\mathcal M(\varphi S'_X)$. Lemma~\ref{lem:sampling_rho}, with
+its bounded absolute constant in the sampling proof, yields
+\[
+\langle|g(\widehat x_{T,c,k})|^4\rangle\ll_c(1+\log X)^4.
+\]
+Here only fixed eighth derivative moments are needed. The restriction
+$c<1/4$ ensures $X^4=o(T)$, so Montgomery--Vaughan applies on the
+bounded dyadic covering of the cutoff support.
+The maximal-function inequality and Cauchy--Schwarz now give
+\[
+\begin{split}
+\langle|S_X(\gamma_k)-S_X(\widehat x_{T,c,k})|^2\rangle
+&\le4\langle|\gamma_k-\widehat x_{T,c,k}|^4\rangle^{1/2}
+\langle|g(\widehat x_{T,c,k})|^4\rangle^{1/2}\\
+&\ll_c\frac{(1+\log X)^2}{\lL(T)^2}\ll_c1.
+\end{split}
+\]
+\end{proof}
+
+\subsection{Certified inexact minimization}
+The construction need not solve \eqref{reg:projection} exactly.
+For a prescribed $0\le\eta_{\mathrm{reg}}\le1$, let
+$P_\eta=\mathsf p_{\mathbf v,T}^{\mathrm{reg}}\in\mathcal C_T^{\mathrm{reg}}$
+satisfy
+\begin{equation}
+\mathscr E_{T,c}^{\mathrm{reg}}(\mathbf v)
+\le\inf\mathscr E_{T,c}^{\mathrm{reg}}+\eta_{\mathrm{reg}}T.
+\label{reg:tolerance}
+\end{equation}
+All previous arguments apply to this interpolant with
+$C_{\mathrm{reg}}(c)$ replaced by $C_{\mathrm{reg}}(c)+8\eta_{\mathrm{reg}}$.
+Consequently, uniformly in this tolerance range and for sufficiently
+large $T$ depending only on $c$,
+\begin{equation}
+\begin{split}
+\left\langle|\widehat x_{T,c,k}^{(\eta_{\mathrm{reg}})}-\gamma_k|^4
+\right\rangle_{\mathcal I_T^\tau}
+&\ll_c\frac{1+\eta_{\mathrm{reg}}}{\log^4T},\\
+\left\langle|\widehat x_{T,c,k}^{(\eta_{\mathrm{reg}})}-\gamma_k|^2
+\right\rangle_{\mathcal I_T^\tau}
+&\ll_c\frac{1+\sqrt{\eta_{\mathrm{reg}}}}{\log^2T}.
+\end{split}
+\label{reg:inexact_clock}
+\end{equation}
+The roots and spacing bounds are obtained from the feasible nodal vector
+by \eqref{reg:inverse}; they require no zero-dependent stopping rule.
+
+Here is an explicit sufficient certificate for \eqref{reg:tolerance}.
+Let $D\mathbf v=(v_{j+1}-v_j)_j$, let $\boldsymbol\mu_+,\boldsymbol\mu_-$
+be nonnegative vectors, and abbreviate the objective to $E(\mathbf v)$.
+Put $h=\mathsf h_T^{\mathrm{reg}}$, $J=|\mathcal J_T^{\mathrm{reg}}|=5T/2$,
+$a=\mathsf a_T^{\mathrm{reg}}$, $b=\mathsf b_T^{\mathrm{reg}}$, and
+\begin{equation}
+\begin{split}
+\mathscr L(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)
+&=E(\mathbf v)+\boldsymbol\mu_+^{\mathsf T}(D\mathbf v-bh\mathbf1)
++\boldsymbol\mu_-^{\mathsf T}(ah\mathbf1-D\mathbf v),\\
+\mathbf r_{\mathrm{reg}}&=\nabla E(\mathbf v)+D^{\mathsf T}
+(\boldsymbol\mu_+-\boldsymbol\mu_-),\qquad
+A_{\mathrm{reg}}=\frac{h^2}{108J},\\
+B_{\mathrm{reg}}&=\mathscr L(\mathbf v,\boldsymbol\mu_+,\boldsymbol\mu_-)
+-\frac3{4^{4/3}}A_{\mathrm{reg}}^{-1/3}
+\|\mathbf r_{\mathrm{reg}}\|_2^{4/3}.
+\end{split}
+\label{reg:dual_certificate}
+\end{equation}
+Then $B_{\mathrm{reg}}\le\inf E$. Therefore feasibility, nonnegative
+multipliers, and $E(\mathbf v)-B_{\mathrm{reg}}\le\eta_{\mathrm{reg}}T$
+certify \eqref{reg:tolerance}. For a numerical certificate all integrals,
+gradients and final inequalities must be enclosed with directed rounding.
+
+The objective and its gradient use only the known prime model. If
+$\mathsf B_{T,i}^{\mathrm{reg}}$ is the nodal hat function, then
+\[
+\frac{\partial E}{\partial v_i}=4\int_{\mathcal J_T^{\mathrm{reg}}}
+\bigl(\mathsf p_{\mathbf v,T}^{\mathrm{reg}}-F_X\bigr)^3
+\mathsf B_{T,i}^{\mathrm{reg}}\,dt.
+\]
+
+To verify the lower bound, use the scalar identity
+\[
+(x+d)^4-x^4-4x^3d-\tfrac13d^4=6d^2(x+d/3)^2\ge0.
+\]
+The linear-interpolation mass matrix has smallest eigenvalue at least
+$h/6$ by its explicit tridiagonal entries. Hence
+\[
+\int|\mathsf p_{\mathbf d,T}^{\mathrm{reg}}|^4
+\ge J^{-1}\left(\int|\mathsf p_{\mathbf d,T}^{\mathrm{reg}}|^2\right)^2
+\ge\frac{h^2}{36J}\|\mathbf d\|_2^4.
+\]
+It follows that $\mathscr L(\mathbf v+\mathbf d)\ge
+\mathscr L(\mathbf v)+\mathbf r_{\mathrm{reg}}^{\mathsf T}\mathbf d
++A_{\mathrm{reg}}\|\mathbf d\|_2^4$.
+Minimizing the last two terms over $\mathbf d$ gives
+\eqref{reg:dual_certificate}. Weak duality proves the assertion.
+
+\paragraph{Scope and constants.}
+The construction itself has no unspecified slope, mesh, or stopping
+parameter once $T,c,\eta_{\mathrm{reg}}$ have been fixed. The analytic
+accuracy constants and the starting height still depend on the constants
+in the fixed-order external moment bounds. Equations
+\eqref{reg:comparator_constant} and \eqref{reg:projected_fourth} give a
+dependency ledger, not a numerical finite-height accuracy certificate.
+No numerical performance or historical priority is asserted here.
+The bounds are blockwise in $T$ and do not by themselves define a single
+global clock independent of the chosen height window. The bounded gap
+range \eqref{reg:gaps} is imposed by the regularization; it is not a
+claim about the fine spacing distribution of zeta zeros.
