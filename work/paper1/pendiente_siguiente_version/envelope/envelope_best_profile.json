@@ -1,0 +1,41 @@
+{
+ "M_heath_brown": 3000,
+ "interval_dps": 50,
+ "results": {
+  "v7: Bourgain + A-process, J=30": {
+   "vertices": 32,
+   "C_lower": "0.09681511427905376702049996",
+   "C_upper": "0.09681511427905376702049996",
+   "2piC_lower": "0.608307303551063",
+   "2piC_upper": "0.608307303551063"
+  },
+  "Bourgain + Heath-Brown chain": {
+   "vertices": 2999,
+   "C_lower": "0.09760789469920844093569143",
+   "C_upper": "0.09760789469920844093569143",
+   "2piC_lower": "0.613288489838799",
+   "2piC_upper": "0.613288489838799"
+  },
+  "TY23 hull: Bourgain + TY23 pairs + A-images + Heath-Brown chain": {
+   "vertices": 3006,
+   "C_lower": "0.09646925276204008612190894",
+   "C_upper": "0.09646925276204008612190894",
+   "2piC_lower": "0.606134191549044",
+   "2piC_upper": "0.606134191549044"
+  },
+  "TY23 hull + TTY25 new pairs": {
+   "vertices": 3006,
+   "C_lower": "0.09645144989767889613306683",
+   "C_upper": "0.09645144989767889613306683",
+   "2piC_lower": "0.606022332853264",
+   "2piC_upper": "0.606022332853264"
+  },
+  "Lindelof hypothesis (e = 0 on [1/2,1]), ceiling of the method": {
+   "vertices": 2,
+   "C_lower": "0.07862527909020537718456419",
+   "C_upper": "0.07862527909020537718456419",
+   "2piC_lower": "0.494017198352473",
+   "2piC_upper": "0.494017198352473"
+  }
+ }
+}

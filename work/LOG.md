@@ -121,3 +121,9 @@
 ## 2026-10-19 15:06 UTC — [claude] — Paper I v8 withdrawn (not ordered by the author)
 - The author had not ordered a v8; the v8 package (8fe0f8d) is removed. Current version: v7.
 - The findings stay recorded as pending changes for the next version: work/paper1/pendiente_siguiente_version/patch_pending_claude.py (applies to the v7 source) and source_audit_pending.json. They are: Fujii 1974 p. 225 non-strict hypotheses (v7's "strict" remark is wrong), Fujii 1981 corrections and (alpha'), Korolev 2016 Lemma 3.13 with (c0 k)^{2k} (Ivic-Korolev omit k^{2k}).
+
+## 2026-10-19 15:17 UTC — [claude] — Theorem E with the best published exponent profiles (pending for v8, no version)
+- Program: work/paper1/pendiente_siguiente_version/envelope/envelope_best_profile.py (closed-form integrals in mpmath interval arithmetic, 50 digits); output .txt/.json next to it.
+- Same integral (eq:envelope_formula), profile = lower convex hull in (sigma, mu) of mu(l-k) <= k over: Bourgain (13/84,55/84); Trudgian-Yang Lemma 1.1 pairs (4742/38463,...), (18/199,...), (2779/38033,...), (715/10238,...); A-process images; Heath-Brown 2017 pairs (TY23 (1.9)), m <= 3000; optionally Tao-Trudgian-Yang 2025 Thm 20 pairs.
+- Results (certified upper ends): v7 profile 2piC = 0.6083073; TY23 hull 2piC <= 0.6061342; + TTY25 pairs 2piC <= 0.6060224; Bourgain + Heath-Brown chain alone 0.6132885 (worse). Ceiling of the method under Lindelof: 2piC = 0.4940172.
+- To verify before use: Heath-Brown 2017 pairs in the original (only via TY23 (1.9) so far); publication status of TY23 (to appear in Math. Comp. per TTY25) and TTY25 (arXiv).
