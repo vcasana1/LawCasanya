@@ -1,0 +1,29 @@
+{
+  "height_T": 267653395647,
+  "odlyzko_block": "zeros3",
+  "global_indices": [1000000000001, 1000000010000],
+  "important_correction": "The previously generated zCasanya_1e12 used frozen empirical c667=[8,8,512]. At this height 512 is not the theoretical cutoff implied by the manuscript.",
+  "theorem_7_3_admissible_cutoff_max": 517352,
+  "theorem_7_3_reason": "X <= T^(1/2)",
+  "corollary_7_4_formal_X": 2086425,
+  "corollary_7_4_note": "At this finite T, 1/sqrt(log log T) > 1/2, so the formal corollary cutoff exceeds the proved range of Theorem 7.3.",
+  "sample": {
+    "type": "320 evenly spaced zeros from Odlyzko zeros3",
+    "power_sharp_iterated_8_8_X": [
+      {"X":512,"RMS":0.052811993927044734,"MAE":0.04310549253656839,"improved_pct":70.625},
+      {"X":2048,"RMS":0.04530223391418035,"MAE":0.03697072460361015,"improved_pct":73.125},
+      {"X":8192,"RMS":0.04005048193608698,"MAE":0.03222510007584056,"improved_pct":77.1875},
+      {"X":32768,"RMS":0.03481453505048819,"MAE":0.02684840096101797,"improved_pct":77.5},
+      {"X":131072,"RMS":0.02937726363474116,"MAE":0.021534033057343773,"improved_pct":83.4375},
+      {"X":517352,"RMS":0.02802782865325526,"MAE":0.020283556775442104,"improved_pct":85.625},
+      {"X":2086425,"RMS":0.02821020798458949,"MAE":0.0205532042729636,"improved_pct":83.125}
+    ],
+    "theorem_euler_one_step_X_517352": {
+      "prime_count": 42853,
+      "RMS": 0.040612885107394726,
+      "MAE": 0.02786860285207767,
+      "max_abs": 0.1929165457218005,
+      "improved_pct": 83.75
+    }
+  }
+}
