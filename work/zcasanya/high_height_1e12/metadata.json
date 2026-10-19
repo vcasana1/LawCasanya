@@ -1,0 +1,38 @@
+{
+  "source": "Odlyzko zeros3 mirrored verbatim from NagusameCS/HyperTensor",
+  "source_path": "data/odlyzko/zeros3",
+  "base": 267653395647,
+  "first_global_index": 1000000000001,
+  "last_global_index": 1000000010000,
+  "records": 10000,
+  "zero_accuracy_note": "Odlyzko header: guaranteed accurate only within 1e-8",
+  "construction": {
+    "zLamb": "2*pi*(n-11/8)/W((n-11/8)/e)",
+    "zCasanya": "c667 power_sharp dyadic; at this height effective cutoffs [8,8,512]",
+    "clock_residual_policy": "exact Lambert clock residual set to zero to avoid catastrophic cancellation at n~1e12"
+  },
+  "rms_Lamb": 0.09943885002496979,
+  "rms_Casanya": 0.05078959001979316,
+  "mae_Lamb": 0.07998474141700126,
+  "mae_Casanya": 0.04112652472934473,
+  "max_Lamb": 0.37009179234996736,
+  "max_Casanya": 0.17336958811249303,
+  "percent_indices_improved": 72.92,
+  "first": {
+    "gamma_offset": 1.8475231278,
+    "lamb_offset": 2.002197265625,
+    "casanya_offset": 1.903167724609375,
+    "gamma_abs": 267653395648.84753,
+    "lamb_abs": 267653395649.0022,
+    "casanya_abs": 267653395648.90317
+  },
+  "last": {
+    "gamma_offset": 2569.0462708995,
+    "lamb_offset": 2568.921905517578,
+    "casanya_offset": 2568.967254638672,
+    "gamma_abs": 267653398216.04626,
+    "lamb_abs": 267653398215.9219,
+    "casanya_abs": 267653398215.96725
+  },
+  "storage_note": "Absolute float64 bins are compatibility copies. Offset bins preserve local differences much better at height 2.676e11."
+}
