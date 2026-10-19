@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-19",
+  "bibliography": {
+    "Titchmarsh1986": {
+      "status": "checked in supplied PDF at specified passages",
+      "passages": [
+        "p. 175 (7.20.1)",
+        "p. 246 (9.25.2)--(9.25.4)"
+      ],
+      "sha256": "4ad89cb2854f7782b0607895d6d7285fdb873c8257c5bf32c7fa48501f3b2244"
+    },
+    "FazzariGerspachMinelli2025": {
+      "status": "checked in supplied PDF",
+      "passages": [
+        "p. 7 (3.6), fixed moment 2 and exponent 1/200"
+      ],
+      "sha256": "f187e540cef0a885504ec91b08accb6cf2806040ff738a1e7f20351c5a5bbd0c"
+    },
+    "BellottiWong2025": {
+      "status": "checked in supplied PDF",
+      "passages": [
+        "p. 1 Theorem 1.1",
+        "p. 2 Table 1",
+        "p. 4 Corollary 1.5"
+      ],
+      "sha256": "9299073e0fbb836ca744790e5ac2c03a496df3194409aaa87832ba6161ead3b5"
+    },
+    "Korolev2012": {
+      "status": "checked in supplied PDF for stated classical comparison",
+      "passages": [
+        "pp. 2--3 displacement definitions and historical statements",
+        "p. 15 fixed-order even and odd displacement moments"
+      ],
+      "sha256": "7ac02127908232bed49b1c841b717b5f33f32d538031a73b60161ee66c1d46a8"
+    },
+    "Billingsley1995": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Bourgain2017": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Carleson1966": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Corless1996": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Folland1999": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Fujii1974": {
+      "status": "original PDF unavailable for this revision; verification pending",
+      "material_dependency": "High-moment constants, exact cutoff exponent, and corrections can affect the tail and uniform-iteration proofs."
+    },
+    "Fujii1981": {
+      "status": "original PDF unavailable for this revision; verification pending",
+      "material_dependency": "High-moment constants, exact cutoff exponent, and corrections can affect the tail and uniform-iteration proofs."
+    },
+    "HasanalizadeShenWong2022": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Hunt1968": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Ivic1985": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Kinnunen1997": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Korolev2011": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Lerner2013": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Littlewood1924": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Mertens1874": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "MontgomeryVaughan1974": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision",
+      "secondary_check": "Weighted mean-value statement checked in Titchmarsh--Heath-Brown p. 175 (7.20.1); original article not checked."
+    },
+    "Selberg1946a": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision",
+      "secondary_check": "Classical moment estimates checked in Titchmarsh--Heath-Brown section 9.25 and Korolev; original paper not checked."
+    },
+    "Selberg1946b": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Stein1970": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Tenenbaum2015": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Trudgian2010": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Trudgian2014": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "TrudgianYang2023": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    },
+    "Tsang1984": {
+      "status": "reference inherited from the complete base article; original not independently re-read in this revision"
+    }
+  },
+  "scope": "A complete inventory of source-check status, not a claim that every original has been independently verified. A bibliography entry does not count as reading a source.",
+  "removed_attributions": [
+    "Specific comparisons with Franca--LeClair and LeClair requiring unavailable original passages"
+  ],
+  "not_used": [
+    "Turing zero-certification assertions",
+    "Selberg critical-line proportion as an input",
+    "Pratt--Robles--Zaharescu--Zeindler as an input"
+  ],
+  "priority": "No exhaustive priority search; no novelty claim for the isolated O(log(T)^(-2)) rate.",
+  "review_limit": "The pre-existing A--E proof structure is preserved. This revision is not an independent certification of every external input or every proof step.",
+  "notation": "No new mathematical symbol is introduced for a new point construction in this revision. Existing recurring symbols and local dummy variables remain distinguished."
+}
