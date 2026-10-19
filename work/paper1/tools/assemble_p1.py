@@ -243,6 +243,11 @@ old = r"\CGeqref{eq:s_bounds} reads $L+\frac12\le x\le U-\frac12$ with $x=s_k-\v
 new = r"\CGeqref{eq:s_bounds} reads $S^-+\frac12\le x\le S^+-\frac12$ with $x=s_k-\varpi(\gamma_k)/\pi$, $S^-=S(\gamma_k^-)$, $S^+=S(\gamma_k^+)$, and $S^+-S^-=\nu(\gamma_k)\ge1$. Put $\mathsf m=\max(|S^-|,|S^+|)$. Then $x\le S^+-\frac12\le\mathsf m-\frac12$ and $x\ge S^-+\frac12\ge-\mathsf m+\frac12$, which is \CGeqref{eq:s_S_bound}."
 notation = must_replace(notation, old, new)
 
+import importlib.util as _ilu, os as _os
+_spec=_ilu.spec_from_file_location('edits_v3', _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'edits_v3.py')); _m=_ilu.module_from_spec(_spec); _spec.loader.exec_module(_m)
+_ns={'must_replace':must_replace,'sub_block':sub_block,'theory':theory,'envelope':envelope,'external':external}
+_m.apply(_ns); theory=_ns['theory']; envelope=_ns['envelope']; external=_ns['external']
+
 # ---- bibliography: keep cited entries, add new ones
 bib_start = next(i for i, l in enumerate(L) if l.startswith(r'\begin{thebibliography}'))
 bib_end = next(i for i, l in enumerate(L) if l.startswith(r'\end{thebibliography}'))

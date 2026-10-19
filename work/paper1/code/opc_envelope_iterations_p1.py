@@ -60,11 +60,13 @@ for J in range(0, 31):
         (s0, k0), (s1, k1) = P[-3], P[-2]
         below = bool(k1 < k0 * (1 - s1) / (1 - s0))
     c = coefficient(P)
+    sJ, kJ = P[-2]
+    tail = 3 * mp.mpf(kJ) * mp.sqrt(1 - mp.mpf(sJ)) / (2 * mp.pi * mp.log(2))   # bound for C_J - C_inf (Theorem E, 'The limit')
     rows.append(dict(J=J, last_vertex=[str(P[-2][0]), str(P[-2][1])], below_chord=below,
-                     C_J=mp.nstr(c, 20), two_pi_C_J=mp.nstr(2 * mp.pi * c, 20),
+                     C_J=mp.nstr(c, 20), two_pi_C_J=mp.nstr(2 * mp.pi * c, 20), bound_CJ_minus_Cinf=mp.nstr(tail, 6),
                      decrease=None if prev is None else mp.nstr(prev - c, 6)))
     lines.append(f"J={J:2d}  sigma_J={float(P[-2][0]):.8f}  below_chord={below}  C_J={mp.nstr(c, 16)}  "
-                 f"2pi*C_J={mp.nstr(2 * mp.pi * c, 12)}" + ("" if prev is None else f"  decrease={mp.nstr(prev - c, 4)}"))
+                 f"2pi*C_J={mp.nstr(2 * mp.pi * c, 12)}  C_J-C_inf<={mp.nstr(tail, 4)}" + ("" if prev is None else f"  decrease={mp.nstr(prev - c, 4)}"))
     prev = c
 os.makedirs(OUT, exist_ok=True)
 json.dump(rows, open(os.path.join(OUT, 'envelope_iterations_p1.json'), 'w'), indent=1)

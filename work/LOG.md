@@ -63,3 +63,9 @@
 - Bibliography: Trudgian2010 → Math. Comp. 81 (2012) 1053–1061 with DOI (preprint arXiv:1010.4596; the 0.1013 statement is in §5 of the preprint); Fujii 1981 (Part II with corrections to Part I) added with % VERIFICAR (volume/pages/DOI not checked).
 - No appendix: the two programs stay in work/paper1/code and are named in Data availability. 40 pp.
 - Files: work/paper1/manuscript/prime_corrected_clock_v2.{tex,txt,pdf}, prime_corrected_clock_v2.zip; tools/assemble_p1.py carries every edit; v1 kept.
+
+## 2026-10-19 — [claude] — Paper I v3: added hypothesis removed, three new unconditional results
+- The range condition r ≤ log T/(4 log(2 log T)) added in v2 to the higher-moments lemma is gone: the boundary term is bounded for every admissible r by a two-case argument (r ≥ √(2 log T/C): (2 log T)^{2r+1} ≤ (Cr²)^{2r} T log T; r < √(2 log T/C): it is ≤ T^{1/2}).
+- New: Theorem thm:tails (exponential tails of the ordinal defect: #{|u_k(X)| > λ} ≤ 2^{2−√(λ/C₈)} #I_T for X = T^c, exp(−(λ/C₈)^{3/2}) ≤ c ≤ 1/(C₈√λ); proof: moments of order 2r ≍ √λ + Chebyshev); Corollary cor:clock_tails (tails λ^{−2q} of the j-th corrected clock from the induction claim); Lemma lem:sorted + Corollary cor:sorted_clock (the sorted m*-step clock is increasing with the same O(1) error; lemma recovered from v17).
+- Theorem E restated with the limit: C_J decreases to C_∞ = 0.0968151142790… (0 ≤ C_J − C_∞ ≤ 3k_J√(1−σ_J)/(2π log 2), proved; at J = 30 the bound is 4.6e−15), limsup|τ_k−γ_k| ≤ 2πC_∞ = 0.608307303…; program prints the bound.
+- Files: work/paper1/manuscript/prime_corrected_clock_v3.{tex,txt,pdf} (43 pp.), prime_corrected_clock_v3.zip; tools/edits_v3.py (imported by assemble_p1.py).
