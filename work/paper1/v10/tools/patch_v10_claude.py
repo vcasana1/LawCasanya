@@ -26,9 +26,9 @@ def rep(old, new):
 
 # ================================================================ abstract
 rep(r"""in units of $\sqrt{H_m}$; (E)""",
-    r"""in units of $\sqrt{H_m}$; (D$'$) with a fixed cutoff $X=T^c$, the best $L^4$ approximation of $\NO+S_X$ on $[\frac T2,3T]$ by piecewise linear functions with slopes between $\frac{\log T}{4\pi}$ and $\frac{\log T}\pi$ is unique and is computed without zeros, its level points $\widehat x_k$ are increasing with gaps between $\pi/\log T$ and $4\pi/\log T$, and $\langle|\widehat x_k-\gamma_k|^4\rangle_{\IT}\ll(1+\log\frac1c)^2/\log^4T$ uniformly for $2\le X\le T^{1/3}$: one step and a fixed power of the height suffice; (E)""")
+    r"""in units of $\sqrt{H_m}$; (D$'$) with a fixed cutoff $X=T^c$, the best $L^4$ approximation of $\NO+S_X$ on $[\frac T2,3T]$ by piecewise linear functions on a mesh of step at most $2\pi/\log T$ with slopes between $\frac{\log T}{4\pi}$ and $\frac{\log T}\pi$ is unique and is computed without zeros, its level points $\widehat x_k$ are increasing with gaps between $\pi/\log T$ and $4\pi/\log T$, and $\langle|\widehat x_k-\gamma_k|^4\rangle_{\IT}\ll(1+\log\frac1c)^2/\log^4T$ uniformly for $2\le X\le T^{1/3}$: no Newton iteration is needed and a fixed power of the height suffices; (E)""")
 rep(r"""The clock equation corrected by the primes $p\le X$ is, up to the term $1/(48t)$ of Stirling's series, the prime equation proposed by LeClair for the $n$-th zero, whose accuracy was estimated there numerically; for $p_N\le T^{1/2}$, (B) and (D) are proved statements about that equation at the true ordinates and about explicit corrected points.""",
-    r"""The clock is the Riemann--von Mangoldt main term inverted by Lambert's function; the same clock equation corrected by the first $N$ primes was solved numerically by LeClair, and the zeros of Gonek's finite Euler products solve a version of it with smoothed weights, with accuracy supported numerically in both cases; for $X\le T^{1/2}$, (B), (D) and (D$'$) are proved statements about this equation at the true ordinates and about explicit points.""")
+    r"""The clock is the Riemann--von Mangoldt main term inverted by Lambert's function; the same clock equation corrected by the first $N$ primes was solved numerically by LeClair, and the zeros of Gonek's functions $\zeta_X$, built from finite Euler products, solve a version of it with smoothed weights, with accuracy supported numerically in both cases; (B) and (D), for $X\le T^{1/2}$, are proved statements about this equation at the true ordinates and about explicit points, and (D$'$), for $X\le T^{1/3}$, about points defined by a convex program in $\NO$ and $S_X$.""")
 
 # ================================================================ intro: program, degree, known results
 rep(r"""by one or several Newton-type steps for the corrected equation $\NO(t)+S_X(t)=k-\frac12$ from $t=\tau_k$, with cutoffs that depend only on the height. Every corrected point is a closed expression in $k$, $\tau_k$ and the primes:""",
@@ -40,11 +40,11 @@ rep(r"""its first approximation, without the argument, is solved by the Lambert 
 rep(r"""LeClair \cite[\S VI, (49), p.~18]{LeClair2021} replaces $\arg\zeta$ by the Euler phase of the first $N$ primes; the resulting equation no longer contains $\zeta$, and it is, up to the term $1/(48t)$ of Stirling's series, the corrected clock equation $\NO(t)+S_X(t)=n-\frac12$ of this paper with $X=p_N$. It is solved there by a root finder, adding one prime at a time from the Lambert value.""",
     r"""LeClair \cite[\S VI, (49), p.~18]{LeClair2021} replaces $\arg\zeta$ by the Euler phase of the first $N$ primes; the resulting equation contains no $\zeta$, and, up to the term $1/(48t)$ of Stirling's series, it is the clock equation corrected by the primes, $\NO(t)+S_X(t)=n-\frac12$ with $X=p_N$. It is solved there by a root finder, adding one prime at a time from the Lambert value.""")
 rep(r"""For $p_N\le T^{1/2}$, Theorem B below is a statement about LeClair's equation at the true ordinates, and Theorem D about explicit corrected points that replace its root finder (Table~\CGref{tab:evaluates});""",
-    r"""For $p_N\le T^{1/2}$, Theorem B below is a statement about this equation at the true ordinates, and Theorems D and D$'$ about explicit points that replace the root finder (Table~\CGref{tab:evaluates});""")
+    r"""For $p_N\le T^{1/2}$, Theorem B below is a statement about this equation at the true ordinates and Theorem D about explicit points that replace the root finder, and for $p_N\le T^{1/3}$ Theorem D$'$ is a statement about points defined by a convex program in $\NO$ and $S_X$ (Table~\CGref{tab:evaluates});""")
 rep(r"""lie inside it.
 \end{itemize}""",
     r"""lie inside it.
-\item Gonek's finite Euler products $\zeta_X(s)=P_X(s)+\chi(s)\overline{P_X(s)}$, with $P_X$ the exponential of a sum over $n\le X^2$ with weights $\Lambda_X(n)$ \cite[(7), \S5]{Gonek2012}, have all their zeros above a fixed height on the critical line \cite[Thm.~6.2]{Gonek2012}. On the line $\zeta_X(\frac12+it)=2e^{-i\vartheta(t)}\Re\bigl(e^{i\vartheta(t)}P_X(\frac12+it)\bigr)$, so these zeros are the solutions of $\NO(t)+\widetilde S_X(t)+\varpi(t)/\pi\in\mathbb Z+\frac12$, where $\pi\widetilde S_X(t)=\Im\log P_X(\frac12+it)$ is the prime phase with Gonek's weights: a corrected clock equation with smoothed weights. Their closeness to the zeros of $\zeta$ is supported numerically there; under the Riemann hypothesis, a modified function $\zeta_X^*$ has, for $X$ large depending on the interval, no zero in a closed interval between consecutive ordinates \cite[Thm.~9.1]{Gonek2012}.
+\item Gonek's functions $\zeta_X(s)=P_X(s)+\chi(s)\overline{P_X(s)}$, built from the finite Euler product $P_X$, the exponential of a sum over $n\le X^2$ with weights $\Lambda_X(n)$ \cite[(7) and \S5]{Gonek2012}, have all their zeros above a fixed height on the critical line \cite[Thm.~6.2]{Gonek2012}. On the line $\zeta_X(\frac12+it)=2e^{-i\vartheta(t)}\Re\bigl(e^{i\vartheta(t)}P_X(\frac12+it)\bigr)$, so these zeros are the solutions of $\NO(t)+\widetilde S_X(t)+\varpi(t)/\pi\in\mathbb Z+\frac12$, where $\pi\widetilde S_X(t)=\Im\log P_X(\frac12+it)$ is the prime phase with Gonek's weights: a corrected clock equation with smoothed weights. Their closeness to the zeros of $\zeta$ is supported numerically there; under the Riemann hypothesis, a modified function $\zeta_X^*$ has, for $X$ large depending on the interval, no zero in a closed interval between consecutive ordinates \cite[Thm.~9.1]{Gonek2012}.
 \end{itemize}""")
 
 # ================================================================ tab:antecedents
@@ -55,9 +55,9 @@ rep(r"""Prime equation for the $n$-th zero
 & The equation with $\arg\zeta$ \cite[(20)]{FrancaLeClair2015}; the clock equation corrected by the first $N$ primes \cite[(49)]{LeClair2021}; with smoothed weights, the equation of the zeros of Gonek's $\zeta_X$ \cite[Thm.~6.2]{Gonek2012}. Accuracy shown by comparison with known zeros \cite[Table~I]{LeClair2021}, without a proved error bound.
 & For $p_N\le T^{1/2}$, Theorem~\CGref{thm:main} gives the mean-square defect of the corrected clock equation at the true ordinates;""")
 rep(r"""Theorems~\CGref{thm:computable_clock}--\CGref{thm:uniform_iteration} replace the root finder by explicit steps with proved mean-square error.\\""",
-    r"""Theorems~\CGref{thm:computable_clock}--\CGref{thm:uniform_iteration} replace the root finder by explicit steps with proved mean-square error, and Theorem~\CGref{thm:regularized_clock} by one regularization with a fixed cutoff.\\""")
+    r"""Theorems~\CGref{thm:computable_clock}--\CGref{thm:uniform_iteration} replace the root finder by explicit steps with proved mean-square error, and, for $p_N\le T^{1/3}$, Theorem~\CGref{thm:regularized_clock} by one convex regularization with a fixed cutoff exponent.\\""")
 rep(r"""& Theorem~\CGref{thm:uniform_iteration} gives uniform control through $\log^*T+O(1)$ prescribed corrections, with a multiplicity estimate. Corollary~\CGref{cor:sorted_clock} gives a nondecreasing output with height MSE $O(\log^{-2}T)$.""",
-    r"""& Theorem~\CGref{thm:uniform_iteration} gives uniform control through $\log^*T+O(1)$ prescribed corrections, with a multiplicity estimate. Corollary~\CGref{cor:sorted_clock} gives a nondecreasing output with height MSE $O(\log^{-2}T)$. Theorem~\CGref{thm:regularized_clock} gives the same scale in one step with a fixed cutoff, in fourth mean, with increasing points separated by at least $\pi/\log T$; its points are defined by a convex program on the whole block, not index by index.""")
+    r"""& Theorem~\CGref{thm:uniform_iteration} gives uniform control through $\log^*T+O(1)$ prescribed corrections, with a multiplicity estimate. Corollary~\CGref{cor:sorted_clock} gives a nondecreasing output with height MSE $O(\log^{-2}T)$. Theorem~\CGref{thm:regularized_clock} gives the same scale without Newton iteration, with a fixed cutoff exponent, in fourth mean, with increasing points separated by at least $\pi/\log T$; its points are defined by a convex program on the whole block, not index by index.""")
 
 # ================================================================ tab:evaluates
 rep(r"""Lambert formula \cite[(63)]{FrancaLeClair2015} $=$ clock $\tau_k$
@@ -72,7 +72,7 @@ rep(r"""& Estimated numerically \cite[Table~I]{LeClair2021}; argued from $S(t)=O
     r"""& Estimated numerically \cite[Table~I]{LeClair2021}; argued from $S(t)=O(1)$, which is false.\\
 Zeros of Gonek's $\zeta_X$ \cite{Gonek2012}
 & The prime powers $n\le X^2$ with weights $\Lambda_X(n)$; the zeros are computed numerically. No $\zeta$, no zero.
-& On the critical line above a fixed height (proved); closeness to the zeros of $\zeta$ supported numerically.\\""")
+& On the critical line above a fixed height (proved); closeness to the zeros of $\zeta$ supported numerically; under RH, for a modified $\zeta_X^*$, no zeros between consecutive ordinates for $X$ large, without rate \cite[Thm.~9.1]{Gonek2012}.\\""")
 rep(r"""& Proved: defect at the ordinates (B), mean-square error in height, $O(1)$ mean spacings after $\log^*T+O(1)$ steps, tails (D).\\""",
     r"""& Proved: defect at the ordinates (B), mean-square error in height, $O(1)$ mean spacings after $\log^*T+O(1)$ steps, tails (D).\\
 Theorem D$'$ (this paper)
@@ -86,15 +86,15 @@ rep(r"""\item \textbf{The pointwise envelope} (Proposition~\CGref{prop:envelope_
 \frac1{\#\IT}\sum_{k\in\IT}\bigl|\widehat x_k-\gamma_k\bigr|^4\ll\frac{(1+\log(1/c))^2}{\log^4T},
 \label{eq:intro_Dprime}
 \end{equation}
-with absolute constants. For fixed $c$ this is the scale of one mean spacing, reached in one step without iteration, sorting or growing cutoffs. If $X\le T^{1/4}$, the transport $S_X(\gamma_k)-S_X(\widehat x_k)$ is bounded in mean square. The price is locality: $\widehat x_k$ depends on $S_X$ on the whole block, through a convex program with $\asymp T\log T$ variables, whereas the Newton-type points of Theorem D are explicit index by index.
+with absolute constants. For fixed $c$ this is the scale of one mean spacing, reached without Newton iteration or sorting, with a fixed cutoff exponent. If $X\le T^{1/4}$, the transport $S_X(\gamma_k)-S_X(\widehat x_k)$ is bounded in mean square. The price is locality: $\widehat x_k$ depends on $S_X$ on the whole block, through a convex program with $\asymp T\log T$ variables, whereas the Newton-type points of Theorem D are explicit index by index.
 \item \textbf{The pointwise envelope} (Proposition~\CGref{prop:envelope_equivalence} and Theorem~\CGref{thm:envelope}).""")
 rep(r"""iterating the Newton-type step brings it down to $O(1)$.""",
-    r"""iterating the Newton-type step brings it down to $O(1)$, and the regularization of Theorem D$'$ does so in one step with a fixed cutoff $X=T^c$.""")
+    r"""iterating the Newton-type step brings it down to $O(1)$, and the regularization of Theorem D$'$ does so without Newton iteration, with a fixed cutoff exponent.""")
 
 # ================================================================ tab:status
 rep(r"""& unconditional & zero-free corrected points with mean-square error $O(1)$ mean spacings & no ($k$, $\tau_k$, primes)\\""",
     r"""& unconditional & zero-free corrected points with mean-square error $O(1)$ mean spacings & no ($k$, $\tau_k$, primes)\\
-Theorem~\CGref{thm:regularized_clock} (D$'$) & unconditional & one step, fixed cutoff, fourth mean $O(1)$ mean spacings, separated increasing points & no ($\NO$, primes)\\""")
+Theorem~\CGref{thm:regularized_clock} (D$'$) & unconditional & no Newton iteration, fixed cutoff exponent, fourth mean $O(1)$ mean spacings, separated increasing points & no ($\NO$, primes)\\""")
 
 # ================================================================ organization
 rep(r"""Section~\CGref{sec:iteration} iterates the Newton-type step uniformly in the number of steps, and Section~\CGref{sec:envelope} proves Theorem E.""",
@@ -111,10 +111,10 @@ NEW_SECTION = r"""%=============================================================
 \section{\texorpdfstring{Theorem D$'$}{Theorem D'}: a regularized clock with a fixed cutoff}
 \label{sec:regularized}
 
-For a fixed cutoff exponent the one-step clock is controlled in mean square if and only if its transport is (Remark~\CGref{rem:newton}), and this is not proved here. The construction below avoids the transport from $\tau_k$: it replaces $F_X=\NO+S_X$ by its best $L^4$ approximation among increasing piecewise linear functions with slopes comparable to $\lL$, and solves the clock equation for that function. A fixed power of the height then suffices, in one step.
+For a fixed cutoff exponent the one-step clock is controlled in mean square if and only if its transport is (Remark~\CGref{rem:newton}), and this is not proved here. The construction below avoids the transport from $\tau_k$: it replaces $F_X=\NO+S_X$ by its best $L^4$ approximation among increasing piecewise linear functions with slopes comparable to $\lL$, and solves the clock equation for that function. A fixed power of the height then suffices, without Newton iteration.
 
 \subsection{The construction}
-For $T\ge T_0$ let $\Lambda_T=\frac{\log T}{2\pi}$, $\mathsf J_T=[\frac T2,3T]$, $\mathsf M_T=\lceil\frac52T\Lambda_T\rceil$, $\eta_T=\frac{5T}{2\mathsf M_T}\le\Lambda_T^{-1}$ and $t_i=\frac T2+i\eta_T$, $0\le i\le\mathsf M_T$. Let $\mathcal K_T$ be the set of continuous functions $P$ on $\mathsf J_T$ that are linear on each $[t_{i-1},t_i]$ with slope in $[\frac12\Lambda_T,2\Lambda_T]$. For $X\ge2$ let $F_X=\NO+S_X$.
+For $T\ge T_0$ let $\Lambda_T=\frac{\log T}{2\pi}$, $\mathsf J_T=[\frac T2,3T]$, $\mathsf L_T=\lceil\frac52T\Lambda_T\rceil$, $\varsigma_T=\frac{5T}{2\mathsf L_T}\le\Lambda_T^{-1}$ and $\mathsf t_i=\frac T2+i\varsigma_T$, $0\le i\le\mathsf L_T$. Let $\mathcal K_T$ be the set of continuous functions $P$ on $\mathsf J_T$ that are linear on each $[\mathsf t_{i-1},\mathsf t_i]$ with slope in $[\frac12\Lambda_T,2\Lambda_T]$. For $X\ge2$ let $F_X=\NO+S_X$.
 
 \begin{definition}[Regularized clock]\label{def:regularized}
 $\widehat F=\widehat F_{T,X}$ is the element of $\mathcal K_T$ that minimizes $\int_{\mathsf J_T}|P-F_X|^4\,dt$ over $P\in\mathcal K_T$. For every integer $k$ with $\widehat F(\frac T2)<k-\frac12<\widehat F(3T)$, $\widehat x_k=\widehat x_k(T,X)\in\mathsf J_T$ is the solution of $\widehat F(\widehat x_k)=k-\frac12$, and $\widehat u_k=k-\frac12-\widehat F(\gamma_k)$ when $\gamma_k\in\mathsf J_T$.
@@ -130,7 +130,7 @@ whenever both points are defined. $\widehat F$ and the $\widehat x_k$ depend onl
 \end{lemma}
 
 \begin{proof}
-For $T\ge T_0$ and $t\in[\frac T2-1,3T+1]$, $\NO'(t)=\lL(t)=\frac1{2\pi}\log\frac t{2\pi}\in[\frac34\Lambda_T,\frac54\Lambda_T]$. An element of $\mathcal K_T$ is determined by its nodal values $v=(v_0,\dots,v_{\mathsf M_T})$, and $\mathcal K_T$ corresponds to the closed convex polyhedron $\{v:\frac12\Lambda_T\eta_T\le v_i-v_{i-1}\le2\Lambda_T\eta_T\}$; it contains the interpolation of $\NO$, whose chord slopes are values of $\NO'$. The functional $\Phi(v)=\int_{\mathsf J_T}|P_v-F_X|^4\,dt$ is continuous; it is strictly convex, because $z\mapsto|z|^4$ is strictly convex and $P_v\ne P_w$ on a set of positive measure when $v\ne w$; and it tends to infinity on the polyhedron as $|v|\to\infty$, because the slopes are bounded and $F_X$ is bounded on $\mathsf J_T$, so $|v_0|\to\infty$ and $|P_v-F_X|\to\infty$ uniformly. Hence there is a unique minimizer. The slope bounds give strict monotonicity and the uniqueness of $\widehat x_k$, and $1=\widehat F(\widehat x_{k+1})-\widehat F(\widehat x_k)$ lies between $\frac12\Lambda_T$ and $2\Lambda_T$ times $\widehat x_{k+1}-\widehat x_k$, which is \CGeqref{eq:regularized_gaps}. The data of the program are $\NO$ and $S_X$.
+For $T\ge T_0$ and $t\in[\frac T2-1,3T+1]$, $\NO'(t)=\lL(t)=\frac1{2\pi}\log\frac t{2\pi}\in[\frac34\Lambda_T,\frac54\Lambda_T]$. An element of $\mathcal K_T$ is determined by its nodal values $v=(v_0,\dots,v_{\mathsf L_T})$, and $\mathcal K_T$ corresponds to the closed convex polyhedron $\{v:\frac12\Lambda_T\varsigma_T\le v_i-v_{i-1}\le2\Lambda_T\varsigma_T\}$; it contains the interpolation of $\NO$, whose chord slopes are values of $\NO'$. The functional $\Phi(v)=\int_{\mathsf J_T}|P_v-F_X|^4\,dt$ is continuous; it is strictly convex, because $z\mapsto|z|^4$ is strictly convex and $P_v\ne P_w$ on a set of positive measure when $v\ne w$; and it tends to infinity on the polyhedron as $|v|\to\infty$, because the slopes are bounded and $F_X$ is bounded on $\mathsf J_T$, so $|v_0|\to\infty$ and $|P_v-F_X|\to\infty$ uniformly. Hence there is a unique minimizer. The slope bounds give strict monotonicity and the uniqueness of $\widehat x_k$, and $1=\widehat F(\widehat x_{k+1})-\widehat F(\widehat x_k)$ lies between $\frac12\Lambda_T$ and $2\Lambda_T$ times $\widehat x_{k+1}-\widehat x_k$, which is \CGeqref{eq:regularized_gaps}. The data of the program are $\NO$ and $S_X$.
 \end{proof}
 
 \subsection{Three lemmas}
@@ -152,7 +152,7 @@ Let $\mathsf a=\frac12\Lambda_T$, $\mathsf b=2\Lambda_T$, $h_j=j/\Lambda_T$, $\p
 \[
 H(t)=\sup_{s\in\mathsf J_T}\bigl(N(s)+\phi(t-s)\bigr)\qquad(t\in\mathsf J_T).
 \]
-Each function $t\mapsto N(s)+\phi(t-s)$ satisfies $\mathsf a(t_2-t_1)\le g(t_2)-g(t_1)\le\mathsf b(t_2-t_1)$ for $t_1<t_2$, and so does their supremum, which is finite because $N$ is bounded on $\mathsf J_T$; and $H\ge N$ (take $s=t$). Thus
+Each function $g_s(t)=N(s)+\phi(t-s)$ satisfies $\mathsf a(y-x)\le g_s(y)-g_s(x)\le\mathsf b(y-x)$ for $x<y$, and so does their supremum, which is finite because $N$ is bounded on $\mathsf J_T$; and $H\ge N$ (take $s=t$). Thus
 \[
 0\le H(t)-N(t)=\max\Bigl\{\sup_{s\le t}\bigl(\mathsf a(t-s)-(N(t)-N(s))\bigr),\ \sup_{s>t}\bigl(N(s)-N(t)-\mathsf b(s-t)\bigr)\Bigr\},
 \]
@@ -178,7 +178,7 @@ By the substitution $u=t-h_j$ in the terms $D^-_j$, $\int_{\mathsf J_T}Z_j^8\le2
 \[
 \int_{T/2}^{3T}\bigl(S(u+h_j)-S(u)\bigr)^8du\ll T\bigl(\log((8j+3)e^4)\bigr)^4\ll T\log^4(j+3)\quad(j\le\Lambda_T),
 \]
-and $\ll T(\log\log T)^4$ for $j>\Lambda_T$. Therefore $\int_{\mathsf J_T}(H-N)^4\ll T+T\sum_{j\ge1}j^{-4}\log^4(j+3)+T(\log\log T)^4\Lambda_T^{-3}\ll T$. Let $P_N$ be the linear interpolation of $H$ at the nodes $t_i$. Its slopes are chord slopes of $H$, so $P_N\in\mathcal K_T$; on $[t_{i-1},t_i]$ both $H$ and $P_N$ lie between $H(t_{i-1})+\mathsf a(t-t_{i-1})$ and $H(t_{i-1})+\mathsf b(t-t_{i-1})$, so $|P_N-H|\le(\mathsf b-\mathsf a)\eta_T\le\frac32$. Hence $|P_N-N|\le H-N+\frac32$ and $\int_{\mathsf J_T}|P_N-N|^4\ll T$.
+For $j>\Lambda_T$, so $h_j>1$, use instead $(S(u+h_j)-S(u))^8\le2^7(S(u+h_j)^8+S(u)^8)$ and Theorem~\CGref{thm:known_selberg_moments} with $j=4$ on dyadic intervals covering $[\frac T4,6T]$, which contains $u$ and $u+h_j$ since $h_j\le h_{j^*}\le\frac52T+1$; this gives $\ll T(\log\log T)^4$. Therefore $\int_{\mathsf J_T}(H-N)^4\ll T+T\sum_{j\ge1}j^{-4}\log^4(j+3)+T(\log\log T)^4\Lambda_T^{-3}\ll T$. Let $P_N$ be the linear interpolation of $H$ at the nodes $\mathsf t_i$. Its slopes are chord slopes of $H$, so $P_N\in\mathcal K_T$; on $[\mathsf t_{i-1},\mathsf t_i]$ both $H$ and $P_N$ lie between $H(\mathsf t_{i-1})+\mathsf a(t-\mathsf t_{i-1})$ and $H(\mathsf t_{i-1})+\mathsf b(t-\mathsf t_{i-1})$, so $|P_N-H|\le(\mathsf b-\mathsf a)\varsigma_T\le\frac32$. Hence $|P_N-N|\le H-N+\frac32$ and $\int_{\mathsf J_T}|P_N-N|^4\ll T$.
 \end{proof}
 
 \begin{lemma}[The prime model on the block]\label{lem:block_fourth}
@@ -204,7 +204,7 @@ There are absolute constants $T_0$ and $C$ such that for $T\ge T_0$ and $2\le X\
 \label{eq:regularized_main}
 \end{equation}
 \item $\max_{k\in\IT}|\widehat x_k-\gamma_k|\le CT^{1/5}$;
-\item if $X\le T^{1/4}$, then $\bigl\langle(S_X(\gamma_k)-S_X(\widehat x_k))^2\bigr\rangle_{\IT}\le C(1+\log(1/c))\bigl((1+\log X)/\log T\bigr)^2\le C$.
+\item if $X\le T^{1/4}$, then $\bigl\langle(S_X(\gamma_k)-S_X(\widehat x_k))^2\bigr\rangle_{\IT}\le C(1+\log(1/c))\bigl((1+\log X)/\log T\bigr)^2\ll1$, with an absolute implied constant.
 \end{enumerate}
 \end{theorem}
 
@@ -214,13 +214,13 @@ There are absolute constants $T_0$ and $C$ such that for $T\ge T_0$ and $2\le X\
 \|\widehat F-N\|_4\le\|\widehat F-F_X\|_4+\|F_X-N\|_4\le\|P_N-F_X\|_4+\|F_X-N\|_4\le\|P_N-N\|_4+2\|F_X-N\|_4,
 \label{eq:regularized_close}
 \end{equation}
-so $\int_{\mathsf J_T}|\widehat F-N|^4\le C_1T(1+\log(1/c))^2$ with an absolute $C_1$.
+so $\int_{\mathsf J_T}|\widehat F-N|^4\le C_{\rm r}T(1+\log(1/c))^2$ with an absolute $C_{\rm r}$.
 
-\emph{Two good heights.} Let $C_{\rm g}$ bound the gaps between consecutive ordinates (Theorem~\CGref{thm:known_basic}) and $K=(16C_1)^{1/4}(1+\log(1/c))^{1/2}$. By Chebyshev's inequality the set where $|\widehat F-N|>K$ has measure at most $T/16$, so there are $t_1\in[\frac T2+C_{\rm g},\frac{3T}4]$ and $t_2\in[\frac{9T}4,3T-C_{\rm g}]$ with $|\widehat F(t_i)-N(t_i)|\le K$. Since $c\ge\log2/\log T$, $K\ll(\log\log T)^{1/2}$.
+\emph{Two good heights.} Let $C_{\rm g}$ bound the gaps between consecutive ordinates (Theorem~\CGref{thm:known_basic}) and $K=(16C_{\rm r})^{1/4}(1+\log(1/c))^{1/2}$. By Chebyshev's inequality the set where $|\widehat F-N|>K$ has measure at most $T/16$, so there are $t_\flat\in[\frac T2+C_{\rm g},\frac{3T}4]$ and $t_\sharp\in[\frac{9T}4,3T-C_{\rm g}-1]$ with $|\widehat F(t_i)-N(t_i)|\le K$. Since $c\ge\log2/\log T$, $K\ll(\log\log T)^{1/2}$.
 
-\emph{(a).} $\widehat F$ is increasing, so $\widehat F(\frac T2)\le\widehat F(t_1)\le N(\frac{3T}4)+K$ and $\widehat F(3T)\ge\widehat F(t_2)\ge N(\frac{9T}4)-K$. For $k\in\IT$, $N(T)+1\le k\le N(2T)$; for $k\in\mathcal I_T^\tau$, $k-\frac12=\NO(\tau_k)\in[\NO(T),\NO(2T))$, and $|N-\NO|\ll\log T$ (Theorem~\CGref{thm:known_basic}). Since $N(T)-N(\frac{3T}4)$ and $N(\frac{9T}4)-N(2T)$ are $\gg T\log T$, $\widehat F(\frac T2)<k-\frac12<\widehat F(3T)$ for $T\ge T_0$. Monotonicity and gaps are Lemma~\CGref{lem:regularized_def}.
+\emph{(a).} $\widehat F$ is increasing, so $\widehat F(\frac T2)\le\widehat F(t_\flat)\le N(\frac{3T}4)+K$ and $\widehat F(3T)\ge\widehat F(t_\sharp)\ge N(\frac{9T}4)-K$. For $k\in\IT$, $N(T)+1\le k\le N(2T)$; for $k\in\mathcal I_T^\tau$, $k-\frac12=\NO(\tau_k)\in[\NO(T),\NO(2T))$, and $|N-\NO|\ll\log T$ (Theorem~\CGref{thm:known_basic}). Since $N(T)-N(\frac{3T}4)$ and $N(\frac{9T}4)-N(2T)$ are $\gg T\log T$, $\widehat F(\frac T2)<k-\frac12<\widehat F(3T)$ for $T\ge T_0$. Monotonicity and gaps are Lemma~\CGref{lem:regularized_def}.
 
-\emph{(b).} Let $k_1=N(t_1)$ and $k_2=N(t_2)+1$. Then $t_1-C_{\rm g}<\gamma_{k_1}\le t_1<\gamma_{k_1+1}$ and $\gamma_{k_2-1}\le t_2<\gamma_{k_2}\le t_2+C_{\rm g}$, so $[\gamma_{k_1},\gamma_{k_2}]\subset(\frac T2,3T)$ and $\IT\subset\{k:k_1<k<k_2\}$. As $\widehat F$ is increasing, $\widehat u_{k_1}\ge N(t_1)-\frac12-\widehat F(t_1)\ge-K-\frac12$ and $\widehat u_{k_2}\le N(t_2)+\frac12-\widehat F(t_2)\le K+\frac12$. Lemma~\CGref{lem:identity_lipschitz} with $j=2$, $\Psi_2(u)=u^4+\frac12u^2+\frac1{80}\ge u^4$ and $\widehat F'\le2\Lambda_T$ gives
+\emph{(b).} Let $k_1=N(t_\flat)$ and $k_2=N(t_\sharp)+1$. Then $t_\flat-C_{\rm g}<\gamma_{k_1}\le t_\flat<\gamma_{k_1+1}$ and $\gamma_{k_2-1}\le t_\sharp<\gamma_{k_2}\le t_\sharp+C_{\rm g}$, so $[\gamma_{k_1},\gamma_{k_2}]\subset(\frac T2,3T)$ and $\IT\subset\{k:k_1<k<k_2\}$. As $\widehat F$ is increasing, $\widehat u_{k_1}\ge N(t_\flat)-\frac12-\widehat F(t_\flat)\ge-K-\frac12$ and $\widehat u_{k_2}\le N(t_\sharp)+\frac12-\widehat F(t_\sharp)\le K+\frac12$. Lemma~\CGref{lem:identity_lipschitz} with $j=2$, $\Psi_2(u)=u^4+\frac12u^2+\frac1{80}\ge u^4$ and $\widehat F'\le2\Lambda_T$ gives
 \[
 \begin{split}
 \sum_{k\in\IT}\widehat u_k^4\le\sum_{k_1<k<k_2}\Psi_2(\widehat u_k)&=\int_{\gamma_{k_1}}^{\gamma_{k_2}}(N-\widehat F)^4\widehat F'\,dt-\frac{(\frac12+\widehat u_{k_1})^5+(\frac12-\widehat u_{k_2})^5}5\\
@@ -231,7 +231,7 @@ and $\#\IT\asymp T\log T$ gives the bound for $\langle\widehat u_k^4\rangle_{\IT
 
 \emph{(c).} Let $d=|\widehat x_k-\gamma_k|>0$. If $\widehat x_k>\gamma_k$, then for $t\in(\gamma_k,\widehat x_k)$, $N(t)\ge k$ and $\widehat F(t)\le k-\frac12-\frac12\Lambda_T(\widehat x_k-t)$; if $\widehat x_k<\gamma_k$, then for $t\in(\widehat x_k,\gamma_k)$, $N(t)\le k-1$ and $\widehat F(t)\ge k-\frac12+\frac12\Lambda_T(t-\widehat x_k)$. In both cases $\int_{\mathsf J_T}|N-\widehat F|^4\ge(\frac12\Lambda_T)^4d^5/5$, so $d^5\ll T(1+\log(1/c))^2/\log^4T\ll T$.
 
-\emph{(d).} By (c), for $k\in\IT$ the interval $[\widehat x_k-d_k,\widehat x_k+d_k]$, $d_k=|\widehat x_k-\gamma_k|$, lies in $[T-2T^{1/2},2T+2T^{1/2}]$ for $T\ge T_0$, where the cutoff $\varphi$ of Lemma~\CGref{lem:sampling_rho} equals $1$. By \CGeqref{eq:regularized_gaps} and $\mathfrak b_T=2\pi/\log(3T)<2\pi/\log T$, every interval of length $\mathfrak b_T$ contains at most $3$ of the points $\widehat x_k$, so $\tilde n\le3$ and $\int_\R\tilde n^2\le3\int_\R\tilde n=3\mathfrak b_T\#\IT$ in Lemma~\CGref{lem:sampling_rho}, which with $r=1$ and $X\le T^{1/4}$ gives $\langle g(\widehat x_k)^4\rangle_{\IT}\ll(1+\log X)^4$ for $g=\mathcal M(\varphi S'_X)$. Since $|S_X(\gamma_k)-S_X(\widehat x_k)|\le2|\gamma_k-\widehat x_k|\,g(\widehat x_k)$, Cauchy--Schwarz and \CGeqref{eq:regularized_main} give
+\emph{(d).} By (c), for $k\in\IT$ the interval $[\widehat x_k-d_k,\widehat x_k+d_k]$, $d_k=|\widehat x_k-\gamma_k|$, lies in $[T-2T^{1/2},2T+2T^{1/2}]$ for $T\ge T_0$, where the cutoff $\varphi$ of Lemma~\CGref{lem:sampling_rho} equals $1$. By \CGeqref{eq:regularized_gaps} and $\mathfrak b_T=2\pi/\log(3T)<2\pi/\log T$, every interval of length $\mathfrak b_T$ contains at most $2$ of the points $\widehat x_k$, so $\tilde n\le2$ and $\int_\R\tilde n^2\le2\int_\R\tilde n=2\mathfrak b_T\#\IT$ in Lemma~\CGref{lem:sampling_rho}, which with $r=1$ and $X\le T^{1/4}$ gives $\langle g(\widehat x_k)^4\rangle_{\IT}\ll(1+\log X)^4$ for $g=\mathcal M(\varphi S'_X)$. Since $|S_X(\gamma_k)-S_X(\widehat x_k)|\le2|\gamma_k-\widehat x_k|\,g(\widehat x_k)$, Cauchy--Schwarz and \CGeqref{eq:regularized_main} give
 \[
 \bigl\langle(S_X(\gamma_k)-S_X(\widehat x_k))^2\bigr\rangle_{\IT}\le4\bigl\langle|\gamma_k-\widehat x_k|^4\bigr\rangle_{\IT}^{1/2}\bigl\langle g(\widehat x_k)^4\bigr\rangle_{\IT}^{1/2}\ll(1+\log(1/c))\frac{(1+\log X)^2}{\log^2T},
 \]
@@ -239,7 +239,7 @@ and $(1+\log X)/\log T\le(1+\frac1{\log2})c$ because $c\ge\log2/\log T$, while $
 \end{proof}
 
 \begin{remark}\label{rem:regularized}
-(a) Compared with Theorem~\CGref{thm:uniform_iteration} and Corollary~\CGref{cor:sorted_clock}, Theorem~\CGref{thm:regularized_clock} reaches the scale of one mean spacing with a fixed cutoff and one step, in fourth mean, with increasing and separated points; the dependence on $c$ is explicit and parallel to Theorem~\CGref{thm:main}. Markov's inequality gives, for $\lambda>0$, $\#\{k\in\IT:|\widehat x_k-\gamma_k|>\lambda\cdot\frac{2\pi}{\log T}\}\le16C(1+\log(1/c))^2\lambda^{-4}\#\IT$. The constants $T_0$ and $C$ are not computed. (b) The cost is locality: $\widehat F$ is the solution of a convex program with $\mathsf M_T+1\asymp T\log T$ unknowns whose data are $S_X$ on the whole block $\mathsf J_T$, and it depends on the block; the points of Theorem~\CGref{thm:computable_clock} and of the iteration are explicit expressions index by index. A version on short overlapping windows is not treated here. (c) Part (d) bounds the transport from the regularized points, not from $\tau_k$: Question~\CGref{q:fixed_c} for the one-step clock $\tau_k^X$ remains open. (d) The slope constraints $[\frac12\Lambda_T,2\Lambda_T]$ enclose the main slope $\lL$ of the counting function on $\mathsf J_T$ and are fixed in advance; no zero is used to choose them, and the ordinates enter only in the proofs (through $P_N$ in Lemma~\CGref{lem:slope_envelope} and the heights $t_1$, $t_2$).
+(a) Compared with Theorem~\CGref{thm:uniform_iteration} and Corollary~\CGref{cor:sorted_clock}, Theorem~\CGref{thm:regularized_clock} reaches the scale of one mean spacing with a fixed cutoff exponent and without Newton iteration, in fourth mean, with increasing and separated points; the dependence on $c$ is explicit and parallel to Theorem~\CGref{thm:main}. Markov's inequality gives, for $\lambda>0$, $\#\{k\in\IT:|\widehat x_k-\gamma_k|>\lambda\cdot\frac{2\pi}{\log T}\}\le C(1+\log(1/c))^2(2\pi\lambda)^{-4}\#\IT$. The constants $T_0$ and $C$ are not computed. (b) The cost is locality: $\widehat F$ is the solution of a convex program with $\mathsf L_T+1\asymp T\log T$ unknowns whose data are $S_X$ on the whole block $\mathsf J_T$, and it depends on the block; the points of Theorem~\CGref{thm:computable_clock} and of the iteration are explicit expressions index by index. A version on short overlapping windows is not treated here. (c) Part (d) bounds the transport from the regularized points, not from $\tau_k$: Question~\CGref{q:fixed_c} for the one-step clock $\tau_k^X$ remains open. (d) The slope constraints $[\frac12\Lambda_T,2\Lambda_T]$ enclose the main slope $\lL$ of the counting function on $\mathsf J_T$ and are fixed in advance; no zero is used to choose them, and the ordinates enter only in the proofs (through $P_N$ in Lemma~\CGref{lem:slope_envelope} and the heights $t_\flat$, $t_\sharp$).
 \end{remark}
 
 """
@@ -250,12 +250,12 @@ rep(r"""%======================================================================
 
 # ================================================================ conclusions
 rep(r"""\item \emph{Tails and order} (Theorem~\CGref{thm:tails}""",
-    r"""\item \emph{A regularized clock with a fixed cutoff} (Theorem~\CGref{thm:regularized_clock}). The best $L^4$ approximation of $\NO+S_X$ by increasing piecewise linear functions with slopes in $[\frac{\log T}{4\pi},\frac{\log T}\pi]$ gives, in one step and with $X=T^c$, increasing points separated by at least $\pi/\log T$ with $\langle|\widehat x_k-\gamma_k|^4\rangle\ll(1+\log\frac1c)^2/\log^4T$; no ordinate enters the construction, which is global on the block $[\frac T2,3T]$.
+    r"""\item \emph{A regularized clock with a fixed cutoff} (Theorem~\CGref{thm:regularized_clock}). The best $L^4$ approximation of $\NO+S_X$ by piecewise linear functions on a mesh of step at most $2\pi/\log T$ with slopes in $[\frac{\log T}{4\pi},\frac{\log T}\pi]$ gives, without Newton iteration and with $X=T^c$, increasing points separated by at least $\pi/\log T$ with $\langle|\widehat x_k-\gamma_k|^4\rangle\ll(1+\log\frac1c)^2/\log^4T$; no ordinate enters the construction, which is global on the block $[\frac T2,3T]$.
 \item \emph{Tails and order} (Theorem~\CGref{thm:tails}""")
 rep(r"""\item \emph{LeClair's prime equation} (Theorems~\CGref{thm:main} and \CGref{thm:computable_clock}, Table~\CGref{tab:evaluates}). The equation for the $n$-th zero with the first $N$ primes \cite{LeClair2021} is the corrected clock equation; for $p_N\le T^{1/2}$ its mean-square defect""",
     r"""\item \emph{The corrected clock equation solved numerically} (Theorems~\CGref{thm:main}, \CGref{thm:computable_clock} and \CGref{thm:regularized_clock}, Table~\CGref{tab:evaluates}). The clock equation, which is the Riemann--von Mangoldt main term inverted by Lambert's function, corrected by the first $N$ primes was solved numerically in \cite{LeClair2021}, and with smoothed weights it is the equation of the zeros of Gonek's $\zeta_X$ \cite{Gonek2012}; for $p_N\le T^{1/2}$ its mean-square defect""")
 rep(r"""and explicit Newton-type steps give points with proved mean-square error, where the accuracy of its numerical solutions was estimated from known zeros.""",
-    r"""and explicit Newton-type steps, or one regularization with a fixed cutoff, give points with proved error, where the accuracy of its numerical solutions was estimated from known zeros.""")
+    r"""explicit Newton-type steps give points with proved error, and so does, for $X\le T^{1/3}$, a convex regularization with a fixed cutoff exponent, where the accuracy of its numerical solutions was estimated from known zeros.""")
 rep(r"""\begin{question}\label{q:fixed_c}
 Does $\langle r_k(T^c)^2\rangle_{\IT}$ stay bounded for fixed $c$,""",
     r"""\begin{question}\label{q:fixed_c}
@@ -269,6 +269,14 @@ rep(r"""\bibitem{HasanalizadeShenWong2022}""",
 S.M. Gonek, Finite Euler products and the Riemann hypothesis, Trans. Amer. Math. Soc. 364 (2012) 2157--2191, \href{https://doi.org/10.1090/S0002-9947-2011-05546-7}{https://doi.org/10.1090/S0002-9947-2011-05546-7}.
 
 \bibitem{HasanalizadeShenWong2022}""")
+
+# ================================================================ after the independent review of v10
+rep(r"""The corrected clocks are computed from $k$, $\tau_k$ and the primes alone""",
+    r"""The corrected clocks are computed from $k$, $\tau_k$ (or $\NO$) and the primes alone""")
+rep(r"""constants in the $O$-terms of Theorems B--D are absolute but not computed""",
+    r"""constants in the $O$-terms of Theorems B--D$'$ are absolute but not computed""")
+rep(r"""Only $k=1,2$ and $0<h\le1$ are used (Lemma~\CGref{lem:zero_pairs}), in the form""",
+    r"""Only $0<h\le1$ is used: with $k=4$ in Lemma~\CGref{lem:slope_envelope} (for $h>1$ that lemma uses Theorem~\CGref{thm:known_selberg_moments} instead), and with $k=1,2$ in Lemma~\CGref{lem:zero_pairs}, in the form""")
 
 TEX.write_text(head + sep + body)
 print('v10 patch applied')

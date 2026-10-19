@@ -60,6 +60,11 @@ Applied by `tools/patch_v10_claude.py` to a copy of the v9 source.
 - Gonek, Trans. AMS 364 (2012): the zeros of zeta_X (on the line, Thm 6.2) solve the corrected
   clock equation with smoothed weights; added to the comparison and to tab:evaluates.
 - Abstract, intro (item D'), tables, conclusions, Question q:fixed_c updated.
+- Independent review (separate agent): mathematics of D' confirmed; corrections applied —
+  shifts h > 1 in Lemma slope_envelope handled by Selberg's moments (Fujii only for h <= 1);
+  ranges X <= T^{1/3} (D') stated wherever D' is compared; "without Newton iteration" instead of
+  "one step"; Gonek's zeta_X called functions built from finite Euler products; mesh stated in
+  the abstract; t_sharp <= 3T - C_g - 1; notation (nodes t_i, L_T, t_flat, t_sharp); constants.
 
 ## Changes from v8 to v9 (Claude, 2026-10-19)
 

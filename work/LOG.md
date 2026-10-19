@@ -148,3 +148,11 @@
 - New table tab:evaluates; "evaluates zeta or zeros" column in tab:status.
 - Independent agent review of the changes; its corrections applied. 51 pp., clean build.
 - Files: v9/, manuscript/prime_corrected_clock_v9.{tex,txt,pdf}, prime_corrected_clock_v9.zip.
+
+## 2026-10-19 [claude] Paper I v10
+- Theorem D' (sec:regularized): best L^4 approximation of N_0+S_X on [T/2,3T] by piecewise linear
+  functions (mesh <= 2pi/log T, slopes in [log T/4pi, log T/pi]); level points increasing, gaps in
+  [pi/log T, 4pi/log T]; <|x_k-gamma_k|^4> << (1+log 1/c)^2/log^4 T for 2<=X<=T^{1/3}; transport bounded
+  for X<=T^{1/4}. Construction from the author's note (attachment 2026-10-19), proofs written in full.
+- Clock attributed to the RvM main term inverted by Lambert's W; corrected equation no longer "LeClair's".
+- Gonek (Trans. AMS 2012) added. Independent review applied. 57 pp., clean build.
