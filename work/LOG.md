@@ -133,3 +133,8 @@
   v7 source and confirmed; listed in NOTAS_v8.md. No manuscript version created.
 - envelope/envelope_disc_scan.{py,txt}: optimum of the Backlund disc is v7's corner (1,1);
   Lindelof value 0.494 is a floor of the one-disc method (LH gives S = o(log t), Titchmarsh 13.6(A)).
+
+## 2026-10-19 [claude] Paper I v8 restored, v9 (final) in progress
+- Author: v8 had been made and stands ("por error dije que no la hicieras"); v8 files restored from 8fe0f8d.
+- v9 = v8 + six fixes of the external review + Theorem E with published hull (2piC_P < 0.6072889)
+  + França-LeClair / LeClair comparison read in originals + table tab:evaluates. Under independent review.
