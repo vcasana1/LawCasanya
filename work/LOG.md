@@ -110,3 +110,10 @@
 - Build: 47 pp., no undefined references, no overfull boxes, TEX/TXT identical; check_pdf_v7 passes.
 - Files: work/paper1/manuscript/prime_corrected_clock_v7.{tex,txt,pdf}; work/paper1/v7/; work/paper1/prime_corrected_clock_v7.zip.
 - Still open: Fujii 1981 (Part II) and Korolev 2016 in the original (requested from the author).
+
+## 2026-10-19 13:26 UTC — [claude] — Paper I v8: external results re-read in the originals (Fujii 1974 page image, Fujii 1981, Korolev 2016)
+- Correction of my v7 entry: Fujii 1974 Main Theorem (p. 225, page image) has non-strict inequalities, T^{1/2+a_2} <= H <= T; the v7 claim "strict, v6's a_2=1/4 outside range" came from the OCR layer and is wrong. v8 uses a_2=1/5, H=T.
+- Fujii 1981 read (library 113a): corrections to Part I (h bounded, error (Ak)^{2k}, Lemma 2/3 remainders, (iii)-(iv) p. 234 erased) do not touch p. 232-233. Difference moments now Fujii 1981 (alpha'), any h>0 with h^1.
+- Korolev 2016 read (library 192b): Lemma 3.13, p. S126, bound (c0/56)(c0 k)^{2k} H; Ivic-Korolev 2018 Lemma 12 omits k^{2k}. Remark rem:korolev_uniform corrected to (Ck)^{2k}.
+- Build 47 pp., clean. Files: work/paper1/manuscript/prime_corrected_clock_v8.*, work/paper1/v8/, work/paper1/prime_corrected_clock_v8.zip.
+- Library additions today (author's Mac, LIBRARY TOTAL): 060a Christ 2014, 113a Fujii 1981, 166a Ivic-Korolev 2018, 190a Korolev 2010 Izv, 191a Korolev arXiv:1106.0516, 192a Korolev 2016 Indian J, 192b Korolev 2016 Proc. Steklov, 192c Korolev-Laurincikas 2023.
