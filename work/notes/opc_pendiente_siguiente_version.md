@@ -66,3 +66,12 @@ opc_second_order_aliasing_check, opc_quotient_second_order_check (+ _train). Cor
 - Representación de dos puntos, núcleo K_θ, ley bajo U y W: el vínculo S² ↔ correlación de pares es clásico (Montgomery, Goldston, Tsang); la ley es condicional.
 - Conclusión: el Paper II aislado es débil. Llevar proyección, término cruzado y casi ortogonalidad al Paper I como lemas; posponer o descartar el resto.
 - Límites de la búsqueda: web/arXiv; sin MathSciNet; sin biblioteca local; Fujii, Korolev y Tsang (∫S(t)S(t+h)) no leídos en el original.
+
+### 17. Criterio del autor para el Paper I (19-10): solo números soportados por demostración analítica
+Se quedan:
+- Constantes que salen de las pruebas: 1/(2π²) de B; 1/(4π²) log log log T del reloj calculable (corte X = T^{1/√(log log T)}, fijado por el teorema); H_m/(4π²) de la iteración; la constante de E (como observación, límite J→∞ ≈ 0.0968151, citando Trudgian, Trudgian–Yang); el umbral de monotonía M_{≤X} ≤ (1−𝖼)L y el X que define (≈ 16 a la altura de los datos).
+- Cálculos que son aplicación directa de un teorema, sin elección: raíz certificada de la Stage A (bisección), el criterio del Teorema H aplicado a puntos con garantía. Condición: aritmética de intervalos; hoy la continuación se comprueba en 5 puntos, eso NO es prueba → o se certifica o no entra.
+Salen (a otro trabajo, marcados exploratorios):
+- zCasanya (8,8,512), reglas R1/R2 (c_G gaussiano), continuación c = 0.85–1.30, 0.063 / 0.024 / 0.0128, ley de Gram corregida 0.019 % con R2, desfase del paseo, par (71,193), x^q, ajuste task4_fit_b3.
+- Comparaciones «mejora a zCasanya».
+Pendiente: las constantes absolutas no calculadas de la iteración (C_⋆, H^*, B_⋆) impiden ejecutar la ley de cortes tal cual; no inventarlas para un experimento.
