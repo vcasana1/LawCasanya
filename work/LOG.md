@@ -202,3 +202,9 @@
   rename or distinguish before any version uses the term.
 - In the library, nobody uses F_Y(y_k) = k (Euler-phase-corrected integer levels) to separate ordinates.
   Weak evidence (library only). The Turing variant is already listed in work/notes/opc_pendiente_rutas_RH.md.
+
+## 2026-10-20 19:10 UTC — [claude] — route via the defect: simple zeros on the line from Theorems A+B
+- work/notes/ruta_defecto_proporcion_2026-10-20.md: N_0^s/N >= 1 - 4<u_k(X)^2> - o(1) = 4/3 - 4Q_2 (unconditional, any F).
+- Context found today: unconditional 2/3 (0.6725, 0.6735) for simple zeros on the line (arXiv:2608.13637, 2609.02882,
+  2610.08965), pair correlation with support <= 1; beyond needs support > 1. Our certificate meets the same barrier
+  through the zero-scale part of Q_2 (measured 0.060; record needs a proved bound <= 0.13).
