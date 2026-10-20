@@ -208,3 +208,11 @@
 - Context found today: unconditional 2/3 (0.6725, 0.6735) for simple zeros on the line (arXiv:2608.13637, 2609.02882,
   2610.08965), pair correlation with support <= 1; beyond needs support > 1. Our certificate meets the same barrier
   through the zero-scale part of Q_2 (measured 0.060; record needs a proved bound <= 0.13).
+
+## 2026-10-20 20:10 UTC — [claude] — explicit B via Hiary-Zhao machinery (author: "sácala")
+- work/paper1/constantes_2026-10-20/explicit_B_hiary_zhao.{py,txt,json}. Transcription of Hiary-Zhao (arXiv:2512.14907)
+  validated: reproduces their 981.4 and h(1) = 6.390. Zeta adaptation [ADAPT, not proved]: q -> T, kappa < 1/4.
+- With F = N0 + S^(1)_X, X = T^{0.075}: D(k=1) = 7.7e5, Q_2 <= 8.6e5 (cross term by Cauchy-Schwarz with D(k=2)),
+  B <= 1.7e7; certificate negative. Needed: B < 1.18 (record) at c < 1/8. Measured B = 1.19 (c = 1/2), Q_2 = 0.0955.
+- ChatGPT review (relayed by the author): agrees with the certificate 4/3 - 4Q_2; a hypothesis must be on the
+  dF-weighted moment Q_2 (cross term C_X included), not on B alone. Agreed.

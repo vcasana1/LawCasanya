@@ -1,0 +1,12 @@
+Hiary-Zhao transcription check: sqrt D(1.156, 0.16, 1/8, k=1) = 981.4369 (paper: 981.4)
+h(1) = 6.3904 at Delta = 0.645 (paper: 6.390, 0.645)
+
+zeta adaptation, kappa_0.125: best delta = 0.1, X = T^0.0375
+  D(k=1) = 1.5442e+06   D(k=2) = 2.6936e+12
+  Q_2 <= 1.6313e+06   <u^2> <= 1.6313e+06   B <= 3.2200e+07   certificate 1-4<u^2> = -6.5251e+06
+
+zeta adaptation, kappa_0.25: best delta = 0.1, X = T^0.0750
+  D(k=1) = 7.7098e+05   D(k=2) = 7.1145e+11
+  Q_2 <= 8.6044e+05   <u^2> <= 8.6044e+05   B <= 1.6984e+07   certificate 1-4<u^2> = -3.4418e+06
+
+targets: <u^2> < 0.25 (positive proportion), < 0.0816 (record 0.6735); measured <u^2> = 0.01213 at c = 1/2, B = 1.19
