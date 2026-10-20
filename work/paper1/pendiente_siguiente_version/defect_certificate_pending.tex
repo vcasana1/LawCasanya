@@ -33,9 +33,6 @@
 \expandafter\gdef\csname CGTip@sec:setting\endcsname{Section: Setting and notation}
 \expandafter\gdef\csname CGTip@sec:lemma\endcsname{Section: The multiplicity lemma}
 \expandafter\gdef\csname CGTip@sec:cert\endcsname{Section: Certificates from the defect}
-\expandafter\gdef\csname CGTip@sec:cond\endcsname{Section: Conditional form and thresholds}
-\expandafter\gdef\csname CGTip@sec:comparison\endcsname{Section: Comparison with the 2026 results}
-\expandafter\gdef\csname CGTip@sec:heur\endcsname{Section: Heuristics and experiments}
 \expandafter\gdef\csname CGTip@eq:defect\endcsname{Equation: u\_k = k - 1/2 - F(gamma\_k), ordinates counted with multiplicity}
 \expandafter\gdef\csname CGTip@eq:Q\endcsname{Equation: Q\_\{2j\}(T,X) = (1/M\_T) int\_\{T\}\textasciicircum{}\{2T\} (N - F\_X)\textasciicircum{}\{2j\} dF\_X}
 \expandafter\gdef\csname CGTip@thm:A\endcsname{Theorem - Exact defect identity (Theorem A of the clock manuscript): int (N-F)\textasciicircum{}\{2j\} F' dt = sum Psi\_j(u\_k) + boundary terms, Psi\_1(u) = u\textasciicircum{}2 + 1/12, Psi\_2(u) = u\textasciicircum{}4 + u\textasciicircum{}2/2 + 1/80}
@@ -46,14 +43,6 @@
 \expandafter\gdef\csname CGTip@cor:Q\endcsname{Corollary - Certificates in terms of Q: N\_0\textasciicircum{}s/M >= 4/3 - 4 Q\_2 - o(1) and N\_0\textasciicircum{}s/M >= 1 - 16 Q\_4 + 8 Q\_2 - 7/15 - o(1)}
 \expandafter\gdef\csname CGTip@eq:cert2\endcsname{Equation: N\_0\textasciicircum{}s/M\_T >= 4/3 - 4 Q\_2 - o(1)}
 \expandafter\gdef\csname CGTip@eq:cert4\endcsname{Equation: N\_0\textasciicircum{}s/M\_T >= 1 - 16 Q\_4 + 8 Q\_2 - 7/15 - o(1)}
-\expandafter\gdef\csname CGTip@hyp:Q\endcsname{Hypothesis - H(c,b): limsup\_\{T\} Q\_2(T,T\textasciicircum{}c) <= (1/2 pi\textasciicircum{}2)(log(1/c) + b)}
-\expandafter\gdef\csname CGTip@cor:cond\endcsname{Corollary - Under H(c,b): liminf N\_0\textasciicircum{}s/N >= 4/3 - (2/pi\textasciicircum{}2)(log(1/c) + b); for c = 1/2 this is 1.1928 - 0.2026 b}
-\expandafter\gdef\csname CGTip@eq:condcert\endcsname{Equation: liminf N\_0\textasciicircum{}s/N >= 4/3 - (2/pi\textasciicircum{}2)(log(1/c) + b)}
-\expandafter\gdef\csname CGTip@rem:thresholds\endcsname{Remark - Thresholds: positive proportion b < 5.89; 2/3 b < 2.597; 0.6735 b < 2.563 (c = 1/2)}
-\expandafter\gdef\csname CGTip@rem:extremal\endcsname{Remark - The extremal configuration of the 2/3 theorems forces Q\_2 >= 1/6, i.e. b >= pi\textasciicircum{}2/3 - log 2 = 2.597 at c = 1/2}
-\expandafter\gdef\csname CGTip@heur:parseval\endcsname{Heuristic - Parseval: Q\_2 ~ (1/2pi\textasciicircum{}2)(log(1/c) + int\_1\textasciicircum{}inf F(alpha) alpha\textasciicircum{}\{-2\} d alpha), F Montgomery's form factor}
-\expandafter\gdef\csname CGTip@rem:experiments\endcsname{Remark - Experiments on Odlyzko's zeros (training indices): <u\textasciicircum{}2> = 0.0121 at c = 1/2, b = 1.19, certificates 0.951 (j=1), 0.989 (j=2)}
-\expandafter\gdef\csname CGTip@tab:exp\endcsname{Table: measured moments and certificates}
 \makeatother
 
 \hypersetup{
@@ -115,7 +104,7 @@
 \email{rotkivanyasac@gmail.com}
 \date{20 October 2026}
 \begin{abstract}
-For any function $F$ and the ordinates $\gamma_k$ of the nontrivial zeros counted with multiplicity, put $u_k=k-\frac12-F(\gamma_k)$. An ordinate of multiplicity $m\ge2$ forces $u_{k+i}=u_k+i$ along its indices. From this we prove, unconditionally and for every $j\ge1$, that the number of simple zeros on the critical line in $(T,2T]$ is at least $M_T-\sum_k(2u_k)^{2j}-O(\log T)$. With the exact defect identity of the prime-corrected clock manuscript this becomes $N_0^s/M_T\ge\frac43-4Q_2-o(1)$, where $Q_2$ is the mean square of $N-F_X$ with respect to $dF_X$, $F_X=N_0+S_X$ and $S_X$ the Euler phase of the primes $p\le X$. We state the conditional form, compare it with the unconditional two-thirds theorems of 2026, and record heuristics and experiments separately.
+For any function $F$ and the ordinates $\gamma_k$ of the nontrivial zeros counted with multiplicity, put $u_k=k-\frac12-F(\gamma_k)$. An ordinate of multiplicity $m\ge2$ forces $u_{k+i}=u_k+i$ along its indices. From this we prove, unconditionally and for every $j\ge1$, that the number of simple zeros on the critical line in $(T,2T]$ is at least $M_T-\sum_k(2u_k)^{2j}-O(\log T)$. With the exact defect identity of the prime-corrected clock manuscript this becomes $N_0^s/M_T\ge\frac43-4Q_2-o(1)$, where $Q_2$ is the mean square of $N-F_X$ with respect to $dF_X$, $F_X=N_0+S_X$ and $S_X$ the Euler phase of the primes $p\le X$. A positive proportion of simple zeros on the critical line follows from $\limsup_TQ_2(T,T^c)<\frac13$ for one fixed $c$.
 \end{abstract}
 \maketitle
 \tableofcontents
@@ -184,79 +173,12 @@ Apply Theorem~\CGref{thm:A} on $\mathcal I_T$ (the boundary terms and the change
 \end{proof}
 
 \begin{remark}
-\CGeqref{eq:cert2} uses only the quadratic moment and is the form compared with pair correlation below. \CGeqref{eq:cert4} needs the quartic moment, which carries four-point information of the zeros; it is stronger numerically (Remark~\CGref{rem:experiments}).
+By \cite[Thm.~B]{PCC11}, $Q_2(T,T^c)=\frac1{2\pi^2}\log\frac1c+O(1+\sqrt{\log(1/c)})$ for $2\le T^c\le T^{1/2}$ with an absolute constant that is not computed, so \CGeqref{eq:cert2} reduces a positive proportion of simple zeros on the critical line to the inequality $\limsup_T Q_2(T,T^c)<\frac13$ for one fixed $c$.
 \end{remark}
-
-\section{Conditional form and thresholds}\label{sec:cond}
-\begin{hypothesis}[$H(c,b)$]\label{hyp:Q}
-For a fixed $0<c\le\frac12$ and a real $b$, $\limsup_{T\to\infty}Q_2(T,T^c)\le\frac1{2\pi^2}\bigl(\log\frac1c+b\bigr)$.
-\end{hypothesis}
-
-\begin{corollary}\label{cor:cond}
-Under $H(c,b)$,
-\begin{equation}\label{eq:condcert}
-\liminf_{T\to\infty}\frac{N_0^s(T,2T)}{M_T}\ \ge\ \frac43-\frac2{\pi^2}\Bigl(\log\frac1c+b\Bigr).
-\end{equation}
-For $c=\frac12$ the right-hand side is $1.19285\ldots-0.20264\ldots\,b$.
-\end{corollary}
-
-\begin{proof}
-\CGeqref{eq:cert2}.
-\end{proof}
-
-\begin{remark}\label{rem:thresholds}
-The cross term $\frac1{M_T}\int(N-F_X)^2S_X'\,dt$ coming from $dF_X=(\mathcal L+S_X')\,dt$ is part of $Q_2$, hence of $b$; no density hypothesis on the zeros is needed. For $c=\frac12$: a positive proportion needs $b<5.887$; the proportion $\frac23$ needs $b<\frac{\pi^2}3-\log2=2.5967$; the value $0.6735$ reported in \cite{Pre261008965} needs $b<2.563$. By \cite[Thm.~B]{PCC11}, $Q_2(T,T^c)=\frac1{2\pi^2}\log\frac1c+O(1+\sqrt{\log(1/c)})$ unconditionally for $2\le T^c\le T^{1/2}$, with an absolute constant that is not computed.
-\end{remark}
-
-\section{Comparison with the 2026 results}\label{sec:comparison}
-Unconditionally, more than two thirds of the zeros are simple and on the critical line \cite{AlpogeFurman2026,Lamzouri2026}, with the constant $0.67250\ldots$ of Montgomery and Taylor; both proofs use Montgomery's pair correlation in the unconditional form of \cite{BGSTB2024}, with Fourier support in $[-1,1]$, and an integrality step ($m^2\ge2m-1$ in the scalar form). Corollary~\CGref{cor:cond} uses a different integrality step (Lemma~\CGref{lem:mult}) and a different quantity, $Q_2$.
-
-\begin{remark}\label{rem:extremal}
-By \CGeqref{eq:cert2}, $N_0^s/M_T\le\frac23+o(1)$ forces $Q_2\ge\frac16-o(1)$, i.e. $b\ge\frac{\pi^2}3-\log2=2.5967$ in the normalisation of Hypothesis~\CGref{hyp:Q} at $c=\frac12$. In particular the extremal configurations of \cite[\S7.2]{AlpogeFurman2026} (two thirds simple zeros and the rest in doubles or shallow off-line pairs) have $b\ge2.5967$. The two certificates use disjoint information: the first, the form factor on $[-1,1]$; the second, the quantity $Q_2$, which by Heuristic~\CGref{heur:parseval} involves the form factor beyond $1$.
-\end{remark}
-
-\section{Heuristics and experiments}\label{sec:heur}
-\begin{heuristic}\label{heur:parseval}
-Since $S'=dN/dt-\mathcal L$, Parseval and Montgomery's form factor $F(\alpha)$ suggest
-$Q_2(T,T^c)\approx\frac1{2\pi^2}\bigl(\log\frac1c+\int_1^\infty F(\alpha)\alpha^{-2}\,d\alpha\bigr)$, the part $c\le\alpha\le1$ giving $\log\frac1c$ through $F(\alpha)=\alpha+o(1)$. Under the pair correlation conjecture the integral is $1$, and Corollary~\CGref{cor:cond} would give $0.990$ at $c=\frac12$. This is not proved; the cross term of Remark~\CGref{rem:thresholds} is not accounted for by the heuristic.
-\end{heuristic}
-
-\begin{remark}[Experiments]\label{rem:experiments}
-On Odlyzko's table of the first $2\,001\,052$ zeros, using only indices $k\le1\,400\,736$ (window $T=408\,392$, $M_T=745\,418$), the programs of the repository give the values of Table~\CGref{tab:exp}. On $T=10^5$, the cross term is $+0.0159$ of $Q_2=0.0950$ at $c=\frac12$ and $+0.0042$ of $0.1148$ at $c=\frac14$. An adaptation to $\zeta$ of the explicit Selberg constants of \cite{HiaryZhao2025} (not proved here) gives $b\le1.7\cdot10^7$, so the unconditional route through Selberg's method does not reach \CGeqref{eq:condcert} with $b<5.887$. Extending the certificate of \cite{Lamzouri2026} to kernels with support beyond $[-1,1]$ under an assumed bound $\int_1^\infty F\alpha^{-2}\le b$, $F\ge0$, a discretised optimisation gives at most $0.675$ for $b\ge1.5$; Corollary~\CGref{cor:cond} is larger for $b<2.597$.
-\end{remark}
-
-\begin{table}[h]
-\centering
-\begin{tabular}{cccccc}
-\toprule
-$c$ & $\langle u^2\rangle$ & $b=2\pi^2Q_2-\log\frac1c$ & $1-\langle(2u)^2\rangle$ & $1-\langle(2u)^4\rangle$ & $\#\{|u|\ge\frac12\}/M_T$\\
-\midrule
-$1/2$ & $0.01213$ & $1.19$ & $0.9515$ & $0.9886$ & $0.00065$\\
-$1/4$ & $0.03274$ & $0.91$ & $0.8690$ & $0.9482$ & $0.00531$\\
-\bottomrule
-\end{tabular}
-\caption{Measured defect moments at $T=408\,392$ (training indices only).}\label{tab:exp}
-\end{table}
-
-These numbers are measurements at heights below $10^6$; they are not used in any proof.
 
 \begin{thebibliography}{99}
-\bibitem{AlpogeFurman2026}
-L.~Alp\"oge and R.~Furman, More than two thirds of the zeros of the Riemann zeta function are simple and on the critical line, preprint (2026), \href{https://arxiv.org/abs/2608.13637}{arXiv:2608.13637}.
-
-\bibitem{BGSTB2024}
-S.~A.~C.~Baluyot, D.~A.~Goldston, A.~I.~Suriajaya and C.~L.~Turnage-Butterbaugh, An unconditional Montgomery theorem for pair correlation of zeros of the Riemann zeta-function, Acta Arith. \textbf{214} (2024), 357--376. DOI not located.
-
-\bibitem{HiaryZhao2025}
-G.~Hiary and T.~Zhao, Unconditional estimates on the argument of Dirichlet $L$-functions with applications to low-lying zeros, preprint (2025), \href{https://arxiv.org/abs/2512.14907}{arXiv:2512.14907}.
-
-\bibitem{Lamzouri2026}
-Y.~Lamzouri, A new proof that more than $2/3$ of the zeros of the Riemann zeta function are simple and on the critical line, preprint (2026), \href{https://arxiv.org/abs/2609.02882}{arXiv:2609.02882}.
-
 \bibitem{PCC11}
 The prime-corrected clock and the zeros of the Riemann zeta function, manuscript, version 11 (2026), repository LawCasanya, \href{https://github.com/vcasana1/LawCasanya}{github.com/vcasana1/LawCasanya}.
 
-\bibitem{Pre261008965}
-More than 83.9\% of the zeros of the Riemann zeta function are distinct and more than 67.35\% are simple and on the critical line, preprint (2026), \href{https://arxiv.org/abs/2610.08965}{arXiv:2610.08965} (authors not checked).
 \end{thebibliography}
 \end{document}
