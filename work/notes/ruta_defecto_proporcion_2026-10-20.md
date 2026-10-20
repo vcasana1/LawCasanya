@@ -56,3 +56,13 @@ Var R needs an explicit Selberg-Fujii constant; Delta_off needs zero density nea
   suggests Delta_off = o(#I_T) (outline, to be written).
 * At c = 1/8 with B = 1 the certificate is 4/3 - 0.2026 (log 8 + 1) = 0.709 (record 0.6735 needs B < 1.18).
   Stronger densities near the line (mollifier methods; not checked, Conrey 1989 in LIBRARY TOTAL has no text layer) would allow larger c.
+
+## Explicit bound for B: status (author asked to extract it)
+* The only unconditional source of a bound for B here is Selberg's approximation plus Selberg's density theorem
+  (v11 Lemma selberg_uniform, via Fujii 1974). Needed: Var(S - S^pr_x) <= a (log(1/c_x) + 2.56); with x = T^{1/80}
+  that is <= 0.352 (true value about 0.27 if B = 1); with the density condition c < 1/8 the record needs B < 1.18,
+  i.e. Var R <= 0.282.
+* The closest explicit version of that machinery found: Hiary-Zhao, arXiv:2512.14907 (2025), Selberg made explicit for
+  the family of Dirichlet L-functions mod q: first moment of S bounded by 982; their mean-square constant D is larger.
+  Pointwise explicit Selberg for zeta: Karatsuba-Korolev (Russian Math. Surveys 2005), cited there, not read.
+* So the explicit B obtainable by this method is orders of magnitude above 2.56: true but useless. Not computed.
