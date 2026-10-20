@@ -230,3 +230,7 @@
 
 ## 2026-10-20 21:55 UTC — [claude] — author's style comments on v11 stored for the next revision
 - work/paper1/pendiente_siguiente_version/comentarios_estilo_autor_2026-10-20.txt (author's list, verbatim, + Claude's checks).
+
+## 2026-10-20 22:10 UTC — [claude] — second external review of v11.2 stored for the next revision
+- work/paper1/pendiente_siguiente_version/revision_matematica_v11_2_segunda_2026-10-20.md, with Claude's notes (point 1.1 confirmed
+  in the source: cutoff-domain mismatch between lem:transport and lem:sampling_rho; repair indicated). Nothing applied.
