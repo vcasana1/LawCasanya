@@ -1,0 +1,111 @@
+Correcciones para pasar a Claude en proxima revision:
+The
+clock is close to the zeros in height : to imaginary part of zeros (heigh) 
+_
+has mean
+square 1
+2π2 log log T (Selberg, Korolev) : es selberg o korolev? elige a uno, el que realmente lo dijo aunque se basara en selberg
+_
+the clock misplaces almost every zero by an unbounded
+number of positions. : no, rvm no los pone a miles de unidades distintas, eso esta mal
+_
+computed from τk and the primes alone : suena a computo, pondria deduced o considering
+_
+the new envelope is asymptotic : que es el envelope
+_
+The corrected
+clocks are computed from k, τk (or N0) and the primes alone : computed suena mal, are calculated
+_
+The clock is the Riemann–von Mangoldt main term
+inverted by Lambert’s function : de repente cambias la definicion de clock dada antes, aclarate que es el clock, si rvm o lambert (es rvm)
+_
+the same clock equation corrected by the first N primes was
+solved numerically by LeClair,: overclaim de leclair, el no "solved" nad, no mas que yo, parece que todo mi paper sea dar vueltas a algo de leclaire--YO DIRIA: our approach is simmilar to the one of LeClair that obtains xxxx, however this work provides xxxxxx
+_
+for X ≤ T1/2, are proved statements about this equation : que es this equation, desde luego no es de leclaire como pareces decir ¿que te paga leclaire para que le des una prominencia que no se merece?
+_
+Away from ordinates the Riemann–von Mangoldt formula reads: eso de away sobra, ¿no?
+-
+the argument of the Riemann zeta function being obtained by continuous variation along
+2 → 2 + iT → 1
+2 + iT from arg ζ(2) = 0. : el argumento se obtendra de mil formas o de una clasica, ¿que tiene esa forma de obtenerlo? ¿para que se usa esa formula?
+_
+The midpoint Riemann–von Mangoldt clock (RvM
+clock) is the sequence τ: eso esta bien, pero en el abstract la primera definicion no parece que sea eso
+_
+W0 is the principal branch of the Lambert function: define cual es, aunque pongas referencia
+_
+verifies the inversion: proves the inversion
+_
+The clock is explicit and lies, in phase, half way between consecutive Gram points: among (no es la mitad) y que son los Gram points, definelo
+-
+This paper studies its relation to the ordinates γk: aclara si para rho en 1/2 o sin importar 1/2, real, pero dilo. 
+_
+by its prime-corrected version: no has definido que es, definelo
+_
+uk(X) = sk−SX(γk),: no defines funciones ordenadamente Sx deberia estar delante de uk
+_
+SX(t) = −
+1
+π
+X
+p≤X
+arg
+ 
+1−p−1/2−it
+ 
+. (1.3)
+uk(X) measures how well the true ordinate satisfies the corrected clock equation N0(t) +
+SX(t) =: creo que usas t minuscula y T mayscula sin ton ni son. o bien no usas k como ordinal de ceros
+_
+no hay claridad entre height y ordinates or gamma ordinates.
+_
+Every corrected point is computed from k, N0 and the
+primes: no uses computed, dependent o calculated
+_
+ordinates γk : no es mejor usar esto que "heights"?? comprueba que usa Journal of Number Theory por ejemplo o articulos modernos
+_
+Theorem E concerns the worst zero.: que coño es the worst zero
+_
+1.3. What is known and only used
+The following facts are quoted with references in Section 3 and are not reproved.: pon Background . cualquiera sabe que son conocidos y estuido reprobarlos. 
+_
+The displacement δk = τk − γk is bounded, and lim supk |δk| ≤ 2π · 0.10076 = 0.6331: arriba dices unbounded
+_
+without the
+argument, is the clock equation N0(t) = n − 1
+2 , which they solve with Lambert’s function: decir lo de lambert es nada complicado, rehaz simplemente diciendo que usan Lambert.
+_
+this inversion of the Riemann–von Mangoldt main term is
+elementary [5]: quita eso
+_
+No error bound for the solutions of either
+equation is proved in [8, 22]. For pN ≤ T1/2, Theorem B below is a statement about this
+equation at the true ordinates and Theorem D about explicit points that replace the root
+finder, and for pN ≤
+q
+T/2 Theorem D′ is a statement about points defined by a convex
+program in N0 and SX (Table 2); the number of primes N(t) < Nmax(t) = [t2] allowed in
+[22, p. 19] goes far beyond this range, which is not covered here. The computations of
+[22, Table I], with N = 5 · 106 at heights 1.4 · 1020 and 1.4 · 1021, lie inside it.: esto es terrible, en lugar de destacar lo nuevo de este paper, parece que trabajo DEBAJO de sus resultados y no aclaras la DIFERENCIA de forma clara: We also use rvm clock and make use of prime numberd, BUT (y explicas todo lo que es diferente, y lo que no consiguen ellos)
+_
+Falta que cites en la introduccion al ruso del abstract
+
+The Lambert expression is not
+claimed as new; neither is the tendency of
+its mean-square height error to zero.
+The Lambert expression is not
+claimed as new; neither is the tendency of
+its mean-square height error to zero.
+: quite esta obviedad no digas nada de eso, es como decir que usamos 2+2=4 pero no decimos que es nuevo
+En lugar de eso di: they are an essential part of this paper, since the gist consists in improve and/or characterize gamma ordinates, using precisely tthe explicit and fully determined Lambert values 
+_
+YA SEGUIRÉ
+---
+Notas de Claude (2026-10-20), comprobadas en LIBRARY TOTAL; para aplicar en la próxima revisión, no aplicado:
+- Selberg/Korolev: Korolev 2010 (Izv. Math. 74:4, 743-780, DOI 10.1070/IM2010v074n04ABEH002506) prueba la parte de la conjetura
+  de Selberg "gamma_n casi nunca en el intervalo de Gram" (Delta_n != 0 para casi todo n); la normalización (2 pi^2)^{-1} ln ln N
+  aparece como reescalado, no como teorema de segundo momento. La media cuadrática (2 pi^2)^{-1} log log T es de Selberg.
+- "ordinates" para gamma_k: término habitual; la cita JNT 2016 aportada no se pudo comprobar (ScienceDirect bloqueado).
+- "unbounded number of positions": un error O(1) en altura equivale a ~log gamma espaciamientos; redactar en unidades de altura
+  o aclarar que se cuenta en índices.

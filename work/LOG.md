@@ -227,3 +227,6 @@
 ## 2026-10-20 21:40 UTC — [claude] — external mathematical review of v11.2 stored for the next revision (author's order: not now)
 - work/paper1/pendiente_siguiente_version/revision_matematica_v11_2_2026-10-20.md: review (1 main + 2 technical + 1 gap) with
   Claude's notes; nothing applied to the manuscript.
+
+## 2026-10-20 21:55 UTC — [claude] — author's style comments on v11 stored for the next revision
+- work/paper1/pendiente_siguiente_version/comentarios_estilo_autor_2026-10-20.txt (author's list, verbatim, + Claude's checks).
