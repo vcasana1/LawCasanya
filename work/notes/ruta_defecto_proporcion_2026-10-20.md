@@ -45,3 +45,14 @@ W = S_X - S_x, Var(S - S_X) = Var R - Var W + 2 Delta_off, where Delta_off comes
 for a pair beta = 1/2 +- delta, p^{-1/2}(p^rho + p^{rho'}) - 2 p^{i gamma} = p^{i gamma} (p^{delta/2} - p^{-delta/2})^2,
 so the ordinate sums at prime frequencies equal Landau-Gonek's sums minus sum_pairs p^{i gamma} 4 sinh^2(delta log p / 2).
 Var R needs an explicit Selberg-Fujii constant; Delta_off needs zero density near the line.
+
+## Correction (author: a proportion of off-line zeros does not locate them)
+* The bootstrap "proportion -> Delta_off" does not work: Delta_off depends on the ordinates of the pairs through p^{i gamma}.
+  The absolute-value bound also fails (weights ~ 1/(sqrt p log p) give a factor sqrt X): the phases are essential.
+* Exact form (derived): Delta_off = sum_pairs [P(rho) + P(1-conj rho) - 2 P(1/2 + i gamma)], P(s) = sum_{x<p<=X} b_p p^{s-1/2},
+  b_p of order 1/(sqrt p log p): a horizontal second difference of a prime Dirichlet polynomial at each off-line pair.
+* No location needed: Cauchy-Schwarz + mean value of |P|^2 over zeros (zero-density technology), with weights X^{2(beta-1/2)}.
+  Convergence needs N(1/2+u, T) << T^{1-Au} log T with A > 2c. Selberg's A = 1/4 allows c < 1/8; then sum |b_p|^2 << 1/log x
+  suggests Delta_off = o(#I_T) (outline, to be written).
+* At c = 1/8 with B = 1 the certificate is 4/3 - 0.2026 (log 8 + 1) = 0.709 (record 0.6735 needs B < 1.18).
+  Stronger densities near the line (mollifier methods; not checked, Conrey 1989 in LIBRARY TOTAL has no text layer) would allow larger c.
