@@ -223,8 +223,3 @@
   results; experiments). Not compiled, not a version. To be integrated when the author orders the next version.
 - work/paper1/constantes_2026-10-20/u_higher_moments.{py,txt,json}: <(2u)^{2j}>, j = 1..4; certificates 0.9515, 0.9886, 0.9945,
   0.9962 (c = 1/2); 0.8690, 0.9482, 0.9670, 0.9715 (c = 1/4).
-
-## 2026-10-20 21:20 UTC — [claude] — pending material trimmed (author: no hypotheses, no experiments; paper unchanged except clear analytic improvements)
-- defect_certificate_pending.{tex,txt} now holds only the unconditional analytic part: multiplicity lemma (all moments),
-  Theorem N_0^s >= M_T - sum (2u_k)^{2j} - O(log T), Corollary 4/3 - 4Q_2 and 1 - 16Q_4 + 8Q_2 - 7/15, remark reducing a
-  positive proportion to limsup Q_2 < 1/3. Conditional statements, heuristics, experiments and comparisons removed.
