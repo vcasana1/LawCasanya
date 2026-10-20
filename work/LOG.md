@@ -223,3 +223,7 @@
   results; experiments). Not compiled, not a version. To be integrated when the author orders the next version.
 - work/paper1/constantes_2026-10-20/u_higher_moments.{py,txt,json}: <(2u)^{2j}>, j = 1..4; certificates 0.9515, 0.9886, 0.9945,
   0.9962 (c = 1/2); 0.8690, 0.9482, 0.9670, 0.9715 (c = 1/4).
+
+## 2026-10-20 21:40 UTC — [claude] — external mathematical review of v11.2 stored for the next revision (author's order: not now)
+- work/paper1/pendiente_siguiente_version/revision_matematica_v11_2_2026-10-20.md: review (1 main + 2 technical + 1 gap) with
+  Claude's notes; nothing applied to the manuscript.
