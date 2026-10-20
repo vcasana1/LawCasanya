@@ -188,3 +188,17 @@
 - Zeta-free fixed-point steps with X = T^{1/4}: nearest ordinate = gamma_k for all 745 418 indices after 4 steps;
   with X = T^{1/2} the steps do not contract.
 - Open: explicit asymptotic for int (S - S_X)^2 with X = T^c; Goldston (JNT 1987) to be read, not verified.
+
+## 2026-10-20 18:30 UTC — [claude] — priority check: Euler-corrected Gram points (author's request)
+- Searched LIBRARY TOTAL (PDF text) and the v11 source; web not searched.
+- França–LeClair (104, 2014, Remark 9, pdf p. 14; 107, CNTP 2015, Remark 8, pdf p. 25): Lambert-W points t_n
+  "intrinsically different from Gram points"; they solve the equation of the n-th zero by root finding and avoid
+  Gram points. No integer-level points, no separation criterion.
+- LeClair 2016 (211, arXiv:1601.00914v1): eq. (49), pdf p. 18-19, is the corrected clock equation at level
+  n - 3/2 (zeros), truncated Euler product N up to [t^2]; no Gram points. His RH argument is different
+  (Theorems 3-4, pdf p. 10: validity of the truncated Euler product for Re s > 1/2, assumed).
+- Jerby 2023 (169, arXiv:2310.14415): "corrected Gram's law" (Theorem A, pdf p. 4: RH iff (-1)^n Delta_n(1) > 0)
+  built from a discriminant of Z, not from Euler phases. Name clash with our "corrected Gram law"; cite and
+  rename or distinguish before any version uses the term.
+- In the library, nobody uses F_Y(y_k) = k (Euler-phase-corrected integer levels) to separate ordinates.
+  Weak evidence (library only). The Turing variant is already listed in work/notes/opc_pendiente_rutas_RH.md.
