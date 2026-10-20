@@ -216,3 +216,10 @@
   B <= 1.7e7; certificate negative. Needed: B < 1.18 (record) at c < 1/8. Measured B = 1.19 (c = 1/2), Q_2 = 0.0955.
 - ChatGPT review (relayed by the author): agrees with the certificate 4/3 - 4Q_2; a hypothesis must be on the
   dF-weighted moment Q_2 (cross term C_X included), not on B alone. Agreed.
+
+## 2026-10-20 21:00 UTC — [claude] — defect certificate: pending for the next version (author: "va a la próxima versión, pero no ahora")
+- work/paper1/pendiente_siguiente_version/defect_certificate_pending.tex: draft material (multiplicity lemma with all moments,
+  N_0^s >= M_T - sum (2u_k)^{2j}; certificates 4/3 - 4Q_2 and 1 - 16Q_4 + 8Q_2 - 7/15; hypothesis H(c,b); comparison with 2026
+  results; experiments). Not compiled, not a version. To be integrated when the author orders the next version.
+- work/paper1/constantes_2026-10-20/u_higher_moments.{py,txt,json}: <(2u)^{2j}>, j = 1..4; certificates 0.9515, 0.9886, 0.9945,
+  0.9962 (c = 1/2); 0.8690, 0.9482, 0.9670, 0.9715 (c = 1/4).
