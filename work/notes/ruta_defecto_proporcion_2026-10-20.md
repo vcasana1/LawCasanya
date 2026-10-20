@@ -87,3 +87,14 @@ Var R needs an explicit Selberg-Fujii constant; Delta_off needs zero density nea
   extremal configuration: the two inequalities see the same groups through different information.
 * Joint problem (proposed, ADAPT of the Chirre-Goncalves-de Laat programme): minimise the simple-on-line proportion over
   configurations with F = Montgomery on [0,1] and Q_2 <= a(log(1/c) + b); expected to beat max of the two bounds.
+
+## Joint extremal problem, computed (joint_extremal.py)
+* Lamzouri's Prop. 2.1 holds for any support lambda; extended beyond lambda = 1/2 under H(b): int_1^inf F alpha^-2 <= b, F >= 0
+  (tail bounded by 2b max_{[1,2lambda]} alpha^2 Q). Discretised SLSQP (n = 120): lambda = 1/2 gives 0.66964 vs exact 0.67250
+  (under-optimised by 0.003).
+* b:        1.0     1.5     2.0     2.597   3.0
+  Lamzouri-extended: 0.718 (lambda=1.5, search edge)  0.675  0.674  0.674  0.673
+  defect certificate (c = 1/2): 0.990  0.889  0.788  0.667  0.585
+* The defect certificate dominates for b < 2.597; above, Lamzouri wins and gains only about 0.005 from the b-information.
+  Combining the two inequalities as stated gives their maximum; a gain beyond it would need a joint inequality per group.
+* Consistency: the defect certificate exceeds 1 for b < 0.95, so (under the Parseval heuristic) b >= 0.95 for zeta; measured 1.19.

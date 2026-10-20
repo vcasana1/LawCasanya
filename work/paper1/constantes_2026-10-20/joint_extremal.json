@@ -1,0 +1,91 @@
+{
+ "MT_check": {
+  "lambda": 0.5,
+  "b": 0.0,
+  "Phi": 1.3303642045177884,
+  "certificate": 0.6696357954822116,
+  "Q0_plus_lin": 1.3303642045177884,
+  "tail_max_alpha2Q": 0.0,
+  "ok": true
+ },
+ "rows": [
+  {
+   "b": 0.5,
+   "lamzouri_extended": {
+    "lambda": 1.5,
+    "b": 0.5,
+    "Phi": 0.9829455787470691,
+    "certificate": 1.0170544212529309,
+    "Q0_plus_lin": 0.6114187609644077,
+    "tail_max_alpha2Q": 0.37152681778266133,
+    "ok": true
+   },
+   "defect_certificate_c_half": 1.0915511641456297
+  },
+  {
+   "b": 1.0,
+   "lamzouri_extended": {
+    "lambda": 1.5,
+    "b": 1.0,
+    "Phi": 1.2819182548380723,
+    "certificate": 0.7180817451619277,
+    "Q0_plus_lin": 0.991169233457103,
+    "tail_max_alpha2Q": 0.14537451069048468,
+    "ok": true
+   },
+   "defect_certificate_c_half": 0.9902299805032919
+  },
+  {
+   "b": 1.5,
+   "lamzouri_extended": {
+    "lambda": 0.9,
+    "b": 1.5,
+    "Phi": 1.325131871768053,
+    "certificate": 0.6748681282319471,
+    "Q0_plus_lin": 1.3226859367141137,
+    "tail_max_alpha2Q": 0.0008153116846463832,
+    "ok": true
+   },
+   "defect_certificate_c_half": 0.8889087968609541
+  },
+  {
+   "b": 2.0,
+   "lamzouri_extended": {
+    "lambda": 0.9,
+    "b": 2.0,
+    "Phi": 1.3258110645789758,
+    "certificate": 0.6741889354210242,
+    "Q0_plus_lin": 1.3235476489281637,
+    "tail_max_alpha2Q": 0.0005658539127030201,
+    "ok": true
+   },
+   "defect_certificate_c_half": 0.7875876132186164
+  },
+  {
+   "b": 2.597,
+   "lamzouri_extended": {
+    "lambda": 0.9,
+    "b": 2.597,
+    "Phi": 1.3263743463338475,
+    "certificate": 0.6736256536661525,
+    "Q0_plus_lin": 1.3243312389949233,
+    "tail_max_alpha2Q": 0.0003933591334085834,
+    "ok": true
+   },
+   "defect_certificate_c_half": 0.6666101199496651
+  },
+  {
+   "b": 3.0,
+   "lamzouri_extended": {
+    "lambda": 0.9,
+    "b": 3.0,
+    "Phi": 1.3266594039363138,
+    "certificate": 0.6733405960636862,
+    "Q0_plus_lin": 1.3247515799646423,
+    "tail_max_alpha2Q": 0.00031797066194523267,
+    "ok": true
+   },
+   "defect_certificate_c_half": 0.5849452459339408
+  }
+ ]
+}
