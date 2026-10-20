@@ -175,3 +175,16 @@
 ## 2026-10-19 [claude] Paper I v11
 - Independent review applied (no mathematical error found; wording/notation). 61 pp., clean build.
 - Files: v11/, manuscript/prime_corrected_clock_v11.{tex,txt,pdf}, prime_corrected_clock_v11.zip.
+
+## 2026-10-20 17:45 UTC — [claude] — constants for the correct index (author's chat request, no version)
+- Folder work/paper1/constantes_2026-10-20/: u_defect_scan.py, u_defect_T_dependence.py, outputs .txt/.json, NOTE.md.
+- Training indices only (k <= 1 400 736). Window T = 408 392, #I_T = 745 418.
+- <u_k(T^c)^2>: 0.01213 (c=1/2), 0.03274 (c=1/4); a log(1/c) = 0.03512, 0.07023; the constant of Theorem B is
+  negative here (-0.023, -0.037), stable on dyadic windows from T = 12 500. Misindexed at the ordinates
+  (|u| >= 1/2): 0.065 % (c=1/2), 0.53 % (c=1/4); plain clock 13.8 %.
+- Theorem A gives <u^2> = Q_2 - 1/12 exactly (Q_2 = dF-weighted mean square of N - F_X): the Chebyshev bound
+  for the misindexed proportion is 4 Q_2 - 1/3. Needed: an explicit Q_2 <= 1/3 at one fixed c; measured 0.0955.
+  The iteration constants (H^*, C_*, C_5, 160) do not enter the index question.
+- Zeta-free fixed-point steps with X = T^{1/4}: nearest ordinate = gamma_k for all 745 418 indices after 4 steps;
+  with X = T^{1/2} the steps do not contract.
+- Open: explicit asymptotic for int (S - S_X)^2 with X = T^c; Goldston (JNT 1987) to be read, not verified.
