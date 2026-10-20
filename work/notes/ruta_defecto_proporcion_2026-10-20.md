@@ -28,3 +28,20 @@ the record needs an upper bound <= 0.13 for it. Next step: derive this formula w
 
 Sources read today (alphaXiv): arXiv:2608.13637 (Alpöge-Furman, argument by Claude), arXiv:2609.02882 (Lamzouri).
 Not in LIBRARY TOTAL.
+
+## Continuation: Q_2 in terms of Montgomery's F (heuristic derivation, 2026-10-20 later)
+n(t) = sum_gamma delta(t-gamma) - L(t) has S' = n (N = N0 + S), so S has spectrum n_hat/(i omega). Montgomery's F
+is the normalised power spectrum of the ordinates at omega = alpha log T. Parseval gives
+    (1/T) int_T^{2T} (S - S_X)^2 dt  ~  (1/2 pi^2) int_c^infty F(alpha) alpha^{-2} d alpha
+(S_X removes the prime spectrum alpha < c), and F(alpha) = alpha + o(1) on [c,1] gives
+    Q_2 ~ a [ log(1/c) + B ],   B := int_1^infty F(alpha) alpha^{-2} d alpha  (B = 1 under the pair correlation conj.),
+plus the dF-cross term (1/#I_T) int (N-F_X)^2 S_X' dt (zero under independence of prime ranges). The structure
+agrees with what I recall of Goldston's mean square of S (JNT 1987, under RH; not verified in the source).
+Measured B_emp = Q_2/a - log(1/c) at T = 408 392: 1.19 (c=1/2), 0.99 (c=1/3), 0.91 (c=1/4).
+Certificate at c = 1/2:  N_0^s/N >= 1.1928 - 0.2026 B - (cross term) - o(1).
+  B = 1 (PCC) -> 0.990;  B_emp -> 0.952;  record 0.6735 <=> B < 2.563;  positive proportion <=> B < 5.887.
+Unconditional decomposition (derived): with R = S - S_x^pr (x in Selberg's range, Lemma selberg_uniform) and
+W = S_X - S_x, Var(S - S_X) = Var R - Var W + 2 Delta_off, where Delta_off comes only from off-line pairs:
+for a pair beta = 1/2 +- delta, p^{-1/2}(p^rho + p^{rho'}) - 2 p^{i gamma} = p^{i gamma} (p^{delta/2} - p^{-delta/2})^2,
+so the ordinate sums at prime frequencies equal Landau-Gonek's sums minus sum_pairs p^{i gamma} 4 sinh^2(delta log p / 2).
+Var R needs an explicit Selberg-Fujii constant; Delta_off needs zero density near the line.
