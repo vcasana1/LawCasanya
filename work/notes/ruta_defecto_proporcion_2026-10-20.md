@@ -66,3 +66,24 @@ Var R needs an explicit Selberg-Fujii constant; Delta_off needs zero density nea
   the family of Dirichlet L-functions mod q: first moment of S bounded by 982; their mean-square constant D is larger.
   Pointwise explicit Selberg for zeta: Karatsuba-Korolev (Russian Math. Surveys 2005), cited there, not read.
 * So the explicit B obtainable by this method is orders of magnitude above 2.56: true but useless. Not computed.
+
+## Q_2 as one quantity (q2_single_quantity.py, T = 100 000, training heights)
+* dF_X = (L + S_X') dt is the zero density predicted by the primes; Q_2 is the mean of R_X^2 under it, equal by Theorem A
+  to the zero-side mean <R_X(gamma)^2> + 1/12 (measured: t-side 0.09498, zero side 0.09497 at c = 1/2).
+* Split: V_L = (1/M) int E^2 L = 0.0790, C_X = (1/M) int E^2 S_X' = +0.0159 (c = 1/2; corr(E^2, S_X') = +0.31);
+  c = 1/4: 0.1106 and +0.0042. The weighting does not cancel: it adds 17 % at c = 1/2, 4 % at c = 1/4.
+* Rigorous conditional form (no density condition needed, c = 1/2 allowed by Theorem B's range):
+  if limsup Q_2(T, T^{1/2}) <= a (log 2 + b), then liminf N_0^s/N >= 4/3 - (2/pi^2)(log 2 + b) = 1.1928 - 0.2026 b.
+  b includes C_X. Measured b = 1.19 (0.31 of it from C_X).
+
+## Comparison with Lamzouri (arXiv:2609.02882, Prop. 2.1) / Alpöge-Furman
+* Both are integrality certificates. Per group of multiplicity m >= 2: ours charges 4 sum_j (u+j)^2 >= m(m^2-1)/3 >= m;
+  theirs charges through m^2 >= 2m - 1 (and (m-1)(m-2) >= 0), flat charge 4 for multiple points and off-line pairs.
+* Information used: theirs, the pair correlation with Fourier support in [-1,1] (known unconditionally, gives 2/3);
+  ours, the weight alpha^{-2} on [c, infinity): the part [c,1] is known (log(1/c)), the part > 1 is b. With support <= 1 only,
+  ours gives nothing; with b = 1 (pair correlation conjecture) it gives 0.99. Neither dominates.
+* Same groups: at Lamzouri's extremal configuration (2/3 simple, 1/6 N on-line doubles or shallow off-line pairs) our lemma
+  forces <u^2> >= 1/12, i.e. Q_2 >= 1/6, i.e. b >= 1/(6a) - log(1/c) = 2.597 (c = 1/2). So "b < 2.597" excludes their
+  extremal configuration: the two inequalities see the same groups through different information.
+* Joint problem (proposed, ADAPT of the Chirre-Goncalves-de Laat programme): minimise the simple-on-line proportion over
+  configurations with F = Montgomery on [0,1] and Q_2 <= a(log(1/c) + b); expected to beat max of the two bounds.
