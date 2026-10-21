@@ -1,0 +1,19 @@
+{
+  "source_path": "/Users/vcasana/Downloads/prime_corrected_clock_v14.tex",
+  "source_sha256": "d2ffdb9703f0e6040dc12cb2eda1396a038d3f4b9e248ce263aa171208a4ac31",
+  "source_bytes": 335687,
+  "precision_decimal_digits": 70,
+  "verification_scope": "independent high-precision evaluations of analytic identities, not a benchmark or a proof audit of the whole v14",
+  "true_zero_data_accessed": false,
+  "fitted_parameters": false,
+  "errors": {
+    "V_second_derivative": "4.52783953941e-72",
+    "interior_hat_load": "4.07505558547e-70",
+    "left_endpoint_hat_load": "1.38665085895e-70",
+    "right_endpoint_hat_load": "1.69793982728e-70",
+    "smooth_hat_load": "3.14050950454e-67",
+    "smooth_primitive": "0.0",
+    "weighted_smooth_primitive": "0.0"
+  },
+  "all_identity_checks_passed": true
+}
