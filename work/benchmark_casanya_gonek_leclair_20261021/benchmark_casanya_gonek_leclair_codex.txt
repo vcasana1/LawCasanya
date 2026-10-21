@@ -1,0 +1,108 @@
+INSTRUCCIONES PARA CODEX
+BENCHMARK REPRODUCIBLE: CASANYA vs. GONEK vs. FRANÇA–LECLAIR
+Fecha: 21 de octubre de 2026
+
+OBJETIVO
+Comparar numéricamente aproximaciones a las ordenadas positivas de los ceros no triviales de zeta, con el mismo conjunto de índices k y, cuando sea posible, un presupuesto comparable de información prima. Determinar qué método ofrece menor RMS, cuántos primos necesita para alcanzar un RMS objetivo y cuál es el coste computacional. No intentar probar RH ni inferir una superioridad universal a partir de los experimentos.
+
+ALCANCE Y REGLAS OBLIGATORIAS
+1. Implementar primero un piloto EN PYTHON. Utilizar MATLAB para el cálculo masivo solo si el perfil de rendimiento demuestra que aporta una ventaja material. Python también puede ejecutar el ensayo completo si resulta eficiente.
+2. NO modificar, sobrescribir, reordenar ni regenerar los binarios originales ni los manuscritos. Guardar scripts, parámetros, resultados, registros y gráficos en un subdirectorio nuevo y separado.
+3. Localizar los archivos locales originales; no inventar rutas. Los nombres esperados son zeross.bin (gamma verdadera, solo para evaluación), zLamb.bin (reloj RvM), zCasanya.bin (aproximación Casanya existente) y el fichero local de primos (verificar tamaño, formato y significado; NO asumir que todos sus registros son menores de dos millones). Los arreglos de ordenadas tienen 2.001.052 registros float64 little-endian según la documentación disponible; verificarlo antes de usar.
+4. En el CONSTRUCTOR de aproximaciones queda PROHIBIDO leer zeross.bin, evaluar zeta o su argumento, usar gamma verdadera o RH. El EVALUADOR separado sí podrá acceder a gamma para calcular métricas y escoger parámetros usando exclusivamente entrenamiento/validación.
+5. Mantener el índice k. No hacer matching al cero verdadero más cercano, no ordenar a posteriori para ocultar cruces, no descartar silenciosamente fallos de raíces. Informar por separado cobertura, raíces faltantes, sobrantes, errores de índice y saltos no positivos.
+6. No utilizar la versión conjetural o heurística de un algoritmo en lugar de su definición publicada. Consultar las ecuaciones y convenciones originales de Gonek y França–LeClair antes de comparar. Registrar las fuentes y páginas/ecuaciones implementadas.
+7. No presentar como diferencias matemáticas entre métodos lo que solo sea una diferencia entre el procedimiento de resolver LA MISMA ecuación, el punto inicial, el suavizado, el corte o la regla de selección de raíces.
+8. Reportar TODOS los parámetros y los resultados desfavorables. No atribuir prioridad o novedad bibliográfica a los resultados experimentales.
+
+MÉTODOS QUE HAY QUE INCLUIR
+M0. LAMBERT–RvM: lectura de zLamb.bin, sin ninguna corrección. Baseline de referencia.
+M1. FRANÇA–LECLAIR: implementar fielmente la variante PUBLICADA de la aproximación de ordenadas mediante Euler truncado, sin arg zeta verdadero. Distinguir claramente entre ecuación con arg zeta (NO admisible como predictor) y variante realmente computable con producto de Euler finito. Documentar constantes de fase, ramas, índice y reglas de resolución. Si varias variantes publicadas son razonables, etiquetarlas sin confundirlas.
+M2. GONEK: implementar desde su artículo «Finite Euler Products and the Riemann Hypothesis» (2012) el producto de Euler SUAVIZADO, su función modelo y la correspondiente ecuación de ceros/fases. Conservar EXACTAMENTE los pesos, rangos y normalización publicados. No sustituirlo por el mismo Euler truncado que Casanya sin etiquetar esa sustitución como experimento separado. Enumerar las raíces críticas y evaluar cualquier falta de correspondencia de índices.
+M3. CASANYA EXISTENTE: cargar zCasanya.bin como baseline congelada y reproducir el algoritmo con sus parámetros si se dispone de código fuente. El informe local «zCasanya_summary.pdf» describe el ganador c667: phase=power_sharp, policy=dyadic, cortes por iteración [8, 8, 512], RMS global publicado 0.0439885472, y 962 saltos no positivos. Verificar esos valores; no dar por supuesto que el archivo está presente hasta encontrarlo.
+M4. CASANYA v17: si están disponibles la implementación y su especificación exacta, añadir las raíces certificadas/continuación de la v17. Si no están disponibles, NO improvisar una supuesta v17: reportar explícitamente «pendiente: código/especificación v17» y continuar con M0–M3.
+
+PUNTO CLAVE DE COMPARABILIDAD
+Gonek usa un corte y pesos SUAVIZADOS que no necesariamente equivalen al mismo «X» usado por França–LeClair o Casanya. Informar de:
+  a) parámetro formal de cada autor;
+  b) mayor primo realmente utilizado;
+  c) número de primos distintos utilizados;
+  d) soporte de potencias primas y pesos no nulos;
+  e) número de evaluaciones aritméticas/fases;
+  f) coste real medido.
+Mantener DOS comparaciones: (A) mismo presupuesto efectivo de primos y (B) mismo coste computacional. Cuando las variantes tengan distinto número de potencias primas, no afirmar «mismo coste» solo porque coincida el primo máximo.
+
+REGIONES Y PREVENCIÓN DE SOBREAJUSTE
+Usar el particionado ya documentado para la selección Casanya:
+  - Entrenamiento/exploración: índices 1 ... 800420.
+  - Selección/validación: índices 800421 ... 1400736.
+  - Evaluación final congelada: índices 1400737 ... 2001052.
+Las configuraciones de Gonek y LeClair deben congelarse antes de medir el conjunto final. ADVERTENCIA: el conjunto final ya fue inspeccionado en el trabajo anterior de Casanya; la comparación es válida como benchmark preespecificado, pero no calificarlo de muestra «nunca vista» para todo el proyecto. Prohibido ajustar Casanya nuevamente utilizando el test final.
+
+PLAN POR ETAPAS
+ETAPA 0: INVENTARIO Y AUDITORÍA
+- Localizar datos, códigos fuente y artículos disponibles. Verificar SHA-256, tamaños, formatos binarios, primeros/últimos valores, monotonicidad de entradas de referencia y procedencia de zCasanya.bin.
+- Registrar qué algoritmo exacto es implementable para cada autor. Antes de ejecutar cálculos caros, elaborar una breve tabla de definiciones matemáticas y diferencias de normalización.
+- Verificar una muestra manual a alta precisión de todas las ecuaciones de fase y raíces (incluidas ramas), sin utilizar las ordenadas verdaderas dentro del constructor.
+
+ETAPA 1: PILOTO DE COSTE REDUCIDO
+- Seleccionar muestras deterministas distribuidas en las tres regiones, con ventanas consecutivas y puntos aislados.
+- Empezar con 1000 índices; después 10000; ampliar a 100000 solo si el piloto es estable.
+- Presupuestos iniciales comparables: primo máximo aproximado 7, 31, 127, 511, 2047, 8191, ajustando para Gonek conforme a su soporte real.
+- Para cada algoritmo, comparar raíces por índice k y registrar precisión de resolución, fallos, saltos no positivos, tiempo y memoria.
+- Estimar coste de extrapolación a 2.001.052 índices. No lanzar el ensayo masivo hasta que las definiciones y el criterio de indexación estén validados.
+
+ETAPA 2: ELECCIÓN DE CONFIGURACIONES
+- Definir una rejilla MODERADA de presupuestos de primos, iteraciones y tolerancias razonables. Elegir candidatos solo con entrenamiento y validación.
+- No mezclar suavizados ni introducir correcciones aprendidas de gamma en Gonek o LeClair.
+- Congelar un identificador y hash de configuración por variante y guardar el manifiesto de selección.
+
+ETAPA 3: ENSAYO COMPLETO
+- Ejecutar sobre los 2.001.052 índices cuando sea viable.
+- Procesar por bloques, vectorizar cálculos de fase y reutilizar información prima. Evitar la lectura repetida del archivo original completo de primos.
+- Si Python resulta demasiado costoso, preparar equivalencia funcional para MATLAB y verificar coincidencia en una muestra antes de cambiar de motor.
+- Mantener tolerancias idénticas cuando el problema numérico sea comparable. Repetir un subconjunto en alta precisión para identificar errores de redondeo y falsas raíces.
+
+MÉTRICAS OBLIGATORIAS
+Para cada método y presupuesto, en los índices correctamente cubiertos:
+  RMS = sqrt(mean((aproximación_k - gamma_k)^2)).
+  MAE, mediana del error absoluto, P95, P99, máximo absoluto.
+  RMS en unidades del espaciado medio local 2*pi/log(gamma/(2*pi)).
+  Porcentaje de índices que mejoran Lambert y porcentaje que empeoran.
+  Conteo de pares consecutivos con aproximación_{k+1} <= aproximación_k.
+  Cobertura y conteo de fallos de resolución y de indexación.
+  Tiempo total, evaluaciones de fase, número de primos distintos, memoria máxima.
+IMPORTANTÍSIMO: no presentar un RMS bajo calculado SOLO sobre las raíces fáciles como si fuese RMS de cobertura completa. Separar cobertura y métricas; la comparación principal exige 100% de cobertura o indicar claramente «no comparable».
+
+DOS OBJETIVOS DE RENDIMIENTO
+A) MISMO PRESUPUESTO: ¿quién tiene menor RMS usando como máximo P primos, con la contabilización suplementaria de potencias y trabajo?
+B) MISMA PRECISIÓN: ¿cuántos primos y cuánto tiempo necesita cada método para RMS <= 0.10, 0.075, 0.050, 0.044 y 0.040? Si no alcanza la meta, indicarlo: nunca extrapolar un resultado no obtenido.
+C) MISMO TIEMPO: comparación adicional opcional únicamente después de optimizar los tres programas suficientemente para que sea interpretable.
+
+TABLAS Y SALIDAS REQUERIDAS
+- benchmark_resumen.csv: métricas agregadas, por método, corte, región e indicador de cobertura.
+- benchmark_por_altura.csv: RMS y otros errores en ventanas de altura/índice.
+- benchmark_presupuesto.csv: precisión frente a cantidad de información prima.
+- benchmark_coste.csv: tiempos y uso de recursos.
+- benchmark_fallos.csv: índices faltantes, raíz ambigua, saltos, no convergencia, etc.
+- Configuraciones congeladas en JSON, con hashes, precisión, parámetros, referencias bibliográficas y versión de código.
+- Gráficas: RMS vs. primos; RMS vs. tiempo; RMS por altura; distribución de errores; fallos/cruces.
+- Informe breve con conclusiones LIMITADAS a lo comprobado y comparación sobre el test final.
+
+COMPROBACIONES DE REFERENCIA (NO SUPONER QUE SE REPRODUCEN AUTOMÁTICAMENTE)
+- Lambert/RvM RMS global aproximado: 0.1880662998.
+- zCasanya.bin RMS global documentado: 0.0439885472.
+- zCasanya.bin: 962 diferencias consecutivas no positivas en la configuración ganadora c667.
+- Casanya, test final documentado: RMS 0.0405544549, frente a Lambert 0.1773789575.
+Si estos números no coinciden, investigar formato, índice, parámetros y archivo ANTES de continuar.
+
+CRITERIO DE ÉXITO
+El benchmark tendrá éxito si determina de manera verificable, aun cuando el vencedor NO sea Casanya:
+  - cuál tiene menor RMS en el mismo conjunto de ordenadas para cada presupuesto;
+  - cuál necesita menos primos para cada precisión alcanzable;
+  - cuál conserva mejor el orden y correspondencia de raíces;
+  - qué parte de la posible ventaja proviene de la ecuación y qué parte proviene del algoritmo numérico.
+No proclamar «mejora matemática universal» ni «superioridad sobre Gonek» sin resultados directos y comparables. No crear ni editar versiones del paper por iniciativa propia.
+
+ENTREGA INICIAL SOLICITADA A CODEX
+Primero entregar: (i) inventario de archivos y fuentes halladas; (ii) descripción exacta de las fórmulas implementadas; (iii) prueba piloto Python de 1000 índices con resultados y tiempos; (iv) estimación de recursos del benchmark completo. Después continuar sin intervención solo si las definiciones de los tres métodos están claras y el coste es razonable; en caso contrario, enumerar los bloqueos concretos, sin sustituir métodos silenciosamente.
