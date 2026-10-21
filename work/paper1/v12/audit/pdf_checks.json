@@ -1,0 +1,26 @@
+{
+  "pages": 67,
+  "annotation_types": {
+    "/Link": 959,
+    "/Widget": 574
+  },
+  "tooltip_widgets": 574,
+  "tooltip_examples": [
+    "Section 2.2: Counting functions (p. 16)",
+    "Proposition 5.5 (Rounding the corrected count misassigns a positive proportion) (p. 26): There are absolute constants c_*>0, kappa_0>0 and T_0 such that for T>= T_0 and 2<= X<= T^c_*, [ (1)/(T)meastin[T,2T]:floor(F_X(t)+(1)/(2))!= N(t)>=kappa_0 . ]",
+    "Section 3: External results (p. 18)",
+    "Lemma 3.6 (Selberg's approximation uniformly in the order) (p. 19): Let kappa_rm F=1/(300log 2) and Y_k=T^1/(80k). There are absolute constants C and T_0 such that for T>= T_0 and every integer k with 1<= k<=kappa_rm Flog T, int_T^2T(S(t)-S^rm pr_Y_k(t))^2kdt<=(Ck^2)^2k T . In particular int_T^2T(S-S^rm pr_Y_0)^4<< T with Y_0=Y_2=T^1/160."
+  ],
+  "named_destinations": 383,
+  "missing_internal_destinations": [],
+  "external_links": 33,
+  "comparison_table_present": true,
+  "removed_project_name_absent": true,
+  "no_unresolved_question_marks": true,
+  "unique_labels": 226,
+  "tex_txt_identical": true,
+  "no_new_sublevel_theorem": true,
+  "pdf_sha256": "81a22bebc53c686ef8baecc9ea81edcbdf9c7afd484eb7d06ad392abab00b625",
+  "visual_review": "Performed separately on page renderings; not inferred from structural assertions.",
+  "viewer_limit": "Annotation tooltips require support in the reader application."
+}
