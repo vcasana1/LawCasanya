@@ -244,3 +244,8 @@
 - Python pilot: 1,000 deterministic indices. Full frozen baselines: 2,001,052 indices; Lambert RMS 0.18806629977698566; c667 RMS 0.04398854715231307 with 962 nonpositive gaps. c667 reconstruction is byte-identical to the original.
 - Full M1–M4 comparison remains pending global model-root ordinal enumeration. Finite LeClair eq49 has two tested roots for k=1,b=8191; v17 Stage A extension misses k=2. The v17 continuation checks five points per segment, not the entire interval.
 - ZIP SHA-256: 6657ad5842cb75e74f5d5b5157d6190d85e66898eda50233150fc889a077c320. The report, code and outputs are preserved as delivered; large original inputs are excluded. No manuscript version created or edited.
+
+## 2026-10-21 [claude] Paper I v14
+- Second complete review of v13 (six reviewers; reports in work/paper1/v13/audit/revision2). No proof was invalid, but there were errors in constants (Lemma 8.2), a wrong case citation (Prop. 8.8), an unproved m^*=log^*T+O(1), V cited outside Lemma V_size, and statements in the abstract stronger than the theorems; two of the Lemma 8.2 errors had been introduced by the v13 patch.
+- Each correction derived first in v14/audit/VERIFICACION_v14.md, then applied by v14/tools/patch_v14_claude.py; changed passages re-checked independently (v14/audit/revision3).
+- code/envelope_best_profile_v10.py: the case "published + ABA" now computes the union (v9 computed ABA alone); C_P unchanged.

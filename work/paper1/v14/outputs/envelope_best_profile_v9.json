@@ -1,0 +1,48 @@
+{
+ "M_heath_brown": 3000,
+ "interval_dps": 50,
+ "results": {
+  "v7: Bourgain + A-process, J=30": {
+   "vertices": 32,
+   "C_lower": "0.09681511427905376702049996",
+   "C_upper": "0.09681511427905376702049996",
+   "2piC_lower": "0.608307303551063",
+   "2piC_upper": "0.608307303551063"
+  },
+  "published: Bourgain 2017 + Heath-Brown 2017 chain + A-images": {
+   "vertices": 3025,
+   "C_lower": "0.09665302455416586768592644",
+   "C_upper": "0.09665302455416586768592644",
+   "2piC_lower": "0.607288863773203",
+   "2piC_upper": "0.607288863773203"
+  },
+  "published + A-images of B-images of A-images (m <= 300, j <= 10)": {
+   "vertices": 310,
+   "C_lower": "0.0966530245657161320828224",
+   "C_upper": "0.0966530245657161320828224",
+   "2piC_lower": "0.607288863845775",
+   "2piC_upper": "0.607288863845775"
+  },
+  "TY23 hull: Bourgain + TY23 pairs + Heath-Brown chain, all with A-images": {
+   "vertices": 3031,
+   "C_lower": "0.09646925276204008518927764",
+   "C_upper": "0.09646925276204008518927764",
+   "2piC_lower": "0.606134191549044",
+   "2piC_upper": "0.606134191549044"
+  },
+  "TY23 hull + TTY25 new pairs, all with A-images": {
+   "vertices": 3031,
+   "C_lower": "0.09645144989767889520043554",
+   "C_upper": "0.09645144989767889520043554",
+   "2piC_lower": "0.606022332853264",
+   "2piC_upper": "0.606022332853264"
+  },
+  "Lindelof profile (e = 0 on [1/2,1]): floor of the one-disc method": {
+   "vertices": 2,
+   "C_lower": "0.07862527909020537718456419",
+   "C_upper": "0.07862527909020537718456419",
+   "2piC_lower": "0.494017198352473",
+   "2piC_upper": "0.494017198352473"
+  }
+ }
+}

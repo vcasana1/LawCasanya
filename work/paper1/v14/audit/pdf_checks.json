@@ -1,0 +1,26 @@
+{
+  "pages": 68,
+  "annotation_types": {
+    "/Link": 997,
+    "/Widget": 610
+  },
+  "tooltip_widgets": 610,
+  "tooltip_examples": [
+    "Section 2.2: Counting functions (p. 17)",
+    "Proposition 5.5 (Rounding the corrected count misassigns a positive proportion) (p. 27): There are absolute constants 0<c_*<=(1)/(2), c_rm rd>0 and T_0 such that for T>= T_0 and 2<= X<= T^c_*, [ (1)/(T)meastin[T,2T]:floor(F_X(t)+(1)/(2))!= N(t)>=c_rm rd . ]",
+    "Corollary 7.7 (A cutoff read off the clock) (p. 37): For tau_k>e^e let X_k^rm loc=tau_k^1/sqrt(log log tau_k) and tau_k^rm loc=tau_k-S_X_k^rm loc(tau_k)/L(tau_k). Then [ (1)/(no. I_T^tau)sum_kin I_T^tau(tau_k^rm loc-gamma_k)^2=(log log log T+O(sqrt(log log log T)))/(log^2T). ]",
+    "Corollary 8.15 (A nondecreasing clock built without ordinates) (p. 50): Let I_T^tau=k:T<=tau_k<2T, a set of consecutive indices defined by the clock alone. For each T, with the cutoffs and the number of steps chosen at height T, the points x^(m^*)_k of Theorem 8.11 are defined by (8.1) on the block I_T^rm blk=k:T/2<=tau_k<=3T, which contains I_T u I_T^tau for T>= T_0; let x^increasing t..."
+  ],
+  "named_destinations": 384,
+  "missing_internal_destinations": [],
+  "external_links": 33,
+  "comparison_table_present": true,
+  "removed_project_name_absent": true,
+  "no_unresolved_question_marks": true,
+  "unique_labels": 226,
+  "tex_txt_identical": true,
+  "no_new_sublevel_theorem": true,
+  "pdf_sha256": "8acd4deb247713573c5fb0a0f64aef93fe48a13443776ea5e911b7c4113b2bc4",
+  "visual_review": "Performed separately on page renderings; not inferred from structural assertions.",
+  "viewer_limit": "Annotation tooltips require support in the reader application."
+}
