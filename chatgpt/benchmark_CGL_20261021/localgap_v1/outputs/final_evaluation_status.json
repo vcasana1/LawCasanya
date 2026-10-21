@@ -1,0 +1,10 @@
+{
+  "complete_tiers": [
+    512,
+    2048,
+    8192
+  ],
+  "all_required_tiers_complete": true,
+  "regular_index_scope": "numerical regular-family indexing t>=6.3, two meshes; near-axis exceptions retained, no interval proof",
+  "criterion": "primary: -right_gap/2 < error < left_gap/2; outer endpoint cells unbounded; legacy symmetric minimum retained"
+}

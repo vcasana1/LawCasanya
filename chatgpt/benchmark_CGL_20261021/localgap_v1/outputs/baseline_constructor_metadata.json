@@ -1,0 +1,65 @@
+{
+  "c667_PAV_a010": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/c667_PAV_a010.bin",
+    "sha256": "01cc32b9775dd5d46f9d88c11291a79c568521e9bab1bea7022d3c8f8e6710e1",
+    "seconds": 3.4624137920036446,
+    "provenance": "fixed PAV of frozen validated c667; no extra primes",
+    "prime_count": 97,
+    "nonpositive_gaps": 0,
+    "min_gap": 0.05191863887012005
+  },
+  "Casanya_constant_X512": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X512.bin",
+    "sha256": "04085a2529d254b35477cc0ec74bd039654cb1bf5d2c03337273168f65f030b2",
+    "seconds": 5.56156162499974,
+    "provenance": "fixed arithmetic constant cutoff; not selected with truth",
+    "prime_count": 97,
+    "nonpositive_gaps": 3578,
+    "min_gap": -0.8963248152475138
+  },
+  "Casanya_constant_X512_PAV_a010": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X512_PAV_a010.bin",
+    "sha256": "d1e10d3484eadb0a92bb3d5ba6918879e2c13e6de46395c59f02e9cd6a6d1806",
+    "seconds": 8.77162962500006,
+    "provenance": "same arithmetic + global PAV alpha0.10",
+    "prime_count": 97,
+    "nonpositive_gaps": 0,
+    "min_gap": 0.05191863887012005
+  },
+  "Casanya_constant_X2048": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X2048.bin",
+    "sha256": "f757158e075d18ff9a9449e1913e86a5a1fd3ab7d53f77cd337cd58d4b1e4dff",
+    "seconds": 16.62684141700447,
+    "provenance": "fixed arithmetic constant cutoff; not selected with truth",
+    "prime_count": 309,
+    "nonpositive_gaps": 22230,
+    "min_gap": -0.6787636634423961
+  },
+  "Casanya_constant_X2048_PAV_a010": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X2048_PAV_a010.bin",
+    "sha256": "c4ad3b2143568a19e5656ed159d5dbbf068cb6d9e6f1cf93692d83aacd5e25a3",
+    "seconds": 19.951553167004022,
+    "provenance": "same arithmetic + global PAV alpha0.10",
+    "prime_count": 309,
+    "nonpositive_gaps": 0,
+    "min_gap": 0.05191859952174127
+  },
+  "Casanya_constant_X8192": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X8192.bin",
+    "sha256": "817b4ba82820d3e11b06d96901b0cc9e1e903f5c82c00728e085097672e6e467",
+    "seconds": 53.598572750008316,
+    "provenance": "fixed arithmetic constant cutoff; not selected with truth",
+    "prime_count": 1028,
+    "nonpositive_gaps": 63632,
+    "min_gap": -0.7482298980134381
+  },
+  "Casanya_constant_X8192_PAV_a010": {
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X8192_PAV_a010.bin",
+    "sha256": "2d04571f440614d1aa4b09b90a9f62b1378672427c41abc6b2237f1fd2febb01",
+    "seconds": 56.92995441700623,
+    "provenance": "same arithmetic + global PAV alpha0.10",
+    "prime_count": 1028,
+    "nonpositive_gaps": 0,
+    "min_gap": 0.05191850708797574
+  }
+}

@@ -1,0 +1,10 @@
+LeClair_X512 refined 8000 / 601340 seconds 0.38031899998895824
+LeClair_X512 refined 88000 / 601340 seconds 4.291006165993167
+LeClair_X512 refined 168000 / 601340 seconds 8.238631999993231
+LeClair_X512 refined 248000 / 601340 seconds 12.258545499993488
+LeClair_X512 refined 328000 / 601340 seconds 15.60379362499225
+LeClair_X512 refined 408000 / 601340 seconds 18.926057707998552
+LeClair_X512 refined 488000 / 601340 seconds 22.291588583000703
+LeClair_X512 refined 568000 / 601340 seconds 25.715163957996992
+LeClair_X512 refined 601340 / 601340 seconds 27.1262304999982
+{'complete': True, 'method': 'LeClair', 'tier': 512, 'n_final': 600316, 'halo': 1024, 'numerical_regular_index_gate_passed': False, 'explicit_phase_index_selection_gate_passed': True, 'branch_policy': 'unique level root; ambiguous levels use existing prime-by-prime construction', 'all_positive_model_root_indexing_claimed': False, 'regular_family_start': 6.3, 'interval_certified': False, 'seconds': 28.356237582993344, 'max_phase_residual': 3.725290298461914e-09, 'min_synthetic_gap': 0.1616064867703244, 'max_iterations': 4, 'prime_budget': {'prime_count': 97, 'max_prime': 509, 'support': 512.0, 'formal_X': None, 'power_terms': 'infinite_analytic', 'phase_point_evaluations': 3720040, 'term_point_evaluations': 360843880, 'raw_trig_term_point_evaluations': 360843880, 'max_support_evaluated': 512.0, 'derivative_term_point_evaluations': 185853940}}

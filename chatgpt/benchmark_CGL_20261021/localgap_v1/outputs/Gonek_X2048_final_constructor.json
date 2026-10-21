@@ -1,0 +1,27 @@
+{
+  "complete": true,
+  "method": "Gonek",
+  "tier": 2048,
+  "n_final": 600316,
+  "halo": 1024,
+  "numerical_regular_index_gate_passed": true,
+  "all_positive_model_root_indexing_claimed": false,
+  "regular_family_start": 6.3,
+  "interval_certified": false,
+  "seconds": 46.79698579199612,
+  "max_phase_residual": 3.725290298461914e-09,
+  "min_synthetic_gap": 0.19157323543913662,
+  "max_iterations": 3,
+  "prime_budget": {
+    "prime_count": 309,
+    "max_prime": 2039,
+    "support": 2048.0,
+    "formal_X": 45.254833995939045,
+    "power_terms": 339,
+    "phase_point_evaluations": 3608040,
+    "term_point_evaluations": 1226733600,
+    "raw_trig_term_point_evaluations": 1226733600,
+    "max_support_evaluated": 2048.0,
+    "derivative_term_point_evaluations": 613366800
+  }
+}

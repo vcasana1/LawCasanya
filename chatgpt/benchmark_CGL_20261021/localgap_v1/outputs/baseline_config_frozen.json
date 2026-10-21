@@ -1,0 +1,13 @@
+{
+  "alpha": 0.1,
+  "cutoffs": [
+    512,
+    2048,
+    8192
+  ],
+  "policy": "constant sharp prime-power [8,8,X], separately labelled from dyadic c667",
+  "index_selection": "all indices in original order",
+  "true_zeros_used": false,
+  "source_c667_sha256": "64d1de134e920c1eb89f61ba5d93c7f949b343bfa0d9ebf5da6fb647c2d790d9",
+  "source_tau_sha256": "b6f2a8d64600951f34ee29c701caff57ffb3c62805d1e1d3be8fa393f24b1252"
+}

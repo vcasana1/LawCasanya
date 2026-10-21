@@ -1,0 +1,18 @@
+{
+  "method": "Gonek",
+  "tiers": [
+    512,
+    2048,
+    8192
+  ],
+  "start_t": 6.3,
+  "stop_t": 1132492.7993213362,
+  "steps": [
+    0.08,
+    0.04
+  ],
+  "family": "regular critical roots above6.3, same target k and original Lambert-warm branch; near-axis roots separately reported",
+  "definition_warning": "not every positive root of the high-height equation; no near-axis root is relabelled into k=1",
+  "truth_access": false,
+  "resumed_backend": "optional validated vForce, same formula"
+}

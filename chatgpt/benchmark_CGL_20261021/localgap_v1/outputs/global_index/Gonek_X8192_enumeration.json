@@ -1,0 +1,32 @@
+{
+  "complete": true,
+  "method": "Gonek",
+  "tier": 8192,
+  "regular_family_start": 6.3,
+  "numerical_regular_index_gate_passed": true,
+  "interval_certified": false,
+  "meshes": [
+    {
+      "step": 0.08,
+      "seconds": 336.1575067079975,
+      "n_required": 2001052,
+      "missing_labels": 0,
+      "multiple_labels": 0,
+      "descending_events": 0,
+      "total_events_required": 2001052,
+      "exactly_one_ascending_per_k": true
+    },
+    {
+      "step": 0.04,
+      "seconds": 325.60520720799104,
+      "n_required": 2001052,
+      "missing_labels": 0,
+      "multiple_labels": 0,
+      "descending_events": 0,
+      "total_events_required": 2001052,
+      "exactly_one_ascending_per_k": true
+    }
+  ],
+  "all_positive_model_zeros_indexed": false,
+  "near_axis_exceptions_preserved_in_pilot": true
+}

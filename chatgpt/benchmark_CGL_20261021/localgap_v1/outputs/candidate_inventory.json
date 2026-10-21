@@ -1,0 +1,103 @@
+[
+  {
+    "method": "c667_original",
+    "path": "/Users/vcasana/Documents/\u00b7.\u00b7 MATLAB/\u00b7.\u00b7 bin_unicos/zCasanya.bin",
+    "bytes": 16008416,
+    "sha256": "64d1de134e920c1eb89f61ba5d93c7f949b343bfa0d9ebf5da6fb647c2d790d9",
+    "prime_count": 97,
+    "provenance": "frozen c667, validation-selected historical parameters"
+  },
+  {
+    "method": "zCasanya_matlab_existing",
+    "path": "/Users/vcasana/Documents/\u00b7.\u00b7 MATLAB/\u00b7.\u00b7 bin_unicos/zCasanya_matlab.bin",
+    "bytes": 16008416,
+    "sha256": "d01d23664b1ab807885f1da3377f2b30b2283897e9e5360a117ecf0639f9dab0",
+    "prime_count": 97,
+    "provenance": "historical MATLAB replication; rounding differs"
+  },
+  {
+    "method": "zCasanya0_existing",
+    "path": "/Users/vcasana/Documents/\u00b7.\u00b7 MATLAB/\u00b7.\u00b7 bin_unicos/zCasanya0.bin",
+    "bytes": 16008416,
+    "sha256": "fa2f8bd57cf544739a3ca9b9e8794b31d9f6a8111b29bcfb283ef06e0ac1d278",
+    "prime_count": "unknown",
+    "provenance": "existing optimized file; truth-selected cutoff/alpha possible; configuration not identified"
+  },
+  {
+    "method": "c667_PAV_a010",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/c667_PAV_a010.bin",
+    "bytes": 16008416,
+    "sha256": "01cc32b9775dd5d46f9d88c11291a79c568521e9bab1bea7022d3c8f8e6710e1",
+    "prime_count": 97,
+    "provenance": "fixed PAV of frozen validated c667; no extra primes"
+  },
+  {
+    "method": "Casanya_constant_X512",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X512.bin",
+    "bytes": 16008416,
+    "sha256": "04085a2529d254b35477cc0ec74bd039654cb1bf5d2c03337273168f65f030b2",
+    "prime_count": 97,
+    "provenance": "fixed arithmetic constant cutoff; not selected with truth"
+  },
+  {
+    "method": "Casanya_constant_X512_PAV_a010",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X512_PAV_a010.bin",
+    "bytes": 16008416,
+    "sha256": "d1e10d3484eadb0a92bb3d5ba6918879e2c13e6de46395c59f02e9cd6a6d1806",
+    "prime_count": 97,
+    "provenance": "same arithmetic + global PAV alpha0.10"
+  },
+  {
+    "method": "Casanya_constant_X2048",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X2048.bin",
+    "bytes": 16008416,
+    "sha256": "f757158e075d18ff9a9449e1913e86a5a1fd3ab7d53f77cd337cd58d4b1e4dff",
+    "prime_count": 309,
+    "provenance": "fixed arithmetic constant cutoff; not selected with truth"
+  },
+  {
+    "method": "Casanya_constant_X2048_PAV_a010",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X2048_PAV_a010.bin",
+    "bytes": 16008416,
+    "sha256": "c4ad3b2143568a19e5656ed159d5dbbf068cb6d9e6f1cf93692d83aacd5e25a3",
+    "prime_count": 309,
+    "provenance": "same arithmetic + global PAV alpha0.10"
+  },
+  {
+    "method": "Casanya_constant_X8192",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X8192.bin",
+    "bytes": 16008416,
+    "sha256": "817b4ba82820d3e11b06d96901b0cc9e1e903f5c82c00728e085097672e6e467",
+    "prime_count": 1028,
+    "provenance": "fixed arithmetic constant cutoff; not selected with truth"
+  },
+  {
+    "method": "Casanya_constant_X8192_PAV_a010",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/benchmark_CGL_20261021/localgap_v1/outputs/Casanya_constant_X8192_PAV_a010.bin",
+    "bytes": 16008416,
+    "sha256": "2d04571f440614d1aa4b09b90a9f62b1378672427c41abc6b2237f1fd2febb01",
+    "prime_count": 1028,
+    "provenance": "same arithmetic + global PAV alpha0.10"
+  },
+  {
+    "method": "v17_StageA_existing",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/LawCasanya/work/v15_prep/outputs/task3_points.npy",
+    "sha256": "33fb7ae69d4990dc0ed90c51f61c0350b592c08ebb4014dc0ddfead88b6d1bbd",
+    "row": 0,
+    "provenance": "arithmetic construction, error evaluated later; rule R2 heuristic prime-tail sigma"
+  },
+  {
+    "method": "v17_R1_existing",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/LawCasanya/work/v15_prep/outputs/task3_points.npy",
+    "sha256": "33fb7ae69d4990dc0ed90c51f61c0350b592c08ebb4014dc0ddfead88b6d1bbd",
+    "row": 1,
+    "provenance": "arithmetic construction, error evaluated later; rule R2 heuristic prime-tail sigma"
+  },
+  {
+    "method": "v17_R2_existing",
+    "path": "/Users/vcasana/Documents/ChatGPT/M\u00f6bius/LawCasanya/work/v15_prep/outputs/task3_points.npy",
+    "sha256": "33fb7ae69d4990dc0ed90c51f61c0350b592c08ebb4014dc0ddfead88b6d1bbd",
+    "row": 2,
+    "provenance": "arithmetic construction, error evaluated later; rule R2 heuristic prime-tail sigma"
+  }
+]

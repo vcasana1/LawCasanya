@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "url": "https://github.com/vcasana1/LawCasanya/issues/1#issuecomment-6314693103",
+      "body": "Prioridad adicional solicitada: decidir experimentalmente si los fallos del criterio **individual** `2*abs(gamma_model[k]-gamma_true[k]) < min(gap_model[k-1],gap_model[k])` se deben a **corte primo insuficiente** o a problema de selección de raíces/fase. Para Casanya con proyección isotónica, barrer cortes primo-potencia X=512,2048,8192 y mayores si el coste lo permite, manteniendo el mismo alfa 0.10 y el mismo conjunto de índices, registrar por ventana: máximo de `2|e_k|/d_k`, índice del máximo, número y porcentaje de violaciones, y máximo error absoluto, además del RMS. Repetir para Gonek y LeClair con presupuesto primo equiparado, validando el emparejamiento ordinal (no usar raíz más cercana). Distinguir explícitamente la monotonía impuesta por PAV de la proximidad real. No presentar como demostración de RH ni afirmar que los modelos Gonek/LeClair cumplen el medio espacio sin test. Importante teórico: Gonek, sección 9, Teorema 9.1, obtiene concentración de sus ceros (para variante modificada) SUPONIENDO RH; la cota de su prueba depende de la separación Δ real y exige X muy grande al disminuir Δ (véase su condición X >= exp(1/(ε Δ))). No confundir esto con una garantía uniforme incondicional de media separación. La fórmula explícita de Landau no construye ordenadas individuales y no es un competidor en este diagnóstico.",
+      "user": {
+        "login": "vcasana1",
+        "name": "vcasana1",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/297213259?v=4",
+        "id": 297213259
+      },
+      "id": 6314693103,
+      "pull_request_review_id": null,
+      "in_reply_to_id": null,
+      "created_at": null,
+      "updated_at": null,
+      "review": null,
+      "side": null,
+      "line": null,
+      "start_line": null,
+      "path": null,
+      "body_html": "<p dir=\"auto\">Prioridad adicional solicitada: decidir experimentalmente si los fallos del criterio <strong>individual</strong> <code class=\"notranslate\">2*abs(gamma_model[k]-gamma_true[k]) &lt; min(gap_model[k-1],gap_model[k])</code> se deben a <strong>corte primo insuficiente</strong> o a problema de selección de raíces/fase. Para Casanya con proyección isotónica, barrer cortes primo-potencia X=512,2048,8192 y mayores si el coste lo permite, manteniendo el mismo alfa 0.10 y el mismo conjunto de índices, registrar por ventana: máximo de <code class=\"notranslate\">2|e_k|/d_k</code>, índice del máximo, número y porcentaje de violaciones, y máximo error absoluto, además del RMS. Repetir para Gonek y LeClair con presupuesto primo equiparado, validando el emparejamiento ordinal (no usar raíz más cercana). Distinguir explícitamente la monotonía impuesta por PAV de la proximidad real. No presentar como demostración de RH ni afirmar que los modelos Gonek/LeClair cumplen el medio espacio sin test. Importante teórico: Gonek, sección 9, Teorema 9.1, obtiene concentración de sus ceros (para variante modificada) SUPONIENDO RH; la cota de su prueba depende de la separación Δ real y exige X muy grande al disminuir Δ (véase su condición X &gt;= exp(1/(ε Δ))). No confundir esto con una garantía uniforme incondicional de media separación. La fórmula explícita de Landau no construye ordenadas individuales y no es un competidor en este diagnóstico.</p>"
+    }
+  ],
+  "url": "https://github.com/vcasana1/LawCasanya/issues/1",
+  "title": "vcasana1/LawCasanya Issue #1 comments",
+  "display_url": "https://github.com/vcasana1/LawCasanya/issues/1",
+  "display_title": "vcasana1/LawCasanya Issue #1 comments"
+}

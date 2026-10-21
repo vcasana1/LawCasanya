@@ -1,0 +1,29 @@
+{
+  "complete": true,
+  "method": "LeClair",
+  "tier": 512,
+  "n_final": 600316,
+  "halo": 1024,
+  "numerical_regular_index_gate_passed": false,
+  "explicit_phase_index_selection_gate_passed": true,
+  "branch_policy": "unique level root; ambiguous levels use existing prime-by-prime construction",
+  "all_positive_model_root_indexing_claimed": false,
+  "regular_family_start": 6.3,
+  "interval_certified": false,
+  "seconds": 28.356237582993344,
+  "max_phase_residual": 3.725290298461914e-09,
+  "min_synthetic_gap": 0.1616064867703244,
+  "max_iterations": 4,
+  "prime_budget": {
+    "prime_count": 97,
+    "max_prime": 509,
+    "support": 512.0,
+    "formal_X": null,
+    "power_terms": "infinite_analytic",
+    "phase_point_evaluations": 3720040,
+    "term_point_evaluations": 360843880,
+    "raw_trig_term_point_evaluations": 360843880,
+    "max_support_evaluated": 512.0,
+    "derivative_term_point_evaluations": 185853940
+  }
+}
