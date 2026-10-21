@@ -234,3 +234,7 @@
 ## 2026-10-20 22:10 UTC — [claude] — second external review of v11.2 stored for the next revision
 - work/paper1/pendiente_siguiente_version/revision_matematica_v11_2_segunda_2026-10-20.md, with Claude's notes (point 1.1 confirmed
   in the source: cutoff-domain mismatch between lem:transport and lem:sampling_rho; repair indicated). Nothing applied.
+
+## 2026-10-21 [claude] Paper I v13
+- Fujii 1974 p. 226 re-read in LIBRARY TOTAL (110_Fujii_1974_...): implied constants independent of q, k, h; point 1.3 of the second audit closed.
+- Five independent reviewers (notation, four domain blocks) on v12; all findings verified and applied by `work/paper1/v13/tools/patch_v13_claude.py` (list in `work/paper1/v13/README.md`). No step was invalid; fixes are notation clashes, missing justifications, one sign slip and two wrong constants (Lemma 8.2 second bound, Prop. 9.7(a)).
