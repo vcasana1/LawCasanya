@@ -1,0 +1,80 @@
+[
+  {
+    "cutoff": 7,
+    "prime_count": 4,
+    "n": 1000,
+    "direct_coverage": 1.0,
+    "max_difference_on_common": 2.0954757928848267e-09,
+    "differences_over_1e7": 0,
+    "local_multiple_roots": 0,
+    "local_no_roots": 0,
+    "refined_mesh_changes": 0,
+    "direct_seconds": 0.005821124999783933,
+    "prime_continuation_seconds": 0.014495875002467074
+  },
+  {
+    "cutoff": 31,
+    "prime_count": 11,
+    "n": 1000,
+    "direct_coverage": 1.0,
+    "max_difference_on_common": 3.958120942115784e-09,
+    "differences_over_1e7": 0,
+    "local_multiple_roots": 0,
+    "local_no_roots": 0,
+    "refined_mesh_changes": 0,
+    "direct_seconds": 0.04240037500130711,
+    "prime_continuation_seconds": 0.04315533300541574
+  },
+  {
+    "cutoff": 127,
+    "prime_count": 31,
+    "n": 1000,
+    "direct_coverage": 1.0,
+    "max_difference_on_common": 3.3760443329811096e-09,
+    "differences_over_1e7": 0,
+    "local_multiple_roots": 0,
+    "local_no_roots": 0,
+    "refined_mesh_changes": 0,
+    "direct_seconds": 0.09538299999985611,
+    "prime_continuation_seconds": 0.17024183300236473
+  },
+  {
+    "cutoff": 511,
+    "prime_count": 97,
+    "n": 1000,
+    "direct_coverage": 1.0,
+    "max_difference_on_common": 2.3283064365386963e-09,
+    "differences_over_1e7": 0,
+    "local_multiple_roots": 0,
+    "local_no_roots": 0,
+    "refined_mesh_changes": 0,
+    "direct_seconds": 0.2605511250003474,
+    "prime_continuation_seconds": 1.0600467500044033
+  },
+  {
+    "cutoff": 2047,
+    "prime_count": 309,
+    "n": 1000,
+    "direct_coverage": 1.0,
+    "max_difference_on_common": 3.259629011154175e-09,
+    "differences_over_1e7": 0,
+    "local_multiple_roots": 0,
+    "local_no_roots": 0,
+    "refined_mesh_changes": 0,
+    "direct_seconds": 0.7198312079999596,
+    "prime_continuation_seconds": 8.558123082999373
+  },
+  {
+    "cutoff": 8191,
+    "prime_count": 1028,
+    "n": 1000,
+    "direct_coverage": 1.0,
+    "max_difference_on_common": 2.6775524020195007e-09,
+    "differences_over_1e7": 0,
+    "local_multiple_roots": 1,
+    "local_no_roots": 0,
+    "refined_mesh_changes": 0,
+    "direct_seconds": 2.9342306250036927,
+    "prime_continuation_seconds": 82.6713113750011
+  }
+]

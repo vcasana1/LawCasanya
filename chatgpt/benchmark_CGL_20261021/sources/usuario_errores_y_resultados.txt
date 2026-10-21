@@ -1,0 +1,244 @@
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -3.92752 is -1.7062-1.9638i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -4.52049 is -2.6687-2.2602i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -5.07624 is -3.6448-2.5381i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -5.60482 is -4.6311-2.8024i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -6.11241 is -5.6254-3.0562i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -6.60314 is -6.6263-3.3016i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -7.07991 is -7.6327-3.54i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -7.54487 is -8.6439-3.7724i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -7.99964 is -9.65932-3.99982i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -8.44548 is -10.6784-4.22274i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -8.88343 is -11.7008-4.44171i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -9.31429 is -12.7262-4.65715i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -9.73877 is -13.7543-4.86939i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -10.1574 is -14.7849-5.07872i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -10.5708 is -15.8178-5.28539i.)
+Check function or try again with a different starting value.
+Exiting fzero: aborting search for an interval containing a sign change
+    because complex function value encountered during search.
+(Function value at -10.9792 is -16.8529-5.48962i.)
+Check function or try again with a different starting value.
+Error using atan2
+Inputs must be real.
+
+Error in casana_tauc_comparacion>phase_S (line 125)
+S  = -(1/pi) * sum(atan2(a.*sin(th), 1 - a.*cos(th)));
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in casana_tauc_comparacion>newton_step (line 115)
+    f  = N_asym(tk) + phase_S(tk, p) - (k - 0.5);
+                      ^^^^^^^^^^^^^^
+Error in casana_tauc_comparacion (line 48)
+    tauL = newton_step(tauL, N_asym, pr, c);
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+>> prime_cutoff_odlyzko_local
+LOW DATA: 2001052 zeros, T_max=1132490.658714411
+zCasanya.bin: RMS=0.043988547, nonpositive gaps=962
+zeros3.bin: reading double offsets from base 267653395647.
+zeros3.bin: 10000 zeros, base 2.6765e+11, RvM RMS 0.09943883 (0.387 spacings)
+zeros4.bin: reading double offsets from base 144176897509546973000.
+zeros4.bin: 10000 zeros, base 1.4418e+20, RvM RMS 0.05994196 (0.425 spacings)
+zeros5.bin: reading double offsets from base 1370919909931995300000.
+zeros5.bin: 10000 zeros, base 1.3709e+21, RvM RMS 0.05729447 (0.427 spacings)
+
+DATASET low_1001_8000          T=4.730963e+03
+ X=     64 primes=    18 val=0.08811951 test=0.09833937 gap<=0:  0/120 minGap=+0.0157637
+ X=    128 primes=    31 val=0.11658856 test=0.11359976 gap<=0:  1/120 minGap=-0.1729658
+ X=    256 primes=    54 val=0.13316857 test=0.11614195 gap<=0:  7/120 minGap=-0.5085830
+ X=    512 primes=    97 val=0.13703519 test=0.12114308 gap<=0: 11/120 minGap=-0.5436403
+ X=   1024 primes=   172 val=0.14310392 test=0.13314357 gap<=0: 13/120 minGap=-0.6032005
+ X=   2048 primes=   309 val=0.14365350 test=0.13537129 gap<=0: 14/120 minGap=-0.5576097
+ X=   4096 primes=   564 val=0.15430365 test=0.14635261 gap<=0: 15/120 minGap=-0.5489385
+ X=   8192 primes=  1028 val=0.17323374 test=0.15490934 gap<=0: 15/120 minGap=-0.5552944
+ CHOSEN X=64 (18 primes); held-out RMS=0.09833937; edge=1
+
+DATASET low_8001_30000         T=1.693733e+04
+ X=     64 primes=    18 val=0.06314135 test=0.05431075 gap<=0:  0/120 minGap=+0.1952837
+ X=    128 primes=    31 val=0.06768990 test=0.07185856 gap<=0:  0/120 minGap=+0.0057757
+ X=    256 primes=    54 val=0.08584560 test=0.08598738 gap<=0:  2/120 minGap=-0.0669418
+ X=    512 primes=    97 val=0.10541535 test=0.11383531 gap<=0:  2/120 minGap=-0.2293757
+ X=   1024 primes=   172 val=0.11885522 test=0.11476629 gap<=0:  5/120 minGap=-0.2919548
+ X=   2048 primes=   309 val=0.12500286 test=0.12329870 gap<=0:  5/120 minGap=-0.3841193
+ X=   4096 primes=   564 val=0.13131635 test=0.12667114 gap<=0:  7/120 minGap=-0.4079827
+ X=   8192 primes=  1028 val=0.14181532 test=0.13754016 gap<=0:  6/120 minGap=-0.4652463
+ CHOSEN X=64 (18 primes); held-out RMS=0.05431075; edge=1
+
+DATASET low_30001_100000       T=5.323773e+04
+ X=     64 primes=    18 val=0.06500044 test=0.06757568 gap<=0:  0/120 minGap=+0.1213081
+ X=    128 primes=    31 val=0.05493005 test=0.05245714 gap<=0:  0/120 minGap=+0.1323763
+ X=    256 primes=    54 val=0.05872347 test=0.05563149 gap<=0:  0/120 minGap=+0.1505063
+ X=    512 primes=    97 val=0.07672870 test=0.07423822 gap<=0:  0/120 minGap=+0.0424127
+ X=   1024 primes=   172 val=0.08511113 test=0.08580613 gap<=0:  3/120 minGap=-0.1228622
+ X=   2048 primes=   309 val=0.09420023 test=0.08872758 gap<=0:  7/120 minGap=-0.1229934
+ X=   4096 primes=   564 val=0.09882975 test=0.09306609 gap<=0:  8/120 minGap=-0.1629977
+ X=   8192 primes=  1028 val=0.10074003 test=0.10202656 gap<=0:  9/120 minGap=-0.2238586
+ CHOSEN X=128 (31 primes); held-out RMS=0.05245714; edge=0
+
+DATASET low_100001_400000      T=1.716584e+05
+ X=     64 primes=    18 val=0.08010793 test=0.07474883 gap<=0:  0/120 minGap=+0.2396823
+ X=    128 primes=    31 val=0.05902837 test=0.05153743 gap<=0:  0/120 minGap=+0.2656409
+ X=    256 primes=    54 val=0.05211803 test=0.04170370 gap<=0:  0/120 minGap=+0.1694268
+ X=    512 primes=    97 val=0.05711645 test=0.05041486 gap<=0:  2/120 minGap=-0.0077442
+ X=   1024 primes=   172 val=0.06308604 test=0.06210884 gap<=0:  1/120 minGap=-0.1082060
+ X=   2048 primes=   309 val=0.06947255 test=0.07581979 gap<=0:  5/120 minGap=-0.1195652
+ X=   4096 primes=   564 val=0.07587270 test=0.08263925 gap<=0:  6/120 minGap=-0.1847137
+ X=   8192 primes=  1028 val=0.08714800 test=0.08645774 gap<=0:  9/120 minGap=-0.1849106
+ CHOSEN X=256 (54 primes); held-out RMS=0.04170370; edge=0
+
+DATASET low_400001_800000      T=3.775171e+05
+ X=     64 primes=    18 val=0.06943387 test=0.06800929 gap<=0:  0/120 minGap=+0.1962986
+ X=    128 primes=    31 val=0.06500572 test=0.05210261 gap<=0:  0/120 minGap=+0.1164792
+ X=    256 primes=    54 val=0.05438932 test=0.03911784 gap<=0:  0/120 minGap=+0.0758147
+ X=    512 primes=    97 val=0.04690208 test=0.04197742 gap<=0:  0/120 minGap=+0.0477070
+ X=   1024 primes=   172 val=0.04989313 test=0.05424845 gap<=0:  1/120 minGap=-0.0090052
+ X=   2048 primes=   309 val=0.05296510 test=0.05840937 gap<=0:  4/120 minGap=-0.0261562
+ X=   4096 primes=   564 val=0.06358754 test=0.06476930 gap<=0:  4/120 minGap=-0.1364653
+ X=   8192 primes=  1028 val=0.07448726 test=0.06504008 gap<=0:  9/120 minGap=-0.1603981
+ CHOSEN X=512 (97 primes); held-out RMS=0.04197742; edge=0
+
+DATASET low_800001_1300000     T=6.449521e+05
+ X=     64 primes=    18 val=0.07434951 test=0.07252491 gap<=0:  0/120 minGap=+0.1755424
+ X=    128 primes=    31 val=0.05692809 test=0.05631099 gap<=0:  0/120 minGap=+0.0378812
+ X=    256 primes=    54 val=0.04598472 test=0.04648645 gap<=0:  0/120 minGap=+0.0226364
+ X=    512 primes=    97 val=0.04469004 test=0.03957335 gap<=0:  0/120 minGap=+0.0568370
+ X=   1024 primes=   172 val=0.04888111 test=0.04218249 gap<=0:  0/120 minGap=+0.0206685
+ X=   2048 primes=   309 val=0.06024446 test=0.05021288 gap<=0:  0/120 minGap=+0.0139041
+ X=   4096 primes=   564 val=0.06868466 test=0.06129237 gap<=0:  2/120 minGap=-0.0704309
+ X=   8192 primes=  1028 val=0.06803160 test=0.07008008 gap<=0:  7/120 minGap=-0.0877052
+ CHOSEN X=512 (97 primes); held-out RMS=0.03957335; edge=0
+
+DATASET low_1300001_2001052    T=9.514729e+05
+ X=     64 primes=    18 val=0.07492779 test=0.06849109 gap<=0:  0/120 minGap=+0.1612296
+ X=    128 primes=    31 val=0.06343475 test=0.05595410 gap<=0:  0/120 minGap=+0.1141430
+ X=    256 primes=    54 val=0.05031608 test=0.04364564 gap<=0:  0/120 minGap=+0.1106673
+ X=    512 primes=    97 val=0.04306420 test=0.03770080 gap<=0:  0/120 minGap=+0.1153666
+ X=   1024 primes=   172 val=0.03911069 test=0.04295205 gap<=0:  0/120 minGap=+0.0936130
+ X=   2048 primes=   309 val=0.04897264 test=0.05348039 gap<=0:  0/120 minGap=+0.0531031
+ X=   4096 primes=   564 val=0.05631313 test=0.06584439 gap<=0:  0/120 minGap=+0.0468068
+ X=   8192 primes=  1028 val=0.06355164 test=0.06682260 gap<=0:  0/120 minGap=+0.0058300
+ CHOSEN X=1024 (172 primes); held-out RMS=0.04295205; edge=0
+High-precision phases: 12251 primes, base=267653395647
+
+DATASET zeros3.bin             T=2.676534e+11
+ X=    512 primes=    97 val=0.05112001 test=0.05150938 gap<=0:  0/120 minGap=+0.1474914
+ X=   2048 primes=   309 val=0.04519768 test=0.04558781 gap<=0:  0/120 minGap=+0.1013226
+ X=   8192 primes=  1028 val=0.04080991 test=0.04011315 gap<=0:  0/120 minGap=+0.0505070
+ X=  32768 primes=  3512 val=0.03591349 test=0.03693892 gap<=0:  0/120 minGap=+0.0758985
+ X= 131072 primes= 12251 val=0.02983877 test=0.03165161 gap<=0:  0/120 minGap=+0.0533040
+ CHOSEN X=131072 (12251 primes); held-out RMS=0.03165161; edge=1
+High-precision phases: 12251 primes, base=144176897509546973000
+
+DATASET zeros4.bin             T=1.441769e+20
+ X=    512 primes=    97 val=0.03433558 test=0.03722234 gap<=0:  0/120 minGap=+0.0939599
+ X=   2048 primes=   309 val=0.03336302 test=0.03379494 gap<=0:  0/120 minGap=+0.0832078
+ X=   8192 primes=  1028 val=0.03213863 test=0.03249342 gap<=0:  0/120 minGap=+0.0807230
+ X=  32768 primes=  3512 val=0.03026991 test=0.02992738 gap<=0:  0/120 minGap=+0.0771885
+ X= 131072 primes= 12251 val=0.02782254 test=0.02737819 gap<=0:  0/120 minGap=+0.0631616
+ CHOSEN X=131072 (12251 primes); held-out RMS=0.02737819; edge=1
+High-precision phases: 12251 primes, base=1370919909931995300000
+
+DATASET zeros5.bin             T=1.370920e+21
+ X=    512 primes=    97 val=0.03650412 test=0.03171503 gap<=0:  0/120 minGap=+0.0898981
+ X=   2048 primes=   309 val=0.03460796 test=0.02967127 gap<=0:  0/120 minGap=+0.0805162
+ X=   8192 primes=  1028 val=0.03254467 test=0.02749645 gap<=0:  0/120 minGap=+0.0437760
+ X=  32768 primes=  3512 val=0.03010933 test=0.02640542 gap<=0:  0/120 minGap=+0.0395336
+ X= 131072 primes= 12251 val=0.02881765 test=0.02571917 gap<=0:  0/120 minGap=+0.0299754
+ CHOSEN X=131072 (12251 primes); held-out RMS=0.02571917; edge=1
+
+LAW A:
+X(T)=T^(0.475020616)
+Log-cutoff fit RMS=0.2529423
+
+LAW B:
+X(T)=T^(0.756512459/sqrt(log(log(T))))
+Log-cutoff fit RMS=0.3344438
+
+HELD-OUT LAW CHECK (same datasets, held-out indices):
+low_1001_8000          A: X=     64 RMS=0.09833937 | B: X=     64 RMS=0.09833937
+low_8001_30000         A: X=    128 RMS=0.07185856 | B: X=    128 RMS=0.07185856
+low_30001_100000       A: X=    128 RMS=0.05245714 | B: X=    256 RMS=0.05563149
+low_100001_400000      A: X=    256 RMS=0.04170370 | B: X=    256 RMS=0.04170370
+low_400001_800000      A: X=    512 RMS=0.04197742 | B: X=    512 RMS=0.04197742
+low_800001_1300000     A: X=    512 RMS=0.03957335 | B: X=    512 RMS=0.03957335
+low_1300001_2001052    A: X=    512 RMS=0.03770080 | B: X=    512 RMS=0.03770080
+zeros3.bin             A: X= 131072 RMS=0.03165161 | B: X=  32768 RMS=0.03693892
+zeros4.bin             A: X= 131072 RMS=0.02737819 | B: X= 131072 RMS=0.02737819
+zeros5.bin             A: X= 131072 RMS=0.02571917 | B: X= 131072 RMS=0.02571917
+           Dataset             Height      BestCutoff    PrimeCount    ValidationRMS    HeldOutRMS    ObservedExponent    GridBoundary
+    _____________________    __________    __________    __________    _____________    __________    ________________    ____________
+
+    "low_1001_8000"                4731            64         18          0.08812        0.098339         0.49148            true     
+    "low_8001_30000"              16937            64         18         0.063141        0.054311         0.42711            true     
+    "low_30001_100000"            53238           128         31          0.05493        0.052457         0.44586            false    
+    "low_100001_400000"      1.7166e+05           256         54         0.052118        0.041704         0.46006            false    
+    "low_400001_800000"      3.7752e+05           512         97         0.046902        0.041977          0.4858            false    
+    "low_800001_1300000"     6.4495e+05           512         97          0.04469        0.039573         0.46635            false    
+    "low_1300001_2001052"    9.5147e+05          1024        172         0.039111        0.042952         0.50353            false    
+    "zeros3.bin"             2.6765e+11    1.3107e+05      12251         0.029839        0.031652         0.44782            true     
+    "zeros4.bin"             1.4418e+20    1.3107e+05      12251         0.027823        0.027378         0.25386            true     
+    "zeros5.bin"             1.3709e+21    1.3107e+05      12251         0.028818        0.025719         0.24211            true     
+
+
+ans =
+
+  10×8 table
+
+           Dataset             Height      BestCutoff    PrimeCount    ValidationRMS    HeldOutRMS    ObservedExponent    GridBoundary
+    _____________________    __________    __________    __________    _____________    __________    ________________    ____________
+
+    "low_1001_8000"                4731            64         18          0.08812        0.098339         0.49148            true     
+    "low_8001_30000"              16937            64         18         0.063141        0.054311         0.42711            true     
+    "low_30001_100000"            53238           128         31          0.05493        0.052457         0.44586            false    
+    "low_100001_400000"      1.7166e+05           256         54         0.052118        0.041704         0.46006            false    
+    "low_400001_800000"      3.7752e+05           512         97         0.046902        0.041977          0.4858            false    
+    "low_800001_1300000"     6.4495e+05           512         97          0.04469        0.039573         0.46635            false    
+    "low_1300001_2001052"    9.5147e+05          1024        172         0.039111        0.042952         0.50353            false    
+    "zeros3.bin"             2.6765e+11    1.3107e+05      12251         0.029839        0.031652         0.44782            true     
+    "zeros4.bin"             1.4418e+20    1.3107e+05      12251         0.027823        0.027378         0.25386            true     
+    "zeros5.bin"             1.3709e+21    1.3107e+05      12251         0.028818        0.025719         0.24211            true     
+
+>> 

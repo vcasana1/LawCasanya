@@ -1,0 +1,3235 @@
+=== PDF PAGE 1 ===
+TRANSACTIONS OF THE
+AMERICAN MA THEMA TICAL SOCIETY
+V olume 364, Number 4, April 2012, Pages 2157–2191
+S 0002-9947(2011)05546-7
+Article electronically published on December 1, 2011
+FINITE EULER PRODUCTS
+AND THE RIEMANN HYPOTHESIS
+S. M. GONEK
+Abstract. We investigate the approximation of the Riemann zeta-functionby
+short truncations of its Euler product in the critical strip. We then construct
+a parameterized family of non-analytic functions that approximate the zeta-
+function to the right of the critical line. With the possible exception of ﬁnitely
+many zeros oﬀ the critical line, each function in the family satisﬁes a Riemann
+Hypothesis. Moreover, when the parameter is not too large, the functions in
+the family have about the same number of zeros as the zeta-function, their
+zeros are all simple, and the zeros “repel”. The structure of these functions
+makes the reason for the simplicity and repulsion of their zeros apparent.
+Computer calculations suggest that the zeros of functions in the family are
+remarkably close to those of the zeta-function, even for small values of the
+parameter. We show that if the Riemann Hypothesis holds for the Riemann
+zeta-function, then the zeros of these functions indeed converge to those of the
+zeta-function as the parameter increases and that, between consecutive zeros
+of the zeta-function, the functions tend to twice the zeta-function. Finally, we
+discuss analogues of the model for other L-functions and the insight they give
+into the distribution of zeros of linear combinations of L-functions.
+Contents
+1. Introduction 2158
+2. The approximation of ζ(s) by ﬁnite Dirichlet series 2159
+3. The approximation of ζ(s) by ﬁnite Euler products 2160
+4. Products, sums, and moments 2167
+5. A function related to the zeta-function 2168
+6. The Riemann Hypothesis for ζ
+X(s) 2170
+7. The number of zeros ofζX(s) 2171
+8. The number of simple zeros ofζX(s) 2178
+9. The relative sizes of ζX(s)a n dζ(s) and the relation
+between their zeros 2179
+10. Why zeros of ζX(s) are simple and repel 2182
+11. Other L-functions and sums of L-functions 2185
+12. Appendix 2188
+Acknowledgements 2190
+References 2190
+Received by the editors September 17, 2010.
+2010 Mathematics Subject Classiﬁcation. Primary 11M06, 11M26.
+This work was supported in part by NSF grant DMS-0653809.
+c⃝2011 American Mathematical Society
+Reverts to public domain 28 years from publication
+2157
+=== PDF PAGE 2 ===
+2158 S. M. GONEK
+1. Introduction
+Why should the Riemann Hypothesis be true? If all thezeros of thezeta-function
+are simple, then why? Why do the zeros seem to repel each other? We know that
+an eventual proof of the Riemann Hypothesis must use, at least implicitly, both
+the zeta-function’s Euler product and functional equation. For there are functions
+with similar functional equations but no Euler product and functions with an Euler
+product but no functional equation, for which the Riemann Hypothesis is false. But
+why are these two ingredients essential? This paper began as an attempt to gain
+insight into these questions.
+Section 2 begins with a brief discussion of the approximation ofζ(s) by trun-
+cations of its Dirichlet series. In Section 3 we turn to the approximation ofζ(s)
+by truncations of its Euler product. We show that if the Riemann Hypothesis is
+true, then short products approximate the zeta-function well in a region containing
+most of the right-half of the critical strip. Conversely, a good approximation by
+products in this region implies the zeta-function has at most ﬁnitely many zeros
+there. Section 4 is a slight departure from the main direction of the paper, but
+we include it in order to deduce some immediate consequences of the results of
+Section 3. In Section 5 we construct a parameterized family,{ζ
+X(s)}, of functions
+related to the zeta-function with the same type of approximation property as the
+ﬁnite Euler products. That is, if the Riemann Hypothesis is true, thenζX(s)i sa
+good approximation ofζ(s) in a certain region in the right-half of the critical strip
+and, if ζX(s) approximates ζ(s) well in this region, thenζ(s) can have at most
+ﬁnitely many zeros there. In Section 6 we show that, with the possible exception
+of a few zeros near the real axis, a Riemann Hypothesis holds for eachζX(s). In
+Sections 7 and 8 we prove that on the Riemann Hypothesis, if the parameterX is
+not too large, thenζX(s) has about the same number of zeros asζ(s) and that its
+zeros are all simple (again with the possible exception of a few low lying ones). We
+also show unconditionally that when the parameter is much larger,ζX(s) still has
+asymptotically the same number of zeros asζ(s) and that 100% of these (in the
+density sense) are simple. In the next section we study relationships between the
+two functions on the critical line. Assuming the Riemannn Hypothesis, we show
+that the zeros ofζ
+X(s) converge to the zeros ofζ(s)a sX →∞ and that between
+the zeros of the zeta-functionζX(1
+2 +it) → 2ζ(1
+2 +it). In Section 10 we examine
+the structural source of the simplicity and repulsion of the zeros ofζX(s) and dis-
+cuss whether this sheds any light on the analogous properties of the zeros ofζ(s).
+In the last section we illustrate how our results generalize to other L-functions by
+deﬁning functionsLX(s,χ) corresponding to the Dirichlet L-functionL(s,χ). We
+then study the distribution of zeros of linear combinations ofLX(s,χ). This sug-
+gests a heuristic diﬀerent from the usual one (of carrier waves) for understanding
+why linear combinations of the standard L-functions should have 100% of their ze-
+ros on the critical line. The Appendix provides some useful approximations of the
+zeta-function by Dirichlet polynomials.
+The functionsζ
+X(s) aresimpler than theRiemann zeta-functionyet they capture
+some of its most important structural features. It is therefore reasonable to regard
+them as “models” of the zeta-function. The modeling is best whenX is large, say
+ap o w e ro ft, but so far, with the exception of Theorem 9.1, our results are most
+satisfactory only for smallerX ranges.
+We began by raising several deep questions. Although we do not oﬀer deﬁnitive
+answers, we hope our investigation will be seen as suggestive. For example, a
+=== PDF PAGE 3 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2159
+possible interpretation of our results as they touch on the question of why both the
+Euler product and functional equation are necessary for the truth of the Riemann
+Hypothesis is this: the Euler product prevents the zeta-function from having zeros
+oﬀ the line, while the functional equation puts them on it.
+2. The approximation of ζ(s) by finite Dirichlet series
+Throughout we writes = σ+it and τ= |t|+2 ;ϵ denotes an arbitrarily small
+positive number which may not be the same at each occurrence.
+The Riemann zeta-function is analytic in the entire complex plane, except for
+a simple pole ats = 1, and in the half-planeσ> 1 it is given by the absolutely
+convergent series
+ζ(s)=
+∞∑
+n=1
+n−s.
+Estimating the tail of the series trivially, we obtain the approximation
+(2.1) ζ(s)=
+X∑
+n=1
+n−s +O
+(X1−σ
+σ−1
+)
+for σ> 1a n dX ≥1. A crude form of the approximate functional equation (see
+Titchmarsh [25]) extends this into the critical strip:
+(2.2) ζ(s)=
+X∑
+n=1
+n−s + X1−s
+s−1 +O(X−σ).
+This holds uniformly forσ≥σ0 > 0, provided thatX ≥Cτ /2π,w h e r eC is any
+constant greater than 1. The second term on the right-hand side reﬂects the simple
+pole ofζ(s)a ts = 1 and, if we stay away from it, it can be ignored. For instance,
+setting X = t and assumingt ≥1, we ﬁnd that
+(2.3) ζ(s)=
+∑
+n≤t
+n−s +O(t−σ)
+uniformly for σ≥σ0 > 0. Thus, truncations of the Dirichlet series deﬁningζ(s)
+approximate it well, even in the critical strip.
+Now suppose that the Lindel¨of Hypothesis is true. That is,
+ζ(1
+2 +it) ≪ τϵ.
+Then the length of the series in (2.2) and (2.3) may be reduced considerably, as the
+following modiﬁcation of Theorem 13.3 of Titchmarsh [25] shows (see the Appendix
+for a proof).
+Theorem 2.1. Let σbe bounded,|σ|≥ 1
+2,a n d|s−1| > 1
+10.A l s ol e t1 ≤X ≤t2.
+A necessary and suﬃcient condition for the truth of the Lindel¨of Hypothesis is that
+ζ(s)=
+∑
+n≤X
+n−s +O(X
+1
+2−στϵ).
+It follows from this that if the Lindel¨of Hypothesis is true and we stay away from
+the pole of the zeta-function ats =1 ,t h e nζ(s) is well-approximable by arbitrarily
+short truncations of its Dirichlet series in the half planeσ> 1
+2. As we have seen,
+this is unconditionally true in the half planeσ>1.
+=== PDF PAGE 4 ===
+2160 S. M. GONEK
+On the other hand, short sumscannot approximate ζ(s)w e l li nt h es t r i p0<
+σ≤1/2. Suppose that such a sum andζ(s) were withinϵ of each other, where
+ϵ> 0 is small. Then we would have
+(2.4)
+∫ 2T
+T
+⏐⏐⏐⏐ζ(s)−
+∑
+n≤X
+n−s
+⏐⏐⏐⏐
+2
+dt ≤ϵ2T.
+However, if 0<σ≤1
+2 is ﬁxed andX<T 1−ϵ,t h e n
+∫ 2T
+T
+⏐⏐⏐⏐
+∑
+n≤X
+n−s
+⏐⏐⏐⏐
+2
+dt ∼
+{
+T
+(X1−σ−1
+1−σ
+)
+if σ< 1
+2,
+T logX if σ= 1
+2
+and ∫ 2T
+T
+|ζ(σ+it)|2 dt ∼
+{
+C(σ)T2−2σ if σ< 1
+2,
+T logT if σ= 1
+2.
+Comparing these whenσ< 1
+2 and again whenσ= 1
+2, we obtain a contradiction to
+(2.4). This argument is unconditional and shows that one cannot do better than
+(2.3) even if the Lindel¨of or Riemann Hypothesis is true.
+To summarize, ζ(s) is well-approximable unconditionally by arbitrarily short
+truncations of its Dirichlet series in the regionσ>1, |s−1| >
+1
+10. On the Lindel¨of
+Hypothesis this remains true even in the right-half of the critical strip,1
+2 <σ≤1.
+However, on and to the left of the critical line, the length of the truncation must
+be ≈t. The situation is the same if we assume the Riemann Hypothesis instead of
+the Lindel¨of Hypothesis, since the former implies the latter.
+3. The approximation of ζ(s) by finite Euler products
+The zeta-function also has the Euler product representation
+ζ(s)=
+∏
+p
+(1−p−s)−1
+in thehalf-planeσ>1, wheretheproduct is overall prime numbers. This converges
+absolutely, and it is straightforward to show (take logarithms) that
+(3.1) ζ(s)=
+∏
+p≤X
+(
+1−p−s)−1 (
+1+ O
+( X1−σ
+(σ−1)log X
+))
+,
+for σ> 1. Here we implicitly use the fact thatζ(s)d o e sn o tv a n i s hi nσ> 1. As
+is often the case, it is more natural from an analytic point of view to work with
+weighted approximations, so we will use expressions of the type
+exp
+( ∑
+n
+Λ(n)v(n)
+ns logn
+)
+,
+where Λ(n) is von Mangoldt’s function and the weightsv(n) will be speciﬁed later.
+We next ask whether it is possible to extend (3.1) or a weighted form of it into
+the critical strip in the same way that (2.2) extended (2.1). The following recent
+result of Gonek, Hughes, and Keating [10] suggests an answer.
+Theorem 3.1. Lets = σ+it with σ≥0 and |t|≥ 2,l e tX ≥2 be a real parameter,
+and let K be any ﬁxed positive integer. Letf(x) be a non-negativeC
+∞ function
+=== PDF PAGE 5 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2161
+of mass 1 supported on[0,1] and set u(x)= Xf(Xlog x
+e +1 )/x (so that u(x) is
+supported on[e1−1/X,e]). Set
+U(z)=
+∫ ∞
+0
+u(x)E1(zlogx) dx,
+where E1(z) is the exponential integral
+∫∞
+z e−w/w dw.T h e n
+(3.2) ζ(s)= PX(s)ZX(s)
+(
+1+ O
+( XK+2
+(|s|logX)K
+)
++O(X−σlogX)
+)
+,
+where
+PX(s)=e x p
+( ∑
+n≤X
+Λ(n)
+ns logn
+)
+,
+Λ(n) is von Mangoldt’s function, and
+ZX(s)=e x p
+(
+−
+∑
+ρn
+U
+(
+(s−ρn)log X
+))
+.
+The constants implied by theO-terms depend only onf and K.
+Thus, if X< |t|1−3/(K+2), for example, thenζ(s) factors in the regionσ≥0,
+|t|≥ 2a s
+(3.3) ζ(s)=e x p
+( ∑
+n≤X
+Λ(n)
+ns logn
+)
+ZX(s)
+(
+1+ o(1)
+)
+,
+where ZX(s) is a product over the zeros ofζ(s). Now one can show that, in the
+right-half of the critical strip,ZX(s)i sc l o s et o1a sl o n ga ss is not too near a
+zero ofζ(s). Hence, if the Riemann Hypothesis is true ands is not too close to the
+critical line,ZX(s) will be close to 1. (The closerσis to 1
+2, the larger one needs to
+take X.) Thus, under the Riemann Hypothesis, an analogue of (3.1) does hold in
+the right-half of the critical strip.
+To prove these assertions it is convenient to work with an alternative form of
+(3.2), and we derive this next.
+Write
+(3.4) PX(s)=e x p
+( ∑
+n≤X2
+ΛX(n)
+ns logn
+)
+,
+where
+ΛX(n)=
+⎧
+⎪⎨
+⎪⎩
+Λ(n)i f n ≤X,
+Λ(n)
+(
+2−logn
+logX
+)
+if X<n ≤X2,
+0i f n>X 2.
+Also, let
+(3.5) E2(z)=
+∫ ∞
+z
+e−w
+w2 dw (z ̸=0 )
+denote the second exponential integral, and set
+F2(z)=2 E2(2z)−E2(z).
+=== PDF PAGE 6 ===
+2162 S. M. GONEK
+Finally, deﬁne
+(3.6) ZX(s)=e x p
+( ∑
+ρ
+F2 ((s−ρ)log X)−F2 ((s−1)log X)
+)
+,
+where the sum is over all the non-trivial zeros,ρ= β+ iγ, of the zeta-function.
+Our modiﬁed version of (3.2) is
+Theorem 3.2. Let σ≥0 and X ≥2.W i t hPX(s) and ZX(s) as above we have
+(3.7) ζ(s)= PX(s)ZX(s)
+(
+1+ O
+( X−σ−2
+τ2 log2 X
+))
+.
+Proof. We begin with the explicit formula (see Titchmarsh [25], Theorem 14.20)
+ζ
+′
+ζ(s)= −
+∑
+n≤X2
+ΛX(n)
+ns + X2(1−s) −X(1−s)
+(1−s)2 logX +
+∑
+ρ
+Xρ−s −X2(ρ−s)
+(s−ρ)2 logX
++ 1
+logX
+∞∑
+q=1
+X−(2q+s) −X−2(2q+s)
+(s+2q)2 .
+The last term on the right is easily seen to be≪ X−σ−2/τ2 logX,s ow eh a v e
+ζ
+′
+ζ(s)=−
+∑
+n≤X2
+ΛX(n)
+ns +X2(1−s) −X(1−s)
+(1−s)2 logX +
+∑
+ρ
+Xρ−s −X2(ρ−s)
+(s−ρ)2 logX +O
+( X−σ−2
+τ2 logX
+)
+.
+(3.8)
+Next we integrate (3.8) from∞ to s0 = σ0 +it,w h e r eσ0 +it is not a zero of the
+zeta-function. We use the convention that ift is the ordinate of a zeroρ= β+iγ
+and 0≤σ0 <β,t h e n
+(3.9) log ζ(σ0 +iγ) = lim
+ϵ→0+
+logζ
+(
+σ0 +i(γ+ϵ)
+)
+.
+The O-term contributes
+≪ X−σ0−2
+τ2 log2 X.
+We also see that∫ σ0+it
+∞
+Xρ−s −X2(ρ−s)
+(s−ρ)2 ds =l o gXF 2
+(
+(s0 −ρ)log X
+)
+.
+Here we use the convention analogous to (3.9) ift is the ordinate of a zero. It
+follows that
+logζ(s0)=
+∑
+n≤X2
+ΛX(n)
+ns0 logn +
+∑
+ρ
+F2
+(
+(s0 −ρ)log X
+)
+−F2
+(
+(s0 −1)log X
+)
++O
+( X−σ0−2
+τ2 log2 X
+)
+.(3.10)
+Replacing σ0 by σand s0 by s and exponentiating both sides, we obtain the stated
+result whens is not equal to a zeroρ. If it is, we may interpret the factor in (3.6)
+corresponding to ρas limϵ→0+ exp
+(
+F2 (iϵlogX)
+)
+. From the well-known formula
+E2(z)=1 /z +log z +e2(z), where|argz| <πand e2(z)i sa n a l y t i ci nz, it follows
+that
+(3.11) F2(z)=l o g4z +f2(z)( |argz| <π),
+=== PDF PAGE 7 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2163
+where f2(z) is also analytic. Therefore limϵ→0+ exp
+(
+F2 (iϵlogX)
+)
+=0 . Since this
+agrees with the left-hand side of (3.7), the formula is valid in this case as well.□
+Before stating our next result we require some notation and a lemma. As usual
+we writeS(t)=( 1/π)arg ζ(1
+2 +it) with the convention that ift is the ordinate of
+a zero,S(t) = limϵ→0+ S(t+ϵ). For t ≥0w el e tΦ (t) denote a positive increasing
+diﬀerentiable function such that
+|S(t)|≤ Φ(t)a n d |ζ(1
+2 +it)|≪ exp(Φ(t)),
+and such that fort suﬃciently large we have
+(3.12) Φ
+′
+(t)/Φ(t) ≪ 1
+tlogt.
+We call such a functionadmissible. Any function of the type (logτ)α(loglog3 τ)β
+with αpositive satisﬁes (3.12). Furthermore, it is easy to show that if Φ satisﬁes
+(3.12), then
+(3.13) Φ( ta) ≪ Φ(t),
+where the implied constant depends at most ona. It is known that Φ(t)= 1
+6 logτ
+is admissible and, on the Lindel¨of Hypothesis, thatϵlogτis for anyϵ> 0. If the
+Riemannn Hypothesis is true, then Φ(t)= 1
+2 logτ/loglog2 τis admissible. (The
+constant 1
+2 is a recent result due to Goldston and Gonek [8].) Balasubramaian and
+Ramachandra[5](seealsoTitchmarsh[25], pp.208-209andp. 384)haveshownthat
+if Φ is admissible, Φ(t)=Ω
+(√
+logτ/loglog2 τ
+)
+, and this is unconditional. Farmer,
+Gonek and Hughes [7] have conjectured that Φ(t)=
+√
+(1
+2 +ϵ)log τloglog2 τis
+admissible, but Φ(t)=
+√
+(1
+2 −ϵ)log τloglog2 τis not.
+For the remainder of this paper Φ will always denote an admissible function.
+We can now state our lemma.
+Lemma 3.3. Assume the Riemann Hypothesis. Suppose that Φ(t) is admissible
+and thatσ> 1
+2 is bounded. Then we have
+(3.14)
+∑
+γ
+σ−1
+2
+(σ−1
+2)2 +(t−γ)2 ≪ logτ+ Φ(t)
+σ−1
+2
+.
+Moreover, ifΔ> 0,t h e n
+(3.15)
+∑
+|γ−t|>Δ
+1
+(t−γ)2 ≪ 1
+Δ
+(
+logτ+ Φ(τ)
+Δ
+)
+.
+Remark. In fact one can show that the ﬁrst sum equals1
+2 logτ+O
+(
+Φ(τ)/(σ−1
+2)
+)
+,
+but we do not require this.
+Proof. For the sake of convenience we writeσ−1
+2 = a. Recall that N(t), the
+number of zeros ofζ(s) with ordinates in [0,t], is
+N(t)= t
+2πlog t
+2π− t
+2π+ 7
+8 +S(t)+ O
+(1
+τ
+)
+.
+Therefore
+N(t+a)−N(t−a)= a
+πlog t
+2π+O(Φ(τ)).(3.16)
+=== PDF PAGE 8 ===
+2164 S. M. GONEK
+The left-hand side of (3.14) is
+≪
+∑
+0≤k≤1/a
+( ∑
+ka≤|γ−t|≤(k+1)a
+a
+a2 +(t−γ)2
+)
++
+∑
+|γ−t|>1
+a
+a2 +(t−γ)2.
+Using (3.16), we see that the second sum is≪ alogτ, and that for eachk the sum
+in parentheses is
+≪
+(
+alogτ+Φ(τ)
+) a
+a2 +(ka)2 ≪ 1
+1+ k2
+(
+logτ+ Φ(τ)
+a
+)
+.
+Summing these estimates, we obtain (3.14).
+The proof of (3.15) is similar. □
+Our approximation of the zeta-function by ﬁnite Euler products will follow al-
+most immediately from
+Theorem 3.4. Assume the Riemann Hypothesis. Letσ≥1
+2+ 1
+logX and |s−1|≥ 1
+10.
+Then for anyX ≥2 we have
+(3.17) ζ(s)= PX(s)eRX(s),
+where
+(3.18) RX(s) ≪ X
+1
+2−σ
+(
+Φ(τ)+ logτ
+logX
+)
++ X
+τ2 log2 X.
+Moreover, throughout the regionσ≥1
+2, |s−1|≥ 1
+10,a n d
+(3.19) arg ζ(σ+it)= −
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+nσlogn +O(RX(s)).
+Proof. We estimate
+(3.20) ZX(s)=e x p
+( ∑
+ρ
+F2
+(
+(s−ρ)log X
+)
+−F2
+(
+(s−1)log X
+))
+in (3.6).
+Integrating (3.5) by parts, we see that for|z|≥ 1,
+(3.21) E2(z)= e−z
+z2 (1+ O(|z|−1)),
+and therefore that
+(3.22) F2(z) ≪ emax(−Rez,−Re2z)/|z|2.
+Since σ≥ 1
+2 + 1
+logX and the zeros are of the formρ= 1
+2 + iγ, they all satisfy
+|s−ρ|logX ≥1. Thus, by (3.22) and Lemma 3.3, the sum in (3.20) is
+(3.23) ≪ 1
+log2 X
+∑
+|s−ρ|logX≥1
+X
+1
+2−σ
+(σ−1
+2)2 +(t−γ)2 ≪ X
+1
+2−σ
+(
+Φ(τ)+ logτ
+logX
+)
+.
+Also by (3.22),
+(3.24) F2
+(
+(s−1)log X
+)
+≪ Xmax(1−σ,2(1−σ))
+τ2 log2 X .
+The ﬁrst assertion of the theorem follows from this and (3.7).
+=== PDF PAGE 9 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2165
+The second assertion follows immediately from (3.17) ifσ≥ 1
+2 + 1
+logX ,s ow e
+need only consider the case1
+2 ≤σ< 1
+2 + 1
+logX . The terms in the sum of (3.20) for
+which |s−ρ|logX ≥1 contribute the same amount as before. However, now there
+may also be a ﬁnite number of terms for which|s−ρ|logX ≤1. Using (3.11) to
+estimate these, we ﬁnd that ifs is not a zero, they contribute
+∑
+|s−ρ|logX≤1
+(
+log(4(s−ρ)log X)+ O(1)
+)
+.
+Since |arg(s−ρ)log X|≤ π/2, the imaginary part of this is
+≪
+∑
+|t−γ|≤1/logX
+1 ≪ logτ
+logX +Φ(t),
+b y( 3 . 1 6 ) .T h i si sb i g -O of the bound in (3.23) because1
+2 ≤σ< 1
+2 + 1
+logX .T h u s ,
+we obtain (3.19) provided thatt is not the ordinate of a zero. If it is, the result
+follows from our convention that argζ(σ+it) = limϵ→0+ argζ
+(
+σ+i(t+ϵ)
+)
+.T h i s
+completes the proof of the theorem. □
+We can now deduce an approximation ofζ(s) by Euler products.
+Theorem 3.5. Assume the Riemann Hypothesis. Let|s−1|≥ 1
+10 and exp(logτ/Φ(t))
+≤X ≤τ2.T h e ni f1
+2 + C logΦ(t)
+logX ≤σ≤1 with C> 1, we have
+(3.25) ζ(s)= PX(s)(1+ O(Φ(t)1−C)).
+If 2 ≤X< exp(logτ/Φ(t)) and 1
+2 + C loglog2 τ
+logX ≤σ≤1 with C> 1,t h e n
+ζ(s)= PX(s)(1+ O((logτ)1−C)).
+Proof. We estimateRX(s) in (3.17). First assume that exp
+(
+logτ/Φ(t)
+)
+≤X ≤τ2
+and 1
+2 + C logΦ(t)
+logX ≤σ≤1 . Then logτ/logX ≤Φ(t)a n d
+RX(s) ≪X
+1
+2−σΦ(t)+ X2( 1
+2−σ)
+log2 X
+≪Φ(t)1−C +Φ(t)−2C
+≪Φ(t)1−C.
+It follows that exp
+(
+RX(s)
+)
+=1+ O
+(
+Φ(t)1−C )
+, so we have (3.25). The second
+assertion follows similarly, except that this time Φ(t) < logτ/logX. □
+Thus, on the Riemann Hypothesis, short Euler products approximateζ(s)a s
+long as we are not too close to the critical line.
+We can combine the two assertions of Theorem 3.5 and prove a partial converse
+as well.
+Theorem 3.6. Assume the Riemann Hypothesis. Let2 ≤X ≤t2, |s −1|≥ 1
+10,
+and 1
+2 + C loglog2 τ
+logX ≤σ≤1 with C> 1.T h e n
+(3.26) ζ(s)= PX(s)
+(
+1+ O
+(
+log(1−C)/2 t
+))
+.
+Conversely, if (3.26) holds for 2 ≤X ≤t2 in the region stated, thenζ(s) has at
+most a ﬁnite number of zeros to the right ofσ= 1
+2 + C loglog2 τ
+logX .
+=== PDF PAGE 10 ===
+2166 S. M. GONEK
+Remark. The conditionσ≥1
+2 + C loglog2 τ
+logX implies a lower bound forX that grows
+with t,n a m e l y ,
+X ≥(logτ)C/(σ−1
+2).
+The converse follows from the observation that if (3.26) holds, then there is a
+constant B> 0 such that
+⏐⏐ζ(s)PX(s)−1 −1
+⏐⏐ ≤B log(1−C)/2 τ.
+If ζ(β+iγ) = 0 withβ> 1
+2 + C loglog(2|γ|+2)
+logX , this forcesγ≤exp(B2/(C−1)), and
+the result follows.
+As in the case of approximations by short sums, one can also ask whether short
+products approximateζ(s)w e l lw h e n0<σ≤1
+2. For sums we saw that the answer
+is no unless they are of length at leastt. For products the answer is no, no matter
+how long they are. A quick way to see this is by counting zeros ofζ(s)a n do fPX(s)
+in a rectangle containing the segment [1
+2, 1
+2 +iT]. The former has∼(T/2π)log T
+zeros, the latter none. This would be impossible ifζ(s)= PX(s)(1+ o(1)) in the
+rectangle.
+One can also argue as follows whenσis strictly less than1
+2. (A modiﬁcation of
+the argument works forσ= 1
+2, too.) Suppose thatζ(s)= PX(s)
+(
+1+ o(1)
+)
+in the
+strip 0<σ≤1
+2.T h e nl o g|ζ(s)| =l o g|PX(s)|+o(1), and we have
+(3.27)
+∫ T
+0
+(log|ζ(σ+it)|)2dt ∼
+∫ T
+0
+(log|PX(σ+it)|)2dt
+for σﬁxed andT →∞ . By the functional equation for the zeta-function,
+log|ζ(σ+it)| =( 1
+2 −σ)log τ
+2π+log |ζ(1−σ−it)|+o(1).
+Nowthemean-squareofthethreetermsontheright-handsideare ∼
+(1
+2−σ
+)2
+T log2 T,
+∼c0T,a n do(T), respectively. Thus,
+(3.28)
+∫ T
+0
+(log|ζ(σ+it)|)2dt ∼(1
+2 −σ)2T log2 T.
+On the other hand, by the mean value theorem for Dirichlet polynomials, ifX =
+o(T
+1
+2 ), the right-hand side of (3.27) is
+∫ T
+0
+(log|PX(σ+it)|)2dt ∼
+∫ T
+0
+( ∑
+n≤X2
+ΛX(n)cos(tlogn)
+nσlogn
+)2
+dt
+∼T
+2
+∑
+n≤X2
+Λ2
+X(n)
+n2σlog2 n
+∼cT X2−4σ
+logX ,
+where c is a positive constant. Comparing this with (3.28), we see that (3.27)
+cannot hold if 0≤σ< 1
+2 and X is larger than a certain power of logT. Note also
+that for inﬁnitely manyt tending to inﬁnity,PX(s) can be quite large, namely
+(3.29) |PX(σ+it)|≫ exp
+(
+X1−2σ/
+√
+logX
+)
+.
+In this section we have seen that short truncations of its Euler product approxi-
+mate ζ(s) well in the regionσ>1, |s−1| > 1
+10. We also showed that this remains
+=== PDF PAGE 11 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2167
+true in the right-half of the critical strip if the Riemann Hypothesis is true and if
+we are not too near the critical line (and use a weighted Euler product). However,
+to the left of the critical line the Euler product is not a good approximation ofζ(s),
+regardless of how long it is.
+4. Products, sums, and moments
+Our purpose in this section is to deduce two consequences of the results of the
+previous section. First we require a result whose proof is given in the Appendix.
+Theorem 4.1. Assume the Riemann Hypothesis. Letσ≥1
+2 be bounded,|s−1| >
+1
+10,a n d2 ≤X ≤t2. Then there is a positive constantC1 such that
+(4.1) ζ(s)=
+∑
+n≤X
+n−s +O(X
+1
+2−σeC1Φ(t)).
+If 1
+2 +2C1
+Φ(t)
+logX ≤σ≤1, the error term in Theorem 4.1 isO(e−C1Φ(t)). For the
+same σ-range, the approximation ofζ(s) given by Theorem 3.4 is
+(4.2) ζ(s)= PX(s)
+(
+1+ O(e−(2−ϵ)C1Φ(t))
+)
+,
+where ϵ is arbitrarily small. Thus, equating respective sides of (4.1) and (4.2) and
+solving forPX(s), we see that
+PX(s)=
+( ∑
+n≤X
+1
+ns +O(e−2C1Φ(t)g)
+)(
+1+ O(e−(2−ϵ)C1Φ(t))
+)
+.
+By the corollary to Theorem 4.1 (see the Appendix), the sum here is≪ eC1Φ(t),s o
+we obtain
+PX(s)=
+∑
+n≤X
+1
+ns +O(e−(1−ϵ)C1Φ(t)).
+We have now proved
+Theorem 4.2. Assume the Riemann Hypothesis. Letσ≥1
+2 be bounded,|s−1| >
+1
+10,a n d2 ≤X ≤t2. There is a positive constantC1 such that if1
+2+2C1Φ(t)
+logX ≤σ≤1,
+then ∑
+n≤X
+1
+ns = PX(s)+ O(e−C2Φ(t)),
+for any positive constantC2 less thanC1.
+Our second observation is that one can use these appoximations to calculate
+the moments of a very long Euler product. Suppose one wished to compute the
+moments ∫
+T
+0
+|PX(σ+it)|2k dt
+when 1
+2 <σ< 1. The standard method would be to writePX(s)k as a Dirichlet
+series and use a mean value theorem for such polynomials to compute the mean
+modulus squared. But this only works well when the product does not have many
+factors. For example, for a slightly diﬀerent Euler product, Gonek, Hughes and
+Keating [10] have proved the following.
+=== PDF PAGE 12 ===
+2168 S. M. GONEK
+Theorem. Let 1/2 <c< 1, ϵ> 0,a n dl e tk be any positive real number. Suppose
+that X and T →∞ and X = O((logT)1/(1−c+ϵ)). Then we have
+∫ 2T
+T
+⏐⏐⏐⏐exp
+( ∑
+n≤X
+Λ(n)
+nσ+it logn
+)⏐⏐⏐⏐
+2k
+dt ∼ak(σ)Tζ(2σ)k2
+e−k2E1((2σ−1)log X),
+where
+ak(σ)=
+∏
+p
+((
+1− 1
+p2σ
+)k2 ∞∑
+m=0
+dk(pm)2
+p2mσ
+)
+uniformly for c ≤ σ≤ 1.H e r edk(n) is the kth divisor function and E1(z)=∫∞
+z
+e−w
+w dw is the ﬁrst exponential integral.
+Note that here the number of factors in the Euler product is not even log2 T.O n
+the other hand, if we assume the Riemann Hypothesis, that1
+2 + C loglog2 T
+logX ≤σ<1
+with C> 1, and that 2≤X ≤T2, then by Theorem 3.5
+ζ(s)= PX(s)(1+ o(1)).
+Hence, ∫ 2T
+T
+|PX(σ+it)|2k dt ∼
+∫ 2T
+T
+|ζ(σ+it)|2k dt.
+Now, it is a consequence of the Lindel¨of Hypothesis (Titchmarsh [25], Theorem
+13.2), and so also of the Riemann Hypothesis, that when1
+2 <σ< 1i sﬁ x e d ,
+∫ 2T
+T
+|ζ(σ+it)|2k dt ∼T
+∞∑
+n=1
+d2
+k(n)
+n2σ
+for any ﬁxed positive integerk.T h u s ,f o rs u c hσand k we have
+∫ 2T
+T
+|PX(σ+it)|2k dt ∼T
+∞∑
+n=1
+d2
+k(n)
+n2σ .
+This gives an estimation of the moments of an extremely long Euler product deep
+into the critical strip.
+5. A function related to the zeta-function
+In Section 2 we showed that short truncations of its Dirichlet series approximate
+ζ(s)i nσ>1 and that, if the Lindel¨of Hypothesis is true, this also holds inσ> 1
+2.
+The approximation cannot be good in the strip 0<σ ≤ 1
+2 unless the length of
+the sum is of order at leastt; and this is so even if we assume the Lindel¨of or
+Riemann Hypothesis. In Section 3 we showed that the situation is similar, up to
+a point, when we approximateζ(s) by the weighted Euler productP
+X(s): short
+products approximateζ(s) well in the half-planeσ>1 unconditionally, and in the
+strip 1
+2 <σ≤1 on the Riemann Hypothesis. However, the approximation cannot
+be close in 0<σ< 1
+2 no matter how many factors there are, forPX(s)g e t sm u c h
+larger than ζ(s) in this strip (see (3.29)). We now re-examine the approximation
+of ζ(s) by sums whenσis close to1
+2. If we assume the Riemann Hypothesis, then
+by (4.1)
+ζ(s)=
+∑
+n≤X
+1
+ns +O(e−C1Φ(t))
+=== PDF PAGE 13 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2169
+for 1
+2 + 2C1Φ(t)
+logX ≤σ≤1a n d2≤X ≤t2.T h i si sg o o df o rX a small power oft
+as long asσis not too close to1
+2, but we knowX has to be of ordert on σ= 1
+2.
+This means the approximation is oﬀ by about∑
+X<n≤t n−s. The Hardy-Littlewood
+approximate functional equation [13] (or see Titchmarsh [25]) gives us another way
+to express this. It says that
+(5.1) ζ(s)=
+∑
+n≤X
+1
+ns +χ(s)
+∑
+n≤|t|/2πX
+1
+n1−s +O(X−σ)+ O(τ−1
+2 X1−σ),
+where 0≤σ≤1, |s−1|≥ 1
+10,a n dχ(s) is the factor in the functional equation
+ζ(s)= χ(s)ζ(1−s).
+From this we see that the amount by which the sum∑
+n≤X n−s is oﬀ fromζ(s)i s
+about
+χ(s)
+∑
+n≤|t|/2πX
+1
+n1−s.
+If we letX =
+√
+|t|/2πand note that|χ(1
+2 + it)| = 1, we ﬁnd that on the critical
+line ζ(s) is essentially composed of two pieces of equal size:
+ζ(1
+2 +it)=
+∑
+n≤X
+1
+n
+1
+2+it +χ(1
+2 +it)
+∑
+n≤X
+1
+n
+1
+2−it +O(τ−1
+4 ).
+In the case of Euler products, Theorem 3.5 suggests thatPX(s) approximates
+ζ(s) well even closer to the critical line than a sum of lengthX does. PX(s)i sa
+good approximation whenσ≥1
+2 + C loglog2 τ
+logX , while the sum is only close (as far as
+we know) whenσ≥1
+2 + 2C1Φ(t)
+logX . In light of this and (5.1) it is tempting to guess
+that
+(5.2) ζ(s) ≈PX(s)+ χ(s)PX(1−s),
+for some unspeciﬁedX. However, this is not a good guess. We have seen that
+PX(1−s) gets as large as exp(Xσ−1
+2 /logX)w h e nσ> 1
+2,w h e r e a s∑
+n≤X ns−1 is
+no larger thanXσ−1
+2 eC1Φ(t) by the Corollary in the Appendix.
+The diﬃculty here is crossing the lineσ= 1
+2, where there is a qualitative change
+in the behavior of the zeta-function. A way around this is to use the fact that the
+functional equation tells us the zeta-function everywhere once we know it inσ≥
+1
+2.
+If we restrict our attention to this half-plane, a reasonable alternative to (5.2) is
+ζX(s)= PX(s)+ χ(s)PX(s).
+Note that on the critical line,ζX(s) and the right-hand side of (5.2) are identical.
+Also, sinceχ(s) ≪ t
+1
+2−σfor σ> 1
+2 (see (6.1) below), we have
+ζX(s)= PX(s)(1+ O(t
+1
+2−σ)).
+Combining this observation with Theorem 3.6, we obtain
+Theorem 5.1. Assume the Riemann Hypothesis. Let2 ≤X ≤t2, |s −1|≥ 1
+10,
+and 1
+2 + C loglog2 τ
+logX ≤σ≤1 with C> 1.T h e n
+(5.3) ζ(s)= ζX(s)
+(
+1+ O
+(
+log(1−C)/2 τ
+))
+.
+Conversely, if (5.3) holds for 2 ≤X ≤t2 in the region stated, thenζ(s) has at
+most a ﬁnite number of zeros to the right ofσ= 1
+2 + C loglog2 τ
+logX .
+=== PDF PAGE 14 ===
+2170 S. M. GONEK
+Thus, even thoughζX(s) is not analytic, it approximatesζ(s)w e l lt ot h er i g h t
+of the critical line. It resembles the zeta-function closely in other ways too, as we
+shall see.
+6. The Riemann Hypothesis for ζX(s)
+For a closer study ofζX(s) we require several properties of the chi-function
+χ(s)= πs−1
+2
+Γ(1
+2 −1
+2s)
+Γ(1
+2s) ,
+which appears in the functional equation of the zeta-function. Chi has simple poles
+at s =1 ,3,5,... from the Γ-factor in the numerator. If we stay away from these,
+(6.1) χ(s)=
+(τ
+2π
+)1
+2−σ−it
+eit+ 1
+4iπ
+{
+1+ O
+(1
+τ
+)}
+in any half-strip−k<σ<k , t ≥0, by Stirling’s approximation. Whent< 0,χ(s)
+is given by the conjugate of this. We note for later use that theO-term is inﬁnitely
+diﬀerentiable.
+Clearly |χ(1
+2 +it)| =1f o ra l lt. The converse is also almost true.
+Lemma 6.1. There is a positive absolute constantC0 such that if|χ(σ+it)| =1
+with 0 ≤σ≤1 and |t|≥ C0,t h e nσ= 1
+2.
+Remark. One can show that the minimal suchC0 is less than 6.3.
+Proof. Taking the logarithmic derivative of (6.1) by means of Cauchy’s integral
+formula, we ﬁnd that
+Re χ
+′
+χ(s)= −log τ
+2π+O
+(1
+τ
+)
+.
+Since |χ(1
+2 +it)| =1 ,w es e et h a ti fσ1 > 1
+2,t h e n
+log|χ(σ1 +it)| =
+∫ σ1
+1
+2
+Re χ
+′
+χ(s)dσ
+=
+(1
+2 −σ1
+)
+log τ
+2π+O
+(σ1 −1
+2
+τ
+)
+.
+This is negative for allt suﬃciently large (independent ofσ1), so the result follows.
+The proof is similar forσ1 < 1
+2. □
+From now onC0 will denote the constant in Lemma 6.1.
+We now prove
+Theorem 6.2 (The Riemann Hypothesis forζX(s)). Let ρX = βX + iγX denote
+any zero ofζX(s) with 0 ≤βX ≤1 and γX ≥C0, the constant in Lemma6.1.T h e n
+βX = 1
+2.
+Proof. Since ζX(s)= PX(s)+ χ(s)PX(s)a n dPX(s) never vanishes, the zeros of
+ζX(s) can only occur at points where|PX(s)| = |χ(s)PX(s)|,t h a ti s ,w h e r e|χ(s)| =
+1. The result now follows from Lemma 6.1. □
+=== PDF PAGE 15 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2171
+7. The number of zeros of ζX(s)
+In this section we estimate the number of zeros of ζX(s)u pt oh e i g h tt on
+the critical line, showing among other things that it has at least as many zeros
+(essentially) asζ(s)d o e s ,n a m e l y
+(7.1) N(t)= t
+2πlog t
+2π− t
+2π+ 7
+8 +S(t)+ O
+(1
+τ
+)
+.
+An exact expression forN(t)i s
+(7.2) N(t)= −1
+2πargχ(1
+2 +it)+ S(t)+1 ,
+and we shall use this later. Here the argument ofχis determined by starting with
+the value 0 ats = 2 and letting it vary continuously, ﬁrst along the segment from
+2t o2+ it and then horizontally from 2+it to 1
+2 +it.
+To investigate the zeros ofζX(s)w ew r i t e
+(7.3) ζX(s)= PX(s)
+(
+1+ χ(s)PX(s)
+PX(s)
+)
+.
+Since PX(s) is never zero,ζX(s) vanishes if and only ifχ(s)PX(s)/PX(s)= −1.
+Now|PX(s)/PX(s)| =1,sothisisequiv alen tto |χ(s)|=1andarg( χ(s)PX(s)/PX(s))
+≡π(mod 2π). By Lemma 6.1, if|χ(s)| =1i nt h eh a l f - s t r i p0≤σ≤1, t ≥C0,
+then σ= 1
+2. Conversely, we know that|χ(1
+2 +it)| =1f o ra l lt.T h u s ,ζX(s)=0
+in 0 ≤σ≤1, t ≥C0 if and only if arg
+(
+χ(1
+2 +it)PX(1
+2 −it)/PX(1
+2 +it)
+)
+≡π
+(mod 2π). Deﬁning
+(7.4) FX(t)= −argχ(1
+2 +it)+2arg PX(1
+2 +it),
+we see that whent ≥C0, ζX(1
+2 +it) = 0 if and only if
+FX(t) ≡π(mod2π).
+This will be the basis for much of our further work.
+Before turning to our ﬁrst estimate, we point out that, as with argχ(1
+2 + it),
+argPX(1
+2 +it) is deﬁned by continuous variation along the segments [2,2+ it]a n d
+[2+ it, 1
+2 +it], starting with the value 0 ats = 2. Also note from (7.4) thatFX(t)
+is inﬁnitely diﬀerentiable fort> 0.
+We now prove
+Theorem 7.1. Let NX(t) denote the number of zerosρ= 1
+2 +iγX of ζX(s) with
+0 ≤γX ≤t.T h e n
+NX(t) ≥ t
+2πlog t
+2π− t
+2π−1
+π
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
++OX(1).
+Proof. There are at most ﬁnitely many zeros (the number may depend onX) with
+ordinates between 0 andC0 (the constant in Lemma 6.1). We may therefore assume
+that t ≥C0.N o w ,b y( 6 . 1 )
+argχ(1
+2 +it)= −tlog t
+2π+t+ 1
+4π+O
+(1
+τ
+)
+,
+and by (3.4)
+argPX(1
+2 +it)=I m
+∑
+n≤X2
+ΛX(n)
+n
+1
+2+it logn
+= −
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
+.
+=== PDF PAGE 16 ===
+2172 S. M. GONEK
+Thus, we may expressFX(t) in (7.4) as
+(7.5) FX(t)= tlog t
+2π−t−1
+4π−2
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
++O
+(1
+τ
+)
+.
+Recall that ζX(1
+2 +i t)=0w h e nt ≥C0 if and only ifFX(t) ≡π(mod2π). Since
+FX(t)i sc o n t i n u o u s ,t h i sh a p p e n sa tl e a s t
+t
+2πlog t
+2π− t
+2π−1
+π
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
++OX(1)
+t i m e sa so n[C0,t]. This gives the result. □
+The sum over prime powers in (7.5) obviously plays an important role in pro-
+ducing zeros ofζX(s). This sum is just−argPX(1
+2 +it), but it will be convenient
+to give it a simpler name. Thus, from now on we write
+fX(t)= −argPX(1
+2 +it)=
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
+.
+As is well known (see Selberg [24] or Titchmarsh [25]),−(1/π)fX(t) is a good
+approximation in mean-square toS(t)=( 1/π)arg ζ(1
+2 +it)i fX is a small power
+of t and if the Riemann Hypothesis holds. A closer analogue ofS(t) in our context
+is
+SX(t)= 1
+πargζX(1
+2 +it).
+From (7.3) we see that
+SX(t)= −1
+π
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
+−1
+πarg
+(
+1+ χ(1
+2 +it)PX(1
+2 −it)
+PX(1
+2 +it)
+)
+=−1
+πfX(t)−1
+πarg
+(
+1+ e−iFX(t))
+.
+The second term on the right, which contains the jump discontinuities ofSX(t)a st
+passes through zeros ofζX(1
+2 +it), has modulus≤1
+2. (Note that our convention is
+that the argument isπ/2w h e n1+e−iFX(t) vanishes.) Thus,SX(t)a n d−(1/π)fX(t)
+diﬀer by at mostO(1).
+The next theorem shows that whenX is not too small,fX(t)a n dSX(t)h a v e
+the same bound asS(t), namely Φ(t).
+Theorem 7.2. Assume the Riemann Hypothesis and that2 ≤X ≤t2.T h e n
+fX(t)=
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
+≪ Φ(t)+ logτ
+logX.
+In particular, fX(t) ≪ Φ(t) when exp(logτ/Φ(t)) ≤X ≤t2. The same bounds
+hold forSX(t).
+Proof. Since SX(t)+(1 /π)fX(t) ≪ 1, it suﬃces to prove the result forfX(t). By
+(3.18) and (3.19) we have
+S(t)= −1
+π
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
++O
+(
+Φ(t)
+)
++O
+(logτ
+logX
+)
+.
+Since S(t) ≪ Φ(t), the result follows. □
+=== PDF PAGE 17 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2173
+From Theorem 7.2 and Theorem 7.1 we immediately obtain
+Theorem 7.3. Assume the Riemann Hypothesis is true. Then for2 ≤X ≤t2,
+(7.6) NX(t) ≥ t
+2πlog t
+2π− t
+2π+O(logτ).
+Moreover, ifexp(clogτ/Φ(t)) ≤X ≤t2,w h e r ec is any positive constant, then
+NX(t) ≥ t
+2πlog t
+2π− t
+2π+O(Φ(t)).
+To obtain an upper bound forNX(t) of the same order we require the following
+theorem.
+Theorem 7.4. Assume the Riemann Hypothesis and that2 ≤X ≤t2.T h e n
+f
+′
+X(t)=
+∑
+n≤X2
+ΛX(n)cos(tlogn)
+n
+1
+2
+≪ Φ(τ)log X + logτ
+logX.
+Proof. Taking the real part of (3.8) withσ= 1
+2,w eo b t a i n
+Re ζ
+′
+ζ(1
+2 +it)=
+∑
+γ
+cos
+(
+(γ−t)log X
+)
+−cos
+(
+2(γ−t)log X
+)
+(γ−t)2 logX
+−
+∑
+n≤X2
+ΛX(n)cos(tlogn)√n +O
+( 1
+logX
+)
+.
+(7.7)
+Similarly, from
+ζ
+′
+ζ(s)=
+∑
+ρ
+( 1
+s−ρ+ 1
+ρ
+)
+−1
+2 log τ
+2π+O(1)
+we see that
+Reζ
+′
+ζ(s)= −1
+2 log τ
+2π+O(1).
+We substitute this into the left-hand side of (7.7) and rearrange the equation to see
+that
+∑
+n≤X2
+ΛX(n)cos(tlogn)√n =1
+2 log τ
+2π+
+∑
+γ
+cos
+(
+(γ−t)log X
+)
+−cos
+(
+2(γ−t)log X
+)
+(γ−t)2 logX
++O(1).
+In the sum over zeros, the terms with|t−γ|≥ 1 contribute≪ logτ/logX. Thus,
+writing C(v)=c o s (vlogX)−cos(2vlogX), we have
+(7.8)
+∑
+n≤X2
+ΛX(n)cos(tlogn)√n = 1
+2 log τ
+2π+ 1
+logX
+∑
+|γ−t|≤1
+C(γ−t)
+(γ−t)2 +O
+(logτ
+logX
+)
+.
+To estimate the sum on the last line, ﬁrst note that
+(7.9) C(v)=
+{
+3
+2v2 log2 X +O(|v|4 log4 X)i f |v|≤ 1/logX,
+O(1) if |v| > 1/logX
+and that
+C′(v)=
+{
+3vlog2 X +O(|v|3 log4 X)i f |v|≤ 1/logX,
+O(logX)i f |v| > 1/logX.
+=== PDF PAGE 18 ===
+2174 S. M. GONEK
+In particular, it follows that
+(7.10) d
+dv
+(C(v)
+v2
+)
+= v2C
+′
+(v)−2vC(v)
+v4 ≪
+{
+|v|log4 X if |v|≤ 1/logX,
+v−2 logX if |v| > 1/logX.
+Now, by (7.1)
+∑
+|γ−t|≤1
+C(γ−t)
+(γ−t)2 =
+∫
+|u−t|≤1
+C(u−t)
+(u−t)2 dN(u)
+= 1
+2π
+∫
+|v|≤1
+C(v)
+v2 log
+(t+v
+2π
+)
+dv +
+∫
+|v|≤1
+C(v)
+v2 dS(t+v).
+Using (7.10), we see that the integral with respect todS is
+S(t+v) C(v)
+v2
+⏐⏐⏐⏐
+1
+−1
+−
+∫
+|v|≤1
+S(t+v)
+(C(v)
+v2
+)′
+dv
+≪ Φ(τ)+Φ(τ)
+( ∫
+|v|≤1/logX
+|v|log4 Xd v+
+∫
+1/logX<|v|≤1
+logX
+v2 dv
+)
+≪ Φ(τ)l o g2 X.
+The other integral is
+1
+2π
+∫
+|v|≤1
+(
+log t
+2π+O
+(|v|
+t
+))C(v)
+v2 dv.
+The O-term contributes
+≪ 1
+τ
+(
+log2 X
+∫
+|v|≤1/logX
+|v| dv +
+∫
+1/logX<|v|≤1
+|v|−1 dv
+)
+≪ 1
+τloglog X
+by (7.9). Thus, combining these results, we ﬁnd that
+(7.11)
+∑
+|γ−t|≤1
+C(γ−t)
+(γ−t)2 = 1
+2πlog t
+2π
+∫
+|v|≤1
+C(v)
+v2 dv + O(Φ(τ)log2 X).
+To calculate the integral we write
+∫
+|v|≤1
+C(v)
+v2 dv =
+∫ ∞
+−∞
+C(v)
+v2 dv −
+∫
+|v|>1
+C(v)
+v2 dv.
+By (7.9) the second integral isO(1). By the calculus of residues and the deﬁnition
+of C(v), the ﬁrst equals
+∫ ∞
+−∞
+cos(vlogX)−cos(2vlogX)
+v2 dv =R e
+∫ ∞
+−∞
+eivlogX −e2ivlogX
+v2 dv
+=R e2πi
+(
+−1
+2 Resv=0
+eivlogX −e2ivlogX
+v2
+)
+= −Re πi(−ilogX)= −πlogX.
+Thus, ∫
+|v|≤1
+C(v)
+v2 dv = −πlogX +O(1).
+=== PDF PAGE 19 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2175
+Using this in (7.11), we obtain
+∑
+|γ−t|≤1
+C(γ−t)
+(γ−t)2 = −1
+2 log t
+2πlogX + O(Φ(τ)log2 X)+ O(logτ).
+It therefore follows from (7.8) that
+∑
+n≤X2
+ΛX(n)cos(tlogn)√n ≪ Φ(τ)log X + logτ
+logX.
+This completes the proof of the theorem. □
+The zeros ofζX(σ+it) witht ≥C0 arise as the solutions of
+FX(t) ≡π(mod2π),
+and their number in [C0,t]i sa tl e a s t( 1/2π)FX(t)+ OX(1) because this is the
+minimum number of times the curvey = FX(t) crosses the horizontal linesy =
+π,3π,5π,.... However, there could be “extra” solutions ifFX(t) is not monotone
+increasing. Now
+(7.12) F
+′
+X(t) = logt
+2π−2
+∑
+n≤X2
+ΛX(n)cos(tlogn)
+n
+1
+2
++O
+(1
+τ
+)
+.
+By Theorem 7.4 there exists a positive constant C3, say, such that if X ≤
+exp
+(
+C3 logτ/Φ(t)
+)
+and t is large enough, then
+(7.13)
+∑
+n≤X2
+ΛX(n)cos(tlogn)
+n
+1
+2
+< 1
+2 log t
+2π.
+This means F
+′
+X(t) is positive, soFX(t) ≡π(mod2π) has no extra solutions. We
+have therefore proved
+Theorem 7.5. Assume the Riemann Hypothesis. There is a constantC3 > 0 such
+that ifX< exp
+(
+C3 logt/Φ(t)
+)
+,t h e n
+(7.14) NX(t)= t
+2πlog t
+2π− t
+2π−1
+π
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
++OX(1).
+Less precisely,
+NX(t)= t
+2πlog t
+2π− t
+2π+OX(Φ(τ)).
+It would be useful to know whether (7.14) (perhaps with a largerO-term) also
+holds whenX is a small ﬁxed power oft. If that is the case, classical results about
+the statistics of the zeros ofζ(s) whose proofs depend on approximatingS(t)b yt h e
+trigonometric polynomial −(1/π)fX(t) would hold for the zeros ofζX(s) as well.
+What we can show for largerX is the following unconditional result.
+Theorem 7.6. There exists a positive constantC4 such that ifX ≤tC4,t h e n
+NX(t) ≪ tlogt.
+Moreover, if X ≤to(1),t h e n
+NX(t)=
+(
+1+ o(1)
+)t
+2πlog t
+2π.
+=== PDF PAGE 20 ===
+2176 S. M. GONEK
+Proof. There are two ways that solutions toFX(t) ≡π(mod2π) may arise, and we
+shall refer to the zeros ofζX(s) corresponding to these two ways as zeros of the
+“ﬁrst” and “second” kind.
+The ﬁrst way is byFX(t) increasing or decreasing from one odd multiple ofπ,
+say (2k+1)π, to the next larger or smaller odd multiple ofπ, without ﬁrst crossing
+(2k +1 )πagain. A moment’s reﬂection reveals that the total number of distinct
+zeros in [C0,t ] arising this way is big-O of the total variation ofFX(t), namely,
+1
+2π
+∫ t
+C0
+|F
+′
+X(u)| du.
+By (7.12) and the triangle and Cauchy-Schwarz inequalities, this is
+≤ 1
+2π
+∫ t
+C0
+⏐⏐⏐⏐log u
+2π−2
+∑
+n≤X2
+ΛX(n)cos(ulogn)√n
+⏐⏐⏐⏐ du+O(1)
+≤ t
+2πlog t
+2π− t
+2π+ 1
+πt1/2
+( ∫ t
+C0
+⏐⏐⏐
+⏐
+∑
+n≤X2
+ΛX(n)cos(ulogn)√n
+⏐⏐⏐
+⏐
+2
+du
+)1/2
+.
+By a standard mean value theorem for Dirichlet polynomials it is easy to show that
+if X ≪ t1/2, the integral is ≪ t log2 X. Thus, writing NI(t)f o rt h en u m b e ro f
+distinct zeros that occur in this way, we have
+NI(t) ≤ t
+2πlog t
+2π− t
+2π+O(t logX).
+We will see how to take multiplicities into account below.
+The second way solutions toFX(t) ≡π(mod2π)c a noc c u ri sb yFX(t) increasing
+or decreasing from a solution (2k+1)πand returning to this value before reaching
+the next larger or smaller odd multiple ofπ. Each time this happens, there must
+be at least one point in between whereF
+′
+X(t) vanishes. Thus, writingNII(t)f o r
+the number ofdistinct zeros ofζX(s) arising this way, we see thatNII(t)i sa tm o s t
+big-O of the number of timesF
+′
+X(t)v a n i s h e so n[C0,t]. To estimate this number
+we deﬁne functions
+gX(s)= −χ
+′
+χ(s)−2
+∑
+n≤X2
+ΛX(n)
+ns
+and
+GX(s)= 1
+2
+(
+gX(s)+ gX(1−s)
+)
+.
+By (7.4), F
+′
+X(t)= GX(1
+2 + it), so the zeros ofF
+′
+X(t)o n[ C0,t] are the zeros of
+GX(s)o n[ 1
+2 + iC0, 1
+2 + it]. We bound this number by bounding the number of
+zeros on each of the segments [1
+2 +it, 1
+2 +2it],[1
+2 +it
+2, 1
+2 +it],..., and adding. The
+number of zeros on any one of these is at most the number of zeros ofGX(s)i n
+a disk containing the segment. By a familiar result from complex analysis, ifD
+is a closed disk of radiusR centered at z0, f(z) is analytic onD with maximum
+modulus M,a n df(z0) ̸= 0, then there is an absolute constantc such thatf has
+≤clog(M/|f(z0)|) zeros in the disc of radius2
+3Rcentered atz0. To apply this tothe
+segment [1
+2 +it, 1
+2 +2it], say, we need a disc containing it, the maximum of|GX(s)|
+on this disk, and a lower bound for|GX| at the center of the disk. We handle the
+last problem ﬁrst by selecting as center a point at which we know|GX(s)| cannot
+=== PDF PAGE 21 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2177
+be too small. The upper bound forNII(t) will follow by repeating this process for
+each of the segments and adding the resulting estimates.
+To show that one can ﬁnd a satisfactory center, ﬁx aδwith 0<δ< 1
+2 and set
+E(t)=
+{
+u ∈[t,2t]:( 1
+2 +δ)log t
+2π≥|f
+′
+X(u)|≥ (1
+2 −δ)log t
+2π
+}
+.
+Then |F
+′
+X(u)| = |GX(1
+2 +iu)|≤ 2δlog(t/2π)+ O(1/t) for allu ∈E(t). Now recall
+that
+∫ 2t
+t
+⏐⏐f
+′
+X(u)
+⏐⏐2
+du =
+∫ 2t
+t
+⏐⏐⏐⏐
+∑
+n≤X2
+ΛX(n)cos(ulogn)√n
+⏐⏐⏐⏐
+2
+du ≪ tlog2 X.
+Thus, the measure ofE(t)i s
+|E(t)| =
+∫
+E(t)
+1 dt ≤
+∫
+E(t)
+( |f
+′
+X(u)|
+(1
+2 −δ)log t
+2π
+)2
+dt
+≪tlog2 X
+log2 t .
+It follows that there exists a constantC4 > 0 such that ifX ≤tC4,t h e n|E(t)| < 1
+6t.
+Since the segment [1
+2 +i(3
+2 −1
+12)t, 1
+2 +i(3
+2 + 1
+12)t] has greater length than the setE(t),
+it contains a point1
+2 +it0 with t0 not inE(t) and therefore with|GX(1
+2 +it0)| >
+2δlog(t/2π).
+We now letD0(t) be the closed disc of radiust centered at 1
+2 + it0, and letM
+denote the maximum of|GX(s)| on D0(t). Clearly onD0(t)w eh a v e
+GX(σ+it) ≪ logt+
+∑
+n≤X2
+ΛX(n)nt−1/2 ≪ Xt+1/2.
+Hence, bythetheoremalluded toabove, GX(s)has ≪ log(Xt+1/2/δlogt) ≪ tlogX
+zerosinsidethesmallerdisc D0(2
+3t)ofradius 2
+3t,w h i c hc o v e r s[1
+2+it, 1
+2+2it]. Adding
+estimates for the diﬀerent intervals, we arrive at≪ tlogX distinct zeros ofF
+′
+X(t).
+The same bound therefore holds for the number of distinct zeros of the second kind.
+Combining the two ways the solutions ofFX(t) ≡π(mod 2π) or zeros ofζX(s)
+arise, we ﬁnd that forX ≤tC4 there are
+NI(t)+ NII(t) ≤(t/2π)log(t/2π)−(t/2π)+ O(t logX)
+distinct zeros.
+Now, a zero 1
+2 + iγX of ζX(1
+2 + it) has multiplicity m if and only if the ﬁrst
+m−1 derivatives ofζX(1
+2 + it) with respect tot vanish atγX, but themth does
+not. It is easy to check that this is equivalent toFX(γX) ≡π(mod 2π),F
+′
+X(γX)=
+... = F(m−1)
+X (γX) = 0, and F(m)
+X (γX) ̸= 0. Also note that our estimate for the
+number of zeros of the analytic functionGX(s) counts them according to their
+multiplicities, and thatF
+′
+X(t)= GX(1
+2 +it),F (2)
+X (t)= iG(1)
+X (1
+2 +it),...,F (m)
+X (t)=
+im−1G(m−1)
+X (1
+2 +it).
+Suppose then that1
+2 +iγX is a zero ofζX(s) of the ﬁrst kind and multiplicitym.
+Then it is counted once inNI(t). Also, since the ﬁrstm−1 derivatives ofFX(t)
+vanish atγX,s od o e sGX(1
+2 +it) and its ﬁrstm−2 derivatives. Thus,1
+2 +iγX is
+counted anotherm−1 times inNII(t), and therefore with the correct multiplicity
+in NI(t)+ NII(t).
+=== PDF PAGE 22 ===
+2178 S. M. GONEK
+Next suppose that1
+2 +iγX is a zero of multiplicitym of the second kind. Then
+it is counted at least once inNII(t) because F
+′
+X(t)= GX(1
+2 + it)v a n i s h e sa ta
+nearby point. Also, at γX itself we haveF
+′
+X(γX)= ··· = Fm−1
+X (γX) = 0, and
+Fm
+X (γX) ̸= 0. This means thatGX(s) and its ﬁrstm −2 derivatives are zero at
+1
+2 +iγX, so this point is countedm−1t i m e sb yNII(t). Thus, zeros of the second
+kind with multiplicitym are counted with weight at leastm in NII(t).
+We now see that
+NX(t) ≤ t
+2πlog t
+2π− t
+2π+O(t logX).
+Both assertions of the theorem now follow from this and the lower bound in
+(7.6). □
+8. The number of simple zeros of ζX(s)
+We saw in the last section that a zero1
+2 +iγX of ζX(s) is simple if and only if
+FX(γX) ≡π(mod 2π)a n dF
+′
+X(γX) ̸=0 .L e tN(1)
+X (t) denote the number of such
+zeros up to heightt. From (7.12) and (7.13) we see thatF
+′
+X(γX) > 0i fX is not
+too large, and therefore that1
+2 + iγX is a simple zero ofζX(s). Combining this
+with Theorem 7.5, we obtain
+Theorem 8.1. Assume the Riemann Hypothesis. There exists a constantC3 > 0
+such that ifX< exp
+(
+C3 logt/Φ(t)
+)
+, then all the zeros ofζX(1
+2 + it) with t ≥C0
+are simple and
+N(1)
+X (t)= NX(t)= t
+2πlog t
+2π− t
+2π−1
+π
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n1/2 logn +OX(1).
+As in our results forNX(t), the condition onX is almost certainly too restrictive.
+The following unconditional but less precise result is valid for largerX.
+Theorem 8.2. Let ϵ> 0 and X ≤exp
+(
+o(log1−ϵ t)
+)
+.T h e na st →∞ ,t h en u m b e r
+of simple zeros up to heightt is
+N(1)
+X (t)=( 1+ o(1)) t
+2πlog t
+2π.
+Proof. Let N be the number of zeros ofζX(1
+2 + iu)i n[ t,2t]a n dN∗the number
+of these that are multiple. By Theorem 7.6, there is a constantC4 such that if
+X ≤tC4,t h e nN ≪ tlogt. We may therefore split the N∗ multiple zeros into
+K ≪ logt sets S1,S2,..., SK, in each of which the points are at least 1 apart. LetS
+be one of these sets and letγ1,γ2,...,γR be its points. Then these must all satisfy
+0= F
+′
+X(γr) = logγr
+2π−2
+∑
+n≤X2
+ΛX(n)cos(γr logn)
+n1/2 +O
+(1
+γr
+)
+.
+Writing
+∑
+n≤X2k
+AX(n)
+n1/2+iu =
+( ∑
+n≤X2
+ΛX(n)
+n1/2+iu
+)k
+,
+we have by a mean value theorem of Davenport (Montgomery [20]) that
+R∑
+r=1
+⏐⏐⏐
+⏐
+∑
+n≤X2
+ΛX(n)
+n1/2+iγr
+⏐⏐⏐
+⏐
+2k
+≪
+(
+t+X2k log
+(
+X2k))
+log
+(
+X2k) ∑
+n≤X2k
+|AX(n)|2
+n .
+=== PDF PAGE 23 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2179
+110 112 114 116 118
+2
+4
+6
+8
+10
+110 112 114 116 118
+2
+4
+6
+8
+10
+Figure 1. Graphs of 2|ζ(1
+2 +it)| (solid) and|ζX(1
+2 +it)| (dotted)
+near t = 114 forX =1 0a n dX = 300, respectively.
+2000 2001 2002 2003 2004 2005
+2.5
+5
+7.5
+10
+12.5
+15
+2000 2001 2002 2003 2004 2005
+2.5
+5
+7.5
+10
+12.5
+15
+Figure 2. Graphs of 2|ζ(1
+2 +it)| (solid) and|ζX(1
+2 +it)| (dotted)
+near t = 2000 forX =1 0a n dX = 300, respectively.
+It is not diﬃcult to show that the sum on the right is≪2k log2k X so, ifX ≤t1/2k,
+the right-hand side is≪k tlog2k+2 X. (We also require X ≤tC4, so we assume
+that k ≥C4/2.) On the other hand, by (8) the left-hand side must be≫ Rlog2k t.
+Therefore |S| = R ≪k tlog2k+2 X/log2k t.T h e r e a r eK ≪ logt sets Sk,s ot h e
+total possible number of multiple zeros isN∗≪k t(log2k+2 X/log2k−1 t). This is
+ok(tlogt)i fX ≤exp(o((logt)1−1/(k+1))). Takingk large enough so that 1/(k+1) <
+ϵ, we obtain the result. □
+9. The relative sizes of ζX(s) and ζ(s) and the relation
+between their zeros
+Although we have not proved thatζX(s) approximatesζ(s) pointwise whenσis
+very close to1
+2, the similarity between the formulae forNX(t)a n dN(t) suggests
+there might be a close relationship between the two functions even on the critical
+line. Indeed, comparing the graphs of|ζX(1
+2 +it)| and |ζ(1
+2 +it)| for a wide range
+of X and t (see Figures 1 and 2), one is struck by two things:
+i) the zeros ofζX(1
+2 +it) are quite close to those ofζ(1
+2 +it), even for relatively
+small X,a n d
+ii)a sX increases, |ζX(1
+2 +it)| seems to approach 2|ζ(1
+2 +it)|.
+An explanation for the second observation is that althoughζX(s) approximates
+ζ(s) to the right of the critical line, so doesPX(s). Therefore ζX(s)= PX(s)+
+χ(s)PX(s) might be a closer approximation to the functionF(s)= ζ(s)+ χ(s)ζ(s)
+than toζ(s). If this is the case, then on the critical line we have by the functional
+=== PDF PAGE 24 ===
+2180 S. M. GONEK
+equation that
+ζX(1
+2 +it) ≈F(1
+2 +it)= ζ(1
+2 +it)+ χ(1
+2 +it)ζ(1
+2 −it)
+=ζ(1
+2 +it)+ |χ(1
+2 +it)|2ζ(1
+2 +it)
+=2ζ(1
+2 +it).
+To establish bothobservationsrigorously weneedtointroduceaslightly modiﬁed
+version ofζX(s). Let
+P∗
+X(s)= PX(s)exp(−F2((s−1)log X))
+and deﬁne
+ζ∗
+X(s)= P∗
+X(s)+ χ(s)P∗
+X(s).
+Note that by (3.24),
+P∗
+X(s)= PX(s)exp
+(
+O
+( X2−2σ
+τ2 log2 X
+))
+when σ≥1
+2 and |s−1|≥ 1
+10. The diﬀerence betweenPX(s)a n dP∗
+X(s), and so also
+ζX(s)a n dζ∗
+X(s), is small when 2≤X ≤t2,a sw eh a v eb e e na s s u m i n gu n t i ln o w .
+We need to takeX much larger, though, in what follows. Similarly, we replace
+FX(t)b y
+F∗
+X(t)= −argχ(1
+2 +it)+2arg P∗
+X(1
+2 +it)
+=−argχ(1
+2 +it)+2
+(
+argPX(1
+2 +it)−ImF2
+(
+(−1
+2 +it)log X
+))
+.(9.1)
+By (7.4) and (3.24)
+F∗
+X(t)= FX(t)+ O
+( X
+τ2 logX
+)
+,
+so these two functions are also close whenX ≤t2. The zeros of ζ∗
+X(1
+2 + it)a r e
+the solutions ofF∗
+X(t) ≡π(mod 2π), and we will show thati)a n dii)a b o v eh o l d
+provided we useζ∗
+X(1
+2 +it)i np l a c eo fζX(1
+2 +it).
+Assume the Riemann Hypothesis is true. Taking the argument of both sides of
+(3.7) and recalling thatS(t)=( 1/π)arg ζ(1
+2 +it), we see that
+πS(t)=a r gPX(1
+2 +it)−ImF2
+(
+(−1
+2 +it)log X
+)
++
+∑
+γ
+Im F2
+(
+i(t−γ)log X
+)(9.2)
++O
+( X−3
+2
+τ2 logX
+)
+,
+where γruns through the ordinates of the zeros ofζ(s). We use this to replace the
+quantity in parentheses in (9.1) and obtain
+F∗
+X(t)= −argχ(1
+2 +it)+2 πS(t)−2Im
+∑
+γ
+F2(i(t−γ)log X)+ O
+( X−3
+2
+τ2 logX
+)
+.
+Now, by (7.2)
+−argχ(1
+2 +it)+2 πS(t)=2 πN(t)−2π,
+thus
+(9.3) 1
+2πF∗
+X(t)= N(t)−1−1
+πIm
+∑
+γ
+F2(i(t−γ)log X)+ O
+( X−3
+2
+τ2 logX
+)
+.
+=== PDF PAGE 25 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2181
+We use this ﬁrst to show that the zeros ofζ∗
+X(s) cluster around the zeros ofζ(s)
+as X →∞ .L e tγ1 and γ2 denote ordinates of distinct consecutive zeros ofζ(s),
+and let 0< Δ≤1
+4(γ1 −γ2). Also, let I =[ γ1 +Δ,γ2 −Δ]. Then by (3.22) and
+Lemma 3.3, ifX ≥exp(1/Δ) we have
+∑
+γ
+F2(i(t−γ)log X) ≪ 1
+log2 X
+∑
+|γ−t|>Δ
+1
+(t−γ)2(9.4)
+≪ 1
+Δlog2 X
+(
+logτ+ Φ(τ)
+Δ
+)
+uniformly fort ∈I. It now follows from (9.3) that given anyϵ> 0, there exists an
+X0 = X0(γ1,Δ,ϵ) such that ifX ≥X0,t h e n
+(9.5)
+
+F
+∗
+X(t)
+2π −N(t)
+
+ <ϵ ,
+uniformly fort ∈I.H e r e∥x∥ denotes distance fromx to the nearest integer. Since
+N(t) is an integer whent ∈I, this means that if 0<ϵ<
+1
+2,t h e n1
+2 +it is not a
+zero ofζ∗
+X(s). Thus I is free from zeros ofζ∗
+X(s)w h e nX is suﬃciently large.
+Now we show thatζ∗
+X(1
+2 +it) tends to 2ζ(1
+2 +it)o nI. By (9) and (9.1) we may
+write
+ζ∗
+X(1
+2 +it)= P∗
+X(1
+2 +it)
+(
+1+ e−iF∗
+X(t))
+.
+Also, by Theorem 3.2 and the deﬁnitions ofP∗
+X and ZX,w eh a v e
+ζ(s)= P∗
+X(s)exp
+( ∑
+γ
+F2
+(
+i(t−γ)log X
+))(
+1+ O
+( X−5
+2
+τ2 log2 X
+))
+.
+From the ﬁrst of these and (9.5) we see that forX suﬃciently large
+ζ∗
+X(1
+2 +it)= P∗
+X(1
+2 +it)(2+ O(ϵ))
+uniformly fort ∈I. From the second and (9.4) we see that forX suﬃciently large
+ζ(1
+2 +it)= P∗
+X(1
+2 +it)
+(
+1+ O(ϵ)
+)
+on I.T h u s ,ζ∗
+X(1
+2 +it) → 2ζ(1
+2 +it)a sX →∞ uniformly fort ∈I.
+Combining our results we now have
+Theorem 9.1. Assume the Riemann Hypothesis. Letγand γ
+′
+denote ordinates of
+distinct consecutive zeros of the Riemann zeta-function and letI denote a closed
+subinterval of(γ, γ
+′
+). Then for allX suﬃciently large,ζ∗
+X(1
+2 +it) has no zeros in
+I. Moreover,ζ∗
+X(1
+2 +it) → 2ζ(1
+2 +it) as X →∞ uniformly fort ∈I.
+E. Bombieri has pointed out to the author that (9.2) is closely related to an
+explicit formula of Guinand ([11], [12]), namely,
+πS(t)= − lim
+X→∞
+( ∑
+n≤X
+Λ(n)sin(tlogn)
+n1/2 logn −
+∫ X
+1
+sin(tlogu)
+u1/2 logu du
+)
+− lim
+X→∞
+(sin(tlogX)
+logX
+( ∑
+n≤X
+Λ(n)
+n1/2 −2X1/2
+))
++arctan2 t
+−1
+4 arctan(sinhπt)−7
+8π+ 1
+2
+(
+argΓ(1
+2 +it)−tlogt+t
+)
+.
+There is no sum over zeros here because Guinand is taking a limit. Also, the Λ(n)
+are unweighted. However, this is only a minor diﬀerence.
+=== PDF PAGE 26 ===
+2182 S. M. GONEK
+It is remarkable that the zeros ofζ∗
+X(s)a n dζX(s) are close to those ofζ(s)e v e n
+when X is small (cf. Figures 1 and 2) . Formula (9.3) oﬀers a possible explanation
+for this. Suppose that t = γ, the ordinate of a zero ofζ(s) with multiplicitym.
+Then N(γ)i sa ni n t e g e r ,s ob y( 9 . 3 )
+1
+2πF∗
+X(γ) ≡−1
+πIm
+∑
+γ′
+F2(i(γ−γ
+′
+)log X)+ O(γ−2)( m o d 1 ).
+Now, a more precise version of (3.11) is that ify is real,
+ImF2(iy)=a r giy +
+∞∑
+k=0
+ak y2k+1,
+where the ak are real and the argument isπ/2w h e ny = 0 (the limit as y →
+0+). This is an odd function (for y ̸= 0). Furthermore, for larger y we have
+ImF2(iy)=( s i ny/y2)(1+ O(1/|y|)) by (3.21). Thus, them terms in the sum with
+γ
+′
+= γcontributem(π/2) and the terms with|γ−γ
+′
+|logX large are decreasing and
+oscillating. They should therefore exhibit a lot of cancellation. There might also
+be a great deal of cancellation among the small and intermediate range terms for
+the following reason. Although it has never been proved, we expect the numbers
+γ
+′
+logX to be uniformly distributed (mod1) whenT ≪ X ≪ TA with A arbitrarily
+large and ﬁxed. This and the fact that ImF2(iy) is odd suggest that all the terms
+with γ′ ̸= γcancel and that (1/2π)F∗
+X(γ) will be close tom/2( m o d1 ) .T h u s ,i f
+m is odd (it is believed thatm is always 1), it would not be surprising to ﬁnd a
+zero ofζ∗
+X(1
+2 +it)n e a r b y .
+While writing this paper, the author learned from a lecture by J. P. Keating that
+he and E. B. Bogomolny had worked with a function similar toζt/2π restricted to
+the critical line as a heuristic tool to calculate the pair correlation function of the
+zeros ofζ(s) (see, for example, Bogomolny and Keating [4] and Bogomolny [1]). In
+fact, Professor Keating [18] had ﬁrst considered such a function in the early 1990s
+and observed that its zeros are quite close to those of the zeta-function. He and
+his graduate student, Steve Banham, also heuristically investigated how close the
+zeros ofζ
+X(1
+2 +it)a n dζ(1
+2 +it) are as a function ofX.
+10. Why zeros of ζX(s) are simple and repel
+Theorem 8.1 shows that if the Riemann Hypothesis holds, then the zeros of
+ζX(1
+2 +it) witht ≥C0 are simple provided thatX ≤exp(C3 logt/Φ(t)) for some
+constant C3 > 0. Futhermore Theorem 8.2 shows unconditionally that even for
+X as large as exp(o(log1−ϵ t)), 100% of the zeros are simple. The structure of
+ζX(1
+2 +it) suggests why. The zeros ofζX(1
+2 +it)f o rt ≥C0 arise as the solutions
+of the congruence FX(t) ≡ π(mod2π). That is, they are the abscissas of the
+points where the curvey = FX(t) crosses the equally spaced horizontal linesy =
+(2k+1)π.I ft were the abscissa of a multiple zero ofζX(1
+2 +it), it would also have
+to be a solution of the equationF
+′
+X(t) = 0. We saw that this cannot happen for
+X ≤exp(C3 logt/Φ(t)) (because thenF
+′
+X(t) > 0) and that it cannot happen often
+if logX = o(logτ). However, for largerX,s a yX ≤t2, one might also expect it to
+happen rarely on the grounds that the “events”
+FX(t)= tlog t
+2π−t−1
+4π−2
+∑
+n≤X2
+ΛX(n)sin(tlogn)
+n
+1
+2 logn
++O
+(1
+τ
+)
+≡π(mod2π)
+=== PDF PAGE 27 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2183
+110 112 114 116 118
+-0.75
+-0.5
+-0.25
+0.25
+0.5
+110 112 114 116 118
+-0.75
+-0.5
+-0.25
+0.25
+0.5
+Figure 3. Graphs ofS(t) (solid) and (−1/π)fX(t) (dotted) near
+t = 114 forX =1 0a n dX = 300, respectively.
+and
+F
+′
+X(t) = logt
+2π−2
+∑
+n≤X2
+ΛX(n)cos(tlogn)
+n
+1
+2
++O
+(1
+τ
+)
+=0
+should be independent.
+What about repulsion? By (7.12) and Theorem 7.4,F
+′
+X(t) ≪ Φ(t)log X +log t
+when 2≤X ≤t2. As in Section 7, we divide the zeros into two kinds. The ﬁrst
+kind comes about byy = FX(t) increasing or decreasing fromy =( 2k+1)πto the
+next larger or smaller odd multiple ofπw i t h o u tﬁ r s tr e - c r o s s i n gy =( 2k+1)π.A l l
+other zeros are zeros of the second kind. Suppose thatγX andγ′
+X are ordinates of
+consecutive zeros ofζX(1
+2 +it)a n dt h a t1
+2 +iγX is a zero of the ﬁrst kind. Then
+FX(γ
+′
+X)−FX(γX)= ±2πand we have
+2π=|FX(γ
+′
+X)−FX(γX)| =
+⏐⏐⏐⏐
+∫ γ′
+X
+γX
+F
+′
+X(u)du
+⏐⏐⏐⏐
+≪(γ
+′
+X −γX)(log γX +Φ(γX)log X).
+Thus,
+γ
+′
+X −γX ≫ 1
+logγX +Φ(γX)log X.
+Recall that (logγX/loglog γX)1/2 ≪ Φ(γX) ≪ logγX.T h u s ,i fX ≤γ2
+X,t h e n
+(10.1) γ
+′
+X −γX ≫ 1
+loga γX
+for somea ∈[3
+2,2].
+Note that ifX ≤exp(C3 logt/Φ(t)) withC3 as in Theorem 8.1, thenF
+′
+X(t) > 0
+and all zeros are of the ﬁrst kind. Furthermore, by the proof of Theorem 7.6, there
+are (1+ o(1))(t/2π)log(t/2π) zeros of the ﬁrst kind when logX = o(logτ).
+If 1
+2 + iγX is a zero of the second kind, thenFX(γ
+′
+X) −FX(γX)=0a n dt h e
+argument above does not work. It may be, however, that most zeros are of the ﬁrst
+kind.
+To see why, ﬁrst observe thatS(t) is a saw-tooth function becauseN(t)i sas t e p -
+functionconsistingoftheincreasingfunction( t/2π)log(t/2π)−(t/2π)+7/8+O(1/τ)
+plus S(t). Now between consecutive ordinates γ,γ
+′
+of zeros of ζ(1
+2 + it), S(t)
+decreases essentially linearly with slope−(1/2π)log(γ/2π). It then jumps atγ
+′
+by
+an amount equal to the multiplicity of the zero1
+2 + iγ
+′
+. The heuristic argument
+at the end of the last section suggesting that∑
+γF2(i(t−γ)log X)i su s u a l l ys m a l l
+=== PDF PAGE 28 ===
+2184 S. M. GONEK
+110 112 114 116 118
+34
+35
+36
+37
+110 112 114 116 118
+34
+35
+36
+37
+Figure 4. Graphs ofN(t)a n d( 1/2π)FX(t)+1near t = 114 for
+X =1 0a n dX = 300
+away from ordinates of zeta zeros, when applied to (9.2) withX ≤t2, implies that
+between the ordinates of zeros
+S(t) ≈−1
+πfX(t)= −1
+π
+( ∑
+n≤X2
+ΛX(n)sin(tlogn)√nlogn
+)
+.
+It is not clear here how largeX should be relative tot. However, graphs offX(t)
+indicate that they are close to the graph ofS(t)w h e nX is moderately large, there
+are small oscillations along the downward slopes ofS(t), and then a ﬂatter, close
+to vertical rise near the jumps ofS(t) (Figure 3). For
+FX(t)
+2π ≈ t
+2πlog t
+2π− t
+2π−1
+8 −1
+πfX(t),
+which approximatesN(t)−1, this means that the oscillations tend to be along the
+ﬂat part of the “steps” and not at the rise (Figure 4). However, zeros ofζX(1
+2 +it)
+correspond to solutions ofFX(t)/2π≡1
+2 (mod 1), and these will be the abscissas
+of points that are about halfway up the rise ofFX(t). This suggests that zeros of
+the second kind are unlikely.
+Our arguments have assumed that X ≤ t2, but we should probably take X
+even larger to model the zeta-function. In that case we would need to repeat the
+arguments with F∗
+X(t). This introduces a term −ImF2
+(
+(−1
+2 +it)log X
+)
+,w h i c h
+can be as large asX/t2 log2 X. Applied to the argument for gaps between zeros of
+the ﬁrst kind with ordinates aroundt, and assumingX = tb with b> 2, this leads
+to
+γ
+′
+X −γX ≫ 1
+ΦX(γX)log γX +γb−3
+X /log2 γX
+in place of (10.1). This is again≫ 1/loga γX for somea ∈[3
+2,2] when 2<b ≤3,
+but it gives
+γ
+′
+X −γX ≫ 1/γb−3
+X
+when b> 3. This may be compared with the repulsion between zeros of the zeta-
+function predicted by extrapolating from Montgomery’s pair correlation conjecture,
+namely
+γ
+′
+X −γX ≫ 1/γ
+1
+3+ϵ
+X .
+It would have been nice if the exponent1
+3 had been forced on us by the above
+argument.
+=== PDF PAGE 29 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2185
+11. Other L-functions and sums of L-functions
+The ideas above have obvious extensions to the more general setting of the
+Selberg Class of L-functions [23] and similar classes of functions with Euler prod-
+ucts and functional equations, such as that deﬁned by Iwaniec and Kowalski [17].
+Here we brieﬂy indicate how this looks for Dirichlet L-functions. We then con-
+sider the analogue of the problem of the distribution of zeros of linear combinations
+of L-functions. This approach provides a new heuristic explanation for why such
+combinations should have almost all their zeros on the critical line.
+Let L(s,χ) denote the Dirichlet L-function with characterχmodulo q and func-
+tional equation
+(11.1) L(s,χ)= τ(χ)
+ia√qΨ(s)L(1−s,χ),
+where
+(11.2) Ψ( s)=
+(π
+q
+)s−1
+2 Γ
+(1+a−s
+2
+)
+Γ
+(a+s
+2
+) ,
+τ(χ) is Gauss’ sum, anda = 0 or 1 according to whetherχ(−1) = 1 or−1. When
+q = 1, this is the functional equation forζ(s) because τ(χ)=1a n d a =0 .S i n c e
+the factor preceding Ψ(s) has modulus 1, we may rewrite (11.1) as
+eiαL(s,χ)=Ψ (s)e−iαL(1−s,χ),
+where α= α(χ) ∈R.
+We now deﬁne the functions
+LX(s,χ)= PX(s,χ)+ e−2iαΨ(s)PX(s,χ),
+where
+PX(s,χ)=e x p
+( ∑
+n≤X2
+ΛX(n)χ(n)
+ns logn
+)
+.
+Observe that PX(s,χ)= PX(s,χ). Clearly theorems corresponding to those we
+have proved forζX(s) hold forLX(s,χ). In particular, one can show that all zeros
+in 1
+2 <σ ≤1 have an imaginary part≤C0. Further, if the Riemann Hypothesis
+holdsfor L(s,χ), thenNX(t,χ), thenumber ofzerosof LX(1
+2+iu,χ)with0 ≤u ≤t,
+satisﬁes
+NX(t,χ) ≥ t
+2πlog qt
+2π− t
+2π+O(logτ)
+when 2 ≤ X ≤ t2, and equality holds if X is much smaller. (We assume q is
+ﬁxed.) Also, unconditionally we haveNX(t,χ)=( 1+ o(1))(t/2π)log(qt/2π)p r o -
+vided logX = o(logτ).
+A number of authors ([2], [3], [14], [23]) have studied the location of zeros of
+linear combinations of the type
+L(s)=
+J∑
+j=1
+bjeiαj L(s,χj),
+for Dirichlet and other L-functions with the same functional equation, that is,
+having the same factor Ψ(s). Here thebj’s are real and non-zero and the inclusion
+of the factorseiαj ensures thatL(s) satisﬁes
+L(s)=Ψ (s)L(1−s).
+=== PDF PAGE 30 ===
+2186 S. M. GONEK
+Typically,L(s) has inﬁnitely many zeros oﬀ the critical line but no Euler product.
+Bombieri and Hejhal ([2],[3]) have shown, however, that if the Riemann Hypoth-
+esis holds for each of the L-functions and their zeros satisfy a plausible spacing
+hypothesis, then 100% of their zeros (in the sense of density) are on the line. In the
+case of Dirichlet and certain other L-functions, Selberg (unpublished) has shown
+unconditionally that such combinations have a positive proportion of their zeros on
+the critical line.
+The idea leading to these results was ﬁrst suggested by H. L. Montgomery and is
+roughly as follows. Consider the case of two distinct Dirichlet L-functionsL(s,χ
+1)
+and L(s,χ2) to the same modulusq and having the same functional equation, and
+let f1(t) = log|L(s,χ1)|/(1
+πloglog t)
+1
+2 and f2(t) = log|L(s,χ2)|/(1
+πloglog t)
+1
+2 .I ti s
+known thatf1(t)a n df2(t) behave like independent normally distributed random
+variables with mean 0 and standard deviation 1. Thus, asymptotically half of the
+time on [T, 2T] we should expect the ﬁrst function to be much larger than the
+second, and the other half of the time much smaller. It can also be shown that in
+any intervalI of length exp(√
+loglog T)/logT, one function dominates the other
+except possibly on a subset of measureo(I). Suppose then thatf1(t) dominates in
+I.T h e n|b1eiα1L(s,χ1)+ b2eiα2L(s,χ2)| is essentially the size of|b1L(s,χ1)| and,
+if the zeros ofL(s,χ1) are well-spaced, the zeros ofb1eiα1L(s,χ1)+ b2eiα2L(s,χ2)
+will be perturbations of the zeros ofL(s,χ1). Thus, if all or almost all of the zeros
+of each L-function is on the critical line, almost all the zeros of the sum should be
+as well.
+We now ask what happens if we replace eachL-function in the linear combination
+by the corresponding functionLX(s,χj). Set
+LX(s)=
+J∑
+j=1
+bjeiαj LX(s,χj),
+where thebj are in R−{0}, and letNX(t) denote the number of zeros ofLX(s)o n
+σ= 1
+2 up to heightt. Using the deﬁnition ofLX(s) we write this as
+LX(s)=
+J∑
+j=1
+bjeiαj PX(s,χj)+Ψ(s)
+J∑
+j=1
+bjeiαj PX(s,χj)
+=PX(s)+Ψ(s)PX(s).
+Clearly LX(s) has zeros onσ= 1
+2 if either
+(1) PX(1
+2 +it)=0
+or
+(2) FX(t)=a r gΨ (1
+2 +it)−2a r gPX(1
+2 +it) ≡ π(mod 2π).
+For the moment let us pass over the ﬁrst case and count the number of points at
+which the second case happens but the ﬁrst does not. By (11.2)
+argΨ(s)= −tlog tq
+2π+t−c0 +O
+(1
+τ
+)
+,
+with c0 a real number. Thus, (2) happens at least
+t
+2πlog tq
+2π− t
+2π−2a r gPX(1
+2 +it)+ O(1)
+times on [0,t]. Here we deﬁne argPX(1
+2 + it) by continuous variation from some
+point σ0 > 1 on the real axis up toσ0 +it a n dt h e no v e rt o1
+2 +it, with our usual
+=== PDF PAGE 31 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2187
+convention ifPX vanishes at1
+2 +it. To bound argPX(1
+2 +it), the pointσ0 requires
+some consideration. For eachj write
+PX(s,χj)=e x p
+( ∑
+n≤X2
+ΛX(n)χj(n)
+ns logn
+)
+=
+∞∑
+n=1
+a(n)χj(n)
+ns .
+Since 0≤ΛX(n) ≤Λ(n), we see that forσ>1,
+∞∑
+n=1
+a(n)
+nσ =exp
+( ∑
+n≤X2
+ΛX(n)
+nσlogn
+)
+≤exp
+( ∞∑
+n=2
+Λ(n)
+nσlogn
+)
+= ζ(σ).
+In particular, 0≤a(n) ≤1a n da(1) = 1.
+Next write
+PX(s)=
+J∑
+j=1
+bjeiαj PX(s,χj)=
+∞∑
+n=1
+a(n)
+ns
+( J∑
+j=1
+bjeiαj χj(n)
+)
+=
+∞∑
+n=1
+a(n)B(n)
+ns ,
+say, and assume from now on thatB(1) ̸=0 .( I fB(1) = 0, the following argument
+would have to be modiﬁed slightly, and the number of zeros would change byO(t).)
+Setting B = ∑J
+j=1 |bj|,w eh a v e|B(n)|≤ B for everyn, and there exists a positive
+constantc1 and a real numberωsuch thatB(1) =c1eiωB. It follows that forσ>1,
+Re(e−iωPX(s)) ≥c1B −B
+∞∑
+n=2
+1
+nσ ≥B
+(
+c1 −
+∫ ∞
+1
+x−σ
+)
+= B
+(
+c1 − 1
+σ−1
+)
+.
+This is positive ifσ>1+1 /c1.T h u s ,i fσ0 meets this condition,
+Re(e−iωPX(σ0 +it)) > 0
+for all t,a n da r gPX(σ0 + it)v a r i e sb ya tm o s tπon [σ0,σ0 + it]. It follows that
+|argPX(1
+2 + it)| is less than or equal to the change in argument ofPX(s)o nt h e
+segment [1
+2 + it,σ0 + it] plus π. By a well-known lemma in Section 9.4 of Titch-
+marsh [25], if|PX(σ
+′
++it
+′
+)|≤ M(σ,t)f o r1
+2 ≤σ≤σ
+′
+,1 ≤t
+′
+≤t, then this change
+in argument is≪ϵ log(M(1
+2 −ϵ,τ)/|Ree−iωPX(σ0)|)+1 for any ϵ> 0. Now
+|PX(s)|≤ B
+J∑
+j=1
+|PX(s,χj)|
+and
+PX(s,χj) ≪ exp
+( ∑
+n≤X2
+ΛX(n)
+nσlogn
+)
+≪ exp
+(X2(1−σ)
+logX
+)
+.
+Thus,
+argPX(1
+2 +it) ≪ϵ
+X1+2ϵ
+logX .
+This is a very crude bound, but it suﬃces here. By (11), we now have
+NX(t) ≥ t
+2πlog tq
+2π− t
+2π+Oϵ(X1+2ϵ),
+and the leading term is larger than theO-term ifX<t 1−2ϵ. To leading order this
+is also the lower bound for the number of zeros of eachLX(s,χ). With more work
+=== PDF PAGE 32 ===
+2188 S. M. GONEK
+we could show unconditionally that when logX/logτ= o(1), the number of zeros
+arising from case (2) is in fact = (1+o(1))(t/2π)log(t/2π).
+An analysis of the contribution of zeros from case (1) is rather elaborate, and
+we will not attempt it here. One expects relatively few zeros to arise in this way,
+though, because it is unlikely that the curvez = P
+X(1
+2 +it) will pass through the
+origin. As with our previous results, the diﬃculty we have is not in proving that
+there are lots of zeros on the line, but that there are not too many, and, just as
+before, we have only limited success with this.
+The main point is that one can see immediately from the structure ofLX(s,χ)
+why one might expect 100% of the zeros of linear combinations of such functions to
+lie on the critical line. It therefore suggests a reason this should be true for linear
+combinations of actual L-functions, and this reason is diﬀerent from the usual one.
+12. Appendix
+Theorem. A necessary and suﬃcient condition for the truth of the Lindel¨of Hy-
+pothesis is that for1
+2 ≤σ≤2, |s−1| > 1
+10,a n d2 ≤X ≤τ2,
+(12.1) ζ(s)=
+∑
+n≤X
+1
+ns +O(X
+1
+2−στϵ).
+Moreover, if the Riemann Hypothesis is true, then there exists a positive constant
+C1 such that forX and s as above,
+(12.2) ζ(s)=
+∑
+n≤X
+1
+ns +O(X
+1
+2−σeC1Φ(t)).
+Here Φ(t) is an admissible function in the sense of Section3.I n p a r t i c u l a r , w e
+have
+(12.3) ζ(s) ≪ eC1Φ(t)
+for 1
+2 ≤σ≤2 and |s−1| > 1
+10.
+Proof. The proof of a statement similar to the ﬁrst assertion may be found in
+Titchmarsh [25] (Theorem 13.3). Moreover, the more diﬃcult implication (Lindel¨of
+implies (12.1)) is proved by an easy modiﬁcation oftheproofofthesecond assertion,
+which we turn to now.
+We apply Perron’s formula (Lemma 3.19 of Titchmarsh [25]) toζ(s)a n do b t a i n
+(12.4)
+∑
+n≤X
+1
+ns = 1
+2πi
+∫ c+iU
+c−iU
+ζ(s+w)Xw
+w dw+O
+(X
+1
+2 log2X
+U
+)
++O(X−σ),
+where X ≥2a n dc = 1
+2 + 1
+logX . Letting b = 1
+2 −σ− 1
+logτ and R the positively
+oriented rectangle with verticesb±iU and c±iU, we ﬁnd that
+(12.5) 1
+2πi
+∫
+R
+ζ(s+w)Xw
+w dw = ζ(s)+ X1−s
+1−s.
+On the Riemann Hypothesis,
+(12.6)
+( ∫ c−iU
+b−iU
++
+∫ b+iU
+c+iU
+)
+ζ(s+w)Xw
+w dw ≪ X
+1
+2 eΦ(U+τ)U−1.
+=== PDF PAGE 33 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2189
+Herewehaveusedthefunctionalequationandtheestimates |ζ(1
+2+ 1
+logτ+i(t+v))|≪
+eΦ(U+τ) and Xc ≪ X
+1
+2 . Also by the Riemann Hypothesis,
+∫ b+iU
+b−iU
+ζ(s+w)Xw
+w dw ≪ X
+1
+2−σeΦ(U+τ)
+∫ U
+0
+(b2 +(v)2)−1
+2 dv
+≪ X
+1
+2−σeΦ(U+τ) log(U/b)(12.7)
+≪ X
+1
+2−σeΦ(U+τ) logU.
+Combining (12.4) - (12.7), we obtain
+ζ(s)=
+∑
+n≤X
+1
+ns + X1−s
+s−1 +O
+(X
+1
+2 eΦ(U+τ)
+U
+)
++O(X
+1
+2−σeΦ(U+τ) logτ).
+Since X ≤τ2 the second term on the right is≪ X
+1
+2−σ(X
+1
+2 /τ) ≪ X
+1
+2−σ. The third
+is ≪ X
+1
+2 eΦ(U+τ)U−1 ≪ X
+1
+2−σeΦ(U+τ) since U = τ+Xσ>X σ. Thus, we ﬁnd that
+ζ(s)=
+∑
+n≤X
+1
+ns +O(X
+1
+2−σeΦ(U+τ) logτ).
+Finally, by (3.13) and the fact that Φ is increasing, we have Φ(U+τ) ≤Φ(τ4+2τ) ≤
+Φ(2τ4) ≤C1Φ(t). This establishes (12.2).
+The bound in (12.3) follows immediately by takingX = 2 in (12.2). □
+Now set
+S(u)=
+∑
+n≤u
+1
+n
+1
+2+it .
+Since ζ(1
+2 +it) ≪ eΦ(t), by (12.2) we see that
+S(u) ≪ eC1Φ(t)
+for 1≤u ≤τ2. By Stieltjes integration, ifσ< 1
+2,
+∑
+n≤X
+1
+nσ+it =
+∫ X
+1−
+u
+1
+2−σdS(u)= u
+1
+2−σS(u)
+⏐⏐
+⏐⏐
+X
+1−
+−(1
+2 −σ)
+∫ X
+1
+u−1
+2−σS(u)du
+≪ X
+1
+2−σeC1Φ(t) +( 1
+2 −σ)eA1Φ(t)
+∫ X
+1
+u−1
+2−σdu
+≪ X
+1
+2−σeC1Φ(t).
+We also have from (4.1) and (12.3) that whenσ≥1
+2,
+∑
+n≤X
+1
+nσ+it ≪ eC1Φ(t).
+Combining our estimates, we obtain the
+Corollary .Let 1 ≤X ≤τ2, |σ|≤ 2,a n d|s−1| > 1
+10. If the Riemann Hypothesis
+is true we have ∑
+n≤X
+1
+ns ≪ Xmax( 1
+2−σ,0) eC1Φ(t).
+=== PDF PAGE 34 ===
+2190 S. M. GONEK
+Moreover, A necessary and suﬃcient condition for the truth of the Lindel¨of Hy-
+pothesis is that
+∑
+n≤X
+1
+ns ≪ Xmax( 1
+2−σ,0) τϵ.
+Acknowledgements
+The author wishes to thank Enrico Bombieri, Dimitri Gioev, Jon Keating, and
+Peter Sarnak for very helpful conversations and communications. The author owes
+an especially great debt to Dimitri Gioev for many stimulating discussions and for
+the extensive computer calculations he performed.
+References
+1. E. Bogomolny, “Spectral statistics”, Doc. Math. J.–Extra vol. ICM (1998), 99–108.
+MR1648144 (99h:81053)
+2. E. Bombieri and D. A. Hejhal, “On the zeros of Epstein zeta functions”,C. R. Acad. Sci.
+Paris Ser. I Math. 304 (1987), no. 9, 213–217. MR883477 (89c:11136)
+3. E. Bombieri and D. A. Hejhal, “On the distribution of zeros of linear combinations of Euler
+products”,Duke Math. J. 80 (1995), 821–862. MR1370117 (96m:11071)
+4. E. B. BogomolnyandJ. P. Keating, “Gutzwiller’straceformulaandspectralstatistics: Beyond
+the diagonal approximation”,Phys. Rev. Lett. 77 (1996), no. 8, 1472–1475.
+5. R. Balasubramaian and K. Ramachandra, “On the frequency of Titchmarsh’s phenomenon
+for ζ(s), III”,Proc. Indian Acad. of Sci. 86 A (1977), 341–351. MR0506063 (58:21968)
+6. H. Davenport, Multiplicative Number Theory (2nd edition), Springer, New York, 1980.
+MR606931 (82m:10001)
+7. D. Farmer, S. M. Gonek, C. P. Hughes, “The maximum size of L-functions”,J. Reine Angew.
+Math. (Crelle’s Journal) 609 (2007), 215–236. MR2350784 (2009b:11140)
+8. D. A. Goldston and S. M. Gonek, “A note onS(t) and the zeros of the Riemann zeta-function”,
+Bull. London Math. Soc. 39 (2007), 482–486. MR2331578 (2008f:11097)
+9. S. M. Gonek, “Mean values of the Riemann zeta-function and its derivatives”,Invent. Math.
+75 (1984), 123–141. MR728143 (85f:11063)
+10. S. M. Gonek, C. P. Hughes and J. P. Keating, “A hybrid Euler-Hadamard product for the
+Riemann zeta function”,Duke Math. J. 136, no. 3 , 2007, 507–549. MR2309173 (2008e:11100)
+11. A. P. Guinand, “Some Fourier transforms in prime-number theory”,Quart. J. Math. Oxford
+Ser. (2) 18 (1947), 53–64. MR0019677 (8:447a)
+12. A. P. Guinand, “A summation formula in the theory of prime numbers”,Proc. London Math.
+Soc. (2) 50 (1948), 107–119. MR0026086 (10:104g)
+13. G. H. Hardy and J. E. Littlewood, “Contributions to the theory of the Riemann zeta-function
+and the theory of the distribution of primes”,Acta Arith. 41 (1918), 119–196. MR1555148
+14. D. A. Hejhal, On a result of Selberg concerning zeros of linear combinations of L-functions ,
+I.M.R.N., (2000), 551–577. MR1763856 (2001m:11149)
+15. C. P. Hughes, J. P. Keating and N. O’Connell, “Random matrix theory and the derivative
+of the Riemann zeta function”,Proc. R. Soc. Lond. A 456 (2000) 2611–2627. MR1799857
+(2002e:11117)
+16. A. E. Ingham, “Mean-values theorems in the theory of the Riemann zeta-function”,Proc.
+Lond. Math. Soc. 27 (1926), 273–300.
+17. H. Iwaniec and E. Kowalski,Analytic Number Theory , American Mathematical Society Col-
+loquium Publications 53, Providence, RI, 2004. MR2061214 (2005h:11005)
+18. J. P. Keating, “Quantum chaology and the Riemann zeta-function”, inQuantum Chaos ,
+eds. G. Casati, I. Guarneri, and U. Smilansky, North-Holland, Amsterdam, 1993, 145–185.
+MR1246830 (95d:81029)
+19. J. P. Keating and N. C. Snaith, “Random matrix theory andζ(1/2+i t
+)”,Commun. Math.
+Phys. 214 (2000), 57–89. MR1794265 (2002c:11107)
+20. H. L. Montgomery, “Mean and large values of Dirichlet polynomials”,Invent. Math. 8 (1969),
+334–345. MR0268130 (42:3029)
+=== PDF PAGE 35 ===
+FINITE EULER PRODUCTS AND THE RIEMANN HYPOTHESIS 2191
+21. H. L. Montgomery, “The pair correlation of zeros of the zeta function”,Analytic Number
+Theory, Proceedings of Symposia in Pure Mathematics 24 (1973), 181–193. MR0337821
+(49:2590)
+22. H. L. Montgomery and R. C. Vaughan, “Hilbert’s inequality”,J. London Math. Soc. (2) 8
+(1974), 73–82. MR0337775 (49:2544)
+23. A. Selberg, “Old and new conjectures and results about a class of Dirichlet series”, inCollected
+Papers, vol. 2, Springer Verlag, 1991, 47–63. MR1220477 (94f:11085)
+24. A. Selberg, “On the remainder in the formula forN(T), the number of zeros ofζ(s)i nt h e
+strip 0 <t<T ”,Avhandlinger Norske Vid. Akad. Oslo , no. 1, (1944), 1–27. MR0015426
+(7:417b)
+25. E. C. Titchmarsh, The Theory of the Riemann Zeta-Function (2nd edition, revised by
+D. R. Heath-Brown), Oxford Science Publications, 1986. MR882550 (88c:11049)
+Department of Mathematics, University of Rochester, Rochester, New York 14627
+E-mail address: gonek@math.rochester.edu

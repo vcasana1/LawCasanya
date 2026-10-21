@@ -1,0 +1,27 @@
+zCasanya - construccion aritmetica en Python
+
+Lambert/RvM               RMS=0.1880662998 max=0.993710851 mejora_indices=---% id=Lambert cortes=[]
+Casanya, 1 step           RMS=0.0670811117 max=1.363458708 mejora_indices=82.390% id=c037 cortes=[512]
+Casanya, 2 steps          RMS=0.0457646234 max=3.468675471 mejora_indices=86.520% id=c656 cortes=[8, 512]
+Casanya, 3 steps          RMS=0.0439885472 max=1.357550974 mejora_indices=86.762% id=c667 cortes=[8, 8, 512]
+Casanya, 4 steps          RMS=0.0442803254 max=1.566533356 mejora_indices=86.794% id=c713 cortes=[8, 8, 8, 512]
+Selected configuration    RMS=0.0439885472 max=1.357550974 mejora_indices=86.762% id=c667 cortes=[8, 8, 512]
+
+Configuracion seleccionada: c667 {'window': 'power_sharp', 'policy': 'dyadic', 'cutoffs': [8, 8, 512]}
+Reduccion RMS completo: 76.610085%
+Reduccion frente a 0.1880662998: 76.610085%
+Segundo paso emparejado: {'first_id': 'c084', 'second_id': 'c656', 'cutoffs': [8, 512], 'first_all_rms': 0.12566916430603325, 'second_all_rms': 0.04576462342503422, 'improves': True}
+
+tuning_full: {"id": "c667", "window": "power_sharp", "policy": "dyadic", "steps": "3", "cutoffs": "[8, 8, 512]", "region": "tuning_full", "k_first": "1", "k_last": "800420", "n": "800420", "rms": "0.04825358023897727", "mae": "0.03789472916756225", "median_abs": "0.03144055505981669", "max_abs": "1.357550974072531", "percent_improved": "86.46560555708254", "mean_signed": "1.5424868018051446e-06", "p90_abs": "0.07862033452038303", "p99_abs": "0.12953883659902196", "nonpositive_gaps": "432", "min_gap": "-0.22775217954767868"}
+selection_validation: {"id": "c667", "window": "power_sharp", "policy": "dyadic", "steps": "3", "cutoffs": "[8, 8, 512]", "region": "selection_validation", "k_first": "800421", "k_last": "1400736", "n": "600316", "rms": "0.04124036034364202", "mae": "0.03220959306032011", "median_abs": "0.026512897107750177", "max_abs": "0.3006832003593445", "percent_improved": "87.02450042977365", "mean_signed": "3.500395818831353e-07", "p90_abs": "0.06686017411993816", "p99_abs": "0.11416263095452436", "nonpositive_gaps": "256", "min_gap": "-0.20705772849032655"}
+untouched_test: {"id": "c667", "window": "power_sharp", "policy": "dyadic", "steps": "3", "cutoffs": "[8, 8, 512]", "region": "untouched_test", "k_first": "1400737", "k_last": "2001052", "n": "600316", "rms": "0.04055445491256421", "mae": "0.03139866579494911", "median_abs": "0.02554184675682336", "max_abs": "0.3134946038480848", "percent_improved": "86.8940691235949", "mean_signed": "1.5149480460945267e-07", "p90_abs": "0.06532123335637152", "p99_abs": "0.1155671186803372", "nonpositive_gaps": "274", "min_gap": "-0.25252443039789796"}
+all: {"id": "c667", "window": "power_sharp", "policy": "dyadic", "steps": "3", "cutoffs": "[8, 8, 512]", "region": "all", "k_first": "1", "k_last": "2001052", "n": "2001052", "rms": "0.04398854715231307", "mae": "0.03424036688864656", "median_abs": "0.028006831591483206", "max_abs": "1.357550974072531", "percent_improved": "86.76181328621145", "mean_signed": "7.674545202536257e-07", "p90_abs": "0.0714265201764647", "p99_abs": "0.12218235527776414", "nonpositive_gaps": "962", "min_gap": "-0.25252443039789796"}
+
+Registros: 2001052; bytes: 16008416; primer valor: 14.4803068948212612; ultimo: 1132490.6732535508926958
+Ruta final original: /Users/vcasana/Documents/·.· MATLAB/·.· bin_unicos/zCasanya.bin
+SHA256: 64d1de134e920c1eb89f61ba5d93c7f949b343bfa0d9ebf5da6fb647c2d790d9
+
+La v10 corta p<=X e incluye todos los exponentes. power_sharp corta p^m<=X. No se mezclan.
+El constructor no abre zeross.bin. La seleccion de parametros usa validacion; el test final se abre despues de fijarla.
+Se conserva la formula iterativa solicitada, sin amortiguacion, ordenacion, recorte, correcciones ajustadas ni evaluaciones de zeta.
+Los cruces se publican sin repararlos. La mejora medida no establece uniformidad asintotica de momentos ni multiplicidad en puntos iterados.

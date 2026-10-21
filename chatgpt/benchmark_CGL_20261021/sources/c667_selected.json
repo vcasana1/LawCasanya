@@ -1,0 +1,93 @@
+{
+  "id": "c667",
+  "window": "power_sharp",
+  "policy": "dyadic",
+  "cutoffs": [
+    8,
+    8,
+    512
+  ],
+  "file": "candidates/c667.bin",
+  "sha256": "64d1de134e920c1eb89f61ba5d93c7f949b343bfa0d9ebf5da6fb647c2d790d9",
+  "records": 2001052,
+  "diagnostics": [
+    {
+      "finite": true,
+      "domain_valid": true,
+      "max_abs_step": 2.0688918873166227,
+      "max_step_in_local_spacings": 0.714395808365768,
+      "large_step_count_2_spacings": 0,
+      "max_abs_displacement": 2.0688918873166227,
+      "cutoffs_actual": [
+        8.0
+      ],
+      "max_clock_residual": 6.984919309616089e-10,
+      "elapsed_seconds": 0.1827955830085557
+    },
+    {
+      "finite": true,
+      "domain_valid": true,
+      "max_abs_step": 5.1509455473983286,
+      "max_step_in_local_spacings": 0.6867801664783248,
+      "large_step_count_2_spacings": 0,
+      "max_abs_displacement": 3.082053660081707,
+      "cutoffs_actual": [
+        8.0
+      ],
+      "max_clock_residual": 6.984919309616089e-10,
+      "elapsed_seconds": 0.18342395799118094
+    },
+    {
+      "finite": true,
+      "domain_valid": true,
+      "max_abs_step": 3.1708838548460268,
+      "max_step_in_local_spacings": 0.8356924531734822,
+      "large_step_count_2_spacings": 0,
+      "max_abs_displacement": 1.7238502573729768,
+      "cutoffs_actual": [
+        8.0,
+        11.0,
+        16.0,
+        22.0,
+        32.0,
+        45.0,
+        64.0,
+        90.0,
+        128.0,
+        181.0,
+        256.0,
+        362.0,
+        512.0
+      ],
+      "max_clock_residual": 6.984919309616089e-10,
+      "elapsed_seconds": 1.9668180829903577
+    }
+  ],
+  "nonpositive_gaps": 962,
+  "minimum_gap": -0.25252443039789796,
+  "selection_validation_metrics": {
+    "id": "c667",
+    "window": "power_sharp",
+    "policy": "dyadic",
+    "steps": 3,
+    "cutoffs": "[8, 8, 512]",
+    "intrinsically_eligible": true,
+    "all_nonpositive_gaps": 962,
+    "n": 600316,
+    "rms": 0.04124036034364202,
+    "mae": 0.03220959306032011,
+    "median_abs": 0.026512897107750177,
+    "max_abs": 0.3006832003593445,
+    "percent_improved": 87.02450042977365,
+    "mean_signed": 3.500395818831353e-07,
+    "p90_abs": 0.06686017411993816,
+    "p99_abs": 0.11416263095452436,
+    "nonpositive_gaps": 256,
+    "min_gap": -0.20705772849032655
+  },
+  "selected_before_untouched_test": true,
+  "selection_time_unix": 1792279693.612917,
+  "constructor_sha256": "c41283b47453291932933cf1e4049bb2e54dfdcc0eab16c05a7984dce5c700e9",
+  "initial_constructor_sha256": "407d8f5c18630e0b7ec8ed41958d42cded244ad294fef546ff3bb13374aba90e",
+  "manifest_reconciliation_note": "All 58 precomputed finalists included; the original frozen configuration and binary SHA-256 are unchanged. Only manifest checkpoint persistence was repaired in the constructor."
+}

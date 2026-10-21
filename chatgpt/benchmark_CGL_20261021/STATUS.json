@@ -1,0 +1,18 @@
+{
+  "initial_delivery_complete": true,
+  "full_benchmark_complete": false,
+  "stages_completed": [
+    "inventory",
+    "formula_audit",
+    "python_pilot1000",
+    "full_frozen_baselines",
+    "high_precision_checks"
+  ],
+  "full_stage_gate_passed": false,
+  "blockers": [
+    "global_model_root_ordinal_enumeration_not_validated",
+    "LeClair_two_roots_k1_b8191",
+    "v17_low_index_k2_not_covered"
+  ],
+  "no_manuscripts_or_original_binaries_modified": true
+}

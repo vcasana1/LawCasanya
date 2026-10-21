@@ -1,0 +1,952 @@
+=== PDF PAGE 1 ===
+Riemann Hypothesis and Random Walks: the Zeta case
+Andr´ e LeClaira
+Cornell University, Physics Department, Ithaca, NY 14850
+Abstract
+In previous work it was shown that if certain series based on sums over primes of non-principal
+Dirichlet characters have a conjectured random walk behavior, then the Euler product formula for
+its L-function is valid to the right of the critical line ℜ(s)> 1/2, and the Riemann Hypothesis for
+this class of L-functions follows. Building on this work, here we propose how to extend this line
+of reasoning to the Riemann zeta function and other principal Dirichlet L-functions. We use our
+results to argue that Sδ(t)≡ limδ→0+
+1
+π argζ( 1
+2 +δ +it) = O(1), and that it is nearly always on
+the principal branch. We conjecture that a 1-point correlation function of the Riemann zeros has
+a normal distribution. This leads to the construction of a probabilistic model for the zeros. Based
+on these results we describe a new algorithm for computing very high Riemann zeros as a kind of
+stochastic process, and we calculate the 10 100-th zero to over 100 digits.
+a andre.leclair@gmail.com
+1
+arXiv:1601.00914v1  [math.NT]  5 Jan 2016
+=== PDF PAGE 2 ===
+I. INTRODUCTION
+There are many generalizations of Riemann’s zeta function to other Dirichlet series, which
+are also believed to satisfy a Riemann Hypothesis. A common opinion, based largely on
+counterexamples, is that the L-functions for which the Riemann Hypothesis is true enjoy
+both an Euler product formula and a functional equation. However a direct connection
+between these properties and the Riemann Hypothesis has not been formulated in a precise
+manner. In [1, 2] a concrete proposal making such a connection was presented for Dirichlet
+L-functions, and those based on cusp forms, due to the validity of the Euler product formula
+to the right of the critical line. In contrast to the non-principal case, in this approach the
+case of principal Dirichlet L-functions, of which Riemann zeta is the simplest, turned out
+to be more delicate, and consequently it was more diﬃcult to state precise results. In the
+present work we address further this special case.
+Letχ(n) be a Dirichlet character modulo k andL(s,χ ) its L-function with s =σ +it. It
+satisﬁes the Euler product formula
+L(s,χ ) =
+∞∑
+n=1
+χ(n)
+ns =
+∞∏
+n=1
+(
+1− χ(pn)
+ps
+n
+)−1
+(1)
+wherepn is then-th prime. The above formula is valid forℜ(s)> 1 since both sides converge
+absolutely. The important distinction between principal verses non-principal characters is
+the following. For non-principal characters the L-function has no pole at s = 1, thus there
+exists the possibility that the Euler product is valid partway inside the strip, i.e. has abscissa
+of convergence σc < 1. It was proposed in [1, 2] that σc = 1/2 for this case. In contrast,
+now consider L-functions based on principal characters. The latter character is deﬁned as
+χ(n) = 1 if n is coprime to k and zero otherwise. The Riemann zeta function is the trivial
+principal character of modulus k = 1 with all χ(n) = 1. L-functions based on principal
+characters do have a pole ats = 1, and therefore have abscissa of convergenceσc = 1, which
+implies the Euler product in the form given above cannot be valid inside the critical strip
+0 < σ <1. Nevertheless, in this paper we will show how a truncated version of the Euler
+product formula is valid for σ >1/2.
+The primary aim of the work [1, 2] was to determine what speciﬁc properties of the
+prime numbers would imply that the Riemann Hypothesis is true. This is the opposite
+of the more well-studied question of what the validity of the Riemann Hypothesis implies
+2
+=== PDF PAGE 3 ===
+for the ﬂuctuations in the distribution of primes. The answer proposed was simply based
+on the multiplicative independence of the primes, which to a large extent underlies their
+pseudo-random behavior. To be more speciﬁc, let χ(n) = eiθn. In [1, 2] it was proven that
+if the series
+BN(t,χ ) =
+N∑
+n=1
+cos (t logpn +θpn) (2)
+is O(
+√
+N), then the Euler product converges for σ > 1/2 and the formula (1) is valid to
+the right of the critical line. For non-principal characters the allowed angles θn are equally
+spaced on the unit circle, and it was conjectured in [2] that the above series with t = 0
+behaves like a random walk due to the multiplicative independence of the primes, and this
+is the origin of the O(
+√
+N) growth. Furthermore, this result extends to all t since domains
+of convergence of Dirichlet series are always half-planes. Taking the logarithm of (1), one
+sees that log L is never inﬁnite to the right of the critical line and thus has no zeros there.
+This, combined with the functional equation that relates L(s) to L(1−s), implies there
+are also no zeros to the left of the critical line, so that all zeros are on the line. The same
+reasoning applies to cusp forms if one also uses a non-trivial result of Deligne [2].
+In this article we reconsider the principal Dirichlet case, specializing to Riemann zeta
+itself since identical arguments apply to all other principal cases with k >1. Here all angles
+θn = 0, so one needs to consider the series
+BN(t) =
+N∑
+n=1
+cos(t logpn) (3)
+which now strongly depends ont. On the one hand, whereas the case of principal DirichletL-
+functions is complicated by the existence of the pole, and, as we will see, one consequently
+needs to truncate the Euler product to make sense of it, on the other hand BN can be
+estimated using the prime number theorem since it does not involve sums over non-trivial
+charactersχ, and this aids the analysis. This is in contrast to the non-principal case, where,
+however well-motivated, we had to conjecture the random walk behavior alluded to above,
+so in this respect the principal case is potentially simpler. To this end, a theorem of Kac
+(Theorem 1 below) nearly does the job: BN(t) =O(
+√
+N) in the limit t and N→∞ , which
+is also a consequence of the multiplicative independence of the primes. This suggests that
+one can also make sense of the Euler product formula in the limit t→∞ . However this is
+not enough for our main purpose, which is to have a similar result for ﬁnite t which we will
+3
+=== PDF PAGE 4 ===
+develop.
+This article is mainly based on our previous work [1, 2] but provides a more detailed
+analysis and extends it in several ways. It was suggested in [1] that one should truncate
+the series at an N that depends on t. In the next section we explain how a simple group
+structure underlies a ﬁnite Euler product which relates it to a generalized Dirichlet series
+which is a subseries of the Riemann zeta function. Subsequently we estimate the error under
+truncation, which shows explicitly how this error is related to the pole ats = 1, as expected.
+The remainder of the paper presents various applications of these ideas. We use these results
+to study the argument of the zeta function and calculate very high zeros. We also conjecture
+that the statistical ﬂuctuations of individual zeros have a normal distribution.
+In some aspects, our work is related to the work of Gonek et. al. [4, 5], which also
+considers a truncated Euler product. The important diﬀerence is that the starting point in
+[4] is a hybrid version of the Euler product which involves both primes and zeros of zeta.
+Only after assuming the Riemann Hypothesis can one explain in that approach why the
+truncated product over primes is a good approximation to zeta. In contrast, here we do not
+assume anything about the zeros of zeta.
+II. ALGEBRAIC STRUCTURE OF FINITE EULER PRODUCTS
+The aim of this section is to deﬁne properly the objects we will be dealing with. In par-
+ticular we will place ﬁnite Euler products on the same footing as other generalized Dirichlet
+series. The results are straightforward and are mainly deﬁnitions.
+Deﬁnition 1. Fix a positive integerN and let{p1,p 2,...p N} denote the ﬁrstN primes where
+p1 = 2. From this set one can generate an abelian group QN of rank N with elements
+QN =
+{
+pn1
+1 pn2
+2 ··· pnN
+N , ni∈ Z∀i
+}
+(4)
+where the group operation is ordinary multiplication. Clearly QN⊂ Q+ where Q+ are the
+positive rational numbers. There are an inﬁnite number of integers in QN which form a
+subset of the natural numbers N ={1, 2,... }. We will denote this set as NN ⊂ N, and
+elements of this set simply as n.
+4
+=== PDF PAGE 5 ===
+Deﬁnition 2. Fix a positive integer N. For every integer n∈ N we can deﬁne the character
+c(n):
+c(n) = 1 if n∈ NN⊂ QN
+= 0 otherwise (5)
+Clearly, for a prime p, c(p) = 0 if p>p N.
+Deﬁnition 3. Fix a positive integer N and let s be a complex number. Based on QN we can
+deﬁne the inﬁnite series
+ζN(s) =
+∞∑
+n=1
+c(n)
+ns =
+∑
+n∈NN
+1
+ns (6)
+which is a generalized Dirichlet series. There are an inﬁnite number of terms in the above
+series since NN is inﬁnite dimensional.
+Example 1. For instance
+ζ2(s) = 1 + 1
+2s + 1
+3s + 1
+4s + 1
+6s + 1
+8s + 1
+9s + 1
+12s +...
+Because of the group structure of QN, ζN satisﬁes a ﬁnite Euler product formula:
+Proposition 1. Letσc be the abscissa of convergence of the series ζN(s) wheres =σ +it,
+namely ζN(s) converges forℜ(s) > σc. Then in this region of convergence, ζN satisﬁes a
+ﬁnite Euler product formula:
+ζN(s) =
+N∏
+n=1
+(
+1− 1
+ps
+n
+)−1
+(7)
+Proof. Based on the completely multiplicative property of the characters,
+c(nm) =c(n)c(m) (8)
+one has
+ζN(s) =
+∞∏
+n=1
+(
+1− c(pn)
+ps
+n
+)−1
+The result follows then from the fact that c(pn) = 0 if n>N .
+5
+=== PDF PAGE 6 ===
+Example 2. Let N = 1, so that {n} ={1, 2, 22, 23...}. Then the above Euler product
+formula (7) is simply the standard formula for the sum of a geometric series:
+ζ1(s) =
+∞∑
+n=0
+1
+2ns = 1
+1− 2−s (9)
+Here the abscissa of convergence is σc = 0.
+The series ζN(s) deﬁned in (6) has some interesting properties:
+(i) For ﬁnite N the product is ﬁnite for s̸= 0, thus the inﬁnite series ζN(s) converges for
+ℜ(s)> 0 for any ﬁnite N.
+(ii) Since the logarithm of the product is ﬁnite, for ﬁnite N, ζN(s) has no zeros nor poles
+forℜ(s)> 0. Thus the Riemann zeros and the pole at s = 1 arise from the primes at inﬁnity
+p∞, i.e. in the limit N →∞ . In this limit all integers are included in the sum (6) that
+deﬁnes ζN since N∞ = N. This is in accordance to the fact that the pole is a consequence
+of there being an inﬁnite number of primes.
+The property (ii) implies that, in some sense, the Riemann zeros condense out of the
+primes at inﬁnity p∞. Formally one has
+lim
+N→∞
+ζN(s) =ζ(s) (10)
+However since N is going to inﬁnity, the above is true only where the series formally con-
+verges, which, as discussed in the Introduction, is ℜ(s) > 1. Nevertheless, for very large
+but ﬁnite N, the function ζN can still be a good approximation to ζ(s) inside the critical
+strip since for N ﬁnite there is convergence of ζN(s) forℜ(s)> 0. This is the subject of the
+next section, where we show that a ﬁnite Euler product formula is valid for ℜ(s) > 1/2 in
+a manner that we will specify.
+III. FINITE EULER PRODUCT FORMULA A T LARGE N TO THE RIGHT OF
+THE CRITICAL LIINE.
+In this section we propose that the Euler product formula can be a very good approxi-
+mation to ζ(s) forℜ(s) > 1/2 and large t if N is chosen to depend on t in a speciﬁc way
+which was already proposed in [1, 2]. The new result presented here is an estimate of the
+error due to the truncation.
+6
+=== PDF PAGE 7 ===
+The random walk property we will build upon is based on a central limit theorem of Kac,
+which largely follows from the multiplicative independence of the primes:
+Theorem 1. (Kac) Let u be a random variable uniformly distributed on the interval u∈
+[T, 2T ], and deﬁne the series
+BN(u) =
+N∑
+n=1
+cos(u logpn) (11)
+Then in the limit N→∞ andT→∞ ,BN/
+√
+N approaches the normal distributionN (0, 1),
+namely
+lim
+N→∞
+lim
+T→∞
+P
+{
+x1√
+2 < BN(u)√
+N
+< x2√
+2
+}
+= 1√
+2π
+∫ x2
+x1
+e−x2/2dx (12)
+whereP denotes the probability for the set.
+We wish to use the above theorem to conclude something about BN(t) for a ﬁxed, non-
+random t. Based on Theorem 1, we ﬁrst conclude the following for non-random, but large
+t:
+Corollary 1.
+lim
+N→∞
+lim
+t→∞
+BN(t) =O(
+√
+N) (13)
+Proof. This is straightforward: as T →∞ , even though u is random, all u in the range
+[T, 2T ] are tending to∞.
+A consequence of the above Theorem 1 and the Corollary 13 is that the Euler product
+formula is valid to the right of the critical line in the limit of large t:
+Theorem 2. Forσ >1/2,
+lim
+t→∞
+ζ(σ +it) = lim
+N→∞
+lim
+t→∞
+N∏
+n=1
+(
+1− 1
+pσ+it
+n
+)−1
+(14)
+Proof. The proof is essentially the same as in [1, 2], so we just sketch the main steps involved.
+Taking the logarithm of the above equation, one concludes that the Euler product converges
+withσ >1/2 if the seriesXN(s) = ∑N
+n=1 1/ps
+n converges asN→∞ . It is enough to consider
+SN =ℜ(XN):
+SN(s) =
+N∑
+n=1
+anbn, a n = 1
+pσ
+n
+, b n = cos(t logpn) (15)
+7
+=== PDF PAGE 8 ===
+The latter can be reorganized using integration by parts:
+SN =aNBN +
+N−1∑
+n=1
+Bn(an−an+1), B n≡
+n∑
+k=1
+cos(t logpn) (16)
+The sum above is bounded
+|SN|≤ σ
+N−1∑
+n=1
+|Bn| gn
+pσ+1
+n
++O(1) (17)
+wheregn =pn+1−pn is the gap between primes. One then performs another summation by
+parts using a summed version of the Cram´ er-Granville conjecture
+N∑
+n=1
+gn <
+N∑
+n=1
+log2pn (18)
+Now if limt→∞BN(t) =O(
+√
+N) for large N, as far as convergence is concerned, the sum in
+(17) behaves as ∑
+n log2n/nσ+1/2 which converges for σ >1/2.
+It is desirable to have a version of Theorem 2 where N and t are taken to inﬁnity si-
+multaneously. Namely, we wish to truncate the product at an N(t) that depends on t with
+the property that limt→∞N(t) =∞. One can then replace the double limit on the RHS of
+(14) with one limit t→∞ , or equivalently N(t)→∞ . There is no unique choice for N(t),
+but there is an optimal upper limit, N(t)< Nmax(t), which we now describe. We need the
+following [1, 2]:
+Proposition 2.
+BN(t) =O(
+√
+N), for N <Nmax(t)≡ [t2] (19)
+where [t2] denotes its integer part.
+Proof. Using the prime number theorem,
+BN(t)≈
+∫ pN
+2
+dx
+logx cos(t logx) =ℜ (Ei ((1 +it) logpN)) (20)
+≈ pN
+logpN
+( t
+1 +t2
+)
+sin (t logpN)
+where Ei is the usual exponential-integral function, and we have used
+Ei(z) = ez
+z
+(
+1 +O
+(1
+z
+))
+(21)
+The prime number theorem impliespN≈N logN. Using this in (20) and imposing BN(t)<
+√
+N proves the proposition.
+8
+=== PDF PAGE 9 ===
+Based on the above proposition, henceforth we will always assume the following properties
+of N(t):
+N(t)∼Nmax(t)≡ [t2] with lim
+t→∞
+N(t) =∞ (22)
+Repeating the arguments in the proof of Theorem 2, we now have the following:
+Proposition 3. LetN(t) satisfy (22). Then
+lim
+t→∞
+ζ(s) = lim
+t→∞
+N (t)∏
+n=1
+(
+1− 1
+ps
+n
+)−1
+, forℜ(s)> 1/2 (23)
+Extensive and compelling numerical evidence supporting the above formula was already
+presented in [1].
+Based on the above results we are now in a position to study the following important
+question. If we ﬁx a ﬁnite but large t, and truncate the Euler product at N(t), which is
+ﬁnite, what is the error in the approximation to ζ to the right of the critical line? We
+estimate this error as follows:
+Theorem 3. LetN(t) satisfy (22). Then for ℜ(s)> 1/2 and large t,
+ζ(s) =
+N (t)∏
+n=1
+(
+1− 1
+ps
+n
+)−1
+exp
+(
+RN (t)(s)
+)
+(24)
+where
+RN(s) = 1
+(s− 1)O
+(N 1−s
+logsN
+)
+(25)
+is ﬁnite (except at the pole s = 1) and satisﬁes
+lim
+t→∞
+RN (t)(s) = 0 (26)
+Proof. From (23), one concludes that (24) must hold in the limit of larget withRN satisfying
+(26). The logarithm of (24) reads
+logζ(s) =−
+N∑
+n=1
+log
+(
+1− 1
+ps
+n
+)
++RN(s) (27)
+In the limit of large t, the error upon truncation is the part that is neglected in (23):
+RN(s) =−
+∞∑
+n=N +1
+log
+(
+1− 1
+ps
+n
+)
+(28)
+9
+=== PDF PAGE 10 ===
+0 200 400 600 800 1000
+t
+0.02
+0.04
+0.06
+0.08
+0.10
+R
+FIG. 1. The error term |RN(s)| with N(t) = Nmax(t) = [t2] for ℜ(s) = 3/4 inside the critical
+strip as a function of t. The ﬂuctuating (blue) curve is |RN| computed directly from the deﬁnition
+(27) with ζ(s) the usual analytic continuation into the strip. The smooth (yellow) curve is the
+approximationRN(s) = 1
+(s− 1)
+N 1−s
+logsN based on (25).
+Expanding out the logarithm, one has
+RN(s)≈
+∞∑
+n=N
+1
+ps
+n
+≈
+∫ ∞
+pN
+dx
+logx
+1
+xs≈ 1
+(s− 1)
+p1−s
+N
+logpN
+(29)
+Next using pN ≈ N logN, one obtains (25). In the above integral, the reason the upper
+limit of integration x =∞ gives zero is that the lower limit behaves as N(t)1−s/t<N 1/2−s
+which goes to zero as N→∞ ifℜ(s)> 1/2. The latter also implies (26).
+Theorem 3 makes it clear that the need for a cut-oﬀ N <Nmax originates from the pole
+ats = 1, since as long as s̸= 1, the error RN(s) in (25) is ﬁnite. The error becomes smaller
+and smaller the further one is from the pole, i.e. as t→∞ . In Figure 1 we numerically
+illustrate Theorem 3 inside the critical strip.
+Remark 1. For estimating errors at large t the following formula is useful:
+|RN (t)(s)|∼ N(t)1−σ
+t ∼ 1
+t2σ−1 (30)
+Theorem 4. Assuming Theorem 3, all non-trivial zeros of ζ(s) are on the critical line.
+Proof. Taking the logarithm of the truncated Euler product, one obtains (27). If there
+were a zero ρ withℜ(ρ)> 1/2, then logζ(ρ) =−∞. However the right hand side of (27) is
+10
+=== PDF PAGE 11 ===
+always ﬁnite, thus there are no zeros to the right of the critical line. The functional equation
+relating ζ(s) to ζ(1−s) shows there are also no zeros to the left of the critical line.
+Remark 2. Interestingly Theorems 3 and 4 imply that proving the validity of the Riemann
+Hypothesis is under better control the higher one moves up the critical line. For instance, it
+is known that all zeros are on the line up to t∼ 1013, and beyond this, the error RN is too
+small to spoil the validity of the Riemann Hypothesis. Henceforth, we assume Theorem 4.
+IV. IMPLICA TIONS FOR THE ARGUMENT OF THE ζ-FUNCTION
+The function S(T ) is conventionally deﬁned as
+S(T ) = 1
+π argζ
+(1
+2 +iT
+)
+(31)
+for T not the ordinate of a zero. The argument is usually deﬁned by piecewise integration
+from s = 2 to s = 2 +it, then to 1
+2 +it. The importance of S(T ) is its role in the function
+N (T ) which counts the number of zeros inside the critical strip with ordinate 0 < t < T.
+There is an exact formula due to Backlund: N (T ) = 1
+πϑ(T ) + 1 +S(T ), where ϑ(T ) is the
+Riemann-Siegel ϑ-function. Consequently, there is a large literature concerning S(T ); see
+for instance [7]. S(t) also plays an important role in the transcendental equations satisﬁed
+by individual zeros obtained in [6]. The main properties of S(T ) that are well-known are:
+(i) At each zero ofζ it jumps by the multiplicity of the zero; (ii) Between zerosdS(t)/dt< 0
+since dN (t)/dt = 0 there and ϑ(t) is monotonically increasing; (iii) The average of S(t) is
+zero.
+The current best bound on S(t) was proven by Goldston and Gonek [8] |S(t)| ≤
+(1
+2 +o(1)
+)
+logt/ log logt in the limit t→ ∞. It should be kept in mind that this is an
+upper bound so that |S(t)| may actually be much smaller, as numerical evidence would
+suggest. Below, based on the results of the last section, we will propose that S(t) is actually
+O(1), and in fact is nearly always on the principal branch.
+In the work [6], Sδ(t) was deﬁned as follows:
+Sδ(t) = lim
+δ→0+
+1
+π argζ
+(1
+2 +δ +it
+)
+(32)
+The above Sδ(t) is actually also well-deﬁned for t equal to the ordinate of a zero. It should
+be kept in mind that this deﬁnition is not necessarily equivalent to other deﬁnitions in the
+11
+=== PDF PAGE 12 ===
+1002 1004 1006 1008 1010
+t
+-1.0
+-0.5
+0.5
+S(t)
+FIG. 2. The exact S(t) (blue line) verses S(t) calculated from the Euler product formula (33)
+(yellow line). Here we took δ = 0.01 and N = 105<N max(t).
+literature. However, if the Riemann Hypothesis is true, they are expected to be the same
+away from the ordinate of a zero since no singularities are encountered in the ﬁnal integration
+to the critical line. Henceforth, S(t) refers to Sδ(t) as deﬁned above. Based on Theorem 3,
+we have
+Sδ(t) = 1
+πℑ logζ
+(1
+2 +δ +it
+)
+=− 1
+π
+N (t)∑
+n=1
+log
+(
+1− 1
+p1/2+δ+it
+n
+)
++ 1
+πℑRN( 1
+2 +it) (33)
+Recall that as t→∞ , RN actually goes to zero. One can check numerically that the above
+formula works rather well with RN disregarded; see Figure 2. From this ﬁgure one clearly
+sees that the above formula knows about all the Riemann zeros, where it jumps by one at
+each.
+It is clear that based on (33), S(t) = O(1) because it is ﬁnite. We can state something
+more precise as follows:
+Proposition 4. Under the assumption of Theorem 3, which implies the Euler product for-
+mula (33) for S(t), then S(t) is well-deﬁned for all t and limt→∞S(t) =O(1).
+Proof. Let us ﬁx N =N(t) satisfying (22). Expanding the logarithm, one has
+S(t) = lim
+δ→0+
+1
+πℑ
+N∑
+n=1
+1
+p1/2+δ+it
+n
++O(1) (34)
+We neglected the RN error since it is also O(1) by (30). As for other functions deﬁned
+by sums over primes, such as the prime number counting function π(x), there is a leading
+12
+=== PDF PAGE 13 ===
+smooth part which is determined by the prime number theorem, and a subleading ﬂuctuating
+part that depends on the exact locations of the primes. We can therefore write
+S(t) =Spnt(t) +δS(t) (35)
+whereSpnt(t) is the smooth part coming from the prime number theorem, and δS(t) are the
+ﬂuctuating corrections. Consider ﬁrst the smooth part:
+Spnt(t) = 1
+πℑ
+∫ pN
+2
+dx
+logx
+e−it logx
+√x (36)
+= 1
+πℑ
+(
+Ei
+[
+( 1
+2−it) logpN
+]
+− Ei
+[
+( 1
+2−it) log 2
+])
+Fory >0:
+ℑ(Ei(−iy)) =−π + cosy
+y +O
+( 1
+y2
+)
+(37)
+Thus limy→∞ℑ (Ei(−iy)) =−π. Now, as t→∞ , in (36) one can replace 1
+2−it with−it,
+and the two terms cancel:
+lim
+t→∞
+Spnt(t) = 0 (38)
+Let us now turn to the ﬂuctuating term δS(t) which actually knows about the locations
+of the zeros since at each zero it jumps by its multiplicity. Since the leading contribution
+Spnt goes to zero, δS(t) has no growth and consists only of these jumps, all occurring around
+S = 0. Thus S(t) =O(1).
+If one assumes all zeros of ζ are simple then one can further argue that S(t) is nearly
+always on the principal branch:
+− 1 ≲S(t) ≲ 1 (39)
+If all zeros are simple, then S(t) jumps by only 1 at each zero. Thus the largest value of
+|δS(t)| is approximately 1 corresponding to a jump beginning at t≈ 0. In other words, S(t)
+is never very far from zero so that most of the jumps pass through S = 0 as seen in Figure
+2.
+Figure 2 provides numerical evidence for Proposition 4. Simply stated, the above Propo-
+sition shows that there is no change in behavior of S(t) as t increases to inﬁnity, such that
+the pattern in Figure 2 persists. We checked its validity all the way up to t = 10 12. Only
+rarely is|S(t)| slightly above 1. Over this whole range we found |S(t)|< 1.2.
+13
+=== PDF PAGE 14 ===
+V. 1-POINT CORRELA TION FUNCTION OF THE RIEMANN ZEROS
+Montgomery conjectured that the pair correlation function of ordinates of the Riemann
+zeros on the critical line satisfy GUE statistics [9]. Being a 2-point correlation function, it is
+a reasonably complicated statistic. In this section we propose a simpler 1-point correlation
+function that captures the statistical ﬂuctuations of individual zeros.
+Lettn be the exact ordinate of the n-th zero on the critical line, with t1 = 14.1347... and
+so forth. The single equation ζ(ρ) = 0 has an inﬁnite number of solutions ρ = 1
+2 +itn. In
+[6], by placing the zeros in one-to-one correspondence with the zeros of the cosine function,
+the single equation ζ(ρ) = 0 was replaced by an inﬁnite number of equations, one for each
+tn that depends only on n:
+ϑ(tn) + lim
+δ→0+
+argζ( 1
+2 +δ +itn) = (n− 3
+2)π (40)
+where ϑ is the Riemann-Siegel function:
+ϑ(t) =ℑ log Γ(1
+4 + it
+2 )−t log√π (41)
+This equation was used to calculate zeros very accurately in [6], up to thousands of digits.
+There is no need for a cut-oﬀNmax in the above equation since the argζ term can in principle
+be calculated for arbitrarily hight without the Euler product formula using standard analytic
+continuation. One aspect of this equation is the following theorem:
+Theorem 5. (Fran¸ ca-LeClair [6]) If there is a unique solution to the equation (40) for
+every n, then the Riemann Hypothesis is true, and furthermore, all zeros are simple.
+If the arg ζ term is ignored, then there is indeed a unique solution for all n since ϑ(t) is
+a monotonically increasing function of t. Using its asymptotic expansion for large t, (48)
+below, then the solution is approximately
+˜tn = 2π(n− 11
+8 )
+W
+(
+(n− 11
+8 )/e
+) (42)
+where W is the Lambert W -function. The only way there would fail be a solution is if S(t)
+is not well deﬁned for all t. However this appears to be ruled out by the analysis of the last
+section, in particular Proposition 4.
+14
+=== PDF PAGE 15 ===
+5 10 15 20 25 30
+n
+20
+40
+60
+80
+100
+tn
+FIG. 3. The ﬁrst 30 Riemann zeros. The smooth curve is the approximation ˜tn in (42), whereas
+the dots are the actual zeros tn.
+The ﬂuctuations in the zeros obviously come from S(t) since ˜tn is a smooth function of
+n. These small ﬂuctuations are shown in Figure 3. Let us deﬁne
+δtn =tn− ˜tn (43)
+One needs to properly normalize δtn, taking into account that the spacing between zeros
+decreases as 1/ logn. To this end we expand the equation (40) around ˜tn. Using ϑ(˜tn)≈
+(n− 3
+2)π, one obtains δtn≈ πS(tn)/ϑ′(˜tn) where ϑ′(t) is the derivative with respect to t.
+Using ϑ′(t)≈ 1
+2 log(t/2πe), this leads us to deﬁne
+δn≡ δtn
+2π log
+(
+˜tn
+2πe
+)
+≈S(tn) (44)
+One can then study the probability distribution of the set
+∆M≡
+{
+δ1,δ 2,...,δ M
+}
+(45)
+for large M. The equation (44) together with (33) makes it clear that the origin of the
+statistical ﬂuctuations of ∆M is the ﬂuctuations in the primes.
+Let us make the hypothesis that ∆ M satisﬁes a normal distributionN (µ,σ 1). Using the
+properties of S(tn) described in the last section, together with the equation (44), we can
+propose the following. First, one expects that the average of δn is zero since it is known
+that the average of S(t) is zero, thus µ = 0. Secondly, if S(t) is nearly always on the
+principal branch, as argued in the last section, then at each jump by 1 at tn, on average
+S(tn) passes through zero. This implies that the average |S(tn)| ≈1/4. For a normal
+15
+=== PDF PAGE 16 ===
+-1.0 -0.5 0.0 0.5 1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+FIG. 4. The probability distribution for the set ∆ M deﬁned in (45) for M = 10 6. The smooth
+curve is the normal distribution N (0,σ 1) with σ1 =
+√
+π/32.
+distribution|S(tn)| =
+√
+2
+πσ1. Thus one expects the standard deviation σ1 of ∆M to be
+σ1≈
+√
+π/32 = 0.313... In Figure 4 we present results for the ﬁrst 10 6-th known zeros. The
+distribution function ﬁts a normal distribution with σ1 =
+√
+π/32 very well. Performing a
+ﬁt, one ﬁnds σ1≈ 0.2966. This leads us to conjecture:
+Conjecture 1. In the limit of large M the set ∆M has a normal distribution N (0,σ 1) with
+σ1≈
+√
+π/32.
+Based on Conjecture 1 we can construct a probabilistic model of the Riemann zeros:
+Deﬁnition 4. A probabilistic model of the Riemann zeros. Let r be a random
+variable with normal distribution N (0,σ 1). Then a probabilistic model of the zeros tn can
+be deﬁned as the set {ˆtn}, where
+ˆtn≡ ˜tn + 2π r
+log(˜tn/2πe) (46)
+and ˜tn is deﬁned in (42).
+Such a model could have a variety of applications, similarly to Cram´ er’s probabilistic
+model of the primes. For instance, one could use it to deﬁne a randomized zeta function
+from a Hadamard product ˆζ(s) = ∏
+ˆρn(s− ˆρn) where ˆρn = 1
+2±iˆtn. Furthermore, if we assume
+an Euler product for this randomized ζ, this would deﬁne a random model of the primes.
+We do not pursue this further here, but rather we investigate the following question.
+16
+=== PDF PAGE 17 ===
+0.5 1.0 1.5 2.0 2.5 3.0
+0.01
+0.02
+0.03
+0.04
+0.05
+FIG. 5. The pair correction function of {ˆtn} deﬁned in (46) for n up to 10 5 where the standard
+deviation of r was taken to be σ1 = 0.274. The solid curve is the GUE prediction. The parameters
+in (47) are β =α + 0.05 with α = (0, 0.05, 0.10,..., 3) and the x-axis is given by x = (α +β)/2.
+The statistical model (46) is rather simplistic since it is just based on a normal distribution
+for r and ˜tn is smooth and completely deterministic. A natural question then arises. Does
+the pair correlation function of {ˆtn} satisfy GUE statistics as does the actual zeros {tn}?
+We expect the answer is no, since the only correlation between pairs of ˆtn’s is the smooth,
+predictable part ˜tn. Nevertheless, it is interesting to study the 2-point correlation function of
+{ˆtn}. Montgomery’s pair correlation conjecture can be stated as follows. Let N (T ) denote
+the number of zeros up to height T , whereN (T )∼ T
+2π log
+(T
+2πe
+)
+. Let t,t′ denote zeros in the
+range [0,T ]. Then in the limit of large T :
+1
+N (T )
+∑
+α<d(t,t′)<β
+1∼
+∫ β
+α
+du
+(
+1− sin2(πu)
+π2u2
+)
+(47)
+where d(t,t′) is a normalized distance between zeros d(t,t′) = 1
+2π log
+(T
+2πe
+)
+(t−t′).
+In Figure 5 we plot the pair correction function for the ﬁrst 10 5-th ˆtn’s. We chose
+σ1 = 0.274 since in this range of n this gives a better ﬁt to the normal distribution of the
+1-point function. The results are surprisingly close to the GUE prediction (47), especially
+considering that for just the ﬁrst 10 5 true zeros the ﬁt to the GUE prediction is not perfect;
+for much higher zeros it is signiﬁcantly better [10].
+VI. COMPUTING VER Y HIGH ZEROS FROM THE PRIMES
+This section can be viewed as providing numerical evidence for some of the previous
+results. Since we will be calculating S(t) from the primes using (33), which requiresℜ(s)→
+17
+=== PDF PAGE 18 ===
+1/2, this is pushing the limit of the validity of the Euler product formula, nevertheless we
+will obtain reasonable results.
+Many very high zeros of ζ have been computed numerically, beginning with the work of
+Odlyzko. All zeros up to the 10 13-th have been computed and are all on the critical line
+[11]. Beyond this the computation of zeros remains a challenging open problem. However
+some zeros around the 10 21-st and 1022-nd are known [12]. In this section we describe a new
+and simple algorithm for computing very high zeros based on the results of Section IV. It
+will allow us to go much higher than the known zeros since it does not require numerical
+implementation of the ζ function itself, but rather only requires knowledge of some of the
+lower primes.
+Let us ﬁrst discuss the numerical challenges involved in computing high zeros from the
+equation (40) based on the standard Mathematica package. The main diﬃculty is that one
+needs to implement the arg ζ term. Mathematica computes Arg ζ, i.e. on the principal
+branch, however near a zero this is likely to be valid due to (39). The main problem is that
+Mathematica can only compute ζ for t below some maximum value around t = 1010. This
+was suﬃcient to calculate up to the n = 109-th zero from (40) in [6]. The log Γ term must
+also be implemented to very high t, which is also limited in Mathematica.
+We deal with these diﬃculties ﬁrst by computing arg ζ from the formula (33) involving a
+ﬁnite sum over primes. Then, the log Γ term can be accurately computed using corrections
+to Stirling’s formula:
+ϑ(t) = t
+2 log
+( t
+2πe
+)
+− π
+8 + 1
+48t +O(1/t3) (48)
+Let tn;N denote the ordinate of the n-th zero computed using the ﬁrst N primes. For high
+zeros, it is approximately the solution to the following equation
+tn;N
+2 log
+(tn;N
+2πe
+)
+− π
+8 + 1
+48tn;N
+− lim
+δ→0+
+ℑ
+N∑
+k=1
+log
+(
+1− 1
+p
+1/2+δ+itn;N
+k
+)
+= (n− 3
+2)π (49)
+The important property of this equation is that it not longer makes any reference to ζ itself.
+It is straightforward to solve the above equation with standard root-ﬁnder software.
+One can view the computation of tn as a kind of stochastic process. If one includes no
+primes, i.e. N = 0, and drops the next to leading 1/t corrections, then the solution is unique
+and explicitly given by tn;0 = ˜tn in (42). One then goes from tn;0 to tn;1 by ﬁnding the root
+to the equation for tn;1 in the vicinity of tn;0, then similarly tn;2 is calculated based on tn;1
+18
+=== PDF PAGE 19 ===
+n tn;N Odlyzko
+1021− 1 144176897509546973538.205 ∼.225
+1021 144176897509546973538.301 ∼.291
+1021 + 1 144176897509546973538.505 ∼.498
+1022− 1 1370919909931995308226.498 ∼.490
+1022 1370919909931995308226.614 ∼.627
+1022 + 1 1370919909931995308226.692 ∼.680
+TABLE I. Zeros around the n = 10 21-ﬁrst and 10 22-nd computed from (49) with N = 5× 106
+primes. We ﬁxed δ = 10−6. Above,∼ denotes the integer part of the second column.
+and so forth. At each step in the process one includes one additional prime, and this slowly
+approachestn, so long as N(t)<N max(t).
+For very hight,Nmax(t) = [t2] is extremely large and it is not possible in practice to work
+with such a large number of primes. This is the primary limitation to the accuracy we can
+obtain. We will limit ourselves toN = 5×106 primes. Let us very roughly estimate the error
+in computing a zero at a given N < Nmax. Since according to Proposition 4, S(t) = O(1),
+the integer part of tn;0 is expected to be correct, and we verify this below. Now, in each
+step tn;N−1→ tn;N one includes an additional term in (49) that is approximately 1 /√pN
+and this can be used to roughly estimate the error. For example, if we work with only
+the ﬁrst N = 106 primes, we expect to get the ﬁrst 2 to 3 digits beyond the decimal point
+correct. Let us verify this by comparing with some known zeros around n = 1021 and 1022.
+The results are shown in Table I. As predicted, we have accuracy to about 2 digits beyond
+the decimal point. Odlyzko was able to calculate a few more digits; our accuracy can be
+improved by increasing N of course.
+Having made this check, let us now go far beyond this and compute then = 10100-th zero
+by the same method. At higher tn one does not need to include more primes if one is still
+only interested in 2 digits beyond the decimal point. Using N = 5× 106 primes, we found
+the following tn:
+10100th zero :
+280690383842894069903195445838256400084548030162846
+045192360059224930922349073043060335653109252473.244....
+19
+=== PDF PAGE 20 ===
+We are conﬁdent that the last 3 digits∼.244 are accurate since we checked that they didn’t
+change beyondN = 106. We calculated the next zero to be ∼.273. By the same procedure,
+we were easily able to calculate the 10 1000-th zero to the same accuracy.
+ACKNOWLEDGMENTS
+We wish to thank Guilherme Fran¸ ca for discussions.
+[1] G. Fran¸ ca and A. LeClair, “On the validity of the Euler product inside the critical strip”,
+arXiv:1410.3520 [math.NT].
+[2] G. Fran¸ ca and A. LeClair, “Some Riemann Hypotheses from Random Walks over Primes”,
+arXiv:1509.03643 [math.NT].
+[3] M. Kac, Statistical Independence in Probability, Analysis and Number Theory , The Mathe-
+matical Association of America, New Jersey, 1959.
+[4] S. M. Gonek, C. P. Hughes, and J. P. Keating, Duke Math. J 136 (2007) 507.
+[5] S. M. Gonek, Trans. Amer. Math. Soc. 364 (2011) 2157.
+[6] G. Fran¸ ca and A. LeClair, Commun. Number Theory and Phys. 9 (2015) 1-50.
+[7] A. A. Karatsuba and M. A. Korolev, Russian Math. Surveys 60 (2005) 433.
+[8] D. A. Goldston and S. M. Gonek, Bull. London Math. Soc. 39 (2007) 482.
+[9] H. Montgomery, in Analytic number theory, Proc. Sympos. Pure Math. XXIV (Providence,
+RI: AMS, 1973).
+[10] A. M. Odlyzko, Math. Comp. 48. 273 (1987).
+[11] X. Gourdon, “The 10 13 First Zeros of the Riemann Zeta Func-
+tion, and Zeros Computation at Very Large Height,” 2004,
+http://numbers.computation.free.fr/Constants/Miscellaneous/zetazeros1e13-1e24.pdf.
+[12] A. M. Odlyzko, The 10 21-st zero of the Riemann zeta function, www.research.att.com/∼amo,
+1998.
+20

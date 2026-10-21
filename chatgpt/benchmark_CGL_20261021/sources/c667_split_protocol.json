@@ -1,0 +1,23 @@
+{
+  "n": 2001052,
+  "tuning": [
+    1,
+    800420
+  ],
+  "selection_validation": [
+    800421,
+    1400736
+  ],
+  "untouched_test": [
+    1400737,
+    2001052
+  ],
+  "pilot_extra_stability_probes": [
+    1,
+    512
+  ],
+  "selection_rule": "Minimum validation RMS among intrinsically eligible candidates; exact RMS ties prefer fewer full-array crossings, then ID. No sorting or repair.",
+  "intrinsic_eligibility": "All iterates finite, t>2pi, every step smaller than 8 smooth local spacings.",
+  "cutoff_policy_dyadic": "T=2^floor(log2(tau)); X=min(Xmax,max(8,floor(sqrt(T)))).",
+  "no_coefficients_or_ordinate_corrections_fit": true
+}

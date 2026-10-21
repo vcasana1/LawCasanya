@@ -1,0 +1,300 @@
+{
+  "digits": 60,
+  "phase_checks": [
+    {
+      "kind": "euler",
+      "support": 31,
+      "t": 14.521346953065626,
+      "phase_abs_error": 5.462517402830048e-16,
+      "derivative_abs_error": 2.045113348226234e-15,
+      "theta_abs_error": 1.6062394889156818e-15
+    },
+    {
+      "kind": "euler",
+      "support": 31,
+      "t": 489972.1119222093,
+      "phase_abs_error": 2.040466204264976e-11,
+      "derivative_abs_error": 2.4816084851729064e-11,
+      "theta_abs_error": 4.920265577717636e-10
+    },
+    {
+      "kind": "euler",
+      "support": 31,
+      "t": 816786.3219246347,
+      "phase_abs_error": 2.6882864026291135e-11,
+      "derivative_abs_error": 4.895928403560037e-11,
+      "theta_abs_error": 5.886833907097576e-11
+    },
+    {
+      "kind": "euler",
+      "support": 31,
+      "t": 1132490.7225876215,
+      "phase_abs_error": 2.680179075857357e-12,
+      "derivative_abs_error": 2.4532186749693393e-11,
+      "theta_abs_error": 1.9639200938573631e-10
+    },
+    {
+      "kind": "euler",
+      "support": 8191,
+      "t": 14.521346953065626,
+      "phase_abs_error": 4.4509957629443424e-17,
+      "derivative_abs_error": 1.4735894347647456e-15,
+      "theta_abs_error": 1.6062394889156818e-15
+    },
+    {
+      "kind": "euler",
+      "support": 8191,
+      "t": 489972.1119222093,
+      "phase_abs_error": 3.075750740262413e-11,
+      "derivative_abs_error": 1.5913767750829504e-10,
+      "theta_abs_error": 4.920265577717636e-10
+    },
+    {
+      "kind": "euler",
+      "support": 8191,
+      "t": 816786.3219246347,
+      "phase_abs_error": 1.0892756065745145e-10,
+      "derivative_abs_error": 1.6156777895377995e-10,
+      "theta_abs_error": 5.886833907097576e-11
+    },
+    {
+      "kind": "euler",
+      "support": 8191,
+      "t": 1132490.7225876215,
+      "phase_abs_error": 1.3882654999648275e-11,
+      "derivative_abs_error": 1.021562420898298e-09,
+      "theta_abs_error": 1.9639200938573631e-10
+    },
+    {
+      "kind": "gonek",
+      "support": 32,
+      "t": 14.521346953065626,
+      "phase_abs_error": 5.963031514773197e-16,
+      "derivative_abs_error": 5.747602025383543e-16,
+      "theta_abs_error": 1.6062394889156818e-15
+    },
+    {
+      "kind": "gonek",
+      "support": 32,
+      "t": 489972.1119222093,
+      "phase_abs_error": 1.1061432842768942e-11,
+      "derivative_abs_error": 6.8872735903349516e-12,
+      "theta_abs_error": 4.920265577717636e-10
+    },
+    {
+      "kind": "gonek",
+      "support": 32,
+      "t": 816786.3219246347,
+      "phase_abs_error": 2.4311468476664995e-11,
+      "derivative_abs_error": 2.4912453668464943e-11,
+      "theta_abs_error": 5.886833907097576e-11
+    },
+    {
+      "kind": "gonek",
+      "support": 32,
+      "t": 1132490.7225876215,
+      "phase_abs_error": 1.5954618410744948e-11,
+      "derivative_abs_error": 9.789831960199095e-11,
+      "theta_abs_error": 1.9639200938573631e-10
+    },
+    {
+      "kind": "gonek",
+      "support": 8192,
+      "t": 14.521346953065626,
+      "phase_abs_error": 1.5246674433311443e-16,
+      "derivative_abs_error": 4.4521801464025526e-15,
+      "theta_abs_error": 1.6062394889156818e-15
+    },
+    {
+      "kind": "gonek",
+      "support": 8192,
+      "t": 489972.1119222093,
+      "phase_abs_error": 3.5772614115020567e-12,
+      "derivative_abs_error": 3.4085734780828334e-11,
+      "theta_abs_error": 4.920265577717636e-10
+    },
+    {
+      "kind": "gonek",
+      "support": 8192,
+      "t": 816786.3219246347,
+      "phase_abs_error": 7.361983156688316e-11,
+      "derivative_abs_error": 9.25611622189797e-12,
+      "theta_abs_error": 5.886833907097576e-11
+    },
+    {
+      "kind": "gonek",
+      "support": 8192,
+      "t": 1132490.7225876215,
+      "phase_abs_error": 3.1006317709258505e-11,
+      "derivative_abs_error": 5.582571833994371e-10,
+      "theta_abs_error": 1.9639200938573631e-10
+    },
+    {
+      "kind": "sharp",
+      "support": 512,
+      "t": 14.521346953065626,
+      "phase_abs_error": 8.82815319955864e-17,
+      "derivative_abs_error": 2.3845285993285665e-15,
+      "theta_abs_error": 1.6062394889156818e-15
+    },
+    {
+      "kind": "sharp",
+      "support": 512,
+      "t": 489972.1119222093,
+      "phase_abs_error": 7.0891967547351484e-12,
+      "derivative_abs_error": 4.9256790168965975e-11,
+      "theta_abs_error": 4.920265577717636e-10
+    },
+    {
+      "kind": "sharp",
+      "support": 512,
+      "t": 816786.3219246347,
+      "phase_abs_error": 8.9737114529614e-11,
+      "derivative_abs_error": 4.0117013063551725e-11,
+      "theta_abs_error": 5.886833907097576e-11
+    },
+    {
+      "kind": "sharp",
+      "support": 512,
+      "t": 1132490.7225876215,
+      "phase_abs_error": 1.5930498605802815e-11,
+      "derivative_abs_error": 3.6901245471499066e-10,
+      "theta_abs_error": 1.9639200938573631e-10
+    }
+  ],
+  "root_checks": [
+    {
+      "method": "Gonek_P7",
+      "k": 1,
+      "phase_residual_hp": 9.921640739130787e-15
+    },
+    {
+      "method": "Gonek_P7",
+      "k": 800421,
+      "phase_residual_hp": 1.2506954459552393e-10
+    },
+    {
+      "method": "Gonek_P7",
+      "k": 1400737,
+      "phase_residual_hp": 1.10457318293306e-10
+    },
+    {
+      "method": "Gonek_P7",
+      "k": 2001052,
+      "phase_residual_hp": 3.102771252666226e-10
+    },
+    {
+      "method": "Gonek_P31",
+      "k": 1,
+      "phase_residual_hp": 3.694538195355734e-17
+    },
+    {
+      "method": "Gonek_P31",
+      "k": 800421,
+      "phase_residual_hp": 2.083781321035353e-10
+    },
+    {
+      "method": "Gonek_P31",
+      "k": 1400737,
+      "phase_residual_hp": 4.150599544895196e-11
+    },
+    {
+      "method": "Gonek_P31",
+      "k": 2001052,
+      "phase_residual_hp": 3.385687768214517e-10
+    },
+    {
+      "method": "Gonek_P127",
+      "k": 1,
+      "phase_residual_hp": 5.156954220161449e-16
+    },
+    {
+      "method": "Gonek_P127",
+      "k": 800421,
+      "phase_residual_hp": 6.257652936739758e-10
+    },
+    {
+      "method": "Gonek_P127",
+      "k": 1400737,
+      "phase_residual_hp": 1.0492987564377525e-10
+    },
+    {
+      "method": "Gonek_P127",
+      "k": 2001052,
+      "phase_residual_hp": 2.123265588949772e-10
+    },
+    {
+      "method": "Gonek_P511",
+      "k": 1,
+      "phase_residual_hp": 6.36917284246862e-16
+    },
+    {
+      "method": "Gonek_P511",
+      "k": 800421,
+      "phase_residual_hp": 1.516539640799238e-10
+    },
+    {
+      "method": "Gonek_P511",
+      "k": 1400737,
+      "phase_residual_hp": 1.883805973466929e-09
+    },
+    {
+      "method": "Gonek_P511",
+      "k": 2001052,
+      "phase_residual_hp": 3.856592217408005e-10
+    },
+    {
+      "method": "Gonek_P2047",
+      "k": 1,
+      "phase_residual_hp": 1.6567392261671206e-15
+    },
+    {
+      "method": "Gonek_P2047",
+      "k": 800421,
+      "phase_residual_hp": 3.2738713472104394e-10
+    },
+    {
+      "method": "Gonek_P2047",
+      "k": 1400737,
+      "phase_residual_hp": 1.8981942360724332e-10
+    },
+    {
+      "method": "Gonek_P2047",
+      "k": 2001052,
+      "phase_residual_hp": 4.167121968614415e-11
+    },
+    {
+      "method": "Gonek_P8191",
+      "k": 1,
+      "phase_residual_hp": 2.2877101257426015e-15
+    },
+    {
+      "method": "Gonek_P8191",
+      "k": 800421,
+      "phase_residual_hp": 6.368108459532177e-10
+    },
+    {
+      "method": "Gonek_P8191",
+      "k": 1400737,
+      "phase_residual_hp": 6.14675917537039e-10
+    },
+    {
+      "method": "Gonek_P8191",
+      "k": 2001052,
+      "phase_residual_hp": 3.1801304807674305e-10
+    }
+  ],
+  "clock_difference_errors": [
+    1.6388196749468937e-20,
+    5.743859758041979e-20,
+    1.9102817762364275e-17,
+    2.444606192610426e-17
+  ],
+  "maxima": {
+    "phase_abs_error": 1.0892756065745145e-10,
+    "derivative_abs_error": 1.021562420898298e-09,
+    "theta_abs_error": 4.920265577717636e-10
+  },
+  "zeta_or_true_ordinate_used": false,
+  "pass_checks": true
+}

@@ -238,3 +238,9 @@
 ## 2026-10-21 [claude] Paper I v13
 - Fujii 1974 p. 226 re-read in LIBRARY TOTAL (110_Fujii_1974_...): implied constants independent of q, k, h; point 1.3 of the second audit closed.
 - Five independent reviewers (notation, four domain blocks) on v12; all findings verified and applied by `work/paper1/v13/tools/patch_v13_claude.py` (list in `work/paper1/v13/README.md`). No step was invalid; fixes are notation clashes, missing justifications, one sign slip and two wrong constants (Lemma 8.2 second bound, Prop. 9.7(a)).
+
+## 2026-10-21 11:01 UTC — [chatgpt] — Benchmark Casaña/Gonek/LeClair: initial delivery
+- Published the author-requested local delivery in chatgpt/benchmark_CGL_20261021/: complete ZIP plus unpacked programs, configurations, CSV metrics, logs, source snapshots and figures.
+- Python pilot: 1,000 deterministic indices. Full frozen baselines: 2,001,052 indices; Lambert RMS 0.18806629977698566; c667 RMS 0.04398854715231307 with 962 nonpositive gaps. c667 reconstruction is byte-identical to the original.
+- Full M1–M4 comparison remains pending global model-root ordinal enumeration. Finite LeClair eq49 has two tested roots for k=1,b=8191; v17 Stage A extension misses k=2. The v17 continuation checks five points per segment, not the entire interval.
+- ZIP SHA-256: 6657ad5842cb75e74f5d5b5157d6190d85e66898eda50233150fc889a077c320. The report, code and outputs are preserved as delivered; large original inputs are excluded. No manuscript version created or edited.
