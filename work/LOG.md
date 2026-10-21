@@ -265,3 +265,6 @@
 - Derived for fixed-cutoff G(t)=t−F_X(t)/N0'(t): at a root G'(r)=−S_X'(r)/N0'(r). The pilot diagnostic opens no true-zero file. Local magnitude exceeds1 in15/300,32/300,58/300 final-pilot indices for cutoffs512/2048/8192. This diagnoses lack of local contraction of that repeated update, not a theorem that every finite three-step approximation is worse.
 - Reused executed same-equation pilot: for the last300, sharp-root convergence at X8192 reduces RMS .05777346→.03157786 and directional failures1→0; at X512 RMS worsens .04210028→.04620385 while failures1→0. Do not optimize RMS alone or claim universal improvement. Full600316 sharp-root comparison remains the next discriminating experiment, not a result already obtained.
 - Proposal1 adapts existing full-derivative solvers and v17 branch continuation; proposal2 tests cutoff allocation from arithmetic branch stability, unvalidated. A residual/derivative bound controls error to the MODEL root only, not to gamma. No literature novelty or RH claim, no new test-set tuning.
+
+## 2026-10-21 [claude] display: variante cuadrática de D′
+- work/display/2026-10-21_variante_cuadratica_D_prima.md: análisis de la variante cuadrática (Codex) del programa de D′ (cargas d_i con sinc² y Li_3, segundo momento). Pendiente para la próxima versión de Paper I; no hay v15.
