@@ -268,3 +268,6 @@
 
 ## 2026-10-21 [claude] display: variante cuadrática de D′
 - work/display/2026-10-21_variante_cuadratica_D_prima.md: análisis de la variante cuadrática (Codex) del programa de D′ (cargas d_i con sinc² y Li_3, segundo momento). Pendiente para la próxima versión de Paper I; no hay v15.
+
+## 2026-10-21 [claude] revisión externa: cierre de observaciones v11.2 → v14
+- work/paper1/v14/audit/revision_externa_cierre_v11.2_a_v14.md (texto del revisor, sin cambios): 10 de 11 observaciones corregidas o justificadas en la v14; la 11 (valores numéricos explícitos de las constantes del régimen uniforme) queda parcialmente resuelta y no invalida los teoremas. No certifica globalmente la v14 ni los Teoremas F y G.
