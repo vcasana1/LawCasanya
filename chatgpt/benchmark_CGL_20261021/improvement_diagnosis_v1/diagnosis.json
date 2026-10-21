@@ -1,0 +1,81 @@
+{
+  "truth_access_forbidden": true,
+  "equation": "F_X(t;k)=N0(t)+S_X(t)-(k-1/2)",
+  "original_iteration": "G(t)=t-F_X(t;k)/N0_prime(t)",
+  "derivative_at_exact_root": "G_prime(r)=-S_X_prime(r)/N0_prime(r)",
+  "qualification": "evaluated at numerical pilot roots; local instability of a repeatedly fixed-cutoff iteration, not a proof that every finite three-step result is worse",
+  "rows": [
+    {
+      "cutoff": 512,
+      "region": "first1000",
+      "n": 1000,
+      "smooth_denominator_local_factor_gt1": 892,
+      "max_factor": 13.567340200152627,
+      "min_full_phase_derivative_at_sampled_roots": 0.8791457456594959
+    },
+    {
+      "cutoff": 512,
+      "region": "pilot_last300",
+      "n": 300,
+      "smooth_denominator_local_factor_gt1": 15,
+      "max_factor": 1.7204289794302379,
+      "min_full_phase_derivative_at_sampled_roots": 0.8442797079681383
+    },
+    {
+      "cutoff": 512,
+      "region": "high_consecutive_last300",
+      "n": 300,
+      "smooth_denominator_local_factor_gt1": 12,
+      "max_factor": 1.7695543202451125,
+      "min_full_phase_derivative_at_sampled_roots": 0.9532537966282273
+    },
+    {
+      "cutoff": 2048,
+      "region": "first1000",
+      "n": 1000,
+      "smooth_denominator_local_factor_gt1": 988,
+      "max_factor": 12.897391105679777,
+      "min_full_phase_derivative_at_sampled_roots": 1.4321554598775974
+    },
+    {
+      "cutoff": 2048,
+      "region": "pilot_last300",
+      "n": 300,
+      "smooth_denominator_local_factor_gt1": 32,
+      "max_factor": 2.132888804654573,
+      "min_full_phase_derivative_at_sampled_roots": 0.8953884908713743
+    },
+    {
+      "cutoff": 2048,
+      "region": "high_consecutive_last300",
+      "n": 300,
+      "smooth_denominator_local_factor_gt1": 34,
+      "max_factor": 1.978879829517096,
+      "min_full_phase_derivative_at_sampled_roots": 0.6668362701781159
+    },
+    {
+      "cutoff": 8192,
+      "region": "first1000",
+      "n": 1000,
+      "smooth_denominator_local_factor_gt1": 1000,
+      "max_factor": 15.957935787058867,
+      "min_full_phase_derivative_at_sampled_roots": 0.9989108578637765
+    },
+    {
+      "cutoff": 8192,
+      "region": "pilot_last300",
+      "n": 300,
+      "smooth_denominator_local_factor_gt1": 58,
+      "max_factor": 2.129500510641358,
+      "min_full_phase_derivative_at_sampled_roots": 1.0203930727749146
+    },
+    {
+      "cutoff": 8192,
+      "region": "high_consecutive_last300",
+      "n": 300,
+      "smooth_denominator_local_factor_gt1": 71,
+      "max_factor": 2.3119787935887874,
+      "min_full_phase_derivative_at_sampled_roots": 0.8815041419416163
+    }
+  ]
+}
