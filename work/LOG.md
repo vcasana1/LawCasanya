@@ -294,3 +294,7 @@
 - work/display/ (nuevos, verbatim): 2026-10-22_espiral_momentos_hankel_transporte.txt, 2026-10-22_revision_veredicto_defecto_par.txt, 2026-10-22_extremo_espectral_taylor_cuarto_orden.txt, 2026-10-22_auditoria_F_X_zeta_sintetica_espiral_B.txt (los cuatro llegaron como documentos pegados por el autor desde otros hilos), y 2026-10-23_primer_armonico_friable_Mobius.md (última respuesta de este hilo: desarrollo exacto del primer armónico con coeficientes mu(d)c_X(d)/d, d | P(X)).
 - Solo texto; sin programas ni cifras nuevas calculadas. Ningún manuscrito creado ni cambiado.
 - Pendiente: el contenido de otros hilos que no llegó a este no está subido; hay que pegarlo o indicarlo.
+
+## 2026-10-22 22:35 UTC — [claude] — sube git: índice de dos hilos (Casaña method for prime approximation; Casañá I conecat)
+- work/display/2026-10-23_indice_hilos_Casana_method_y_Casana_I.md: resumen técnico y enlaces; los resultados ya estaban en work/paper1, work/notes y este log. Transcripciones completas no copiadas.
+- Solo texto; sin programas ni cifras nuevas. Ningún manuscrito creado ni cambiado.
