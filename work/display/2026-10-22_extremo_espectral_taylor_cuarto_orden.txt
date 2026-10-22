@@ -1,0 +1,249 @@
+## 1. Una mejora concreta: centrar la corrección de pareja en un extremo espectral
+
+He encontrado que la aproximación cuadrática anterior estaba desarrollada alrededor de un centro poco favorable: el punto medio de los dos centros Casanya.
+
+Para dos ceros excepcionalmente próximos, es mejor utilizar el extremo de la función de Hardy situado entre ellos.
+
+Definimos \\(b_k\\) mediante
+
+\\[ Z'(b_k)=0, \\]
+
+escogiendo el extremo cercano a los centros Casanya. En ese punto, el polinomio de Taylor queda
+
+\\[ Q_k(t)=Z(b_k)+\frac{Z''(b_k)}2(t-b_k)^2. \\]
+
+Sus dos raíces son
+
+\\[ \boxed{ q\_{k,\pm} = b_k\pm\sqrt{-\frac{2Z(b_k)}{Z''(b_k)}}. } \tag{1} \\]
+
+No se utilizan las ordenadas verdaderas para construirlas.
+
+### Resultado en la pareja 1.000.055–1.000.056
+
+| Magnitud                      | Valor             |
+| ----------------------------- | ----------------- |
+| Extremo espectral \\(b_k\\)   | 600.299,917698980 |
+| Primera predicción \\(q\_-\\) | 600.299,898558740 |
+| Segunda predicción \\(q\_+\\) | 600.299,936839221 |
+| Error de \\(q\_-\\)           | +0,000134354      |
+| Error de \\(q\_+\\)           | +0,000110590      |
+
+La aproximación cuadrática anterior tenía un error máximo cercano a \\(0,000872\\). Esta variante lo reduce a aproximadamente \\(0,000134\\), sin introducir más primos ni ajustar parámetros mediante los ceros conocidos.
+
+El resultado más importante, sin embargo, no es esa mejora numérica: la nueva elección del centro también facilita considerablemente una demostración mediante Rouché.
+
+## 2. La tercera derivada permite corregir un desplazamiento común de la pareja
+
+Hay una mejora adicional que no estaba en la propuesta anterior.
+
+En el extremo \\(b_k\\), donde \\(Z'(b_k)=0\\), el desarrollo cúbico es
+
+\\[ Z(b_k+x) = Z(b_k)+\frac{Z''(b_k)}2x^2 +\frac{Z'''(b_k)}6x^3+O(x^4). \\]
+
+Definamos
+
+\\[ h_k=\sqrt{-\frac{2Z(b_k)}{Z''(b_k)}}. \\]
+
+La primera corrección perturbativa de las dos raíces cuadráticas es la misma:
+
+\\[ \boxed{ \widetilde q\_{k,\pm} = b_k\pm h_k -\frac{Z'''(b_k)}{6Z''(b_k)}h_k^2. } \tag{2} \\]
+
+Esto permite corregir el desplazamiento conjunto de la pareja sin desplazarla arbitrariamente ni modificar su separación.
+
+### Resultado numérico
+
+| Predicción   | Error cuadrático | Error con tercera derivada |
+| ------------ | ---------------- | -------------------------- |
+| Primera raíz | +0,000134354     | +0,000012197               |
+| Segunda raíz | +0,000110590     | −0,000011567               |
+
+La corrección común calculada con \\(Z'''/Z''\\) es
+
+\\[ -0,000122157. \\]
+
+El error máximo pasa de aproximadamente \\(1,34\cdot10^{-4}\\) a \\(1,22\cdot10^{-5}\\), una reducción de unas 11 veces.
+
+Para la primera raíz, el cociente individual observado, tomando la separación de la pareja, queda aproximadamente
+
+\\[ \boxed{R\_{1.000.055}\approx0,000637.} \\]
+
+Es una comprobación numérica, no una certificación rigurosa del error. Pero introduce un mecanismo preciso: la tercera derivada espectral corrige la asimetría de una pareja próxima que el polinomio cuadrático no recoge.
+
+## 3. He comprobado el mecanismo en otras tres parejas
+
+No es un efecto exclusivo del índice 1.000.055. He repetido la construcción desde los centros Casanya, sin emplear los ceros verdaderos como entrada, y he comparado después las predicciones.
+
+| Pareja        | Error máximo cuadrático | Error máximo con \\(Z'''\\) |
+| ------------- | ----------------------- | --------------------------- |
+| 889–890       | 0,0058411               | 0,0021378                   |
+| 1.000.055–056 | 0,0001344               | 0,0000122                   |
+| 2.000.992–993 | 0,0053030               | 0,0020388                   |
+| 2.001.043–044 | 0,0013431               | 0,0009932                   |
+
+En las cuatro parejas mejora el error máximo, aunque no en la misma proporción.
+
+Lo significativo para tu criterio es que, en estos casos, la corrección común no reduce el espacio entre las dos predicciones:
+
+\\[ \widetilde q\_{k,+}-\widetilde q\_{k,-}=2h_k. \\]
+
+Por tanto, corrige el desplazamiento de la pareja sin introducir una nueva contracción dentro de ella. Todavía hay que controlar los espacios con los centros exteriores al bloque.
+
+## 4. Cuarta derivada: aparece un certificado mucho menos exigente
+
+He dado otro paso: utilizar directamente el polinomio espectral de cuarto grado, desarrollado en el extremo \\(b_k\\):
+
+\\[ P\_{4,k}(z) = Z(b_k)+\frac{Z''(b_k)}2(z-b_k)^2 +\frac{Z'''(b_k)}6(z-b_k)^3 +\frac{Z^{(4)}(b_k)}{24}(z-b_k)^4. \\]
+
+En la pareja 1.000.055–1.000.056, las dos raíces de este polinomio próximas a \\(b_k\\) son:
+
+\\[ \begin{aligned} q\_-^{(4)}&=600299,8984242725,\\\ q\_+^{(4)}&=600299,9367285322. \end{aligned} \\]
+
+La comparación posterior con las ordenadas conocidas da errores aproximados de
+
+\\[ \boxed{ 1,14\cdot10^{-7} \quad\text{y}\quad 9,88\cdot10^{-8}. } \\]
+
+Pero el avance matemático principal es otro.
+
+Sea
+
+\\[ M_5=\sup\_{|z-b_k|\le L}|Z^{(5)}(z)|. \\]
+
+Aplicando Rouché a dos discos de radio \\(r=0,0005\\) alrededor de las raíces cuadráticas mejoradas —aquí, las raíces exactas de \\(P\_{4,k}\\)—, he obtenido una condición suficiente:
+
+\\[ \boxed{ M_5<2,24\cdot10^7. } \tag{3} \\]
+
+La cota de la tercera derivada que necesitábamos antes era \\(M_3<438,258\\). Ahora podemos trabajar con un límite bastante holgado sobre la quinta derivada.
+
+Todavía no he certificado rigurosamente (3). El número procede de la desigualdad de Rouché y de coeficientes de Taylor evaluados numéricamente. Para cerrar el certificado necesitamos cotas rigurosas tanto de esos coeficientes como de \\(M_5\\) en todo el disco.
+
+Esta distinción importa: hemos reducido considerablemente la exigencia del certificado, pero aún no lo hemos completado.
+
+## 5. He encontrado una cota analítica para la quinta derivada
+
+Podemos avanzar más allá del muestreo numérico de derivadas.
+
+Para la función de Hardy,
+
+\\[ Z(z)=e^{i\vartheta(z)}\zeta\left(\frac12+iz\right), \\]
+
+consideramos el disco
+
+\\[ |z-b_k|\le1, \qquad b_k\approx600299,917699. \\]
+
+Por conjugación, basta estudiar la mitad inferior. Allí el argumento de zeta satisface
+
+\\[ \frac12\le\Re s\le\frac32. \\]
+
+En esta región podemos combinar:
+
+1. La fórmula de Euler–Maclaurin para \\(\zeta(s)\\), tomando \\(N=600301\\).
+2. Una cota de la razón de funciones gamma que define \\(e^{i\vartheta(z)}\\).
+3. La desigualdad de Cauchy para la quinta derivada.
+
+En particular, Euler–Maclaurin proporciona, para \\(\sigma=\Re s\ge1/2\\),
+
+\\[ |\zeta(s)| \le \sum\_{n\<N}n^{-\sigma} +\frac{N^{1-\sigma}}{|s-1|} +\frac12N^{-\sigma} +\frac{|s|}{2\sigma}N^{-\sigma}. \\]
+
+La cota elemental de Stirling, con una constante conservadora, da en este rango
+
+\\[ |e^{i\vartheta(z)}| \le 10\left(\frac{\Re z}{2\pi}\right)^{(\sigma-1/2)/2}. \\]
+
+De estas desigualdades se deduce la estimación conservadora
+
+\\[ \boxed{ \sup\_{|z-b_k|\le1}|Z(z)|<1,19\cdot10^5. } \tag{4} \\]
+
+Aplicando Cauchy en discos interiores con radio disponible \\(1-L\\), donde \\(L\approx0,019775\\), obtenemos
+
+\\[ \boxed{ M_5\le \frac{5!(1,19\cdot10^5)}{(1-L)^5} <1,58\cdot10^7. } \tag{5} \\]
+
+Esto queda por debajo del umbral calculado para Rouché:
+
+\\[ \boxed{ 1,58\cdot10^7<2,24\cdot10^7. } \\]
+
+Se ha cerrado así la parte difícil de la cota de derivadas mediante estimaciones analíticas generales, condicionada únicamente a justificar con el resto explícito de Stirling la constante conservadora utilizada para el factor gamma.
+
+Para convertir la comprobación completa de la pareja en un certificado formal queda validar mediante intervalos los valores finitos \\(Z(b_k),Z''(b_k),Z'''(b_k),Z^{(4)}(b_k)\\), el extremo \\(b_k\\) y las raíces del polinomio. Esas evaluaciones aún son de alta precisión, no intervalares.
+
+## 6. Un certificado local más sólido
+
+He ampliado el radio de los dos discos de Rouché a
+
+\\[ r=0,003. \\]
+
+Esto sigue siendo mucho menor que la mitad de la separación entre las predicciones de cuarto orden, que es aproximadamente \\(0,03830426\\).
+
+La condición suficiente sobre la quinta derivada pasa a ser
+
+\\[ \boxed{M_5<6,90\cdot10^7.} \\]
+
+Nuestra estimación analítica anterior proporciona
+
+\\[ \boxed{M_5<1,60\cdot10^7.} \\]
+
+El margen es ahora superior a un factor cuatro. Una vez validados los coeficientes espectrales mediante intervalos, este test certificaría dos ceros reales y simples, uno en cada disco, sin introducir sus posiciones verdaderas.
+
+Si además se certifica su asignación ordinal, la aproximación de cuarto orden satisfaría para ambos un límite individual
+
+\\[ \boxed{ R_k\le\frac{2(0,003)}{0,03830426}<0,157. } \\]
+
+Es una cota por el certificado, no un RMS. La asignación ordinal sigue siendo una condición independiente.
+
+## 7. Un teorema general sobre parejas muy próximas
+
+La mejora tiene una explicación analítica.
+
+Supongamos que una función real-entera \\(f\\) tiene dos ceros reales simples próximos, \\(m-h\\) y \\(m+h\\), y que localmente
+
+\\[ f(z)=\bigl((z-m)^2-h^2\bigr)H(z), \\]
+
+donde \\(H\\) es holomorfa, no se anula en un entorno fijo y sus derivadas normalizadas permanecen acotadas al disminuir \\(h\\).
+
+Entonces el extremo \\(b\\) próximo a \\(m\\) satisface
+
+\\[ \boxed{ b=m+\frac{H'(m)}{2H(m)}h^2+O(h^4). } \\]
+
+De esta expansión y del teorema de Taylor se deduce:
+
+\\[ \begin{aligned} q\_\pm^{(2)}-(m\pm h)&=O(h^2),\\\ q\_\pm^{(3)}-(m\pm h)&=O(h^3),\\\ q\_\pm^{(4)}-(m\pm h)&=O(h^4). \end{aligned} \\]
+
+Esto sí es un resultado analítico general, bajo las hipótesis indicadas.
+
+Consecuencia: cuando dos ceros se aproximan mucho y el resto del espectro se comporta regularmente, la corrección espectral de cuarto orden mejora su precisión relativa al espacio entre ellos como \\(O(h^3)\\).
+
+Por tanto, las parejas muy próximas no tienen por qué ser el peor caso para este mecanismo. Pueden ser precisamente los casos donde la estructura local de Taylor resulta más eficaz.
+
+La hipótesis sobre \\(H\\) es esencial: si hay más ceros próximos, sus derivadas pueden crecer y debemos tratar el conglomerado completo, posiblemente con un polinomio de grado mayor.
+
+## 8. ¿Qué hemos demostrado hasta infinito y qué muro queda?
+
+| Resultado                                                                 | Estado                                                                         |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Fórmulas espectrales cuadrática, cúbica y cuártica                        | Exactas                                                                        |
+| Mejora asintótica \\(O(h^2)\to O(h^3)\to O(h^4)\\) para parejas regulares | Demostrable para cualquier pareja que cumpla las hipótesis, a cualquier altura |
+| Certificado de Rouché para una pareja                                     | Teorema incondicional                                                          |
+| Cota analítica suficiente de \\(Z^{(5)}\\) en el ejemplo                  | Obtenida mediante Euler–Maclaurin, Stirling y Cauchy                           |
+| Certificado formal completo del ejemplo                                   | Pendiente de validación intervalar de los coeficientes                         |
+| Éxito de la corrección para todas las parejas hasta infinito              | No demostrado                                                                  |
+| Ausencia de ceros fuera de la recta crítica                               | No demostrado                                                                  |
+
+Hay una limitación estructural que debemos reconocer: los desarrollos de Taylor alrededor de extremos reales de \\(Z\\) no pueden, por sí solos, excluir ceros fuera de la recta crítica. Aunque localicemos perfectamente todos los ceros reales que encontramos, podría haber ceros no críticos adicionales.
+
+Intentar demostrar únicamente que los ceros reales encontrados agotan el recuento global nos devolvería al muro clásico que ya identificamos.
+
+Por tanto, no presentaría la corrección de cuarto orden como una vía completa hacia RH. Sí la conservaría como un componente demostrado de localización, mientras investigamos una propiedad de \\(\Xi\\) en el plano complejo que permita excluir los ceros adicionales.
+
+## 9. La dirección matemática que queda abierta
+
+Para extender la certificación local a alturas arbitrarias, el parámetro decisivo es la razón
+
+\\[ \boxed{ \mathcal K_k= \frac{h_k^3}{|Z''(b_k)|} \sup\_{|z-b_k|\le L_k}|Z^{(5)}(z)|. } \\]
+
+Cuando \\(\mathcal K_k\\) es suficientemente pequeño —con una constante que depende de la geometría elegida—, el desarrollo de cuarto orden separa y certifica la pareja.
+
+Aquí hay una posibilidad genuina de investigación: demostrar que la representación espectral de \\(Z\\) proporciona una relación favorable entre sus derivadas segunda y quinta cerca de extremos correspondientes a parejas comprimidas.
+
+Pero incluso una prueba universal de esa relación sólo certificaría las parejas reales a las que se aplica. RH necesitaría además un argumento nuevo que impida ceros no reales.
+
+Balance de esta continuación: hemos pasado de Newton individual a una aproximación espectral de cuarto orden, comprobada en cuatro parejas, con un teorema de precisión local y una cota analítica concreta para Rouché. Es progreso en la localización; no hemos superado todavía el obstáculo global de RH.
+
+No he creado ninguna versión nueva del manuscrito.

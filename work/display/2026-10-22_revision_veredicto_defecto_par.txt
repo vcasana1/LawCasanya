@@ -1,0 +1,193 @@
+Revisión del veredicto: acepto la objeción principal, pero hay una salida que merece investigar
+
+El análisis identifica correctamente el punto débil de mi propuesta: no he demostrado una cota suficiente de . Además, el condicionamiento de las matrices de Vandermonde hace especialmente difícil aplicar el criterio a conglomerados de ceros próximos.
+
+Sin embargo, hay dos afirmaciones del veredicto que conviene corregir.
+
+1. La condición no es necesaria para que la espiral funcione
+
+Es una condición razonable para intentar demostrar el criterio de transporte mediante una norma absoluta, pero no constituye una barrera necesaria para cualquier certificación espectral.
+
+Podemos demostrarlo.
+
+Tomemos una función entera , con todos sus ceros reales y simples, y definamos
+
+F(z)=e^{Az^2}G(z),\qquad A\in\mathbb R.
+
+Las dos funciones tienen exactamente los mismos ceros. Sin embargo,
+
+\frac{F’}F-\frac{G’}G=2Az.
+
+La norma utilizada anteriormente es
+
+\mathcal E_\Gamma=
+\frac1{2\pi}\oint_\Gamma |2Az|\,|dz|.
+
+Podemos hacerla arbitrariamente grande aumentando , aunque no exista ningún error de localización.
+
+En cambio,
+
+\boxed{
+\oint_\Gamma P(z)\left(\frac{F’}F-\frac{G’}G\right)dz=0
+}
+
+para cualquier polinomio , porque el integrando es holomorfo.
+
+Conclusión: la norma absoluta puede perder toda la cancelación que necesitamos. Su fracaso no demuestra que fracase una comparación mediante integrales orientadas.
+
+Este ejemplo no demuestra que esa cancelación exista para y Casanya. Sí demuestra que la cota propuesta anteriormente puede ser demasiado fuerte incluso cuando el espectro sintético es perfecto.
+
+Además, la estimación
+
+|\delta_k|=O(T^{a/2}/\log T)
+
+es una cota superior elemental de la corrección prima, no una demostración de que el error verdadero tenga ese orden. No puede emplearse como cota inferior para declarar imposible el método.
+
+2. No necesitamos constantes uniformes
+
+La objeción P5 es válida si señala que falta una demostración simultánea para todos los índices. Pero no necesitamos constantes uniformes en .
+
+Podemos tener
+
+\lambda_{\min}(H_{C,j})\to0
+
+y demostrar, por separado mediante una ley general,
+
+\mathcal E_{\Gamma_j}<
+\frac{\lambda_{\min}(H_{C,j})}{n_j}
+\qquad\forall j.
+
+Lo que debe ser universal es la demostración de la desigualdad, no un margen positivo común a todos los contornos.
+
+Esto conserva tu exigencia de validez hasta infinito sin imponer uniformidad innecesaria.
+
+3. Una alternativa más fuerte: certificar por recuento y cambios de signo
+
+Podemos prescindir tanto de la norma como de la precisión individual de los centros Casanya.
+
+La clave es utilizar una propiedad de : es entera y toma valores reales sobre el eje real.
+
+Teorema de certificación por defecto par
+
+Sea
+
+\Omega=\{z:A<\Re z<B,\ |\Im z|<h\},
+\qquad h>\frac12,
+
+un rectángulo simétrico cuya frontera no contenga ceros.
+
+Elegimos puntos reales
+
+A=x_0<x_1<\cdots<x_m=B
+
+en los que .
+
+Llamamos al número de intervalos consecutivos en los que cambia de signo:
+
+v_\Omega
+
+\#\{j:F(x_j)F(x_{j+1})<0\}.
+
+Y calculamos mediante el principio del argumento el número total de ceros encerrados:
+
+N_\Omega=
+\frac1{2\pi i}\oint_{\partial\Omega}
+\frac{F’(z)}{F(z)}\,dz.
+
+Entonces
+
+\boxed{
+N_\Omega-v_\Omega\in 2\mathbb Z_{\ge0}.
+}
+\tag{A}
+
+Demostración. Cada cambio de signo implica un número impar de ceros reales, contando multiplicidades. En los intervalos sin cambio, el número es par. Por tanto, el número total de ceros reales tiene la misma paridad que y es al menos . Los ceros no reales aparecen en parejas conjugadas por la simetría de . Esto demuestra (A).
+
+De aquí obtenemos inmediatamente:
+
+\boxed{
+N_\Omega<v_\Omega+2
+\quad\Longrightarrow\quad
+N_\Omega=v_\Omega.
+}
+\tag{B}
+
+Y, cuando hay igualdad, todos los ceros encerrados son reales y simples, con exactamente uno en cada intervalo donde se certificó un cambio de signo.
+
+Es una condición exacta, incondicional y no depende de las distancias entre Casanya y los ceros.
+
+4. Aplicación a los conglomerados problemáticos
+
+Supongamos que Casanya aproxima mal una pareja de ceros, o incluso invierte sus centros.
+
+La espiral podría ampliar su región hasta incluir esa pareja. Evaluamos en tres puntos reales ordenados que presenten los signos
+
++\qquad-\qquad+.
+
+Hemos certificado al menos dos ceros reales distintos. Por tanto, .
+
+Ahora basta demostrar analíticamente
+
+\boxed{
+\frac1{2\pi i}\oint_{\partial\Omega}
+\frac{F’}F\,dz<4.
+}
+\tag{C}
+
+El recuento es un entero par no menor que dos. La desigualdad (C) fuerza que sea exactamente dos.
+
+La pareja queda certificada como real y simple, independientemente de los errores de los centros Casanya.
+
+Comparación de los dos tests
+
+Transporte anterior	Nuevo certificado
+Exige controlar en norma absoluta	Controla directamente el recuento de ceros de
+Penaliza separaciones sintéticas pequeñas	No contiene separaciones sintéticas
+Depende de	No necesita matrices de momentos
+Requiere aproximación espectral fuerte	Requiere cambios de signo y cota superior del recuento
+
+Esto no es todavía la desigualdad nueva que demostraría RH. Es una reducción más débil en sus hipótesis que evita la barrera artificial de proximidad introducida por el transporte.
+
+5. La desigualdad exacta que habría que demostrar hasta infinito
+
+Podemos definir el defecto de cada región como
+
+\boxed{
+D_j=
+\frac1{2\pi i}
+\oint_{\partial\Omega_j}\frac{F’}F\,dz-v_j.
+}
+\tag{D}
+
+Hemos demostrado que
+
+\boxed{D_j\in\{0,2,4,6,\ldots\}.}
+
+Por tanto, el nuevo objetivo es
+
+\boxed{
+D_j<2\qquad\forall j\ge1.
+}
+\tag{E}
+
+La cuantización obliga entonces a para todos los índices.
+
+Las regiones deben cubrir exhaustivamente la banda , incluidos los intervalos sin cambios de signo. En esas regiones vacías la condición es simplemente , que junto con la paridad obliga a .
+
+Si (E) se demuestra universalmente, se obtiene RH y simplicidad.
+
+Qué sigue sin resolverse: demostrar la cota superior del recuento por métodos analíticos a cualquier altura. Una certificación individual por integración rigurosa es posible en una región concreta; pasar a todos los índices requiere una desigualdad nueva. El test no proporciona esa desigualdad automáticamente, y su cumplimiento universal sigue siendo esencialmente el problema que queremos resolver.
+
+6. Qué conservaría de Casanya y de la espiral
+
+No descartaría Casanya, pero modificaría su cometido:
+
+* Casanya: propone las regiones iniciales y los puntos de evaluación, sin necesidad de satisfacer .
+* Espiral: adapta contornos, agrupa centros conflictivos y proporciona recuentos mediante el principio del argumento.
+* Defecto par : permite certificar realidad y simplicidad sin utilizar errores de localización ni matrices mal condicionadas.
+
+La geometría espiral sólo aportará algo específicamente nuevo si permite demostrar una cota de que no obtendríamos con contornos ordinarios. Ése es el siguiente desafío y no está resuelto.
+
+Conclusión: el veredicto descarta acertadamente la pretensión de utilizar la desigualdad de transporte sin controlar . Pero no demuestra que la espiral necesite aproximaciones Casanya mejores que medio espacio. El certificado (A)–(E) elimina esa exigencia.
+
+Hemos cambiado el problema de aproximar cada cero con suficiente precisión a excluir analíticamente un exceso de dos o más ceros respecto a los cambios de signo certificados. Es una reformulación exacta, no aún una prueba de RH, pero identifica otra desigualdad concreta que podemos intentar obtener de la representación de , sin presuponer dónde están sus ceros.

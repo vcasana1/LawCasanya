@@ -1,0 +1,206 @@
+## 1. Primer avance: la espiral debe corregir grupos de ceros, no necesariamente uno a uno
+
+He identificado una propiedad especialmente relevante en uno de los dos fallos de Casanya con \\(a=0,5\\).
+
+En el índice \\(k=2.000.977\\), tenemos:
+
+| Magnitud                          | Ordenada            |
+| --------------------------------- | ------------------- |
+| Cero anterior \\(\gamma\_{k-1}\\) | 1.132.451,379952896 |
+| Centro Casanya \\(c_k\\)          | 1.132.451,485577120 |
+| Cero buscado \\(\gamma_k\\)       | 1.132.451,599347587 |
+
+El centro Casanya está más cerca del cero anterior que del que pretende localizar:
+
+\\[ |c_k-\gamma\_{k-1}|=0,105624224, \\]
+
+\\[ |c_k-\gamma_k|=0,113770467. \\]
+
+Por tanto, ningún disco centrado en \\(c_k\\) puede contener \\(\gamma_k\\) sin contener también \\(\gamma\_{k-1}\\). Esto explica por qué un procedimiento que intente corregir siempre un solo cero desde su centro Casanya puede fallar.
+
+Sin embargo, una espiral que encierre ambos ceros puede recuperar sus dos posiciones y separarlas algebraicamente.
+
+Si sus momentos espectrales son
+
+\\[ M_j=\frac{1}{2\pi i}\oint\_\Gamma (z-c_k)^j\frac{F'(z)}{F(z)}\\,dz, \qquad F(z)=\xi(1/2+iz), \\]
+
+y \\(M_0=2\\), las dos raíces encerradas son exactamente
+
+\\[ \boxed{ z\_\pm=c_k+\frac{M_1\pm\sqrt{2M_2-M_1^2}}2. } \\]
+
+No presupone que las raíces sean reales.
+
+Si \\(2M_2-M_1^2>0\\), ambas son reales y distintas. Si es negativo, forman una pareja conjugada no real. Si es cero, coinciden.
+
+La consecuencia es importante para tu estrategia: un fallo del umbral individual Casanya puede recuperarse mediante una certificación espectral conjunta. No necesitamos obligar a la fórmula prima a separar previamente todos los pares próximos.
+
+## 2. Segundo avance: un criterio para separar cualquier grupo sin conocer previamente sus ceros
+
+El resultado para dos ceros se generaliza.
+
+Sea \\(\Omega\\) una región simétrica respecto al eje real del plano \\(z\\), delimitada por un contorno \\(\Gamma\\) que no atraviesa ceros de \\(F\\). Supongamos que la integral de argumento da exactamente \\(n\\) ceros en su interior, contando multiplicidades.
+
+Definimos los momentos
+
+\\[ m_j=\frac{1}{2\pi i}\oint\_\Gamma (z-c)^j\frac{F'(z)}{F(z)}\\,dz \qquad(0\le j\le 2n-2) \\]
+
+y construimos la matriz real simétrica
+
+\\[ \boxed{ H\_\Omega=(m\_{r+s})\_{0\le r,s\<n}. } \tag{1} \\]
+
+Teorema.
+
+\\[ \boxed{ H\_\Omega\text{ es definida positiva} \quad\Longleftrightarrow\quad \text{los }n\text{ ceros de }\Omega \text{ son reales y simples}. } \tag{2} \\]
+
+La demostración es algebraica. Si los ceros son \\(z_1,\ldots,z_n\\), entonces, para cualquier polinomio real \\(P\\) de grado menor que \\(n\\),
+
+\\[ v^{\mathsf T}H\_\Omega v =\sum\_{\nu=1}^n P(z\_\nu)^2, \\]
+
+donde \\(v\\) es el vector de sus coeficientes.
+
+Si todos los \\(z\_\nu\\) son reales y distintos, la expresión es estrictamente positiva para cualquier \\(P\neq0\\).
+
+Si hay un par conjugado no real, podemos construir por interpolación un polinomio real que tome valores \\(i\\) y \\(-i\\) en ambos ceros y cero en los demás. La expresión resulta negativa. Si hay un cero real repetido, la matriz es singular.
+
+Esto prueba (2) sin RH.
+
+La ventaja sobre el momento de orden dos es que funciona con grupos de cualquier tamaño. Si Casanya concentra cuatro predicciones, la espiral puede estudiar las cuatro conjuntamente sin tener que asignar inicialmente una a cada índice.
+
+Advertencia importante: (2) todavía es un criterio algebraico de los ceros encerrados, no una demostración de que la matriz sea positiva. Para progresar necesitamos obtener esa positividad mediante una desigualdad analítica sobre las integrales, sin conocer los ceros.
+
+## 3. Tercer avance: una desigualdad que conecta directamente los primos de Casanya con la espiral
+
+Podemos construir una función entera cuyos ceros sean exactamente las ordenadas sintéticas Casanya, sin utilizar ceros verdaderos:
+
+\\[ \boxed{ G_a(z)=\prod\_{k\ge1} \left(1-\frac{z^2}{c\_{a,k}^2}\right). } \tag{3} \\]
+
+Para los exponentes \\(0\<a\le1\\) estudiados, la convergencia del producto se deduce de
+
+\\[ c\_{a,k}=\tau_k+ O\left(\frac{\tau_k^{a/2}}{\log\tau_k}\right), \\]
+
+siempre que ningún centro sea cero, condición que puede comprobarse por separado en el tramo inicial.
+
+Definimos ahora un nuevo objeto:
+
+\\[ \boxed{ \mathcal E_a(z)= \frac{F'(z)}{F(z)} - \frac{G_a'(z)}{G_a(z)}. } \tag{4} \\]
+
+Aquí se enfrentan directamente los dos sistemas:
+
+- \\(G_a\\): ceros construidos con RvM y primos.
+- \\(F\\): espectro completo de la función \\(\xi\\).
+
+No aparecen las ordenadas verdaderas como datos en (4).
+
+### Una desigualdad individual para cada contorno
+
+Sea \\(\Gamma\\) un contorno simétrico que no atraviese ceros de ninguna de las dos funciones. Definimos
+
+\\[ \boxed{ E\_\Gamma= \frac1{2\pi}\oint\_\Gamma |\mathcal E_a(z)|\\,|dz|. } \tag{5} \\]
+
+Supongamos que la región encierra \\(n\\) ceros sintéticos Casanya distintos y reales, \\(q_1,\ldots,q_n\\).
+
+Elegimos un centro real \\(b\\) y
+
+\\[ R=\max\_{z\in\Gamma}|z-b|. \\]
+
+Con las coordenadas normalizadas \\(u=(z-b)/R\\), construimos la matriz de referencia
+
+\\[ H_C= \left( \sum\_{\nu=1}^n \left(\frac{q\_\nu-b}{R}\right)^{r+s} \right)\_{0\le r,s\<n}. \\]
+
+Teorema de transporte espectral por contornos.
+
+Si
+
+\\[ \boxed{ E\_\Gamma< \frac{\lambda\_{\min}(H_C)}{n}, } \tag{6} \\]
+
+entonces la región encerrada por \\(\Gamma\\) contiene exactamente \\(n\\) ceros de \\(F\\), todos reales y simples.
+
+### Demostración
+
+La diferencia entre los momentos espectrales verdaderos y los del modelo es
+
+\\[ m_j(F)-m_j(G_a)= \frac1{2\pi i}\oint\_\Gamma \left(\frac{z-b}{R}\right)^j \mathcal E_a(z)\\,dz. \\]
+
+Por tanto,
+
+\\[ \boxed{ |m_j(F)-m_j(G_a)|\le E\_\Gamma. } \tag{7} \\]
+
+Para \\(j=0\\), la diferencia es un entero: la diferencia entre los números de ceros encerrados. Como (6) implica \\(E\_\Gamma<1\\), ambos recuentos coinciden.
+
+Además, cada entrada de las dos matrices de momentos difiere como máximo en \\(E\_\Gamma\\). Por tanto,
+
+\\[ \\|H_F-H_C\\|\_2\le nE\_\Gamma. \\]
+
+La desigualdad (6) implica que \\(H_F\\) es definida positiva. Por el teorema anterior, sus \\(n\\) ceros son reales y simples.
+
+Queda demostrado.
+
+Esta condición no utiliza RMS, posiciones verdaderas ni una constante uniforme en \\(k\\).
+
+## 4. El resultado es especialmente sencillo para dos ceros
+
+Sean \\(q_1\<q_2\\) dos centros Casanya dentro del contorno. Elegimos
+
+\\[ b=\frac{q_1+q_2}{2}, \qquad d=q_2-q_1. \\]
+
+La matriz sintética se simplifica:
+
+\\[ H_C= \begin{pmatrix} 2&0\\\ 0&\dfrac{d^2}{2R^2} \end{pmatrix}. \\]
+
+Podemos mejorar la condición general (6) utilizando directamente el discriminante de los dos ceros.
+
+Obtenemos la condición suficiente
+
+\\[ \boxed{ E\_\Gamma<1, \qquad 2E\_\Gamma+E\_\Gamma^2< \left(\frac dR\right)^2. } \tag{8} \\]
+
+Si se cumplen ambas, los dos ceros verdaderos encerrados son reales y distintos.
+
+Observa que no exigimos que cada centro Casanya esté cerca del cero de su mismo índice. Basta con que los dos ceros puedan certificarse conjuntamente.
+
+Ésta es una propiedad distinta de \\(R_k<1\\) para los centros originales.
+
+## 5. Qué aporta realmente la geometría espiral
+
+Hay una limitación demostrable: dar más vueltas alrededor de exactamente los mismos ceros no produce nuevos momentos independientes. El teorema de los residuos devuelve las mismas sumas, multiplicadas por el número de vueltas.
+
+Pero modificar la geometría del contorno sí puede cambiar \\(E\_\Gamma\\).
+
+Esto sugiere un cometido concreto para la espiral: buscar regiones que agrupen los ceros difíciles y permitan obtener cotas pequeñas para la discrepancia (4), sin hacer ninguna hipótesis sobre la posición de esos ceros.
+
+Etapa A · Referencia aritmética
+
+\\[ \\{\tau_k\\}+\text{primos}\longrightarrow G_a(z) \\]
+
+Centros que pueden estar desplazados, comprimidos o invertidos.
+
+Etapa B · Espiral espectral
+
+\\[ \Gamma\longrightarrow E\_\Gamma,\ H_F \\]
+
+Se pueden agrupar dos, tres o más ceros sin asignarlos todavía.
+
+Etapa C · Certificación de realidad y separación
+
+\\[ H_F\succ0 \\]
+
+Todos los ceros del grupo son críticos y simples; después se ordenan mediante los recuentos acumulados.
+
+## 6. ¿Y hasta infinito?
+
+Aquí hay que conservar tu exigencia sin rebajarla.
+
+La condición (6) es un teorema válido a cualquier altura, pero todavía no hemos demostrado que se satisfaga para todos los contornos necesarios. En particular, una separación sintética muy pequeña puede hacer que el lado derecho de (6) también sea pequeño.
+
+La tarea concreta pasa a ser demostrar que existen regiones espectrales consecutivas, que cubran toda la banda de ordenadas positivas, para las que se cumpla una desigualdad como
+
+\\[ \boxed{ E\_{\Gamma_j}< \frac{\lambda\_{\min}(H\_{C,j})}{n_j} \qquad \text{para cada }j\ge1. } \tag{9} \\]
+
+Las regiones sin ceros sintéticos requieren además \\(E\_{\Gamma_j}<1\\), para excluir allí ceros adicionales.
+
+Si se demostraran estas condiciones para una partición exhaustiva, obtendríamos RH y simplicidad, sin márgenes uniformes ni errores medios.
+
+La cuestión nueva no es ya controlar cada diferencia de fase entre ordenadas consecutivas. Es controlar la discrepancia analítica entre dos derivadas logarítmicas a lo largo de contornos adaptativos.
+
+No conozco una obstrucción demostrada que descarte esa posibilidad. Tampoco tenemos aún una estimación suficiente de \\(\mathcal E_a(z)\\) para afirmar que funcionará.
+
+Ésta es la línea que considero más precisa para continuar: estudiar si la estructura prima de \\(G_a\\) y la representación integral de \\(\Xi\\) permiten demostrar (9) hasta infinito. Ya tenemos una desigualdad suficiente y una demostración exacta de sus consecuencias. Lo que falta es resolver su contenido aritmético.
