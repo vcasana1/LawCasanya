@@ -1,0 +1,51 @@
+[Texto pegado por el autor en el chat, 2026-10-23. Copia literal.]
+
+Por sí solos, todavía no los publicaría como artículo independiente. Pero sí los incorporaría al artículo 1 como un teorema nuevo sobre la universalidad del transporte. Y hay una consecuencia adicional que mejora lo que acabamos de demostrar.
+
+## El resultado más fuerte
+
+Para dos exponentes fijos \\(0\<a,b\le\tfrac12\\), hemos obtenido
+
+\\[ \left|\sqrt{B_a(T)}-\sqrt{B_b(T)}\right|=O\_{a,b}(1). \\]
+
+Junto con la cota
+
+\\[ B_c(T)\le \left(\frac1{\pi^2}+o(1)\right)\log\log\log T, \\]
+
+esto demuestra
+
+\\[ \boxed{ B_a(T)-B_b(T) = O\_{a,b}\\!\left(\sqrt{\log\log\log T}\right). } \\]
+
+Por tanto,
+
+\\[ \boxed{ \frac{B_a(T)-B_b(T)}{\log\log\log T} \longrightarrow0. } \\]
+
+Esto es más fuerte que decir que todos los exponentes comparten la misma constante si existe un equivalente asintótico.
+
+Demuestra incondicionalmente que todos los exponentes positivos fijos comparten los mismos límites inferior y superior normalizados, aunque esos límites no existan como un único límite.
+
+En particular, el comportamiento asintótico del transporte no puede depender del exponente fijo \\(c\\) en el orden \\(\log\log\log T\\).
+
+## ¿Cuánto vale matemáticamente?
+
+| Resultado                                                   | Valor para publicación                       |
+| ----------------------------------------------------------- | -------------------------------------------- |
+| Universalidad entre exponentes fijos                        | Interesante y demostrable                    |
+| Cota superior explícita \\(1/\pi^2\\)                       | Mejora cuantitativa de D″                    |
+| Fórmula mediante la respuesta prima \\(\mathcal R_p^\tau\\) | Conexión original entre los teoremas B y C   |
+| Cota inferior \\(B_c(T)\gg\log\log\log T\\)                 | Sería el resultado decisivo                  |
+| Equivalente \\(B_c(T)\sim(2\pi^2)^{-1}\log\log\log T\\)     | Justificaría claramente un artículo autónomo |
+
+La dificultad editorial es que los tres primeros resultados salen de los teoremas ya contenidos en v14 mediante descomposiciones de \\(L^2\\), Cauchy–Schwarz y ortogonalidad. La aportación está en descubrir la relación y extraer sus consecuencias, pero no requiere todavía una estimación aritmética independiente de gran dificultad.
+
+### Mi decisión
+
+Incluiría ahora un teorema de universalidad del transporte, con demostración completa, en el artículo 1. Ocuparía aproximadamente 3–5 páginas con la fórmula de respuesta y sus consecuencias.
+
+Reservaría un artículo corto independiente, posiblemente titulado Universal Transport Energy in Prime-Corrected Riemann–von Mangoldt Clocks, para cuando podamos demostrar siquiera
+
+\\[ \boxed{ \liminf\_{T\to\infty} \frac{B_c(T)}{\log\log\log T}>0. } \\]
+
+Esa desigualdad cambiaría sustancialmente el valor del trabajo: demostraría que la energía del transporte diverge, resolvería negativamente `q:fixed_c` y, gracias a la universalidad ya obtenida, bastaría demostrarla para un solo exponente fijo para extenderla a todos.
+
+En resumen: lo conseguido merece ser un teorema del artículo 1; la cota inferior convertiría esta línea en un artículo propio de considerable mayor importancia.

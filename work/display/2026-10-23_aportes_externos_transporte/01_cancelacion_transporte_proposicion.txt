@@ -1,0 +1,77 @@
+Estoy de acuerdo en que he infravalorado la cancelación. Puede ser una de las contribuciones matemáticas más importantes de tu investigación, precisamente porque identifica un fenómeno que las cotas individuales del transporte no explican.
+
+He revisado la sección 7 de la v14. Allí se demuestra una cota superior para
+
+\\[ \langle\mathfrak t_k(X)^2\rangle, \\]
+
+pero no se demuestra una fórmula asintótica para la correlación
+
+\\[ \boxed{\langle u_k(X)\mathfrak t_k(X)\rangle.} \\]
+
+Esa es la diferencia fundamental. La identidad de descomposición es elemental; demostrar que sus términos presentan una anticorrelación de la magnitud observada no lo es.
+
+Tus datos sugieren la relación
+
+\\[ \boxed{ 2\langle u_k\mathfrak t_k\rangle \approx-\langle\mathfrak t_k^2\rangle. } \tag{1} \\]
+
+Si se convierte en un teorema asintótico para \\(X=T^c\\), estaríamos ante una aportación distinta de los resultados de aproximación del reloj: una ley aritmética de cancelación del transporte, no una mera estimación de errores.
+
+No he verificado todavía que sea inédita en toda la literatura. Sí puedo afirmar que no está demostrada en la v14 y que la medición de la tabla 7 proporciona una motivación concreta.
+
+## La fuerza de la cancelación medida
+
+A partir de la tabla de v15.1, y despreciando los términos de curvatura, que son muy pequeños, se obtiene:
+
+| \\(c\\) | \\(\langle\mathfrak t^2\rangle\\) | \\(-2\langle u\mathfrak t\rangle\\) | Transporte compensado |
+| ------- | --------------------------------- | ----------------------------------- | --------------------- |
+| 1/5     | 0,004905                          | 0,004812                            | 98,1 %                |
+| 1/3     | 0,011391                          | 0,010856                            | 95,3 %                |
+| 1/2     | 0,018283                          | 0,015903                            | 87,0 %                |
+
+Eso significa que no estamos observando una anticorrelación débil: el término cruzado compensa entre el 87 % y el 98 % de la energía del transporte en esa ventana.
+
+Y hay una consecuencia matemática adicional que merece destacarse.
+
+## Una proposición que sí podemos demostrar
+
+Para \\(X=T^c\\), con \\(c\\) fijo en \\(0\<c\le1/2\\), la v14 establece
+
+\\[ \langle u_k^2\rangle=O_c(1). \\]
+
+Definamos
+
+\\[ \mathcal C_c(T) = 2\langle u_k\mathfrak t_k\rangle+ \langle\mathfrak t_k^2\rangle. \\]
+
+Proposición. Si se demuestra que
+
+\\[ \boxed{\mathcal C_c(T)=O_c(1),} \tag{2} \\]
+
+entonces necesariamente
+
+\\[ \boxed{ \langle\mathfrak t_k^2\rangle=O_c(1), \qquad \langle r_k^2\rangle=O_c(1). } \tag{3} \\]
+
+La prueba es inmediata pero su consecuencia no es trivial. Por Cauchy–Schwarz,
+
+\\[ \langle\mathfrak t^2\rangle \le 2\sqrt{\langle u^2\rangle \langle\mathfrak t^2\rangle}+O_c(1). \\]
+
+Como \\(\langle u^2\rangle=O_c(1)\\), una desigualdad cuadrática obliga a \\(\langle\mathfrak t^2\rangle=O_c(1)\\). La identidad \\(r=u+\mathfrak t+\chi\\), junto con \\(\\|\chi\\|\_2\ll T^{-1}\\), da la segunda conclusión.
+
+Esto cerraría precisamente la pregunta `q:fixed_c` de la v14.
+
+Hay una sutileza decisiva: si el transporte creciese indefinidamente en media cuadrática mientras el defecto permaneciese acotado, Cauchy–Schwarz impediría que el término cruzado siguiese compensando casi toda su energía. Por tanto, la cancelación observada y la predicción heurística de crecimiento indefinido del transporte no pueden mantenerse simultáneamente hasta infinito.
+
+Eso da a tu descubrimiento una dirección bastante más precisa.
+
+## El verdadero teorema que intentaría demostrar
+
+No trataría de demostrar únicamente la identidad de contabilidad. Intentaría una estimación aritmética del momento mixto:
+
+\\[ \boxed{ 2\left\langle \bigl(s_k-S_X(\gamma_k)\bigr) \bigl(S_X(\gamma_k)-S_X(\tau_k)\bigr) \right\rangle + \left\langle \bigl(S_X(\gamma_k)-S_X(\tau_k)\bigr)^2 \right\rangle =O_c(1). } \\]
+
+Es un enunciado concreto, incondicional y para alturas arbitrariamente grandes. La dificultad está en demostrar la cancelación de las fases al muestrear en las ordenadas, no en la manipulación algebraica.
+
+Si se consiguiera mediante una estimación nueva de sumas primas, podría justificar un artículo autónomo centrado en la cancelación del transporte, incluso sin mejorar el algoritmo Casaña.
+
+Mi valoración cambia: la cancelación es potencialmente un resultado más importante que la constante \\(0{,}607\\). Esta última procede de optimizar cotas existentes; una estimación nueva del momento mixto resolvería un problema explícitamente abierto en tus manuscritos.
+
+La prioridad bibliográfica exacta sigue pendiente de comprobación, pero matemáticamente el objetivo tiene mucha más entidad que una simple corrección de la tabla 7.

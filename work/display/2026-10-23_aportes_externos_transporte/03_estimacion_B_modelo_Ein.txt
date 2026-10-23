@@ -1,0 +1,157 @@
+## Estimación de \\(B_c(T)\\)
+
+Para \\(X=T^c\\), \\(0\<c\le\tfrac12\\), define
+
+\\[ B_c(T)=\frac1{N_T}\sum\_{T<\gamma_k\le2T} \bigl[S_X(\gamma_k)-S_X(\tau_k)\bigr]^2. \\]
+
+Mi estimación de trabajo es
+
+\\[ \boxed{ B_c(T)\ \sim\_{\mathrm{modelo}}\ \frac{1}{2\pi^2}\log\log\log T \qquad(c>0\text{ fijo}). } \tag{1} \\]
+
+La constante principal sería \\(1/(2\pi^2)\approx0{,}05066\\), independiente de \\(c\\). La dependencia del corte aparecería en el término constante.
+
+Esta es una predicción, no un teorema. Lo demostrado en D″ de v14 es únicamente
+
+\\[ 0\le B_c(T)\ll_c1+\log\log\log T. \tag{2} \\]
+
+Voy a precisar el origen de la predicción y contrastarla con tus tres valores observados.
+
+## 2. Derivación del modelo
+
+La suma prima dominante tiene la forma
+
+\\[ S_X(t)\simeq-\frac1\pi\sum\_{p\le X} \frac{\sin(t\log p)}{\sqrt p}. \\]
+
+Escribamos
+
+\\[ s_k=N_0(\tau_k)-N_0(\gamma_k), \qquad V_T=\langle s_k^2\rangle. \\]
+
+Por el teorema del valor medio,
+
+\\[ (\tau_k-\gamma_k)\log p = 2\pi s_k\frac{\log p}{\log T} \left(1+O\left(\frac1{\log T}\right)\right) \\]
+
+uniformemente en la ventana, bajo las cotas puntuales del manuscrito.
+
+Definamos la frecuencia prima normalizada
+
+\\[ q=\frac{\log p}{\log T}. \\]
+
+Si las fases primas se comportaran diagonalmente en la media sobre ceros, tendríamos
+
+\\[ B_c(T)\approx \frac1{\pi^2}\sum\_{p\le T^c} \frac{1-\langle\cos(2\pi q s_k)\rangle}{p}. \tag{3} \\]
+
+Ahora introducimos una hipótesis adicional: que la función característica de \\(s_k\\), en las frecuencias relevantes, sea aproximadamente gaussiana, con varianza \\(V_T\\):
+
+\\[ \langle\cos(2\pi q s_k)\rangle \approx e^{-2\pi^2 V_Tq^2}. \\]
+
+Aplicando la distribución de los primos a la suma diagonal obtenemos el modelo explícito
+
+\\[ \boxed{ B_c^{\mathrm{mod}}(T)= \frac1{2\pi^2} \operatorname{Ein}(2\pi^2V_Tc^2), } \tag{4} \\]
+
+donde
+
+\\[ \operatorname{Ein}(z) = \int_0^z\frac{1-e^{-v}}{v}\\,dv. \\]
+
+Esta fórmula proporciona dos regímenes.
+
+Régimen inicial: cuando \\(2\pi^2V_Tc^2\ll1\\),
+
+\\[ \boxed{ B_c^{\mathrm{mod}}(T) =c^2V_T-\frac{\pi^2}{2}c^4V_T^2 +O(c^6V_T^3). } \tag{5} \\]
+
+Aquí recuperamos precisamente el comportamiento \\(c^2\langle s_k^2\rangle\\) que has identificado.
+
+Régimen asintótico: como
+
+\\[ V_T\sim\frac{\log\log T}{2\pi^2}, \\]
+
+para \\(c>0\\) fijo el argumento de \\(\operatorname{Ein}\\) tiende a infinito. Utilizando
+
+\\[ \operatorname{Ein}(z) =\log z+\gamma\_{\mathrm E}+E_1(z), \\]
+
+se llega a
+
+\\[ \boxed{ B_c^{\mathrm{mod}}(T)= \frac{\log\log\log T}{2\pi^2} +\frac{\log(c^2)+\gamma\_{\mathrm E}}{2\pi^2} +o(1). } \tag{6} \\]
+
+Este término constante pertenece al modelo; no está demostrado que sea el de la función real.
+
+## 3. Comparación numérica con la tabla 7
+
+Utilizo la varianza medida en tu ventana, \\(V_T=0{,}11279\\), en lugar de su aproximación asintótica.
+
+| \\(c\\) | \\(B_c\\) observado | Modelo (4) | Diferencia relativa del modelo |
+| ------- | ------------------- | ---------- | ------------------------------ |
+| 1/5     | 0,004905            | 0,004413   | −10,0 %                        |
+| 1/3     | 0,011391            | 0,011798   | +3,6 %                         |
+| 1/2     | 0,018283            | 0,024713   | +35,2 %                        |
+
+ObservadoModelo
+
+00.0070.0140.0210.0281/51/31/2
+
+Modelo diagonal-gaussiano frente a los tres valores de la tabla 7; ventana 2¹⁹–2²⁰.
+
+La predicción funciona razonablemente para \\(c=1/5\\) y \\(1/3\\), pero sobreestima de manera apreciable el transporte para \\(c=1/2\\).
+
+Esto es relevante: hay correlaciones adicionales que el modelo diagonal-gaussiano no incorpora. La estadística de la tabla no permite todavía determinar si esas correlaciones alteran únicamente el término constante o incluso el coeficiente principal del crecimiento.
+
+## 4. Una cota uniforme que sí se obtiene de v14
+
+Hay una formulación útil de los resultados ya demostrados.
+
+Pongamos \\(H=\log\log T\\). Combinando el lema de transporte con D″ se obtiene, uniformemente para \\(0\<c\le1/2\\) en el rango admisible,
+
+\\[ \boxed{ B_c(T)\ll \begin{cases} c^2H,&c^2H\le1,\\\\[2mm] 1+\log(c^2H),&c^2H\ge1. \end{cases} } \tag{7} \\]
+
+La constante implícita puede tomarse absoluta bajo las condiciones uniformes de los teoremas de v14.
+
+La escala de transición es
+
+\\[ \boxed{c\_{\mathrm{crit}}\asymp(\log\log T)^{-1/2}.} \\]
+
+Es exactamente la misma escala que aparece en la construcción del reloj corregido.
+
+Lo interesante es que la envolvente rigurosa (7) y el modelo (4) tienen la misma estructura de transición, aunque esto no demuestra que el modelo sea correcto.
+
+## 5. Qué falta para demostrar la estimación asintótica
+
+Volviendo a la suma prima, el cuadrado del transporte contiene términos de dos tipos:
+
+\\[ B_c(T)=B_c^{\mathrm{diag}}(T)+B_c^{\mathrm{off}}(T), \\]
+
+más las contribuciones de potencias primas, donde los términos diagonales corresponden a productos con el mismo primo y los no diagonales a primos distintos.
+
+La fórmula (4) presupone que el término no diagonal es despreciable al orden principal y que las fases diagonales satisfacen la aproximación gaussiana necesaria.
+
+El problema es que \\(\tau_k-\gamma_k\\) depende de los propios ceros y de las fases primas. No podemos aplicar directamente la ortogonalidad de polinomios de Dirichlet con desplazamiento fijo.
+
+Para justificar (1), bastaría demostrar una estimación del tipo
+
+\\[ B_c^{\mathrm{off}}(T)=o(\log\log\log T) \\]
+
+junto con el equivalente diagonal
+
+\\[ B_c^{\mathrm{diag}}(T) \sim\frac1{2\pi^2}\log\log\log T. \\]
+
+Ninguna de esas dos afirmaciones se deduce actualmente de D″. En particular, la convergencia gaussiana ordinaria de \\(s_k/\sqrt{\log\log T}\\) no controla automáticamente todas las frecuencias \\(q\\) necesarias.
+
+## Mi estimación final
+
+Para \\(c\\) fijo, mi hipótesis principal sería
+
+\\[ \boxed{ B_c(T)\asymp\log\log\log T, } \\]
+
+con la predicción más precisa
+
+\\[ \boxed{ B_c(T)\sim\frac1{2\pi^2}\log\log\log T } \\]
+
+si la diagonal prima gobierna el término principal.
+
+Le asignaría confianza moderada como modelo y ninguna condición de teorema demostrado: la escala coincide con D″, explica el régimen de cortes pequeños y tiene un mecanismo aritmético explícito, pero el desajuste observado para \\(c=1/2\\) impide dar por validada la constante.
+
+La consecuencia sería decisiva para interpretar la tabla 7: la cancelación del 87–98 % sería un fenómeno de altura finita, no una ley asintótica persistente, porque para \\(c\\) fijo y \\(B_c(T)\to\infty\\), Cauchy–Schwarz obliga a que la fracción compensada tienda a cero.
+
+El siguiente resultado matemático sustancial sería demostrar siquiera una cota inferior
+
+\\[ \boxed{ B_c(T)\gg_c\log\log\log T. } \\]
+
+Combinada con D″, establecería el orden exacto de crecimiento y resolvería negativamente `q:fixed_c` para el reloj de un paso. Esa cota inferior es ahora el objetivo preciso; no la tenemos demostrada.

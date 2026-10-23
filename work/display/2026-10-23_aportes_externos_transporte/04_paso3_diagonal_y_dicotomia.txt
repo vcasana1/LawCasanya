@@ -1,0 +1,186 @@
+## 1. He conseguido cerrar una parte del paso 3 sin suponer independencia
+
+La ley de distribución de \\(s_k\\) de tu `cor:signed_law` permite demostrar una cancelación oscilatoria promediada en la escala de los primos. Es más fuerte que limitarse a citar una aproximación gaussiana para frecuencias fijas.
+
+Sea
+
+\\[ V_T=\frac{\log\log T}{2\pi^2},\qquad \theta_T=\frac{\omega_T}{\sqrt{V_T}}, \\]
+
+con \\(\omega_T\to\infty\\) suficientemente despacio, y supongamos \\(\theta_T\<c\\).
+
+Lema. Si \\(s_k/\sqrt{V_T}\\) converge en distribución a una variable continua cuya ley no tiene átomo en cero, entonces
+
+\\[ \boxed{ \frac1{N_T}\sum\_{T<\gamma_k\le2T} \int\_{\theta_T}^{c} \cos(2\pi\theta s_k)\\,\frac{d\theta}{\theta} = o\left(\log\frac c{\theta_T}\right). } \tag{1} \\]
+
+La prueba no necesita independencia entre \\(s_k\\) y las fases primas.
+
+En efecto, para \\(s\ne0\\), integración por partes da
+
+\\[ \left| \int\_{\theta_T}^{c} \cos(2\pi\theta s)\\,\frac{d\theta}{\theta} \right| \le\frac{1}{\pi\theta_T|s|}. \\]
+
+Separamos los índices según
+
+\\[ |s_k|<\frac{\sqrt{V_T}}{\sqrt{\omega_T}}. \\]
+
+Por la ley límite, la proporción de estos índices tiende a cero. Su contribución es \\(o(\log(c/\theta_T))\\).
+
+Para los restantes,
+
+\\[ \frac1{\theta_T|s_k|} \le\frac1{\sqrt{\omega_T}}\longrightarrow0. \\]
+
+La contribución promedio de estos últimos es \\(o(1)\\), lo que prueba (1).
+
+Resultado: el factor oscilatorio diagonal que parecía exigir una estimación de la función característica a frecuencias crecientes puede controlarse mediante la ley límite ya obtenida en v14.
+
+Esto cierra la cancelación del modelo diagonal continuo, pero todavía no permite identificarlo automáticamente con la diagonal aritmética de la suma sobre primos. Esa identificación requiere controlar uniformemente el paso de la suma prima a la integral.
+
+## 2. La diagonal aritmética también puede cerrarse
+
+El lema anterior admite una aplicación directa a los primos de la banda
+
+\\[ \mathcal P_T= \\{p:T^{\theta_T}\le p\le T^c\\}. \\]
+
+Para cada \\(k\\), la identidad del reloj da
+
+\\[ N_0(\tau_k)-N_0(\gamma_k)=s_k. \\]
+
+Por el teorema del valor medio,
+
+\\[ (\tau_k-\gamma_k)\log p = 2\pi\theta_p s_k + O\left(\frac{\theta_p|s_k|}{\log T}\right), \qquad \theta_p=\frac{\log p}{\log T}. \\]
+
+Como \\(\langle s_k^2\rangle\asymp V_T\\), el error medio de esta sustitución es \\(o(1)\\).
+
+Por otra parte, el teorema de los números primos permite sustituir
+
+\\[ \sum\_{p\in\mathcal P_T}\frac{f(\theta_p)}p \\]
+
+por
+
+\\[ \int\_{\theta_T}^{c}f(\theta)\frac{d\theta}{\theta} \\]
+
+con un error uniforme despreciable para las funciones \\(f(\theta)=\cos(2\pi\theta s_k)\\), utilizando la cota puntual conocida \\(|s_k|\ll\log T\\).
+
+Por tanto, combinando el teorema de los números primos con (1),
+
+\\[ \boxed{ \sum\_{p\in\mathcal P_T} \frac1p \left\langle \cos\bigl((\gamma_k-\tau_k)\log p\bigr) \right\rangle = o\left(\log\frac c{\theta_T}\right). } \tag{2} \\]
+
+Esta es una conclusión incondicional obtenida de la ley de distribución de \\(s_k\\) y de resultados clásicos sobre primos. No requiere una ley conjunta de todas las fases.
+
+Hemos eliminado la contribución principal de la diagonal \\(p=q\\) correspondiente a la diferencia de fases.
+
+Todavía hay que controlar el término de suma de fases \\(\cos((\gamma_k+\tau_k)\log p)\\), que aparece al multiplicar los senos. No debe confundirse con la diagonal ya resuelta.
+
+## 3. El problema restante se puede reducir a una sola estimación
+
+Escribamos, ignorando momentáneamente las potencias primas,
+
+\\[ W(t)=-\frac1\pi\sum\_{q\in\mathcal P_T}\frac{\sin(t\log q)}{\sqrt q}. \\]
+
+El teorema de equidistribución del reloj de v14 da
+
+\\[ L_T:=\langle W(\tau_k)^2\rangle = \frac1{2\pi^2}\log\frac c{\theta_T}+o(1). \\]
+
+Además,
+
+\\[ L_T\sim\frac1{4\pi^2}\log\log\log T. \\]
+
+Descompongamos
+
+\\[ \langle S_X(\gamma_k)W(\tau_k)\rangle = D_T+\mathcal O_T, \\]
+
+donde \\(D_T\\) es la diagonal de diferencia de fases controlada por (2), y \\(\mathcal O_T\\) contiene todos los términos cruzados restantes, incluidos los de suma de fases.
+
+Ya sabemos que
+
+\\[ D_T=o(L_T). \\]
+
+Entonces
+
+\\[ \langle\mathfrak t,W(\tau)\rangle = -L_T+\mathcal O_T+o(L_T). \\]
+
+Aplicando la proyección,
+
+\\[ \boxed{ B_c(T)\ge \frac{\bigl(L_T-\mathcal O_T+o(L_T)\bigr)^2} {L_T+o(L_T)}. } \tag{3} \\]
+
+Esta desigualdad permite formular una disyuntiva concreta.
+
+- Si \\(\mathcal O_T=o(L_T)\\), queda demostrada tu cota inferior con constante \\(1/(4\pi^2)\\).
+- Si \\(B_c(T)=O_c(1)\\), entonces necesariamente
+
+\\[ \boxed{\mathcal O_T=L_T+o(L_T).} \tag{4} \\]
+
+Este segundo resultado es significativo: si el transporte permanece acotado hasta infinito, los términos fuera de la diagonal deben reconstruir asintóticamente toda la energía de \\(W\\). No basta una correlación residual pequeña.
+
+Así, el problema se ha concentrado en decidir si existe esa correlación macroscópica fuera de la diagonal.
+
+## 4. He comprobado la ruta Arguin–Bourgade–Radziwiłł
+
+He consultado directamente [The Fyodorov–Hiary–Keating Conjecture II](https://arxiv.org/pdf/2307.00982?utm_source=chatgpt.com).
+
+Sus autores desarrollan un análisis multiescala de polinomios de Dirichlet en primos, con aproximaciones por paseos gaussianos y técnicas de momentos. Pero su resultado principal se refiere al máximo de \\(\log|\zeta(1/2+it)|\\) en intervalos cortos. No establece directamente una ley conjunta para \\(S(t)=\pi^{-1}\arg\zeta(1/2+it)\\) y las ordenadas muestreadas.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://arxiv.org\&sz=32)
+
+arxiv.org
+
+
+
+También encontré un antecedente más cercano, publicado en 2025:
+
+Selberg's Central Limit Theorem weighted by Linear Statistics of Zeta Zeros.
+
+Sus autores demuestran teoremas centrales del límite con estadísticas locales de ceros como pesos. La extensión de soporte para la parte imaginaria de \\(\log\zeta\\) exige RH; además, el peso considerado es una estadística suavizada sobre \\(dt\\), no exactamente la medida atómica \\(dN\\) que aparece aquí.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://arxiv.org\&sz=32)
+
+arxiv.org
+
+
+
+Esto confirma que el desacoplo buscado no se obtiene simplemente citando uno de esos artículos.
+
+Hay dos dificultades adicionales que conviene tratar antes de desarrollar la técnica multiescala:
+
+Primera: sumar sobre todos los pares. Una estimación pequeña para cada integral
+
+\\[ \frac1T\int_T^{2T} (p/q)^{it}e^{i\xi S(t)}\\,dt \\]
+
+no basta. Hay que controlar la suma con los pesos \\(1/\sqrt{pq}\\); los errores individuales pueden acumularse hasta superar \\(L_T\\).
+
+Segunda: la medida de ceros. Sustituir \\(dN\\) por \\(\Lambda(t)\\,dt\\) no es una aproximación inocua para estos productos oscilatorios. La diferencia es una medida singular y puede contribuir al orden principal. Además, la correspondencia \\(\tau_k=\Phi(\gamma_k)\\) con una única función \\(\Phi\\) necesita tratar separadamente las ordenadas repetidas. Para una prueba incondicional debemos conservar los índices con multiplicidad y no presuponer simplicidad.
+
+## 5. Resultado alcanzado y siguiente objetivo exacto
+
+La cadena queda ahora:
+
+Ley de distribución de \\(s_k\\)
+
+Cancelación oscilatoria integrada en \\(\theta\\)
+
+Diagonal prima de diferencia de fases
+
+Suma ponderada fuera de la diagonal
+
+Abierto
+
+Cota inferior \\(B_c(T)\gg\log\log\log T\\)
+
+Pendiente
+
+El resultado nuevo de este análisis es la reducción (3)–(4), apoyada por la cancelación diagonal (2).
+
+La próxima estimación que hace falta demostrar es
+
+\\[ \boxed{ \mathcal O_T=o(\log\log\log T), } \\]
+
+incluyendo los términos de suma de fases, las potencias primas y las contribuciones de la medida \\(dN\\).
+
+Si resulta cierta, se obtiene
+
+\\[ \boxed{ B_c(T)\ge \left(\frac1{4\pi^2}-o(1)\right) \log\log\log T, } \\]
+
+y `q:fixed_c` tendría respuesta negativa para el reloj de un paso.
+
+Si resulta falsa, la alternativa (4) identifica algo igualmente relevante: una correlación aritmética fuera de la diagonal suficientemente grande para sostener la compensación del transporte.
+
+Por tanto, no descartaría la investigación de la cancelación. El objetivo más preciso ya no es demostrar una independencia genérica entre escalas primas, sino calcular o acotar \\(\mathcal O_T\\) con su signo y magnitud. Ese es el punto matemático que decide entre los dos escenarios.

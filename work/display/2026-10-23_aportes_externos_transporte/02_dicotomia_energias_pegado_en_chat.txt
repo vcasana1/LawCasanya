@@ -1,0 +1,82 @@
+[Texto pegado por el autor en el chat, 2026-10-23, precedido de la orden "estima B". Copia literal.]
+
+Tu corrección es acertada. Mi proposición anterior no aportaba un avance: reformulaba `q:fixed_c` utilizando la identidad de las energías. La retiro como candidato a resultado nuevo.
+
+Pero tu segunda observación permite establecer una conclusión más fuerte que la desaparición de la compensación relativa.
+
+## 1. Un resultado riguroso sobre el transporte
+
+Para \\(X=T^c\\), \\(c>0\\) fijo, escribamos
+
+\\[ A(T)=\langle u^2\rangle,\qquad B(T)=\langle\mathfrak t^2\rangle,\qquad R(T)=\langle r^2\rangle. \\]
+
+Tenemos
+
+\\[ r=u+\mathfrak t+\chi, \\]
+
+con \\(A(T)=O_c(1)\\) y el término de curvatura \\(\chi\\) despreciable en \\(L^2\\) en el régimen considerado.
+
+La desigualdad triangular y su inversa dan
+
+\\[ \boxed{ \left|\sqrt{R(T)}-\sqrt{B(T)}\right| \le\sqrt{A(T)}+\sqrt{\langle\chi^2\rangle} =O_c(1). } \tag{1} \\]
+
+De aquí se deducen dos afirmaciones.
+
+Primera: la pregunta abierta de error acotado equivale, bajo esas hipótesis, a la acotación cuadrática del transporte:
+
+\\[ \boxed{ R(T)=O_c(1) \iff B(T)=O_c(1). } \tag{2} \\]
+
+Segunda: si \\(B(T)\to\infty\\), entonces
+
+\\[ \boxed{ R(T)=B(T)+O_c\\!\left(\sqrt{B(T)}+1\right), \qquad \frac{R(T)}{B(T)}\longrightarrow1. } \tag{3} \\]
+
+No solo desaparece la fracción de energía compensada: la energía del error final pasa a ser asintóticamente igual a la energía del transporte.
+
+Esto es una consecuencia rigurosa de las cotas disponibles, aunque todavía no determina qué escenario ocurre.
+
+## 2. Qué implica exactamente D″
+
+Si D″ demuestra
+
+\\[ B(T)\ll_c\log\log\log T, \\]
+
+tenemos dos escenarios posibles:
+
+| Comportamiento de \\(B(T)\\) | Consecuencia                                             |
+| ---------------------------- | -------------------------------------------------------- |
+| \\(B(T)=O_c(1)\\)            | `q:fixed_c` queda resuelta afirmativamente               |
+| \\(B(T)\to\infty\\)          | \\(R(T)\sim B(T)\\); el transporte domina el error final |
+
+La estimación D″ no decide cuál de ellos ocurre. Solo permite un crecimiento lento.
+
+Además, si \\(B(T)\\) es no acotada pero no converge a infinito, la segunda conclusión sigue siendo válida a lo largo de cualquier sucesión de alturas donde \\(B(T)\to\infty\\).
+
+## 3. Esto cambia cómo investigaría la cancelación
+
+La compensación del 87–98 % es un fenómeno numérico real en la ventana estudiada. Pero hay que distinguir dos objetivos matemáticos diferentes.
+
+El primero es demostrar
+
+\\[ \boxed{\sup\_{T\ge T_0}B(T)<\infty.} \\]
+
+Ese objetivo equivale al problema abierto de error acotado, así que no podemos presentarlo como una ruta independiente que ya esté más cerca de resolverse.
+
+El segundo, potencialmente más específico, es demostrar una ley asintótica del momento mixto,
+
+\\[ \boxed{ 2\langle u\mathfrak t\rangle +\langle\mathfrak t^2\rangle=o(1). } \tag{4} \\]
+
+Esta afirmación es más fuerte que la mera acotación: significaría que las energías del defecto y del error corregido se aproximan asintóticamente. No se deduce de D″ ni de Cauchy–Schwarz.
+
+Sería una verdadera ley de compensación, pero todavía no hay pruebas de que (4) sea cierta.
+
+Por tanto, la pregunta aritmética fundamental es:
+
+¿El transporte presenta una energía uniformemente acotada por cancelaciones internas de las fases primas, o desarrolla un crecimiento lento que terminará destruyendo la compensación observada?
+
+Para contestarla hay que estudiar directamente
+
+\\[ \mathfrak t_k = S_X(\gamma_k)-S_X(\tau_k) \\]
+
+y su segundo momento. Una cota no trivial obtenida de las correlaciones entre fases primas evaluadas en ambos relojes sería un avance genuino; la identidad de descomposición por sí sola no lo es.
+
+Conclusión: tu interpretación de D″ es correcta. Y el resultado adicional (3) precisa la disyuntiva: si el transporte crece sin límite, acabará determinando prácticamente toda la energía del error. La siguiente demostración que merece esfuerzo es una estimación independiente de \\(B(T)\\), no otra reformulación de `q:fixed_c`.

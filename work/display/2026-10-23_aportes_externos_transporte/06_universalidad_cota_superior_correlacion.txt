@@ -1,0 +1,189 @@
+## Un resultado incondicional nuevo en esta línea: el comportamiento no depende del exponente fijo
+
+He encontrado una consecuencia de los teoremas B y D″ que no necesita la cota pendiente sobre \\(\mathcal R_p^\tau\\).
+
+Proposición. Sean \\(0\<a\<b\le\tfrac12\\) dos exponentes fijos y
+
+\\[ B_c(T)=\left\langle [S\_{T^c}(\gamma_k)-S\_{T^c}(\tau_k)]^2 \right\rangle. \\]
+
+Entonces
+
+\\[ \boxed{ \left|\sqrt{B_b(T)}-\sqrt{B_a(T)}\right| =O\_{a,b}(1). } \tag{1} \\]
+
+La demostración es corta. Poniendo \\(W=S\_{T^b}-S\_{T^a}\\),
+
+\\[ \mathfrak t_b-\mathfrak t_a=W(\gamma)-W(\tau). \\]
+
+Por las identidades del defecto,
+
+\\[ W(\gamma_k)=u_k(T^a)-u_k(T^b). \\]
+
+El teorema B proporciona
+
+\\[ \langle W(\gamma)^2\rangle=O\_{a,b}(1), \\]
+
+y la ortogonalidad en los puntos RvM proporciona
+
+\\[ \langle W(\tau)^2\rangle=O\_{a,b}(1). \\]
+
+Por consiguiente,
+
+\\[ \\|\mathfrak t_b-\mathfrak t_a\\|\_2=O\_{a,b}(1), \\]
+
+y la desigualdad triangular inversa demuestra (1).
+
+### Consecuencias
+
+Primera:
+
+\\[ \boxed{ B_a(T)=O(1) \iff B_b(T)=O(1) } \\]
+
+entendido como acotación uniforme para \\(T\to\infty\\).
+
+Por tanto, `q:fixed_c` tiene la misma respuesta para todos los exponentes positivos fijos del intervalo \\((0,\tfrac12]\\).
+
+Segunda: si para algún \\(a\\)
+
+\\[ B_a(T)\longrightarrow\infty, \\]
+
+entonces, para cualquier \\(b>0\\) fijo,
+
+\\[ \boxed{\frac{B_b(T)}{B_a(T)}\longrightarrow1.} \tag{2} \\]
+
+Y si para uno de ellos se demuestra
+
+\\[ B_a(T)\sim K\log\log\log T, \\]
+
+el mismo equivalente, con idéntica constante \\(K\\), se cumple para todos los demás exponentes fijos.
+
+Este resultado no demuestra todavía el crecimiento, pero establece rigurosamente una característica que el modelo gaussiano solo predecía: si existe un término principal divergente del transporte, es universal respecto del exponente fijo \\(c\\).
+
+La demostración utiliza tus resultados sobre el defecto y la ortogonalidad del reloj, no una hipótesis probabilística. No he comprobado aún si esta consecuencia concreta ya figura en algún trabajo publicado.
+
+## 2. Una cota superior con constante explícita
+
+La misma descomposición permite mejorar cuantitativamente la lectura de D″.
+
+Proposición. Para cualquier \\(c\in(0,\tfrac12]\\) fijo, bajo los teoremas B y el lema de transporte de v14 y la ortogonalidad del reloj de v15.1,
+
+\\[ \boxed{ B_c(T)\le \frac1{\pi^2}\log\log\log T +O_c\\!\left(\sqrt{\log\log\log T}\right). } \tag{3} \\]
+
+### Demostración
+
+Pongamos
+
+\\[ H=\log\log T,\qquad Y=T^{1/\sqrt H},\qquad X=T^c, \\]
+
+y
+
+\\[ L=\frac1{2\pi^2}\log(c\sqrt H) =\frac1{4\pi^2}\log H+O_c(1). \\]
+
+La descomposición exacta del transporte es
+
+\\[ \mathfrak t_X = \mathfrak t_Y+W(\gamma)-W(\tau). \\]
+
+Tenemos, por el lema de transporte,
+
+\\[ \\|\mathfrak t_Y\\|\_2=O(1). \\]
+
+El teorema B, aplicado a ambos cortes, da
+
+\\[ \\|W(\gamma)\\|\_2^2=L+O_c(\sqrt L). \\]
+
+Y la ortogonalidad de los polinomios primos en los puntos del reloj da
+
+\\[ \\|W(\tau)\\|\_2^2=L+o(1). \\]
+
+Así,
+
+\\[ \begin{aligned} \sqrt{B_c(T)} &\le \\|\mathfrak t_Y\\|\_2 +\\|W(\gamma)\\|\_2+\\|W(\tau)\\|\_2\\\ &\le 2\sqrt L+O_c(1). \end{aligned} \\]
+
+Elevando al cuadrado,
+
+\\[ B_c(T)\le4L+O_c(\sqrt L), \\]
+
+que es (3).
+
+La mejora consiste en obtener un coeficiente principal explícito, mientras que el enunciado de D″ solamente proporciona una constante implícita.
+
+No es todavía la constante \\(1/(2\pi^2)\\) que predice el modelo: la cota demostrada es el doble.
+
+## 3. La respuesta armónica resulta ser una correlación normalizada
+
+Esta es la formulación que considero más útil para continuar la demostración.
+
+Volvamos a tu banda
+
+\\[ \theta_T=\frac{\omega_T}{\sqrt{V_T}}, \qquad \omega_T=(\log V_T)^{1/8}, \\]
+
+y definamos
+
+\\[ U_k=W(\gamma_k),\qquad V_k=W(\tau_k). \\]
+
+Ambas sucesiones satisfacen
+
+\\[ \langle U^2\rangle=L+o(L), \qquad \langle V^2\rangle=L+o(L). \\]
+
+Además, la identidad ya demostrada implica
+
+\\[ \langle s,W(\tau)\rangle = \langle U,V\rangle+o(L). \\]
+
+Por tanto, la respuesta prima media obedece
+
+\\[ \boxed{ \overline{\mathcal R}\_c(T) = \frac{\langle U,V\rangle}{L}+o(1). } \tag{4} \\]
+
+Esto tiene dos consecuencias inmediatas.
+
+Primero, Cauchy–Schwarz proporciona una cota de la respuesta que la estimación espectral general no daba a esta escala:
+
+\\[ \boxed{ -1-o(1)\le \overline{\mathcal R}\_c(T) \le1+o(1). } \tag{5} \\]
+
+Segundo, la energía del transporte se expresa como
+
+\\[ \boxed{ B_c(T)=2L \left( 1-\frac{\langle U,V\rangle}{L} \right)+o(L). } \tag{6} \\]
+
+Ahora la cota inferior que buscamos tiene una interpretación geométrica exacta al orden principal.
+
+OBJETIVO DE LA DEMOSTRACIÓN
+
+\\[ \limsup\_{T\to\infty}\frac{\langle U,V\rangle}{L}\le\frac12 \\]
+
+Con ello se obtiene
+
+\\[ B_c(T)\ge\left(\frac1{4\pi^2}-o(1)\right)\log\log\log T. \\]
+
+Es decir, el problema se ha reducido a demostrar que las dos evaluaciones del mismo polinomio primo, una en las ordenadas verdaderas y otra en el reloj RvM, no mantienen una correlación asintótica superior a \\(1/2\\) en la banda móvil.
+
+La desigualdad (5) todavía no da esa separación estricta.
+
+## 4. Por qué no podemos obtenerla solamente de los segundos momentos
+
+Hay una obstrucción precisa.
+
+Las estimaciones actuales son compatibles con dos configuraciones extremas:
+
+- Si \\(U=V\\), entonces ambas energías valen \\(L\\), pero el transporte de la banda es nulo.
+- Si \\(U=-V\\), ambas energías siguen valiendo \\(L\\), pero la energía del transporte de la banda es \\(4L\\).
+
+Son ejemplos algebraicos, no afirmaciones sobre los ceros de \\(\zeta\\). Demuestran que los segundos momentos marginales y la ortogonalidad individual no pueden imponer una cota inferior positiva al transporte.
+
+Hace falta una propiedad adicional de la relación entre \\(\gamma_k\\), \\(\tau_k\\) y las fases primas.
+
+Esto explica por qué los desacoplos de Arguin–Bourgade–Radziwiłł no cierran directamente la prueba: sus resultados para polinomios de primos separados no imponen la pérdida de correlación de estas dos evaluaciones unidas por los desplazamientos de los ceros.
+
+## 5. Qué hemos demostrado y qué sigue abierto
+
+| Resultado                                                                                            | Estado                                          |
+| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| \\(B_c(T)=O_c(1)\\) tiene la misma respuesta para todos los \\(c>0\\) fijos                          | Demostrado a partir de v14                      |
+| Si \\(B_c(T)\sim K\log\log\log T\\) para un \\(c\\), la constante \\(K\\) es la misma para los demás | Demostrado                                      |
+| \\(B_c(T)\le(\pi^{-2}+o(1))\log\log\log T\\)                                                         | Demostrado a partir de las estimaciones citadas |
+| \\(\overline{\mathcal R}\_c=\langle W(\gamma)W(\tau)\rangle/L+o(1)\\)                                | Demostrado                                      |
+| \\(\limsup\overline{\mathcal R}\_c\le1/2\\)                                                          | Abierto                                         |
+| \\(B_c(T)\ge(1/(4\pi^2)-o(1))\log\log\log T\\)                                                       | Aún no demostrado                               |
+
+Hay también que corregir una conclusión de la nota que me has enviado: \\(\overline{\mathcal R}\_c(T)\to1\\) no equivale a \\(B_c(T)=O_c(1)\\). La identidad tiene un error \\(o(L)\\), de modo que esa convergencia solamente obliga a \\(B_c(T)=o(L)\\). La implicación contraria sí es válida.
+
+La contribución más fuerte conseguida aquí es la universalidad del comportamiento para todos los exponentes fijos y la cota superior explícita. La cota inferior sigue necesitando demostrar una pérdida estricta de correlación entre \\(W(\gamma_k)\\) y \\(W(\tau_k)\\). No he encontrado una forma rigurosa de deducirla de los teoremas actualmente disponibles, y no la presentaré como cerrada.
+
+No he modificado los manuscritos ni GitHub.

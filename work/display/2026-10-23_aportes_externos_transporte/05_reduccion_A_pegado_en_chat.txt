@@ -1,0 +1,67 @@
+[Texto pegado por el autor en el chat, 2026-10-23. Copia literal tal como llegó: algunas fórmulas en línea se perdieron al pegar (huecos visibles). La versión completa y verificada de la reducción (A) está en work/notes/2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md, §7.6.]
+
+He encontrado una reducción más fuerte que la del término no diagonal. Para demostrar la cota inferior no es necesario controlar por separado todas las correlaciones no lineales de la forma
+
+\left\langle (q/p)^{i\tau_k}e^{i\xi_p s_k}\right\rangle.
+
+Se puede sustituir toda esa dificultad por una única respuesta prima lineal, precisamente la función definida en tu teorema C.
+
+Reducción rigurosa
+
+Sea , , y elijamos
+
+\omega_T=(\log V)^{1/8},
+\qquad
+\theta_T=\frac{\omega_T}{\sqrt V},
+\qquad Y=T^{\theta_T},\quad X=T^c.
+
+Definimos
+
+W(t)=S_X(t)-S_Y(t),\qquad
+L_T=\frac1{2\pi^2}\log\frac c{\theta_T}.
+
+Entonces
+
+L_T\sim\frac1{4\pi^2}\log\log\log T.
+
+Las estimaciones demostradas en v14 dan
+
+\begin{aligned}
+\langle u_X^2\rangle&=O_c(1),\\
+\langle u_Y^2\rangle&=L_T+O_c(\sqrt{L_T}+1),\\
+\langle W(\tau)^2\rangle&=L_T+O_c(1),\\
+\langle\mathfrak t_Y^2\rangle&\ll\omega_T^2.
+\end{aligned}
+
+Además, por ortogonalidad de las frecuencias primas distintas en los puntos del reloj,
+
+\langle S_Y(\tau)W(\tau)\rangle=o(L_T).
+
+Usando las identidades exactas
+
+W(\gamma)=u_Y-u_X,
+\qquad
+S_Y(\gamma)=S_Y(\tau)+\mathfrak t_Y,
+
+se obtiene
+
+\boxed{
+B_c(T)
+
+2L_T-
+2\langle s_k W(\tau_k)\rangle
++o(L_T).
+}
+\tag{A}
+
+La prueba consiste en expandir
+
+\|\mathfrak t_X\|_2^2
+
+\|\mathfrak t_Y+W(\gamma)-W(\tau)\|_2^2.
+
+Todos los términos que contienen son por Cauchy–Schwarz, ya que . También lo es el término que contiene , cuya norma permanece acotada.
+
+Esta es una identidad asintótica incondicional, utilizando las estimaciones de la v14. No presupone independencia de fases, un modelo gaussiano conjunto ni RH.
+
+Y ahora la dificultad se ha simplificado considerablemente.

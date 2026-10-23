@@ -350,3 +350,13 @@
 - On author's express request archived `casanya_prime_spiral_short_v4.tex` and byte-identical `.txt` with Python appendices and README in `chatgpt/casanya_prime_spiral_short_v4_20261023/` (17-page PDF was previously generated for the conversation but not stored as binary in this GitHub commit).
 - v4 was made before the later Table 7 transport correction. The v4 manuscript is archived unchanged; the new transport note and script remain in Claude's `work/paper1/` and were not merged into v4.
 - v4 documents 584 local Rouché successes reported from two 300-index blocks, with 238 Newton-recentered original tests requiring corrected same-disc Arb/Turing rerun; v4 validator and pair audit script have not been executed in this environment. No new numerical claims. No files in Claude's `work/` modified except this append-only log entry.
+
+## 2026-10-23 [claude] — sube git: hilo completo Rouché/Turing, c>1/2 y energía del transporte (con aportes de ChatGPT y la v4)
+- Informe detallado: work/notes/2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md (§1 Rouché+Turing; §2 c>1/2 y RH; §3 barrera c=1/2 y ley de diferencias en media t, sin verificar; §4 Tabla 7; §5–7 energía del transporte B_c(T); §8 estado; §9 aportes de ChatGPT; §10 biblioteca).
+- Demostrado a partir de la v14 (verificado término a término): reducción (A) B_c = 2L − 2⟨s W(τ)⟩ + o(L); B_c = π^{-2} Σ_{T^{θ_T}<p≤T^c}(1 − R^τ_p)/p + o(log log log T); universalidad |√B_b − √B_a| = O(1) y B_a − B_b = O(√logloglog T); B_c ≤ (π^{-2}+o(1)) log log log T; cancelación diagonal; dicotomía. Abierto: lim sup R̄_c ≤ 1/2 (⇔ B_c ≫ log log log T). La banda asintótica solo existe para T > e^{e^{79}} (c=1/2).
+- Pendiente para Paper I: work/paper1/pendiente_siguiente_version/universalidad_transporte_2026-10-23.md (sin versión nueva).
+- Textos de ChatGPT aportados por el autor, verbatim: work/display/2026-10-23_aportes_externos_transporte/01–07.
+- v4 (ChatGPT) copiada sin cambios a work/prime_spiral/v4/ (tex, txt; SHA-256 idéntico al de chatgpt/) más PDF compilado por Claude (17 pp., sin errores).
+- Fallo reconocido (señalado por ChatGPT): en work/paper1/rouche_cert/rouche_one_zero.py los 238 éxitos con re-centrado de Newton comprobaban el índice contra el disco ampliado, no contra el disco de Rouché. Ejecutando por primera vez el validador corregido chatgpt/…/rouche_one_zero_v4.py sobre los dos bloques; resultados en un commit posterior.
+- LIBRARY TOTAL renumerada entera (001–312) con Arguin–Bourgade–Radziwiłł I y II; espejo en work/library/INDEX.md y work/library/_renumeracion_2026-10-23.tsv.
+- Ningún manuscrito cambiado.
