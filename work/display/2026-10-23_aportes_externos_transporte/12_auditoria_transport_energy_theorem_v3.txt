@@ -1,0 +1,119 @@
+## Auditoría matemática de `transport_energy_theorem_v3.tex`
+
+La v3 corrige los cinco problemas que había señalado en la v1, al menos en sus formulaciones principales:
+
+| Problema anterior                                    | Estado en v3                                |
+| ---------------------------------------------------- | ------------------------------------------- |
+| Definición inconsistente de \\(N_0(t)\\)             | Corregida                                   |
+| Coeficientes potencialmente complejos en el lema 4.5 | Corregidos                                  |
+| Constante insuficiente en \\(J_0\\)                  | Corregida a \\(32e^2s\\)                    |
+| Error de Mertens demasiado fuerte                    | Sustituido por \\(O(1/\log R_1)\\)          |
+| Ortogonalidad importada de una versión equivocada    | Ahora incluye demostración propia, lema 4.3 |
+
+La demostración de la ortogonalidad es una mejora real: separa las frecuencias \\(p/q\\) de las resonancias \\(pq\\), utilizando Kusmin–Landau y una estimación de segunda derivada.
+
+Sin embargo, he detectado un nuevo problema en el lema de muestreo 4.6 que impide certificar todavía el teorema principal tal como está escrito. Es necesario distinguir el defecto de su enunciado general de lo que realmente necesitan las aplicaciones del §7.
+
+## El problema nuevo: el lema 4.6 es falso en su generalidad
+
+El lema afirma que, bajo su condición de longitud,
+
+\\[ \left\langle |f(\varrho_k)|^{2q}\right\rangle \ll_q \kappa^{1/2}\sigma_f^{2q} (1+\mathfrak b_T\log N). \tag{A} \\]
+
+La dificultad está en que permite disminuir arbitrariamente los coeficientes de \\(f\\) para satisfacer
+
+\\[ (2\\|f\\|\_1)^{4q}N^{8q}\le T^{1/2}, \\]
+
+aunque las frecuencias sean tan altas que sus fases resulten prácticamente coincidentes en todos los puntos muestreados.
+
+### Contraejemplo
+
+Tomemos \\(q=1\\) y \\(\varrho_k=\tau_k\\).
+
+Para \\(N\\) suficientemente grande respecto de \\(T\\), podemos elegir \\(K\\) primos distintos en un intervalo
+
+\\[ N(1-T^{-2})\<p_j\le N. \\]
+
+Definamos
+
+\\[ f(t)=\varepsilon\sum\_{j=1}^{K}g(t\log p_j), \\]
+
+donde \\(g\\) es seno o coseno, elegido de manera que su media cuadrática en los puntos \\(\tau_k\\), para el primer primo, sea al menos \\(1/2\\). Una de las dos funciones cumple necesariamente esta propiedad.
+
+Como
+
+\\[ \left|\tau_k\log\frac{p_j}{p_1}\right|=O(T^{-1}), \\]
+
+las fases son prácticamente iguales. En consecuencia,
+
+\\[ \langle f(\tau)^2\rangle \ge\frac14K^2\varepsilon^2 \\]
+
+para \\(T\\) suficientemente grande.
+
+Sin embargo,
+
+\\[ \sigma_f^2=K\varepsilon^2. \\]
+
+La desigualdad (A) exigiría
+
+\\[ K\ll1+\mathfrak b_T\log N. \\]
+
+Podemos elegir \\(K\\) mucho mayor que esa cantidad y después hacer \\(\varepsilon\\) suficientemente pequeño para satisfacer la hipótesis de longitud. Esto contradice (A).
+
+El lema 4.6, en su formulación actual, no es válido.
+
+## Reparación matemática
+
+La prueba escrita sí permite demostrar una variante con error aditivo.
+
+Si definimos
+
+\\[ \delta_f= \frac{(2\\|f\\|\_1)^{4q}N^{4q}}{T}, \\]
+
+la comparación de la media temporal con el modelo independiente proporciona
+
+\\[ \frac1{|J|}\int_J |f(t)|^{4q}\\,dt \ll_q \sigma_f^{4q}+\delta_f. \\]
+
+La misma estimación para \\(f'\\), utilizando \\(\log n\le\log N\\), y el argumento de muestreo dan
+
+\\[ \boxed{ \langle |f(\varrho)|^{2q}\rangle \ll_q \kappa^{1/2} \left(\sigma_f^{2q}+\sqrt{\delta_f}\right) (1+\mathfrak b_T\log N). } \tag{B} \\]
+
+Bajo la condición original,
+
+\\[ \delta_f\le T^{-1/2}. \\]
+
+Así se obtiene el lema corregido
+
+\\[ \boxed{ \langle |f(\varrho)|^{2q}\rangle \ll_q \kappa^{1/2} \left(\sigma_f^{2q}+T^{-1/4}\right) (1+\mathfrak b_T\log N). } \tag{C} \\]
+
+La estimación (C) evita el contraejemplo: cuando los coeficientes son demasiado pequeños, el error aditivo ya no puede eliminarse sin una condición relativa adicional.
+
+### ¿Afecta al teorema principal?
+
+He comprobado las aplicaciones de este lema en los apartados 7.1 y 7.3.
+
+Allí se aplica a \\(Q^\flat\\), a sus derivadas y a las derivadas normalizadas \\(\widetilde Q^{(m)}\\). Sus frecuencias satisfacen
+
+\\[ N=X_2^2=T^{2/\sqrt{H_1}}, \\]
+
+y el error adicional \\(T^{-1/4}\\) es despreciable frente a las cotas \\(O(H_0)\\) que realmente se emplean.
+
+Por tanto, esta reparación parece conservar las estimaciones de los restos de Taylor sin modificar el equivalente principal.
+
+## Resultado de la revisión de v3
+
+La parte más importante del manuscrito es ahora una cadena bastante precisa:
+
+\\[ \text{segundo Casaña} \longrightarrow \text{correlación prima} \longrightarrow \text{Taylor agregado} \longrightarrow \text{diagonal aritmética}. \\]
+
+La prueba autónoma del lema de ortogonalidad y la elección corregida de \\(J_0\\) eliminan dos objeciones anteriores. La estimación global fuera de la diagonal sigue siendo compatible con las longitudes utilizadas.
+
+El principal defecto nuevo que he identificado es el lema 4.6, y he dado arriba una desigualdad sustitutiva que conserva, en principio, sus aplicaciones.
+
+Dictamen: la v3 ha progresado sustancialmente respecto de la v1, pero no certificaría todavía el teorema 1.1. Tras sustituir el lema 4.6 por (C), falta comprobar de forma independiente las hipótesis y uniformidades de los resultados (I1)–(I4) importados del artículo I y su aplicación conjunta en la prueba final.
+
+No he encontrado en esta revisión una refutación del equivalente
+
+\\[ B_c(T)\sim\frac1{2\pi^2}\log\log\log T, \\]
+
+pero tampoco una demostración completamente auditada que permita declararlo definitivo. No he modificado la v3.

@@ -388,3 +388,9 @@
 - work/paper1/transport_theorem/transport_energy_theorem_v3.{tex,txt,pdf} (9 pp., 0 errores) y transport_energy_theorem_v3_changelog.md.
 - Lema de muestreo (4.7): era falso sin la hipótesis de soporte en potencias de primos (contraejemplo de ChatGPT: cos(t log 6)). Hipótesis añadida; todas sus aplicaciones (Q^♭ y sus derivadas) la cumplen. El resto de la auditoría (J_0, N_0, Mertens, ε, I5) ya estaba resuelto en v2.
 - Auditoría verbatim: work/display/2026-10-23_aportes_externos_transporte/11_segunda_auditoria_transport_energy_theorem_v1.txt. Ningún manuscrito cambiado.
+
+## 2026-10-24 [claude] — transport_energy_theorem v4 (auditoría de ChatGPT de la v3)
+- work/paper1/transport_theorem/transport_energy_theorem_v4.{tex,txt,pdf} (9 pp., 0 errores) y transport_energy_theorem_v4_changelog.md.
+- Lema de muestreo (4.7): el error de la comparación con el modelo es aditivo; el enunciado ahora es κ^{1/2}(σ_f^{2q}+T^{-1/4})(1+𝔟_T log N) (contraejemplo de ChatGPT correcto para la forma anterior). Las aplicaciones no cambian.
+- Comprobadas contra la v14 las entradas (I1)–(I4) y los números de ecuación citados. Corregidas dos citas erróneas de v1–v3: "Theorem D'' [Thm 7.5]" (7.5 es otro corolario; Thm 7.3 solo da ≪ log log T a c fijo) y "proof of Lemma 5.11" para Sobolev (sustituida por prueba propia).
+- Auditoría verbatim: work/display/2026-10-23_aportes_externos_transporte/12_auditoria_transport_energy_theorem_v3.txt. Ningún manuscrito cambiado.
