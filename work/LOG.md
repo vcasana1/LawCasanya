@@ -340,3 +340,8 @@
 ## 2026-10-23 [claude] — sube git: término principal para c > 1/2
 - work/display/2026-10-23_c_mayor_un_medio_termino_principal.md (verbatim, última respuesta del hilo). (1) Ley de diferencias en media en t: (1/T)(‖E_{T^{c'}}‖_w² − ‖E_{T^c}‖_w²) = ŵ(0)/(2π²)·log(c/c') + o(1) para 0<c'<c<1, vía fórmula explícita de Weil con ventana suave; existe A_T independiente de c. Derivación a mano, no verificada línea a línea; novedad sin comprobar. (2) Media sobre ceros (u_k) para 1/2<c<1: el término ∫E_X²S_X' se reduce, con S_X²S_X'=(S_X³)'/3, a sumas sobre ceros Σ_γ S_X(γ)², Σ_γ S(γ)S_X(γ) (correlación de pares con α<1); conjetura: (1/2π²)log(1/c)+A'.
 - Contexto del hilo: ninguna versión de c>1/2 para todo k está probada; para todo k implicaría RH y simplicidad. Sin programas ni cifras nuevas. Ningún manuscrito cambiado.
+
+## 2026-10-23 [claude] — transporte de la Tabla 7 (v14): corrección del factor 1/(2π²) y límite del transporte
+- work/paper1/pendiente_siguiente_version/transporte_tabla7_2026-10-23.md (pendiente para la siguiente versión; sin versión nueva). work/paper1/transport_note/s2_window_2p19.{py,out,json}: ⟨s_k²⟩ = 0.11279 sobre 2^19<γ_k≤2^20 (977 804 ceros). work/display/2026-10-23_transporte_tabla7_limite.md (respuesta verbatim).
+- La frase de la Tabla 7 ("smaller than c² log log T by factors 21–35") omite 1/(2π²): ⟨t_k²⟩/(c²⟨s_k²⟩) = 1.087, 0.909, 0.648 para c = 1/5, 1/3, 1/2. Lo real es la cancelación 2⟨u t⟩ ≈ −⟨t²⟩.
+- Modelo local (no teorema): el defecto entra siempre como u/(1+σ); ninguna corrección calculable desde el reloj baja ⟨r²⟩ más de O(c²⟨u²⟩/⟨a²⟩) relativo por debajo de ⟨u²⟩. El transporte solo puede impedir que el error crezca; bajar el error exige c>1/2. Ningún manuscrito cambiado.
