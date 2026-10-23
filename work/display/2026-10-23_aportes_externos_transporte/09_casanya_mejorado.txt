@@ -1,0 +1,97 @@
+En la demostración estamos utilizando ambos, pero con funciones distintas. Y sí: un Casaña mejorado podría ayudar a cerrar la prueba, aunque hay una condición decisiva.
+
+## 1. Qué reloj estamos utilizando
+
+| Objeto                                  | Definición                                                         | Función en la demostración                                                        |
+| --------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| RvM original \\(\tau_k\\)               | \\(N_0(\tau_k)=k-\tfrac12\\)                                       | Referencia fija del transporte \\(B_c(T)\\)                                       |
+| Primer reloj corregido \\(x_k^{(1)}\\)  | \\(\displaystyle\tau_k-\frac{S\_{X_1}(\tau_k)}{\Lambda(\tau_k)}\\) | Corrige las ordenadas mediante primos                                             |
+| Segundo reloj corregido \\(x_k^{(2)}\\) | Segunda iteración aritmética de Newton                             | Aproxima mejor \\(\gamma_k\\) y permite sustituir \\(s_k\\) por información prima |
+| Casaña `zCasanya.bin`                   | Predictor concreto construido a partir del reloj y los primos      | No se ha utilizado en esta demostración                                           |
+
+En particular, cuando escribimos
+
+\\[ B_c(T)= \left\langle [S\_{T^c}(\gamma_k)-S\_{T^c}(\tau_k)]^2 \right\rangle, \\]
+
+\\(\tau_k\\) sigue siendo el RvM puro.
+
+Pero cuando utilizamos
+
+\\[ S\_{X_2}(x_k^{(1)}) \\]
+
+para aproximar el desplazamiento \\(s_k\\), ya estamos empleando una construcción de tipo Casaña: correcciones aritméticas sucesivas que no necesitan conocer los ceros verdaderos.
+
+Por tanto, no estábamos trabajando exclusivamente con RvM.
+
+## 2. ¿Un Casaña mejorado facilitaría la demostración?
+
+Sí, si mejora la estructura aritmética de la aproximación, no solamente su precisión numérica.
+
+Definamos, para cualquier predictor aritmético \\(\widehat\gamma_k\\),
+
+\\[ \widehat s_k =\Lambda(\tau_k)(\tau_k-\widehat\gamma_k), \\]
+
+y su error cuadrático respecto del desplazamiento verdadero:
+
+\\[ E(T)=\langle(s_k-\widehat s_k)^2\rangle. \\]
+
+En la demostración aparece la correlación
+
+\\[ \langle s_kW(\tau_k)\rangle. \\]
+
+Podemos sustituirla por una correlación calculable con Casaña, pagando
+
+\\[ \boxed{ \left|\langle sW(\tau)\rangle- \langle\widehat sW(\tau)\rangle\right| \le \sqrt{E(T)L_T}. } \\]
+
+Como \\(L_T\asymp\log\log\log T\\), basta que
+
+\\[ \boxed{E(T)=o(\log\log\log T).} \\]
+
+La segunda iteración de v14 ya alcanza esa condición, pues proporciona
+
+\\[ E(T)=O(\log\log\log\log T). \\]
+
+Esta conclusión es importante: una mejora adicional de Casaña en RMS no cerraría, por sí sola, el hueco principal. El error de sustitución ya es suficientemente pequeño.
+
+## 3. Dónde sí podría aportar algo decisivo Casaña
+
+El paso pendiente es demostrar que
+
+\\[ \boxed{ \langle\widehat s_k W(\tau_k)\rangle=o(L_T). } \\]
+
+Para eso necesitamos poder separar los primos que construyen el desplazamiento de los primos con los que medimos la correlación.
+
+La estructura favorable sería
+
+\\[ \underbrace{S\_{X_1}(\tau_k)}\_{\text{primos bajos}} \longrightarrow \underbrace{x_k^{(1)}}\_{\text{desplazamiento}} \longrightarrow \underbrace{S\_{X_2}(x_k^{(1)})}\_{\text{segunda corrección}} \\]
+
+y compararla con \\(W(\tau_k)\\), construido con primos mayores que \\(X_1\\).
+
+Aquí una versión mejorada de Casaña ayudaría si consigue alguna de estas dos propiedades:
+
+1. Una representación de \\(\widehat s_k\\) mediante polinomios aritméticos suficientemente cortos, con errores globales \\(o(\sqrt{L_T})\\).
+2. Un control riguroso de los momentos altos y de los restos de Taylor de las correcciones sucesivas, que permita efectuar la suma sobre todos los primos de \\(W\\) sin perder su escala \\(L_T\\).
+
+La segunda propiedad es precisamente lo que falta en nuestra prueba actual.
+
+Hay una precaución: utilizar más primos en Casaña puede mejorar \\(\widehat\gamma_k\\), pero si esos primos coinciden con los de \\(W\\), la separación de frecuencias deja de ser automática.
+
+## 4. Qué haría con un Casaña mejorado
+
+No sustituiría \\(\tau_k\\) en la definición de \\(B_c\\), porque estaríamos cambiando el problema que queremos resolver.
+
+Mantendría RvM como reloj de referencia y utilizaría Casaña mejorado como instrumento auxiliar de demostración.
+
+De este modo:
+
+\\[ \boxed{ \text{RvM} \ \xrightarrow{\text{Casaña mejorado}}\ \widehat s_k \ \xrightarrow{\text{desacoplo aritmético}}\ \langle sW(\tau)\rangle \ \xrightarrow{}\ B_c(T). } \\]
+
+La mejora más valiosa no sería pasar, por ejemplo, de un error cuadrático \\(O(\log\log\log\log T)\\) a \\(O(1)\\). Sería demostrar una fórmula de Casaña que permita controlar rigurosamente su correlación con una banda de primos que no intervenga en la fase de desplazamiento.
+
+### Conclusión
+
+En el trabajo actual usamos RvM original para definir el transporte y una aproximación iterativa de tipo Casaña para intentar demostrar su comportamiento.
+
+El Casaña concreto de `zCasanya.bin` todavía no tiene acreditada la garantía asintótica necesaria. Una versión analíticamente mejorada sí podría ser decisiva, pero tendría que aportar un teorema de desacoplo o de control uniforme de las correcciones, no únicamente una menor distancia a los ceros en una muestra finita.
+
+Ese es el aspecto de Casaña que investigaría para cerrar la cota inferior.

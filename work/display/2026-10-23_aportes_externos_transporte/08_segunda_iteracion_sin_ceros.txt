@@ -1,0 +1,317 @@
+He seguido la vía de la segunda iteración y encuentro una mejora importante: no necesitamos congelar las frecuencias ni demostrar un desacoplo probabilístico general. Podemos conservar exactamente su dependencia de y convertir el problema en una expansión de Taylor de un polinomio de Dirichlet compuesto con el primer reloj corregido.
+
+Esto permite cerrar algebraicamente toda la parte truncada. La dificultad se concentra en justificar el resto de Taylor en norma , uniformemente sobre los puntos RvM.
+
+1. Una identidad que simplifica el problema
+
+Escribamos
+
+H=\log\log T,\qquad h=\log H,
+
+y tomemos los cortes de la segunda iteración de v14:
+
+X_1=T^{H^{-1/2}},
+\qquad
+X_2=T^{h^{-1/2}}.
+
+Sea
+
+P(t)=S_{X_1}(t),\qquad Q(t)=S_{X_2}(t).
+
+El primer punto corregido es
+
+x_k^{(1)}
+
+\tau_k-\frac{P(\tau_k)}{\Lambda(\tau_k)}.
+
+En la parte prima de ,
+
+Q^{\mathrm{pr}}(t)
+=-\frac1\pi\sum_{q\le X_2}\frac{\sin(t\log q)}{\sqrt q}.
+
+Por tanto, la fase no lineal que nos preocupaba satisface exactamente
+
+q^{-ix_k^{(1)}}
+
+q^{-i\tau_k}
+\exp\left(
+i\frac{\log q}{\Lambda(\tau_k)}P(\tau_k)
+\right).
+\tag{1}
+
+El factor exponencial no tiene que desarrollarse primo por primo. Es simplemente la evaluación del polinomio en un argumento desplazado:
+
+\boxed{
+Q\left(\tau_k-\frac{P(\tau_k)}{\Lambda(\tau_k)}\right).
+}
+
+Esta observación permite emplear Taylor sobre la función completa . Así, la suma sobre todos los primos permanece agrupada durante la estimación del resto.
+
+2. Separación de las escalas
+
+Definamos
+
+Z=T^{H^{-2}},
+
+y dividamos
+
+P=P_0+P_1,
+
+donde contiene los términos primos , y los restantes términos de .
+
+Las varianzas esperadas, y accesibles mediante los momentos de polinomios de Dirichlet, son
+
+\langle P_0^2\rangle
+
+\frac{H}{2\pi^2}+O(h),\langle P_1^2\rangle=O(h).
+
+El segundo bloque tiene una energía mucho menor que el primero, aunque contiene primos considerablemente mayores.
+
+La expansión buscada es
+
+\begin{aligned}
+Q\left(t-\frac{P_0(t)+P_1(t)}{\Lambda(t)}\right)
+={}&
+\sum_{j=0}^{J_0}
+\sum_{\ell=0}^{J_1}
+\frac{(-P_0(t))^j(-P_1(t))^\ell}
+{j!\,\ell!\,\Lambda(t)^{j+\ell}}\\
+&\quad\times Q^{(j+\ell)}(t)
++\mathcal E_T(t).
+\end{aligned}
+\tag{2}
+
+La ventaja es que cada término de la suma doble es un producto explícito de polinomios aritméticos.
+
+3. La longitud de los polinomios sí puede mantenerse pequeña
+
+Elijamos, por ejemplo,
+
+J_0\asymp\frac{H^{3/4}}{\sqrt h},
+\qquad
+J_1\asymp h^2,
+
+con constantes suficientemente grandes.
+
+Para el bloque , las potencias tienen frecuencia máxima
+
+\log Z^{J_0}
+
+\frac{J_0}{H^2}\log T,
+
+y
+
+\frac{J_0}{H^2}
+\asymp\frac1{H^{5/4}\sqrt h}
+\longrightarrow0.
+
+Para , si truncamos previamente las potencias primas con una cola uniformemente pequeña, las frecuencias relevantes pueden restringirse a . Entonces
+
+\frac{J_1\log(X_1^2)}{\log T}
+\ll \frac{h^2}{\sqrt H}
+\longrightarrow0.
+
+Finalmente, los dos polinomios y contienen primos hasta , por lo que su producto tiene exponente máximo
+
+\frac2{\sqrt h}.
+
+Así, toda la expansión truncada tiene frecuencias racionales con
+
+a,b\le T^{\eta_T},
+
+donde
+
+\boxed{
+\eta_T=
+O\left(
+\frac2{\sqrt h}
++\frac{h^2}{\sqrt H}
++\frac1{H^{5/4}\sqrt h}
+\right)
+=o(1).
+}
+\tag{3}
+
+Este control de longitud es el punto que permite utilizar la ortogonalidad determinista de los puntos RvM.
+
+No depende de RH.
+
+4. El término fuera de la diagonal de la expansión truncada
+
+Para una frecuencia racional , con , consideremos
+
+C_T(a/b)
+
+\frac1{\#\mathcal I_T}
+\sum_{k\in\mathcal I_T}
+e^{i\tau_k\log(a/b)}.
+
+Como
+
+N_0(\tau_k)=k-\frac12,
+
+la derivada de la fase respecto al índice es
+
+\frac{d}{dk}
+\left(\frac{\tau(k)\log(a/b)}{2\pi}\right)
+
+\frac{\log(a/b)}{2\pi\Lambda(\tau(k))}.
+
+En nuestra banda, esa derivada tiene módulo menor que para suficientemente grande.
+
+La desigualdad de primera derivada para sumas exponenciales da
+
+\left|
+\sum_{k\in\mathcal I_T}
+e^{i\tau_k\log(a/b)}
+\right|
+\ll
+\frac{\log T}{|\log(a/b)|}.
+
+Puesto que y ambos son enteros menores que ,
+
+|\log(a/b)|\gg T^{-\eta_T}.
+
+Por consiguiente,
+
+\boxed{
+|C_T(a/b)|\ll T^{-1+\eta_T}.
+}
+\tag{4}
+
+En la expansión truncada, la suma absoluta de los coeficientes puede acotarse por , usando las longitudes anteriores y los factoriales de Taylor.
+
+Por ello, la suma completa de los términos no constantes de esa expansión es .
+
+Esta parte no requiere ninguna hipótesis de independencia entre primos.
+
+¿Qué términos constantes quedan?
+
+Por factorización única, como los primos de son mayores que , mientras que y solo contienen factores primos menores o iguales que , la frecuencia constante solo puede surgir cuando el primo de coincide con el primo de .
+
+Es decir, la parte truncada tiene exactamente la diagonal esperada:
+
+\boxed{
+\frac1{2\pi^2}
+\sum_{Y<p\le X_2}
+\frac{\Re\chi_{X_1}(\xi_p)}p,
+}
+\tag{5}
+
+salvo los errores de truncamiento y las contribuciones de potencias primas.
+
+Aquí es la función característica del modelo de fases independientes asociado a .
+
+5. Esa diagonal tiende a cero respecto de
+
+Para pequeño, el producto de los factores locales proporciona
+
+\log|\chi_{X_1}(\xi)|
+\le
+-C\xi^2\sum_{p\le X_1}\frac1p
+
+con una constante absoluta .
+
+Y
+
+\sum_{p\le X_1}\frac1p
+
+H-\frac12h+O(1).
+
+Como para los primos de
+
+\xi_p=2\pi\frac{\log p}{\log T}
+\ge2\pi\theta_T,
+\qquad
+\theta_T=\frac{\omega_T}{\sqrt{V_T}},
+
+resulta
+
+\xi_p^2 H\gg\omega_T^2.
+
+Así,
+
+\boxed{
+\sup_{Y<p\le X_2}
+|\chi_{X_1}(\xi_p)|
+\ll e^{-C’\omega_T^2}=o(1).
+}
+\tag{6}
+
+La diagonal de (5), una vez justificada la sustitución por la función característica, es .
+
+Por tanto, para la expansión polinómica truncada, el desacoplo principal sí queda establecido.
+
+6. El último punto que hay que certificar
+
+Todo depende ahora de convertir (2) en una aproximación válida en media cuadrática:
+
+\boxed{
+\|\mathcal E_T(\tau_k)\|_{2,\mathcal I_T}
+=o(\sqrt{h}).
+}
+\tag{7}
+
+No sería suficiente demostrar el resto para cada primo por separado, porque las constantes podrían crecer al sumar.
+
+La vía que estoy examinando utiliza el resto integral de Taylor aplicado directamente a . En una región donde
+
+|P_0(t)|\le H^{3/4},
+\qquad
+|P_1(t)|\le h^2,
+
+el desplazamiento es pequeño y los restos se controlan mediante cantidades del tipo
+
+\frac{D^{J+1}}{(J+1)!}
+\sup_{|v|\le D}|Q^{(J+1)}(t+v)|.
+
+Los momentos altos de permiten que el conjunto excepcional tenga densidad muy pequeña.
+
+El punto preciso que falta verificar es una desigualdad maximal, uniforme en el orden de derivación , para los polinomios evaluados en intervalos cortos alrededor de los puntos , junto con el tratamiento de las colas de potencias primas.
+
+No es la misma dificultad que teníamos inicialmente. Ya no aparece , ni una distribución conjunta de ceros, ni una suma no diagonal sin estructura.
+
+Pero no he terminado la estimación (7), y por eso no voy a declarar demostrado el equivalente de .
+
+7. Qué se obtendría al certificar (7)
+
+Si (7) se demuestra, entonces
+
+\left\langle
+S_{X_2}(x_k^{(1)})W(\tau_k)
+\right\rangle=o(L_T).
+
+El teorema de la segunda iteración de v14 ya proporciona
+
+\|s_k-S_{X_2}(x_k^{(1)})\|_2^2=O(\log h),
+
+mientras que . Por Cauchy–Schwarz,
+
+\langle s_kW(\tau_k)\rangle=o(L_T).
+
+Nuestra identidad de transporte produciría entonces
+
+B_c(T)=2L_T+o(L_T),
+
+y finalmente
+
+\boxed{
+B_c(T)\sim\frac1{2\pi^2}\log\log\log T.
+}
+
+Se obtendría la constante completa del modelo, no solo la cota inferior inicialmente perseguida.
+
+Estado de la prueba
+
+Elemento	Estado
+Reducción mediante la segunda iteración	Establecida a partir de v14
+Conservación de la dependencia exacta	Identidad exacta
+Longitud de los términos truncados	Establecida
+Eliminación aritmética de los términos no diagonales truncados	Establecida
+Decaimiento de la diagonal en el modelo independiente	Establecido
+Resto uniforme de Taylor para la suma completa	Por certificar
+Cota inferior y equivalente de	Todavía pendientes
+
+El avance concreto es que la parte no diagonal ya no exige una nueva ley conjunta de y los primos. Se puede eliminar dentro de una aproximación polinómica finita utilizando factorización única y la geometría explícita del reloj RvM.
+
+La demostración se concentra ahora en la desigualdad (7). Es una cuestión de control analítico de polinomios de Dirichlet en puntos determinados, no una hipótesis de independencia sobre los ceros. No he modificado ningún manuscrito ni archivo de GitHub.
