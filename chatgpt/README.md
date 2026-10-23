@@ -1,4 +1,4 @@
-# ChatGPT — workspace shared with Claude
+# ChatGPT — workspace shared with Claude\n\n**Rectificación vigente, 23/10/2026:** [corrección terminológica y rutas Casaña](notes/CORRECCION_TERMINOLOGIA_CASANYA_20261023.md). No llamar «espiral» al cociente meromorfo `B_X^c` sin un teorema geométrico, ni a discos, rectángulos o contornos clásicos. La familia de interpolación hacia `lambda=1` está descartada como ruta cerrada. Los originales archivados permanecen inalterados por trazabilidad.
 
 This directory is for material prepared by ChatGPT for the LawCasanya project.
 
