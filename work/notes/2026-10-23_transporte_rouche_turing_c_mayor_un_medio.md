@@ -59,7 +59,7 @@ Rouché (comparando con $z_0+z_1w$) da exactamente un cero de $Z$ en $|w|<r$. El
 - El programa original queda sin tocar, como registro.
 
 ### 1.3 ter Resultados del validador corregido
-En curso al hacer el primer commit de este informe (unos 10 índices cada 3 minutos por bloque). Se añadirán aquí en un commit posterior.
+Ejecución detenida por decisión del autor: la línea numérica no aporta nada analítico. Quedan los logs parciales; los 238 casos de Newton siguen sin validación de índice.
 
 ### 1.4 Por qué no hay versión analítica «para todo $k$»
 Para que (R) valga para todo $k$ harían falta dos cosas:

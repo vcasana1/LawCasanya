@@ -360,3 +360,6 @@
 - Fallo reconocido (señalado por ChatGPT): en work/paper1/rouche_cert/rouche_one_zero.py los 238 éxitos con re-centrado de Newton comprobaban el índice contra el disco ampliado, no contra el disco de Rouché. Ejecutando por primera vez el validador corregido chatgpt/…/rouche_one_zero_v4.py sobre los dos bloques; resultados en un commit posterior.
 - LIBRARY TOTAL renumerada entera (001–312) con Arguin–Bourgade–Radziwiłł I y II; espejo en work/library/INDEX.md y work/library/_renumeracion_2026-10-23.tsv.
 - Ningún manuscrito cambiado.
+
+## 2026-10-23 [claude] — certificados numéricos de Rouché: se abandona la ejecución
+- Por decisión del autor (no aportan nada analítico), se detiene la ejecución del validador corregido de la v4 sobre los dos bloques. Quedan en el repositorio los logs parciales. Los 238 éxitos con re-centrado de Newton de work/paper1/rouche_cert/ siguen sin validación de índice (ver work/notes/2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md, §1.3 bis). No se continuará esta línea numérica.
