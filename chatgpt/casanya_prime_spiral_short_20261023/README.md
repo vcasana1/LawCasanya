@@ -1,4 +1,4 @@
-# Casanya prime-corrected clocks and spectral spirals (2026-10-23)
+# Casanya prime-corrected clocks and meromorphic phase quotient (2026-10-23)\n\n**Corrección terminológica vigente:** el título del artefacto histórico usó *spectral spirals*, pero no se probó que `B_X^c(s)=P_X(s)/zeta_c(s)` describiera una espiral geométrica. Las identidades de fase y residuos NO demuestran dicha geometría. Trátese como cociente meromorfo de fase prima, no como espiral. Véase [rectificación](../notes/CORRECCION_TERMINOLOGIA_CASANYA_20261023.md). El `.tex/.txt` histórico y sus PDF/ZIP conservan su título para no alterar la versión congelada.
 
 Standalone nine-page short note, author Rotkiv Aynäsac, no affiliation.
 The article contains theorems and proofs plus appendices on attempted arguments, failures and empirical examples.
