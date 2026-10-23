@@ -1,6 +1,8 @@
 # TRASPASO — Casanya, ceros próximos, certificados locales y ruta hacia RH
 
-**Fecha:** 23 de octubre de 2026. **Estado:** investigación abierta; **no hay demostración de RH**. Este documento sirve para comenzar un nuevo chat autónomo.\n\n> **Corrección posterior vigente (23/10/2026):** el objeto \`B_X^c=P_X/\zeta_c\` se denomina **cociente meromorfo sintético de fase prima**, no «espiral»: no se ha demostrado geometría de espiral. Ningún rectángulo, disco, contorno o momento de Hankel debe presentarse como «espiral». La interpolación \`\zeta_\lambda=(1-\lambda)\zeta_c+\lambda\zeta\` no constituye ruta RH resuelta por transporte: el extremo \`\lambda=1\` carece del control necesario. Las denominaciones de las fuentes históricas no son avales. Véase [rectificación terminológica](../notes/CORRECCION_TERMINOLOGIA_CASANYA_20261023.md).\n\n
+**Fecha:** 23 de octubre de 2026. **Estado:** investigación abierta; no hay demostración de RH.
+
+> **Corrección vigente (23/10/2026):** \(B_X^c=P_X/\zeta_c\) es un **cociente meromorfo sintético de fase prima**, no una espiral geométrica demostrada. Rectángulos, discos, contornos y matrices de momentos no deben llamarse «espiral». Se retira la interpolación \(\zeta_\lambda=(1-\lambda)\zeta_c+\lambda\zeta\) como ruta RH: no se ha resuelto el extremo \(\lambda=1\). Véase [rectificación](../notes/CORRECCION_TERMINOLOGIA_CASANYA_20261023.md). Las referencias con «spiral» en nombres de archivo son históricas.
 
 ## 1. Objetivo y reglas de trabajo
 
