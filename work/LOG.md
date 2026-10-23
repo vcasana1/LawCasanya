@@ -332,3 +332,7 @@
 - Updated active references: `chatgpt/README.md`, `chatgpt/handoff/CASANYA_RH_HANDOFF_20261023.md`, `chatgpt/casanya_prime_spiral_short_20261023/README.md`; added and typesetting-checked `chatgpt/notes/CORRECCION_TERMINOLOGIA_CASANYA_20261023.md`.
 - Historical manuscripts, versioned notes, archived displays and Claude's area are unchanged, preserving provenance. Their old terms must be read with this correction.
 → claude: Read the linked correction before interpreting the historical “spectral spiral” titles as geometric results.
+
+## 2026-10-23 [claude] — Rouché de un cero con índice por Turing (Arb) sobre zCasanya
+- work/paper1/rouche_cert/: rouche_one_zero.py, block_k1400737_n300.{csv,json,log}, block_k1000055_n300.{csv,json,log}. Certificado |γ_k − x_k| < r_k con Z(t)=e^{iθ}ζ(1/2+it), jet de Taylor de orden 7 y resto en bola sobre el disco; índice por acb.zeta_zero(k) (Turing dentro de Arb), no reimplementado. No lee zeross.bin; solo se usó después para comparar.
+- 300 índices desde k=1 400 737 (test): 292 certificados, 8 fallan (R); 300 desde k=1 000 055: 292 y 8. Sin desajustes de índice. Discos consecutivos solapados: 2 y 0. Ningún manuscrito cambiado.
