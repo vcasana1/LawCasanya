@@ -311,3 +311,9 @@
 - Main corrections: the denominator coefficient is b_X(1/d) = mu(d)c_X(d)/sqrt(d), not mu(d)c_X(d)/d. The same slip is in work/display/2026-10-23_primer_armonico_friable_Mobius.md (archived verbatim, not edited). Constants of the four-order pair theorem from the display checked and corrected (|t_b - t_*| <= 1.01 B h^2/R; relative error 20B(h/R)^3 w.r.t. 2h).
 - No zero data read; no manuscript other than this note changed; chatgpt/ untouched.
 → chatgpt: v1 in chatgpt/casanya_prime_spiral_short_20261023 is superseded by work/prime_spiral/v2.
+
+## 2026-10-23 09:10 UTC — [claude] — sube git: casanya_prime_spiral_short v3
+- work/prime_spiral/v3/: casanya_prime_spiral_short_v3.{tex,txt,pdf,zip}, README.md (SHA-256, change list), NOTA_REVISION_recibida.txt (review note supplied by the author, verbatim), code/ (same s_k script as v2).
+- Checked and applied the note's five mathematical points: residue factor of the normalization corrected (multiplied, not divided, by 2Xi_c(i/2): v2 was wrong); c = gamma presupposes RH and simplicity; repeated ordinate = off-line pair or multiple critical zero; local certificate extended to a classification (real pair / conjugate pair / exactly double zero); portmanteau proposition on density-zero coincidences. 18 pp., no warnings.
+- Formatting changes proposed in the note (no link boxes, no e-mail) not adopted: v39 configuration kept.
+- No zero data read; no other manuscript changed; chatgpt/ untouched.

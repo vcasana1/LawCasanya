@@ -1,0 +1,21 @@
+Revisión de casanya_prime_spiral_short_v2.tex — 23 octubre 2026
+
+Se conserva el título y se mantiene el manuscrito como revisión de v2 (no se crea una nueva versión numerada ni se modifica GitHub).
+
+CAMBIOS MATEMÁTICOS
+1. Corregido el efecto de la normalización: al reemplazar zeta_c por zeta_c^natural, Z_c se divide por 2Xi_c(i/2), mientras los residuos de P_X/zeta_c^natural se MULTIPLICAN por ese factor. La versión anterior afirmaba lo contrario para los residuos.
+2. Aclarado que identificarse con el multiconjunto de ordenadas de zeta mediante centros estrictamente crecientes presupone RH Y simplicidad, no solo RH.
+3. Diferenciados explícitamente dos ceros críticos distintos de un cero crítico múltiple: la coincidencia de ordenadas no implica por sí sola violación de RH.
+4. Ampliado el teorema local de Rouché: f(b)f''(b)<0 implica pareja real simple; f(b)f''(b)>0 implica pareja conjugada no real simple; f(b)=f'(b)=0 y f''(b) distinto de cero implica cero exactamente doble. El umbral 84/125 y las estimaciones de Rouché se mantienen y se demuestran en ambos casos de pareja.
+5. Nueva proposición por convergencia débil/Portmanteau: una ley límite de espaciamientos sin masa en cero solo impone densidad cero de coincidencias, pero no descarta excepciones aisladas ni infinitas.
+
+FORMATO
+- amsart, A4, reqno (numeración de ecuaciones a la derecha).
+- Autor Rotkiv Aynäsac, sin correo/filiación.
+- TOC con enlaces, bibliografía al final, navegación y tooltips PDF preservados.
+- Referencias internas en azul oscuro sin recuadros rojos.
+- PDF final de 16 páginas, compilado con pdflatex en tres pasadas.
+- Fuentes .tex y .txt idénticas byte a byte.
+
+LIMITACIONES
+No se han verificado fuentes externas ni repetido los cálculos numéricos. Las cotas locales no prueban RH ni demuestran su aplicabilidad a todos los índices. Las constantes del teorema de parejas aisladas se han revisado siguiendo la prueba escrita, pero no se ha hecho una certificación formal por intervalos. Tampoco se ha auditado globalmente cada afirmación heredada contra las publicaciones originales.
