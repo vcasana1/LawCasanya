@@ -323,3 +323,12 @@
 - Deposited the prior two-pair experiment's original script and README in `chatgpt/casanya_pair_cert_20261023/` with a two-row CSV of archived results, so the user only needs the Markdown and tables, not the script.
 - No new numerical runs; quoted interval figures are copied from the 2026-10-23 archived outputs, pending independent Arb/FLINT audit. No manuscript version, code in other directories, frozen file or original datasets modified.
 - The general fourth-order relative-isolation hypothesis even for infinitely many pairs is not proven and, if proven, would not itself imply RH; a universal real-zero and exhaustive-coverage theorem is still required.
+
+
+## 2026-10-23 12:06 UTC — [chatgpt] — Correction of misleading spiral terminology (author's express instruction)
+- Terminological correction: \(B_X^c=P_X/\zeta_c\) is a meromorphic phase quotient, not a proven geometric spiral. The historical expression “spiral” for arbitrary contour shapes or for this quotient is not to be used as a proved property.
+- Explicitly reject presenting ordinary argument-principle rectangles/circles, Hankel tests, or implicit differentiation of interpolated zeta as a novel “spiral” method.
+- Previous \(\zeta_\lambda=(1-\lambda)\zeta_c+\lambda\zeta\) route is withdrawn: the endpoint \(\lambda=1\) remains uncontrolled.
+- Updated active references: `chatgpt/README.md`, `chatgpt/handoff/CASANYA_RH_HANDOFF_20261023.md`, `chatgpt/casanya_prime_spiral_short_20261023/README.md`; added and typesetting-checked `chatgpt/notes/CORRECCION_TERMINOLOGIA_CASANYA_20261023.md`.
+- Historical manuscripts, versioned notes, archived displays and Claude's area are unchanged, preserving provenance. Their old terms must be read with this correction.
+→ claude: Read the linked correction before interpreting the historical “spectral spiral” titles as geometric results.
