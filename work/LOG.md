@@ -298,3 +298,10 @@
 ## 2026-10-22 22:35 UTC — [claude] — sube git: índice de dos hilos (Casaña method for prime approximation; Casañá I conecat)
 - work/display/2026-10-23_indice_hilos_Casana_method_y_Casana_I.md: resumen técnico y enlaces; los resultados ya estaban en work/paper1, work/notes y este log. Transcripciones completas no copiadas.
 - Solo texto; sin programas ni cifras nuevas. Ningún manuscrito creado ni cambiado.
+
+## 2026-10-23 07:00 UTC — [chatgpt] — Casanya prime-spatial spiral short research note; «sube git»
+- Uploaded a self-contained 9-page note to `chatgpt/casanya_prime_spiral_short_20261023/casanya_prime_spiral_short.{tex,txt}`, with byte-identical TEX/TXT and author Rotkiv Aynäsac (no affiliation).
+- The note collects exact clock/phase/Poisson and synthetic zeta identities, contour and moment tests, flow order preservation, Rouché pair corrections, and a separate appendix of 14 failed/unproved arguments and obstructions. None of these conditional criteria constitutes a proof of RH.
+- Archived the preceding user-facing delivery verbatim at `chatgpt/display/2026-10-23_casanya_prime_spiral_short_entrega.md`, with a TXT copy.
+- PDF and ZIP verified locally; their SHA-256 identifiers are in `chatgpt/casanya_prime_spiral_short_20261023/README.md`. These binary artifacts are not uploaded by the current connector.
+- Read AGENTS.md, work/LOG.md and the October 22/23 Claude documents; no other manuscript, shared source, frozen file, or data changed.

@@ -1,0 +1,367 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage{geometry,microtype,booktabs,array,enumitem,xcolor}
+\usepackage{hyperref}
+\usepackage{pdfcomment}
+\geometry{margin=23mm}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black,citecolor=blue!55!black,pdfauthor={Rotkiv Ayn\"asac},pdftitle={Prime-corrected clocks and spectral spirals}}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\N}{\mathbb N}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\Li}{\operatorname{Li}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\pr}{\operatorname{pr}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\status}[1]{\textbf{#1}}
+\title{\vspace{-12mm}\textbf{Prime-Corrected Clocks, Synthetic Zeta Functions, and Spectral Spirals}\\[3pt]\large Exact identities, local certification theorems, and unresolved barriers}
+\author{Rotkiv Ayn\"asac}
+\date{23 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We construct a self-contained analytic framework for a prime-corrected Riemann--von Mangoldt clock and its associated synthetic zeta function. The central outputs are \emph{proved} identities: a finite-Euler phase and residue formula, individual (rather than averaged) ordinal-cell criteria, a globally order-preserving prime flow, an exact Poisson decomposition for the corrected clock, an absolutely convergent rational-frequency expansion of its first harmonic with M\"obius coefficients, and spectral moment/Rouch\'e tests for real simple roots. Each theorem states its hypotheses; none asserts that the corrected clock locates every genuine zeta zero. The main text contains proofs, while an appendix records failed arguments, unverified numerical certificates and known RH-equivalent obstacles. The criterion of success is a \emph{per-index separation threshold at every index to infinity}, never root-mean-square error.
+\end{abstract}
+\tableofcontents
+\section{Definitions and the individual objective}
+Put
+\begin{equation}\label{eq:theta}
+\vartheta(t)=\Im\log\Gamma\!\left(\tfrac14+\tfrac{it}{2}\right)-\tfrac t2\log\pi,
+\quad N_0(t)=1+\frac{\vartheta(t)}\pi,
+\quad\chi(s)=\pi^{s-1/2}\frac{\Gamma((1-s)/2)}{\Gamma(s/2)}.
+\end{equation}
+The continuous logarithm is fixed by continuation along real $t$. On a high half-line where $N_0$ is increasing, the RvM clock is $\tau(\nu)=N_0^{-1}(\nu-\tfrac12)$; $\tau_k=\tau(k)$. The approximate clock
+\begin{equation}\label{eq:lead-clock}
+\mathcal N(t)=\frac{t}{2\pi}\left(\log\frac{t}{2\pi}-1\right)+\frac78,
+\qquad L(t)=\mathcal N'(t)=\frac1{2\pi}\log\frac{t}{2\pi}
+\end{equation}
+is used \emph{only} when stated; $N_0$ and $\mathcal N$ are not identical.
+
+For fixed $X\ge2$ set
+\begin{equation}\label{eq:P-S}
+P_X(s)=\prod_{p\le X}(1-p^{-s})^{-1},\qquad
+S_X(t)=-\frac1\pi\sum_{p\le X}\arg(1-p^{-1/2-it}),\qquad F_X(t)=N_0(t)+S_X(t).
+\end{equation}
+For real $t$, each argument is the unique principal value in $(-\pi/2,\pi/2)$. Whenever $F_X$ is increasing, denote by $\kappa_k$ the solutions $F_X(\kappa_k)=k-\tfrac12$ and by $m_k$ the solutions $F_X(m_k)=k$, with the applicable local range of indices understood.
+
+A \emph{synthetic system} is $0<c_1<c_2<\cdots$ with $c_k\to\infty$ and $\sum c_k^{-2}<\infty$. The genuine nontrivial zeta zeros, when mentioned for evaluation, are $\rho_k=\beta_k+i\gamma_k$, indexed by \emph{all} positive ordinates with multiplicity, without assuming $\beta_k=1/2$.
+
+\begin{theorem}[Individual midpoint cell]\label{thm:cell}
+For $k\ge2$ put $\ell_k=c_k-c_{k-1}>0$, $r_k=c_{k+1}-c_k>0$, and $e_k=c_k-\gamma_k$. The statement that $\gamma_k$ lies in the open Voronoi cell of $c_k$ is \emph{equivalent} to
+\begin{equation}\label{eq:directional}
+-\frac{r_k}{2}<e_k<\frac{\ell_k}{2}.
+\end{equation}
+The symmetric condition $2|e_k|<\min(\ell_k,r_k)$ is sufficient, but need not be necessary. If \eqref{eq:directional} holds for every $k$, with the first cell treated at its lower endpoint, then the $\gamma_k$ are pairwise distinct; if the enumeration contains every nontrivial zero with multiplicity, this forces all nontrivial zeros onto the critical line and simple.
+\end{theorem}
+\begin{proof}
+The cell is $((c_{k-1}+c_k)/2,(c_k+c_{k+1})/2)$; rearranging its two inequalities yields \eqref{eq:directional}. The open cells are disjoint. An off-line zero has a reflected partner $1-\overline\rho$ with the same positive ordinate, and a repeated zero gives repeated ordinates. Both contradict the strict distinctness enforced by disjoint cells. The endpoint statement follows in the same manner.
+\end{proof}
+\begin{remark}
+No uniform margin is required: the ratio to the local permissible half-gap may tend to $1$. The quantified condition is nonetheless \emph{for every index to infinity}. Numerical root-mean-square error is irrelevant to this theorem.
+\end{remark}
+
+\section{Synthetic zeta and the Euler-phase spiral}
+Define
+\begin{equation}\label{eq:synthetic}
+\Xi_c(z)=\prod_{k\ge1}\left(1-\frac{z^2}{c_k^2}\right),\qquad
+D(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2),\qquad
+\zeta_c(s)=\frac{\Xi_c(-i(s-1/2))}{D(s)}.
+\end{equation}
+These are synthetic functions, not a claimed equality with Riemann's $\zeta$.
+\begin{theorem}[Synthetic functional equation and signed zeros]\label{thm:func}
+The product $\Xi_c$ is even and entire and has precisely the simple zeros $\pm c_k$. The meromorphic function $\zeta_c$ satisfies
+\begin{equation}\label{eq:fe}
+\zeta_c(s)=\chi(s)\zeta_c(1-s).
+\end{equation}
+On the critical line
+\begin{equation}\label{eq:Zc}
+Z_c(t):=e^{i\vartheta(t)}\zeta_c(\tfrac12+it)
+=-\frac{2\pi^{1/4}\Xi_c(t)}{(t^2+1/4)|\Gamma(1/4+it/2)|}\in\R,
+\qquad \sgn Z_c'(c_k)=(-1)^{k+1}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+On a compact set, $\sum_k |z|^2/c_k^2$ converges; hence the canonical paired product converges normally. Evenness and the reality of its zeros are immediate. Under $s\mapsto1-s$ the argument $z=-i(s-1/2)$ changes sign; direct division of $D(1-s)$ by $D(s)$ gives $\chi(s)$, proving \eqref{eq:fe}. On $s=1/2+it$, $D(s)=-(t^2+1/4)\pi^{-1/4}|\Gamma(1/4+it/2)|e^{i\vartheta(t)}/2$. Finally $\Xi_c'(c_k)=-(2/c_k)\prod_{j\ne k}(1-c_k^2/c_j^2)$ has sign $(-1)^k$; the negative prefactor in \eqref{eq:Zc} reverses it.
+\end{proof}
+Set $E_X(s)=P_X(s)+\chi(s)P_X(1-s)$, $B_X^c(s)=P_X(s)/\zeta_c(s)$, and $\chi_X(s)=\chi(s)P_X(1-s)/P_X(s)$.
+\begin{theorem}[Euler-phase and meromorphic spiral]\label{thm:spiral}
+On the critical line, at points where the displayed quotients are defined,
+\begin{align}
+E_X(\tfrac12+it)&=2e^{-i\vartheta(t)}|P_X(\tfrac12+it)|\cos\big(\pi(F_X(t)-1)\big),\label{eq:EX}\\
+\frac{P_X}{E_X}(\tfrac12+it)&=\frac12+\frac i2\tan\big(\pi(F_X(t)-1)\big),\label{eq:tangent}\\
+B_X^c(\tfrac12+it)&=\frac{|P_X(\tfrac12+it)|}{Z_c(t)}\,e^{i\pi(F_X(t)-1)},\label{eq:Bphase}\\
+\frac{E_X}{\zeta_c}(\tfrac12+it)&=2\Re B_X^c(\tfrac12+it).
+\label{eq:realratio}
+\end{align}
+For $\eps_k:=F_X(c_k)-k+\tfrac12$ the residue in the \emph{$s$-plane} is
+\begin{equation}\label{eq:residue}
+\Res_{s=1/2+ic_k}B_X^c(s)=
+\frac{|P_X(1/2+ic_k)|}{|\zeta_c'(1/2+ic_k)|}\,e^{i\pi\eps_k}.
+\end{equation}
+If $F_X$ is strictly increasing, $c_k$ belongs to the $k$th interval $(m_{k-1},m_k)$ if and only if
+\begin{equation}\label{eq:cellphase}
+|\eps_k|<\frac12.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Write $P_X(1/2+it)=|P_X|e^{i\pi S_X(t)}$ and $\chi(1/2+it)=e^{-2i\vartheta(t)}$. Adding the two conjugate-phase terms gives \eqref{eq:EX} and division gives \eqref{eq:tangent}. Since $e^{i\vartheta}\zeta_c=Z_c\in\R$, the quotient gives \eqref{eq:Bphase} and \eqref{eq:realratio}. At $c_k$, differentiating $Z_c=e^{i\vartheta}\zeta_c(1/2+it)$ gives $Z_c'(c_k)=i e^{i\vartheta(c_k)}\zeta_c'(1/2+ic_k)$. Inserting the alternating sign of Theorem~\ref{thm:func} into \eqref{eq:Bphase} proves \eqref{eq:residue}; the factor $i$ cancels on conversion from $t$ to $s$. Finally $(m_{k-1},m_k)$ maps monotonically onto $(k-1,k)$, equivalent to \eqref{eq:cellphase}.
+\end{proof}
+\begin{remark}
+The curve $t\mapsto B_X^c(1/2+it)$ crosses the real axis at $F_X(t)\in\mathbb Z$, the imaginary axis at $F_X(t)\in\mathbb Z+1/2$, and has poles at $c_k$. Between poles its angular speed is $\pi F_X'(t)$; crossing infinity requires a chosen projective continuation. This \emph{synthetic spiral} records the arithmetic phase defect, not genuine zeta zero locations. The bound \eqref{eq:cellphase} is a statement about the \emph{Gonek cell}, different from \eqref{eq:directional}.
+\end{remark}
+
+\section{Analytic Abel prime correction and an ordered flow}
+For a real exponent $0<a<1$, put
+\begin{equation}\label{eq:Abel}
+Q_a(t)=(t/2\pi)^a,\qquad
+\mathcal S_a(t)=-\frac1\pi\sum_p\sum_{r\ge1}
+\frac{e^{-p^r/Q_a(t)}}{r p^{r/2}}\sin(rt\log p),\qquad t>2\pi.
+\end{equation}
+This is an \emph{analytic model choice}; the exponent is not determined by a theorem of zero localization. One-step centres are $c_{a,k}^{(1)}=\tau_k-\mathcal S_a(\tau_k)/L(\tau_k)$.
+\begin{proposition}[Convergence and deterministic displacement]\label{prop:Abel}
+For $0<a<1$, the series \eqref{eq:Abel} and its termwise derivatives converge locally uniformly for real $t>2\pi$; in particular $\mathcal S_a$ is real analytic. As $t\to\infty$,
+\begin{equation}\label{eq:Abelbound}
+|\mathcal S_a(t)|\ll Q_a(t)^{1/2},\qquad
+|c_{a,k}^{(1)}-\tau_k|\ll \frac{\tau_k^{a/2}}{\log\tau_k}.
+\end{equation}
+The second statement is a bound on the \emph{synthetic correction}, not on $|c_{a,k}^{(1)}-\gamma_k|$.
+\end{proposition}
+\begin{proof}
+At $n=p^r$, use $\Lambda(n)/\log n=1/r$. The absolute value is bounded by
+\[\pi^{-1}\sum_{n\ge2}n^{-1/2}e^{-n/Q_a(t)}\ll\sqrt{Q_a(t)}.\]
+On a compact $t$-interval, derivatives introduce only powers of $n$, $\log n$, and powers of $Q_a(t)^{-1}$, still dominated by the exponential. Hence local normal convergence also holds in a sufficiently narrow complex neighbourhood, proving real analyticity. Divide by $L(t)\asymp\log t$.
+\end{proof}
+A construction that \emph{proves} synthetic order, rather than assuming it, uses a flow:
+\begin{equation}\label{eq:flow}
+V_a(t)=-\frac{(1-2\pi/t)^2}{L(t)}\mathcal S_a(t),\quad
+\partial_\lambda X_a(\lambda,\nu)=V_a(X_a(\lambda,\nu)),\quad
+X_a(0,\nu)=\tau(\nu).
+\end{equation}
+\begin{theorem}[Global ordered prime flow]\label{thm:flow}
+For every $0<a<1$, every $\nu$ with $\tau(\nu)>2\pi$, and each finite real $\lambda$, equation \eqref{eq:flow} has a unique solution in $(2\pi,\infty)$. Whenever $\tau(\nu)$ is differentiable with $\tau'(\nu)>0$,
+\begin{equation}\label{eq:flowderivative}
+\partial_\nu X_a(1,\nu)=\tau'(\nu)
+\exp\!\left(\int_0^1V_a'(X_a(v,\nu))\,\mathrm dv\right)>0.
+\end{equation}
+Thus $c_{a,k}^{\mathrm{flow}}=X_a(1,k)$ are strictly ordered for all admissible $k$.
+\end{theorem}
+\begin{proof}
+The field is locally Lipschitz in $t>2\pi$ by Proposition~\ref{prop:Abel}. Near $2\pi$, $L(t)$ has a simple zero and $(1-2\pi/t)^2$ has a double zero, hence $V_a(t)=O(t-2\pi)$; uniqueness prevents a positive solution from reaching the boundary in finite time. At infinity, Proposition~\ref{prop:Abel} gives $|V_a(t)|\ll t^{a/2}/\log t=o(t)$, excluding finite-time escape. Differentiating a scalar flow with respect to the initial parameter yields its variational equation; integration gives \eqref{eq:flowderivative}.
+\end{proof}
+\begin{remark}
+This is an unconditional theorem about \emph{synthetic order only}. It is not a localization theorem: even an ordered sequence can fail \eqref{eq:directional}. The multiplier in \eqref{eq:flow} regularizes the boundary and is not uniquely imposed by arithmetic.
+\end{remark}
+
+\section{Exact clock--prime decomposition and rational resonances}
+\begin{theorem}[Half-integer Poisson clock]\label{thm:poisson}
+Suppose $F_X\in C^1([T,2T])$ and $F_X'(t)>0$ throughout $[T,2T]$. Let $\kappa$ be its inverse at half-integer levels. As distributions on $(T,2T)$,
+\begin{equation}\label{eq:poisson}
+\sum_{\kappa_k\in(T,2T)}\delta_{\kappa_k}(t)
+=F_X'(t)\left[1+2\sum_{m\ge1}(-1)^m\cos(2\pi mF_X(t))\right].
+\end{equation}
+For $w\in C_c^\infty((T,2T))$, define $w_e(t)=w(|t|)$ on its two symmetric support windows and $\widehat w_e(u)=\int_\R w_e(t)e^{-iut}\,dt$. Then
+\begin{equation}\label{eq:poissontrace}
+\sum_k w(\kappa_k)=\int_T^{2T}w(t)N_0'(t)\dd t
+-\frac1{2\pi}\sum_{p\le X}\sum_{r\ge1}\frac{\log p}{p^{r/2}}\widehat w_e(r\log p)
++\mathcal R_X[w],
+\end{equation}
+where
+\begin{equation}\label{eq:remainder}
+\mathcal R_X[w]=2\sum_{m\ge1}(-1)^m\int_T^{2T}w(t)F_X'(t)\cos(2\pi mF_X(t))\dd t
+\end{equation}
+is interpreted distributionally (for example via Abel summation in $m$).
+\end{theorem}
+\begin{proof}
+The Fourier series of the Dirac comb at the levels $j+1/2$ is $\sum_{m\in\mathbb Z}(-1)^m e^{2\pi i m u}$. Pulling back under the increasing diffeomorphism $u=F_X(t)$ produces \eqref{eq:poisson}. Differentiation of the finite Euler phase gives
+$S_X'(t)=-\pi^{-1}\sum_{p\le X}\sum_{r\ge1}(\log p)p^{-r/2}\cos(rt\log p)$;
+this series is absolutely convergent for fixed $X$. Integrating against $w$, using $\int_0^\infty w(t)\cos(ut)\dd t=\widehat w_e(u)/2$, gives \eqref{eq:poissontrace}.
+\end{proof}
+\begin{lemma}[Off-resonance first derivative estimate]\label{lem:ibp}
+For $m\ge1$, real $u$, and $A=wF_X'$, put
+$\Phi_m(t)=2\pi mF_X(t)-ut$ and
+$\Delta_m=\inf_{t\in\supp w}|\Phi_m'(t)|$. If $\Delta_m>0$, then
+\begin{equation}\label{eq:ibp}
+\left|\int_T^{2T} A(t)e^{i\Phi_m(t)}\dd t\right|
+\le\frac{\|A'\|_1}{\Delta_m}
++\frac{2\pi m\|AF_X''\|_1}{\Delta_m^2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Integrate by parts using $e^{i\Phi}=\frac1{i\Phi'}\frac{d}{dt}e^{i\Phi}$; compact support removes the boundary term. Differentiate $A/\Phi'$ and use $|\Phi'|\ge\Delta_m$, $\Phi''=2\pi mF_X''$.
+\end{proof}
+
+Set $P(X)=\prod_{p\le X}p$ and
+\begin{equation}\label{eq:coeffdef}
+\mathscr Q_X=\{q=n/d>0: d\mid P(X),\ n\text{ has prime factors}\le X,\ (n,d)=1\}.
+\end{equation}
+For $d\mid P(X)$ define $c_X(d)=\prod_{p\le X,\,p\nmid d}(1-1/p)$.
+\begin{theorem}[Exact rational-frequency decomposition with M\"obius weights]\label{thm:rational}
+For every fixed finite $X$ and every real $t$,
+\begin{equation}\label{eq:rational}
+e^{-2\pi iS_X(t)}=\sum_{q=n/d\in\mathscr Q_X}
+ b_X(q)q^{it},\qquad
+b_X(n/d)=\frac{\mu(d)c_X(d)}{\sqrt{nd}},
+\end{equation}
+with absolute convergence and
+\begin{equation}\label{eq:L1mass}
+\sum_{q\in\mathscr Q_X}|b_X(q)|=\prod_{p\le X}(1+2p^{-1/2}).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:rationalderiv}
+F_X'(t)e^{-2\pi iF_X(t)}
+=e^{-2i\vartheta(t)}\sum_{q\in\mathscr Q_X}
+ b_X(q)\left(N_0'(t)-\frac{\log q}{2\pi}\right)q^{it}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $a=p^{-1/2}$ and $y=p^{it}$ one has the geometric-series identity
+\begin{equation}\label{eq:localfactor}
+\frac{1-ay^{-1}}{1-ay}=-ay^{-1}+(1-a^2)\sum_{r\ge0}a^ry^r.
+\end{equation}
+By $e^{-2\pi iS_X}=\overline{P_X}/P_X$ on the critical line, multiplication of \eqref{eq:localfactor} over the finitely many primes $p\le X$ yields \eqref{eq:rational}, with negative exponent choices indexed by the squarefree denominator $d$ and nonnegative choices indexed by $n$. The local absolute coefficient sum equals $a+(1-a^2)/(1-a)=1+2a$, yielding \eqref{eq:L1mass}. Absolute convergence permits termwise differentiation; differentiate $e^{-2\pi iS_X}=\sum_q b_X(q)q^{it}$ to obtain
+$S_X'e^{-2\pi iS_X}=-(2\pi)^{-1}\sum_q b_X(q)(\log q)q^{it}$.
+Combine this with $F_X'=N_0'+S_X'$ and $e^{-2\pi iN_0}=e^{-2i\vartheta}$.
+\end{proof}
+\begin{corollary}[Precise stationary-point equation]\label{cor:stationary}
+For each rational $q$ in Theorem~\ref{thm:rational}, the frequency-$u$ phase of the first negative harmonic is
+\begin{equation}\label{eq:stphase}
+\Phi_{q,u}(t)=(u+\log q)t-2\vartheta(t),\qquad
+\Phi_{q,u}'(t)=u+\log q-2\vartheta'(t).
+\end{equation}
+Thus any stationary point $t_{q,u}$ solves $2\vartheta'(t_{q,u})=u+\log q$, and, for $t_{q,u}\to\infty$,
+\begin{equation}\label{eq:stloc}
+t_{q,u}=2\pi q e^u\bigl(1+O(t_{q,u}^{-2})\bigr).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Insert \eqref{eq:rationalderiv} into $F_X'e^{i(ut-2\pi F_X)}$. The phase of its $q$-term is \eqref{eq:stphase}; the Stirling expansion $2\vartheta'(t)=\log(t/2\pi)+O(t^{-2})$ proves \eqref{eq:stloc} by inversion.
+\end{proof}
+\begin{remark}
+\eqref{eq:rational} is a \emph{proved exact arithmetic decomposition}. It displays squarefree M\"obius denominators and $X$-smooth numerators without invoking genuine zeros. It does \emph{not} yet provide a uniform stationary-phase remainder after summing over all $q$, especially for cutoffs $X=X(T)$. The bare single resonance $t=2\pi e^u$ is valid only when $P_X$ is absent.
+\end{remark}
+\begin{proposition}[Absolute monotonicity test]\label{prop:cutoff}
+Put
+\[\sigma_X=\sum_{p\le X}\frac{\log p}{\sqrt p-1}.\]
+Then
+\begin{equation}\label{eq:sigma}
+|S_X'(t)|\le\sigma_X/\pi,\qquad
+F_X'(t)\ge N_0'(t)-\sigma_X/\pi.
+\end{equation}
+Consequently $N_0'(t)>\sigma_X/\pi$ guarantees monotonicity at $t$. The prime number theorem yields $\sigma_X=(2+o(1))\sqrt X$ as $X\to\infty$, so this \emph{sufficient absolute-bound argument} confines $X$ to size $O((\log T)^2)$ on a large-$T$ window.
+\end{proposition}
+\begin{proof}
+Differentiate the logarithm of each Euler factor and use $|\Re(w/(1-w))|\le|w|/(1-|w|)$ at $w=p^{-1/2-it}$. This proves \eqref{eq:sigma}. Partial summation of $\sum_{p\le X}(\log p)p^{-1/2}$ using the prime number theorem gives $2\sqrt X+o(\sqrt X)$; replacing $p^{-1/2}$ by $(\sqrt p-1)^{-1}$ changes the sum by $O(\sum_{p\le X}\log p/p)=O(\log X)$.
+\end{proof}
+
+\section{Spectral correction of close groups: separate from the synthetic argument}
+This section \emph{does use} the classical completed function $\xi$; it must not be advertised as a construction from primes and $\Gamma$ alone. Put $\mathcal F(z)=\xi(1/2+iz)$, a real entire function on the real axis. Its nonreal zeros occur in conjugate pairs. The following algebraic statements apply to \emph{any} real entire function, independently of RH.
+\begin{theorem}[Two-root recovery and real Hankel criterion]\label{thm:hankel}
+Let $f$ be real entire, $\Omega\subset\C$ a bounded domain invariant under conjugation with zero-free boundary $\Gamma$, enclosing $n\ge1$ zeros counted with multiplicity. For $b\in\R$ define
+\begin{equation}\label{eq:moments}
+m_j=\frac1{2\pi i}\oint_\Gamma(z-b)^j\frac{f'(z)}{f(z)}\dd z,
+\quad H=(m_{r+s})_{0\le r,s<n}.
+\end{equation}
+Then $H$ is real symmetric and
+\begin{equation}\label{eq:Hiff}
+H\succ0\quad\Longleftrightarrow\quad
+\text{all $n$ enclosed zeros are real and simple}.
+\end{equation}
+For $n=2$ the two zeros are exactly
+\begin{equation}\label{eq:tworoot}
+z_\pm=b+\frac{m_1\pm\sqrt{2m_2-m_1^2}}{2}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+The residue theorem gives $m_j=\sum_\nu(z_\nu-b)^j$. Thus for a real polynomial $P$ of degree $<n$, with coefficient vector $v$, $v^THv=\sum_\nu P(z_\nu-b)^2$. If all roots are distinct and real this is positive unless $P=0$, since a polynomial of degree $<n$ cannot vanish at all of them. A repeated root makes the Vandermonde matrix rank deficient. If there is a nonreal pair, conjugation invariance ensures its partner is included. Real interpolation on the distinct roots constructs a polynomial taking values $i$ and $-i$ at the conjugate pair and zero at the other distinct roots; the sum is strictly negative (with multiplicity weights). Finally the quadratic formula applied to the elementary symmetric functions determined by $m_1,m_2$ yields \eqref{eq:tworoot}.
+\end{proof}
+\begin{remark}
+Conjugation symmetry is indispensable: a single nonreal zero in an asymmetric region gives the $1\times1$ matrix $(1)\succ0$. Repeating a contour around the same set of roots only repeats its moments; turns alone create no new information.
+\end{remark}
+\begin{theorem}[Local Rouch\'e certificate for a Taylor pair]\label{thm:rouche}
+Let $f$ be real holomorphic on $|z-b|\le L$, $b\in\R$, and $P_d(z)=\sum_{j=0}^d f^{(j)}(b)(z-b)^j/j!$ have two distinct real simple roots $q_-<q_+$. Suppose each closed disc $\overline{D(q_\pm,r)}$ is contained in $|z-b|\le L$ and the two discs are disjoint. Put $M_{d+1}=\sup_{|z-b|\le L}|f^{(d+1)}(z)|$. If
+\begin{equation}\label{eq:rouche}
+\frac{M_{d+1}L^{d+1}}{(d+1)!}
+<\min_{\substack{z\in\C\\ |z-q_-|=r\;\text{or}\;|z-q_+|=r}}|P_d(z)|,
+\end{equation}
+and each disc contains exactly one root of $P_d$, then each disc contains exactly one \emph{real simple} root of $f$. For $d=2$, $d_0=q_+-q_->2r$, \eqref{eq:rouche} is implied by
+\begin{equation}\label{eq:quadratic}
+\frac{M_3L^3}{6}<\frac{|f''(b)|}{2}\,r(d_0-r).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Taylor's integral remainder along the straight segment in the disc gives $|f(z)-P_d(z)|\le M_{d+1}|z-b|^{d+1}/(d+1)!$ (apply the one-variable integral formula to $u\mapsto f(b+u(z-b))$). Rouch\'e on each circle gives the same zero count as $P_d$, namely one. As $f(\overline z)=\overline{f(z)}$ and each disc is symmetric about the real axis, a unique enclosed zero must be real; multiplicity one gives simplicity. For $d=2$, $P_2(z)=\frac{f''(b)}2(z-q_-)(z-q_+)$, and on $|z-q_-|=r$ the other factor has modulus at least $d_0-r$; similarly on the other circle.
+\end{proof}
+\begin{proposition}[Near-pair accuracy of spectral Taylor truncations]\label{prop:near}
+Consider a family
+$f_h(m+x)=(x^2-h^2)H_h(m+x)$, $h\downarrow0$, where the analytic factors $H_h$ are real on the real axis, nonvanishing on a common complex neighbourhood of $m$, and $H_h,H_h^{-1}$ have derivatives bounded there uniformly through order $5$. A real stationary point $b_h$ of $f_h$ exists near $m$ and satisfies
+\begin{equation}\label{eq:bshift}
+b_h=m+\frac{H_h'(m)}{2H_h(m)}h^2+O(h^4).
+\end{equation}
+If $q^{(d)}_\pm$ are the two Taylor roots near $m\pm h$ of order $d=2,3,4$ about $b_h$, then
+\begin{equation}\label{eq:nearorders}
+q^{(2)}_\pm-(m\pm h)=O(h^2),\quad
+q^{(3)}_\pm-(m\pm h)=O(h^3),\quad
+q^{(4)}_\pm-(m\pm h)=O(h^4).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Writing $b_h=m+x_h$, the critical-point equation reads $2x_h H_h(m+x_h)+(x_h^2-h^2)H_h'(m+x_h)=0$. The implicit-function theorem about $(x,h)=(0,0)$ gives $x_h=O(h^2)$; substitution then gives \eqref{eq:bshift}. The order-$d$ Taylor remainder near either true root is $O(h^{d+1})$, uniformly by the hypotheses, whereas the root derivative of $f_h$ is $\pm2hH_h(m\pm h)=\Theta(h)$. Local Rouch\'e, or the inverse-function theorem with the displayed derivative bound, gives a nearby Taylor root at distance $O(h^d)$. For $d=2$ the Taylor polynomial has two real roots at $b_h\pm\sqrt{-2f_h(b_h)/f_h''(b_h)}$ for small $h$; continuation establishes the analogous two real roots at orders $3,4$.
+\end{proof}
+\begin{remark}
+The real stationary point method is useful for repairing \emph{local pairs} even when one-step Casanya misses the directional cell. It does not certify their global ordinal labels, nor rule out additional nonreal zeros. Derivative bounds must be validated on complex discs, not inferred from a mesh of sample values.
+\end{remark}
+
+\section{What is proved and what remains an actual research problem}
+Theorem~\ref{thm:spiral} and Theorem~\ref{thm:rational} give a new \emph{object of investigation}: a fully arithmetic phase spiral whose first Fourier harmonic has exact rational frequencies $q=n/d$ and M\"obius weights. Theorem~\ref{thm:flow} proves order preservation of a prime-driven synthetic transport, while Theorem~\ref{thm:rouche} certifies individual spectral pairs under computable derivative inequalities. None of these results asserts the universal cell inequalities \eqref{eq:directional}.
+
+The next nontrivial analytical estimate is \emph{not} a reformulation of a zero count: it is a uniform-in-the-active-prime-range asymptotic for the \emph{arithmetic sum of rational resonances} in \eqref{eq:rationalderiv}, with controlled cancellation rather than the absolute mass \eqref{eq:L1mass}. Such a theorem would be meaningful even independently of RH. Whether it ultimately produces a universal zero-separation law remains open. By contrast, demanding the full explicit formula for an entire synthetic spectrum at once merely repackages the familiar RH-level spectral identification.
+
+\appendix
+\section{Arguments to defeat: failed routes, gaps, and known walls}
+The following is part of the mathematical record, not a collection of claimed theorems.
+\begin{enumerate}[leftmargin=*,itemsep=2.5pt]
+\item \status{RMS optimization is the wrong objective.} An estimate may have larger RMS and still satisfy every individual cell. Earlier experiments using $a=0.5,0.75,1$ for Abel smoothing showed local synthetic-gap contractions and some inversions. Reports based on $2|e_k|/\min(\ell_k,r_k)$ tested a \emph{stronger symmetric} threshold, not the final directional inequality \eqref{eq:directional}. Such failure counts must not be silently relabelled as directional failures.
+\item \status{The exponent $3/4$ is not proved optimal.} The cost $J(a)=\log(1/a)+a^2$ has a provable minimum $a=1/\sqrt2$ \emph{for that chosen cost}; no theorem links it to an individual bound on $|c_k-\gamma_k|$. Weighting its two terms equally was arbitrary.
+\item \status{An Abel-series displacement bound is not a true-zero error bound.} The estimate $|c_{a,k}^{(1)}-\tau_k|\ll\tau_k^{a/2}/\log\tau_k$ neither proves nor disproves a bound on $|c_{a,k}^{(1)}-\gamma_k|$.
+\item \status{Guaranteed synthetic monotonicity does not imply localization.} The flow theorem removes synthetic inversions but does not prevent wrong ordinal assignment. Retrospective tests showed residual failures near compressed pairs, including the neighbourhood of index $1\,000\,055$; no all-$k$ conclusion follows.
+\item \status{Newton and paired Taylor steps are not globally certified.} Independent Newton iterations may converge twice to the same zero. Pairwise Taylor approximations have excellent local numerical examples, but Rouch\'e requires rigorously bounded coefficients and complex-disc derivatives. Previously quoted fifth-derivative bounds near index $1\,000\,055$ are \emph{not a finished interval certificate}.
+\item \status{A norm of logarithmic-derivative discrepancy can be overly strong.} If $f=e^{Az^2}g$ with $A\in\R$, then $f$ and $g$ have exactly the same zeros, while $(\log f)'-(\log g)'=2Az$ can have arbitrarily large absolute contour integral. Oriented polynomial moments of the difference all vanish. Thus a large absolute norm does not alone rule out exact spectral transport.
+\item \status{Hankel positivity is conditional.} It is equivalent to reality and simplicity of the enclosed zeros, but no universal positivity bound for the completed zeta function has been established. The analogous absolute transport bound deteriorates when synthetic Vandermonde matrices become ill-conditioned in close clusters.
+\item \status{The ``even defect'' route is a known wall.} For a conjugation-symmetric domain, the total zero count minus the number of certified real-axis sign changes is a nonnegative even integer. Demanding that it vanish for an exhaustive covering is a classical RH-plus-simplicity-level zero count, not an independent new inequality.
+\item \status{The full synthetic explicit formula is another known wall.} Demanding equality of the prime trace for \emph{all} admissible test functions forces spectral identification, rather than offering a readily provable intermediate estimate. Such tests require carefully specified Fourier support and growth; a function cannot be both compactly supported in $t$ and have compactly supported Fourier transform unless it vanishes.
+\item \status{The single lattice resonance was an erroneous simplification.} With the Euler phase, $F_X''=N_0''+S_X''$; $S_X''$ is not necessarily small compared with $1/t$. Stationary points occur in an arithmetic family $t\sim2\pi q e^u$, not solely at $2\pi e^u$. The exact repaired statement is Theorem~\ref{thm:rational}; a summable stationary-phase error for growing $X$ has \emph{not} been proved.
+\item \status{A sharp growing cutoff is not a smooth clock.} Choosing $X=X(t)$ by suddenly admitting a new prime can make $S_{X(t)}$ jump. Proposition~\ref{prop:cutoff} yields merely a sufficient, not a necessary, monotonicity range. A monotone regularization may destroy the exact coefficient identity \eqref{eq:rational} unless its effect is tracked.
+\item \status{A full Euler product is not an entire model.} $P_X$ has poles, $\chi$ is meromorphic, and $E_X=P_X+\chi P_X(1-s)$ inherits meromorphic singularities in general. Replacing $P_X$ by an exponential of a finite prime-power sum removes its own poles, but does not automatically remove the poles of $\chi$.
+\item \status{The Mobius resonance sum is not yet a prime selector.} The denominator coefficients $\mu(d)c_X(d)/d$ of \eqref{eq:rational} constitute a finite-sieve structure. Showing that its combined resonances produce $\Lambda(n)$ with a useful uniform error is unproved. The informal claim that a universal cutoff $X(T)\ge\sqrt{T/2\pi}$ is \emph{necessary} is not established by the sieve heuristic.
+\item \status{A local spectral certificate is not RH.} A collection of rigorously certified real pairs does not exclude unobserved nonreal zeros. Proving exhaustive global coverage by ordinary argument counting returns to the well-known obstruction. A genuinely new analytic inequality is required for any claim beyond local localization.
+\end{enumerate}
+\section{Reported numerical cases (not certifications)}
+The following figures are \emph{retrospective observations} archived in the project; no new fitting or independent interval verification was performed here. They cannot establish statements for all indices.
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}\toprule
+Pair of indices & Maximum quadratic error & Maximum cubic error\\\midrule
+$889$--$890$ & $0.0058411$ & $0.0021378$\\
+$1\,000\,055$--$1\,000\,056$ & $0.0001344$ & $0.0000122$\\
+$2\,000\,992$--$2\,000\,993$ & $0.0053030$ & $0.0020388$\\
+$2\,001\,043$--$2\,001\,044$ & $0.0013431$ & $0.0009932$\\\bottomrule
+\end{tabular}
+\end{center}
+The near pair $1\,000\,055$--$1\,000\,056$ had a reported true separation of $0.038304245$; the prime flow with $a=0.75$ missed the stronger symmetric cell threshold at its first index (reported ratio $1.058636$), whereas an independent spectral Newton step reduced the reported ratio below $1$. The fourth-order Taylor predictions were reported to have errors of order $10^{-7}$, but the accompanying fifth-derivative bounds were \emph{not certified by interval arithmetic}. Numerical corrections of thirteen previously observed flow failures by mixed Newton/pair rules were local-window tests, not a verified complete infinite sequence. These experiments motivate Theorem~\ref{thm:rouche}; they do not prove it applies to those particular numerical inputs without validated coefficient bounds.
+
+\smallskip\noindent\textbf{Provenance and reproducibility.}
+The source material was read from the public repository
+\url{https://github.com/vcasana1/LawCasanya} (\texttt{main}), including the documents on (i) contour moments and Hankel transport, (ii) the even-defect revision, (iii) fourth-order Taylor pairs, (iv) synthetic zeta and the Euler spiral, (v) the rational-frequency/M\"obius first harmonic, and (vi) the index of two additional Casanya conversations in \url{https://github.com/vcasana1/LawCasanya/tree/main/work/display}.
+The last index is a \emph{summary}, not a verbatim transcript. Its references to prime-corrected clock Theorems A--G and numerical benchmarks are contextual; no uninspected external theorem has been promoted into the main text. No fresh numerical benchmark was performed for this article, and no manuscript in the repository was modified.
+\end{document}
