@@ -394,3 +394,8 @@
 - Lema de muestreo (4.7): el error de la comparación con el modelo es aditivo; el enunciado ahora es κ^{1/2}(σ_f^{2q}+T^{-1/4})(1+𝔟_T log N) (contraejemplo de ChatGPT correcto para la forma anterior). Las aplicaciones no cambian.
 - Comprobadas contra la v14 las entradas (I1)–(I4) y los números de ecuación citados. Corregidas dos citas erróneas de v1–v3: "Theorem D'' [Thm 7.5]" (7.5 es otro corolario; Thm 7.3 solo da ≪ log log T a c fijo) y "proof of Lemma 5.11" para Sobolev (sustituida por prueba propia).
 - Auditoría verbatim: work/display/2026-10-23_aportes_externos_transporte/12_auditoria_transport_energy_theorem_v3.txt. Ningún manuscrito cambiado.
+
+## 2026-10-24 [claude] — transport_energy_theorem v5 (fusión con el v4 de ChatGPT y revisión completa)
+- work/paper1/transport_theorem/transport_energy_theorem_v5.{tex,txt,pdf} (10 pp., 0 errores) y transport_energy_theorem_v5_changelog.md.
+- Del v4 de ChatGPT (verbatim en work/display/2026-10-23_aportes_externos_transporte/13_transport_energy_theorem_v4_chatgpt.tex): redacción del lema de muestreo con Δ_f explícito y Observación 4.8 de aplicaciones. Se mantienen las correcciones de la v4 de Claude (cita Theorem D, Sobolev con prueba propia), que el v4 de ChatGPT no tenía.
+- Revisión completa: corregidos el Lema de Hoeffding (ahora con cosenos), el término cruzado O(√L Y^{-1/4}) en las medias cuadráticas en el reloj, |y_k| ≤ ½T^{1/2} en multiplicidad y la cota de σ²(P_2). Enunciado sin cambios. Ningún manuscrito cambiado.
