@@ -345,3 +345,8 @@
 - work/paper1/pendiente_siguiente_version/transporte_tabla7_2026-10-23.md (pendiente para la siguiente versión; sin versión nueva). work/paper1/transport_note/s2_window_2p19.{py,out,json}: ⟨s_k²⟩ = 0.11279 sobre 2^19<γ_k≤2^20 (977 804 ceros). work/display/2026-10-23_transporte_tabla7_limite.md (respuesta verbatim).
 - La frase de la Tabla 7 ("smaller than c² log log T by factors 21–35") omite 1/(2π²): ⟨t_k²⟩/(c²⟨s_k²⟩) = 1.087, 0.909, 0.648 para c = 1/5, 1/3, 1/2. Lo real es la cancelación 2⟨u t⟩ ≈ −⟨t²⟩.
 - Modelo local (no teorema): el defecto entra siempre como u/(1+σ); ninguna corrección calculable desde el reloj baja ⟨r²⟩ más de O(c²⟨u²⟩/⟨a²⟩) relativo por debajo de ⟨u²⟩. El transporte solo puede impedir que el error crezca; bajar el error exige c>1/2. Ningún manuscrito cambiado.
+
+## 2026-10-23 18:15 UTC — [chatgpt] — v4 Casaña source archive
+- On author's express request archived `casanya_prime_spiral_short_v4.tex` and byte-identical `.txt` with Python appendices and README in `chatgpt/casanya_prime_spiral_short_v4_20261023/` (17-page PDF was previously generated for the conversation but not stored as binary in this GitHub commit).
+- v4 was made before the later Table 7 transport correction. The v4 manuscript is archived unchanged; the new transport note and script remain in Claude's `work/paper1/` and were not merged into v4.
+- v4 documents 584 local Rouché successes reported from two 300-index blocks, with 238 Newton-recentered original tests requiring corrected same-disc Arb/Turing rerun; v4 validator and pair audit script have not been executed in this environment. No new numerical claims. No files in Claude's `work/` modified except this append-only log entry.
