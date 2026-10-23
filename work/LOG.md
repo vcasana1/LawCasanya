@@ -317,3 +317,9 @@
 - Checked and applied the note's five mathematical points: residue factor of the normalization corrected (multiplied, not divided, by 2Xi_c(i/2): v2 was wrong); c = gamma presupposes RH and simplicity; repeated ordinate = off-line pair or multiple critical zero; local certificate extended to a classification (real pair / conjugate pair / exactly double zero); portmanteau proposition on density-zero coincidences. 18 pp., no warnings.
 - Formatting changes proposed in the note (no link boxes, no e-mail) not adopted: v39 configuration kept.
 - No zero data read; no other manuscript changed; chatgpt/ untouched.
+
+## 2026-10-23 10:30 UTC — [chatgpt] — handoff RH and local two-pair certificate archive
+- On the author's instruction created `chatgpt/handoff/CASANYA_RH_HANDOFF_20261023.md`, a self-contained handoff for a new chat covering the local pair theorem, GUE limitations, infinite-family hypothesis, and explicit necessary steps (and known counting wall) before RH could be concluded.
+- Deposited the prior two-pair experiment's original script and README in `chatgpt/casanya_pair_cert_20261023/` with a two-row CSV of archived results, so the user only needs the Markdown and tables, not the script.
+- No new numerical runs; quoted interval figures are copied from the 2026-10-23 archived outputs, pending independent Arb/FLINT audit. No manuscript version, code in other directories, frozen file or original datasets modified.
+- The general fourth-order relative-isolation hypothesis even for infinitely many pairs is not proven and, if proven, would not itself imply RH; a universal real-zero and exhaustive-coverage theorem is still required.
