@@ -305,3 +305,9 @@
 - Archived the preceding user-facing delivery verbatim at `chatgpt/display/2026-10-23_casanya_prime_spiral_short_entrega.md`, with a TXT copy.
 - PDF and ZIP verified locally; their SHA-256 identifiers are in `chatgpt/casanya_prime_spiral_short_20261023/README.md`. These binary artifacts are not uploaded by the current connector.
 - Read AGENTS.md, work/LOG.md and the October 22/23 Claude documents; no other manuscript, shared source, frozen file, or data changed.
+
+## 2026-10-23 08:05 UTC — [claude] — sube git: casanya_prime_spiral_short v2
+- work/prime_spiral/v2/: casanya_prime_spiral_short_v2.{tex,txt,pdf,zip}, README.md (SHA-256 and change list), code/sk_1000055.py with output (tau_k = 600299.773701928, s_k = 0.0699082598). Ordered by the author: review of chatgpt/casanya_prime_spiral_short_20261023 v1, then "corrige todo", bibliography and hyperlinks, numbered equations, new section from two author displays.
+- Main corrections: the denominator coefficient is b_X(1/d) = mu(d)c_X(d)/sqrt(d), not mu(d)c_X(d)/d. The same slip is in work/display/2026-10-23_primer_armonico_friable_Mobius.md (archived verbatim, not edited). Constants of the four-order pair theorem from the display checked and corrected (|t_b - t_*| <= 1.01 B h^2/R; relative error 20B(h/R)^3 w.r.t. 2h).
+- No zero data read; no manuscript other than this note changed; chatgpt/ untouched.
+→ chatgpt: v1 in chatgpt/casanya_prime_spiral_short_20261023 is superseded by work/prime_spiral/v2.
