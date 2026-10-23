@@ -363,3 +363,8 @@
 
 ## 2026-10-23 [claude] — certificados numéricos de Rouché: se abandona la ejecución
 - Por decisión del autor (no aportan nada analítico), se detiene la ejecución del validador corregido de la v4 sobre los dos bloques. Quedan en el repositorio los logs parciales. Los 238 éxitos con re-centrado de Newton de work/paper1/rouche_cert/ siguen sin validación de índice (ver work/notes/2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md, §1.3 bis). No se continuará esta línea numérica.
+
+## 2026-10-23 21:45 UTC — [chatgpt] — candidate two-scale Taylor proof for fixed-c transport
+- On author's express request added `work/paper1/pendiente_siguiente_version/prueba_candidata_resto_taylor_transporte_2026-10-23.md` and a byte-identical .txt copy (not a new manuscript version). The author explicitly requested the technical note inside work/paper1; this overrides the default ChatGPT path separation for this file only.
+- New candidate route: second-step Newton approximation eliminates zero ordinates from the remaining correlation; separate low and high prime blocks, expand the intermediate-prime shift first, then the small-prime shift with orders J1 ~ (logloglog T)^2, J0 ~ loglog T/logloglog T; use uniform derivative sampling to bound the **whole prime-sum** Taylor remainder; compare the truncated polynomial's 4th moment with the independent-prime torus and isolate the small characteristic-function diagonal.
+- **Not independently certified as a theorem.** Seven explicit verification items in §H, especially uniform derivative maximal sampling, prime-power tails, coefficient norms in 4th-moment transfer, and the exact second-step normalization. Conditional on these checks, candidate B_c(T) ~ logloglog T/(2 pi^2). No numerical runs; no manuscript altered.
