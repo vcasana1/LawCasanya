@@ -383,3 +383,8 @@
 - Corregido: N_0 = (t/2π)log(t/2πe)+7/8 como en la v14, eq. (2.2); J_0 = ⌈32e²s⌉ en el Lema 7.3 (la desigualdad de v1 con 24e² era falsa); error O(1/log R_1) en la eq. de varianzas; ε_{p,m} ∈ [−1,1] reales.
 - La Prop. 8.17 sí está en manuscript/ordinal_prime_cutoff_v14.tex (la auditoría miró prime_corrected_clock_v14.tex); aun así v2 incluye prueba propia (Lema 4.3, b ≤ 1/2, ‖G−I‖ ≪ T^{b−1}log T + 1/log T) y ya no la usa como entrada.
 - Auditoría de ChatGPT, verbatim: work/display/2026-10-23_aportes_externos_transporte/10_auditoria_transport_energy_theorem_v1.txt. Ningún manuscrito cambiado.
+
+## 2026-10-24 [claude] — transport_energy_theorem v3 (segunda auditoría de ChatGPT)
+- work/paper1/transport_theorem/transport_energy_theorem_v3.{tex,txt,pdf} (9 pp., 0 errores) y transport_energy_theorem_v3_changelog.md.
+- Lema de muestreo (4.7): era falso sin la hipótesis de soporte en potencias de primos (contraejemplo de ChatGPT: cos(t log 6)). Hipótesis añadida; todas sus aplicaciones (Q^♭ y sus derivadas) la cumplen. El resto de la auditoría (J_0, N_0, Mertens, ε, I5) ya estaba resuelto en v2.
+- Auditoría verbatim: work/display/2026-10-23_aportes_externos_transporte/11_segunda_auditoria_transport_energy_theorem_v1.txt. Ningún manuscrito cambiado.

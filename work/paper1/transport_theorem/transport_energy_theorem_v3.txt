@@ -1,0 +1,580 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage[no-math]{fontspec}
+\fi
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[pagebackref=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{pdfcomment}
+
+% Hover previews for internal references (no layout change).
+\makeatletter
+\let\CG@origref\ref
+\let\CG@origeqref\eqref
+\newcommand{\CG@gettip}[1]{\@ifundefined{CGTip@#1}{Reference: #1}{\csname CGTip@#1\endcsname}}
+\DeclareRobustCommand{\CGref}[1]{\pdftooltip{\CG@origref{#1}}{\CG@gettip{#1}}}
+\DeclareRobustCommand{\CGeqref}[1]{\pdftooltip{\CG@origeqref{#1}}{\CG@gettip{#1}}}
+% one line per label:
+\expandafter\gdef\csname CGTip@sec:intro\endcsname{Section: Statement}
+\expandafter\gdef\csname CGTip@thm:main\endcsname{Theorem - Transport energy: for fixed c in (0,1/2], B\_c(T)=(1/(2 pi\textasciicircum{}2)) log log log T + O\_c((log log log T)\textasciicircum{}(5/8)), and the same for the mean square of r\_k(T\textasciicircum{}c).}
+\expandafter\gdef\csname CGTip@cor:fixedc\endcsname{Corollary - Fixed exponent: for every fixed c in (0,1/2] the one-step clock error in units of mean spacings is unbounded in mean square.}
+\expandafter\gdef\csname CGTip@sec:notation\endcsname{Section: Notation and parameters}
+\expandafter\gdef\csname CGTip@eq:params\endcsname{Equation: H\_0=log log T, H\_1=log H\_0, H\_2=log H\_1, X\_1=T\textasciicircum{}(H\_0\textasciicircum{}(-1/2)), X\_2=T\textasciicircum{}(H\_1\textasciicircum{}(-1/2)), V=H\_0/(2 pi\textasciicircum{}2), omega=(log V)\textasciicircum{}(1/8), theta\_T=omega/sqrt V, Y=T\textasciicircum{}theta\_T, Z=T\textasciicircum{}(H\_0\textasciicircum{}(-2)), X=T\textasciicircum{}c.}
+\expandafter\gdef\csname CGTip@eq:L\endcsname{Equation: L=(1/(2 pi\textasciicircum{}2)) log(c/theta\_T)=(1/(4 pi\textasciicircum{}2)) H\_1+O(log H\_1).}
+\expandafter\gdef\csname CGTip@eq:SX\endcsname{Equation: S\_X(t)=sum over p<=X and m>=1 of beta\_(p\textasciicircum{}m) sin(m t log p), beta\_(p\textasciicircum{}m)=-1/(pi m p\textasciicircum{}(m/2)).}
+\expandafter\gdef\csname CGTip@sec:inputs\endcsname{Section: Results of Paper I used}
+\expandafter\gdef\csname CGTip@sec:aux\endcsname{Section: Auxiliary lemmas}
+\expandafter\gdef\csname CGTip@lem:clocksum\endcsname{Lemma - Clock sums: for 0<|w|<=(3/4)log T and weights of bounded variation, sum over k of w\_k e\textasciicircum{}(i w tau\_k) << (sup|w|+Var w)(log T/|w|+1).}
+\expandafter\gdef\csname CGTip@lem:model\endcsname{Lemma - Clock means versus the model: for a trigonometric polynomial G with frequencies log(a/b), a,b<=T\textasciicircum{}beta, beta<=3/4, the clock mean of G equals E\_mod G up to ||G||\_1 T\textasciicircum{}(beta-1) log T.}
+\expandafter\gdef\csname CGTip@lem:hoeffding\endcsname{Lemma - Sub-Gaussian model: P=sum f\_p(theta\_p) with |f\_p|<=c\_p satisfies E|P|\textasciicircum{}(2q)<=2 q! (2 sigma\textasciicircum{}2)\textasciicircum{}q with sigma\textasciicircum{}2=sum c\_p\textasciicircum{}2.}
+\expandafter\gdef\csname CGTip@lem:orth\endcsname{Lemma - Almost orthogonality: for 0<b<=1/2 the Gram matrix of v\_p(k)=sqrt(2/M) sin(tau\_k log p), p<=T\textasciicircum{}b, satisfies ||G-I||\_op << T\textasciicircum{}(b-1) log T + 1/log T.}
+\expandafter\gdef\csname CGTip@eq:orth\endcsname{Equation: ||G-I||\_op << T\textasciicircum{}(b-1) log T + (log T)\textasciicircum{}(-1).}
+\expandafter\gdef\csname CGTip@lem:tmoments\endcsname{Lemma - Time means versus the model: (1/|J|) integral over J of G equals E\_mod G up to 2 ||G||\_1 N\_G/|J|.}
+\expandafter\gdef\csname CGTip@lem:mult\endcsname{Lemma - Multiplicity: the points tau\_k - Pi(tau\_k)/Lambda(tau\_k) have multiplicity integral << b\_T M, uniformly over coefficient-dominated Pi.}
+\expandafter\gdef\csname CGTip@lem:sampling\endcsname{Lemma - Sampling: for f supported on prime powers p\textasciicircum{}m<=N with real coefficients, at points of multiplicity kappa, <f(rho\_k)\textasciicircum{}(2q)> << kappa\textasciicircum{}(1/2) sigma\_f\textasciicircum{}(2q) (1+b\_T log N).}
+\expandafter\gdef\csname CGTip@lem:clockL2\endcsname{Lemma - Clock mean squares: <W(tau)\textasciicircum{}2>=L+o(1), <S\_Y(tau)W(tau)>=O(sqrt L), ||W\_pr(tau)||\_2\textasciicircum{}2=L+o(1).}
+\expandafter\gdef\csname CGTip@sec:stepA\endcsname{Section: Step A, reduction to a linear response}
+\expandafter\gdef\csname CGTip@prop:A\endcsname{Proposition - Step A: B\_c(T)=2L-2<s\_k W(tau\_k)>+O(H\_1\textasciicircum{}(5/8)).}
+\expandafter\gdef\csname CGTip@sec:stepB\endcsname{Section: Step B, removal of the zeros}
+\expandafter\gdef\csname CGTip@prop:B\endcsname{Proposition - Step B: <s\_k W(tau\_k)>=<Q(rho\_k) W(tau\_k)>+O(sqrt(H\_1 H\_2)+sqrt(H\_1)), Q=S\_(X\_2), rho\_k=tau\_k-S\_(X\_1)(tau\_k)/Lambda(tau\_k).}
+\expandafter\gdef\csname CGTip@sec:stepC\endcsname{Section: Step C, the clock correlation}
+\expandafter\gdef\csname CGTip@lem:trunc\endcsname{Lemma - Truncations: <Q(rho)W(tau)>=<Q\textasciicircum{}flat(rho\textasciicircum{}flat) W\_pr(tau)>+o(1).}
+\expandafter\gdef\csname CGTip@lem:identity\endcsname{Lemma - Aggregated expansion: Q\textasciicircum{}flat(rho\textasciicircum{}flat)=Main+Rem\_I+Rem\_II with the remainders in integral form evaluated at shifted points.}
+\expandafter\gdef\csname CGTip@eq:main\endcsname{Equation: Main = sum over j<J\_0, l<J\_1 of (-P\_0)\textasciicircum{}j (-P\_1)\textasciicircum{}l Q\textasciicircum{}flat(j+l)(tau)/(j! l! Lambda\textasciicircum{}(j+l)).}
+\expandafter\gdef\csname CGTip@eq:remI\endcsname{Equation: Rem\_I = (-P\_1)\textasciicircum{}J\_1/((J\_1-1)! Lambda\textasciicircum{}J\_1) integral\_0\textasciicircum{}1 (1-u)\textasciicircum{}(J\_1-1) Q\textasciicircum{}flat(J\_1)(tau-(P\_0+u P\_1)/Lambda) du.}
+\expandafter\gdef\csname CGTip@eq:remII\endcsname{Equation: Rem\_II = sum over l<J\_1 of (-P\_1)\textasciicircum{}l (-P\_0)\textasciicircum{}J\_0/(l! (J\_0-1)! Lambda\textasciicircum{}(l+J\_0)) integral\_0\textasciicircum{}1 (1-u)\textasciicircum{}(J\_0-1) Q\textasciicircum{}flat(l+J\_0)(tau-u P\_0/Lambda) du.}
+\expandafter\gdef\csname CGTip@lem:rem\endcsname{Lemma - Remainders: <|Rem\_I+Rem\_II| |W\_pr(tau)|>=o(1).}
+\expandafter\gdef\csname CGTip@lem:offdiag\endcsname{Lemma - Non-zero frequencies of the main term: total contribution << T\textasciicircum{}(3c/2-1+o(1)).}
+\expandafter\gdef\csname CGTip@lem:diag\endcsname{Lemma - Zero frequency: Diag = sum over Y<p<=X\_2 of (a\_p\textasciicircum{}2/2)<Re E\_mod[e\_J0(-i xi P\_0)] E\_mod[e\_J1(-i xi P\_1)]> and |Diag| << L exp(-2 pi\textasciicircum{}2 omega\textasciicircum{}2 (1+o(1))).}
+\expandafter\gdef\csname CGTip@prop:C\endcsname{Proposition - Step C: <Q(rho\_k)W(tau\_k)>=o(1)+O(L exp(-c omega\textasciicircum{}2)).}
+\expandafter\gdef\csname CGTip@sec:proof\endcsname{Section: Proof of the theorem}
+\expandafter\gdef\csname CGTip@sec:scope\endcsname{Section: Scope and dependence on Paper I}
+\expandafter\gdef\csname CGTip@eq:thm\endcsname{Equation: B\_c(T)=<t\_k(T\textasciicircum{}c)\textasciicircum{}2>=(1/(2 pi\textasciicircum{}2)) log log log T + O\_c((log log log T)\textasciicircum{}(5/8)).}
+\expandafter\gdef\csname CGTip@eq:sigmas\endcsname{Equation: sigma\textasciicircum{}2(S\_R)<=(1/pi\textasciicircum{}2)(log log R+O(1)); sigma\textasciicircum{}2(S\_R2-S\_R1)<=(1/pi\textasciicircum{}2)(log(log R\_2/log R\_1)+O(1/log R\_1)).}
+\expandafter\gdef\csname CGTip@eq:tails\endcsname{Equation: |Q-Q\textasciicircum{}flat|<=7/log X\_2 and |E\_1|<=7/log X\_1 uniformly.}
+\expandafter\gdef\csname CGTip@eq:J\endcsname{Equation: J\_1=ceil(H\_1), J\_0=ceil(32 e\textasciicircum{}2 s), s=xi\textasciicircum{}2 sigma\_0\textasciicircum{}2<=16 H\_0/H\_1.}
+\expandafter\gdef\csname CGTip@eq:hoeff\endcsname{Equation: E\_mod|P|\textasciicircum{}(2q)<=2 q! (2 sigma\textasciicircum{}2)\textasciicircum{}q.}
+\expandafter\gdef\csname CGTip@eq:sig01\endcsname{Equation: sigma\_0\textasciicircum{}2<=(H\_0/pi\textasciicircum{}2)(1+o(1)), sigma\_1\textasciicircum{}2<=(1/pi\textasciicircum{}2)((3/2)H\_1+O(1)).}
+\makeatother
+
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 1},
+  linkbordercolor={1 0 0},
+  citebordercolor={0 0.3 1},
+  urlbordercolor={0 0.6 0.6},
+  filebordercolor={0 0.6 0.6},
+  linktoc=all,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=1,
+  pdfstartview=FitH,
+  pdftitle={The transport energy of the one-step prime-corrected clock},
+  pdfauthor={V. Casa\~na-Giner},
+  pdfsubject={Riemann zeta zeros, Riemann--von Mangoldt clock, prime corrections},
+  pdfkeywords={Riemann zeta function, zeros, clock, transport, Dirichlet polynomials}
+}
+% Back-references in the bibliography.
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+  \ifcase #1 %
+    \relax
+  \or
+    \ (Cited on p.~#2.)%
+  \else
+    \ (Cited on pp.~#2.)%
+  \fi}
+
+% In \cite[note]{key} the note (e.g. a section number) is linked too.
+\makeatletter
+\let\CG@origcite\cite
+\renewcommand*{\cite}[2][]{\def\CG@citekey{#2}%
+  \ifx\relax#1\relax\CG@origcite{#2}\else\CG@origcite[#1]{#2}\fi}
+\def\@cite#1#2{{\@citestyle[\citeform{#1}\if@tempswa, \hyper@link{cite}{cite.\CG@citekey}{#2}\fi]}}
+\makeatother
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setlength{\emergencystretch}{1.5em}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\IT}{\mathcal I_T}
+\newcommand{\Emod}{\mathbb E_{\rm mod}}
+\newcommand{\bb}{\mathfrak b_T}
+
+\begin{document}
+
+\title{The transport energy of the one-step prime-corrected clock}
+\author{V. Casa\~na-Giner}
+\date{24 October 2026}
+
+\begin{abstract}
+Let $\tau_k$ be the midpoint Riemann--von Mangoldt clock, $\gamma_k$ the ordinates of the zeros of the Riemann zeta function, $S_X$ the phase of the Euler product over the primes $p\le X$, and $\mathfrak t_k(X)=S_X(\gamma_k)-S_X(\tau_k)$ the transport of the one-step corrected clock of \cite{PaperI}. We prove that for every fixed $c\in(0,\frac12]$ the mean square of $\mathfrak t_k(T^c)$ over $T<\gamma_k\le2T$ equals $\frac1{2\pi^2}\log\log\log T+O_c((\log\log\log T)^{5/8})$. Consequently the error of the one-step clock with a fixed cutoff exponent is unbounded in mean square in units of the mean spacing, with a leading constant independent of $c$; this answers negatively Question 13.2 of \cite{PaperI}. The proof is unconditional. It replaces the zeros by the second prime-corrected clock of \cite{PaperI} and evaluates the remaining correlation at the clock points by an aggregated two-scale Taylor expansion of a Dirichlet polynomial composed with the first corrected clock.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+%======================================================================
+\section{Statement}\label{sec:intro}
+
+Notation follows \cite{PaperI}: $\gamma_k$ are the ordinates of the nontrivial zeros of the Riemann zeta function counted with multiplicity, $N_0(t)=\frac t{2\pi}\log\frac t{2\pi e}+\frac78$ \cite[eq.~(2.2)]{PaperI}, $\tau_k$ is defined by $N_0(\tau_k)=k-\frac12$, $s_k=N_0(\tau_k)-N_0(\gamma_k)$, $\Lambda(t)=\frac1{2\pi}\log\frac t{2\pi}$, $u_k(X)=s_k-S_X(\gamma_k)$, $\mathfrak t_k(X)=S_X(\gamma_k)-S_X(\tau_k)$, $\tau_k^X=\tau_k-S_X(\tau_k)/\Lambda(\tau_k)$ and $r_k(X)=\Lambda(\tau_k)(\tau^X_k-\gamma_k)$. Means $\langle\cdot\rangle$ are over $\IT=\{k:T<\gamma_k\le2T\}$, $M=\#\IT$.
+
+\begin{theorem}\label{thm:main}
+For every fixed $c\in(0,\frac12]$, as $T\to\infty$,
+\begin{equation}
+B_c(T):=\bigl\langle\mathfrak t_k(T^c)^2\bigr\rangle=\frac1{2\pi^2}\log\log\log T+O_c\bigl((\log\log\log T)^{5/8}\bigr),
+\label{eq:thm}
+\end{equation}
+and $\langle r_k(T^c)^2\rangle=\frac1{2\pi^2}\log\log\log T+O_c\bigl((\log\log\log T)^{5/8}\bigr)$.
+\end{theorem}
+
+\begin{corollary}\label{cor:fixedc}
+For every fixed $c\in(0,\frac12]$, $\langle r_k(T^c)^2\rangle\to\infty$. The one-step clock with a fixed cutoff exponent does not have an error bounded in mean square in units of the mean spacing.
+\end{corollary}
+
+The upper bound of the same order is Theorem D$''$ \cite[Thm.~7.5]{PaperI}. At $2^{19}<\gamma_k\le2^{20}$ the defect and the transport compensate to $87$--$98\%$ \cite[Table~7]{PaperI}; Theorem~\CGref{thm:main} shows that this compensation is a finite-height effect. The proof uses a band of primes $T^{\theta_T}<p\le T^c$ with $\theta_T\sqrt{\log\log T}\to\infty$, which is empty unless $\log\log T>2\pi^2\omega_T^2/c^2$ (Section~\CGref{sec:notation}).
+
+%======================================================================
+\section{Notation and parameters}\label{sec:notation}
+
+Let $T$ be large and $c\in(0,\frac12]$ fixed. Put
+\begin{equation}
+\begin{gathered}
+H_0=\log\log T,\quad H_1=\log H_0,\quad H_2=\log H_1,\quad X_1=T^{H_0^{-1/2}},\quad X_2=T^{H_1^{-1/2}},\\
+V=\frac{H_0}{2\pi^2},\quad\omega=(\log V)^{1/8},\quad\theta_T=\frac{\omega}{\sqrt V},\quad Y=T^{\theta_T},\quad Z=T^{H_0^{-2}},\quad X=T^c .
+\end{gathered}
+\label{eq:params}
+\end{equation}
+Since $\theta_T\sqrt{H_0}=\pi\sqrt2\,\omega\to\infty$ and $\theta_T\sqrt{H_1}\to0$, for $T\ge T_0(c)$ we have $Z<X_1<Y<X_2<X\le T^{1/2}$. Let
+\begin{equation}
+L=\frac1{2\pi^2}\log\frac c{\theta_T}=\frac{H_1}{4\pi^2}+O(\log H_1).
+\label{eq:L}
+\end{equation}
+The phase of the Euler product is \cite[eq.~(2.10)]{PaperI}
+\begin{equation}
+S_X(t)=\sum_{p\le X}\sum_{m\ge1}\beta_{p^m}\sin(mt\log p),\qquad\beta_{p^m}=-\frac1{\pi m\,p^{m/2}},
+\label{eq:SX}
+\end{equation}
+and $a_p=\beta_p=-1/(\pi\sqrt p)$. We write $W=S_X-S_Y$, $Q=S_{X_2}$ and
+\[
+\rho_k=x^{(1)}_k=\tau_k-\frac{S_{X_1}(\tau_k)}{\Lambda(\tau_k)},
+\]
+the first corrected point of \cite[eq.~(8.1)]{PaperI} with cutoff $X_1$ (exactly, since $N_0(\tau_k)=k-\frac12$). Let $\bb=2\pi/\log(3T)$. For $k\in\IT$ and $T\ge T_0$, $\tau_k\in[T-1,2T+1]$, $\tau_{k+1}-\tau_k\ge\bb$, and $M\asymp T\log T$ \cite{PaperI}.
+
+A finite sum $G(t)=\sum_\lambda g_\lambda e^{i\lambda t}$ over $\lambda\in\{\log(a/b):a,b\in\mathbb N\}$ is called a \emph{rational trigonometric polynomial}; $\|G\|_1=\sum|g_\lambda|$; its \emph{height} is the largest $\max(a,b)$ with $g_{\log(a/b)}\neq0$ in reduced form. Its \emph{model mean} is $\Emod G=g_0$. Equivalently, $\Emod$ is the expectation when $t\log p$ is replaced by independent uniform phases $\theta_p$ for each prime $p$, and $t\log p^m$ by $m\theta_p$ (unique factorization).
+
+A function $\Pi$ is \emph{coefficient-dominated by $S_{X_1}$} if $\Pi=\sum_{p\le X_1}\sum_{m:\,p^m\le X_1^2}\varepsilon_{p,m}\beta_{p^m}\sin(mt\log p)+vE_1(t)$ with real $\varepsilon_{p,m}\in[-1,1]$, $0\le v\le1$, and $E_1=\sum_{p\le X_1}\sum_{m:\,p^m>X_1^2}\beta_{p^m}\sin(mt\log p)$.
+
+%======================================================================
+\section{Results of Paper I used}\label{sec:inputs}
+
+From \cite{PaperI} we use, for $T\ge T_0$:
+\begin{enumerate}[label=(I\arabic*),leftmargin=2.4em]
+\item \cite[Thm.~5.1]{PaperI} (Theorem B): for $2\le X'\le T^{1/2}$ and $c'=\log X'/\log T$, $\langle u_k(X')^2\rangle=\frac1{2\pi^2}\log\frac1{c'}+O(1+\sqrt{\log(1/c')})$.
+\item \cite[Lemma~7.2]{PaperI} (transport lemma): for $2\le X'\le T^{1/2}$, $\langle\mathfrak t_k(X')^2\rangle\ll\log\log T\,(1+\log X')^2/\log^2T$.
+\item \cite[Prop.~8.1]{PaperI} (exact recursion) with $j=2$: $\Lambda(\rho_k)e_{2,k}=u_k(X_2)+S_{X_2}(\gamma_k)-S_{X_2}(\rho_k)+\chi_{2,k}$, $0\le\chi_{2,k}\le e_{1,k}^2/(4\pi\min(\gamma_k,\rho_k))$.
+\item \cite[Thm.~8.5]{PaperI} (second Newton step): $\langle\Lambda(\rho_k)^2e_{2,k}^2\rangle=\frac1{4\pi^2}H_2+O(1+\sqrt{H_2})$, and $\langle\chi_{2,k}^2\rangle\ll T^{-2}$ (in its proof).
+\item \cite[Lemma~8.3]{PaperI}: the multiplicity function of $\rho_k$ satisfies $\int\tilde n^2\ll\bb M$; its proof is reproduced, for general $\Pi$, in Lemma~\CGref{lem:mult}.
+\end{enumerate}
+The almost orthogonality of the prime phases at the clock points \cite[Prop.~8.17]{PaperI} is used only for primes $p\le T^{1/2}$; in that range it is proved in Lemma~\CGref{lem:orth}. External inputs: the Kusmin--Landau inequality \cite[Thm.~2.1]{GrahamKolesnik1991}, the van der Corput second-derivative estimate \cite[Thm.~2.2]{GrahamKolesnik1991}, the Montgomery--Vaughan mean value theorem \cite[Cor.~3]{MontgomeryVaughan1974}, Mertens' theorem $\sum_{p\le x}\frac1p=\log\log x+\kappa_{\rm M}+O(\frac1{\log x})$ \cite{Mertens1874}, and Hoeffding's inequality \cite[Thm.~2]{Hoeffding1963}.
+
+%======================================================================
+\section{Auxiliary lemmas}\label{sec:aux}
+
+\begin{lemma}[Clock sums]\label{lem:clocksum}
+Let $0<|\omega_0|\le\frac34\log T$ and let $(w_k)_{k\in\IT}$ have $\|w\|_\infty+\operatorname{Var}w\le A$. Then
+\[
+\Bigl|\sum_{k\in\IT}w_ke^{i\omega_0\tau_k}\Bigr|\ll A\Bigl(\frac{\log T}{|\omega_0|}+1\Bigr).
+\]
+In particular, if $\omega_0=\log(a/b)\ne0$ with $a,b\le T^\beta$, $\beta\le\frac34$, then $\frac1M|\sum_kw_ke^{i\omega_0\tau_k}|\ll A\,T^{\beta-1}$.
+\end{lemma}
+
+\begin{proof}
+Take $\omega_0>0$. Let $\Omega(x)=\omega_0\tau_x/2\pi$ for real $x$. By \cite[eq.~(2.5)]{PaperI}, $\Omega'(x)=\omega_0/\log(\tau_x/2\pi)$, continuous and monotone, and on the window $0<\Omega'\le\frac34\log T/\log((T-1)/2\pi)\le0.8$ for $T\ge T_0$. Hence $\|\Omega'\|\ge\min(\omega_0/\log(3T),\frac15)$ and by Kusmin--Landau every partial sum of $e^{i\omega_0\tau_k}$ over consecutive $k\in\IT$ is $\ll\log T/\omega_0+1$. Abel summation gives the weighted bound. For the last claim, $|\log(a/b)|\ge|a-b|/\max(a,b)\ge T^{-\beta}$ and $M\asymp T\log T$.
+\end{proof}
+
+\begin{lemma}[Clock means versus the model]\label{lem:model}
+Let $G$ be a rational trigonometric polynomial of height $\le T^\beta$, $\beta\le\frac34$, and $(w_k)$ as in Lemma~\CGref{lem:clocksum}. Then $\bigl|\frac1M\sum_kw_kG(\tau_k)-\Emod G\cdot\frac1M\sum_kw_k\bigr|\ll A\,\|G\|_1T^{\beta-1}$.
+\end{lemma}
+
+\begin{proof}
+Apply Lemma~\CGref{lem:clocksum} to each $\lambda\neq0$ and sum.
+\end{proof}
+
+\begin{lemma}[Almost orthogonality]\label{lem:orth}
+Let $0<b\le\frac12$, $v_p(k)=\sqrt{2/M}\,\sin(\tau_k\log p)$ for $k\in\IT$ and primes $p\le T^b$, and $G=(\langle v_p,v_q\rangle)_{p,q\le T^b}$ with the inner product of $\mathbb R^M$. Then
+\begin{equation}
+\|G-I\|_{\rm op}\ll T^{b-1}\log T+(\log T)^{-1}.
+\label{eq:orth}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $C_T(y)=\frac1M\sum_{k\in\IT}e^{i\tau_k\log y}$. By $2\sin\alpha\sin\beta=\cos(\alpha-\beta)-\cos(\alpha+\beta)$, $\langle v_p,v_q\rangle=\Re C_T(p/q)-\Re C_T(pq)$, so $G-I=D-H$ with $D_{pq}=\Re C_T(p/q)\mathbf 1_{p\ne q}$ and $H_{pq}=\Re C_T(pq)$.
+
+\emph{Quotients.} For $p\ne q$, $0<|\log(p/q)|\le\frac12\log T$ and $|\log(p/q)|\ge|p-q|/\max(p,q)$. Lemma~\CGref{lem:clocksum} with $w\equiv1$ and $M\asymp T\log T$ give $|C_T(p/q)|\ll\max(p,q)/(T|p-q|)$. Every row sum of $|D|$ is $\ll T^{-1}\cdot T^b\sum_{1\le|d|\le T^b}|d|^{-1}\ll T^{b-1}\log T$, and Schur's test gives $\|D\|_{\rm op}\ll T^{b-1}\log T$.
+
+\emph{Products.} Let $n=pq\le T^{2b}\le T$ and $f(x)=\tau_x\log n/2\pi$ for real $x\ge1$. By \cite[eq.~(2.5)]{PaperI}, $f'(x)=\log n/\log(\tau_x/2\pi)$ and $f''(x)=-2\pi\log n/(\tau_x\log^3(\tau_x/2\pi))<0$; for $k\in\IT$, $\tau_k\in[T-1,2T+1]$.
+If $n\le T^{3/4}$, Lemma~\CGref{lem:clocksum} gives $|C_T(n)|\ll1/T$.
+If $T^{3/4}<n\le T/\log T$, then $\frac12\le f'\le\frac{\log T-\log\log T}{\log((T-1)/2\pi)}\le1-\frac{\log\log T}{2\log T}$ for $T\ge T_0$, so $\|f'\|\ge\frac{\log\log T}{2\log T}$ and Kusmin--Landau gives $|C_T(n)|\ll\frac{\log T}{M\log\log T}\ll\frac1T$.
+If $T/\log T<n\le T$, then $\lambda\le|f''|\le3\lambda$ on the window with $\lambda\asymp1/(T\log^2T)$, and the second-derivative estimate gives $|\sum_{k\in\IT}e^{i\tau_k\log n}|\ll M\lambda^{1/2}+\lambda^{-1/2}\ll\sqrt T\log T$, i.e. $|C_T(n)|\ll T^{-1/2}$. In this case $p,q>\sqrt T/\log T$, so the number of ordered pairs is $\le\pi(\sqrt T)^2\ll T/\log^2T$.
+Hence $\|H\|_{\rm HS}^2\ll\pi(\sqrt T)^2T^{-2}+\frac T{\log^2T}\cdot\frac1T\ll(\log T)^{-2}$, and $\|H\|_{\rm op}\le\|H\|_{\rm HS}\ll(\log T)^{-1}$.
+\end{proof}
+
+\begin{lemma}[Sub-Gaussian model]\label{lem:hoeffding}
+Let $P=\sum_{p\in\mathcal P}f_p(\theta_p)$ with $\theta_p$ independent and uniform, $f_p(\theta)=\sum_m b_{p,m}\sin(m\theta)$ finite and $|f_p|\le c_p$. With $\sigma^2=\sum_pc_p^2$, for every integer $q\ge1$,
+\begin{equation}
+\Emod|P|^{2q}\le2\,q!\,(2\sigma^2)^q .
+\label{eq:hoeff}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The $f_p(\theta_p)$ are independent, of mean zero and with values in $[-c_p,c_p]$. Hoeffding's inequality gives $\mathbb P(|P|\ge x)\le2e^{-x^2/2\sigma^2}$, and $\mathbb E|P|^{2q}=\int_0^\infty2qx^{2q-1}\mathbb P(|P|>x)dx\le4q\cdot\frac12(2\sigma^2)^q\Gamma(q)$.
+\end{proof}
+
+For $\Pi$ as in \CGeqref{eq:SX} restricted to a set of prime powers, we use the proxy $\sigma^2(\Pi)=\sum_p(\sum_m|{\rm coeff}_{p^m}|)^2$. For the sums of this paper, by Mertens,
+\begin{equation}
+\sigma^2(S_{R})\le\frac1{\pi^2}\bigl(\log\log R+O(1)\bigr),\qquad\sigma^2\bigl(S_{R_2}-S_{R_1}\bigr)\le\frac1{\pi^2}\Bigl(\log\frac{\log R_2}{\log R_1}+O\Bigl(\frac1{\log R_1}\Bigr)\Bigr),
+\label{eq:sigmas}
+\end{equation}
+since $\sum_m|\beta_{p^m}|\le\frac1\pi(p^{-1/2}+2p^{-1})$, so that $(\sum_m|\beta_{p^m}|)^2\le\frac1{\pi^2}(\frac1p+8p^{-3/2})$, and $\sum_{R_1<p\le R_2}\frac1p=\log\frac{\log R_2}{\log R_1}+O(\frac1{\log R_1})$ by Mertens' theorem, while $\sum_{p>R_1}p^{-3/2}\ll R_1^{-1/2}$.
+
+\begin{lemma}[Time means versus the model]\label{lem:tmoments}
+Let $G$ be a rational trigonometric polynomial of height $\le N_G$ and $J$ an interval. Then $\bigl|\frac1{|J|}\int_JG-\Emod G\bigr|\le2\|G\|_1N_G/|J|$.
+\end{lemma}
+
+\begin{proof}
+For $\lambda\ne0$, $|\int_Je^{i\lambda t}dt|\le2/|\lambda|\le2N_G$.
+\end{proof}
+
+\begin{lemma}[Multiplicity of shifted clock points]\label{lem:mult}
+Let $\Pi$ be coefficient-dominated by $S_{X_1}$, $y_k=\Pi(\tau_k)/\Lambda(\tau_k)$, $\varrho_k=\tau_k-y_k$ and $\tilde n(u)=\#\{k\in\IT:u-\bb\le\varrho_k\le u\}$. Then $\varrho_k\in[T-T^{1/2},2T+T^{1/2}]$ and $\int_{\mathbb R}\tilde n^2\le C\bb M$ with $C$ absolute, uniformly in $\Pi$.
+\end{lemma}
+
+\begin{proof}
+We follow \cite[Lemma~8.3]{PaperI}. Three facts are used.
+(a) $\sup|\Pi|\le\sum_{n\le X_1^2}|\beta_n|+|E_1|\le2X_1+1$, so $|y_k|\le T^{1/2}$.
+(b) $\Pi'=\sum\varepsilon_{p,m}\beta_{p^m}m\log p\cos(mt\log p)+vE_1'$, with $|E_1'|\le\sum_{p\le X_1}\sum_{p^m>X_1^2}\log p\,p^{-m/2}$, which is $\le7$. By Montgomery--Vaughan (length $X_1^2\le T$) and Mertens, $\int_{T-1}^{2T+1}|\Pi'|^2\ll T\sum_{p\le X_1}\frac{\log^2p}p+T\ll T(1+\log X_1)^2$.
+(c) $\langle\Pi(\tau_k)^4\rangle\ll(1+H_0)^2$. The polynomial part has height $\le X_1^8\le T^{1/8}$ in the fourth power, and $\|\cdot\|_1\le(2X_1)^4$; Lemmas~\CGref{lem:model} and \CGref{lem:hoeffding} with \CGeqref{eq:sigmas} give it, and $|E_1|\le1$.
+
+Now write $b=\bb$. The ordered pairs $(j,k)$ with $|j-k|\le1$ number $\le3M$. Let $j=k+m$ with $m\ge2$ and $|\varrho_{k+m}-\varrho_k|\le b$. Since $\tau_{k+m}-\tau_k\ge mb$, $|y_{k+m}-y_k|\ge(m-1)b$.
+
+\emph{Variation.} On $J_{k,m}=[\tau_k,\tau_{k+m}]$, of length $\le mb(1+o(1))$, $y=\Pi/\Lambda$ has $y'=\Pi'/\Lambda-\Pi\Lambda'/\Lambda^2$. By (a), the second part contributes $\ll T^{1/2}\cdot mb/(T\log^2T)=o((m-1)b)$. Hence $|J_{k,m}|^{-1}\int_{J_{k,m}}|\Pi'|\ge\frac13\Lambda(T)$. Each $t$ lies in at most $m$ of the $J_{k,m}$, and $|J_{k,m}|\ge mb$. By Chebyshev, Jensen and (b),
+\[
+\#\{k:\text{variation}\}\le\frac9{\Lambda(T)^2b}\int_{T-1}^{2T+1}|\Pi'|^2\ll\frac{T(1+\log X_1)^2}{\log T}\ll M\,H_0^{-1}.
+\]
+\emph{Size.} $\max(|y_k|,|y_{k+m}|)\ge\frac{m-1}2b$, so $\max(|\Pi(\tau_k)|,|\Pi(\tau_{k+m})|)\ge\frac{m-1}3$. By Chebyshev of order $4$ and (c), $\#\{k:\text{size}\}\ll M(1+H_0)^2/(m-1)^4$.
+
+\emph{Sum.} Summing $M\min(H_0^{-1},H_0^2(m-1)^{-4})$ over $m\ge2$ gives $\ll MH_0^{-1/4}$. Each pair contributes at most $b$ to $\int\tilde n^2=\sum_{j,k}(b-|\varrho_j-\varrho_k|)_+$. Hence $\int\tilde n^2\le(3+O(H_0^{-1/4}))bM$.
+\end{proof}
+
+\begin{lemma}[Sampling at points of bounded multiplicity]\label{lem:sampling}
+Let $f$ be supported on prime powers,
+\[f(t)=\sum_{p}\sum_{m\ge1:\,p^m\le N}\bigl(\alpha_{p^m}\cos(mt\log p)+\alpha'_{p^m}\sin(mt\log p)\bigr),\qquad\alpha_{p^m},\alpha'_{p^m}\in\mathbb R,\]
+with $\|f\|_1=\sum_{p^m\le N}(|\alpha_{p^m}|+|\alpha'_{p^m}|)$, $q\in\{1,2,3,4\}$, $(2\|f\|_1)^{4q}N^{8q}\le T^{1/2}$, and $\varrho_k\in[T-T^{1/2},2T+T^{1/2}]$ with $\int\tilde n^2\le\kappa\bb M$, $\kappa\ge1$. Let $\sigma_f^2=\sum_p(\sum_m(|\alpha_{p^m}|+|\alpha'_{p^m}|))^2$. Then
+\[
+\bigl\langle f(\varrho_k)^{2q}\bigr\rangle\ll_q\kappa^{1/2}\sigma_f^{2q}\bigl(1+\bb\log N\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $F=f^{2q}\ge0$ and $b=\bb$. For $x\in[u-b,u]$, $F(x)\le\frac1b\int_{u-b}^uF+\int_{u-b}^u|F'|$. Since $\varrho_k\in[u-b,u]$ exactly when $u\in[\varrho_k,\varrho_k+b]$, averaging over $u$ and summing over $k$ gives
+\[
+\sum_kF(\varrho_k)\le\frac1b\int\tilde n(u)\bigl(A F(u)+bA|F'|(u)\bigr)du,\qquad Ah(u)=\frac1b\int_{u-b}^uh .
+\]
+$A$ has norm $\le1$ on $L^2$. Let $J=[T-2T^{1/2},2T+2T^{1/2}]$; by Cauchy--Schwarz, $\sum_kF(\varrho_k)\le b^{-1}(\kappa bM)^{1/2}(\|F\|_{L^2(J)}+b\|F'\|_{L^2(J)})$.
+
+In the model, $f=\sum_pf_p(\theta_p)$ with $f_p(\theta)=\sum_m(\alpha_{p^m}\cos m\theta+\alpha'_{p^m}\sin m\theta)$, which has mean zero and $|f_p|\le\sum_m(|\alpha_{p^m}|+|\alpha'_{p^m}|)$; this is where the support on prime powers is used (for $f(t)=\cos(t\log6)$ the right side of the lemma would vanish). Here $f^{4q}$ is a rational trigonometric polynomial of height $\le N^{4q}$ with $\|f^{4q}\|_1\le(2\|f\|_1)^{4q}$, so Lemma~\CGref{lem:tmoments} and Lemma~\CGref{lem:hoeffding} give $\frac1{|J|}\int_Jf^{4q}\le2(2q)!(2\sigma_f^2)^{2q}+o(1)$. The derivative $f'$ is of the same form, again supported on prime powers, with coefficients multiplied by $\log p^m\le\log N$, so $\frac1{|J|}\int_J|f'|^{4q}\ll_q(\log N)^{4q}\sigma_f^{4q}$. By Hölder, $\|F'\|_2=2q\|f^{2q-1}f'\|_2\le2q(\int_Jf^{4q})^{(2q-1)/4q}(\int_J|f'|^{4q})^{1/4q}$. Divide by $M$ and use $|J|/(bM)\asymp1$.
+\end{proof}
+
+\begin{lemma}[Clock mean squares]\label{lem:clockL2}
+Write $W=W_{\rm pr}+W_{\rm pp}$ with $W_{\rm pr}=\sum_{Y<p\le X}a_p\sin(t\log p)$. Then
+\[
+\langle W_{\rm pr}(\tau)^2\rangle=L+o(1),\quad\langle W_{\rm pp}(\tau)^2\rangle\ll Y^{-1/2},\quad\langle W(\tau)^2\rangle=L+o(1),\quad\langle S_Y(\tau)W(\tau)\rangle=O(\sqrt L).
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\CGref{lem:orth} with $b=c\le\frac12$, $\langle W_{\rm pr}(\tau)^2\rangle=\frac12a_W^{\top}Ga_W=\frac12|a_W|^2(1+O((\log T)^{-1}))$, where $a_W=(a_p)_{Y<p\le X}$ and $\frac12|a_W|^2=\frac1{2\pi^2}\sum_{Y<p\le X}\frac1p=L+O(1/\log Y)$.
+
+For a real sum $g$ of the form \CGeqref{eq:SX} with coefficients $g_n$, Sobolev on the disjoint intervals $\mathcal U_k=[\tau_k,\tau_k+\bb]\subset[T-1,2T+2]$ \cite[proof of Lemma~5.11]{PaperI} gives
+\[
+\langle g(\tau)^2\rangle\le\frac2{\bb M}\int_{T-1}^{2T+2}g^2+\frac{2\bb}M\int_{T-1}^{2T+2}g'^2 .
+\]
+For $W_{\rm pp}$ truncate $m\le4\log T$; the tail is $\le4X2^{-2\log T}$ uniformly. Montgomery--Vaughan gives $\int W_{\rm pp}^2\ll T\sum_ng_n^2+\sum_ng_n^2n\ll T/Y+X$, and similarly $\int W_{\rm pp}'^2\ll(T/Y+X)\log^4T$. With $\bb M\asymp T$ and $\bb\asymp1/\log T$ this gives $\ll Y^{-1}+X\log^4T/T\ll Y^{-1/2}$.
+
+Then $\langle W^2\rangle=\langle W_{\rm pr}^2\rangle+O(\sqrt{L/Y})+O(Y^{-1/2})$.
+
+Finally $S_Y=S_{Y,\rm pr}+S_{Y,\rm pp}$. By Lemma~\CGref{lem:orth}, $\langle S_{Y,\rm pr}(\tau)W_{\rm pr}(\tau)\rangle=\frac12a_Y^{\top}(G-I)a_W$, which is $\ll(\log T)^{-1}\sqrt{H_0L}=o(1)$, since the two sets of primes are disjoint. The same Sobolev and Montgomery--Vaughan bound gives $\langle S_{Y,\rm pp}(\tau)^2\rangle=O(1)$ and $\langle S_Y(\tau)^2\rangle\ll H_0$. Hence $\langle S_{Y,\rm pp}W_{\rm pr}\rangle=O(\sqrt L)$ and $\langle S_YW_{\rm pp}\rangle\ll\sqrt{H_0}Y^{-1/4}$.
+\end{proof}
+
+%======================================================================
+\section{Step A: reduction to a linear response}\label{sec:stepA}
+
+\begin{proposition}\label{prop:A}
+$B_c(T)=2L-2\langle s_kW(\tau_k)\rangle+O(H_1^{5/8})$.
+\end{proposition}
+
+\begin{proof}
+Write $U_k=W(\gamma_k)$ and $V_k=W(\tau_k)$. Since $S_X=S_Y+W$, $\mathfrak t_k(X)=\mathfrak t_k(Y)+U_k-V_k$; and $U=S_X(\gamma)-S_Y(\gamma)=(s-u(X))-(s-u(Y))=u(Y)-u(X)$.
+
+By (I1), $\langle u(X)^2\rangle=O_c(1)$ and $\langle u(Y)^2\rangle=\frac1{2\pi^2}\log\frac1{\theta_T}+O(1+\sqrt{H_1})=L+O_c(\sqrt L)$. Hence $\langle U^2\rangle=L+O_c(\sqrt L)$.
+
+By (I2) with $X'=Y$, $\langle\mathfrak t(Y)^2\rangle\ll H_0(\theta_T\log T)^2/\log^2T=2\pi^2\omega^2$. By Lemma~\CGref{lem:clockL2}, $\langle V^2\rangle=L+o(1)$.
+
+Expanding the square and bounding the terms with $\mathfrak t(Y)$ by Cauchy--Schwarz,
+\[
+B_c=\langle U^2\rangle+\langle V^2\rangle-2\langle UV\rangle+O(\omega\sqrt L+\omega^2).
+\]
+Now $U=s-S_Y(\gamma)-u(X)$ and $S_Y(\gamma)=S_Y(\tau)+\mathfrak t(Y)$. So
+\[
+\langle UV\rangle=\langle sV\rangle-\langle S_Y(\tau)V\rangle-\langle\mathfrak t(Y)V\rangle-\langle u(X)V\rangle=\langle sV\rangle+O(\sqrt L+\omega\sqrt L),
+\]
+by Lemma~\CGref{lem:clockL2} and Cauchy--Schwarz. Since $\omega\asymp H_1^{1/8}$ and $L\asymp H_1$, the errors are $O(H_1^{5/8})$.
+\end{proof}
+
+%======================================================================
+\section{Step B: removal of the zeros}\label{sec:stepB}
+
+\begin{proposition}\label{prop:B}
+$\langle s_kW(\tau_k)\rangle=\langle Q(\rho_k)W(\tau_k)\rangle+O(\sqrt{H_1H_2}+\sqrt{H_1})$.
+\end{proposition}
+
+\begin{proof}
+By (I3), since $u_k(X_2)=s_k-S_{X_2}(\gamma_k)$,
+\[
+\Lambda(\rho_k)e_{2,k}=s_k-Q(\rho_k)+\chi_{2,k}.
+\]
+By (I4), $\|s-Q(\rho)\|_2\le\|\Lambda(\rho)e_2\|_2+\|\chi_2\|_2\ll1+\sqrt{H_2}$. Cauchy--Schwarz with $\|W(\tau)\|_2\ll\sqrt L$ (Lemma~\CGref{lem:clockL2}) gives the claim.
+\end{proof}
+
+The right side involves only the clock points $\tau_k$ and the primes.
+
+%======================================================================
+\section{Step C: the clock correlation}\label{sec:stepC}
+
+\subsection{Truncations}
+Let
+\begin{itemize}[leftmargin=1.6em]
+\item $Q^\flat=\sum_{p\le X_2}\sum_{m:\,p^m\le X_2^2}\beta_{p^m}\sin(mt\log p)$;
+\item $P_0=\sum_{p\le Z}\sum_{m:\,p^m\le Z^2}$, $P_1=\sum_{Z<p\le X_1}\sum_{m:\,p^m\le X_1^2}$, $P_2=\sum_{p\le Z}\sum_{m:\,Z^2<p^m\le X_1^2}$ (all with terms $\beta_{p^m}\sin(mt\log p)$);
+\item $E_1$ as in Section~\CGref{sec:notation}.
+\end{itemize}
+Then $S_{X_1}=P_0+P_1+P_2+E_1$. Put $\rho^\flat_k=\tau_k-(P_0+P_1)(\tau_k)/\Lambda(\tau_k)$. For $p\le R$, $\sum_{m:\,p^m>R^2}p^{-m/2}\le3.5/R$, so
+\begin{equation}
+|Q-Q^\flat|\le\frac7{\log X_2},\qquad|E_1|\le\frac7{\log X_1}\qquad\text{uniformly}.
+\label{eq:tails}
+\end{equation}
+
+\begin{lemma}\label{lem:trunc}
+$\langle Q(\rho_k)W(\tau_k)\rangle=\langle Q^\flat(\rho^\flat_k)W_{\rm pr}(\tau_k)\rangle+o(1)$.
+\end{lemma}
+
+\begin{proof}
+\emph{(i) $Q\to Q^\flat$.} By \CGeqref{eq:tails} and $\|W(\tau)\|_1\le\|W(\tau)\|_2$, the cost is $\ll\sqrt L/\log X_2$.
+
+The sums $Q^\flat$, $Q^{\flat(m)}$ and $\tilde Q^{(m)}$ below are supported on the prime powers $\le X_2^2$, with real coefficients, so Lemma~\CGref{lem:sampling} applies to them.
+
+\emph{(ii) $W\to W_{\rm pr}$.} $\langle Q^\flat(\rho)W_{\rm pp}(\tau)\rangle\le\|Q^\flat(\rho)\|_2\|W_{\rm pp}(\tau)\|_2$. By Lemmas~\CGref{lem:mult} and \CGref{lem:sampling} ($q=1$, $\Pi=S_{X_1}$, $f=Q^\flat$, $N=X_2^2$, $\sigma_f^2\ll H_0$), $\|Q^\flat(\rho)\|_2\ll\sqrt{H_0}$. Lemma~\CGref{lem:clockL2} gives $\|W_{\rm pp}(\tau)\|_2\ll Y^{-1/4}$.
+
+\emph{(iii) $\rho\to\rho^\flat$.} With $\Pi_v=P_0+P_1+v(P_2+E_1)$, coefficient-dominated for $v\in[0,1]$,
+\[
+Q^\flat(\rho)-Q^\flat(\rho^\flat)=-\frac{(P_2+E_1)(\tau)}{\Lambda(\tau)}\int_0^1Q^{\flat\prime}\Bigl(\tau-\frac{\Pi_v(\tau)}{\Lambda(\tau)}\Bigr)dv .
+\]
+By Hölder, the cost is $\le\Lambda_{\min}^{-1}\|P_2+E_1\|_4\sup_v\|Q^{\flat\prime}(\tau-\Pi_v/\Lambda)\|_4\|W_{\rm pr}(\tau)\|_2$.
+- $P_2$ has $\sigma^2(P_2)\le\sum_{p\le Z}\sum_{p^m>Z^2}p^{-m}\le2/Z$ and height $\le X_1^2$, so by Lemmas~\CGref{lem:model} and \CGref{lem:hoeffding}, $\|P_2(\tau)\|_4\ll Z^{-1/2}+T^{-1/8}$; and $|E_1|\le7/\log X_1$.
+- By Lemmas~\CGref{lem:mult} and \CGref{lem:sampling} ($f=Q^{\flat\prime}$, coefficients $\le|\beta_n|\log X_2^2$), $\|Q^{\flat\prime}(\cdot)\|_4\ll\sqrt{H_0}\log X_2$.
+
+The cost is $\ll\frac{\log X_2}{\log T}\sqrt{H_0}\bigl(Z^{-1/2}+\frac1{\log X_1}\bigr)\sqrt L\ll\frac{H_0\sqrt L}{\sqrt{H_1}\log T}=o(1)$. The condition of Lemma~\CGref{lem:sampling}, $(2\|f\|_1)^{4q}N^{8q}\le T^{1/2}$, holds: $\|Q^\flat\|_1\le2X_2\log X_2^2$ and $N=X_2^2=T^{2/\sqrt{H_1}}$.
+\end{proof}
+
+\subsection{The aggregated expansion}
+Let $e_J(z)=\sum_{j<J}z^j/j!$ and $R_J(z)=e^z-e_J(z)=\frac{z^J}{(J-1)!}\int_0^1(1-u)^{J-1}e^{uz}du$. For a sum $F=\sum_n\phi_n\sin(t\log n)$ write $F^{(m)}$ for its $m$-th derivative: $F^{(m)}(t)=\sum_n\phi_n(\log n)^m\Im(i^mn^{it})$.
+
+\begin{lemma}\label{lem:identity}
+Let $J_0,J_1\ge1$. Then, with $P_0,P_1,\Lambda$ evaluated at $\tau_k$,
+\begin{align}
+Q^\flat(\rho^\flat_k)&={\rm Main}_k+{\rm Rem}_{{\rm I},k}+{\rm Rem}_{{\rm II},k},\notag\\
+{\rm Main}&=\sum_{j<J_0}\sum_{l<J_1}\frac{(-P_0)^j(-P_1)^l}{j!\,l!\,\Lambda^{j+l}}\,Q^{\flat(j+l)}(\tau),\label{eq:main}\\
+{\rm Rem}_{\rm I}&=\frac{(-P_1)^{J_1}}{(J_1-1)!\,\Lambda^{J_1}}\int_0^1(1-u)^{J_1-1}Q^{\flat(J_1)}\Bigl(\tau-\frac{P_0+uP_1}{\Lambda}\Bigr)du,\label{eq:remI}\\
+{\rm Rem}_{\rm II}&=\sum_{l<J_1}\frac{(-P_1)^l(-P_0)^{J_0}}{l!\,(J_0-1)!\,\Lambda^{l+J_0}}\int_0^1(1-u)^{J_0-1}Q^{\flat(l+J_0)}\Bigl(\tau-\frac{uP_0}{\Lambda}\Bigr)du.\label{eq:remII}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+For each $n$, with $\xi=\log n/\Lambda(\tau_k)$, $\sin(\rho^\flat\log n)=\Im(n^{i\tau}e^{a+b})$, where $a=-i\xi P_0$ and $b=-i\xi P_1$. The algebraic identity
+\[
+e^{a+b}=e_{J_0}(a)e_{J_1}(b)+e^aR_{J_1}(b)+R_{J_0}(a)e_{J_1}(b)
+\]
+follows from $e^b=e_{J_1}(b)+R_{J_1}(b)$ and $e^a=e_{J_0}(a)+R_{J_0}(a)$. Insert it and sum $\sum_n\beta_n\Im(n^{i\tau}\,\cdot)$ over the prime powers $n$ of $Q^\flat$.
+
+In the first term, $(-i\xi)^{j+l}n^{i\tau}=\Lambda^{-(j+l)}(\log n)^{j+l}(-1)^{j+l}i^{j+l}n^{i\tau}$ gives \CGeqref{eq:main}, because $P_0,P_1,\Lambda$ are real.
+
+In the second, $e^aR_{J_1}(b)=\frac{b^{J_1}}{(J_1-1)!}\int_0^1(1-u)^{J_1-1}e^{a+ub}du$, and $n^{i\tau}e^{a+ub}=n^{i(\tau-(P_0+uP_1)/\Lambda)}$, which gives \CGeqref{eq:remI}. The third is the same and gives \CGeqref{eq:remII}.
+\end{proof}
+
+\subsection{The remainders}
+Let $\Lambda_{\min}=\Lambda(T-1)$, $\hat\xi=\log(X_2^2)/\Lambda_{\min}=\frac{4\pi}{\sqrt{H_1}}(1+O(\frac1{\log T}))$ and $\tilde Q^{(m)}=Q^{\flat(m)}/(\log X_2^2)^m$; the coefficients of $\tilde Q^{(m)}$ are bounded by $|\beta_n|$. By \CGeqref{eq:sigmas},
+\begin{equation}
+\sigma_0^2:=\sigma^2(P_0)\le\frac{H_0}{\pi^2}(1+o(1)),\qquad\sigma_1^2:=\sigma^2(P_1)\le\frac1{\pi^2}\Bigl(\frac32H_1+O(1)\Bigr),
+\label{eq:sig01}
+\end{equation}
+so that $s:=\hat\xi^2\sigma_0^2\le\frac{16H_0}{H_1}(1+o(1))$ and $\hat\xi^2\sigma_1^2\le25$ for $T\ge T_0$. Choose
+\begin{equation}
+J_1=\lceil H_1\rceil,\qquad J_0=\lceil32e^2s\rceil\asymp\frac{H_0}{H_1}.
+\label{eq:J}
+\end{equation}
+
+\begin{lemma}\label{lem:rem}
+$\langle(|{\rm Rem}_{\rm I}|+|{\rm Rem}_{\rm II}|)\,|W_{\rm pr}(\tau)|\rangle\ll H_0^{1/2-(\log H_1)/2+O(1)}\sqrt L+2^{-J_0}H_0^{1/2}\sqrt L=o(1)$.
+\end{lemma}
+
+\begin{proof}
+\emph{Moments of $P_0,P_1$ at the clock.} For integers $q$ with $(2Z)^{2q}Z^{4q}\le T^{1/4}$, which holds for $q\le H_0^2/40$, Lemma~\CGref{lem:model} (height $\le Z^{4q}$, $\|P_0^{2q}\|_1\le(2Z)^{2q}$) and Lemma~\CGref{lem:hoeffding} give $\langle P_0(\tau)^{2q}\rangle\le2q!(2\sigma_0^2)^q+T^{-1/2}$. The same holds for $P_1$ with $q\le\sqrt{H_0}/40$.
+
+\emph{${\rm Rem}_{\rm I}$.} With the probability measure $\mu(du)=J_1(1-u)^{J_1-1}du$, \CGeqref{eq:remI} gives
+\[
+|{\rm Rem}_{\rm I}|\le\frac{(\hat\xi|P_1|)^{J_1}}{J_1!}\int_0^1\bigl|\tilde Q^{(J_1)}(x_k(u))\bigr|\mu(du),\qquad x_k(u)=\tau_k-\frac{(P_0+uP_1)(\tau_k)}{\Lambda(\tau_k)}.
+\]
+By Hölder ($\frac14+\frac14+\frac12=1$) and uniformly in $u$:
+- By the moments above with $q=2J_1$, $\|(\hat\xi P_1)^{J_1}/J_1!\|_4\le(2(2J_1)!)^{1/4}(50)^{J_1/2}/J_1!\le2(100e^2/J_1)^{J_1/2}$.
+- $\Pi=P_0+uP_1$ is coefficient-dominated. Lemmas~\CGref{lem:mult} and \CGref{lem:sampling} ($q=2$, $N=X_2^2$) give $\|\tilde Q^{(J_1)}(x(u))\|_4\ll\sqrt{H_0}$.
+- With $\|W_{\rm pr}\|_2\ll\sqrt L$ and $J_1=\lceil H_1\rceil$, the product is $\ll\sqrt{H_0}(740/H_1)^{H_1/2}\sqrt L$, and $(740/H_1)^{H_1/2}=H_0^{-(\log H_1)/2+O(1)}$.
+
+\emph{${\rm Rem}_{\rm II}$.} Similarly, with $x'_k(u)=\tau_k-uP_0(\tau_k)/\Lambda(\tau_k)$, Hölder with $\frac18+\frac18+\frac14+\frac12=1$ gives
+\[
+\langle|{\rm Rem}_{\rm II}||W_{\rm pr}|\rangle\le\sum_{l<J_1}\Bigl\|\frac{(\hat\xi P_1)^l}{l!}\Bigr\|_8\Bigl\|\frac{(\hat\xi P_0)^{J_0}}{J_0!}\Bigr\|_8\sup_u\|\tilde Q^{(l+J_0)}(x'(u))\|_4\|W_{\rm pr}\|_2 .
+\]
+- $\|(\hat\xi P_1)^l/l!\|_8\le2(200e^2/l)^{l/2}$, whose sum over $l$ is $O(1)$.
+- $\|(\hat\xi P_0)^{J_0}/J_0!\|_8\le(2(4J_0)!)^{1/8}(2s)^{J_0/2}/J_0!$, which is $\le2^{1/8}(8e^2s/J_0)^{J_0/2}\le2^{1/8}\,4^{-J_0/2}\le2^{1-J_0}$, since $J_0\ge32e^2s$ by \CGeqref{eq:J}. The moments of $P_0$ of order $8J_0\ll H_0/H_1$ are within the range $q\le H_0^2/40$.
+- The third factor is $\ll\sqrt{H_0}$ as before.
+\end{proof}
+
+\subsection{The main term}
+
+\begin{lemma}[Non-zero frequencies]\label{lem:offdiag}
+Write ${\rm Main}\cdot W_{\rm pr}=\sum_{j,l}w^{(j+l)}_k G_{j,l}(\tau_k)$ with $w^{(m)}_k=\Lambda(\tau_k)^{-m}$ and $G_{j,l}=\frac{(-P_0)^j(-P_1)^l}{j!l!}Q^{\flat(j+l)}W_{\rm pr}$. Then
+\[
+\sum_{j<J_0,\,l<J_1}\Bigl|\frac1M\sum_kw^{(j+l)}_k\bigl(G_{j,l}(\tau_k)-\Emod G_{j,l}\bigr)\Bigr|\ll T^{3c/2-1+o(1)}.
+\]
+\end{lemma}
+
+\begin{proof}
+$G_{j,l}$ is a rational trigonometric polynomial. Its height is
+\[
+\le Z^{2J_0}X_1^{2J_1}X_2^2X=T^{c+\eta_T},\qquad\eta_T=\frac{2J_0}{H_0^2}+\frac{2J_1}{\sqrt{H_0}}+\frac2{\sqrt{H_1}}\to0,
+\]
+and $\|G_{j,l}\|_1\le\frac{(2Z)^j(2X_1)^l}{j!l!}(\log X_2^2)^{j+l}2X_2\sqrt X$. The weight $w^{(m)}$ is monotone with $\|w^{(m)}\|_\infty+\operatorname{Var}w^{(m)}\le2\Lambda_{\min}^{-m}$. By Lemma~\CGref{lem:model} with $\beta=c+\eta_T\le\frac34$, each term is $\ll\Lambda_{\min}^{-(j+l)}\|G_{j,l}\|_1T^{c+\eta_T-1}$. The sum over $j<J_0$, $l<J_1$ is at most $J_0J_1(2Z\hat\xi)^{J_0}(2X_1\hat\xi)^{J_1}\cdot2X_2\sqrt X\cdot T^{c+\eta_T-1}=T^{3c/2-1+o(1)}$, since $(2Z\hat\xi)^{J_0}=T^{o(1)}$, $(2X_1\hat\xi)^{J_1}=T^{o(1)}$ and $X_2=T^{o(1)}$.
+\end{proof}
+
+\begin{lemma}[Zero frequency]\label{lem:diag}
+Let $\xi_{p,k}=\log p/\Lambda(\tau_k)$. Then
+\[
+{\rm Diag}:=\sum_{j,l}\frac1M\sum_kw^{(j+l)}_k\Emod G_{j,l}=\sum_{Y<p\le X_2}\frac{a_p^2}2\Bigl\langle\Re\,\Emod\bigl[e_{J_0}(-i\xi_{p,k}P_0)\bigr]\,\Emod\bigl[e_{J_1}(-i\xi_{p,k}P_1)\bigr]\Bigr\rangle_k,
+\]
+and $|{\rm Diag}|\ll L\,e^{-2\pi^2\omega^2(1+o(1))}+L\,2^{-J_0}$.
+\end{lemma}
+
+\begin{proof}
+In the model, $W_{\rm pr}=\sum_{Y<p\le X}a_p\sin\theta_p$, the phases of $P_0,P_1$ involve only primes $\le X_1<Y$, and $Q^{\flat(m)}=\sum_n\beta_n(\log n)^m\Im(i^me^{i\theta_n})$ with $\theta_{q^e}=e\theta_q$. Fix $p\in(Y,X]$.
+- A term with $n=q^e$, $q\ne p$, is independent of $\theta_p$ and has $\mathbb E\sin\theta_p=0$.
+- If $n=p^e$, then $\mathbb E[\sin\theta_p\,\Im(i^me^{ie\theta_p})]=\frac12\Re(i^m)\mathbf 1_{e=1}$.
+
+So only $n=p$ contributes, which requires $p\le X_2$. Its contribution is
+\[
+\frac{a_p\beta_p}2(\log p)^m\Re(i^m)\,\Emod\frac{(-P_0)^j(-P_1)^l}{j!\,l!},
+\]
+with $m=j+l$. Multiplied by $w^{(m)}_k=\Lambda(\tau_k)^{-m}$ this is $\frac{a_p^2}2\Re\,\Emod\frac{(-i\xi_{p,k}P_0)^j(-i\xi_{p,k}P_1)^l}{j!\,l!}$, because $(-i\xi)^m(-1)^m=i^m\xi^m$ and $a_p=\beta_p$. Summing over $j,l$ gives the formula, using that $P_0$ and $P_1$ involve disjoint primes and are independent in the model.
+
+For the bound: for imaginary $z$, $|R_J(z)|\le|z|^J/J!$. By Cauchy--Schwarz, Lemma~\CGref{lem:hoeffding} and $J!\ge(J/e)^J$, $\Emod(\hat\xi|P_i|)^{J}/J!\le(2J!\,(2\hat\xi^2\sigma_i^2)^J)^{1/2}/J!\le\sqrt2\,(2e\hat\xi^2\sigma_i^2/J)^{J/2}$. With $\hat\xi^2\sigma_1^2\le25$, $J_1=\lceil H_1\rceil$, $\hat\xi^2\sigma_0^2=s$ and $J_0\ge32e^2s$, this gives $|\Emod e_{J_1}(-i\xi P_1)|\le1+\sqrt2(50e/J_1)^{J_1/2}\le2$ and $|\Emod e_{J_0}(-i\xi P_0)|\le|\Emod e^{-i\xi P_0}|+\sqrt2(16e)^{-J_0/2}\le|\Emod e^{-i\xi P_0}|+2^{1-J_0}$.
+
+Write $P_0=\sum_{r\le Z}f_r(\theta_r)$. Then $|f_r|\le c_r\le\frac1\pi(r^{-1/2}+2r^{-1})\le\frac3{\pi\sqrt r}$, so $|\xi f_r|\le\hat\xi\cdot\frac3{\pi\sqrt2}<1$, $\mathbb Ef_r=0$ and $\mathbb Ef_r^2\ge\frac12\beta_r^2=\frac1{2\pi^2r}$. So
+\[
+|\mathbb Ee^{-i\xi f_r}|\le1-\frac{\xi^2}{4\pi^2r}+\frac{\xi^3}6\Bigl(\frac{3}{\pi\sqrt r}\Bigr)^3\le\exp\Bigl(-\frac{\xi^2}{4\pi^2r}+\frac{\xi^3}{r^{3/2}}\Bigr),
+\]
+and by independence and Mertens,
+\[
+|\Emod e^{-i\xi P_0}|\le\exp\Bigl(-\frac{\xi^2}{4\pi^2}(H_0-2H_1-C)+C\xi^3\Bigr).
+\]
+For $Y<p$ and $k\in\IT$, $\xi_{p,k}\ge\log Y/\Lambda(2T+1)=2\pi\theta_T(1+O(1/\log T))$. Hence $\frac{\xi^2}{4\pi^2}H_0\ge\theta_T^2H_0(1-o(1))=2\pi^2\omega^2(1-o(1))$, while $\theta_T^2H_1\to0$ and $\xi^3\to0$. Finally $\sum_{Y<p\le X_2}\frac{a_p^2}2\le L$.
+\end{proof}
+
+\begin{proposition}\label{prop:C}
+$\langle Q(\rho_k)W(\tau_k)\rangle=O\bigl(L\,e^{-2\pi^2\omega^2(1+o(1))}\bigr)+o(1)$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\CGref{lem:trunc}, Lemma~\CGref{lem:identity}, Lemma~\CGref{lem:rem}, and $\langle{\rm Main}\cdot W_{\rm pr}\rangle={\rm Diag}+O(T^{3c/2-1+o(1)})$ (Lemma~\CGref{lem:offdiag}), with Lemma~\CGref{lem:diag}.
+\end{proof}
+
+%======================================================================
+\section{Proof of the theorem}\label{sec:proof}
+
+By Propositions~\CGref{prop:A}, \CGref{prop:B} and \CGref{prop:C}, and since $\omega^2=(\log V)^{1/4}\asymp H_1^{1/4}$ makes $L\,e^{-2\pi^2\omega^2}\to0$,
+\[
+B_c(T)=2L+O(H_1^{5/8})+O(\sqrt{H_1H_2})=\frac{H_1}{2\pi^2}+O(H_1^{5/8}),
+\]
+by \CGeqref{eq:L}; this is \CGeqref{eq:thm}, since $H_1=\log\log\log T$.
+
+For $r_k$: by \cite[eq.~(7.1)]{PaperI}, $r_k=u_k(X)+\mathfrak t_k(X)+\chi_k$ with $0\le\chi_k\ll1/T$, and $\langle u(X)^2\rangle=O_c(1)$ by (I1). So $|\|r\|_2-\|\mathfrak t\|_2|=O_c(1)$, and $\langle r^2\rangle=B_c+O_c(\sqrt{B_c})$. Corollary~\CGref{cor:fixedc} follows. \qed
+
+%======================================================================
+\section{Scope and dependence on Paper I}\label{sec:scope}
+
+The proof is unconditional. It uses the results (I1)--(I5) of \cite{PaperI} as stated there, and classical results (Kusmin--Landau, van der Corput, Montgomery--Vaughan, Mertens, Hoeffding). Every other step is proved above; Lemma~\CGref{lem:mult} reproduces the proof of \cite[Lemma~8.3]{PaperI} for coefficient-dominated $\Pi$. The implied constants are not explicit; they depend on those of \cite{PaperI}.
+
+The method: Step B uses \cite[Thm.~8.5]{PaperI} to replace the zero ordinates by the second corrected clock, at a cost $O(\sqrt{H_1H_2})$. Step C then evaluates a correlation of explicit Dirichlet polynomials at the clock points. The two-scale split $P=P_0+P_1$ and the order of the expansion in Lemma~\CGref{lem:identity} keep the factor $e^{-i\xi P_0}$, whose argument has variance $\asymp H_0/H_1$, unimodular in ${\rm Rem}_{\rm I}$; and summation over $n$ before estimation turns each remainder into one derivative of $Q^\flat$ evaluated at shifted points, controlled by multiplicity. The idea of truncating exponentials of prime sums with moment control goes back to the work of Radziwiłł and Soundararajan on Selberg's central limit theorem \cite{RadziwillSoundararajan2017}.
+
+\begin{thebibliography}{9}
+
+\bibitem{GrahamKolesnik1991}
+S.W. Graham, G. Kolesnik, Van der Corput's Method of Exponential Sums, London Math. Soc. Lecture Note Ser., vol. 126, Cambridge University Press, Cambridge, 1991, \href{https://doi.org/10.1017/CBO9780511661976}{https://doi.org/10.1017/CBO9780511661976}.
+
+\bibitem{Hoeffding1963}
+W. Hoeffding, Probability inequalities for sums of bounded random variables, J. Amer. Statist. Assoc. 58 (1963) 13--30, \href{https://doi.org/10.1080/01621459.1963.10500830}{https://doi.org/10.1080/01621459.1963.10500830}.
+
+\bibitem{Mertens1874}
+F. Mertens, Ein Beitrag zur analytischen Zahlentheorie, J. Reine Angew. Math. 78 (1874) 46--62, \href{https://doi.org/10.1515/crll.1874.78.46}{https://doi.org/10.1515/crll.1874.78.46}.
+
+\bibitem{MontgomeryVaughan1974}
+H.L. Montgomery, R.C. Vaughan, Hilbert's inequality, J. Lond. Math. Soc. (2) 8 (1974) 73--82, \href{https://doi.org/10.1112/jlms/s2-8.1.73}{https://doi.org/10.1112/jlms/s2-8.1.73}.
+
+\bibitem{PaperI}
+R. Ayn\"asac, The Riemann--von Mangoldt clock and the zeros of the Riemann zeta function: an exact defect identity, prime cutoffs and a computable corrected clock, manuscript, version 14, 2026, \href{https://github.com/vcasana1/LawCasanya/blob/main/manuscript/ordinal_prime_cutoff_v14.tex}{https://github.com/vcasana1/LawCasanya/blob/main/manuscript/ordinal\_prime\_cutoff\_v14.tex}.
+
+\bibitem{RadziwillSoundararajan2017}
+M. Radziwi\l\l, K. Soundararajan, Selberg's central limit theorem for $\log|\zeta(\frac12+it)|$, Enseign. Math. 63 (2017) 1--19, \href{https://doi.org/10.4171/LEM/63-1/2-1}{https://doi.org/10.4171/LEM/63-1/2-1}.
+
+\end{thebibliography}
+
+\end{document}
