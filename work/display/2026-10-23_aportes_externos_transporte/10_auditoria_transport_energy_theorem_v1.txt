@@ -1,0 +1,114 @@
+## Auditoría matemática de `transport_energy_theorem_v1`
+
+El manuscrito contiene una demostración mucho más desarrollada que la que habíamos construido en el chat: presenta el desacoplo en dos escalas, controla los restos de Taylor mediante momentos altos y trata la suma no diagonal conjuntamente.
+
+Todavía no lo consideraría certificado para publicación. He identificado errores concretos que deben corregirse o justificarse. Algunos son menores, pero uno afecta directamente al control de los restos, que es el núcleo del artículo.
+
+### 1. Definición inconsistente del reloj \\(N_0\\)
+
+En §1 escribes
+
+\\[ N_0(t)=\frac{\vartheta(t)}{\pi}+1, \qquad \Lambda(t)=\frac1{2\pi}\log\frac{t}{2\pi}. \\]
+
+Pero en el artículo I, versión 14, el reloj utilizado es
+
+\\[ N_0(t)= \frac{t}{2\pi}\log\frac{t}{2\pi e}+\frac78, \\]
+
+cuya derivada sí es exactamente \\(\Lambda(t)\\).
+
+Las dos funciones difieren en \\(O(1/t)\\), pero no son idénticas. Por tanto, si se conserva la definición con \\(\vartheta\\), las identidades de derivación y la aplicación literal de los teoremas del artículo I dejan de ser exactas.
+
+Corrección: mantener la definición de \\(N_0\\) del artículo I. La diferencia asintótica es pequeña, pero no debe quedar implícita en una demostración que se presenta como rigurosa.
+
+### 2. Desigualdad incorrecta en el lema 7.3
+
+En el tratamiento de \\(\mathrm{Rem}\_{\mathrm{II}}\\) se elige
+
+\\[ J_0=\lceil24e^2s\rceil \\]
+
+y se afirma
+
+\\[ 2\left(\frac{8e^2s}{J_0}\right)^{J_0/2} \le 2^{1-J_0}. \\]
+
+Con esa elección, el cociente puede aproximarse a \\(1/3\\). Sin embargo,
+
+\\[ (1/3)^{J_0/2}>2^{-J_0}. \\]
+
+Por tanto, la desigualdad escrita es falsa.
+
+Se puede conservar una cota exponencial más débil, aproximadamente \\(2\cdot3^{-J_0/2}\\), suficiente para el objetivo, o aumentar la constante de elección de \\(J_0\\).
+
+Esto parece reparable, pero la prueba actual no justifica literalmente la estimación que proclama.
+
+### 3. El teorema de ortogonalidad (I5) está atribuido a una versión incorrecta
+
+El §3 cita como resultado del artículo I, versión 14, la proposición 8.17:
+
+\\[ \\|G-I\\|\_{\mathrm{op}} \ll_b(\log T)^{-1/4}+T^{b-1}\log T. \\]
+
+He comprobado los archivos locales. Esa proposición aparece en `ordinal_prime_cutoff_v15_1.tex`, pero no en `prime_corrected_clock_v14.tex`.
+
+La estimación es importante porque sustenta el lema 4.7, que se utiliza después en toda la prueba.
+
+Hay dos posibilidades correctas: incorporar una demostración autónoma de esa ortogonalidad, o cambiar explícitamente la dependencia bibliográfica a una versión que realmente la contenga.
+
+La primera opción sería preferible para publicar el trabajo independientemente.
+
+### 4. El error de Mertens en (4.2) es demasiado fuerte
+
+Se afirma
+
+\\[ \sigma^2(S\_{R_2}-S\_{R_1}) \le \frac1{\pi^2} \left( \log\frac{\log R_2}{\log R_1} +O(R_1^{-1/2}) \right). \\]
+
+El término \\(O(R_1^{-1/2})\\) no se obtiene de los teoremas de Mertens citados. La cola de potencias primas sí permite un ahorro de ese tipo, pero el error al aproximar la suma de recíprocos de primos necesita su propia estimación.
+
+Se puede utilizar una formulación más débil, con \\(O(1)\\), que parece suficiente para las aplicaciones posteriores. Aun así, la estimación escrita en el manuscrito no está justificada.
+
+### 5. Precisión necesaria en el lema 4.5
+
+La definición de coefficient-dominated admite formalmente coeficientes \\(\varepsilon\_{p,m}\\) con \\(|\varepsilon\_{p,m}|\le1\\), sin exigir que sean reales.
+
+Sin embargo, el lema de multiplicidad construye puntos
+
+\\[ \varrho_k=\tau_k-\frac{\Pi(\tau_k)}{\Lambda(\tau_k)} \\]
+
+que necesariamente deben ser reales.
+
+Basta exigir
+
+\\[ \varepsilon\_{p,m}\in[-1,1]. \\]
+
+Los casos utilizados en la demostración cumplen esta condición. Es un ajuste de los cuantificadores, no un obstáculo estructural.
+
+### 6. Valoración del núcleo matemático
+
+La parte que más importa es §7:
+
+- La identidad de Taylor agregado del lema 7.2 está algebraicamente bien planteada.
+- La separación entre \\(P_0\\), \\(P_1\\) y los primos altos permite controlar las longitudes de los polinomios.
+- El lema 7.4 proporciona un argumento colectivo para las frecuencias no nulas, evitando la pérdida que aparecía al estimar cada pareja de primos por separado.
+- El lema 7.5 identifica correctamente el mecanismo de decaimiento de la diagonal mediante la función característica de los primos bajos.
+
+No he identificado una contradicción estructural en estos pasos. Pero esto no equivale todavía a haber verificado todas las constantes y uniformidades de los lemas 4.5–4.6 y 7.3. Son precisamente las partes que requieren la revisión más exigente.
+
+## Dictamen provisional
+
+| Aspecto                                  | Evaluación                                               |
+| ---------------------------------------- | -------------------------------------------------------- |
+| Enunciado del teorema principal          | Preciso                                                  |
+| Reducción al segundo reloj corregido     | Respaldada por v14                                       |
+| Expansión de Taylor agregada             | Estructura correcta                                      |
+| Cancelación de frecuencias no diagonales | Argumento concreto y prometedor                          |
+| Control de restos                        | Necesita corregir y verificar la estimación del lema 7.3 |
+| Dependencia de resultados anteriores     | Referencia I5 incorrecta                                 |
+| Certificación final del equivalente      | Pendiente                                                |
+
+Mi conclusión es favorable a continuar la auditoría, pero no a declarar todavía probado definitivamente el teorema. Los errores identificados parecen reparables sin abandonar el método.
+
+Si las estimaciones de muestreo y los restos resisten la verificación completa, el resultado
+
+\\[ \boxed{ B_c(T)=\frac1{2\pi^2}\log\log\log T+ O_c\\!\left((\log\log\log T)^{5/8}\right) } \\]
+
+sería suficientemente sólido y específico para justificar el artículo independiente que estamos buscando.
+
+No he modificado el PDF, el LaTeX ni ninguna versión del manuscrito.

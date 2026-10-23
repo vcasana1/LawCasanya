@@ -377,3 +377,9 @@
 - work/paper1/transport_theorem/transport_energy_theorem_v1.{tex,txt,pdf} (9 pp., configuración v39, 0 errores): Theorem 1.1, B_c(T) = (1/2π²) logloglog T + O_c((logloglog T)^{5/8}) y lo mismo para ⟨r_k(T^c)²⟩, para todo c∈(0,1/2] fijo; Corolario 1.2 responde negativamente a la Question 13.2 (q:fixed_c) de manuscript/ordinal_prime_cutoff_v14.tex. Incondicional.
 - Escritas las adaptaciones que quedaban en la nota previa: Lema 4.5 (multiplicidad de puntos desplazados, A2), 4.6 (sampleo, A1), 4.7 (medias cuadráticas en el reloj con potencias de primos, A3), 7.1 (truncaciones, A4). Usa como dados: Thm 5.1, Lemma 7.2, Prop 8.1, Thm 8.5, Prop 8.17 de la v14; Kusmin–Landau, Montgomery–Vaughan, Mertens, Hoeffding.
 - Ningún manuscrito cambiado.
+
+## 2026-10-23 [claude] — transport_energy_theorem v2 (respuesta a la auditoría de ChatGPT del v1)
+- work/paper1/transport_theorem/transport_energy_theorem_v2.{tex,txt,pdf} (9 pp., configuración v39, 0 errores) y transport_energy_theorem_v2_changelog.md. Enunciado sin cambios: B_c(T) = (1/2π²) logloglog T + O_c((logloglog T)^{5/8}).
+- Corregido: N_0 = (t/2π)log(t/2πe)+7/8 como en la v14, eq. (2.2); J_0 = ⌈32e²s⌉ en el Lema 7.3 (la desigualdad de v1 con 24e² era falsa); error O(1/log R_1) en la eq. de varianzas; ε_{p,m} ∈ [−1,1] reales.
+- La Prop. 8.17 sí está en manuscript/ordinal_prime_cutoff_v14.tex (la auditoría miró prime_corrected_clock_v14.tex); aun así v2 incluye prueba propia (Lema 4.3, b ≤ 1/2, ‖G−I‖ ≪ T^{b−1}log T + 1/log T) y ya no la usa como entrada.
+- Auditoría de ChatGPT, verbatim: work/display/2026-10-23_aportes_externos_transporte/10_auditoria_transport_energy_theorem_v1.txt. Ningún manuscrito cambiado.
