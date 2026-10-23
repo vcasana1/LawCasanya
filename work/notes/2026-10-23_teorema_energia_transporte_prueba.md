@@ -3,7 +3,7 @@
 Redacción: Claude, 2026-10-23, en `work/` (AGENTS.md §2). Ningún manuscrito modificado.
 Base: Paper I v14 (`manuscript/ordinal_prime_cutoff_v14.tex`), cuyos enunciados se citan por etiqueta.
 Antecedentes en este repositorio: `work/notes/2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md` (§5–§7) y `work/display/2026-10-23_aportes_externos_transporte/`.
-**La auditoría de rigor está en §6.** Lo que allí figura como «adaptación» es un paso que no está escrito aquí línea a línea.
+**Sustituida por la prueba completa en `work/paper1/transport_theorem/transport_energy_theorem_v1.{tex,txt,pdf}`, donde A1–A4 están escritas (Lemas 4.5, 4.6, 4.7 y 7.1).** La auditoría de rigor de esta versión previa está en §6. Lo que allí figura como «adaptación» es un paso que no está escrito aquí línea a línea.
 
 ## 0. Enunciado
 
