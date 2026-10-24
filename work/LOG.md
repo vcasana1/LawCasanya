@@ -403,3 +403,8 @@
 ## 2026-10-24 [claude] — revisión de los teoremas sobre τ_k − γ_k a la luz del teorema del transporte
 - work/notes/2026-10-24_distancia_tau_gamma_consecuencias_transporte.md: catálogo de lo que había en manuscript/ordinal_prime_cutoff_v14.tex y seis consecuencias demostradas a partir de transport_energy_theorem_v5: R1 error O(√(H1H2)) (cambiando ω² = π^{-2} log log V); R2 rango uniforme log(1/c) = o(logloglog T); R3 reloj de un paso con c fijo: 2 logloglog T/log²T en ordenadas, el doble del corte variable de la v14; R4 cota inferior ⟨r(T^c)²⟩ ≥ (1/2π²)log(c/θ_T) − O(√(H1H2)) para todo c ≥ θ_T (régimen intermedio c = (loglogT)^{-α}); R5 media armónica de R^τ_p en los primos móviles → 0 (cierra el abierto R̄_c ≤ 1/2, más fuerte); R6 ley de la respuesta del transporte del segundo reloj en bandas: Φ_T(p) − 1 con Φ_T ≈ e^{−θ² log log T} en (X1, X2], 0 en (X2, T^{1/2}].
 - Abiertos con su obstáculo concreto (ley a θ fijo, régimen intermedio exacto, c > 1/2, casi todo k). Ningún manuscrito cambiado.
+
+## 2026-10-24 [claude] — sube git: verificación de la v5 por ChatGPT y respuesta
+- work/display/2026-10-24_respuesta_verificacion_v5.md: última respuesta de Claude, literal (las "referencias mal numeradas" lo son solo respecto de prime_corrected_clock_v14.tex; en manuscript/ordinal_prime_cutoff_v14.tex, que es el citado, son Lema 8.3 y Teorema 8.5; propuesta de v6 con R1, tabla de equivalencias entre las dos v14 y R3–R6, pendiente de orden).
+- Textos de ChatGPT, literales, en work/display/2026-10-23_aportes_externos_transporte/: 15 (distancia τ−γ y ϖ_Z1, adjunto) y 16 (verificación de la v5, pegado en el chat).
+- Ningún manuscrito cambiado.

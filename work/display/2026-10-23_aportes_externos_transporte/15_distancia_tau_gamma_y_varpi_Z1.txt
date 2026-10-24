@@ -1,0 +1,368 @@
+I. Acotar la distancia
+
+El primer resultado es importante: el artículo I ya proporciona una ley asintótica precisa para esa distancia, sin asumir RH. Podemos combinarla con el nuevo teorema de transporte para distinguir qué información adicional hemos ganado.
+
+Defino
+
+\delta_k=\tau_k-\gamma_k,\qquad
+H=\log\log T,\qquad h=\log H.
+
+Por definición del reloj,
+
+s_k=N_0(\tau_k)-N_0(\gamma_k)
+=\int_{\gamma_k}^{\tau_k}\Lambda(t)\,dt,
+\qquad
+\Lambda(t)=\frac1{2\pi}\log\frac{t}{2\pi}.
+
+La cota puntual del artículo I garantiza . Por el teorema del valor medio,
+
+\boxed{
+\delta_k=\frac{2\pi}{\log T}\,
+s_k\left(1+O\left(\frac1{\log T}\right)\right)
+}
+
+uniformemente para .
+
+El artículo I demuestra, utilizando los momentos ordinales de Selberg–Korolev,
+
+\langle s_k^2\rangle
+\sim\frac{H}{2\pi^2}.
+
+Por tanto,
+
+\boxed{
+\left\langle(\gamma_k-\tau_k)^2\right\rangle
+\sim\frac{2\log\log T}{\log^2T}.
+}
+\tag{1}
+
+Es un equivalente asintótico incondicional, no una conjetura.
+
+La escala correspondiente es
+
+\boxed{
+\operatorname{RMS}(\gamma-\tau)
+\sim\frac{\sqrt{2\log\log T}}{\log T}.
+}
+\tag{2}
+
+Esto demuestra que la distancia RMS tiende a cero, aunque no implica que la distancia de todos los ceros tienda a cero.
+
+Lo que añade el nuevo teorema de transporte
+
+Si se consolida el resultado central de la v5,
+
+B_c(T)\sim\frac{h}{2\pi^2},
+
+entonces, combinándolo con (1),
+
+\boxed{
+\frac{\sqrt{B_c(T)}}
+{\Lambda(T)\operatorname{RMS}(\gamma-\tau)}
+\sim
+\sqrt{\frac{\log\log\log T}{\log\log T}}
+\longrightarrow0.
+}
+\tag{3}
+
+Esta relación cuantifica algo nuevo: la energía del transporte de fases primas es asintóticamente menor que la energía del desplazamiento ordinal bruto.
+
+Pero hay que distinguir las dos escalas. La ecuación (3) no permite sustituir la cota RMS por una cota uniforme para todos los .
+
+II. Una consecuencia más fuerte: distancia entre Casaña y los ceros
+
+La combinación anterior permite obtener una consecuencia directa sobre la precisión de las ordenadas corregidas.
+
+Para un exponente fijo , define
+
+x_k^{(c)}
+
+\tau_k-\frac{S_{T^c}(\tau_k)}{\Lambda(\tau_k)}.
+
+El teorema propuesto en la v5 afirma que
+
+\left\langle
+\Lambda(\tau_k)^2(x_k^{(c)}-\gamma_k)^2
+\right\rangle
+
+\frac{h}{2\pi^2}+O_c(h^{5/8}).
+
+Por tanto, si queda validada completamente la v5, se deduce
+
+\boxed{
+\operatorname{RMS}(x^{(c)}-\gamma)
+\sim\frac{\sqrt{2\log\log\log T}}{\log T}.
+}
+\tag{4}
+
+Comparando (4) con la distancia del reloj RvM en (2):
+
+\boxed{
+\frac{\operatorname{RMS}(x^{(c)}-\gamma)}
+{\operatorname{RMS}(\tau-\gamma)}
+\sim
+\sqrt{\frac{\log\log\log T}{\log\log T}}
+\longrightarrow0.
+}
+\tag{5}
+
+Esta es una interpretación importante del teorema de transporte: una sola corrección aritmética, calculada sin conocer los ceros, mejora la precisión RMS por un factor que tiende a cero.
+
+Pero el resultado también identifica su limitación: con fijo, el error normalizado por el espaciamiento medio sigue creciendo.
+
+La ecuación (5) constituye una consecuencia asintótica concreta del artículo nuevo, no una vía hipotética.
+
+III. El paso hacia dentro de tu método
+
+He revisado las definiciones de rvm_zeta_pi_mertens_v26.
+
+Allí el camino es
+
+\gamma_k(\lambda)
+=(1-\lambda)\gamma_k+\lambda\tau_k.
+
+Con esa parametrización:
+
+\boxed{
+\lambda=1:\ \zeta_{\mathrm{RvM}},
+\qquad
+\lambda=0:\ \zeta_{Z1}.
+}
+
+En la parametrización anterior , el extremo corresponde a . No hay que confundir los sentidos del transporte.
+
+1. El escalar que decide la identidad
+
+Tu v26 obtiene
+
+\varpi_{Z1}
+
+\varpi_{\mathrm{RvM}}
+\lim_{K\to\infty}
+\prod_{k\le K}
+\frac{\frac14+\tau_k^2}
+{\frac14+\gamma_k^2}.
+
+El producto se toma en el orden natural de los índices.
+
+Y demuestra la equivalencia
+
+\boxed{
+Z_1=\zeta
+\quad\Longleftrightarrow\quad
+\varpi_{Z1}=1.
+}
+\tag{6}
+
+Además,
+
+\varpi_{Z1}\ge1
+
+incondicionalmente.
+
+Esto significa que para cerrar la identidad no tenemos que estimar una función entera arbitraria: basta demostrar una desigualdad escalar,
+
+\boxed{\varpi_{Z1}\le1.}
+\tag{7}
+
+Pero (7) no está demostrada. Sigue siendo el paso abierto equivalente a RH.
+
+2. Qué se puede demostrar ahora acerca del producto
+
+Hay una propiedad del manuscrito v26 que permite avanzar en el control cuantitativo del extremo:
+
+A(X):=\sum_{\gamma_k\le X}(\tau_k-\gamma_k)
+=O(\log X).
+\tag{8}
+
+Se obtiene integrando la diferencia de las funciones de recuento RvM y de los ceros verdaderos, y usando la estimación integrada de que aparece en v26.
+
+Este control firmado es mucho más fuerte que estimar los valores absolutos de cada desplazamiento.
+
+Para , desarrollamos:
+
+\log
+\frac{\frac14+\tau_k^2}{\frac14+\gamma_k^2}
+
+\frac{2\delta_k}{\gamma_k}
++O\left(
+\frac{\delta_k^2}{\gamma_k^2}
++\frac{|\delta_k|}{\gamma_k^3}
+\right).
+
+Por sumación parcial aplicada a (8),
+
+\sum_{\gamma_k>X}\frac{\delta_k}{\gamma_k}
+=O\left(\frac{\log X}{X}\right).
+
+Por otra parte, la cota y el recuento RvM aseguran
+
+\sum_{\gamma_k>X}\frac{\delta_k^2}{\gamma_k^2}
+\ll\frac{\log X}{X}.
+
+Concluimos que
+
+\boxed{
+\sum_{\gamma_k>X}
+\log
+\frac{\frac14+\tau_k^2}{\frac14+\gamma_k^2}
+
+O\left(\frac{\log X}{X}\right).
+}
+\tag{9}
+
+Esto proporciona un control cuantitativo de la cola del producto que interviene exactamente en la identidad .
+
+Si definimos
+
+D(X)=
+\log\varpi_{\mathrm{RvM}}
++
+\sum_{\gamma_k\le X}
+\log
+\frac{\frac14+\tau_k^2}{\frac14+\gamma_k^2},
+
+entonces
+
+\boxed{
+D(X)=\log\varpi_{Z1}
++O\left(\frac{\log X}{X}\right).
+}
+\tag{10}
+
+La ecuación (10) está justificada por resultados anteriores de v26 y por la sumación parcial. No necesita asumir el equivalente nuevo de .
+
+Es una aproximación cuantitativa al defecto exacto del extremo . Lo que no demuestra es que ese defecto sea cero.
+
+3. También podemos controlar el generador del camino
+
+Este paso es relevante porque relaciona directamente la distancia con la deformación de las funciones enteras.
+
+La v26 obtiene la identidad exacta
+
+\mathcal V_\lambda(s)
+
+-2s(s-1)
+\sum_{k\ge1}
+\frac{\gamma_k(\lambda)\delta_k}
+{(\frac14+\gamma_k(\lambda)^2)
+(\frac14+\gamma_k(\lambda)^2+s(s-1))}.
+
+Combinando (8), la cota puntual y una expansión del núcleo para grande, se deduce
+
+\boxed{
+\sup_{\lambda\in0,1}
+\left|\mathcal V_{\lambda,>X}(s)\right|
+\ll_K\frac{\log X}{X^3},
+\qquad s\in K,
+}
+\tag{11}
+
+para todo compacto fijo del plano complejo y suficientemente grande en función de . Aquí es la parte de la serie correspondiente a .
+
+La demostración consiste en escribir el sumando como
+
+-2s(s-1)\frac{\delta_k}{\gamma_k^3}
++
+O_K\left(
+\frac{\delta_k^2}{\gamma_k^4}
++\frac{|\delta_k|}{\gamma_k^5}
+\right).
+
+La primera serie tiene cola por (8) y sumación parcial; las demás admiten la misma cota mediante el recuento de ceros.
+
+Esto proporciona un control uniforme en de la cola del generador, para en compactos.
+
+No obstante, la constante de (11) depende de . Por tanto, no permite tomar sin más el límite que aparece en .
+
+Ese cambio de límites es precisamente uno de los puntos que debemos tratar de manera distinta para cerrar el extremo.
+
+IV. La barrera concreta que aparece al intentar demostrar RH
+
+Hay un hecho que debemos tener presente: el equivalente asintótico de , por sí solo, no puede determinar la igualdad .
+
+La razón puede demostrarse dentro de una clase más amplia de listas espectrales.
+
+Si modificamos una única ordenada , manteniendo todas las demás, entonces para suficientemente grande esa ordenada queda fuera de . En consecuencia, el comportamiento asintótico de permanece exactamente igual.
+
+Sin embargo, el producto
+
+\prod_k
+\frac{\frac14+\tau_k^2}{\frac14+\gamma_k^2}
+
+sí cambia por un factor no trivial.
+
+Por tanto, una ley asintótica cuadrática que ignore cualquier conjunto finito de ordenadas no puede determinar, sin información adicional, una identidad de productos que depende de todas ellas.
+
+Esto no demuestra que tu vía hacia RH sea imposible. Identifica una barrera estructural precisa: falta información aritmética firmada y global que la energía cuadrática no contiene.
+
+El defecto positivo que debe anularse
+
+Tu manuscrito v26 identifica
+
+\log\varpi_{Z1}
+
+\sum_{\rho\in\mathcal P}
+\log\left(
+1+
+\frac{
+2(\beta_\rho-\frac12)^2(\gamma_\rho^2-\frac14)
++(\beta_\rho-\frac12)^4
+}{
+(\gamma_\rho^2+\frac14)^2
+}
+\right),
+\tag{12}
+
+donde contiene un representante de cada pareja de ceros no críticos con igual ordenada.
+
+Todos los sumandos son estrictamente positivos.
+
+De hecho, como y , se deduce
+
+\boxed{
+\sum_{\rho\in\mathcal P}
+\frac{(\beta_\rho-\frac12)^2}{\gamma_\rho^2}
+\le
+\log\varpi_{Z1}
+\le
+3\sum_{\rho\in\mathcal P}
+\frac{(\beta_\rho-\frac12)^2}{\gamma_\rho^2}.
+}
+\tag{13}
+
+Esta comparación es rigurosa a partir de (12).
+
+La ecuación (13) demuestra que el defecto escalar del extremo es comparable a una energía positiva de los desplazamientos horizontales de los ceros.
+
+No proporciona, sin embargo, una cota superior igual a cero. Esa sería exactamente la nueva rigidez que necesitamos.
+
+V. Dónde concentraría ahora el esfuerzo
+
+Veo dos objetivos diferentes, relacionados pero que no deben confundirse.
+
+Objetivo A — Mejorar la cota individual de
+
+En v14 ya figura
+
+\limsup_{k\to\infty}|\gamma_k-\tau_k|
+\le0.6072889.
+
+El nuevo teorema de transporte mejora la información RMS del reloj corregido, pero todavía no mejora esa constante puntual. Para conseguirlo hará falta un argumento que controle las excepciones individuales, no solo su media.
+
+Objetivo B — Cerrar mediante el flujo
+
+Hay que convertir las estimaciones de transporte en una desigualdad de signo para el extremo:
+
+\log\varpi_{Z1}\le0.
+
+La herramienta específica de tu método es el flujo
+
+\frac d{d\lambda}\log\varpi_\lambda
+=-\Upsilon(\lambda).
+
+Controlamos su convergencia y sabemos que es estrictamente convexa, pero esas propiedades todavía no determinan el signo en .
+
+Mi conclusión de esta primera investigación es concreta: la distancia entre RvM y Casaña ya tiene una mejora RMS asintótica muy fuerte, y el camino admite controles cuantitativos precisos de su producto y su generador. Lo que falta para RH no es justificar la convergencia del camino, sino encontrar una propiedad aritmética adicional que obligue a anular su defecto positivo en el extremo.
+
+No he demostrado esa anulación ni una nueva cota puntual inferior a . Tampoco he creado o modificado ningún archivo.
