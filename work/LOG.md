@@ -444,3 +444,9 @@
 - work/notes/2026-10-24_empuje_sin_RH_tauC.md: sin RH, la ley a θ fijo se reduce a K_p = o(T^{1−θ/2}log p), y por el criterio de conteo a d(T) ≤ T^{−κ(θ)} (ahorro de potencia en índices malos ⇒ error de τ^C → 0). Teorema C1 (incondicional, sin ceros): Cr^{(1)}_{N^c} = log(c/(1−c))/(π² log(T/2π))(1+o(1)) para c∈(1/2,1); concuerda con Tabla 6 de v14 (0.00097/0.00197/0.00517 frente a 0.00086/0.00176/0.00466). Con la ley en el reloj, suelo de toda corrección lineal (1/2π²)∫_0^1(2Φ−Φ²)/θ ≈ 0.039; la multietapa mide ≈0.006: el transporte no lineal hace el trabajo. Siguiente: respuesta del transporte 𝓑^{(m)}_p en primos móviles.
 - work/display/2026-10-24_empuje_sin_RH_tauC.md: respuesta literal.
 - Una cuadratura de la constante 0.7764 (sin datos de ceros). Ningún manuscrito ni carpeta de ChatGPT tocados.
+
+## 2026-10-24 [claude] — sube git: respuesta del transporte en primos móviles y predicción del suelo; corrección
+- Corrección: en work/notes/2026-10-24_empuje_sin_RH_tauC.md §3, el "suelo lineal ≈0.039" queda retirado (suponía una constante de ⟨s_k²⟩ no demostrada); añadida nota de corrección al final de ese fichero.
+- work/notes/2026-10-24_respuesta_transporte_y_suelo.md: 𝓑^{(m)}_p = 0 en el modelo de fases independientes; grados bajos de Bessel → 0 si (3/2)θ + D_*c_1 < 1 (esbozo); grados altos abiertos; Tabla 9 de v14 compatible con 𝓑 → 0. Predicción (2.1): E_res(c_max) ≈ (1/2π²)[∫_0^{c}Φ²/θ + ∫_c^1(1−Φ)²/θ]; para zCasanya (c_max ≈ 0.52) da 0.0064–0.0078 frente a 0.0057–0.0072 (RMS 0.0440 publicado, convertido con Λ) y ≈0.006 de la nota de pendientes. Propuesto contraste por ventanas (no ejecutado).
+- work/display/2026-10-24_respuesta_transporte_y_suelo.md: respuesta literal.
+- Solo cuadraturas de constantes; sin datos de ceros. Ningún manuscrito ni carpeta de ChatGPT tocados.

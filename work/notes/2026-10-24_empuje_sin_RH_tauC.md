@@ -114,3 +114,7 @@ $$\text{ley a }\theta\text{ fijo (sin RH)}\ \Longleftarrow\ (1.1)\ \Longleftarro
 $$\text{error de }\tau^C\to0\ \Longrightarrow\ \mathcal A_p\to R^\tau_p\ \text{en los primos móviles}\quad(\text{Prop. spectral\_energy}).$$
 
 **Siguiente paso concreto**, sin RH y del lado del reloj: calcular la respuesta computable del transporte $\mathcal B^{(m)}_p$ de la multietapa (Thm `computable_response` de v14) en los primos móviles. El objetivo es demostrar o refutar que la anticorrelación transporte–defecto produce $\mathcal A_p\approx1-\Phi(\theta)$. El Teorema C1 elimina el término cruzado de esa cuenta para todo $c<1$.
+
+---
+
+**Corrección (24-oct, posterior).** El "suelo lineal $\approx0.039$" de §3 queda retirado: supone una constante de $\langle s_k^2\rangle$ no demostrada. Ver `2026-10-24_respuesta_transporte_y_suelo.md` §0 y la predicción correcta (2.1) allí.
