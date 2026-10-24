@@ -1,0 +1,23 @@
+{
+  "records": [
+    {
+      "j": 4,
+      "tau_max": 10000.0,
+      "sample_cesaro_square": 0.06247421291918817,
+      "exact_infinite_cesaro_square": 0.0625
+    },
+    {
+      "j": 6,
+      "tau_max": 10000.0,
+      "sample_cesaro_square": 0.015620410939392686,
+      "exact_infinite_cesaro_square": 0.015625
+    },
+    {
+      "j": 8,
+      "tau_max": 10000.0,
+      "sample_cesaro_square": 0.0038891018917928677,
+      "exact_infinite_cesaro_square": 0.00390625
+    }
+  ],
+  "interpretation": "finite illustration; the limit is an exact theorem"
+}

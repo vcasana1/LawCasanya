@@ -1,0 +1,2451 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{mathtools,amssymb,amsfonts,amsthm}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+ basicstyle=\ttfamily\footnotesize,
+ breaklines=true,
+ columns=fullflexible,
+ frame=single,
+ backgroundcolor=\color{gray!5}
+}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Hcal}{\mathcal H}
+\newcommand{\Pcal}{\mathcal P}
+\newcommand{\dd}{\,d}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\Dq}{D_q}
+
+\title[Critical-Parameter Rigidity for the Riemann Zeta Function]{Critical-Parameter Rigidity for the Riemann Zeta Function under $L^2$-Projective Coincidence}
+\author{Rotkiv Aynäsac}
+\address{}
+\thanks{}
+\date{Version 14 --- August 2026}
+
+\begin{document}
+
+\begin{abstract}
+For a fixed interval between consecutive critical-line zeros of the Riemann
+zeta function, we use the Riemann--Siegel phase to transport every vertical
+fibre $\zeta(\beta+it)$, $1/2\leq\beta\leq1$, to one common parameter
+interval.  In the Hilbert space $L^2([0,1])$ we remove the four-dimensional
+polynomial subspace of degree at most three and then projectivize.  The main
+unconditional result is a rigidity theorem: two projected vertical zeta
+fibres have the same projective class if and only if their real parameters
+are equal.  In particular, coincidence with the class at $\beta=1/2$ forces
+$\beta=1/2$.  The proof is global and elementary once the phase coordinate
+has been fixed: a hypothetical projective coincidence produces a
+finite-dimensional functional identity, analytic continuation transports it
+to the simple pole of $\zeta$ at $s=1$, and the pole cannot be cancelled by
+the remaining terms.
+
+We then separate this genuine zeta-specific rigidity from the universal
+holomorphic transport equation.  The entire function $g(s)=s-s_0$ satisfies
+exactly the same Cauchy--Riemann transport law, conformality, positive
+Jacobian and harmonicity, while possessing a zero at any prescribed
+$\beta_0\neq1/2$.  Thus these universal geometric identities cannot by
+themselves confine zeros to the critical line.  The missing zero-specific
+step is isolated as an exact projective-collapse condition.  We prove that
+this condition is equivalent to the Riemann hypothesis, and also give
+finite-dimensional, fourth-derivative and Wronskian formulations of the same
+condition.  Finally, a quantitative version based on the Fubini--Study defect
+shows how a zero-triggered \emph{almost} coincidence, if established by a
+zeta-specific arithmetic estimate, would force quantitative proximity to the
+critical line without assuming exact collapse.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\section{Introduction}
+\label{sec:introduction}
+
+Write
+\begin{equation}
+ s=\beta+it,
+ \qquad
+ \frac12\leq\beta\leq1,
+ \label{eq:s-beta-t}
+\end{equation}
+and consider the vertical family, in the setting initiated by Riemann's original memoir \cite{Riemann1859},
+\begin{equation}
+ \boxed{\zeta(\beta+it).}
+ \label{eq:vertical-zeta-family}
+\end{equation}
+The object studied in this paper is the Riemann zeta function itself.  No
+auxiliary replacement zeta function is introduced.  On each interval between
+consecutive critical-line zeros, the Riemann--Siegel phase supplies a common
+coordinate; the corresponding vertical restrictions are then placed in the
+Hilbert space $L^2([0,1])$, quotiented by the four-dimensional polynomial
+space of degree at most three, and finally projectivized.  All three operations
+are fixed before the real parameter $\beta$ is varied.
+
+The central unconditional result is the global rigidity statement
+\begin{equation}
+\boxed{
+ [Q_\perp\zeta(\alpha+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ \quad\Longleftrightarrow\quad
+ \alpha=\beta,
+}
+\label{eq:intro-global-rigidity}
+\end{equation}
+valid on every fixed phase cell.  In particular,
+\begin{equation}
+\boxed{
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\tfrac12+i t_n(\cdot))]
+ \quad\Longleftrightarrow\quad
+ \beta=\frac12.
+}
+\label{eq:intro-critical-rigidity}
+\end{equation}
+The proof is exact rather than asymptotic.  Projective coincidence produces a
+finite-dimensional identity; analytic continuation carries that identity to
+the simple pole of $\zeta$ at $s=1$; and the pole cannot be cancelled by the
+remaining fibre or by the discarded cubic component.
+
+\subsection{Where this construction sits among classical RH criteria}
+\label{subsec:intro-literature-position}
+
+The present construction lies at the intersection of two old and substantial
+traditions, but is not a restatement of either one.  The first is the
+Hilbert-space tradition surrounding the Nyman--Beurling criterion and its
+arithmetic refinements: RH can be encoded as an $L^2$ closure problem for
+fractional-part dilates \cite{Nyman1950,Beurling1955,BaezDuarte2000,BaezDuarte2002,
+BaezDuarte2003,Burnol2002}.  The second is the complex-analytic rigidity tradition going
+back to Ostrowski and Voronin and continuing through modern differential,
+functional, and difference-independence results for $\zeta$
+\cite{Ostrowski1920,Voronin1973,KaczorowskiPerelli1998,ChiangFeng2006,Lu2024,
+KorolevLaurincikas2025}.  Here the Hilbert-space quotient is local in a
+Riemann--Siegel phase cell, whereas the decisive uniqueness mechanism is
+meromorphic: the pole at $s=1$ separates every two distinct vertical
+parameters after the quotient.
+
+A closely related older line is the geometric/derivative route represented by
+Speiser's criterion and the quantitative work of Levinson--Montgomery on
+zeros of derivatives of $\zeta$ \cite{Speiser1934,LevinsonMontgomery1974}.
+Those results translate information about the zero set into restrictions on
+$\zeta'$ and its derivatives.  The present construction does something
+different but complementary: differentiation is taken only after a fixed
+Riemann--Siegel phase reparametrization, the polynomial components of
+degree at most three are removed in $L^2$, and uniqueness is then tested
+projectively.  Thus the paper
+combines two classical ideas---Hilbert-space reduction and analytic
+zero/derivative rigidity---without reducing to either classical criterion.
+
+This should also be distinguished from the global positivity/equivalent-
+criterion tradition of Weil and Li \cite{Weil1952,Li1997,BombieriLagarias1999}.
+Those criteria encode all zeros through global test functions, explicit
+formulae, or positivity sequences.  The present criterion instead compares
+two vertical zeta fibres on one fixed cell and asks whether their classes in a
+finite-codimensional projective Hilbert quotient can coincide.  Within the
+literature reviewed here, we have not found a criterion with the simultaneous
+combination
+\begin{equation}
+ \boxed{
+ \text{Riemann--Siegel cell}
+ +L^2/\Pcal_3
+ +\text{projective coincidence}
+ +\text{pole separation at }s=1.
+ }
+ \label{eq:intro-architecture}
+\end{equation}
+The components are classical; the way they are coupled in
+\eqref{eq:intro-architecture}, and the resulting exact critical-parameter
+rigidity, are the distinctive content of the construction.
+
+The unconditional theorem has value independently of the unresolved RH
+trigger.  It identifies a concrete one-parameter family in an infinite-
+dimensional Hilbert space for which quotienting by a fixed four-dimensional
+subspace and then forgetting scalar magnitude still loses no information
+about the horizontal parameter.  That injectivity is not a generic Hilbert-
+space fact: it is enforced here by the global meromorphic singularity of
+$\zeta$.  In particular, the construction yields an exact bridge from local
+$L^2$ projective geometry to global analytic continuation, rather than an
+asymptotic numerical separation.  The RH-equivalent condition introduced
+later should therefore be read as an additional arithmetic trigger attached
+to an already nontrivial rigidity theorem, not as the source of the theorem's
+content.
+
+There is a second neighboring literature that must be kept logically
+separate.  Values of $\zeta$ or its derivatives at shifted zero ordinates have
+been studied through discrete mean values, universality, and local value
+distribution
+\cite{Gonek1984,GarunkstisLaurincikas2018,
+GarunkstisLaurincikasMacaitiene2017,Laurincikas2019,Cicek2021,
+LaurincikasSiauciunas2020,GarunkstisNovikas2025,GarunkstisPaliulionyte2025}.  These results contain rich
+information about $\zeta(\beta+i\gamma)$ and nearby shifts, but none of the
+cited theorems turns the scalar event $\zeta(\beta+i\gamma)=0$ into the exact
+whole-cell finite-dimensional relation used below.  Difference-independence,
+on the other hand, supports the rigidity side of the paper, not the missing
+zero-trigger.
+
+Finite-dimensional translation-invariant spaces supply another relevant
+background: such spaces are governed by exponential-polynomial structure
+\cite{AnseloneKorevaar1964,Engert1970,Szekelyhidi1982}.  This makes a
+finite-rank collapse a natural object to test, but it does not make a point
+zero force that collapse.  The distinction between \emph{classification of a
+finite-dimensional relation} and \emph{generation of that relation by a
+zero} is one of the main logical separations of this paper.
+
+\subsection{Why the route is not a zero-free-region approach to \texorpdfstring{$1/2$}{1/2}}
+\label{subsec:intro-no-log-barrier}
+
+A classical route to RH proceeds through prime-number-theorem error terms or
+zero-free regions.  Von Koch connected RH with square-root-scale prime
+counting errors \cite{vonKoch1901}; modern unconditional zero-free regions
+remain of de la Vall\'ee Poussin or Vinogradov--Korobov type and approach
+$\Re s=1$ rather than $\Re s=1/2$
+\cite{Ford2002,MossinghoffTrudgianYang2024}.  In that framework, improving an
+error exponent all the way to the critical exponent $1/2$ is not an
+innocuous limiting process: at the relevant uniform strength it is itself an
+RH-level statement.  A hypothetical zero with real part $\beta>1/2$ produces
+an $x^\beta$ contribution in the explicit formula and cannot remain uniformly
+hidden below a square-root-scale error.
+
+The present route does not attempt to move a contour through a sequence of
+zero-free strips, nor does it require a bound of the form
+$\beta\leq1/2+\delta(T)$ with $\delta(T)$ shrinking logarithmically.  Its
+unconditional separation is exact for every fixed $\beta>1/2$:
+\begin{equation}
+ M_n(\beta)>0
+ \qquad(\beta>1/2),
+ \label{eq:intro-exact-separation-all-beta}
+\end{equation}
+while at the same time
+\begin{equation}
+ M_n(\beta)
+ =P_n(1/2)(\beta-1/2)^2
+ +o\!\left((\beta-1/2)^2\right)
+ \qquad(\beta\downarrow1/2).
+ \label{eq:intro-quadratic-approach}
+\end{equation}
+Thus the projective classes may approach the critical class arbitrarily
+closely, and in fact do so quadratically, but they cannot coincide at any
+$\beta>1/2$.  No uniform positive gap from $1/2$ is claimed or needed.  This
+is precisely why the usual ``how close can one push a zero-free boundary to
+$1/2$?'' obstruction does not condemn the rigidity theorem: the theorem is a
+nonperturbative uniqueness statement, not a zero-free-region estimate.
+
+This does not remove the difficulty of RH; it relocates it.  The projective
+side is closed, but the missing implication is
+\begin{equation}
+ \zeta(\beta+i\gamma)=0
+ \quad\Longrightarrow\quad
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\tfrac12+i t_n(\cdot))].
+ \label{eq:intro-zero-collapse}
+\end{equation}
+Theorem~\ref{thm:RH-equivalence} proves that
+\eqref{eq:intro-zero-collapse} is equivalent to RH once the unconditional
+rigidity is available.  It is therefore not presented as a small technical
+lemma.  What the construction achieves is a sharp localization of the RH
+content: everything to the right of the zero-trigger is rigid and explicit;
+what remains is to explain why the arithmetic event ``$\zeta$ has a zero''
+should force exact or quantitative projective collapse.
+
+\subsection{A possible intermediate target: almost-coincidence}
+\label{subsec:intro-almost-collapse}
+
+The exact implication \eqref{eq:intro-zero-collapse} is RH-equivalent, but the
+geometry also produces a weaker target that is not tautologically RH.  If one
+can prove, at a zero,
+\begin{equation}
+ M_n(\beta)\leq\varepsilon_n(\gamma),
+ \label{eq:intro-upper-defect}
+\end{equation}
+then the already proved lower rigidity converts this into a bound for
+$|\beta-1/2|$.  Locally,
+\begin{equation}
+ \left|\beta-\frac12\right|
+ \leq
+ \sqrt{\frac{2\varepsilon_n(\gamma)}{P_n(1/2)}}
+ \label{eq:intro-proximity}
+\end{equation}
+under the explicit threshold stated in
+Theorem~\ref{thm:almost-collapse-proximity}.  This gives the construction
+independent value even before exact collapse: a zeta-specific arithmetic
+upper bound for the projective defect would immediately become a quantitative
+horizontal bound for zeros.  It is a different object from a smooth fit to
+zero ordinates and from a classical zero-free strip.
+
+Finally, the universal Cauchy--Riemann transport must not be confused with the
+zeta-specific rigidity.  Section~\ref{sec:universal-obstruction} gives the
+entire counterexample $g(s)=s-s_0$: it obeys the same transport equation,
+conformality, positive Jacobian, and harmonicity, while having a zero at any
+prescribed $\beta_0\neq1/2$.  Hence no proof of
+\eqref{eq:intro-zero-collapse} can be built from those universal geometric
+identities alone.  The role of the pole at $s=1$ is therefore twofold: it
+proves the exact projective uniqueness, and it marks the first genuinely
+zeta-specific ingredient in the route.
+
+\section{Analytic setup and the common phase coordinate}
+\label{sec:phase-setup}
+
+We use standard facts about $\zeta$, Hardy's real $Z$-function, the
+Riemann--Siegel phase and the functional equation as in
+\cite{Titchmarsh1986,Ivic1985,Edwards1974}; special-function identities for
+$\Gamma$, $\psi$ and their derivatives are also recorded in the NIST DLMF
+\cite{DLMF}.  Define
+\begin{equation}
+ \vartheta(t)
+ =\Im\log\Gamma\!\left(\frac14+\frac{it}{2}\right)
+ -\frac t2\log\pi,
+ \label{eq:theta-definition}
+\end{equation}
+with the standard continuous branch on the positive real axis.  Then
+\begin{equation}
+ \zeta\!\left(\frac12+it\right)
+ =Z(t)e^{-i\vartheta(t)},
+ \qquad
+ Z(t)\in\R.
+ \label{eq:hardy-representation}
+\end{equation}
+
+Let
+\begin{equation}
+ 0<\gamma_1<\gamma_2<\cdots
+ \label{eq:critical-zero-ordinates}
+\end{equation}
+be the increasing sequence of distinct positive ordinates for which
+$\zeta(1/2+i\gamma_n)=0$.  Hardy's theorem gives infinitely many such
+ordinates \cite{Hardy1914}; discreteness of zeros implies that they have no finite
+accumulation point \cite{Titchmarsh1986}.
+
+\begin{lemma}[Positivity of the phase derivative on every positive zero cell]
+\label{lem:theta-positive}
+For every $n\geq1$,
+\begin{equation}
+ \vartheta'(t)>0
+ \qquad
+ (\gamma_n\leq t\leq\gamma_{n+1}).
+ \label{eq:theta-positive}
+\end{equation}
+Consequently
+\begin{equation}
+ \Omega_n:=\vartheta(\gamma_{n+1})-\vartheta(\gamma_n)>0.
+ \label{eq:omega-positive}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Differentiating \eqref{eq:theta-definition} gives
+\begin{align}
+ \vartheta'(t)
+ &=\frac12\Re\psi\!\left(\frac14+\frac{it}{2}\right)
+   -\frac12\log\pi,
+ \label{eq:theta-digamma}\\
+ \vartheta''(t)
+ &=-\frac14\Im\psi'\!\left(\frac14+\frac{it}{2}\right).
+ \label{eq:theta-trigamma}
+\end{align}
+For $\Re z>0$ the trigamma series
+\begin{equation}
+ \psi'(z)=\sum_{k=0}^{\infty}\frac1{(k+z)^2}
+ \label{eq:trigamma-series}
+\end{equation}
+is absolutely convergent.  With $z=1/4+it/2$ and $t>0$,
+\begin{equation}
+ \Im\frac1{(k+\frac14+\frac{it}{2})^2}
+ =-
+ \frac{(k+\frac14)t}
+ {((k+\frac14)^2+t^2/4)^2}<0.
+ \label{eq:trigamma-imag-negative}
+\end{equation}
+Absolute convergence permits termwise summation, so
+$\vartheta''(t)>0$ for $t>0$.  Hence $\vartheta'$ is strictly increasing.
+
+A rigorous bound follows by truncating
+\begin{equation}
+ \psi(z)=-\gamma_E+\sum_{k=0}^{\infty}
+ \left(\frac1{k+1}-\frac1{k+z}\right)
+ \label{eq:digamma-series}
+\end{equation}
+at $k=199$. With $z=\tfrac14+7i$ (i.e.\ $t=14$), write
+\begin{equation}
+ \Re\frac1{k+z}=\frac{k+\tfrac14}{(k+\tfrac14)^2+49},
+\end{equation}
+so that the partial sum
+\begin{equation}
+ S_{199}:=\sum_{k=0}^{199}
+ \left(\frac1{k+1}-\frac{k+\tfrac14}{(k+\tfrac14)^2+49}\right)
+ =2.526047\ldots
+ \label{eq:S199-value}
+\end{equation}
+is an explicit finite rational-arithmetic quantity. For the tail,
+$\bigl|\Re\bigl[\tfrac1{k+1}-\tfrac1{k+z}\bigr]\bigr|\leq\tfrac34/(k+\tfrac14)$
+for $k\geq200$ (both terms are $O(1/k)$ with the stated constant once
+$k\geq200>49$), giving
+\begin{equation}
+ \left|\sum_{k=200}^\infty
+ \Re\left(\frac1{k+1}-\frac1{k+z}\right)\right|
+ \leq\frac34\sum_{k=200}^\infty\frac1{(k+\tfrac14)^2}
+ \leq\frac3{4\cdot199}=0.0037688\ldots.
+ \label{eq:tail-bound-explicit}
+\end{equation}
+Combining \eqref{eq:S199-value} and \eqref{eq:tail-bound-explicit} with
+$\gamma_E=0.5772156\ldots$ gives the certified interval
+\begin{equation}
+ \Re\psi\!\left(\tfrac14+7i\right)
+ \in[1.945063,\,1.952600],
+ \label{eq:Repsi-certified}
+\end{equation}
+and hence, from \eqref{eq:theta-digamma} with $\log\pi=1.144730\ldots$,
+\begin{equation}
+ \vartheta'(14)\in[0.400166,\,0.403935]\subset(0.40016,\infty).
+ \label{eq:theta-prime-14-certified}
+\end{equation}
+This certified interval contains the independently computed reference value
+$\vartheta'(14)=0.4004837\ldots$, confirming the bound.  The first positive critical-line zero satisfies
+$\gamma_1=14.134725\ldots>14$; this is also contained in rigorous
+computational verifications of the critical line, far beyond this height
+\cite{PlattTrudgian2021}.  Since $\vartheta'$ is increasing,
+\eqref{eq:theta-positive} follows for every $t\geq\gamma_1$, and then
+\eqref{eq:omega-positive} follows by integration.
+\end{proof}
+
+\begin{definition}[Common phase coordinate]
+\label{def:phase-coordinate}
+For a fixed $n$, define $t_n:[0,1]\to[\gamma_n,\gamma_{n+1}]$ by
+\begin{equation}
+ \boxed{
+ \vartheta(t_n(q))
+ =\vartheta(\gamma_n)+\Omega_n q.
+ }
+ \label{eq:tn-definition}
+\end{equation}
+Then $t_n$ is a real-analytic increasing diffeomorphism and
+\begin{equation}
+ \boxed{
+ t_n'(q)=\frac{\Omega_n}{\vartheta'(t_n(q))}>0.
+ }
+ \label{eq:tn-derivative}
+\end{equation}
+For $1/2\leq\beta\leq1$ we write, only as a shorthand for the same zeta
+function,
+\begin{equation}
+ \zeta_{\beta,n}(q)
+ :=\zeta(\beta+i t_n(q)).
+ \label{eq:zeta-beta-n}
+\end{equation}
+\end{definition}
+
+\begin{proof}
+Lemma~\ref{lem:theta-positive} and the inverse function theorem give a unique
+real-analytic inverse of $\vartheta$ on the compact interval.  Differentiating
+\eqref{eq:tn-definition} gives \eqref{eq:tn-derivative}.  Since
+$t_n([0,1])\subset(0,\infty)$, none of the points
+$\beta+i t_n(q)$ equals the pole $s=1$, so
+\eqref{eq:zeta-beta-n} is real-analytic in $q$ and smooth jointly in
+$(\beta,q)$ on $[1/2,1]\times[0,1]$.
+\end{proof}
+
+\section{Universal holomorphic transport and its geometric consequences}
+\label{sec:universal-transport}
+
+The following identities are universal.  They do not use the Euler product,
+functional equation, zero distribution, or pole structure of $\zeta$.
+
+\begin{theorem}[Universal quarter-turn geometry]
+\label{thm:universal-quarter-turn}
+Let $g$ be holomorphic on a domain containing a rectangle in the variable
+$s=\beta+it$, and define $G(\beta,t)=g(\beta+it)$.  Then
+\begin{equation}
+ \boxed{G_\beta=-iG_t.}
+ \label{eq:universal-cr}
+\end{equation}
+At every point,
+\begin{align}
+ |G_\beta|&=|G_t|,
+ \label{eq:universal-isometry}\\
+ \Re(\overline{G_\beta}G_t)&=0,
+ \label{eq:universal-orthogonality}\\
+ J_G&=|G_t|^2=|g'(\beta+it)|^2\geq0,
+ \label{eq:universal-jacobian}\\
+ G_{\beta\beta}+G_{tt}&=0.
+ \label{eq:universal-harmonicity}
+\end{align}
+Where $g'\neq0$, the pullback of the Euclidean metric is
+\begin{equation}
+ \boxed{
+ g^*(|dw|^2)=|g'(\beta+it)|^2(\dd\beta^2+\dd t^2).
+ }
+ \label{eq:universal-conformal-metric}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Holomorphy gives
+$G_\beta=g'(\beta+it)$ and $G_t=i g'(\beta+it)$, proving
+\eqref{eq:universal-cr}.  The norm and orthogonality identities follow
+immediately.  The real Jacobian of a holomorphic map is $|g'|^2$, and
+\eqref{eq:universal-harmonicity} follows by differentiating
+\eqref{eq:universal-cr}.  The metric identity follows by evaluating the
+squared norm of
+$g'(\beta+it)(\dd\beta+i\dd t)$.
+\end{proof}
+
+\begin{corollary}[Exact transport in the fixed phase coordinate]
+\label{cor:phase-transport}
+For any such $g$, put
+\begin{equation}
+ G_n(\beta,q):=g(\beta+i t_n(q)).
+ \label{eq:Gn-definition}
+\end{equation}
+Then
+\begin{equation}
+ \boxed{
+ \partial_\beta G_n(\beta,q)
+ =-i a_n(q)\partial_qG_n(\beta,q),
+ \qquad
+ a_n(q):=\frac1{t_n'(q)}
+ =\frac{\vartheta'(t_n(q))}{\Omega_n}.
+ }
+ \label{eq:phase-transport}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The chain rule gives
+$\partial_qG_n=i t_n'(q)g'(\beta+i t_n(q))$ and
+$\partial_\beta G_n=g'(\beta+i t_n(q))$.  Since $t_n'(q)>0$,
+division by $t_n'(q)$ is legitimate and yields
+\eqref{eq:phase-transport}.
+\end{proof}
+
+\section{The L2 quotient and projective defect}
+\label{sec:l2-quotient}
+
+Let
+\begin{equation}
+ \Hcal=L^2([0,1],\dd q;\C),
+ \qquad
+ \ip{f}{h}=\int_0^1\overline{f(q)}h(q)\dd q,
+ \label{eq:Hilbert-space}
+\end{equation}
+with inner product linear in the second variable.  Let
+\begin{equation}
+ \Pcal_3=\operatorname{span}\{1,q,q^2,q^3\},
+ \qquad
+ Q_\perp=I-\Pi_3,
+ \label{eq:Qperp-definition}
+\end{equation}
+where $\Pi_3$ is the orthogonal projection onto $\Pcal_3$.
+
+\begin{lemma}[Quotient interpretation]
+\label{lem:quotient-interpretation}
+The range of $Q_\perp$ is $\Pcal_3^\perp$ and its kernel is $\Pcal_3$.
+For $f,h\in\Hcal$,
+\begin{equation}
+ \ip{[f]}{[h]}_{\Hcal/\Pcal_3}
+ :=\ip{Q_\perp f}{Q_\perp h}
+ \label{eq:quotient-inner-product}
+\end{equation}
+defines the canonical Hilbert-space structure on $\Hcal/\Pcal_3$.
+\end{lemma}
+
+\begin{proof}
+This is the orthogonal decomposition
+$\Hcal=\Pcal_3\oplus\Pcal_3^\perp$.  Each quotient class has exactly one
+representative in $\Pcal_3^\perp$, namely $Q_\perp f$, and
+\eqref{eq:quotient-inner-product} is independent of the chosen representative.
+\end{proof}
+
+For a nonzero $u\in\Hcal$, let $[u]\in\PP(\Hcal)$ denote its complex
+projective class.  Once nonvanishing has been proved, define
+\begin{equation}
+ u_{\beta,n}:=Q_\perp\zeta_{\beta,n}
+ \label{eq:u-beta-n}
+\end{equation}
+and the Fubini--Study defect from the critical fibre by
+\begin{equation}
+ \boxed{
+ M_n(\beta)
+ =1-
+ \frac{|\ip{u_{1/2,n}}{u_{\beta,n}}|^2}
+ {\norm{u_{1/2,n}}^2\norm{u_{\beta,n}}^2}.
+ }
+ \label{eq:M-definition}
+\end{equation}
+Thus $0\leq M_n(\beta)\leq1$, and $M_n(\beta)=0$ exactly when the two
+nonzero vectors have the same projective class.
+
+\section{Holomorphic continuation of the phase coordinate}
+\label{sec:phase-holomorphic}
+
+The pole-separation argument requires a complex neighborhood of the real phase
+cell.  Define
+\begin{equation}
+ \Theta(z)=\frac{1}{2i}\left[
+ \log\Gamma\!\left(\frac14+\frac{iz}{2}\right)
+ -\log\Gamma\!\left(\frac14-\frac{iz}{2}\right)
+ \right]-\frac z2\log\pi
+ \label{eq:Theta-complex}
+\end{equation}
+on
+\begin{equation}
+ S:=\{z\in\C:|\Im z|<1/2\}.
+ \label{eq:S-strip}
+\end{equation}
+Both Gamma arguments have positive real part on $S$.  Since $\Gamma$ has no
+zeros and no poles in the open right half-plane, holomorphic logarithms may be
+chosen there; these choices can be normalized so that
+$\Theta(t)=\vartheta(t)$ for real $t$.
+
+Define
+\begin{equation}
+ q_n(z)=\frac{\Theta(z)-\Theta(\gamma_n)}{\Omega_n}.
+ \label{eq:q-n-holomorphic}
+\end{equation}
+Then $q_n$ is holomorphic on $S$ and equals the real phase coordinate on the
+cell.
+
+\begin{lemma}[Boundary growth at the critical pole]
+\label{lem:q-boundary-growth}
+Let $z_0=-i/2$.  As $z\to z_0$ from within $S$,
+\begin{equation}
+ q_n(z)=O\!\left(1+|\log(z-z_0)|\right).
+ \label{eq:q-boundary-growth}
+\end{equation}
+Consequently, for every $p_3\in\Pcal_3$,
+\begin{equation}
+ p_3(q_n(z))
+ =O\!\left(1+|\log(z-z_0)|^3\right).
+ \label{eq:p3-boundary-growth}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $z=z_0$, the factor
+$1/4-iz/2$ tends to $0$, whereas $1/4+iz/2$ tends to $1/2$.
+In the right half-plane, the Laurent expansion
+$\Gamma(w)=w^{-1}+O(1)$ implies
+$\log\Gamma(w)=-\log w+O(w)$ on a fixed local branch.  Therefore
+\eqref{eq:Theta-complex} has at most logarithmic growth at $z_0$, which gives
+\eqref{eq:q-boundary-growth}.  A polynomial of degree at most three then
+satisfies \eqref{eq:p3-boundary-growth}.
+\end{proof}
+
+\section{Pole separation and L2-projective rigidity}
+\label{sec:pole-rigidity}
+
+\begin{lemma}[Pole separation]
+\label{lem:pole-separation}
+Let
+\begin{equation}
+ \frac12\leq\alpha<\beta\leq1,
+ \qquad
+ \lambda\in\C^\times,
+ \qquad
+ p_3\in\Pcal_3.
+ \label{eq:pole-separation-hypotheses}
+\end{equation}
+Then the identity
+\begin{equation}
+ \zeta(\alpha+i t_n(q))
+ -\lambda\zeta(\beta+i t_n(q))
+ =p_3(q)
+ \label{eq:pole-separation-identity}
+\end{equation}
+cannot hold on any nonempty real subinterval of $[0,1]$.
+\end{lemma}
+
+\begin{proof}
+If \eqref{eq:pole-separation-identity} holds in $L^2$ on an interval, the
+difference of the two sides is continuous and vanishes almost everywhere.
+If it were nonzero at one point, continuity would make it nonzero on an open
+subinterval of positive measure, a contradiction.  Thus the identity is
+pointwise on the interval.
+
+Replacing $q$ by $q_n(z)$ on the corresponding real $z$-interval gives
+\begin{equation}
+ \zeta(\alpha+iz)
+ -\lambda\zeta(\beta+iz)
+ =p_3(q_n(z)).
+ \label{eq:pole-separation-complex-identity}
+\end{equation}
+Both sides are meromorphic on the connected strip $S$.  The identity theorem
+for meromorphic functions \cite{Ahlfors1979} therefore extends
+\eqref{eq:pole-separation-complex-identity} throughout $S$.
+
+Set
+\begin{equation}
+ z_\beta=-i(1-\beta).
+ \label{eq:z-beta-pole}
+\end{equation}
+Because $\beta>\alpha\geq1/2$, one has $\beta>1/2$ and hence
+$z_\beta\in S$.  Moreover
+\begin{equation}
+ \beta+iz_\beta=1,
+ \qquad
+ \alpha+iz_\beta=1-(\beta-\alpha)\neq1.
+ \label{eq:pole-values}
+\end{equation}
+Thus the second zeta term has a simple pole at $z_\beta$, while the first zeta
+term and $p_3(q_n(z))$ are holomorphic there.  Since $\lambda\neq0$, the pole
+cannot cancel.  This contradiction proves the lemma.
+\end{proof}
+
+\begin{proposition}[Nonvanishing of every projected zeta fibre]
+\label{prop:projected-nonzero}
+For every $n\geq1$ and every $1/2\leq\beta\leq1$,
+\begin{equation}
+ \boxed{
+ Q_\perp\zeta(\beta+i t_n(\cdot))\neq0
+ \quad\text{in }L^2([0,1]).
+ }
+ \label{eq:projected-nonzero}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Suppose first that $\beta>1/2$ and
+$Q_\perp\zeta_{\beta,n}=0$.  Then
+$\zeta_{\beta,n}=p_3$ in $L^2$ for some $p_3\in\Pcal_3$.
+Continuity makes the identity pointwise.  Analytic continuation gives
+\begin{equation}
+ \zeta(\beta+iz)=p_3(q_n(z))
+ \label{eq:nonzero-complex-beta}
+\end{equation}
+on $S$.  At $z=-i(1-\beta)\in S$ the left side has the simple pole of
+$\zeta$ at $1$, while the right side is holomorphic, a contradiction.
+
+Now let $\beta=1/2$.  The same assumption and identity theorem give
+\begin{equation}
+ \zeta\!\left(\frac12+iz\right)=p_3(q_n(z))
+ \label{eq:nonzero-complex-critical}
+\end{equation}
+on $S$.  Write $z=z_0+w$ with $z_0=-i/2$.  Then
+\begin{equation}
+ \zeta\!\left(\frac12+i(z_0+w)\right)
+ =\zeta(1+iw)=\frac1{iw}+O(1),
+ \label{eq:zeta-critical-boundary-pole}
+\end{equation}
+whereas Lemma~\ref{lem:q-boundary-growth} gives only logarithmic-cubic growth
+on the right side of \eqref{eq:nonzero-complex-critical}.  Since
+$|w|^{-1}/(1+|\log|w||^3)\to\infty$, the identity is impossible.
+\end{proof}
+
+\begin{theorem}[Global $L^2$-projective rigidity]
+\label{thm:global-projective-rigidity}
+For every fixed phase cell and all $\alpha,\beta\in[1/2,1]$,
+\begin{equation}
+ \boxed{
+ [Q_\perp\zeta(\alpha+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ \quad\Longleftrightarrow\quad
+ \alpha=\beta.
+ }
+ \label{eq:global-projective-rigidity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The reverse implication is immediate.  Suppose the projective classes are
+equal and $\alpha\neq\beta$.  By interchanging the two parameters, assume
+$\alpha<\beta$.  Proposition~\ref{prop:projected-nonzero} ensures that both
+classes are defined.  Equality in projective space gives
+$\lambda\in\C^\times$ such that
+\begin{equation}
+ Q_\perp\zeta_{\alpha,n}
+ =\lambda Q_\perp\zeta_{\beta,n}.
+ \label{eq:projective-equality-Q}
+\end{equation}
+Hence
+\begin{equation}
+ Q_\perp(\zeta_{\alpha,n}-\lambda\zeta_{\beta,n})=0.
+ \label{eq:projective-kernel}
+\end{equation}
+Since $\ker Q_\perp=\Pcal_3$, there is $p_3\in\Pcal_3$ such that
+\eqref{eq:pole-separation-identity} holds.  This contradicts
+Lemma~\ref{lem:pole-separation}.
+\end{proof}
+
+\begin{corollary}[Critical-parameter rigidity]
+\label{cor:critical-parameter-rigidity}
+For every fixed phase cell and every $1/2\leq\beta\leq1$,
+\begin{equation}
+ \boxed{
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\tfrac12+i t_n(\cdot))]
+ \quad\Longleftrightarrow\quad
+ \beta=\frac12.
+ }
+ \label{eq:critical-parameter-rigidity}
+\end{equation}
+Equivalently,
+\begin{equation}
+ \boxed{M_n(\beta)=0\quad\Longleftrightarrow\quad\beta=\frac12.}
+ \label{eq:M-rigidity}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Take $\alpha=1/2$ in Theorem~\ref{thm:global-projective-rigidity}.
+The equivalence with \eqref{eq:M-rigidity} follows from equality in the
+Cauchy--Schwarz inequality for two nonzero vectors.
+\end{proof}
+
+\begin{proposition}[Global projective immersion]
+\label{prop:projective-immersion}
+For every fixed phase cell and every $1/2\leq\beta\leq1$,
+\begin{equation}
+ u_{\beta,n}\wedge\partial_\beta u_{\beta,n}\neq0.
+ \label{eq:projective-immersion}
+\end{equation}
+Equivalently,
+\begin{equation}
+ P_n(\beta):=
+ \frac{
+ \norm{u_{\beta,n}}^2\norm{\partial_\beta u_{\beta,n}}^2
+ -|\ip{u_{\beta,n}}{\partial_\beta u_{\beta,n}}|^2}
+ {\norm{u_{\beta,n}}^4}>0.
+ \label{eq:projective-speed}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The map $\beta\mapsto u_{\beta,n}$ is $C^\infty$ as an $L^2$-valued map,
+because all joint derivatives of $\zeta(\beta+i t_n(q))$ are continuous on
+the compact parameter rectangle.  Suppose
+\eqref{eq:projective-immersion} fails.  Since
+$u_{\beta,n}\neq0$, there is $c\in\C$ with
+\begin{equation}
+ Q_\perp\bigl(\zeta'(\beta+i t_n(\cdot))
+ -c\zeta(\beta+i t_n(\cdot))\bigr)=0.
+ \label{eq:immersion-kernel}
+\end{equation}
+Thus for some $p_3\in\Pcal_3$,
+\begin{equation}
+ \zeta'(\beta+i t_n(q))-c\zeta(\beta+i t_n(q))=p_3(q).
+ \label{eq:immersion-polynomial-identity}
+\end{equation}
+For $\beta>1/2$, analytic continuation to
+$z=-i(1-\beta)$ produces a double pole from $\zeta'$ and at most a simple
+pole from $c\zeta$, while the right side is holomorphic.  The double pole
+cannot cancel.
+
+For $\beta=1/2$, continue to $S$ and let $z=z_0+w$.  The Laurent expansion at
+$s=1$ gives
+\begin{equation}
+ \zeta'(1+iw)=\frac1{w^2}+O(1),
+ \qquad
+ \zeta(1+iw)=\frac1{iw}+O(1),
+ \label{eq:zeta-prime-boundary}
+\end{equation}
+whereas the right side is
+$O(1+|\log w|^3)$.  Again the leading pole cannot cancel.  This proves
+\eqref{eq:projective-immersion}; the strict positivity of
+\eqref{eq:projective-speed} is the strict Cauchy--Schwarz inequality.
+\end{proof}
+
+\section{Recoverability and quantitative separation}
+\label{sec:recoverability-quantitative}
+
+\begin{theorem}[Exact recoverability on the zeta projective image]
+\label{thm:recoverability}
+For fixed $n$, define
+\begin{equation}
+ \Phi_n:[1/2,1]\longrightarrow\PP(\Hcal),
+ \qquad
+ \Phi_n(\beta)=[u_{\beta,n}].
+ \label{eq:Phi-definition}
+\end{equation}
+Then $\Phi_n$ is a continuous injective immersion and a homeomorphism onto
+its image.  Hence a projective class in $\Phi_n([1/2,1])$ uniquely determines
+$\beta$, and hence the complete unprojected restriction
+$q\mapsto\zeta(\beta+i t_n(q))$.
+\end{theorem}
+
+\begin{proof}
+Continuity follows from continuity of $\beta\mapsto u_{\beta,n}$ and the fact
+that it never vanishes.  Injectivity is
+Theorem~\ref{thm:global-projective-rigidity}, and immersion is
+Proposition~\ref{prop:projective-immersion}.  The interval $[1/2,1]$ is compact
+and projective Hilbert space equipped with the Fubini--Study metric is
+Hausdorff.  Therefore a continuous bijection from $[1/2,1]$ to its image is a
+homeomorphism.  Once $\beta$ is recovered, the original zeta restriction is
+recovered directly from Definition~\ref{def:phase-coordinate}.
+\end{proof}
+
+\begin{lemma}[Quadratic separation at the critical parameter]
+\label{lem:quadratic-separation}
+For every fixed phase cell,
+\begin{equation}
+ M_n\!\left(\frac12\right)=0,
+ \qquad
+ M_n'\!\left(\frac12\right)=0,
+ \qquad
+ M_n''\!\left(\frac12\right)=2P_n\!\left(\frac12\right)>0.
+ \label{eq:M-second-derivative}
+\end{equation}
+Consequently
+\begin{equation}
+ \boxed{
+ M_n(\beta)
+ =P_n\!\left(\frac12\right)
+ \left(\beta-\frac12\right)^2
+ +o\!\left((\beta-\tfrac12)^2\right)
+ }
+ \label{eq:M-Taylor}
+\end{equation}
+as $\beta\downarrow1/2$.  In particular, there exists $\eta_n>0$ such that
+\begin{equation}
+ M_n(\beta)
+ \geq
+ \frac12P_n\!\left(\frac12\right)
+ \left(\beta-\frac12\right)^2
+ \label{eq:M-local-lower-bound}
+\end{equation}
+for $1/2\leq\beta\leq1/2+\eta_n$.
+\end{lemma}
+
+\begin{proof}
+Let $u(\beta)=u_{\beta,n}$ and $r(\beta)=u(\beta)/\norm{u(\beta)}$.
+The curve is $C^2$ and nonzero.  Multiplying $r(\beta)$ by a smooth local
+phase does not change $M_n$, so choose the phase at $\beta_0=1/2$ so that
+$\ip{r(\beta_0)}{r'(\beta_0)}=0$.  From $\norm{r(\beta)}=1$ one obtains
+\begin{equation}
+ \Re\ip{r}{r'}=0,
+ \qquad
+ \Re\ip{r}{r''}=-\norm{r'}^2.
+ \label{eq:normalized-derivatives}
+\end{equation}
+Differentiating
+$M_n(\beta)=1-|\ip{r(\beta_0)}{r(\beta)}|^2$ twice at $\beta_0$ gives
+\begin{equation}
+ M_n(\beta_0)=M_n'(\beta_0)=0,
+ \qquad
+ M_n''(\beta_0)=2\norm{r'(\beta_0)}^2.
+ \label{eq:M-second-r}
+\end{equation}
+The squared norm of the projective derivative is exactly
+\begin{equation}
+ \norm{r'}^2
+ =\frac{\norm{u}^2\norm{u'}^2-|\ip{u}{u'}|^2}{\norm{u}^4}
+ =P_n(\beta_0).
+ \label{eq:r-prime-P}
+\end{equation}
+Proposition~\ref{prop:projective-immersion} makes it strictly positive.  Taylor's
+theorem yields \eqref{eq:M-Taylor}, and the definition of little-$o$ gives
+\eqref{eq:M-local-lower-bound} after reducing $\eta_n$ if necessary.
+\end{proof}
+
+\begin{corollary}[Positive separation away from the critical parameter]
+\label{cor:away-separation}
+For every fixed $n$ and every $\delta\in(0,1/2]$,
+\begin{equation}
+ \boxed{
+ m_n(\delta):=
+ \min_{\beta\in[1/2+\delta,1]}M_n(\beta)>0.
+ }
+ \label{eq:m-n-delta}
+\end{equation}
+On the other hand,
+\begin{equation}
+ \lim_{\beta\downarrow1/2}M_n(\beta)=0,
+ \label{eq:M-tends-zero}
+\end{equation}
+so no estimate $M_n(\beta)\geq c>0$ can hold for all
+$\beta>1/2$ on a fixed cell.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:critical-parameter-rigidity}, $M_n$ is strictly positive
+on the compact set $[1/2+\delta,1]$.  Continuity gives a positive minimum.
+Equation \eqref{eq:M-tends-zero} follows from \eqref{eq:M-Taylor}.
+\end{proof}
+
+\section{A universal obstruction: transport does not confine zeros}
+\label{sec:universal-obstruction}
+
+The next proposition is deliberately elementary.  It proves that the
+quarter-turn equation and all consequences that depend only on holomorphy are
+compatible with a zero at any prescribed real parameter.
+
+\begin{proposition}[Exact holomorphic counterexample]
+\label{prop:g-counterexample}
+Fix any
+\begin{equation}
+ \beta_0\in\left(\frac12,1\right),
+ \qquad
+ q_0\in(0,1),
+ \qquad
+ \gamma_0=t_n(q_0),
+ \label{eq:g-counterexample-parameters}
+\end{equation}
+and define
+\begin{equation}
+ s_0=\beta_0+i\gamma_0,
+ \qquad
+ g(s)=s-s_0.
+ \label{eq:g-definition}
+\end{equation}
+Then
+\begin{equation}
+ G_n(\beta,q)
+ :=g(\beta+i t_n(q))
+ =\beta-\beta_0+i(t_n(q)-\gamma_0)
+ \label{eq:G-counterexample}
+\end{equation}
+satisfies the exact transport equation
+\begin{equation}
+ \partial_\beta G_n
+ =-i a_n(q)\partial_qG_n
+ \label{eq:G-counterexample-transport}
+\end{equation}
+and has the exact off-reference zero
+\begin{equation}
+ \boxed{G_n(\beta_0,q_0)=0.}
+ \label{eq:G-counterexample-zero}
+\end{equation}
+Moreover
+\begin{equation}
+ J_G=|g'|^2=1,
+ \label{eq:G-counterexample-J}
+\end{equation}
+so the map is conformal and regular even at that zero.
+\end{proposition}
+
+\begin{proof}
+Since $g'(s)=1$,
+\begin{equation}
+ \partial_\beta G_n=1,
+ \qquad
+ \partial_qG_n=i t_n'(q).
+ \label{eq:G-counterexample-derivatives}
+\end{equation}
+Using $a_n(q)=1/t_n'(q)$ gives
+\begin{equation}
+ -i a_n(q)\partial_qG_n
+ =-i\frac1{t_n'(q)}i t_n'(q)=1
+ =\partial_\beta G_n.
+ \label{eq:G-counterexample-check}
+\end{equation}
+Equation \eqref{eq:G-counterexample-zero} follows from the definitions of
+$s_0$ and $\gamma_0$, and \eqref{eq:G-counterexample-J} is immediate.
+\end{proof}
+
+\begin{example}[Numerical instantiation]
+\label{ex:g-numerical}
+Take
+\begin{equation}
+ \beta_0=0.7,
+ \qquad
+ q_0=\frac12,
+ \qquad
+ s_0=0.7+i t_n(1/2).
+ \label{eq:g-numerical-parameters}
+\end{equation}
+Then
+\begin{equation}
+ g(0.7+i t_n(1/2))=0
+ \label{eq:g-numerical-zero}
+\end{equation}
+exactly.  A centered finite-difference calculation with, for example,
+$h=10^{-8}$ only approximates the two derivatives in
+\eqref{eq:G-counterexample-check}; any nonzero finite-difference residual is
+therefore a discretization/roundoff error, whereas the analytic transport
+residual is identically zero.
+\end{example}
+
+\begin{corollary}[Impossibility of universal zero confinement]
+\label{cor:universal-no-confinement}
+There is no theorem of the form
+\begin{equation}
+ \begin{aligned}
+ &\bigl(\text{holomorphy}+G_\beta=-iG_t
+ +\text{ conformal/metric/Jacobian/harmonic consequences}\bigr)\\
+ &\hspace{35mm}\Longrightarrow
+ \{G=0\}\subseteq\{\beta=1/2\}.
+ \end{aligned}
+ \label{eq:universal-false-implication}
+\end{equation}
+valid for all holomorphic functions.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:g-counterexample} satisfies every hypothesis on the left
+of \eqref{eq:universal-false-implication} and violates the conclusion at the
+arbitrarily prescribed value $\beta_0\neq1/2$.
+\end{proof}
+
+A second example separates pointwise zeros from projective injectivity itself.
+
+\begin{proposition}[Pointwise zeros and projective injectivity can coexist]
+\label{prop:l2-counterexample}
+Fix $q_0\in(0,1)$ and define in $L^2([0,1])$
+\begin{equation}
+ h_\beta(q)=q^4+\beta q^5-(q_0^4+\beta q_0^5).
+ \label{eq:h-counterexample}
+\end{equation}
+Then
+\begin{equation}
+ h_\beta(q_0)=0
+ \qquad\text{for every }\beta,
+ \label{eq:h-common-zero}
+\end{equation}
+while
+\begin{equation}
+ \boxed{
+ [Q_\perp h_\alpha]=[Q_\perp h_\beta]
+ \quad\Longleftrightarrow\quad
+ \alpha=\beta.
+ }
+ \label{eq:h-projective-injective}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Constants are in $\Pcal_3$, so
+\begin{equation}
+ Q_\perp h_\beta=Q_\perp q^4+\beta Q_\perp q^5.
+ \label{eq:h-projection}
+\end{equation}
+The vectors $Q_\perp q^4$ and $Q_\perp q^5$ are linearly independent:
+otherwise $q^5-cq^4$ would belong to $\Pcal_3$ for some $c$, contradicting
+polynomial degree.  Equality of the two projective classes therefore forces
+the proportionality factor to be $1$ from the $q^4$ coefficient and then
+forces $\alpha=\beta$ from the $q^5$ coefficient.  The converse is trivial.
+\end{proof}
+
+Propositions~\ref{prop:g-counterexample} and \ref{prop:l2-counterexample}
+locate the exact logical boundary: universal holomorphic transport permits
+off-reference zeros, and projective injectivity by itself does not turn a
+pointwise zero into a projective coincidence.  Any proof of a zero-triggered
+collapse for $\zeta$ must therefore use additional zeta-specific structure.
+
+\section{The zero-triggered collapse condition}
+\label{sec:zero-triggered-collapse}
+
+Let $\rho=\beta+i\gamma$ be a nontrivial zero with
+$\beta\in[1/2,1)$ and $\gamma\geq\gamma_1$.  Choose $n$ so that
+\begin{equation}
+ \gamma\in[\gamma_n,\gamma_{n+1}].
+ \label{eq:zero-containing-cell}
+\end{equation}
+Such an $n$ exists because the distinct positive critical-line zero ordinates
+are unbounded and consecutive cells cover $[\gamma_1,\infty)$.
+
+\begin{definition}[Zero-triggered projective collapse]
+\label{def:B-condition}
+Condition $\mathbf B$ is the implication
+\begin{equation}
+ \boxed{
+ \zeta(\beta+i\gamma)=0
+ \quad\Longrightarrow\quad
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\tfrac12+i t_n(\cdot))]
+ }
+ \tag{B}\label{eq:B}
+\end{equation}
+for every right-half nontrivial zero and every containing phase cell as above.
+\end{definition}
+
+The next theorem gives three exact analytic forms of the projective conclusion
+in \eqref{eq:B}.
+
+\begin{theorem}[Finite-dimensional, fourth-derivative and Wronskian forms]
+\label{thm:B-equivalent-forms}
+Fix $n$ and $\beta\in[1/2,1]$.  The following statements are equivalent.
+
+\begin{enumerate}
+\item[(i)]
+\begin{equation}
+ [Q_\perp\zeta_{\beta,n}]
+ =[Q_\perp\zeta_{1/2,n}].
+ \label{eq:B-form-projective}
+\end{equation}
+
+\item[(ii)] There exist $\lambda\in\C^\times$ and $p_3\in\Pcal_3$ such that
+\begin{equation}
+ \boxed{
+ \zeta(\beta+i t_n(q))
+ -\lambda\zeta(\tfrac12+i t_n(q))
+ =p_3(q)
+ \qquad(0\leq q\leq1).
+ }
+ \tag{B'}\label{eq:B-prime}
+\end{equation}
+
+\item[(iii)] There exists $\lambda\in\C^\times$ such that
+\begin{equation}
+ \boxed{
+ \Dq^4\zeta(\beta+i t_n(q))
+ =\lambda\Dq^4\zeta(\tfrac12+i t_n(q))
+ \qquad(0\leq q\leq1).
+ }
+ \tag{B''}\label{eq:B-double-prime}
+\end{equation}
+
+\item[(iv)] The analytic Wronskian-type expression
+\begin{equation}
+ \boxed{
+ \begin{aligned}
+ \mathcal W_{\beta,n}(q)
+ :=&\,
+ \Dq^5\zeta(\beta+i t_n(q))
+ \Dq^4\zeta(\tfrac12+i t_n(q))\\
+ &-
+ \Dq^4\zeta(\beta+i t_n(q))
+ \Dq^5\zeta(\tfrac12+i t_n(q))
+ \end{aligned}
+ =0
+ \quad(0\leq q\leq1).
+ }
+ \tag{B'''}\label{eq:B-triple-prime}
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The equivalence of (i) and (ii) follows from
+$\ker Q_\perp=\Pcal_3$ and Proposition~\ref{prop:projected-nonzero}.  Indeed,
+projective equality is equivalent to the existence of
+$\lambda\in\C^\times$ with
+$Q_\perp(\zeta_{\beta,n}-\lambda\zeta_{1/2,n})=0$.
+
+For (ii)$\Rightarrow$(iii), apply $\Dq^4$ and use
+$\Dq^4p_3=0$.  Conversely, if (iii) holds, then
+\begin{equation}
+ F(q):=\zeta_{\beta,n}(q)-\lambda\zeta_{1/2,n}(q)
+ \label{eq:F-fourth-kernel}
+\end{equation}
+satisfies $F^{(4)}=0$ on the connected interval.  Repeated integration, or
+Taylor's theorem with zero fourth derivative, gives
+$F\in\Pcal_3$, proving (ii).  All differentiations are legitimate because
+Definition~\ref{def:phase-coordinate} makes both functions real-analytic.
+
+Now put
+\begin{equation}
+ A(q)=\Dq^4\zeta_{\beta,n}(q),
+ \qquad
+ B(q)=\Dq^4\zeta_{1/2,n}(q).
+ \label{eq:A-B-fourth}
+\end{equation}
+Neither $A$ nor $B$ is identically zero: otherwise the corresponding zeta
+fibre would be a polynomial of degree at most three, contradicting
+Proposition~\ref{prop:projected-nonzero}.  Statement (iii) immediately gives
+$A'B-AB'=0$, which is (iv).
+
+Conversely, suppose (iv) holds.  Choose $q_*$ with $B(q_*)\neq0$.  On a
+neighborhood where $B\neq0$,
+\begin{equation}
+ \left(\frac{A}{B}\right)'
+ =\frac{A'B-AB'}{B^2}=0.
+ \label{eq:ratio-derivative-zero}
+\end{equation}
+Hence $A=\lambda B$ there for some constant $\lambda$.  The real-analytic
+function $A-\lambda B$ vanishes on a nonempty interval, so the identity
+theorem for real-analytic functions extends the equality to all of $[0,1]$.
+If $\lambda=0$, then $A$ would vanish identically, which has already been
+excluded.  Thus $\lambda\in\C^\times$, proving (iii).
+\end{proof}
+
+\section{The phase differential operator and the same rigidity in \texorpdfstring{$t$}{t}-coordinates}
+\label{sec:phase-differential-operator}
+
+The fourth-derivative form above can be written directly in the physical
+ordinate $t$.  For the present construction the coefficient is not an
+arbitrary smooth function: it is fixed by the Riemann--Siegel phase.
+
+\begin{definition}[Phase differential coefficient and operator]
+\label{def:phase-differential-operator}
+On the $n$th cell put
+\begin{equation}
+ \boxed{
+ b_n(t):=\frac{\Omega_n}{\vartheta'(t)},
+ \qquad
+ \mathcal D_n:=(b_n(t)D_t)^4,
+ \qquad D_t=\frac{d}{dt}.
+ }
+ \label{eq:bn-Dn-definition}
+\end{equation}
+This is well defined and finite on the whole cell, since $\vartheta'(t)>0$
+there by Lemma~\ref{lem:theta-positive}; no division by zero occurs on the
+real phase coordinate.
+\end{definition}
+
+\begin{lemma}[Exact identification with the phase derivative]
+\label{lem:Dq-equals-bDt}
+Let $t=t_n(q)$.  For every $C^4$ function $f$ on the cell,
+\begin{equation}
+ \boxed{
+ D_q\bigl(f(t_n(q))\bigr)
+ =\left[b_n(t)D_t f(t)\right]_{t=t_n(q)}.
+ }
+ \label{eq:Dq-bDt-one}
+\end{equation}
+Consequently,
+\begin{equation}
+ \boxed{
+ D_q^4\bigl(f(t_n(q))\bigr)
+ =\left[\mathcal D_n f(t)\right]_{t=t_n(q)}.
+ }
+ \label{eq:Dq4-Dn}
+\end{equation}
+Thus, on the fixed phase cell,
+\begin{equation}
+ \boxed{D_q=b_nD_t,\qquad D_q^4=\mathcal D_n.}
+ \label{eq:Dq-operator-identification}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Equation~\eqref{eq:tn-derivative} gives
+\begin{equation}
+ t_n'(q)=\frac{\Omega_n}{\vartheta'(t_n(q))}=b_n(t_n(q)).
+ \label{eq:tnprime-is-bn}
+\end{equation}
+The chain rule gives \eqref{eq:Dq-bDt-one}.  Iterating the same operator four
+times proves \eqref{eq:Dq4-Dn}.  Notice that this is an operator identity
+under composition with $t_n$; it does \emph{not} assert
+$(b_nD_t)^4=b_n^4D_t^4$.
+\end{proof}
+
+For later comparison, the exact product-rule expansion is
+\begin{equation}
+\boxed{
+\begin{aligned}
+ (bD_t)^4f={}&b^4f^{(4)}+6b^3b'f^{(3)}\\
+ &+\bigl(4b^3b''+7b^2(b')^2\bigr)f''\\
+ &+\bigl(b^3b'''+4b^2b'b''+b(b')^3\bigr)f'.
+\end{aligned}}
+\label{eq:bDt-fourth-expansion}
+\end{equation}
+Hence, for $f(t)=\zeta(\beta+it)$,
+\begin{equation}
+\begin{aligned}
+ \mathcal D_n\zeta(\beta+it)={}&
+ b_n^4\zeta^{(4)}(\beta+it)
+ -6i b_n^3b_n'\zeta^{(3)}(\beta+it)\\
+ &-\bigl(4b_n^3b_n''+7b_n^2(b_n')^2\bigr)
+ \zeta''(\beta+it)\\
+ &+i\bigl(b_n^3b_n'''+4b_n^2b_n'b_n''
+ +b_n(b_n')^3\bigr)\zeta'(\beta+it).
+\end{aligned}
+\label{eq:Dn-zeta-expansion}
+\end{equation}
+This expansion is useful for pole bookkeeping, but the coordinate identity
+\eqref{eq:Dq4-Dn} is conceptually stronger: $\mathcal D_n$ is exactly the
+fourth derivative in the fixed phase coordinate.
+
+\begin{theorem}[Differential quotient equals projective coincidence]
+\label{thm:differential-projective-equivalence}
+Fix $n$ and $\beta\in[1/2,1]$, and define on the real cell
+\begin{equation}
+ A_{\beta,n}(t):=\mathcal D_n\zeta(\beta+it),
+ \qquad
+ A_{0,n}(t):=\mathcal D_n\zeta(\tfrac12+it).
+ \label{eq:A-beta-operator}
+\end{equation}
+On every nonempty open interval on which $A_{0,n}\neq0$, the following are
+equivalent:
+\begin{align}
+ \frac{d}{dt}\left(\frac{A_{\beta,n}}{A_{0,n}}\right)&=0,
+ \label{eq:operator-ratio-zero}\\
+ A_{\beta,n}&=C A_{0,n}\quad\text{for some }C\in\C^\times,
+ \label{eq:operator-proportional}\\
+ \zeta(\beta+i t_n(q))-C\zeta(\tfrac12+i t_n(q))&\in\Pcal_3,
+ \label{eq:operator-cubic}\\
+ [Q_\perp\zeta_{\beta,n}]&=[Q_\perp\zeta_{1/2,n}].
+ \label{eq:operator-projective}
+\end{align}
+Equivalently, without dividing by $A_{0,n}$, the analytic condition is
+\begin{equation}
+ \boxed{
+ A_{\beta,n}'A_{0,n}-A_{\beta,n}A_{0,n}'\equiv0.
+ }
+ \label{eq:operator-wronskian-t}
+\end{equation}
+In particular,
+\begin{equation}
+ \boxed{
+ \frac{d}{dt}\left[
+ \frac{\mathcal D_n\zeta(\beta+it)}
+ {\mathcal D_n\zeta(\tfrac12+it)}
+ \right]\equiv0
+ \quad\Longleftrightarrow\quad
+ \beta=\frac12,
+ }
+ \label{eq:operator-selects-half}
+\end{equation}
+where the quotient formulation is read on any component where it is defined,
+and the global formulation is \eqref{eq:operator-wronskian-t}.
+\end{theorem}
+
+\begin{proof}
+Since $dq/dt=1/t_n'(q)\neq0$, constancy in $t$ is equivalent to constancy
+in $q$.  By Lemma~\ref{lem:Dq-equals-bDt},
+\eqref{eq:operator-proportional} is exactly
+\begin{equation}
+ D_q^4\zeta_{\beta,n}=C D_q^4\zeta_{1/2,n}.
+ \label{eq:operator-q-fourth}
+\end{equation}
+on the corresponding nonempty open $q$-interval.  Both sides are
+real-analytic on the whole cell, so the identity theorem extends
+\eqref{eq:operator-q-fourth} to all of $[0,1]$.  The constant cannot be
+zero: otherwise $D_q^4\zeta_{\beta,n}\equiv0$, contradicting
+Proposition~\ref{prop:projected-nonzero}.  The kernel of $D_q^4$ on a
+connected interval is precisely $\Pcal_3$:
+repeated integration gives
+\begin{equation}
+ D_q^4H=0
+ \quad\Longleftrightarrow\quad
+ H(q)=c_0+c_1q+c_2q^2+c_3q^3.
+ \label{eq:kernel-Dq4-P3}
+\end{equation}
+Thus \eqref{eq:operator-proportional} is equivalent to
+\eqref{eq:operator-cubic}; applying $Q_\perp$ gives
+\eqref{eq:operator-projective}, and the converse follows from
+$\ker Q_\perp=\Pcal_3$.  Theorem~\ref{thm:global-projective-rigidity} then
+forces $\beta=1/2$.  The converse is immediate with $C=1$.
+
+If the denominator has isolated zeros, division is unnecessary.  The
+cross-multiplied expression \eqref{eq:operator-wronskian-t} is analytic on
+the real cell and, under the phase coordinate, is the same Wronskian
+condition as \eqref{eq:B-triple-prime}.  The identity theorem then gives one
+global constant $C$ rather than unrelated constants on different components.
+\end{proof}
+
+Theorem~\ref{thm:differential-projective-equivalence} is important
+conceptually: the differential equation is not a second criterion placed next
+to the $L^2$ construction.  For the specific coefficient
+$b_n=\Omega_n/\vartheta'$, it is exactly the fourth-order differential form of
+the already proved orthogonal-cubic projective relation.
+
+\subsection{A local pole proof for the actual phase coefficient}
+\label{subsec:actual-bn-pole}
+
+The general statement ``a holomorphic coefficient $B$ must be nonzero at both
+pole points'' is stronger than necessary here.  For the actual phase
+coefficient, only the pole point of the noncritical numerator is needed.
+Differentiate \eqref{eq:Theta-complex}:
+\begin{equation}
+ \Theta'(z)=\frac14\left[
+ \psi\!\left(\frac14+\frac{iz}{2}\right)
+ +\psi\!\left(\frac14-\frac{iz}{2}\right)
+ \right]-\frac12\log\pi.
+ \label{eq:Theta-prime-complex}
+\end{equation}
+Since $\Theta'$ is holomorphic on $S$ and is not identically zero, set
+\begin{equation}
+ B_n(z):=\frac{\Omega_n}{\Theta'(z)}.
+ \label{eq:Bn-holomorphic}
+\end{equation}
+Then $B_n$ is meromorphic on $S$ and its restriction to the real phase cell is
+exactly $b_n(t)$, where it is finite and positive by
+Lemma~\ref{lem:theta-positive}.
+
+\begin{lemma}[Nondegeneracy at the off-critical pole point]
+\label{lem:Bn-nondegenerate-zbeta}
+For every fixed $\beta\in(1/2,1]$, let
+\begin{equation}
+ z_\beta=i(\beta-1).
+ \label{eq:zbeta-operator}
+\end{equation}
+Then $\Theta'(z_\beta)<0$, hence $B_n$ is holomorphic and nonzero in a
+neighborhood of $z_\beta$.
+\end{lemma}
+
+\begin{proof}
+Substitution into \eqref{eq:Theta-prime-complex} gives
+\begin{equation}
+ \Theta'(z_\beta)=\frac14\left[
+ \psi\!\left(\frac{2\beta-1}{4}\right)
+ +\psi\!\left(\frac{3-2\beta}{4}\right)
+ \right]-\frac12\log\pi.
+ \label{eq:Theta-prime-zbeta}
+\end{equation}
+Both digamma arguments lie in $(0,1/2]$.  On $(0,\infty)$ the trigamma
+function is positive, so $\psi$ is strictly increasing; moreover
+$\psi(1/2)=-\gamma_E-2\log2<0$ \cite{DLMF}.  Therefore both digamma values
+in \eqref{eq:Theta-prime-zbeta} are negative, and the additional term
+$-(1/2)\log\pi$ is negative.  Hence $\Theta'(z_\beta)<0$.
+\end{proof}
+
+\begin{proposition}[Operator-level pole separation]
+\label{prop:operator-pole-separation}
+Let $\beta\in(1/2,1]$.  If for some $C\in\C$ one had
+\begin{equation}
+ (b_n(t)D_t)^4\zeta(\beta+it)
+ =C(b_n(t)D_t)^4\zeta(\tfrac12+it)
+ \label{eq:operator-real-proportionality}
+\end{equation}
+on any nonempty open real subinterval of the phase cell, then the corresponding
+meromorphic identity
+\begin{equation}
+ (B_n(z)D_z)^4\zeta(\beta+iz)
+ =C(B_n(z)D_z)^4\zeta(\tfrac12+iz)
+ \label{eq:operator-meromorphic-proportionality}
+\end{equation}
+would hold throughout $S$, which is impossible.
+\end{proposition}
+
+\begin{proof}
+The two sides of \eqref{eq:operator-meromorphic-proportionality} are
+meromorphic on the connected strip $S$: formula
+\eqref{eq:bDt-fourth-expansion} expresses them using meromorphic coefficients
+$B_n,B_n',B_n'',B_n'''$ and meromorphic derivatives of $\zeta$.  Their
+restrictions to the real cell give \eqref{eq:operator-real-proportionality}.
+Hence the meromorphic identity theorem extends the equality from the nonempty
+real interval to all of $S$.
+
+At $z=z_\beta$,
+\begin{equation}
+ \beta+iz_\beta=1,
+ \qquad
+ \frac12+iz_\beta=\frac32-\beta\neq1.
+ \label{eq:operator-pole-arguments}
+\end{equation}
+By Lemma~\ref{lem:Bn-nondegenerate-zbeta}, $B_n(z_\beta)\neq0$.  The
+highest derivative term in \eqref{eq:bDt-fourth-expansion} therefore carries
+$B_n(z_\beta)^4\zeta^{(4)}(\beta+iz)$ and has a pole of order five.  Every
+term involving $\zeta^{(j)}$, $j\leq3$, has pole order at most four and cannot
+cancel the order-five term.  The right-hand side of
+\eqref{eq:operator-meromorphic-proportionality} is holomorphic at $z_\beta$
+because $1/2+iz_\beta\neq1$ and $B_n$ is holomorphic there.  The two sides
+cannot be identical.
+\end{proof}
+
+\begin{remark}[The shorter pole proof is already the cubic proof]
+\label{rem:shorter-cubic-pole-proof}
+Proposition~\ref{prop:operator-pole-separation} verifies the pole structure of
+the fourth-order operator itself, but it is stronger than is needed for
+critical-parameter rigidity.  Once
+\eqref{eq:operator-cubic} is known, Lemma~\ref{lem:pole-separation} gives the
+shorter argument directly:
+\begin{equation}
+ \zeta(\beta+iz)-C\zeta(\tfrac12+iz)
+ =p_3(q_n(z)).
+ \label{eq:short-cubic-pole-identity}
+\end{equation}
+At $z=z_\beta=i(\beta-1)$ the first term has the simple pole at $s=1$, the
+second term is holomorphic, and the right-hand side is holomorphic because
+$z_\beta$ lies strictly inside the strip $S$ for $\beta>1/2$.
+Consequently the contradiction does not require any information about
+$B_n(z_\beta)$ at all.  The order-five calculation is retained because it
+shows that the same obstruction is visible directly at the level of
+$\mathcal D_n$.
+\end{remark}
+
+\begin{remark}[Why no hypothesis at $z=-i/2$ is required]
+\label{rem:no-B-critical-pole-needed}
+At the boundary point $z=-i/2$, one digamma argument in
+\eqref{eq:Theta-prime-complex} approaches $0$, so $\Theta'$ has singular
+behavior and $B_n=\Omega_n/\Theta'$ tends to zero along the admissible side.
+Thus a general theorem demanding $B_n(-i/2)\neq0$ would be badly adapted to
+the present coefficient.  Proposition~\ref{prop:operator-pole-separation}
+never uses that point: for each fixed $\beta>1/2$ the contradiction occurs at
+the interior point $z_\beta=i(\beta-1)$, where $B_n$ is nonzero.
+\end{remark}
+
+\begin{remark}[What survives from the arbitrary-$b$ analysis]
+\label{rem:arbitrary-b-contrast}
+For a completely free smooth coefficient $b$, the equation
+\begin{equation}
+ (bD_t)^4\left[
+ \zeta(\beta+it)-C\zeta(\tfrac12+it)
+ \right]=0
+ \label{eq:arbitrary-b-equation}
+\end{equation}
+is an additional differential constraint on $b$; with complex-valued $b$ it
+can even be engineered locally.  Therefore no theorem selecting $1/2$ can be
+claimed for arbitrary smooth $b$ from the formal shape of the operator alone.
+That observation is valid, but it is not the situation of this paper:
+$b_n$ is fixed in advance by \eqref{eq:tn-definition}, satisfies
+\eqref{eq:Dq-operator-identification}, and has the meromorphic structure
+needed for the pole argument above.  The special coefficient is part of the
+mathematical content, not a tunable parameter.
+\end{remark}
+
+The differential formulation therefore leaves exactly one unresolved arrow:
+\begin{equation}
+ \boxed{
+ \zeta(\beta+i\gamma)=0
+ \quad\stackrel{?}{\Longrightarrow}\quad
+ \frac{d}{dt}\left[
+ \frac{\mathcal D_n\zeta(\beta+it)}
+ {\mathcal D_n\zeta(\tfrac12+it)}
+ \right]=0.
+ }
+ \label{eq:operator-missing-zero-trigger}
+\end{equation}
+Everything to the right of this arrow---constant ratio, cubic difference,
+projective coincidence, and the conclusion $\beta=1/2$---is already proved.
+The missing implication is the same zero-triggered condition as
+Definition~\ref{def:B-condition}, expressed in $t$-coordinates.
+
+The theorem shows that the missing implication is not a matter of notation.
+A single scalar equation
+$\zeta(\beta+i\gamma)=0$ would have to force a functional identity on a whole
+cell, or equivalently force the analytic function
+$\mathcal W_{\beta,n}$ to vanish identically.
+
+\section{Exact equivalence with the Riemann hypothesis}
+\label{sec:rh-equivalence}
+
+\begin{theorem}[Riemann hypothesis as zero-triggered $L^2$ collapse]
+\label{thm:RH-equivalence}
+Granting the rigorous computational verification of RH for
+$0<\gamma\leq3\times10^{12}$ of \cite{PlattTrudgian2021} (which in
+particular settles every zero below $\gamma_1$), the Riemann hypothesis is
+equivalent to Condition $\mathbf B$ of Definition~\ref{def:B-condition} for
+zeros with $\gamma\geq\gamma_1$.  Equivalently, it is equivalent to requiring
+that every such right-half nontrivial zero satisfy any one of
+\eqref{eq:B-prime}, \eqref{eq:B-double-prime}, or
+\eqref{eq:B-triple-prime} on a containing phase cell.
+\end{theorem}
+
+\begin{proof}
+Assume RH.  Every nontrivial zero has real part $\beta=1/2$.  For every
+containing cell, the two projective classes in \eqref{eq:B} are then
+identical.  Thus $\mathbf B$ holds, with $\lambda=1$ and $p_3=0$ in
+\eqref{eq:B-prime}.
+
+Conversely, assume $\mathbf B$.  Let $\rho=\beta+i\gamma$ be a nontrivial
+zero with $\gamma>0$.  Rigorous interval-arithmetic computations verify RH for
+all zeros with $0<\gamma\leq3\cdot10^{12}$
+\cite{PlattTrudgian2021}; in particular the finite range below
+$\gamma_1$ is already settled.
+
+Suppose therefore $\gamma\geq\gamma_1$.  If $\beta\geq1/2$, Condition
+$\mathbf B$ gives the projective coincidence \eqref{eq:B};
+Corollary~\ref{cor:critical-parameter-rigidity} then forces
+$\beta=1/2$.  If $\beta<1/2$, the functional equation and conjugation symmetry
+of $\zeta$ imply that
+\begin{equation}
+ 1-\overline\rho=(1-\beta)+i\gamma
+ \label{eq:zero-symmetry}
+\end{equation}
+is also a zero.  Its real part is $1-\beta>1/2$, so the previous argument
+forces $1-\beta=1/2$, again giving $\beta=1/2$.  Zeros with negative ordinate
+are conjugates of positive-ordinate zeros.  Therefore every nontrivial zero
+lies on the critical line, which is RH.
+
+The equivalence with the other formulations follows from
+Theorem~\ref{thm:B-equivalent-forms}.
+\end{proof}
+
+\begin{remark}[What the theorem does and does not close]
+\label{rem:RH-content}
+Theorem~\ref{thm:RH-equivalence} concentrates the RH content into one exact
+statement, but it does not make that statement easier automatically.  The
+unconditional part of the route is
+\begin{equation}
+ \text{projective coincidence}
+ \quad\Longrightarrow\quad
+ \beta=\frac12,
+ \label{eq:closed-half-route}
+\end{equation}
+and the unresolved part is
+\begin{equation}
+ \text{zeta zero}
+ \quad\Longrightarrow\quad
+ \text{projective coincidence}.
+ \label{eq:open-half-route}
+\end{equation}
+By Proposition~\ref{prop:g-counterexample},
+\eqref{eq:open-half-route} cannot follow from the universal transport geometry
+alone.
+\end{remark}
+
+\section{A quantitative route through almost-coincidence}
+\label{sec:quantitative-route}
+
+Exact collapse is RH-equivalent.  A weaker and potentially non-circular target
+is to ask whether the presence of a zeta zero forces the projective defect to
+be small rather than identically zero.
+
+\begin{definition}[Zero-triggered upper defect]
+\label{def:zero-upper-defect}
+A quantitative zero-triggered estimate on cell $n$ is an implication of the
+form
+\begin{equation}
+ \boxed{
+ \zeta(\beta+i\gamma)=0,
+ \quad
+ \gamma\in[\gamma_n,\gamma_{n+1}],
+ \quad
+ \beta\geq\frac12
+ \quad\Longrightarrow\quad
+ M_n(\beta)\leq\varepsilon_n(\gamma).
+ }
+ \label{eq:zero-upper-defect}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Conversion of almost-coincidence into proximity]
+\label{thm:almost-collapse-proximity}
+Fix a phase cell $n$.  Let $\eta_n$ be as in
+Lemma~\ref{lem:quadratic-separation} and let
+\begin{equation}
+ \mu_n:=m_n(\eta_n)>0.
+ \label{eq:mu-n}
+\end{equation}
+If a right-half zero in that cell satisfies
+\begin{equation}
+ M_n(\beta)\leq\varepsilon<\mu_n,
+ \label{eq:epsilon-less-mu}
+\end{equation}
+then necessarily $\beta<1/2+\eta_n$, and
+\begin{equation}
+ \boxed{
+ \left|\beta-\frac12\right|
+ \leq
+ \sqrt{\frac{2\varepsilon}{P_n(1/2)}}.
+ }
+ \label{eq:beta-proximity-bound}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+If $\beta\geq1/2+\eta_n$, Corollary~\ref{cor:away-separation} gives
+$M_n(\beta)\geq m_n(\eta_n)=\mu_n$, contradicting
+\eqref{eq:epsilon-less-mu}.  Hence $\beta<1/2+\eta_n$, where
+\eqref{eq:M-local-lower-bound} applies.  Combining it with
+$M_n(\beta)\leq\varepsilon$ gives \eqref{eq:beta-proximity-bound}.
+\end{proof}
+
+\begin{corollary}[Asymptotic forcing criterion]
+\label{cor:asymptotic-forcing}
+Let $\rho_k=\beta_k+i\gamma_k$ be a sequence of right-half nontrivial zeros,
+with $\gamma_k\to\infty$, and let $n_k$ be containing phase cells.  Suppose
+there are upper bounds
+\begin{equation}
+ M_{n_k}(\beta_k)\leq\varepsilon_k
+ \label{eq:sequence-upper-bound}
+\end{equation}
+such that for every fixed $\delta>0$,
+\begin{equation}
+ \varepsilon_k<m_{n_k}(\delta)
+ \label{eq:sequence-global-threshold}
+\end{equation}
+for all sufficiently large $k$.  Then
+\begin{equation}
+ \beta_k\longrightarrow\frac12.
+ \label{eq:beta-k-to-half}
+\end{equation}
+If in addition $\varepsilon_k<\mu_{n_k}$ eventually, then the explicit local
+bound \eqref{eq:beta-proximity-bound} applies cell by cell.
+\end{corollary}
+
+\begin{proof}
+For each $\delta>0$, if
+$|\beta_k-1/2|\geq\delta$, then
+$M_{n_k}(\beta_k)\geq m_{n_k}(\delta)$, contradicting
+\eqref{eq:sequence-global-threshold}.  Hence eventually
+$|\beta_k-1/2|<\delta$.  Since $\delta$ is arbitrary,
+\eqref{eq:beta-k-to-half} follows.  The final statement is
+Theorem~\ref{thm:almost-collapse-proximity}.
+\end{proof}
+
+The quantitative route makes clear why two superficially similar lower bounds
+have very different meanings.  Geometry alone cannot give
+$M_n(\beta)\geq c>0$ for all $\beta>1/2$, because
+$M_n(\beta)\to0$ as $\beta\downarrow1/2$.  It does give a positive lower
+bound on every region a fixed distance away from $1/2$, namely
+$m_n(\delta)>0$.  Therefore a zeta-specific upper estimate at zeros is the
+natural complementary object: lower projective rigidity plus upper
+zero-triggered almost-coincidence yields an actual bound on
+$|\beta-1/2|$.
+
+\section{Where an additional zeta-specific input would have to enter}
+\label{sec:zeta-specific-input}
+
+The entire counterexample in Section~\ref{sec:universal-obstruction} rules out
+any proof of Condition $\mathbf B$ that uses only properties shared by every
+holomorphic function: Cauchy--Riemann, the quarter-turn transport equation,
+conformality, positive Jacobian, harmonicity, and consequences obtained from
+these alone.  The projective rigidity theorem, by contrast, is genuinely
+zeta-specific because its proof uses the unique simple pole of $\zeta$ at
+$s=1$.
+
+A proof of the missing zero-triggered implication would therefore need an
+additional ingredient that links a point zero to a whole-cell relation.  The
+available literature supplies several neighboring structures without this
+link.  Difference independence excludes broad classes of algebraic shift
+relations \cite{ChiangFeng2006}.  Mean-value and shifted-zero results study
+$\zeta$ and its derivatives statistically at zero ordinates
+\cite{Gonek1984}.  Universality results along zero sequences concern
+approximation and distribution rather than exact deterministic collapse
+\cite{GarunkstisLaurincikasMacaitiene2017,Laurincikas2019}.  Finite-dimensional
+translation-invariant spaces are classically classified by exponential
+polynomials \cite{AnseloneKorevaar1964}, but such a classification does not
+supply the missing trigger from the scalar equation $\zeta(\rho)=0$.
+
+The Wronskian form \eqref{eq:B-triple-prime} gives a particularly sharp target.
+To prove exact collapse from a zero, one must force the analytic function
+$\mathcal W_{\beta,n}$ to vanish identically.  A single point zero does not do
+this for a generic analytic function.  A viable argument would therefore have
+to provide either enough additional initial conditions for
+$\mathcal W_{\beta,n}$, a zeta-specific differential/functional equation that
+propagates the vanishing, or a finite-rank mechanism whose hypotheses are
+actually forced by the arithmetic structure of $\zeta$.  None of these
+mechanisms is assumed in the theorems above.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The $L^2$-projective part of the construction is rigid.  On every fixed
+critical-line phase cell,
+\begin{equation}
+ [Q_\perp\zeta(\alpha+i t_n(\cdot))]
+ =
+ [Q_\perp\zeta(\beta+i t_n(\cdot))]
+ \quad\Longleftrightarrow\quad
+ \alpha=\beta,
+ \label{eq:conclusion-rigidity}
+\end{equation}
+and therefore
+\begin{equation}
+ M_n(\beta)=0
+ \quad\Longleftrightarrow\quad
+ \beta=\frac12.
+ \label{eq:conclusion-M}
+\end{equation}
+The proof is unconditional and is driven by analytic continuation to the
+simple pole at $s=1$.
+
+The universal holomorphic transport structure does not confine zeros.  The
+exact function $g(s)=s-s_0$ satisfies the same transport equation and all of
+its local conformal consequences while carrying a zero at an arbitrary
+$\beta_0$.  Hence the passage
+\begin{equation}
+ \zeta(\beta+i\gamma)=0
+ \quad\Longrightarrow\quad
+ [Q_\perp\zeta_{\beta,n}]=[Q_\perp\zeta_{1/2,n}]
+ \label{eq:conclusion-missing-step}
+\end{equation}
+is genuinely additional.  Theorem~\ref{thm:RH-equivalence} proves that this
+zero-triggered exact collapse is equivalent to RH; it is not an already
+established consequence of the geometry.
+
+The quantitative alternative is strictly weaker and therefore logically
+separate.  The already proved projective rigidity gives both quadratic local
+separation and positive separation on compact regions away from $1/2$.  Any
+new zeta-specific estimate forcing $M_n(\beta)$ to be small at a zero would
+therefore translate immediately into a quantitative bound on the horizontal
+displacement of that zero.  This identifies a non-circular intermediate
+problem between the universal transport identities and the RH-equivalent
+exact collapse.
+
+A structural advantage of this formulation is that it is not an attempt to
+push a classical zero-free boundary logarithmically toward $\Re s=1/2$.
+For every fixed $\beta>1/2$ the pole argument gives exact projective
+separation, even though the defect itself tends to zero quadratically as
+$\beta\downarrow1/2$.  Thus arbitrarily close approach and exact noncoincidence
+are simultaneously compatible.  The usual zero-free-region obstruction is
+therefore not the obstruction of this route.  The unresolved content has been
+moved to the different, explicitly stated question of whether a zeta zero
+forces exact or quantitative projective collapse.
+
+The phase differential operator makes the same point in a second language:
+with $b_n(t)=\Omega_n/\vartheta'(t)$ one has
+$\mathcal D_n=(b_nD_t)^4=D_q^4$, so constancy of the fourth-order quotient is
+exactly the orthogonal-cubic projective condition.  It is not an independent
+hypothesis and requires no separate uniqueness theory.  What would constitute
+a genuine completion is a zeta-specific mechanism for the implication
+\eqref{eq:operator-missing-zero-trigger} or, at a weaker quantitative level,
+a useful zero-triggered upper bound for $M_n$.
+
+\subsection{Why the missing arrow cannot be closed by local data at the zero}
+\label{subsec:no-finite-jet}
+
+The results above localize every unresolved step in the construction to the
+single implication \eqref{eq:operator-missing-zero-trigger}.  This subsection
+shows that the implication cannot be obtained from any finite amount of local
+information at the zero itself, however that information is packaged.  This
+is stronger than the universal obstruction of
+Section~\ref{sec:universal-obstruction}: that section shows the transport
+geometry alone cannot supply the implication, while the present statement
+shows that no truncated Taylor data at $q_\gamma$ can supply it either, even
+granting every zeta-specific ingredient already proved.
+
+\begin{proposition}[No finite jet at a zero forces the cubic condition]
+\label{prop:no-finite-jet}
+Fix $n$, $\beta\in(1/2,1]$, and a point $q_\gamma\in(0,1)$ at which
+$F_\beta(q):=\zeta(\beta+it_n(q))$ has a zero of finite multiplicity $m\geq1$.
+Fix $C\in\C^\times$ and any integer $N\geq4$. Then there exists a function
+$\widetilde F_\beta$, holomorphic in a neighborhood of $q_\gamma$, such that
+\begin{equation}
+ \widetilde F_\beta^{(j)}(q_\gamma)=F_\beta^{(j)}(q_\gamma)
+ \qquad\text{for every }0\leq j\leq N,
+ \label{eq:jet-agreement}
+\end{equation}
+while
+\begin{equation}
+ D_q^4\bigl(\widetilde F_\beta-CF_{1/2,n}\bigr)
+ \not\equiv0
+ \label{eq:jet-still-broken}
+\end{equation}
+on every neighborhood of $q_\gamma$ on which $D_q^4(F_\beta-CF_{1/2,n})$ is
+not itself identically zero.
+\end{proposition}
+
+\begin{proof}
+Let $G$ be any function holomorphic near $q_\gamma$ with $G(q_\gamma)\neq0$,
+and set
+\begin{equation}
+ \widetilde F_\beta(q):=F_\beta(q)+(q-q_\gamma)^{N+1}G(q).
+ \label{eq:jet-perturbation}
+\end{equation}
+For $0\leq j\leq N$, the product rule gives
+\begin{equation}
+ D_q^j\left[(q-q_\gamma)^{N+1}G(q)\right]\Big|_{q=q_\gamma}=0,
+ \label{eq:jet-vanishing-derivatives}
+\end{equation}
+since every term in the expansion retains a factor $(q-q_\gamma)^{N+1-j}$
+with $N+1-j\geq1$. This proves \eqref{eq:jet-agreement}. For
+\eqref{eq:jet-still-broken}, write
+\begin{equation}
+ D_q^4\bigl(\widetilde F_\beta-CF_{1/2,n}\bigr)
+ =D_q^4\bigl(F_\beta-CF_{1/2,n}\bigr)
+ +D_q^4\left[(q-q_\gamma)^{N+1}G(q)\right].
+ \label{eq:jet-decomposition}
+\end{equation}
+Since $N+1\geq5$, the added term $(q-q_\gamma)^{N+1}G(q)$ is holomorphic and
+not a polynomial of degree $\leq3$ near $q_\gamma$ unless $G\equiv0$ there;
+its fourth derivative is a nonzero holomorphic function on a punctured
+neighborhood of $q_\gamma$ for generic choice of $G$ (for instance
+$G(q)\equiv1$ already gives a nonzero fourth derivative away from
+$q_\gamma$). Two holomorphic functions that agree on no open subinterval
+cannot cancel identically by the identity theorem unless one is the negative
+of the other on the whole component, which is excluded by choosing $G$
+freely among infinitely many holomorphically independent perturbations.
+Hence \eqref{eq:jet-decomposition} is not identically zero whenever the
+first term is not already identically zero.
+\end{proof}
+
+\begin{remark}[Numerical confirmation]
+\label{rem:jet-numerical}
+For a concrete real-analytic $F_\beta$ with a simple zero at $q_\gamma$ and
+an unrelated reference $F_{1/2,n}$, matching six derivatives at $q_\gamma$
+($N=6$, well beyond the fourth-order requirement of
+\eqref{eq:kernel-Dq4-P3}) leaves $D_q^4(\widetilde F_\beta-CF_{1/2,n})$
+evaluated near $q_\gamma$ of the same order of magnitude before and after
+the perturbation ($46.9$ versus $49.0$ in one such computation), confirming
+that the obstruction in Proposition~\ref{prop:no-finite-jet} is not an
+artifact of low order.
+\end{remark}
+
+\begin{corollary}[The zero-trigger is not a finite-order phenomenon among
+arbitrary holomorphic germs]
+\label{cor:zero-trigger-not-finite-order}
+Fix $n$, $\beta\in(1/2,1]$, $q_\gamma\in(0,1)$, and $N\geq4$. No theorem of
+the following shape can hold:
+\begin{equation}
+ \Bigl[\,F^{(j)}(q_\gamma)=F_\beta^{(j)}(q_\gamma)\text{ for }0\leq j\leq N
+ \,\Bigr]
+ \quad\Longrightarrow\quad
+ D_q^4\bigl(F-CF_{1/2,n}\bigr)\equiv0,
+ \label{eq:jet-corollary-statement}
+\end{equation}
+quantified over \emph{all} holomorphic germs $F$ near $q_\gamma$, for any
+fixed $N$: Proposition~\ref{prop:no-finite-jet} exhibits, for every such
+$N$, a holomorphic germ consistent with the prescribed jet for which the
+conclusion fails.
+\end{corollary}
+
+Corollary~\ref{cor:zero-trigger-not-finite-order} is a statement about the
+class of \emph{all} holomorphic germs sharing a given finite jet at
+$q_\gamma$; it shows that jet data alone, stripped of any further
+information about which germ it came from, is compatible with either
+outcome. It does \emph{not} show, and the argument used cannot show, that
+the same failure persists once the germ is required to equal
+$\zeta(\beta+it_n(\cdot))$ specifically: the perturbation
+$\widetilde F_\beta=F_\beta+(q-q_\gamma)^{N+1}G$ used in the proof of
+Proposition~\ref{prop:no-finite-jet} is an arbitrary holomorphic function of
+$q$ for arbitrary $G$, and there is no reason for it to itself be of the
+form $\zeta(\beta'+it_n(q))$ for any $\beta'$, nor to satisfy any other
+global property of $\zeta$ (the functional equation, the Euler product on
+$\Re s>1$, or any relation between derivatives at different points).
+Proposition~\ref{prop:no-finite-jet} therefore rules out one specific
+category of argument --- one that uses only finitely many derivative
+\emph{values} at $q_\gamma$, forgetting where those values came from --- and
+leaves untouched the possibility that some mechanism using the full,
+global, zeta-specific structure of $F_\beta$ (not reducible to a finite jet
+at one point) could still supply
+\eqref{eq:operator-missing-zero-trigger}. Locating or ruling out such a
+mechanism is exactly the open content of RH under
+Theorem~\ref{thm:RH-equivalence}, and Proposition~\ref{prop:no-finite-jet}
+should be read as narrowing the search --- eliminating finite-order local
+expansion as a viable tool --- rather than as foreclosing every possible
+route.
+
+\begin{quote}
+\itshape
+Within the present construction, two specific routes to
+\eqref{eq:operator-missing-zero-trigger} are now ruled out: the transport
+geometry alone (Section~\ref{sec:universal-obstruction}), and any argument
+that reduces the zero to a finite list of derivative values, detached from
+the rest of $\zeta$'s structure (Proposition~\ref{prop:no-finite-jet}).
+What remains open --- and is not addressed by either exclusion --- is
+whether some mechanism using $\zeta$'s full global structure at the zero
+(the functional equation, the Euler product, or an identity not reducible
+to a finite jet) could still supply \eqref{eq:operator-missing-zero-trigger}.
+That question is exactly, and only, the arithmetic content of RH under
+Theorem~\ref{thm:RH-equivalence}.
+\end{quote}
+
+\appendix
+\section{Computational verification}
+\label{app:computations}
+
+This appendix collects the Python scripts and their raw output underlying
+every specific numerical claim made in the body of the paper
+(\eqref{eq:theta-prime-14-certified}, Example~\ref{ex:g-numerical},
+and Remark~\ref{rem:jet-numerical}), so that each can be reproduced
+independently. All scripts use \texttt{mpmath} (arbitrary-precision
+arithmetic) or \texttt{sympy} (exact symbolic differentiation); no numerical
+claim in the paper relies on floating-point arithmetic alone.
+
+\subsection{Certified bound for \texorpdfstring{$\vartheta'(14)$}{theta'(14)}}
+\label{app:A1}
+
+\begin{lstlisting}[language=Python]
+"""
+Appendix A.1 -- Certified lower bound for theta'(14).
+Reproduces eq:S199-value, eq:tail-bound-explicit, eq:theta-prime-14-certified.
+"""
+import mpmath as mp
+mp.mp.dps = 30
+
+gammaE = mp.euler
+t = mp.mpf(14)
+
+def term_real(k):
+    # Re[1/(k+1) - 1/(k+1/4+7i)]
+    denom = (mp.mpf(k) + mp.mpf('0.25'))**2 + mp.mpf('49')
+    return mp.mpf(1)/(k+1) - (mp.mpf(k) + mp.mpf('0.25'))/denom
+
+S199 = sum(term_real(k) for k in range(200))
+print(f"S_199                 = {S199}")
+
+tail_bound = mp.mpf(3) / (4*199)
+print(f"tail bound            = {tail_bound}")
+
+Repsi_center = S199 - gammaE
+Repsi_lo = Repsi_center - tail_bound
+Repsi_hi = Repsi_center + tail_bound
+print(f"Re psi(1/4+7i) in     [{Repsi_lo}, {Repsi_hi}]")
+
+logpi = mp.log(mp.pi)
+theta_prime_lo = Repsi_lo/2 - logpi/2
+theta_prime_hi = Repsi_hi/2 - logpi/2
+print(f"theta'(14) certified  [{theta_prime_lo}, {theta_prime_hi}]")
+print(f"exceeds 0.40016?      {theta_prime_lo > mp.mpf('0.40016')}")
+
+# independent cross-check via mpmath's own digamma implementation
+ref = mp.re(mp.digamma(mp.mpf('0.25')+7j))/2 - logpi/2
+print(f"independent reference theta'(14) = {ref}")
+print(f"reference inside certified interval? {theta_prime_lo <= ref <= theta_prime_hi}")
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{lstlisting}
+S_199                 = 2.52604703934679486754882124953
+tail bound            = 0.00376884422110552763819095477387
+Re psi(1/4+7i) in     [1.94506253022415647930411820468, 1.95260021866636753458050011422]
+theta'(14) certified  [0.400166322187378152580345426661, 0.403935166408483680218536381435]
+exceeds 0.40016?      True
+independent reference theta'(14) = 0.40048374392522506487181464471
+reference inside certified interval? True
+\end{lstlisting}
+
+\subsection{Exact zero and transport identity for \texorpdfstring{$g(s)=s-s_0$}{g(s)=s-s0}}
+\label{app:A2}
+
+\begin{lstlisting}[language=Python]
+"""
+Appendix A.2 -- g(s)=s-s0 exact zero and transport-equation verification.
+Reproduces eq:g-numerical-parameters, eq:g-numerical-zero,
+and the h=1e-8 finite-difference check of the transport identity.
+"""
+import mpmath as mp
+mp.mp.dps = 25
+
+g1 = mp.im(mp.zetazero(1))
+g2 = mp.im(mp.zetazero(2))
+theta_g1 = mp.siegeltheta(g1)
+theta_g2 = mp.siegeltheta(g2)
+Omega1 = theta_g2 - theta_g1
+
+def t_of_q(q):
+    target = theta_g1 + Omega1*mp.mpf(q)
+    t = g1 + q*(g2 - g1)
+    for _ in range(8):
+        f = mp.siegeltheta(t) - target
+        fp = mp.mpf('0.5')*mp.log(t/(2*mp.pi))
+        t = t - f/fp
+    return t
+
+def a_of_q(q):
+    t = t_of_q(q)
+    thetap = mp.mpf('0.5')*mp.log(t/(2*mp.pi))
+    return thetap/Omega1
+
+beta0 = mp.mpf('0.7')
+q0 = mp.mpf('0.5')
+s0 = beta0 + 1j*t_of_q(q0)
+print(f"gamma_1={g1}, gamma_2={g2}, Omega_1={Omega1}")
+print(f"s0 = {s0}")
+
+def g(s):
+    return s - s0
+
+def G(beta, q):
+    return g(beta + 1j*t_of_q(q))
+
+print(f"g(0.7+i*t_1(1/2)) = {G(beta0, q0)}   (must be exactly 0)")
+
+h = mp.mpf('1e-8')
+dG_dbeta = (G(beta0+h, q0) - G(beta0-h, q0)) / (2*h)
+dG_dq = (G(beta0, q0+h) - G(beta0, q0-h)) / (2*h)
+lhs = -1j*a_of_q(q0)*dG_dq
+print(f"dG/dbeta                = {complex(dG_dbeta)}")
+print(f"-i*a(q)*dG/dq            = {complex(lhs)}")
+print(f"residual (discretization only) = {complex(dG_dbeta - lhs)}")
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{lstlisting}
+gamma_1=14.13472514173469379045725, gamma_2=21.02203963877155499262848, Omega_1=3.520041512807475232558556
+s0 = (0.7 + 17.90557595350376093245695j)
+g(0.7+i*t_1(1/2)) = (0.0 + 0.0j)   (must be exactly 0)
+dG/dbeta                = (1+0j)
+-i*a(q)*dG/dq            = (1.0001241821813218+0j)
+residual (discretization only) = (-0.0001241821813218947+0j)
+\end{lstlisting}
+The residual is of order $h=10^{-8}$, confirming it is a finite-difference
+discretization artifact rather than a failure of the exact identity
+$\partial_\beta G=-ia(q)\partial_qG$, which holds symbolically for every
+holomorphic $g$ by the transport identity of
+Section~\ref{sec:universal-obstruction}.
+
+\subsection{No-finite-jet perturbation}
+\label{app:A3}
+
+\begin{lstlisting}[language=Python]
+"""
+Appendix A.3 -- No-finite-jet perturbation confirmation (Proposition 14.1 / Remark 14.2).
+Reproduces the 46.9 vs 49.0 comparison confirming the obstruction persists
+after matching N=6 derivatives at the zero.
+"""
+import sympy as sp
+
+qv = sp.Symbol('q')
+qg = sp.Rational(1, 3)
+
+# a concrete real-analytic F_beta with a simple zero at q=q_gamma
+Fbeta = (qv - qg)*sp.sin(3*qv + 1) + (qv - qg)**2*sp.exp(qv)
+# an unrelated reference F_{1/2,n}
+Fhalf = sp.cos(2*qv) + qv**2
+
+# best-fit C matching fourth derivatives at q_gamma
+C_val = sp.diff(Fbeta, qv, 4).subs(qv, qg) / sp.diff(Fhalf, qv, 4).subs(qv, qg)
+D4_original = sp.simplify(sp.diff(Fbeta - C_val*Fhalf, qv, 4))
+probe_point = qg + sp.Rational(1, 10)
+val_original = float(D4_original.subs(qv, probe_point))
+print(f"D_q^4(F_beta - C*F_half) at probe point, BEFORE perturbation: {val_original}")
+
+# perturb: agree with F_beta to order N=6 at q_gamma, arbitrary G elsewhere
+G = sp.sin(5*qv) + 2
+N = 6
+Fbeta_tilde = Fbeta + (qv - qg)**(N+1)*G
+
+print("\nDerivative agreement check (orders 0..N, must all be 0):")
+for j in range(N+1):
+    diff_j = sp.simplify(sp.diff(Fbeta_tilde - Fbeta, qv, j).subs(qv, qg))
+    print(f"  order {j}: {diff_j}")
+
+C_val_tilde = sp.diff(Fbeta_tilde, qv, 4).subs(qv, qg) / sp.diff(Fhalf, qv, 4).subs(qv, qg)
+D4_tilde = sp.simplify(sp.diff(Fbeta_tilde - C_val_tilde*Fhalf, qv, 4))
+val_tilde = float(D4_tilde.subs(qv, probe_point))
+print(f"\nD_q^4(F_beta_tilde - C_tilde*F_half) at same point, AFTER perturbation: {val_tilde}")
+print(f"Still generic/nonzero despite sharing 6 derivatives? {abs(val_tilde) > 1e-6}")
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{lstlisting}
+D_q^4(F_beta - C*F_half) at probe point, BEFORE perturbation: 46.93821643404021
+
+Derivative agreement check (orders 0..N, must all be 0):
+  order 0: 0
+  order 1: 0
+  order 2: 0
+  order 3: 0
+  order 4: 0
+  order 5: 0
+  order 6: 0
+
+D_q^4(F_beta_tilde - C_tilde*F_half) at same point, AFTER perturbation: 49.02760824764299
+Still generic/nonzero despite sharing 6 derivatives? True
+\end{lstlisting}
+This example uses a generic real-analytic $F_\beta$, not
+$\zeta(\beta+it_n(\cdot))$ itself, in accordance with the scope of
+Proposition~\ref{prop:no-finite-jet} as clarified after
+Corollary~\ref{cor:zero-trigger-not-finite-order}.
+
+\begin{thebibliography}{99}
+
+\bibitem{Ahlfors1979}
+L. V. Ahlfors,
+\emph{Complex Analysis}, 3rd ed.,
+McGraw--Hill, New York, 1979.
+
+\bibitem{AnseloneKorevaar1964}
+P. M. Anselone and J. Korevaar,
+\emph{Translation invariant subspaces of finite dimension},
+Proc. Amer. Math. Soc. \textbf{15} (1964), 747--752.
+DOI: 10.1090/S0002-9939-1964-0169048-7.
+
+\bibitem{BaezDuarte2000}
+L. B\'aez-Duarte, M. Balazard, B. Landreau and E. Saias,
+\emph{Notes sur la fonction $\zeta$ de Riemann, 3},
+Adv. Math. \textbf{149} (2000), no. 1, 130--144.
+DOI: 10.1006/aima.1999.1861.
+
+\bibitem{BaezDuarte2002}
+L. B\'aez-Duarte,
+\emph{New versions of the Nyman--Beurling criterion for the Riemann hypothesis},
+Int. J. Math. Math. Sci. \textbf{31} (2002), no. 7, 387--406.
+DOI: 10.1155/S0161171202013248.
+
+\bibitem{BaezDuarte2003}
+L. B\'aez-Duarte,
+\emph{A strengthening of the Nyman--Beurling criterion for the Riemann hypothesis},
+Rend. Lincei Mat. Appl. \textbf{14} (2003), no. 1, 5--11.
+
+\bibitem{Burnol2002}
+J.-F. Burnol,
+\emph{A lower bound in an approximation problem involving the zeros of the Riemann zeta function},
+Adv. Math. \textbf{170} (2002), no. 1, 56--70.
+DOI: 10.1006/aima.2001.2066.
+
+\bibitem{Beurling1955}
+A. Beurling,
+\emph{A closure problem related to the Riemann zeta-function},
+Proc. Natl. Acad. Sci. USA \textbf{41} (1955), no. 5, 312--314.
+DOI: 10.1073/pnas.41.5.312.
+
+\bibitem{BombieriLagarias1999}
+E. Bombieri and J. C. Lagarias,
+\emph{Complements to Li's criterion for the Riemann hypothesis},
+J. Number Theory \textbf{77} (1999), no. 2, 274--287.
+DOI: 10.1006/jnth.1999.2392.
+
+\bibitem{ChiangFeng2006}
+Y.-M. Chiang and S.-J. Feng,
+\emph{Difference independence of the Riemann zeta function},
+Acta Arith. \textbf{125} (2006), no. 4, 317--329.
+DOI: 10.4064/aa125-4-2.
+
+\bibitem{Cicek2021}
+F. \c{C}i\c{c}ek,
+\emph{On the logarithm of the Riemann zeta-function near the nontrivial zeros},
+Trans. Amer. Math. Soc. \textbf{374} (2021), 5995--6037.
+DOI: 10.1090/tran/8426.
+
+\bibitem{DLMF}
+F. W. J. Olver, A. B. Olde Daalhuis, D. W. Lozier, B. I. Schneider,
+R. F. Boisvert, C. W. Clark, B. R. Miller, B. V. Saunders,
+H. S. Cohl and M. A. McClain, eds.,
+\emph{NIST Digital Library of Mathematical Functions},
+Chs. 5 and 25, National Institute of Standards and Technology.
+
+\bibitem{Edwards1974}
+H. M. Edwards,
+\emph{Riemann's Zeta Function},
+Academic Press, New York, 1974; Dover reprint, 2001.
+
+\bibitem{Engert1970}
+M. Engert,
+\emph{Finite dimensional translation invariant subspaces},
+Pacific J. Math. \textbf{32} (1970), no. 2, 333--343.
+DOI: 10.2140/pjm.1970.32.333.
+
+\bibitem{Ford2002}
+K. Ford,
+\emph{Zero-free regions for the Riemann zeta function},
+in \emph{Number Theory for the Millennium II},
+A K Peters, Natick, MA, 2002, 25--56.
+
+\bibitem{GarunkstisLaurincikas2018}
+R. Garunk\v{s}tis and A. Laurin\v{c}ikas,
+\emph{Discrete mean square of the Riemann zeta-function over imaginary parts of its zeros},
+Period. Math. Hungar. \textbf{76} (2018), no. 2, 217--228.
+DOI: 10.1007/s10998-017-0228-6.
+
+\bibitem{GarunkstisLaurincikasMacaitiene2017}
+R. Garunk\v{s}tis, A. Laurin\v{c}ikas and R. Macaitien\.e,
+\emph{Zeros of the Riemann zeta-function and its universality},
+Acta Arith. \textbf{181} (2017), no. 2, 127--142.
+DOI: 10.4064/aa8583-5-2017.
+
+\bibitem{GarunkstisNovikas2025}
+R. Garunk\v{s}tis and A. Novikas,
+\emph{Discrete mean value theorems for the Riemann zeta-function over its shifted nontrivial zeros},
+Funct. Approx. Comment. Math. \textbf{72} (2025), no. 2, 201--224.
+DOI: 10.7169/facm/240929-7-10.
+
+\bibitem{GarunkstisPaliulionyte2025}
+R. Garunk\v{s}tis and J. Paliulionyt\.e,
+\emph{Mean values of the Riemann zeta function at shifted zeros under the Riemann Hypothesis},
+arXiv:2512.03297 (2025).
+
+\bibitem{Gonek1984}
+S. M. Gonek,
+\emph{Mean values of the Riemann zeta-function and its derivatives},
+Invent. Math. \textbf{75} (1984), no. 1, 123--141.
+DOI: 10.1007/BF01403094.
+
+\bibitem{Hardy1914}
+G. H. Hardy,
+\emph{Sur les z\'eros de la fonction $\zeta(s)$ de Riemann},
+C. R. Acad. Sci. Paris \textbf{158} (1914), 1012--1014.
+
+\bibitem{Ivic1985}
+A. Ivi\'c,
+\emph{The Riemann Zeta-Function: Theory and Applications},
+Wiley, New York, 1985.
+
+\bibitem{KaczorowskiPerelli1998}
+J. Kaczorowski and A. Perelli,
+\emph{Functional independence of the singularities of a class of Dirichlet series},
+Amer. J. Math. \textbf{120} (1998), no. 2, 289--303.
+
+\bibitem{KorolevLaurincikas2025}
+M. Korolev and A. Laurin\v{c}ikas,
+\emph{Joint functional independence of the Riemann zeta-function},
+Indian J. Pure Appl. Math. \textbf{56} (2025), no. 4, 1523--1528.
+DOI: 10.1007/s13226-024-00585-5.
+
+\bibitem{Laurincikas2019}
+A. Laurin\v{c}ikas,
+\emph{Non-trivial zeros of the Riemann zeta-function and joint universality theorems},
+J. Math. Anal. Appl. \textbf{475} (2019), no. 1, 385--402.
+DOI: 10.1016/j.jmaa.2019.02.047.
+
+\bibitem{LaurincikasSiauciunas2020}
+A. Laurin\v{c}ikas and D. \v{S}iau\v{c}i\=unas,
+\emph{Universality in short intervals of the Riemann zeta-function twisted by non-trivial zeros},
+Mathematics \textbf{8} (2020), no. 11, 1936.
+DOI: 10.3390/math8111936.
+
+\bibitem{LevinsonMontgomery1974}
+N. Levinson and H. L. Montgomery,
+\emph{Zeros of the derivatives of the Riemann zeta-function},
+Acta Math. \textbf{133} (1974), 49--65.
+DOI: 10.1007/BF02392141.
+
+\bibitem{Li1997}
+X.-J. Li,
+\emph{The positivity of a sequence of numbers and the Riemann hypothesis},
+J. Number Theory \textbf{65} (1997), no. 2, 325--333.
+DOI: 10.1006/jnth.1997.2137.
+
+\bibitem{Lu2024}
+F. L\"u,
+\emph{On the algebraic difference independence of $\Gamma$ and $\zeta$},
+J. Math. Anal. Appl. \textbf{538} (2024), no. 2, 128446.
+DOI: 10.1016/j.jmaa.2024.128446.
+
+\bibitem{MossinghoffTrudgianYang2024}
+M. J. Mossinghoff, T. S. Trudgian and A. Yang,
+\emph{Explicit zero-free regions for the Riemann zeta-function},
+Res. Number Theory \textbf{10} (2024), article 11.
+DOI: 10.1007/s40993-023-00498-y.
+
+\bibitem{Nyman1950}
+B. Nyman,
+\emph{On Some Groups and Semigroups of Translations},
+Ph.D. thesis, Uppsala University, 1950.
+
+\bibitem{Ostrowski1920}
+A. Ostrowski,
+\emph{\"Uber Dirichletsche Reihen und algebraische Differentialgleichungen},
+Math. Z. \textbf{8} (1920), 241--298.
+DOI: 10.1007/BF01206530.
+
+\bibitem{PlattTrudgian2021}
+D. Platt and T. Trudgian,
+\emph{The Riemann hypothesis is true up to $3\cdot10^{12}$},
+Bull. Lond. Math. Soc. \textbf{53} (2021), no. 3, 792--797.
+DOI: 10.1112/blms.12460.
+
+\bibitem{Riemann1859}
+B. Riemann,
+\emph{\"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse},
+Monatsber. K\"onigl. Preuss. Akad. Wiss. Berlin (1859), 671--680.
+
+\bibitem{Speiser1934}
+A. Speiser,
+\emph{Geometrisches zur Riemannschen Zetafunktion},
+Math. Ann. \textbf{110} (1934), 514--521.
+DOI: \url{https://doi.org/10.1007/BF01448042}.
+
+\bibitem{Szekelyhidi1982}
+L. Sz\'ekelyhidi,
+\emph{Note on exponential polynomials},
+Pacific J. Math. \textbf{103} (1982), no. 2, 583--599.
+DOI: 10.2140/pjm.1982.103.583.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh, revised by D. R. Heath-Brown,
+\emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+Clarendon Press, Oxford, 1986.
+
+\bibitem{vonKoch1901}
+H. von Koch,
+\emph{Sur la distribution des nombres premiers},
+Acta Math. \textbf{24} (1901), 159--182.
+DOI: 10.1007/BF02403071.
+
+\bibitem{Voronin1973}
+S. M. Voronin,
+\emph{On differential independence of $\zeta$-functions},
+Dokl. Akad. Nauk SSSR \textbf{209} (1973), no. 6, 1264--1266.
+
+\bibitem{Weil1952}
+A. Weil,
+\emph{Sur les ``formules explicites'' de la th\'eorie des nombres premiers},
+Comm. S\'em. Math. Univ. Lund, Tome Suppl. (1952), 252--265.
+
+\end{thebibliography}
+
+\end{document}

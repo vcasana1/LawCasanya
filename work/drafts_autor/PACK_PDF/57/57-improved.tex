@@ -1,0 +1,764 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Torus}{\mathbb T}
+\newcommand{\dd}{\,\mathrm d}
+
+\title[Prime-Pair Kernels]{Prime-Pair Kernels, Mangoldt Resonances, and a Finite-Height Energy Bridge}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Shells and normalized kernels}
+\label{sec:shells}
+
+Write $\mathbb N_0=\{0,1,2,\ldots\}$.  Let
+\begin{equation}
+\mathcal S_R\subset\mathbb N_0^2
+\qquad(R>0)
+\label{eq:shells}
+\end{equation}
+be finite nested sets satisfying
+\begin{equation}
+\mathcal S_R\subset\mathcal S_{R'}\quad(R<R'),
+\qquad
+\bigcup_{R>0}\mathcal S_R=\mathbb N_0^2.
+\label{eq:shell_exhaustion}
+\end{equation}
+The parameter $R$ indexes the arithmetic shell; the letter $T$ will be reserved for the height of zeta zeros.
+
+Fix distinct primes $p,q$.  Define
+\begin{align}
+W_R^{(p,q)}
+&=
+\sum_{(a,b)\in\mathcal S_R}p^{-a}q^{-b},
+\label{eq:WR}
+\\
+S_R^{(p,q)}
+&=
+\sum_{(a,b)\in\mathcal S_R}p^{-2a}q^{-2b},
+\label{eq:SR}
+\\
+w_{a,b;R}^{(p,q)}
+&=
+\frac{p^{-a}q^{-b}}{W_R^{(p,q)}}
+\qquad((a,b)\in\mathcal S_R).
+\label{eq:weights}
+\end{align}
+Then the weights are positive and have sum one.
+
+\begin{proposition}[Coefficient energy]
+\label{prop:coefficient_energy}
+Set
+\begin{equation}
+Q_R^{(p,q)}
+=
+\sum_{(a,b)\in\mathcal S_R}
+\left(w_{a,b;R}^{(p,q)}\right)^2
+=
+\frac{S_R^{(p,q)}}{\left(W_R^{(p,q)}\right)^2}.
+\label{eq:QR}
+\end{equation}
+Then
+\begin{equation}
+Q_R^{(p,q)}\longrightarrow
+Q_\infty^{(p,q)}
+=
+\frac{p-1}{p+1}\frac{q-1}{q+1}
+\in(0,1).
+\label{eq:Qinfty}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Monotone convergence of the two geometric series gives
+\begin{equation}
+W_R^{(p,q)}\longrightarrow
+\frac{1}{(1-p^{-1})(1-q^{-1})},
+\qquad
+S_R^{(p,q)}\longrightarrow
+\frac{1}{(1-p^{-2})(1-q^{-2})}.
+\label{eq:geometric_limits}
+\end{equation}
+Substitution in \eqref{eq:QR} gives \eqref{eq:Qinfty}.
+\end{proof}
+
+For $\vartheta=(\vartheta_p,\vartheta_q)\in\Torus^2=(\mathbb R/2\pi\mathbb Z)^2$, put
+\begin{equation}
+u_{a,b}^{(p,q)}=a\log p+b\log q
+\label{eq:uab}
+\end{equation}
+and define
+\begin{equation}
+K_{R,\vartheta}^{(p,q)}(z)
+=
+\sum_{(a,b)\in\mathcal S_R}
+w_{a,b;R}^{(p,q)}
+e^{-i(a\vartheta_p+b\vartheta_q)}
+e^{izu_{a,b}^{(p,q)}}.
+\label{eq:finite_kernel}
+\end{equation}
+
+\section{Limit kernel and pointwise resonance}
+\label{sec:limit_kernel}
+
+Define
+\begin{equation}
+w_{a,b;\infty}^{(p,q)}
+=
+(1-p^{-1})(1-q^{-1})p^{-a}q^{-b}.
+\label{eq:limit_weights}
+\end{equation}
+
+\begin{proposition}[Uniform convergence on the real axis]
+\label{prop:uniform_convergence}
+For every fixed $\vartheta\in\Torus^2$,
+\begin{equation}
+K_{R,\vartheta}^{(p,q)}(\tau)
+\longrightarrow
+K_{\infty,\vartheta}^{(p,q)}(\tau)
+\label{eq:uniform_kernel_limit}
+\end{equation}
+uniformly for $\tau\in\mathbb R$, where
+\begin{align}
+K_{\infty,\vartheta}^{(p,q)}(z)
+&=
+\sum_{a,b\geq0}
+w_{a,b;\infty}^{(p,q)}
+e^{-i(a\vartheta_p+b\vartheta_q)}
+e^{izu_{a,b}^{(p,q)}}
+\label{eq:limit_kernel_series}
+\\
+&=
+\frac{(1-p^{-1})(1-q^{-1})}
+{\left(1-p^{-1}e^{i(z\log p-\vartheta_p)}\right)
+ \left(1-q^{-1}e^{i(z\log q-\vartheta_q)}\right)}.
+\label{eq:limit_kernel_closed}
+\end{align}
+The series is locally uniformly convergent in the half-plane $\operatorname{Im}z>-1$.
+\end{proposition}
+
+\begin{proof}
+Extend the finite weight vector by zero outside $\mathcal S_R$.  The exhaustion and the convergence of $W_R^{(p,q)}$ imply
+\begin{equation}
+\sum_{a,b\geq0}
+\left|w_{a,b;R}^{(p,q)}-w_{a,b;\infty}^{(p,q)}\right|
+\longrightarrow0.
+\label{eq:l1_weight_convergence}
+\end{equation}
+This proves uniform convergence on the real axis.  The geometric series give \eqref{eq:limit_kernel_closed}; the same argument on compact subsets of $\operatorname{Im}z>-1$ proves local uniform convergence there.
+\end{proof}
+
+\begin{proposition}[Pointwise resonance]
+\label{prop:pointwise_resonance}
+For real $\tau$,
+\begin{equation}
+\left|K_{\infty,\vartheta}^{(p,q)}(\tau)\right|\leq1.
+\label{eq:pointwise_bound}
+\end{equation}
+Moreover,
+\begin{equation}
+\sup_{\tau\in\mathbb R}
+\left|K_{\infty,\vartheta}^{(p,q)}(\tau)\right|=1.
+\label{eq:global_supremum}
+\end{equation}
+For $\vartheta=(0,0)$ equality occurs at $\tau=0$.
+\end{proposition}
+
+\begin{proof}
+For $0<r<1$ and real $t$,
+\begin{equation}
+|1-re^{it}|\geq1-r.
+\label{eq:elementary_denominator_bound}
+\end{equation}
+Applying this to both factors in \eqref{eq:limit_kernel_closed} proves \eqref{eq:pointwise_bound}.  Unique factorization gives
+\begin{equation}
+m\log p+n\log q=0,\quad (m,n)\in\mathbb Z^2
+\quad\Longrightarrow\quad
+m=n=0.
+\label{eq:log_independence}
+\end{equation}
+Consequently the line $\tau(\log p,\log q)$ is dense modulo $2\pi$ in $\Torus^2$.  It approaches the prescribed phase $\vartheta$ arbitrarily closely, proving \eqref{eq:global_supremum}.
+\end{proof}
+
+\section{Equidistribution of zeta-zero phases}
+\label{sec:zero_equidistribution}
+
+Let $\rho=\beta+i\gamma$ run through the nontrivial zeros of $\zeta$, with $0<\gamma\leq T$, counted with multiplicity, and let $N(T)$ be their number.
+
+\begin{theorem}[Joint zero-phase equidistribution]
+\label{thm:joint_equidistribution}
+For distinct primes $p,q$, the vectors
+\begin{equation}
+\left(\gamma\log p,\gamma\log q\right)\pmod{2\pi}
+\label{eq:zero_phase_vectors}
+\end{equation}
+are uniformly distributed in $\Torus^2$ as $T\to\infty$.
+\end{theorem}
+
+\begin{proof}
+Hlawka's theorem states that, for every fixed nonzero real number $\alpha$, the sequence $\alpha\gamma$ is uniformly distributed modulo one; see \cite{FordZaharescu2005}.  For every $(m,n)\in\mathbb Z^2\setminus\{(0,0)\}$, equation \eqref{eq:log_independence} gives
+\begin{equation}
+\frac{m\log p+n\log q}{2\pi}\neq0.
+\label{eq:nonzero_character_frequency}
+\end{equation}
+Hlawka's theorem applied to every nontrivial character, followed by the multidimensional Weyl criterion, proves the assertion.
+\end{proof}
+
+\section{Exact mean-square contraction}
+\label{sec:mean_square_contraction}
+
+\begin{theorem}[Finite-shell contraction on the zero ordinates]
+\label{thm:finite_shell_contraction}
+For every fixed shell $R$ and phase $\vartheta$,
+\begin{equation}
+\lim_{T\to\infty}
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left|K_{R,\vartheta}^{(p,q)}(\gamma)\right|^2
+=
+Q_R^{(p,q)}.
+\label{eq:finite_shell_zero_energy}
+\end{equation}
+Consequently,
+\begin{equation}
+\lim_{R\to\infty}\lim_{T\to\infty}
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left|K_{R,\vartheta}^{(p,q)}(\gamma)\right|^2
+=
+Q_\infty^{(p,q)}<1.
+\label{eq:double_limit_contraction}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Expanding the square in \eqref{eq:finite_shell_zero_energy} gives diagonal terms
+\begin{equation}
+\sum_{(a,b)\in\mathcal S_R}
+\left(w_{a,b;R}^{(p,q)}\right)^2
+=Q_R^{(p,q)}
+\label{eq:diagonal_energy}
+\end{equation}
+and off-diagonal characters of the vector \eqref{eq:zero_phase_vectors}.  Theorem~\ref{thm:joint_equidistribution} makes every off-diagonal average vanish.  Proposition~\ref{prop:coefficient_energy} then gives \eqref{eq:double_limit_contraction}.
+\end{proof}
+
+\begin{corollary}[Limit-kernel contraction]
+\label{cor:limit_kernel_contraction}
+For every fixed phase $\vartheta$,
+\begin{equation}
+\lim_{T\to\infty}
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left|K_{\infty,\vartheta}^{(p,q)}(\gamma)\right|^2
+=Q_\infty^{(p,q)}.
+\label{eq:limit_kernel_zero_energy}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The uniform convergence in Proposition~\ref{prop:uniform_convergence} permits passage from the finite kernels to the limit kernel inside the normalized average.
+\end{proof}
+
+Define the torus kernel
+\begin{equation}
+\mathcal K_{p,q}(x,y)
+=
+\frac{(1-p^{-1})(1-q^{-1})}
+{(1-p^{-1}e^{ix})(1-q^{-1}e^{iy})}.
+\label{eq:torus_kernel}
+\end{equation}
+
+\begin{theorem}[Iteration with one fixed pair]
+\label{thm:fixed_pair_iteration}
+For every integer $r\geq1$,
+\begin{align}
+E_r^{(p,q)}
+&:=
+\lim_{T\to\infty}
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left|K_{\infty,\vartheta}^{(p,q)}(\gamma)\right|^{2r}
+\label{eq:Er_definition}
+\\
+&=
+\frac1{(2\pi)^2}
+\int_0^{2\pi}\int_0^{2\pi}
+|\mathcal K_{p,q}(x,y)|^{2r}\,\dd x\,\dd y.
+\label{eq:Er_torus_integral}
+\end{align}
+Moreover,
+\begin{equation}
+E_1^{(p,q)}=Q_\infty^{(p,q)},
+\qquad
+E_r^{(p,q)}\longrightarrow0
+\quad(r\to\infty).
+\label{eq:iterated_contraction}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Equation \eqref{eq:Er_torus_integral} follows from Theorem~\ref{thm:joint_equidistribution}.  Proposition~\ref{prop:pointwise_resonance} gives $|\mathcal K_{p,q}|\leq1$, with equality only at $(0,0)$ modulo $2\pi$.  This equality set has Haar measure zero.  Dominated convergence proves the second assertion in \eqref{eq:iterated_contraction}.
+\end{proof}
+
+\begin{corollary}[The pair $(5,7)$]
+\label{cor:five_seven}
+For $p=5$ and $q=7$,
+\begin{equation}
+K_{\infty,0}^{(5,7)}(\tau)
+=
+\frac{24/35}
+{\left(1-5^{-1}e^{i\tau\log5}\right)
+ \left(1-7^{-1}e^{i\tau\log7}\right)}
+\label{eq:five_seven_kernel}
+\end{equation}
+and
+\begin{equation}
+\boxed{
+\lim_{T\to\infty}
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left|K_{\infty,0}^{(5,7)}(\gamma)\right|^2
+=\frac12.}
+\label{eq:five_seven_half}
+\end{equation}
+The moments with exponent $2r$ tend to zero in the iterated order displayed in Theorem~\ref{thm:fixed_pair_iteration}.
+\end{corollary}
+
+\begin{remark}[One prime versus one dilation]
+\label{rem:one_prime}
+A single dilation is unitary.  A normalized average over the powers of one prime is a different operator: its limiting mean-square factor on the zero ordinates is $(p-1)/(p+1)<1$.  These two statements must not be identified.
+\end{remark}
+
+\section{Mangoldt resonances and the linear bridge}
+\label{sec:mangoldt_bridge}
+
+For a nontrivial zero write
+\begin{equation}
+\delta_\rho=\beta-\frac12.
+\label{eq:horizontal_displacement}
+\end{equation}
+For fixed $T$ with $N(T)>0$, define the existing finite-height exponential difference
+\begin{equation}
+F_T(y)
+=
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left(e^{(\delta_\rho+i\gamma)y}-e^{i\gamma y}\right).
+\label{eq:FT}
+\end{equation}
+
+Let $\Lambda(x)$ equal $\log \ell$ when $x=\ell^k$ is an integral prime power and equal zero for all other real $x>1$.
+
+\begin{proposition}[Mangoldt response of a finite shell]
+\label{prop:mangoldt_response}
+Assume $(0,0)\in\mathcal S_R$.  Write $n_{a,b}=p^aq^b$ and $w_{0,0;R}=w_{0,0;R}^{(p,q)}$.  Then
+\begin{align}
+&\frac1T
+\left(
+\sum_{0<\gamma\leq T}
+K_{R,\vartheta}^{(p,q)}(\gamma-i\delta_\rho)
+-w_{0,0;R}N(T)
+\right)
+\label{eq:complete_mangoldt_response}
+\\
+&\qquad\longrightarrow
+-\frac1{2\pi}
+\sum_{\substack{(a,b)\in\mathcal S_R\\(a,b)\neq(0,0)}}
+w_{a,b;R}^{(p,q)}e^{-i(a\vartheta_p+b\vartheta_q)}
+\frac{\Lambda(n_{a,b})}{\sqrt{n_{a,b}}},
+\notag
+\\[1ex]
+&\frac1T
+\left(
+\sum_{0<\gamma\leq T}
+K_{R,\vartheta}^{(p,q)}(\gamma)
+-w_{0,0;R}N(T)
+\right)
+\label{eq:ordinate_mangoldt_response}
+\\
+&\qquad\longrightarrow
+-\frac1{2\pi}
+\sum_{\substack{(a,b)\in\mathcal S_R\\(a,b)\neq(0,0)}}
+w_{a,b;R}^{(p,q)}e^{-i(a\vartheta_p+b\vartheta_q)}
+\frac{\Lambda(n_{a,b})}{\sqrt{n_{a,b}}}.
+\notag
+\end{align}
+If $a,b\geq1$, then $\Lambda(p^aq^b)=0$; hence the Mangoldt main term is supported on the two prime-power axes.
+\end{proposition}
+
+\begin{proof}
+For every fixed $x>1$, Landau's formula gives \cite{Titchmarsh1986}
+\begin{equation}
+\sum_{0<\gamma\leq T}x^\rho
+=
+-\frac{T}{2\pi}\Lambda(x)+O_x(\log T).
+\label{eq:landau_formula}
+\end{equation}
+Ford and Zaharescu prove the corresponding fixed-frequency ordinate asymptotic
+\cite{FordZaharescu2005}:
+\begin{equation}
+\frac{1}{T}
+\sum_{0<\gamma\leq T}x^{i\gamma}
+\longrightarrow
+-\frac{1}{2\pi}\frac{\Lambda(x)}{\sqrt{x}},
+\qquad x>1 \text{ fixed}.
+\label{eq:ford_zaharescu_ordinate_formula}
+\end{equation}
+Here, as above, $\Lambda(x)$ is zero unless $x$ is an integral prime power.
+For completeness, \eqref{eq:ford_zaharescu_ordinate_formula} is the Fourier-coefficient
+form of their limiting distribution for the fractional parts of
+$\gamma\log x/(2\pi)$; its sign and normalization are therefore fixed by the
+coefficient $-\Lambda(x)/(2\pi\sqrt{x})$.
+
+Since
+\begin{equation}
+K_{R,\vartheta}^{(p,q)}(\gamma-i\delta_\rho)
+=
+\sum_{(a,b)\in\mathcal S_R}
+w_{a,b;R}^{(p,q)}e^{-i(a\vartheta_p+b\vartheta_q)}
+n_{a,b}^{\rho-1/2},
+\label{eq:complete_kernel_expansion}
+\end{equation}
+finite summation of \eqref{eq:landau_formula} proves
+\eqref{eq:complete_mangoldt_response}.  Likewise,
+\begin{equation}
+K_{R,\vartheta}^{(p,q)}(\gamma)
+=
+\sum_{(a,b)\in\mathcal S_R}
+w_{a,b;R}^{(p,q)}e^{-i(a\vartheta_p+b\vartheta_q)}
+n_{a,b}^{i\gamma},
+\label{eq:ordinate_kernel_expansion}
+\end{equation}
+and finite summation of \eqref{eq:ford_zaharescu_ordinate_formula} proves
+\eqref{eq:ordinate_mangoldt_response}.  Unique factorization gives the final assertion.
+\end{proof}
+
+\begin{corollary}[Exact linear bridge]
+\label{cor:linear_bridge}
+For every fixed shell $R$,
+\begin{align}
+\sum_{(a,b)\in\mathcal S_R}
+&w_{a,b;R}^{(p,q)}e^{-i(a\vartheta_p+b\vartheta_q)}
+F_T\!\left(u_{a,b}^{(p,q)}\right)
+\label{eq:linear_bridge_F}
+\\
+&=
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left(
+K_{R,\vartheta}^{(p,q)}(\gamma-i\delta_\rho)
+-K_{R,\vartheta}^{(p,q)}(\gamma)
+\right)
+\label{eq:linear_bridge_kernel}
+\\
+&=o_R\!\left(\frac1{\log T}\right).
+\label{eq:linear_bridge_asymptotic}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+The equality of \eqref{eq:linear_bridge_F} and \eqref{eq:linear_bridge_kernel} follows by expanding the definitions.  Proposition~\ref{prop:mangoldt_response} makes the numerator in \eqref{eq:linear_bridge_kernel} equal to $o_R(T)$.  The Riemann--von Mangoldt formula gives $N(T)\asymp T\log T$ \cite{Titchmarsh1986}.
+\end{proof}
+
+\section{A positive finite-height energy bridge}
+\label{sec:energy_bridge}
+
+Let $m_T(\delta,\tau)$ be the multiplicity of the zero $1/2+\delta+i\tau$ for $0<\tau\leq T$ and $\delta>0$.  For $x>0$, define
+\begin{equation}
+D_x(\tau)
+=
+\sum_{\delta>0}
+m_T(\delta,\tau)
+\left(\cosh(\delta\log x)-1\right).
+\label{eq:Dx}
+\end{equation}
+Functional-equation symmetry pairs $\delta$ with $-\delta$ at the same ordinate.
+
+Let $\dd m(\vartheta)=(2\pi)^{-2}\dd\vartheta_p\dd\vartheta_q$ be normalized Haar measure on $\Torus^2$.  Define
+\begin{align}
+\mathcal E_{R,T}^{\mathrm{full}}
+&=
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\int_{\Torus^2}
+\left|K_{R,\vartheta}^{(p,q)}
+(\gamma-i\delta_\rho)\right|^2
+\dd m(\vartheta),
+\label{eq:full_energy}
+\\
+\mathcal E_{R,T}^{\mathrm{ord}}
+&=
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\int_{\Torus^2}
+\left|K_{R,\vartheta}^{(p,q)}(\gamma)\right|^2
+\dd m(\vartheta),
+\label{eq:ordinate_energy}
+\\
+\Delta_{R,T}^{(p,q)}
+&=
+\mathcal E_{R,T}^{\mathrm{full}}
+-\mathcal E_{R,T}^{\mathrm{ord}}.
+\label{eq:energy_difference}
+\end{align}
+
+\begin{theorem}[Exact energy bridge]
+\label{thm:exact_energy_bridge}
+For every finite shell,
+\begin{align}
+\mathcal E_{R,T}^{\mathrm{ord}}
+&=Q_R^{(p,q)},
+\label{eq:exact_ordinate_energy}
+\\
+\Delta_{R,T}^{(p,q)}
+&=
+\frac{2}{N(T)}
+\sum_{0<\tau\leq T}
+\sum_{\delta>0}m_T(\delta,\tau)
+\sum_{(a,b)\in\mathcal S_R}
+\left(w_{a,b;R}^{(p,q)}\right)^2
+\left(\cosh(2\delta u_{a,b}^{(p,q)})-1\right)
+\label{eq:positive_energy_bridge}
+\\
+&=
+\frac{2}{N(T)}
+\sum_{(a,b)\in\mathcal S_R}
+\left(w_{a,b;R}^{(p,q)}\right)^2
+\sum_{0<\tau\leq T}
+D_{\exp(2u_{a,b}^{(p,q)})}(\tau).
+\label{eq:energy_bridge_Dx}
+\end{align}
+If $\mathcal S_R$ contains an index $(a,b)\neq(0,0)$, then
+\begin{equation}
+\boxed{
+\Delta_{R,T}^{(p,q)}=0
+\quad\Longleftrightarrow\quad
+\operatorname{Re}\rho=\frac12
+\text{ for every }0<\operatorname{Im}\rho\leq T.}
+\label{eq:energy_bridge_equivalence}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Orthogonality of the phase characters gives, for every real $\delta$,
+\begin{equation}
+\int_{\Torus^2}
+\left|K_{R,\vartheta}^{(p,q)}(\gamma-i\delta)\right|^2
+\dd m(\vartheta)
+=
+\sum_{(a,b)\in\mathcal S_R}
+\left(w_{a,b;R}^{(p,q)}\right)^2
+e^{2\delta u_{a,b}^{(p,q)}}.
+\label{eq:phase_orthogonality_energy}
+\end{equation}
+Setting $\delta=0$ proves \eqref{eq:exact_ordinate_energy}.  Pairing $\delta$ and $-\delta$ proves \eqref{eq:positive_energy_bridge}; Definition~\eqref{eq:Dx} gives \eqref{eq:energy_bridge_Dx}.  Every summand in \eqref{eq:positive_energy_bridge} is nonnegative.  A nonzero displacement makes every term with $u_{a,b}^{(p,q)}>0$ strictly positive, proving \eqref{eq:energy_bridge_equivalence}.
+\end{proof}
+
+Define the finite-height curvature
+\begin{equation}
+F_T''(0)
+=
+\frac{2}{N(T)}
+\sum_{0<\tau\leq T}
+\sum_{\delta>0}m_T(\delta,\tau)\delta^2.
+\label{eq:curvature}
+\end{equation}
+
+\begin{corollary}[Coercive curvature bound]
+\label{cor:coercive_curvature}
+Let
+\begin{equation}
+M_{2,R}^{(p,q)}
+=
+\sum_{(a,b)\in\mathcal S_R}
+\left(w_{a,b;R}^{(p,q)}\right)^2
+\left(u_{a,b}^{(p,q)}\right)^2.
+\label{eq:M2R}
+\end{equation}
+Then
+\begin{equation}
+\boxed{
+\Delta_{R,T}^{(p,q)}
+\geq
+2M_{2,R}^{(p,q)}F_T''(0).}
+\label{eq:coercive_bridge}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply $\cosh t-1\geq t^2/2$ termwise in \eqref{eq:positive_energy_bridge}.
+\end{proof}
+
+\begin{corollary}[Explicit $(5,7)$ bridge]
+\label{cor:explicit_five_seven_bridge}
+For the limit weights
+\begin{equation}
+w_{a,b;\infty}^{(5,7)}=\frac{24}{35}5^{-a}7^{-b},
+\label{eq:five_seven_limit_weights}
+\end{equation}
+set
+\begin{equation}
+J_{5,7}(\delta)
+=
+\sum_{a,b\geq0}
+\left(w_{a,b;\infty}^{(5,7)}\right)^2
+e^{2\delta(a\log5+b\log7)}
+=
+\frac{(24/35)^2}
+{(1-5^{2\delta-2})(1-7^{2\delta-2})}.
+\label{eq:J_five_seven}
+\end{equation}
+For $|\delta|<1/2$ this is finite, and $J_{5,7}(0)=1/2$.  The limiting energy difference satisfies
+\begin{equation}
+\Delta_{\infty,T}^{(5,7)}
+=
+\frac1{N(T)}
+\sum_{0<\gamma\leq T}
+\left(J_{5,7}(\delta_\rho)-\frac12\right)
+\label{eq:explicit_energy_difference}
+\end{equation}
+and
+\begin{equation}
+\boxed{
+\Delta_{\infty,T}^{(5,7)}
+\geq
+0.204533768513927\ldots\,F_T''(0).}
+\label{eq:explicit_coercive_constant}
+\end{equation}
+More exactly,
+\begin{equation}
+M_{2,\infty}^{(5,7)}
+=
+\frac{13}{576}(\log5)^2
++\frac{25}{2304}(\log7)^2
++\frac{1}{1152}\log5\log7
+=0.102266884256963\ldots.
+\label{eq:explicit_M2}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Equation \eqref{eq:J_five_seven} is the product of two geometric series.
+Passing to the limit shell in \eqref{eq:phase_orthogonality_energy} gives
+\eqref{eq:explicit_energy_difference}.  Direct differentiation of the geometric series, or the identities
+\begin{equation}
+\sum_{k\geq0}r^k=\frac1{1-r},
+\quad
+\sum_{k\geq0}kr^k=\frac{r}{(1-r)^2},
+\quad
+\sum_{k\geq0}k^2r^k=\frac{r(1+r)}{(1-r)^3},
+\label{eq:geometric_moments}
+\end{equation}
+gives \eqref{eq:explicit_M2}.  Corollary~\ref{cor:coercive_curvature} then gives \eqref{eq:explicit_coercive_constant}.
+\end{proof}
+
+\section{What the contraction determines}
+\label{sec:scope}
+
+\begin{theorem}[Finite horizontal perturbations preserve the asymptotic inputs]
+\label{thm:finite_perturbation}
+Let a symmetric zero multiset satisfy the Riemann--von Mangoldt count, Hlawka equidistribution, the Landau formula \eqref{eq:landau_formula}, and the mean-square contraction \eqref{eq:five_seven_half}.  Adjoin, at one fixed positive ordinate $\tau$, the symmetric pair
+\begin{equation}
+\frac12+\delta+i\tau,
+\qquad
+\frac12-\delta+i\tau,
+\qquad 0<\delta<\frac12,
+\label{eq:inserted_pair}
+\end{equation}
+together with the conjugate pair at negative ordinate.  Then all four asymptotic statements remain valid, while for every $T\geq\tau$,
+\begin{equation}
+F_T''(0)>0,
+\qquad
+\Delta_{\infty,T}^{(5,7)}>0.
+\label{eq:positive_after_insertion}
+\end{equation}
+Consequently, the mean-square contraction and the stated Mangoldt asymptotics do not imply the energy equality $\Delta_{\infty,T}^{(5,7)}=0$.
+\end{theorem}
+
+\begin{proof}
+The insertion changes $N(T)$ by at most two and changes every fixed normalized zero-phase average by $O(1/N(T))$.  It therefore preserves the Riemann--von Mangoldt and Hlawka asymptotics and the limit in \eqref{eq:five_seven_half}.  For every fixed $x>1$, its contribution to the Landau sum is
+\begin{equation}
+x^{1/2+\delta+i\tau}+x^{1/2-\delta+i\tau}
+=
+2x^{1/2}e^{i\tau\log x}\cosh(\delta\log x),
+\label{eq:finite_landau_perturbation}
+\end{equation}
+which is $O_x(1)$ and is absorbed by the error $O_x(\log T)$ in \eqref{eq:landau_formula}.  The strict inequalities in \eqref{eq:positive_after_insertion} follow from \eqref{eq:curvature} and Theorem~\ref{thm:exact_energy_bridge}.
+\end{proof}
+
+\begin{proposition}[Energy transfer preserves the horizontal excess]
+\label{prop:energy_transfer}
+For arbitrary complex branch amplitudes $z_p,z_q$,
+\begin{equation}
+\left|\frac{z_p+z_q}{\sqrt2}\right|^2
++
+\left|\frac{z_p-z_q}{\sqrt2}\right|^2
+=
+|z_p|^2+|z_q|^2.
+\label{eq:parallelogram_energy}
+\end{equation}
+Thus contraction of the averaged branch transfers the missing energy to the complementary branch.  Applied to the complete zero branches, the conserved total is $Q_R^{(p,q)}+\Delta_{R,T}^{(p,q)}$, not $Q_R^{(p,q)}$ when a horizontal displacement is present.
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:parallelogram_energy} is the parallelogram identity.  The second assertion follows from the definition \eqref{eq:energy_difference}.
+\end{proof}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The prime pair $(5,7)$ has the exact zero-ordinate mean-square contraction factor $1/2$, and the moments of every fixed iterate are given by the torus integral \eqref{eq:Er_torus_integral}.  The isolated pointwise resonances do not obstruct this averaged contraction.  The Mangoldt response is supported on the two prime-power axes; the mixed branches $5^a7^b$, $a,b\geq1$, have zero Mangoldt main term.
+
+The linear identity \eqref{eq:linear_bridge_kernel} connects the kernel directly to the existing finite-height exponential difference $F_T$.  Phase orthogonality gives the stronger positive energy identity \eqref{eq:positive_energy_bridge}.  For $(5,7)$ it yields the explicit coercive estimate \eqref{eq:explicit_coercive_constant}, and vanishing of the energy difference is equivalent to critical-line containment up to height $T$.
+
+Theorem~\ref{thm:finite_perturbation} determines the logical relation between these statements: the zero-ordinate contraction and the stated Landau--Mangoldt asymptotics are unchanged by a finite symmetric horizontal perturbation, whereas the positive energy bridge responds immediately.  Energy conservation transfers the corresponding excess between complementary branches but does not remove it.
+
+\begin{thebibliography}{99}
+
+\bibitem{FordZaharescu2005}
+K.~Ford and A.~Zaharescu,
+On the distribution of imaginary parts of zeros of the Riemann zeta function,
+\emph{J. Reine Angew. Math.} \textbf{579} (2005), 145--158,
+\href{https://doi.org/10.1515/crll.2005.2005.579.145}{doi:10.1515/crll.2005.2005.579.145}; arXiv:math/0405459.
+
+\bibitem{Titchmarsh1986}
+E.~C.~Titchmarsh,
+\emph{The Theory of the Riemann Zeta-function},
+2nd ed., revised by D.~R.~Heath-Brown,
+Oxford University Press, 1986.
+
+\end{thebibliography}
+
+\end{document}

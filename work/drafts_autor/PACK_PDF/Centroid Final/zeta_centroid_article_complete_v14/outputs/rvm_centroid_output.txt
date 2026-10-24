@@ -1,0 +1,23 @@
+LAMBERT RVM EXPONENTIAL CENTROID REPRODUCTION
+N              = 2001052
+tau_1            = 14.521346953065626
+tau_N            = 1132490.722587621537969
+max |M(tau_k)-(k-1/2)|    = 6.984919309616e-10
+
+C_N direct          = +0.041570227040394 +1.757541761467938i
+-d_1 exp(i tau_1)      = +6.031991313792247 +2.977851908778479i
+boundary average       = -1.700645406387667e-06 +1.385344506745871e-07i
+weighted Abel series     = -5.990419386106493 -1.220310285845148i
+C_N from Abel identity    = +0.041570227040348 +1.757541761467782i
+|direct-Abel|        = 1.625736540272e-13
+
+infinite-series truncation N = +0.041568808323635 +1.757541025528465i
+partial Abel-series approximants:
+ J=   10000: +0.041580072865611 +1.757554793733856i
+ J=  100000: +0.041570891195329 +1.757542207523970i
+ J=  500000: +0.041569346208409 +1.757541422824472i
+ J= 1000000: +0.041569178431353 +1.757540990615438i
+ J= 2001052: +0.041568808323635 +1.757541025528465i
+
+The analytic theorem in the manuscript proves convergence of the
+unweighted Abel series and an O(log J / J) tail at the smooth-clock scale.

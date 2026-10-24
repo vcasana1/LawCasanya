@@ -1,0 +1,14 @@
+Same-scale 3D phase-walk clouds
+input = data/g_hp.bin
+input sha256 = 80c7bb512e210922397fd36b5bdfb97239cc0c5ee73dc1ec57a919ce41b367b2
+ordinates = 22491
+sampled points per panel = 4500
+max |M(tau_k)-(k-1/2)| = 3.638e-12
+zeta walk centroid = +0.777204389314 +0.768179110409i
+RVM walk centroid = +0.041475031748 +1.757470238988i
+paired-residual walk centroid = +0.735729357566 -0.989291128579i
+intrinsic-residual walk centroid = -422.852350549495 -0.256907673382i
+walk common limits (Re_min, Re_max, Im_min, Im_max) = -2.488223 +4.021101 -2.482510 +3.937423
+residual common limits (Re_min, Re_max, Im_min, Im_max) = -815.598452 +48.714749 -2.850584 +0.828066
+figure = figures/zeta_rvm_walks_3d_same_scale.png
+figure = figures/residual_walks_3d_same_scale.png

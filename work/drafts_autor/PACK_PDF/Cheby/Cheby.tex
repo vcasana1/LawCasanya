@@ -1,0 +1,347 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\title{Tubular Confinement and Clocked Chebyshev Cancellation}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Definitions}
+\label{sec:definitions}
+
+Let
+\begin{equation}
+\rho_k=\beta_k+i\gamma_k
+\label{eq:zero_definition}
+\end{equation}
+denote a nontrivial zero of the Riemann zeta function, ordered by
+increasing ordinate $\gamma_k$.
+
+\begin{definition}[Logarithmic clock]
+\label{def:logarithmic_clock}
+For $k\ge 3$, define
+\begin{equation}
+\tau_k
+=
+\pi\frac{\log\log k}{\log k}.
+\label{eq:tau_definition}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Free-amplitude phase-walk]
+\label{def:free_amplitude_phase_walk}
+For $\sigma\in\mathbb R$, define
+\begin{equation}
+z_k(\sigma)
+=
+\exp\big((\sigma+i\gamma_k)\tau_k\big),
+\label{eq:zk_sigma_definition}
+\end{equation}
+and
+\begin{equation}
+S_N(\sigma)
+=
+\sum_{k=3}^{N}z_k(\sigma).
+\label{eq:SN_sigma_definition}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Clocked Chebyshev scale]
+\label{def:clocked_chebyshev_scale}
+Define
+\begin{equation}
+x_k
+=
+\exp(\tau_k).
+\label{eq:xk_definition}
+\end{equation}
+Equivalently,
+\begin{equation}
+\log x_k
+=
+\tau_k
+=
+\pi\frac{\log\log k}{\log k}.
+\label{eq:log_xk_tau}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Tubular confinement]
+\label{def:tubular_confinement}
+The walk $S_N(\sigma)$ is said to be tubarly confined if there exist
+$C\in\mathbb C$, $R>0$, and $N_0\ge 3$ such that
+\begin{equation}
+|S_N(\sigma)-C|\le R
+\label{eq:tubular_confinement_definition}
+\end{equation}
+for every $N\ge N_0$.
+\end{definition}
+
+\begin{definition}[Clocked Chebyshev cancellation]
+\label{def:clocked_chebyshev_cancellation}
+The clocked Chebyshev terms are said to have controlled cancellation at
+amplitude $\sigma$ if there exist $C\in\mathbb C$, $R>0$, and $N_0\ge 3$
+such that
+\begin{equation}
+\left|
+\sum_{k=3}^{N}
+x_k^\sigma
+\left(
+\cos(\gamma_k\log x_k)
++
+i\sin(\gamma_k\log x_k)
+\right)
+-C
+\right|
+\le R
+\label{eq:clocked_chebyshev_cancellation_definition}
+\end{equation}
+for every $N\ge N_0$.
+\end{definition}
+
+\section{Equivalence theorem}
+\label{sec:equivalence_theorem}
+
+\begin{theorem}[Tubular confinement is clocked Chebyshev cancellation]
+\label{thm:tube_chebyshev_equivalence}
+For every $\sigma\in\mathbb R$, the following statements are equivalent.
+
+\begin{enumerate}[label=\textnormal{(\roman*)}]
+\item The walk $S_N(\sigma)$ is tubarly confined:
+\begin{equation}
+|S_N(\sigma)-C|\le R
+\label{eq:theorem_tube_condition}
+\end{equation}
+for every $N\ge N_0$.
+
+\item The clocked Chebyshev terms have controlled cancellation:
+\begin{equation}
+\left|
+\sum_{k=3}^{N}
+x_k^\sigma
+\left(
+\cos(\gamma_k\log x_k)
++
+i\sin(\gamma_k\log x_k)
+\right)
+-C
+\right|
+\le R
+\label{eq:theorem_chebyshev_condition}
+\end{equation}
+for every $N\ge N_0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:xk_definition} and \eqref{eq:log_xk_tau}, one has
+\begin{equation}
+x_k^\sigma
+=
+\exp(\sigma\tau_k),
+\label{eq:xk_sigma_expansion}
+\end{equation}
+and
+\begin{equation}
+\gamma_k\log x_k
+=
+\gamma_k\tau_k.
+\label{eq:gamma_log_xk_identity}
+\end{equation}
+Therefore
+\begin{align}
+x_k^\sigma
+\left(
+\cos(\gamma_k\log x_k)
++
+i\sin(\gamma_k\log x_k)
+\right)
+&=
+\exp(\sigma\tau_k)
+\left(
+\cos(\gamma_k\tau_k)
++
+i\sin(\gamma_k\tau_k)
+\right)
+\label{eq:clocked_term_expanded}
+\\
+&=
+\exp(\sigma\tau_k)\exp(i\gamma_k\tau_k)
+\label{eq:clocked_term_euler}
+\\
+&=
+\exp\big((\sigma+i\gamma_k)\tau_k\big)
+\label{eq:clocked_term_combined}
+\\
+&=
+z_k(\sigma).
+\label{eq:clocked_term_equals_zk}
+\end{align}
+Summing \eqref{eq:clocked_term_equals_zk} from $k=3$ to $N$ gives
+\begin{equation}
+\sum_{k=3}^{N}
+x_k^\sigma
+\left(
+\cos(\gamma_k\log x_k)
++
+i\sin(\gamma_k\log x_k)
+\right)
+=
+S_N(\sigma).
+\label{eq:partial_sum_identity}
+\end{equation}
+
+Assume first that $S_N(\sigma)$ is tubarly confined. Then
+\eqref{eq:theorem_tube_condition} holds. By the identity
+\eqref{eq:partial_sum_identity}, this is exactly
+\eqref{eq:theorem_chebyshev_condition}. Thus tubular confinement implies
+controlled clocked Chebyshev cancellation.
+
+Conversely, assume that controlled clocked Chebyshev cancellation holds.
+Then \eqref{eq:theorem_chebyshev_condition} holds. By
+\eqref{eq:partial_sum_identity}, the partial sum appearing in
+\eqref{eq:theorem_chebyshev_condition} is exactly $S_N(\sigma)$.
+Therefore \eqref{eq:theorem_tube_condition} holds. Thus controlled
+clocked Chebyshev cancellation implies tubular confinement.
+
+The two statements are equivalent.
+\end{proof}
+
+\section{Critical amplitude}
+\label{sec:critical_amplitude}
+
+\begin{proposition}[Critical amplitude]
+\label{prop:critical_amplitude}
+At
+\begin{equation}
+\sigma=\frac12,
+\label{eq:sigma_half}
+\end{equation}
+the clocked Chebyshev amplitude is
+\begin{equation}
+x_k^\sigma=x_k^{1/2}.
+\label{eq:critical_amplitude_identity}
+\end{equation}
+Thus $\sigma=1/2$ is the critical amplitude level of the clocked
+Chebyshev model.
+\end{proposition}
+
+\begin{proof}
+Substitution of \eqref{eq:sigma_half} into \eqref{eq:xk_sigma_expansion}
+gives
+\begin{equation}
+x_k^\sigma=x_k^{1/2}.
+\label{eq:critical_amplitude_substitution}
+\end{equation}
+For a zero $\rho=\beta+i\gamma$, the standard zero term has the
+algebraic form
+\begin{equation}
+x^\rho
+=
+x^\beta
+\left(
+\cos(\gamma\log x)
++
+i\sin(\gamma\log x)
+\right).
+\label{eq:xrho_decomposition}
+\end{equation}
+Hence the exponent $\beta=1/2$ corresponds to the amplitude $x^{1/2}$.
+In the clocked model, the free parameter $\sigma$ plays the same formal
+amplitude role, and $\sigma=1/2$ is the critical value.
+\end{proof}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The exact identity
+\begin{equation}
+S_N(\sigma)
+=
+\sum_{k=3}^{N}
+x_k^\sigma
+\left(
+\cos(\gamma_k\log x_k)
++
+i\sin(\gamma_k\log x_k)
+\right)
+\label{eq:conclusion_identity}
+\end{equation}
+with
+\begin{equation}
+\log x_k
+=
+\pi\frac{\log\log k}{\log k}
+\label{eq:conclusion_clock}
+\end{equation}
+shows that the logarithmic phase-walk is not merely analogous to a
+Chebyshev-type oscillatory sum. It is exactly a Chebyshev-shaped
+oscillatory sum evaluated on the clocked scale \eqref{eq:conclusion_clock}.
+
+Therefore,
+\begin{equation}
+\boxed{
+\text{tubular confinement of }S_N(\sigma)
+\Longleftrightarrow
+\text{controlled cancellation of clocked Chebyshev-type terms}
+}
+\label{eq:final_equivalence}
+\end{equation}
+for every real $\sigma$.
+
+The critical case is
+\begin{equation}
+\boxed{
+\sigma=\frac12,
+}
+\label{eq:final_critical_sigma}
+\end{equation}
+because this is exactly the value for which the clocked amplitude is
+$x_k^{1/2}$.
+
+\end{document}

@@ -1,0 +1,1810 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.88in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+
+\title{Adversarial M\"obius Completions and Signed Displacement Cuts:\\
+A Combinatorial Framework with Exact Finite Results}
+\author{V\'ictor Casa\~na-Giner\\
+Bio Logic Crop Science S.L., E-46120 Alboraya (Valencia), Spain\\
+\texttt{vcasana@biologiccropscience.com}\\
+ORCID 0000-0002-8252-2608}
+\date{August 2026}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\RHC}{\mathrm{RHC}}
+\newcommand{\RHF}{\mathrm{RHF}}
+\newcommand{\BN}{B_N}
+\newcommand{\sqf}{\mathrm{sqf}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\Cut}{\operatorname{Cut}}
+\newcommand{\Ftwo}{\mathbb F_2}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study a finite, deterministic completion problem for the M\"obius function.  At scale $N$, the non-squarefree support is fixed, selected prime signs may be fixed, and the remaining prime signs are treated adversarially.  The endpoint envelope
+\[
+ B_N(\mathcal I)=\max_{x\in\mathcal C_N(\mathcal I)}
+ \left|\sum_{n\le N}x_n\right|
+\]
+separates the amount of information supplied from the worst endpoint still compatible with that information.  The first arithmetic layers admit exact closed forms: unrestricted squarefree signs and free multiplicative prime signs both have envelope $Q(N)$, while fixing the sign at $2$ gives
+\[
+ B_N=Q_{\rm odd}(N)-Q_{\rm odd}(N/2)\sim \frac{2}{\pi^2}N.
+\]
+Thus a very large reduction in the number of completions need not change the endpoint exponent.
+
+The second part of the paper develops a finite combinatorial representation of short-correlation comparisons.  For
+\[
+ C_h(x)=\sum_{n\le N-h}x_nx_{n+h},\qquad
+ d_h(x)=C_h(x)-C_h(\mu),
+\]
+the discrepancy set $D(x)=\{n:x_n\ne\mu(n)\}$ defines a cut in a signed displacement graph $G_h$.  Exactly,
+\[
+ \frac{d_h(x)}2=\Cut_{G_h}(D(x)).
+\]
+Because admissible discrepancy sets arise from prime-sign assignments, they form the image of a binary linear code.  Each displacement edge yields a parity form $q\cdot b$, and its sign is determined by the parity identity
+\[
+ -\mu(n)\mu(n+h)=(-1)^{|q|+h+1}.
+\]
+Hence every first-witness condition is an explicit threshold of low-order parity tests on the free prime-sign cube.  An exhaustive computation at $N=110$ over $2^{28}$ completions gives $9{,}311{,}936$ strict square-root excursions, a survivor chain ending in $13\to2\to0$ at lags $9,10,11$, and two hardest states with first witness $h_*=11$.  Complete signed-cut data for all $109$ lags are recorded.
+\end{abstract}
+
+\section{Scope and notation}
+
+Let
+\[
+ M(N)=\sum_{n\le N}\mu(n)
+\]
+and let
+\[
+ Q(N)=\#\{n\le N:\mu(n)\ne0\}.
+\]
+The finite program begins with a family of words
+\[
+ x=(x_1,\ldots,x_N)\in\{-1,0,1\}^N
+\]
+and progressively imposes exact arithmetic information.  If $\mathcal I$ denotes the declared information and closure rules, write
+\[
+ \mathcal C_N(\mathcal I)
+ =\{x:\ x\text{ is compatible with }\mathcal I\}
+\]
+and
+\[
+ \boxed{
+ B_N(\mathcal I)=
+ \max_{x\in\mathcal C_N(\mathcal I)}
+ \left|\sum_{n\le N}x_n\right|.
+ }
+\]
+The object is deterministic: a single surviving completion matters, irrespective of its proportion inside the state space.
+
+The strict square-root excursion class is
+\[
+ \boxed{\RHC_N=\{x:|S_x(N)|>\sqrt N\}},
+ \qquad
+ S_x(N)=\sum_{n\le N}x_n.
+\]
+For $\delta\ge0$ define
+\[
+ \boxed{
+ \RHF_{N,\delta}
+ =\{x:|S_x(N)|>N^{1/2+\delta}\},
+ \qquad
+ \RHF_{N,0}=\RHC_N.
+ }
+\]
+The distinction is finite and exact.  In particular, the false Mertens inequality
+$|M(N)|\le\sqrt N$ cannot hold for every $N$, whereas the Riemann hypothesis is equivalent to
+\[
+ M(N)=O_\varepsilon(N^{1/2+\varepsilon})
+ \qquad(\forall\,\varepsilon>0).
+\]
+
+\section{Literature boundary}
+
+The neighboring literature is substantial, but it addresses different objects.
+
+Vandehey introduced $P$-multiplicative functions, imposing
+$f(pn)=f(p)f(n)$ only for primes in a prescribed finite set $P$, and studied bounded partial sums in that weakened multiplicative setting \cite{Vandehey2012}.  Thus finite prime prescriptions and partial multiplicativity are established objects.
+
+Aymone and Sidoravicius study random multiplicative functions supported on the squarefree integers whose prime values are independent $\{\pm1\}$ variables biased toward the M\"obius signs, including an RH-equivalent probabilistic statement for a family of such models \cite{AymoneSidoravicius2017}.  Koukoulopoulos and Soundararajan prove inverse structural results for multiplicative functions with very small partial sums \cite{KoukSound2020}.  Matom\"aki, Radziwi{\l}{\l}, and Tao establish local sign-pattern results for Liouville and M\"obius \cite{MRT2016}.  These works delimit the classical multiplicative-function side of the problem.
+
+Aperiodic autocorrelation of finite binary sequences is also classical; Willms, for example, relates the full autocorrelation vector to run structure \cite{Willms2013}.  Signed graphs and signed cuts form a mature graph-theoretic framework \cite{Zaslavsky1982,Gallier2016}.  Consequently, neither ``autocorrelation'' nor ``signed cut'' by itself constitutes a novelty claim.
+
+The specific finite object isolated below is more restrictive: a simultaneous family of signed displacement graphs whose edge signs are inherited from the finite M\"obius word, with cuts restricted to discrepancy sets generated by squarefree multiplicative prime-sign completions.  Targeted searches using combinations of M\"obius autocorrelation, signed cuts, displacement graphs, multiplicative completions, and first-lag witnesses did not locate this exact formulation.  This negative search is a bibliographic boundary, not a theorem of novelty.
+
+For computational context, Hurst computed all values of $M(x)$ through $10^{16}$ and later isolated values through $10^{25}$ \cite{Hurst2018,Hurst2026}.  Those computations emphasize the distinction between computing the true M\"obius word and exhaustively solving a completion problem over exponentially many compatible words.
+
+\section{Exact endpoint envelopes for the first arithmetic layers}
+
+\subsection{Squarefree support and free multiplicativity}
+
+\begin{proposition}
+Let the nonsquarefree coordinates be fixed to zero and every squarefree coordinate be free in $\{\pm1\}$.  Then
+\[
+ \boxed{B_N^{\sqf}=Q(N)}.
+\]
+If instead the squarefree word is required to be multiplicative and all prime signs are free, then
+\[
+ \boxed{B_N^{\mult}=Q(N)}.
+\]
+\end{proposition}
+
+\begin{proof}
+The squarefree-support maximum is attained by assigning $+1$ to every squarefree coordinate.  Under multiplicativity the same word is obtained by setting every prime sign to $+1$; every squarefree value is then $+1$.
+\end{proof}
+
+Since
+\[
+ Q(N)\sim\frac{6}{\pi^2}N,
+\]
+both envelopes have exponent one.  Multiplicativity can therefore collapse the state count from exponential in $Q(N)$ to exponential in $\pi(N)$ without changing the extremal envelope.
+
+\subsection{Fixing the sign at $2$}
+
+Let $f$ be squarefree-supported and multiplicative, with
+\[
+ f(2)=-1,\qquad f(p)=\sigma_p\in\{\pm1\}\quad(p\ge3).
+\]
+
+\begin{theorem}
+For every $N$,
+\[
+ \boxed{
+ B_N^{\mu(2)}
+ =Q_{\rm odd}(N)-Q_{\rm odd}(N/2)
+ =Q_{\rm odd}(N)-Q_{\rm even}(N).
+ }
+\]
+Consequently
+\[
+ \boxed{
+ B_N^{\mu(2)}\sim\frac{2}{\pi^2}N.
+ }
+\]
+\end{theorem}
+
+\begin{proof}
+Every odd squarefree $m\le N/2$ is paired with $2m$, and
+\[
+ f(2m)=f(2)f(m)=-f(m).
+\]
+These pairs cancel.  Hence
+\[
+ S_f(N)=
+ \sum_{\substack{N/2<m\le N\\m\ {\rm odd,\ squarefree}}}f(m).
+\]
+All remaining terms are simultaneously made $+1$ by choosing the odd-prime signs appropriately, so the maximum is their count.  Finally, the even squarefree integers up to $N$ are in bijection with odd squarefree $m\le N/2$ via $m\mapsto2m$.  The standard densities are
+\[
+ Q_{\rm odd}(N)\sim\frac4{\pi^2}N,\qquad
+ Q_{\rm even}(N)\sim\frac2{\pi^2}N.
+\]
+\end{proof}
+
+Thus the finite drop
+\[
+ 16\longrightarrow6\qquad(N=25)
+\]
+is the finite manifestation of the constant change
+\[
+ \frac6{\pi^2}\longrightarrow\frac2{\pi^2},
+\]
+an asymptotic factor of three, not an exponent contraction.
+
+\subsection{Finite exponent bias}
+
+If
+\[
+ B_N=cN^\theta,
+\]
+then
+\[
+ \boxed{
+ E_N:=\frac{\log B_N}{\log N}-\frac12
+ =\theta-\frac12+\frac{\log c}{\log N}.
+ }
+\]
+Thus $E_N$ contains a large finite-size bias when $c\ne1$.  The appropriate scaling diagnostics are
+\[
+ R_N=\frac{B_N}{N}
+\]
+and a local log--log slope
+\[
+ \boxed{
+ \theta_N^{(a)}
+ =\frac{\log B_{aN}-\log B_N}{\log a}.
+ }
+\]
+For the fixed-$\mu(2)$ layer:
+\begin{center}
+\begin{tabular}{r r c c}
+\toprule
+$N$ & $B_N^{\mu(2)}$ & $B_N^{\mu(2)}/N$ & decade slope\\
+\midrule
+$10^2$&21&0.210000&0.978811\\
+$10^3$&200&0.200000&1.006252\\
+$10^4$&2029&0.202900&0.999357\\
+$10^5$&20260&0.202600&1.000099\\
+$10^6$&202646&0.202646&--\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Two distinct prime-information models}
+
+The two following models are not interchangeable.
+
+\subsection{Model A: prescribed prime signs without residual propagation}
+
+Revealed prime signs are fixed and unrevealed prime signs remain independent.  No primality statement is inferred from a residual factor.
+
+At $N=25$:
+\begin{center}
+\begin{tabular}{c r r r r}
+\toprule
+revealed signs & states & $B_{25}$ & RHC & $\RHF_{25,0.10}$\\
+\midrule
+$\{2\}$&256&6&8&0\\
+$\{2,3\}$&128&6&4&0\\
+$\{2,3,5\}$&64&6&2&0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{proposition}[Prime-singleton obstruction]
+Suppose $k$ unrevealed primes lie in $(N/2,N]$.  Then
+\[
+ B_N\ge k.
+\]
+If the true M\"obius completion is present in the admissible set, then
+\[
+ \boxed{B_N\ge 2k-|M(N)|}.
+\]
+\end{proposition}
+
+\begin{proof}
+Each such prime occurs only at its own coordinate.  After the other variables are fixed,
+\[
+ S_N=C+\sum_{p\in P_{\rm free}}\sigma_p,
+\]
+so the maximum over these signs is $|C|+k\ge k$.  Starting from the true word and flipping all $k$ prime signs changes the endpoint by $2k$, whence the second inequality.
+\end{proof}
+
+If all upper-half primes are free,
+\[
+ k=\pi(N)-\pi(N/2)\sim\frac{N}{2\log N},
+\]
+so this model retains an $N^{1-o(1)}$ endpoint obstruction.
+
+\subsection{Model B: residual closure by $P_r$}
+
+Let
+\[
+ P_r=\{p_1,\ldots,p_r\}.
+\]
+Strip known prime factors from $n$.  Repeated known factors force zero; residual $1$ fixes the sign; a residual $q\le p_r^2$ with no factor in $P_r$ is forced prime; larger unresolved residual cores are shared ternary variables.
+
+At $N=25$:
+\begin{center}
+\begin{tabular}{c r r r r}
+\toprule
+$P_r$ & states & $B_{25}$ & RHC & $\RHF_{25,0.10}$\\
+\midrule
+$\{2\}$&$3^{11}=177147$&7&1296&162\\
+$\{2,3\}$&$3^6=729$&7&18&3\\
+$\{2,3,5\}$&1&2&0&0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The endpoint has the exact form
+\[
+ S_N=A_r(N)+\sum_c w_{r,N}(c)z_c,
+\qquad z_c\in\{-1,0,1\},
+\]
+with
+\[
+ \boxed{
+ w_{r,N}(c)=
+ \sum_{\substack{d\mid P_r^\#\\dc\le N}}\mu(d).
+ }
+\]
+Hence
+\[
+ \boxed{
+ B_r^E(N)=|A_r(N)|+\sum_c|w_{r,N}(c)|
+ }
+\]
+and the endpoint distribution is encoded by
+\[
+ x^{A_r(N)}\prod_c(x^{-w_c}+1+x^{w_c}).
+\]
+
+\begin{proposition}[Residual singleton obstruction]
+Every unresolved core
+\[
+ c>\max(N/2,p_r^2),\qquad(c,P_r^\#)=1
+\]
+appears in only one endpoint coordinate.  Therefore
+\[
+ \boxed{
+ B_{N,P_r}\ge
+ L_r(N):=
+ \#\{\,\max(N/2,p_r^2)<c\le N:(c,P_r^\#)=1\,\}.
+ }
+\]
+\end{proposition}
+
+\section{Three exact combinatorial barriers}
+
+\subsection{A terminal global identity}
+
+Let $f$ be squarefree-supported and multiplicative, with $f(p)\in\{\pm1\}$.  If
+\[
+ \sum_{d\le N}f(d)\left\lfloor\frac Nd\right\rfloor=1,
+\]
+then, writing $g=\mathbf1*f$,
+\[
+ g(n)=\prod_{p\mid n}(1+f(p))\ge0
+\]
+and
+\[
+ \sum_{n\le N}g(n)=1.
+\]
+Since $g(1)=1$, one obtains $g(n)=0$ for every $2\le n\le N$, hence
+\[
+ f(p)=-1\qquad(p\le N).
+\]
+Thus this identity is terminal in the prime-sign model: it determines the entire prime-sign prefix.
+
+\subsection{Support-transport lemma}
+
+\begin{lemma}
+Let $U$ be a target coordinate set and let $A_j$ be constraint rows.  Suppose
+\[
+ d_U=\max_j|\operatorname{supp}(A_j)\cap U|.
+\]
+If a dual combination $y$ uses at most $s$ rows, then
+\[
+ \boxed{
+ \|\mathbf1_U-(A^Ty)_U\|_1\ge |U|-sd_U.
+ }
+\]
+\end{lemma}
+
+\begin{proof}
+The union of the selected row supports covers at most $sd_U$ coordinates of $U$.  At every uncovered coordinate, $(A^Ty)_u=0$, so the residual against $\mathbf1_U$ contributes exactly one.
+\end{proof}
+
+For divisor-local rows on the upper-half squarefree set, $d_U=1$.  For pointwise translational rows of bounded width $h$, $d_U=O(h)$.  This is a coverage obstruction; it does not apply to genuinely global rows.
+
+\subsection{Aggregated divisor identities and inversion}
+
+From
+\[
+ \sum_{d\mid n}\mu(d)=\delta_{n1},
+\]
+multiply by arbitrary coefficients $a_n$ and aggregate:
+\[
+ \sum_{d\le N}\mu(d)\sum_{m\le N/d}a_{dm}=a_1.
+\]
+Put
+\[
+ c_d=\sum_{m\le N/d}a_{dm}.
+\]
+Then
+\[
+ \boxed{
+ M(N)=a_1+\sum_{d\le N}\mu(d)(1-c_d)
+ }
+\]
+and
+\[
+ |M(N)|\le |a_1|
+ +\sum_{\substack{d\le N\\d\ {\rm squarefree}}}|1-c_d|.
+\]
+The transform is exactly invertible:
+\[
+ \boxed{
+ a_n=\sum_{k\le N/n}\mu(k)c_{nk}.
+ }
+\]
+In particular, the exact target $c_d\equiv1$ gives
+\[
+ a_n=M(\lfloor N/n\rfloor),
+ \qquad
+ a_1=M(N).
+\]
+If $a_n=0$ for $n>K$, then $c_d=0$ for $d>K$, and therefore the squarefree $\ell^1$ defect is at least
+\[
+ Q(N)-Q(K).
+\]
+
+\section{The fixed-$\sigma_2$ multiplicative cube}
+
+From now on,
+\[
+ x_1=1,\qquad
+ x_n=0\quad(n\text{ nonsquarefree}),
+\]
+and, for squarefree $n$,
+\[
+ \boxed{
+ x_n=\prod_{p\mid n}\sigma_p,
+ \qquad
+ \sigma_2=-1,\quad
+ \sigma_p\in\{\pm1\}\ (p\ge3).
+ }
+\]
+Thus
+\[
+ |\Omega_N|=2^{\pi(N)-1}.
+\]
+The true M\"obius word is the all-minus prime assignment.
+
+At $N=25$,
+\[
+ \boxed{
+ S_{25}
+ =\sigma_{13}+\sigma_{17}+\sigma_{19}+\sigma_{23}
+ +\sigma_3\sigma_5+\sigma_3\sigma_7.
+ }
+\]
+The variable $\sigma_{11}$ is silent.  The eight RHC extremizers are described by
+\[
+ \sigma_{13}=\sigma_{17}=\sigma_{19}=\sigma_{23}=\tau,
+ \qquad
+ \sigma_5=\sigma_7=\tau\sigma_3,
+\]
+with $\tau,\sigma_3,\sigma_{11}\in\{\pm1\}$.
+
+The first multiplicative dependence among the active endpoint monomials appears at $N=65$:
+\[
+ \boxed{
+ f(33)f(39)f(55)f(65)=1.
+ }
+\]
+
+\subsection{Exact center of the finite sign cube}
+
+Equip the free odd-prime signs with the uniform product measure.
+
+\begin{proposition}
+For $N\ge2$,
+\[
+ \boxed{\mathbb E S_N=0.}
+\]
+Moreover,
+\[
+ \boxed{
+ \mathbb E C_h=
+ \begin{cases}
+ -1,& h\text{ odd and squarefree, }2h\le N,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+ }
+\]
+\end{proposition}
+
+\begin{proof}
+The terms $x_1=1$ and $x_2=-1$ cancel in expectation.  Every other squarefree $n$ contains at least one free odd prime, so $\mathbb E x_n=0$.
+
+For $\mathbb E[x_nx_{n+h}]$ to be nonzero, every free odd prime must occur an even number of times across the two squarefree integers.  Hence $n$ and $n+h$ must have the same set of odd prime divisors.  Since they are distinct squarefree integers, they can then differ only by a factor of $2$.  As $n+h>n$, necessarily $n=h$ and $n+h=2h$, with $h$ odd squarefree.  In that case $x_hx_{2h}=-1$.
+\end{proof}
+
+\section{Short correlations and the first witness}
+
+Define
+\[
+ C_h(x;N)=\sum_{n\le N-h}x_nx_{n+h},
+ \qquad 1\le h<N,
+\]
+and
+\[
+ \boxed{
+ d_h(x;N)=C_h(x;N)-C_h(\mu;N).
+ }
+\]
+The first positive witness is
+\[
+ \boxed{
+ h_*(x;N)=\min\{h\ge1:d_h(x;N)>0\},
+ }
+\]
+when it exists.
+
+All admissible words have the same zero support as $\mu$, so
+\[
+ S_x(N)^2=\sum_{n\le N}x_n^2+
+ 2\sum_{h=1}^{N-1}C_h(x;N).
+\]
+Subtracting the M\"obius identity gives
+\[
+ \boxed{
+ \sum_{h=1}^{N-1}d_h(x;N)
+ =\frac{S_x(N)^2-M(N)^2}{2}.
+ }
+\]
+Thus $|S_x(N)|>|M(N)|$ forces at least one positive $d_h$.  The finite combinatorial question is the position of the first such $h$.
+
+For a state with witness $h_*$ define
+\[
+ D^-(x)=-\sum_{h<h_*}d_h(x)\ge0,
+ \qquad
+ J(x)=d_{h_*}(x)>0.
+\]
+These are exact descriptive quantities; $D^-$ alone does not determine $h_*$, as the $N=110$ data below show.
+
+\section{Signed displacement cuts}
+
+\subsection{Cut identity}
+
+Let
+\[
+ V_N=\{n\le N:\mu(n)\ne0\}.
+\]
+For each $h$, form the graph
+\[
+ G_h(N)=(V_N,E_h,w_h),
+\]
+where
+\[
+ E_h=\{\{n,n+h\}:1\le n\le N-h,\ n,n+h\in V_N\}
+\]
+and
+\[
+ w_h(\{n,n+h\})=-\mu(n)\mu(n+h)\in\{\pm1\}.
+\]
+For an admissible completion $x$, define its discrepancy set
+\[
+ \boxed{
+ D(x)=\{n\in V_N:x_n\ne\mu(n)\}.
+ }
+\]
+Because the zero support is fixed,
+\[
+ x_n=
+ \begin{cases}
+ -\mu(n),&n\in D(x),\\
+ \mu(n),&n\notin D(x).
+ \end{cases}
+\]
+
+Let $\partial_hD$ be the set of edges in $E_h$ with exactly one endpoint in $D$, and define the signed cut
+\[
+ \Cut_h(D)=\sum_{e\in\partial_hD}w_h(e).
+\]
+
+\begin{theorem}[Signed displacement-cut identity]
+For every admissible completion and every $1\le h<N$,
+\[
+ \boxed{
+ \frac{C_h(x)-C_h(\mu)}2
+ =\Cut_h(D(x)).
+ }
+\]
+Equivalently, if
+\[
+ A_h(x)=\#\{e\in\partial_hD:w_h(e)=+1\},
+ \qquad
+ B_h(x)=\#\{e\in\partial_hD:w_h(e)=-1\},
+\]
+then
+\[
+ \boxed{
+ d_h(x)=2(A_h(x)-B_h(x))
+ }
+\]
+and
+\[
+ \boxed{
+ h_*(x)=\min\{h:A_h(x)>B_h(x)\}.
+ }
+\]
+\end{theorem}
+
+\begin{proof}
+If both endpoints of an edge are simultaneously flipped, or neither is flipped, the product $x_nx_{n+h}$ equals $\mu(n)\mu(n+h)$.  If exactly one endpoint is flipped, the product changes sign, so
+\[
+ x_nx_{n+h}-\mu(n)\mu(n+h)
+ =-2\mu(n)\mu(n+h)=2w_h(e).
+\]
+Summing over crossing edges proves the identity.
+\end{proof}
+
+For every $h$, the underlying graph is a disjoint union of fragments of arithmetic progressions
+\[
+ r,\ r+h,\ r+2h,\ldots,
+\]
+hence a forest of paths.  If $h>N/2$, every component contains at most one edge, so $G_h$ is a matching.
+
+\subsection{Multiplicative admissibility as a binary code}
+
+Index the free odd primes by $p$.  Write
+\[
+ b_p=
+ \begin{cases}
+ 0,&\sigma_p=-1,\\
+ 1,&\sigma_p=+1.
+ \end{cases}
+\]
+For squarefree $n$,
+\[
+ \boxed{
+ \mathbf1_{D(x)}(n)
+ \equiv\sum_{\substack{p\mid n\\p\ {\rm odd}}}b_p
+ \pmod2.
+ }
+\]
+If $A$ is the binary incidence matrix
+\[
+ A_{n,p}=\mathbf1_{p\mid n}\pmod2,
+\]
+then
+\[
+ \boxed{\mathbf1_D=Ab\pmod2.}
+\]
+Thus admissible cuts are not arbitrary cuts of $G_h$; they belong to the image of a specific binary linear code generated by prime divisibility.
+
+For an edge $e=\{n,n+h\}$ define
+\[
+ \boxed{
+ q_e=A_n+A_{n+h}\in\Ftwo^{\pi(N)-1}.
+ }
+\]
+Then
+\[
+ e\in\partial_hD
+ \iff q_e\cdot b=1\pmod2.
+\]
+
+\begin{proposition}[Parity of the edge sign]
+For every displacement edge,
+\[
+ \boxed{
+ w_h(e)=(-1)^{|q_e|+h+1},
+ }
+\]
+where $|q_e|$ is the Hamming weight of $q_e$.
+\end{proposition}
+
+\begin{proof}
+For squarefree endpoints,
+\[
+ \mu(n)\mu(n+h)=(-1)^{\omega(n)+\omega(n+h)}.
+\]
+Every common odd prime contributes twice and disappears modulo $2$; the remaining odd-prime parity is $|q_e|$.  The prime $2$ lies in the symmetric difference of the prime supports exactly when $n$ and $n+h$ have opposite parity, equivalently when $h$ is odd.  Hence
+\[
+ \omega(n)+\omega(n+h)\equiv |q_e|+h\pmod2,
+\]
+and multiplying by the leading minus sign gives the formula.
+\end{proof}
+
+Group edges with the same parity form:
+\[
+ m_h(q)=\#\{e\in E_h:q_e=q\}.
+\]
+Then
+\[
+ \boxed{
+ \frac{d_h(b)}2
+ =
+ \sum_{\substack{q\\q\cdot b=1}}
+ m_h(q)(-1)^{|q|+h+1}.
+ }
+\]
+Therefore
+\[
+ \boxed{
+ h_*(b)=
+ \min\left\{
+ h:
+ \sum_{q\cdot b=1}
+ m_h(q)(-1)^{|q|+h+1}>0
+ \right\}.
+ }
+\]
+This is an exact finite threshold system of parity tests on the prime-sign cube.
+
+\section{Exact correlation benchmark at $N=25$}
+
+At $N=25$ the fixed-$\sigma_2$ family contains $256$ states.  Its endpoint distribution is
+\begin{center}
+\begin{tabular}{c|rrrrrrr}
+$S$&$-6$&$-4$&$-2$&$0$&$2$&$4$&$6$\\
+\hline
+count&4&24&60&80&60&24&4
+\end{tabular}
+\end{center}
+so exactly eight states satisfy RHC.
+
+For the true M\"obius word,
+\[
+ \boxed{(C_1,C_2,C_3)=(-3,-1,-5).}
+\]
+Sequentially imposing these exact correlation values inside the $256$-state family gives
+\[
+ \boxed{
+ 256\xrightarrow{C_1=-3}56
+ \xrightarrow{C_2=-1}19
+ \xrightarrow{C_3=-5}1.
+ }
+\]
+The unique final state is the M\"obius word.  Moreover, every one of the eight RHC states has
+\[
+ C_2\in\{3,5,7,9\},
+\]
+whereas $C_2(\mu)=-1$.
+
+\section{Canonical finite benchmark for $1\le N\le 25$}
+
+This section fixes a single reproducible finite benchmark. All counts are exact. The unrestricted ternary layer is computed by coefficient convolution of $(z^{-1}+1+z)^N$; the squarefree-support layer fixes $\mu(1)=1$, fixes zero on nonsquarefree indices, and leaves the remaining squarefree signs free; the multiplicative layer assigns free signs to the primes $p\le N$ and extends multiplicatively on squarefree integers; the last nonterminal layer additionally fixes only $\mu(2)=-1$. No true values $M(N)$ are used in these four layers.
+
+The strict endpoint classes used here are
+\[
+ \RHC_N=\{\omega:|S_\omega(N)|>\sqrt N\},
+ \qquad
+ \RHF_{N,\delta}=\{\omega:|S_\omega(N)|>N^{1/2+\delta}\}.
+\]
+The original reference population $3^N$ is retained in every table. A terminal control layer obtained by imposing the full prime rule $\mu(p)=-1$ for every prime $p\le N$ contains exactly one word and is therefore excluded from the nontrivial filtration.
+
+\subsection{Surviving completion counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r}
+\toprule $N$ & $3^N$ & squarefree support & multiplicative & multiplicative $+\mu(2)=-1$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & squarefree support & multiplicative & multiplicative $+\mu(2)=-1$\\ \midrule\endhead
+1 & 3 & 1 & 1 & 1\\
+2 & 9 & 2 & 2 & 1\\
+3 & 27 & 4 & 4 & 2\\
+4 & 81 & 4 & 4 & 2\\
+5 & 243 & 8 & 8 & 4\\
+6 & 729 & 16 & 8 & 4\\
+7 & 2{,}187 & 32 & 16 & 8\\
+8 & 6{,}561 & 32 & 16 & 8\\
+9 & 19{,}683 & 32 & 16 & 8\\
+10 & 59{,}049 & 64 & 16 & 8\\
+11 & 177{,}147 & 128 & 32 & 16\\
+12 & 531{,}441 & 128 & 32 & 16\\
+13 & 1{,}594{,}323 & 256 & 64 & 32\\
+14 & 4{,}782{,}969 & 512 & 64 & 32\\
+15 & 14{,}348{,}907 & 1{,}024 & 64 & 32\\
+16 & 43{,}046{,}721 & 1{,}024 & 64 & 32\\
+17 & 129{,}140{,}163 & 2{,}048 & 128 & 64\\
+18 & 387{,}420{,}489 & 2{,}048 & 128 & 64\\
+19 & 1{,}162{,}261{,}467 & 4{,}096 & 256 & 128\\
+20 & 3{,}486{,}784{,}401 & 4{,}096 & 256 & 128\\
+21 & 10{,}460{,}353{,}203 & 8{,}192 & 256 & 128\\
+22 & 31{,}381{,}059{,}609 & 16{,}384 & 256 & 128\\
+23 & 94{,}143{,}178{,}827 & 32{,}768 & 512 & 256\\
+24 & 282{,}429{,}536{,}481 & 32{,}768 & 512 & 256\\
+25 & 847{,}288{,}609{,}443 & 32{,}768 & 512 & 256\\
+\bottomrule\end{longtable}\end{center}
+\subsection{Extremal envelope and archival finite effective exponent}
+\begin{center}\scriptsize\begin{longtable}{r rr rr rr rr}
+\toprule & \multicolumn{2}{c}{ternary} & \multicolumn{2}{c}{squarefree} & \multicolumn{2}{c}{multiplicative} & \multicolumn{2}{c}{$+\mu(2)=-1$}\\
+$N$ & $B_N$ & $E_N$ & $B_N$ & $E_N$ & $B_N$ & $E_N$ & $B_N$ & $E_N$\\ \midrule\endfirsthead
+\toprule $N$ & $B_0$ & $E_0$ & $B_{\rm sqf}$ & $E_{\rm sqf}$ & $B_{\rm mult}$ & $E_{\rm mult}$ & $B_2$ & $E_2$\\ \midrule\endhead
+1 & 1 & -- & 1 & -- & 1 & -- & 1 & --\\
+2 & 2 & +0.50000 & 2 & +0.50000 & 2 & +0.50000 & 0 & --\\
+3 & 3 & +0.50000 & 3 & +0.50000 & 3 & +0.50000 & 1 & -0.50000\\
+4 & 4 & +0.50000 & 3 & +0.29248 & 3 & +0.29248 & 1 & -0.50000\\
+5 & 5 & +0.50000 & 4 & +0.36135 & 4 & +0.36135 & 2 & -0.06932\\
+6 & 6 & +0.50000 & 5 & +0.39824 & 5 & +0.39824 & 1 & -0.50000\\
+7 & 7 & +0.50000 & 6 & +0.42078 & 6 & +0.42078 & 2 & -0.14379\\
+8 & 8 & +0.50000 & 6 & +0.36165 & 6 & +0.36165 & 2 & -0.16667\\
+9 & 9 & +0.50000 & 6 & +0.31546 & 6 & +0.31546 & 2 & -0.18454\\
+10 & 10 & +0.50000 & 7 & +0.34510 & 7 & +0.34510 & 1 & -0.50000\\
+11 & 11 & +0.50000 & 8 & +0.36719 & 8 & +0.36719 & 2 & -0.21094\\
+12 & 12 & +0.50000 & 8 & +0.33683 & 8 & +0.33683 & 2 & -0.22106\\
+13 & 13 & +0.50000 & 9 & +0.35663 & 9 & +0.35663 & 3 & -0.07168\\
+14 & 14 & +0.50000 & 10 & +0.37250 & 10 & +0.37250 & 2 & -0.23735\\
+15 & 15 & +0.50000 & 11 & +0.38547 & 11 & +0.38547 & 3 & -0.09432\\
+16 & 16 & +0.50000 & 11 & +0.36486 & 11 & +0.36486 & 3 & -0.10376\\
+17 & 17 & +0.50000 & 12 & +0.37706 & 12 & +0.37706 & 4 & -0.01070\\
+18 & 18 & +0.50000 & 12 & +0.35972 & 12 & +0.35972 & 4 & -0.02038\\
+19 & 19 & +0.50000 & 13 & +0.37112 & 13 & +0.37112 & 5 & +0.04660\\
+20 & 20 & +0.50000 & 13 & +0.35620 & 13 & +0.35620 & 5 & +0.03724\\
+21 & 21 & +0.50000 & 14 & +0.36682 & 14 & +0.36682 & 6 & +0.08852\\
+22 & 22 & +0.50000 & 15 & +0.37610 & 15 & +0.37610 & 5 & +0.02068\\
+23 & 23 & +0.50000 & 16 & +0.38426 & 16 & +0.38426 & 6 & +0.07144\\
+24 & 24 & +0.50000 & 16 & +0.37242 & 16 & +0.37242 & 6 & +0.06379\\
+25 & 25 & +0.50000 & 16 & +0.36135 & 16 & +0.36135 & 6 & +0.05664\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHC survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary RHC & squarefree RHC & multiplicative RHC & $+\mu(2)$ RHC\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary RHC & squarefree RHC & multiplicative RHC & $+\mu(2)$ RHC\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 8 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 42 & 1 & 1 & 0\\
+6 & 729 & 156 & 6 & 2 & 0\\
+7 & 2{,}187 & 548 & 7 & 3 & 0\\
+8 & 6{,}561 & 1{,}854 & 7 & 3 & 0\\
+9 & 19{,}683 & 3{,}014 & 7 & 3 & 0\\
+10 & 59{,}049 & 10{,}386 & 8 & 2 & 0\\
+11 & 177{,}147 & 34{,}938 & 37 & 7 & 0\\
+12 & 531{,}441 & 115{,}440 & 37 & 7 & 0\\
+13 & 1{,}594{,}323 & 376{,}196 & 46 & 10 & 0\\
+14 & 4{,}782{,}969 & 1{,}212{,}672 & 176 & 16 & 0\\
+15 & 14{,}348{,}907 & 3{,}874{,}980 & 232 & 10 & 0\\
+16 & 43{,}046{,}721 & 7{,}253{,}118 & 232 & 10 & 0\\
+17 & 129{,}140{,}163 & 23{,}469{,}114 & 299 & 15 & 0\\
+18 & 387{,}420{,}489 & 75{,}346{,}590 & 299 & 15 & 0\\
+19 & 1{,}162{,}261{,}467 & 240{,}301{,}818 & 1{,}093 & 53 & 8\\
+20 & 3{,}486{,}784{,}401 & 762{,}080{,}202 & 1{,}093 & 53 & 8\\
+21 & 10{,}460{,}353{,}203 & 2{,}405{,}119{,}464 & 1{,}471 & 33 & 4\\
+22 & 31{,}381{,}059{,}609 & 7{,}558{,}657{,}992 & 4{,}944 & 56 & 8\\
+23 & 94{,}143{,}178{,}827 & 23{,}667{,}691{,}934 & 6{,}885 & 82 & 8\\
+24 & 282{,}429{,}536{,}481 & 73{,}869{,}142{,}280 & 6{,}885 & 82 & 8\\
+25 & 847{,}288{,}609{,}443 & 150{,}937{,}165{,}552 & 6{,}885 & 82 & 8\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHF$_{0.05}$ survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 8 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 42 & 1 & 1 & 0\\
+6 & 729 & 156 & 6 & 2 & 0\\
+7 & 2{,}187 & 548 & 7 & 3 & 0\\
+8 & 6{,}561 & 846 & 7 & 3 & 0\\
+9 & 19{,}683 & 3{,}014 & 7 & 3 & 0\\
+10 & 59{,}049 & 10{,}386 & 8 & 2 & 0\\
+11 & 177{,}147 & 34{,}938 & 37 & 7 & 0\\
+12 & 531{,}441 & 115{,}440 & 37 & 7 & 0\\
+13 & 1{,}594{,}323 & 200{,}592 & 46 & 10 & 0\\
+14 & 4{,}782{,}969 & 672{,}132 & 56 & 8 & 0\\
+15 & 14{,}348{,}907 & 2{,}220{,}600 & 232 & 10 & 0\\
+16 & 43{,}046{,}721 & 7{,}253{,}118 & 232 & 10 & 0\\
+17 & 129{,}140{,}163 & 23{,}469{,}114 & 299 & 15 & 0\\
+18 & 387{,}420{,}489 & 75{,}346{,}590 & 299 & 15 & 0\\
+19 & 1{,}162{,}261{,}467 & 141{,}568{,}470 & 378 & 23 & 0\\
+20 & 3{,}486{,}784{,}401 & 459{,}240{,}570 & 378 & 23 & 0\\
+21 & 10{,}460{,}353{,}203 & 1{,}479{,}280{,}662 & 1{,}471 & 33 & 4\\
+22 & 31{,}381{,}059{,}609 & 4{,}736{,}045{,}276 & 1{,}941 & 26 & 0\\
+23 & 94{,}143{,}178{,}827 & 15{,}082{,}716{,}810 & 6{,}885 & 82 & 8\\
+24 & 282{,}429{,}536{,}481 & 47{,}810{,}887{,}112 & 6{,}885 & 82 & 8\\
+25 & 847{,}288{,}609{,}443 & 150{,}937{,}165{,}552 & 6{,}885 & 82 & 8\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHF$_{0.10}$ survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 8 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 42 & 1 & 1 & 0\\
+6 & 729 & 156 & 6 & 2 & 0\\
+7 & 2{,}187 & 226 & 7 & 3 & 0\\
+8 & 6{,}561 & 846 & 7 & 3 & 0\\
+9 & 19{,}683 & 3{,}014 & 7 & 3 & 0\\
+10 & 59{,}049 & 10{,}386 & 8 & 2 & 0\\
+11 & 177{,}147 & 16{,}854 & 9 & 3 & 0\\
+12 & 531{,}441 & 58{,}812 & 9 & 3 & 0\\
+13 & 1{,}594{,}323 & 200{,}592 & 46 & 10 & 0\\
+14 & 4{,}782{,}969 & 672{,}132 & 56 & 8 & 0\\
+15 & 14{,}348{,}907 & 1{,}157{,}538 & 67 & 5 & 0\\
+16 & 43{,}046{,}721 & 3{,}922{,}206 & 67 & 5 & 0\\
+17 & 129{,}140{,}163 & 13{,}105{,}098 & 299 & 15 & 0\\
+18 & 387{,}420{,}489 & 43{,}282{,}686 & 299 & 15 & 0\\
+19 & 1{,}162{,}261{,}467 & 141{,}568{,}470 & 378 & 23 & 0\\
+20 & 3{,}486{,}784{,}401 & 257{,}959{,}890 & 378 & 23 & 0\\
+21 & 10{,}460{,}353{,}203 & 851{,}645{,}150 & 470 & 17 & 0\\
+22 & 31{,}381{,}059{,}609 & 2{,}788{,}013{,}542 & 1{,}941 & 26 & 0\\
+23 & 94{,}143{,}178{,}827 & 9{,}060{,}478{,}368 & 2{,}517 & 40 & 0\\
+24 & 282{,}429{,}536{,}481 & 29{,}257{,}136{,}160 & 2{,}517 & 40 & 0\\
+25 & 847{,}288{,}609{,}443 & 93{,}945{,}019{,}352 & 2{,}517 & 40 & 0\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHF$_{0.20}$ survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 2 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 12 & 1 & 1 & 0\\
+6 & 729 & 56 & 1 & 1 & 0\\
+7 & 2{,}187 & 226 & 7 & 3 & 0\\
+8 & 6{,}561 & 314 & 1 & 1 & 0\\
+9 & 19{,}683 & 1{,}250 & 1 & 1 & 0\\
+10 & 59{,}049 & 1{,}782 & 1 & 1 & 0\\
+11 & 177{,}147 & 7{,}020 & 9 & 3 & 0\\
+12 & 531{,}441 & 26{,}340 & 9 & 3 & 0\\
+13 & 1{,}594{,}323 & 39{,}860 & 10 & 4 & 0\\
+14 & 4{,}782{,}969 & 149{,}610 & 11 & 3 & 0\\
+15 & 14{,}348{,}907 & 544{,}068 & 67 & 5 & 0\\
+16 & 43{,}046{,}721 & 1{,}929{,}774 & 67 & 5 & 0\\
+17 & 129{,}140{,}163 & 3{,}125{,}622 & 79 & 8 & 0\\
+18 & 387{,}420{,}489 & 11{,}148{,}402 & 79 & 8 & 0\\
+19 & 1{,}162{,}261{,}467 & 39{,}021{,}138 & 92 & 12 & 0\\
+20 & 3{,}486{,}784{,}401 & 64{,}683{,}150 & 92 & 12 & 0\\
+21 & 10{,}460{,}353{,}203 & 227{,}686{,}670 & 106 & 11 & 0\\
+22 & 31{,}381{,}059{,}609 & 789{,}507{,}890 & 576 & 14 & 0\\
+23 & 94{,}143{,}178{,}827 & 2{,}702{,}576{,}730 & 697 & 22 & 0\\
+24 & 282{,}429{,}536{,}481 & 4{,}644{,}553{,}260 & 697 & 22 & 0\\
+25 & 847{,}288{,}609{,}443 & 15{,}993{,}177{,}852 & 697 & 22 & 0\\
+\bottomrule\end{longtable}\end{center}
+
+\subsection{Immediate finite observations}
+The benchmark separates reduction in state count from reduction in the extremal envelope. The $E_N$ columns are retained only as exact finite diagnostics; the closed forms above show that all four baseline envelopes have exponent one. At $N=25$ the squarefree-support layer has $32768$ words and the multiplicative layer has only $512$, yet both have $B_{25}=16$. Fixing $\sigma_2=-1$ changes the constant sharply, from $16$ to $6$, but the closed form above shows that this layer still has linear asymptotic growth. At $N=25$ it leaves eight RHC states and no $\RHF_{25,0.10}$ state. The short-correlation benchmark adds a different kind of information: the first three correlations identify the true word uniquely among the $256$ fixed-$\sigma_2$ states, and lag $2$ separates it from all eight RHC states.
+
+
+
+
+\section{Validated exhaustive computation at $N=110$}
+
+The fixed-$\sigma_2$ family has $28$ free odd-prime signs, hence
+\[
+ |\Omega_{110}|=2^{28}=268{,}435{,}456.
+\]
+The exhaustive engine was cross-checked against an independent brute-force implementation for every state for $N\le25$, reproducing the $N=25$ endpoint distribution and RHC count exactly.  The $N=110$ run used deterministic sampled audits in addition to the independent reconstruction of retained states.
+
+For RHC,
+\[
+ \boxed{\#\RHC_{110}=9{,}311{,}936}
+\]
+and
+\[
+ \boxed{H_{\max,0}(110)=11.}
+\]
+The survivor cascade is:
+\begin{center}\small
+\begin{tabular}{r r r r}
+\toprule $H$ & witnesses at $H$ & survivors after $H$ & survivor fraction\\
+\midrule
+0 & 0 & 9{,}311{,}936 & 1\\
+1 & 1{,}809{,}348 & 7{,}502{,}588 & 0.8056958295\\
+2 & 6{,}814{,}779 & 687{,}809 & 0.07386315799\\
+3 & 672{,}761 & 15{,}048 & 0.001615990488\\
+4 & 11{,}781 & 3{,}267 & 0.0003508400401\\
+5 & 1{,}801 & 1{,}466 & 0.0001574323535\\
+6 & 926 & 540 & 5.799008928e-05\\
+7 & 315 & 225 & 2.41625372e-05\\
+8 & 157 & 68 & 7.302455687e-06\\
+9 & 55 & 13 & 1.396057705e-06\\
+10 & 11 & 2 & 2.147781084e-07\\
+11 & 2 & 0 & 0\\
+\bottomrule\end{tabular}
+\end{center}
+
+The same enumeration supplies the following RHF thresholds:
+\begin{center}\small
+\begin{tabular}{c r r r r r r}
+\toprule $\delta$ & threshold & RHF states & $H_{\max}$ & $H_{50}$ & $H_{99}$ & $H_{99.9}$\\
+\midrule
+0 & 11 & 9{,}311{,}936 & 11 & 2 & 3 & 4\\
+0.01 & 11 & 9{,}311{,}936 & 11 & 2 & 3 & 4\\
+0.02 & 12 & 2{,}851{,}328 & 10 & 2 & 3 & 3\\
+0.03 & 13 & 2{,}851{,}328 & 10 & 2 & 3 & 3\\
+0.04 & 13 & 2{,}851{,}328 & 10 & 2 & 3 & 3\\
+0.05 & 14 & 697{,}792 & 5 & 2 & 2 & 3\\
+0.075 & 15 & 697{,}792 & 5 & 2 & 2 & 3\\
+0.10 & 17 & 131{,}072 & 4 & 2 & 2 & 3\\
+0.15 & 22 & 64 & 2 & 2 & 2 & 2\\
+0.20 & 27 & 0 & NA & NA & NA & NA\\
+0.25 & 34 & 0 & NA & NA & NA & NA\\
+\bottomrule\end{tabular}
+\end{center}
+
+The monotonicity of $H_{\max,\delta}$ in $\delta$ at fixed $N$ follows simply from the nesting
+\[
+ \RHF_{N,\delta_2}\subseteq\RHF_{N,\delta_1}
+ \qquad(\delta_2>\delta_1).
+\]
+
+\subsection{The thirteen states surviving through lag $9$}
+
+Exactly thirteen RHC states satisfy
+\[
+ d_h\le0\qquad(1\le h\le9).
+\]
+Exactly two also satisfy $d_{10}\le0$, and both have $h_*=11$:
+\begin{center}\scriptsize
+\begin{longtable}{r r r r r r r r}
+\toprule rank & mask & $S$ & $h_*$ & $D^-$ & $J$ & $d_{10}$ & $d_{11}$\\
+\midrule\endfirsthead
+\toprule rank & mask & $S$ & $h_*$ & $D^-$ & $J$ & $d_{10}$ & $d_{11}$\\
+\midrule\endhead
+1 & 247462518 & 11 & 11 & 18 & 8 & -2 & 8\\
+2 & 249555574 & 11 & 11 & 20 & 14 & -4 & 14\\
+3 & 268299894 & 13 & 10 & 8 & 4 & 4 & 6\\
+4 & 83952078 & -11 & 10 & 10 & 6 & 6 & 0\\
+5 & 201191030 & 11 & 10 & 14 & 2 & 2 & 6\\
+6 & 251394422 & 11 & 10 & 20 & 2 & 2 & 4\\
+7 & 251522678 & 11 & 10 & 14 & 2 & 2 & 6\\
+8 & 251525750 & 11 & 10 & 22 & 4 & 4 & 8\\
+9 & 262138422 & 11 & 10 & 6 & 2 & 2 & 14\\
+10 & 264105590 & 11 & 10 & 16 & 2 & 2 & 4\\
+11 & 267892190 & 11 & 10 & 18 & 2 & 2 & 0\\
+12 & 268154334 & 11 & 10 & 18 & 2 & 2 & 0\\
+13 & 268303094 & 11 & 10 & 18 & 6 & 6 & 4\\
+\bottomrule\end{longtable}
+\end{center}
+
+For $N=110$,
+\[
+ M(110)=-5.
+\]
+Both hardest states have $S=11$, so
+\[
+ \sum_{h=1}^{109}d_h
+ =\frac{11^2-(-5)^2}{2}
+ =48.
+\]
+Their canonical masks are
+\[
+ \boxed{247462518,\qquad249555574.}
+\]
+They differ only at
+\[
+ \boxed{\{43,83,86,89\}},
+\]
+and the four flipped signs have zero total mass, so the endpoint is unchanged.
+
+For the first record,
+\[
+ (d_1,\ldots,d_{11})
+ =(-6,0,0,0,-2,-6,0,-2,0,-2,8),
+\]
+while for the second,
+\[
+ (d_1,\ldots,d_{11})
+ =(-2,0,-2,-6,-2,0,-2,-2,0,-4,14).
+\]
+Thus the transition
+\[
+ 13\longrightarrow2\longrightarrow0
+\]
+is exact: eleven states first become positive at lag $10$, whereas the remaining two still have
+\[
+ d_{10}=-2,-4
+\]
+and then jump to
+\[
+ d_{11}=8,14.
+\]
+
+The pre-witness deficits of the two records are $18$ and $20$.  They are not maximal among the thirteen survivors: one $h_*=10$ state has $D^-=22$.  Hence a larger accumulated deficit does not by itself imply a later first witness.
+
+\subsection{Exact $h=10$ and $h=11$ parity systems}
+
+At $h=10$ there are $33$ displacement edges and $33$ distinct parity forms $q$.  Their Hamming-weight distribution is
+\begin{center}
+\begin{tabular}{c|rrrr}
+$|q|$&1&2&3&4\\
+\hline
+number&2&13&17&1\\
+edge sign&$+$&$-$&$+$&$-$
+\end{tabular}
+\end{center}
+because $h=10$ is even.
+
+At $h=11$ there are $32$ edges and $31$ distinct parity forms.  The Hamming-weight distribution, counted with edge multiplicity, is
+\begin{center}
+\begin{tabular}{c|rrrrr}
+$|q|$&0&1&2&3&4\\
+\hline
+number&1&2&11&16&2\\
+edge sign&$+$&$-$&$+$&$-$&$+$
+\end{tabular}
+\end{center}
+because $h=11$ is odd.  The $q=0$ edge never crosses an admissible multiplicative cut.
+
+The first record has
+\[
+ A_{10}-B_{10}=-1,\qquad A_{11}-B_{11}=4,
+\]
+and the second has
+\[
+ A_{10}-B_{10}=-2,\qquad A_{11}-B_{11}=7,
+\]
+which gives exactly
+\[
+ d_{10}=-2,-4,\qquad d_{11}=8,14.
+\]
+
+\subsection{Linear rank is already saturated at lag $2$}
+
+For $N=110$,
+\[
+ \operatorname{rank}_{\Ftwo}Q_1=26,\qquad
+ \operatorname{rank}_{\Ftwo}Q_2=27,
+\]
+but
+\[
+ \boxed{
+ \operatorname{rank}_{\Ftwo}(Q_1\cup Q_2)=28,
+ }
+\]
+the full number of free prime-sign bits.  Consequently,
+\[
+ \operatorname{rank}_{\Ftwo}(Q_1\cup\cdots\cup Q_H)=28
+ \qquad(H\ge2).
+\]
+Thus the later lags do not reveal new linear directions in the prime-sign cube.  They impose new weighted parity thresholds on an already full-rank family.
+
+For every displacement edge at $N=110$,
+\[
+ \boxed{|q_e|\le4.}
+\]
+The parity tests are therefore of degree at most four in the free prime-sign bits.  Collisions $q_e=q_{e'}$ are rare: the largest collision count occurs at $h=63$, where $21$ edges give $18$ distinct parity forms.
+
+\subsection{Complete signed-cut profile of the thirteen survivors}
+
+Among the thirteen states, the lags at which all thirteen cuts are strictly positive are
+\[
+ \boxed{15,16,27,28,45,46,55,83,95,}
+\]
+and the lags at which all thirteen are strictly negative are
+\[
+ \boxed{30,60,73,86,92,94,98,105.}
+\]
+The lags at which no one of the thirteen has a positive cut are
+\[
+ \boxed{
+ 1,2,3,4,5,6,7,8,9,29,30,36,37,59,60,73,76,86,92,94,98,99,105,107.
+ }
+\]
+Some signs are forced already by the displacement graph, independently of multiplicative admissibility: at
+\[
+ h=98,105,107
+\]
+every existing edge has negative weight, while at $h=109$ the unique edge has positive weight.
+
+The complete aggregate data for all $109$ lags are:
+\begin{center}\scriptsize
+\begin{longtable}{r r r r r r r}
+\toprule $h$ & $d_h<0$ & $d_h=0$ & $d_h>0$ & $\min d_h$ & $\max d_h$ & $\sum d_h$\\
+\midrule\endfirsthead
+\toprule $h$ & $d_h<0$ & $d_h=0$ & $d_h>0$ & $\min d_h$ & $\max d_h$ & $\sum d_h$\\
+\midrule\endhead
+1 & 8 & 5 & 0 & -6 & 0 & -30\\
+2 & 6 & 7 & 0 & -4 & 0 & -14\\
+3 & 7 & 6 & 0 & -2 & 0 & -14\\
+4 & 6 & 7 & 0 & -6 & 0 & -22\\
+5 & 9 & 4 & 0 & -6 & 0 & -26\\
+6 & 8 & 5 & 0 & -6 & 0 & -28\\
+7 & 5 & 8 & 0 & -4 & 0 & -12\\
+8 & 8 & 5 & 0 & -6 & 0 & -22\\
+9 & 5 & 8 & 0 & -10 & 0 & -28\\
+10 & 2 & 0 & 11 & -4 & 6 & 28\\
+11 & 0 & 3 & 10 & 0 & 14 & 74\\
+12 & 3 & 2 & 8 & -4 & 6 & 30\\
+13 & 3 & 5 & 5 & -4 & 6 & 6\\
+14 & 1 & 0 & 12 & -2 & 8 & 42\\
+15 & 0 & 0 & 13 & 18 & 26 & 288\\
+16 & 0 & 0 & 13 & 8 & 18 & 156\\
+17 & 3 & 4 & 6 & -14 & 8 & 0\\
+18 & 4 & 3 & 6 & -4 & 8 & 14\\
+19 & 11 & 0 & 2 & -6 & 2 & -42\\
+20 & 11 & 0 & 2 & -10 & 8 & -50\\
+21 & 2 & 5 & 6 & -2 & 16 & 42\\
+22 & 1 & 1 & 11 & -2 & 8 & 36\\
+23 & 1 & 2 & 10 & -6 & 8 & 46\\
+24 & 6 & 3 & 4 & -12 & 4 & -20\\
+25 & 7 & 5 & 1 & -10 & 2 & -22\\
+26 & 2 & 0 & 11 & -6 & 10 & 52\\
+27 & 0 & 0 & 13 & 4 & 12 & 102\\
+28 & 0 & 0 & 13 & 2 & 18 & 152\\
+29 & 11 & 2 & 0 & -10 & 0 & -72\\
+30 & 13 & 0 & 0 & -18 & -6 & -170\\
+31 & 9 & 1 & 3 & -8 & 6 & -26\\
+32 & 2 & 0 & 11 & -2 & 20 & 82\\
+33 & 1 & 1 & 11 & -2 & 16 & 56\\
+34 & 4 & 1 & 8 & -6 & 4 & 8\\
+35 & 9 & 1 & 3 & -12 & 6 & -56\\
+36 & 11 & 2 & 0 & -22 & 0 & -120\\
+37 & 11 & 2 & 0 & -8 & 0 & -48\\
+38 & 1 & 2 & 10 & -4 & 8 & 38\\
+39 & 4 & 1 & 8 & -6 & 8 & 30\\
+40 & 8 & 2 & 3 & -6 & 8 & -22\\
+41 & 4 & 1 & 8 & -10 & 8 & 18\\
+42 & 10 & 2 & 1 & -14 & 4 & -62\\
+43 & 1 & 3 & 9 & -2 & 6 & 26\\
+44 & 0 & 4 & 9 & 0 & 10 & 36\\
+45 & 0 & 0 & 13 & 4 & 18 & 152\\
+46 & 0 & 0 & 13 & 4 & 10 & 90\\
+47 & 11 & 1 & 1 & -10 & 2 & -76\\
+48 & 9 & 1 & 3 & -14 & 4 & -64\\
+49 & 2 & 4 & 7 & -8 & 4 & 6\\
+50 & 5 & 6 & 2 & -6 & 6 & -6\\
+51 & 3 & 2 & 8 & -10 & 8 & 28\\
+52 & 1 & 1 & 11 & -2 & 10 & 68\\
+53 & 4 & 3 & 6 & -4 & 6 & 18\\
+54 & 3 & 0 & 10 & -2 & 10 & 32\\
+55 & 0 & 0 & 13 & 2 & 6 & 56\\
+56 & 2 & 0 & 11 & -2 & 10 & 62\\
+57 & 2 & 4 & 7 & -4 & 8 & 26\\
+58 & 8 & 3 & 2 & -6 & 4 & -22\\
+59 & 12 & 1 & 0 & -14 & 0 & -110\\
+60 & 13 & 0 & 0 & -16 & -4 & -108\\
+61 & 8 & 3 & 2 & -6 & 6 & -22\\
+62 & 4 & 4 & 5 & -8 & 6 & -2\\
+63 & 1 & 1 & 11 & -6 & 6 & 34\\
+64 & 4 & 2 & 7 & -2 & 6 & 20\\
+65 & 7 & 5 & 1 & -8 & 4 & -22\\
+66 & 1 & 4 & 8 & -2 & 6 & 26\\
+67 & 2 & 0 & 11 & -4 & 10 & 68\\
+68 & 5 & 3 & 5 & -12 & 2 & -20\\
+69 & 0 & 3 & 10 & 0 & 10 & 46\\
+70 & 6 & 4 & 3 & -6 & 4 & -12\\
+71 & 10 & 1 & 2 & -8 & 4 & -48\\
+72 & 2 & 4 & 7 & -2 & 8 & 22\\
+73 & 13 & 0 & 0 & -8 & -2 & -60\\
+74 & 0 & 2 & 11 & 0 & 8 & 38\\
+75 & 0 & 4 & 9 & 0 & 10 & 38\\
+76 & 12 & 1 & 0 & -12 & 0 & -92\\
+77 & 0 & 3 & 10 & 0 & 8 & 36\\
+78 & 2 & 2 & 9 & -6 & 6 & 24\\
+79 & 4 & 0 & 9 & -6 & 8 & 32\\
+80 & 3 & 6 & 4 & -8 & 4 & -8\\
+81 & 12 & 0 & 1 & -8 & 2 & -74\\
+82 & 0 & 1 & 12 & 0 & 8 & 66\\
+83 & 0 & 0 & 13 & 2 & 8 & 74\\
+84 & 6 & 2 & 5 & -6 & 6 & 4\\
+85 & 7 & 5 & 1 & -4 & 2 & -18\\
+86 & 13 & 0 & 0 & -6 & -2 & -52\\
+87 & 7 & 5 & 1 & -4 & 8 & -10\\
+88 & 2 & 5 & 6 & -4 & 12 & 28\\
+89 & 1 & 11 & 1 & -2 & 8 & 6\\
+90 & 1 & 1 & 11 & -4 & 6 & 42\\
+91 & 1 & 2 & 10 & -4 & 8 & 62\\
+92 & 13 & 0 & 0 & -4 & -2 & -42\\
+93 & 8 & 4 & 1 & -2 & 2 & -14\\
+94 & 13 & 0 & 0 & -4 & -2 & -44\\
+95 & 0 & 0 & 13 & 2 & 8 & 46\\
+96 & 1 & 5 & 7 & -2 & 4 & 14\\
+97 & 3 & 0 & 10 & -2 & 4 & 16\\
+98 & 13 & 0 & 0 & -8 & -4 & -66\\
+99 & 12 & 1 & 0 & -6 & 0 & -54\\
+100 & 10 & 2 & 1 & -8 & 2 & -70\\
+101 & 0 & 1 & 12 & 0 & 4 & 26\\
+102 & 1 & 1 & 11 & -2 & 2 & 20\\
+103 & 1 & 2 & 10 & -2 & 4 & 38\\
+104 & 3 & 0 & 10 & -4 & 4 & 14\\
+105 & 13 & 0 & 0 & -4 & -2 & -50\\
+106 & 1 & 11 & 1 & -2 & 2 & 0\\
+107 & 12 & 1 & 0 & -4 & 0 & -44\\
+108 & 0 & 11 & 2 & 0 & 2 & 4\\
+109 & 0 & 3 & 10 & 0 & 2 & 20\\
+\bottomrule\end{longtable}
+\end{center}
+
+\section{Complete parity-form statistics for all lags at $N=110$}
+
+For each $h$, the following table records the number of squarefree displacement edges, the number of distinct parity forms $q_e$, the number of collisions, the rank of the forms at that lag, the cumulative rank through that lag, and the maximum Hamming weight of a form.
+\begin{center}\scriptsize
+\begin{longtable}{r r r r r r r}
+\toprule $h$ & $|E_h|$ & distinct $q$ & collisions & $\operatorname{rank}Q_h$ & cumulative rank & $\max|q|$\\
+\midrule\endfirsthead
+\toprule $h$ & $|E_h|$ & distinct $q$ & collisions & $\operatorname{rank}Q_h$ & cumulative rank & $\max|q|$\\
+\midrule\endhead
+1 & 38 & 38 & 0 & 26 & 26 & 4\\
+2 & 37 & 37 & 0 & 27 & 28 & 4\\
+3 & 35 & 35 & 0 & 25 & 28 & 3\\
+4 & 54 & 54 & 0 & 26 & 28 & 4\\
+5 & 36 & 35 & 1 & 24 & 28 & 3\\
+6 & 35 & 35 & 0 & 27 & 28 & 4\\
+7 & 34 & 33 & 1 & 23 & 28 & 4\\
+8 & 50 & 50 & 0 & 26 & 28 & 4\\
+9 & 38 & 36 & 2 & 23 & 28 & 3\\
+10 & 33 & 33 & 0 & 26 & 28 & 4\\
+11 & 32 & 31 & 1 & 20 & 28 & 4\\
+12 & 49 & 49 & 0 & 27 & 28 & 4\\
+13 & 32 & 31 & 1 & 23 & 28 & 4\\
+14 & 33 & 32 & 1 & 26 & 28 & 4\\
+15 & 33 & 32 & 1 & 23 & 28 & 3\\
+16 & 47 & 46 & 1 & 25 & 28 & 4\\
+17 & 30 & 30 & 0 & 20 & 28 & 4\\
+18 & 35 & 35 & 0 & 25 & 28 & 4\\
+19 & 31 & 31 & 0 & 21 & 28 & 4\\
+20 & 45 & 44 & 1 & 25 & 28 & 4\\
+21 & 30 & 29 & 1 & 22 & 28 & 3\\
+22 & 29 & 29 & 0 & 23 & 28 & 4\\
+23 & 32 & 32 & 0 & 22 & 28 & 4\\
+24 & 44 & 44 & 0 & 25 & 28 & 3\\
+25 & 29 & 29 & 0 & 20 & 28 & 4\\
+26 & 28 & 28 & 0 & 23 & 28 & 4\\
+27 & 33 & 33 & 0 & 24 & 28 & 3\\
+28 & 41 & 39 & 2 & 24 & 28 & 4\\
+29 & 27 & 27 & 0 & 20 & 28 & 4\\
+30 & 28 & 28 & 0 & 25 & 28 & 3\\
+31 & 29 & 29 & 0 & 21 & 28 & 4\\
+32 & 41 & 39 & 2 & 25 & 28 & 4\\
+33 & 25 & 24 & 1 & 21 & 28 & 3\\
+34 & 25 & 25 & 0 & 23 & 28 & 4\\
+35 & 26 & 25 & 1 & 20 & 28 & 3\\
+36 & 43 & 43 & 0 & 25 & 28 & 4\\
+37 & 23 & 23 & 0 & 19 & 28 & 4\\
+38 & 25 & 25 & 0 & 24 & 28 & 4\\
+39 & 24 & 24 & 0 & 20 & 28 & 3\\
+40 & 36 & 35 & 1 & 23 & 28 & 4\\
+41 & 23 & 23 & 0 & 19 & 28 & 4\\
+42 & 22 & 22 & 0 & 22 & 28 & 3\\
+43 & 22 & 22 & 0 & 20 & 28 & 4\\
+44 & 32 & 32 & 0 & 23 & 28 & 4\\
+45 & 23 & 22 & 1 & 20 & 28 & 3\\
+46 & 21 & 21 & 0 & 20 & 28 & 4\\
+47 & 21 & 21 & 0 & 17 & 28 & 4\\
+48 & 32 & 31 & 1 & 23 & 28 & 3\\
+49 & 19 & 19 & 0 & 17 & 28 & 3\\
+50 & 23 & 23 & 0 & 22 & 28 & 3\\
+51 & 22 & 22 & 0 & 18 & 28 & 3\\
+52 & 29 & 29 & 0 & 23 & 28 & 4\\
+53 & 17 & 17 & 0 & 15 & 28 & 4\\
+54 & 22 & 22 & 0 & 21 & 28 & 3\\
+55 & 21 & 21 & 0 & 16 & 28 & 3\\
+56 & 28 & 28 & 0 & 23 & 28 & 4\\
+57 & 17 & 17 & 0 & 15 & 28 & 3\\
+58 & 17 & 17 & 0 & 17 & 28 & 4\\
+59 & 20 & 20 & 0 & 19 & 28 & 4\\
+60 & 25 & 25 & 0 & 22 & 28 & 3\\
+61 & 15 & 15 & 0 & 15 & 28 & 4\\
+62 & 16 & 16 & 0 & 16 & 28 & 4\\
+63 & 21 & 18 & 3 & 16 & 28 & 3\\
+64 & 25 & 25 & 0 & 21 & 28 & 4\\
+65 & 16 & 15 & 1 & 15 & 28 & 3\\
+66 & 17 & 17 & 0 & 17 & 28 & 3\\
+67 & 17 & 17 & 0 & 17 & 28 & 4\\
+68 & 23 & 23 & 0 & 21 & 28 & 4\\
+69 & 14 & 14 & 0 & 13 & 28 & 3\\
+70 & 14 & 14 & 0 & 14 & 28 & 3\\
+71 & 16 & 16 & 0 & 15 & 28 & 4\\
+72 & 23 & 22 & 1 & 20 & 28 & 3\\
+73 & 13 & 13 & 0 & 13 & 28 & 3\\
+74 & 13 & 13 & 0 & 13 & 28 & 4\\
+75 & 13 & 12 & 1 & 12 & 28 & 2\\
+76 & 18 & 18 & 0 & 16 & 28 & 4\\
+77 & 11 & 11 & 0 & 11 & 28 & 3\\
+78 & 11 & 11 & 0 & 11 & 28 & 3\\
+79 & 11 & 11 & 0 & 11 & 28 & 4\\
+80 & 16 & 16 & 0 & 15 & 28 & 3\\
+81 & 11 & 11 & 0 & 11 & 28 & 3\\
+82 & 10 & 10 & 0 & 10 & 28 & 4\\
+83 & 10 & 10 & 0 & 10 & 28 & 4\\
+84 & 14 & 14 & 0 & 14 & 28 & 3\\
+85 & 7 & 7 & 0 & 7 & 28 & 3\\
+86 & 10 & 10 & 0 & 10 & 28 & 4\\
+87 & 9 & 9 & 0 & 9 & 28 & 3\\
+88 & 12 & 12 & 0 & 11 & 28 & 4\\
+89 & 7 & 7 & 0 & 7 & 28 & 4\\
+90 & 9 & 9 & 0 & 9 & 28 & 2\\
+91 & 8 & 8 & 0 & 8 & 28 & 3\\
+92 & 10 & 10 & 0 & 10 & 28 & 4\\
+93 & 6 & 6 & 0 & 6 & 28 & 3\\
+94 & 6 & 6 & 0 & 6 & 28 & 4\\
+95 & 7 & 7 & 0 & 7 & 28 & 3\\
+96 & 8 & 8 & 0 & 8 & 28 & 3\\
+97 & 4 & 4 & 0 & 4 & 28 & 3\\
+98 & 4 & 4 & 0 & 4 & 28 & 2\\
+99 & 6 & 6 & 0 & 6 & 28 & 2\\
+100 & 7 & 7 & 0 & 7 & 28 & 2\\
+101 & 4 & 4 & 0 & 4 & 28 & 2\\
+102 & 4 & 4 & 0 & 4 & 28 & 2\\
+103 & 4 & 4 & 0 & 4 & 28 & 3\\
+104 & 5 & 5 & 0 & 5 & 28 & 3\\
+105 & 3 & 3 & 0 & 3 & 28 & 1\\
+106 & 2 & 2 & 0 & 2 & 28 & 2\\
+107 & 2 & 2 & 0 & 2 & 28 & 3\\
+108 & 2 & 2 & 0 & 2 & 28 & 2\\
+109 & 1 & 1 & 0 & 1 & 28 & 2\\
+\bottomrule\end{longtable}
+\end{center}
+
+\section{Complete profiles of the two hardest states}
+
+\subsection{Mask 247462518}
+\begin{center}\scriptsize
+\begin{longtable}{r r r r r r}
+\toprule $h$ & $A_h$ & $B_h$ & $d_h$ & $C_h(x)$ & $C_h(\mu)$\\
+\midrule\endfirsthead
+\toprule $h$ & $A_h$ & $B_h$ & $d_h$ & $C_h(x)$ & $C_h(\mu)$\\
+\midrule\endhead
+1 & 8 & 11 & -6 & -2 & 4\\
+2 & 8 & 8 & 0 & -3 & -3\\
+3 & 10 & 10 & 0 & -13 & -13\\
+4 & 10 & 10 & 0 & -6 & -6\\
+5 & 8 & 9 & -2 & 4 & 6\\
+6 & 6 & 9 & -6 & 5 & 11\\
+7 & 10 & 10 & 0 & 0 & 0\\
+8 & 13 & 14 & -2 & -4 & -2\\
+9 & 10 & 10 & 0 & -12 & -12\\
+10 & 6 & 7 & -2 & -7 & -5\\
+11 & 9 & 5 & 8 & 12 & 4\\
+12 & 14 & 11 & 6 & 19 & 13\\
+13 & 9 & 8 & 2 & 6 & 4\\
+14 & 9 & 8 & 2 & -1 & -3\\
+15 & 14 & 3 & 22 & -3 & -25\\
+16 & 14 & 8 & 12 & 1 & -11\\
+17 & 5 & 7 & -4 & -2 & 2\\
+18 & 11 & 11 & 0 & 7 & 7\\
+19 & 7 & 9 & -4 & -1 & 3\\
+20 & 9 & 11 & -4 & -5 & -1\\
+21 & 4 & 4 & 0 & -14 & -14\\
+22 & 8 & 7 & 2 & -1 & -3\\
+23 & 8 & 6 & 4 & 4 & 0\\
+24 & 10 & 10 & 0 & 10 & 10\\
+25 & 6 & 6 & 0 & 1 & 1\\
+26 & 7 & 2 & 10 & 10 & 0\\
+27 & 10 & 6 & 8 & -3 & -11\\
+28 & 15 & 9 & 12 & 5 & -7\\
+29 & 3 & 6 & -6 & 3 & 9\\
+30 & 3 & 10 & -14 & 2 & 16\\
+31 & 4 & 6 & -4 & 1 & 5\\
+32 & 11 & 10 & 2 & -5 & -7\\
+33 & 6 & 5 & 2 & -9 & -11\\
+34 & 7 & 5 & 4 & 5 & 1\\
+35 & 4 & 5 & -2 & -4 & -2\\
+36 & 8 & 12 & -8 & 7 & 15\\
+37 & 5 & 5 & 0 & 5 & 5\\
+38 & 8 & 6 & 4 & 3 & -1\\
+39 & 7 & 5 & 4 & 2 & -2\\
+40 & 8 & 10 & -4 & -4 & 0\\
+41 & 5 & 4 & 2 & 5 & 3\\
+42 & 4 & 6 & -4 & 4 & 8\\
+43 & 4 & 3 & 2 & 4 & 2\\
+44 & 10 & 9 & 2 & -2 & -4\\
+45 & 8 & 2 & 12 & -1 & -13\\
+46 & 6 & 4 & 4 & -3 & -7\\
+47 & 1 & 5 & -8 & -7 & 1\\
+48 & 7 & 10 & -6 & 2 & 8\\
+49 & 6 & 5 & 2 & 3 & 1\\
+50 & 6 & 6 & 0 & -1 & -1\\
+51 & 7 & 6 & 2 & -2 & -4\\
+52 & 7 & 2 & 10 & 5 & -5\\
+53 & 5 & 6 & -2 & -5 & -3\\
+54 & 5 & 4 & 2 & 6 & 4\\
+55 & 6 & 4 & 4 & 3 & -1\\
+56 & 7 & 6 & 2 & 4 & 2\\
+57 & 6 & 4 & 4 & -1 & -5\\
+58 & 2 & 5 & -6 & -9 & -3\\
+59 & 2 & 8 & -12 & -6 & 6\\
+60 & 5 & 8 & -6 & 5 & 11\\
+61 & 5 & 5 & 0 & 3 & 3\\
+62 & 3 & 2 & 2 & 2 & 0\\
+63 & 4 & 2 & 4 & -3 & -7\\
+64 & 5 & 5 & 0 & -3 & -3\\
+65 & 3 & 4 & -2 & -2 & 0\\
+66 & 4 & 2 & 4 & 7 & 3\\
+67 & 5 & 1 & 8 & 9 & 1\\
+68 & 4 & 3 & 2 & 5 & 3\\
+69 & 3 & 2 & 2 & -4 & -6\\
+70 & 4 & 6 & -4 & -4 & 0\\
+71 & 3 & 6 & -6 & -4 & 2\\
+72 & 5 & 5 & 0 & 3 & 3\\
+73 & 1 & 4 & -6 & -1 & 5\\
+74 & 6 & 4 & 4 & 1 & -3\\
+75 & 6 & 3 & 6 & -1 & -7\\
+76 & 2 & 6 & -8 & -6 & 2\\
+77 & 4 & 3 & 2 & -1 & -3\\
+78 & 4 & 1 & 6 & 9 & 3\\
+79 & 3 & 1 & 4 & 5 & 1\\
+80 & 5 & 5 & 0 & 2 & 2\\
+81 & 1 & 5 & -8 & -7 & 1\\
+82 & 4 & 2 & 4 & 0 & -4\\
+83 & 3 & 0 & 6 & 0 & -6\\
+84 & 3 & 4 & -2 & 0 & 2\\
+85 & 1 & 2 & -2 & 1 & 3\\
+86 & 2 & 3 & -2 & 0 & 2\\
+87 & 2 & 2 & 0 & -3 & -3\\
+88 & 2 & 3 & -2 & -6 & -4\\
+89 & 0 & 0 & 0 & -3 & -3\\
+90 & 3 & 0 & 6 & 9 & 3\\
+91 & 5 & 1 & 8 & 6 & -2\\
+92 & 1 & 3 & -4 & -2 & 2\\
+93 & 0 & 1 & -2 & -4 & -2\\
+94 & 0 & 2 & -4 & 0 & 4\\
+95 & 2 & 1 & 2 & -1 & -3\\
+96 & 2 & 2 & 0 & 2 & 2\\
+97 & 1 & 0 & 2 & 2 & 0\\
+98 & 0 & 2 & -4 & 0 & 4\\
+99 & 0 & 2 & -4 & -4 & 0\\
+100 & 0 & 4 & -8 & -5 & 3\\
+101 & 2 & 1 & 2 & 0 & -2\\
+102 & 1 & 0 & 2 & 4 & 2\\
+103 & 2 & 0 & 4 & 4 & 0\\
+104 & 2 & 1 & 2 & 1 & -1\\
+105 & 0 & 2 & -4 & -1 & 3\\
+106 & 1 & 1 & 0 & 0 & 0\\
+107 & 0 & 2 & -4 & -2 & 2\\
+108 & 1 & 1 & 0 & 0 & 0\\
+109 & 1 & 0 & 2 & 1 & -1\\
+\bottomrule\end{longtable}
+\end{center}
+
+\subsection{Mask 249555574}
+\begin{center}\scriptsize
+\begin{longtable}{r r r r r r}
+\toprule $h$ & $A_h$ & $B_h$ & $d_h$ & $C_h(x)$ & $C_h(\mu)$\\
+\midrule\endfirsthead
+\toprule $h$ & $A_h$ & $B_h$ & $d_h$ & $C_h(x)$ & $C_h(\mu)$\\
+\midrule\endhead
+1 & 9 & 10 & -2 & 2 & 4\\
+2 & 9 & 9 & 0 & -3 & -3\\
+3 & 9 & 10 & -2 & -15 & -13\\
+4 & 10 & 13 & -6 & -12 & -6\\
+5 & 8 & 9 & -2 & 4 & 6\\
+6 & 8 & 8 & 0 & 11 & 11\\
+7 & 10 & 11 & -2 & -2 & 0\\
+8 & 13 & 14 & -2 & -4 & -2\\
+9 & 10 & 10 & 0 & -12 & -12\\
+10 & 6 & 8 & -4 & -9 & -5\\
+11 & 11 & 4 & 14 & 18 & 4\\
+12 & 13 & 13 & 0 & 13 & 13\\
+13 & 10 & 7 & 6 & 10 & 4\\
+14 & 9 & 7 & 4 & 1 & -3\\
+15 & 14 & 3 & 22 & -3 & -25\\
+16 & 14 & 10 & 8 & -3 & -11\\
+17 & 6 & 5 & 2 & 4 & 2\\
+18 & 10 & 9 & 2 & 9 & 7\\
+19 & 8 & 11 & -6 & -3 & 3\\
+20 & 9 & 11 & -4 & -5 & -1\\
+21 & 5 & 2 & 6 & -8 & -14\\
+22 & 8 & 6 & 4 & 1 & -3\\
+23 & 10 & 6 & 8 & 8 & 0\\
+24 & 12 & 15 & -6 & 4 & 10\\
+25 & 6 & 6 & 0 & 1 & 1\\
+26 & 7 & 4 & 6 & 6 & 0\\
+27 & 10 & 6 & 8 & -3 & -11\\
+28 & 17 & 8 & 18 & 11 & -7\\
+29 & 4 & 7 & -6 & 3 & 9\\
+30 & 3 & 12 & -18 & -2 & 16\\
+31 & 4 & 7 & -6 & -1 & 5\\
+32 & 11 & 9 & 4 & -3 & -7\\
+33 & 8 & 5 & 6 & -5 & -11\\
+34 & 7 & 5 & 4 & 5 & 1\\
+35 & 4 & 7 & -6 & -8 & -2\\
+36 & 8 & 14 & -12 & 3 & 15\\
+37 & 3 & 5 & -4 & 1 & 5\\
+38 & 7 & 7 & 0 & -1 & -1\\
+39 & 9 & 5 & 8 & 6 & -2\\
+40 & 8 & 8 & 0 & 0 & 0\\
+41 & 5 & 4 & 2 & 5 & 3\\
+42 & 2 & 6 & -8 & 0 & 8\\
+43 & 5 & 3 & 4 & 6 & 2\\
+44 & 11 & 9 & 4 & 0 & -4\\
+45 & 10 & 2 & 16 & 3 & -13\\
+46 & 6 & 3 & 6 & -1 & -7\\
+47 & 1 & 5 & -8 & -7 & 1\\
+48 & 5 & 10 & -10 & -2 & 8\\
+49 & 6 & 5 & 2 & 3 & 1\\
+50 & 5 & 6 & -2 & -3 & -1\\
+51 & 7 & 5 & 4 & 0 & -4\\
+52 & 6 & 5 & 2 & -3 & -5\\
+53 & 5 & 6 & -2 & -5 & -3\\
+54 & 6 & 4 & 4 & 8 & 4\\
+55 & 6 & 4 & 4 & 3 & -1\\
+56 & 9 & 6 & 6 & 8 & 2\\
+57 & 6 & 4 & 4 & -1 & -5\\
+58 & 2 & 3 & -2 & -5 & -3\\
+59 & 2 & 8 & -12 & -6 & 6\\
+60 & 5 & 10 & -10 & 1 & 11\\
+61 & 4 & 5 & -2 & 1 & 3\\
+62 & 4 & 1 & 6 & 6 & 0\\
+63 & 3 & 2 & 2 & -5 & -7\\
+64 & 5 & 6 & -2 & -5 & -3\\
+65 & 3 & 5 & -4 & -4 & 0\\
+66 & 4 & 5 & -2 & 1 & 3\\
+67 & 7 & 2 & 10 & 11 & 1\\
+68 & 4 & 3 & 2 & 5 & 3\\
+69 & 5 & 2 & 6 & 0 & -6\\
+70 & 4 & 6 & -4 & -4 & 0\\
+71 & 3 & 7 & -8 & -6 & 2\\
+72 & 5 & 4 & 2 & 5 & 3\\
+73 & 3 & 4 & -2 & 3 & 5\\
+74 & 5 & 4 & 2 & -1 & -3\\
+75 & 4 & 3 & 2 & -5 & -7\\
+76 & 2 & 7 & -10 & -8 & 2\\
+77 & 3 & 3 & 0 & -3 & -3\\
+78 & 4 & 3 & 2 & 5 & 3\\
+79 & 3 & 1 & 4 & 5 & 1\\
+80 & 5 & 3 & 4 & 6 & 2\\
+81 & 2 & 4 & -4 & -3 & 1\\
+82 & 3 & 1 & 4 & 0 & -4\\
+83 & 3 & 0 & 6 & 0 & -6\\
+84 & 2 & 3 & -2 & 0 & 2\\
+85 & 1 & 1 & 0 & 3 & 3\\
+86 & 2 & 4 & -4 & -2 & 2\\
+87 & 2 & 3 & -2 & -5 & -3\\
+88 & 3 & 3 & 0 & -4 & -4\\
+89 & 0 & 0 & 0 & -3 & -3\\
+90 & 3 & 0 & 6 & 9 & 3\\
+91 & 5 & 1 & 8 & 6 & -2\\
+92 & 1 & 3 & -4 & -2 & 2\\
+93 & 0 & 1 & -2 & -4 & -2\\
+94 & 0 & 2 & -4 & 0 & 4\\
+95 & 2 & 1 & 2 & -1 & -3\\
+96 & 2 & 2 & 0 & 2 & 2\\
+97 & 1 & 0 & 2 & 2 & 0\\
+98 & 0 & 2 & -4 & 0 & 4\\
+99 & 0 & 2 & -4 & -4 & 0\\
+100 & 0 & 4 & -8 & -5 & 3\\
+101 & 2 & 1 & 2 & 0 & -2\\
+102 & 1 & 0 & 2 & 4 & 2\\
+103 & 2 & 0 & 4 & 4 & 0\\
+104 & 2 & 1 & 2 & 1 & -1\\
+105 & 0 & 2 & -4 & -1 & 3\\
+106 & 1 & 1 & 0 & 0 & 0\\
+107 & 0 & 2 & -4 & -2 & 2\\
+108 & 1 & 1 & 0 & 0 & 0\\
+109 & 1 & 0 & 2 & 1 & -1\\
+\bottomrule\end{longtable}
+\end{center}
+
+\section{Bibliographic assessment of the signed-cut formulation}
+
+The identity
+\[
+ d_h/2=\Cut_h(D)
+\]
+is elementary once the discrepancy set is introduced, and signed cuts themselves are classical \cite{Zaslavsky1982,Gallier2016}.  Likewise, finite aperiodic autocorrelation is classical \cite{Willms2013}.  The multiplicative-function literature studies correlations and sign patterns by analytic and probabilistic methods \cite{MRT2016,KoukSound2020,AymoneSidoravicius2017}.
+
+The combination used here is more specific:
+\[
+ \mathcal D_H(N)=
+ \left\{
+ D=Ab:
+ \Cut_h(D)\le0,\ 1\le h\le H
+ \right\},
+\]
+possibly intersected with an endpoint class such as RHC.  Equivalently, on the free prime-sign cube,
+\[
+ \mathcal B_H(N)=
+ \left\{
+ b:
+ \sum_{q\cdot b=1}
+ m_h(q)(-1)^{|q|+h+1}\le0,\
+ 1\le h\le H
+ \right\}.
+\]
+The nested filtration
+\[
+ \mathcal B_1\supseteq\mathcal B_2\supseteq\cdots
+\]
+and the first positive threshold
+\[
+ h_*(b)=
+ \min\left\{
+ h:
+ \sum_{q\cdot b=1}m_h(q)(-1)^{|q|+h+1}>0
+ \right\}
+\]
+are the combinatorial objects measured by the exhaustive computation.
+
+No exact antecedent for this simultaneous M\"obius-signed displacement-cut filtration, restricted to the multiplicative squarefree completion code, was located in the literature searches performed for this work.  The statement is deliberately narrower than a claim that signed cuts, autocorrelation, parity functions, or multiplicative correlations are new.
+
+\section{Conclusions: original, proved, and useful content}
+
+Within the bibliography surveyed here, the original contribution supported by complete proofs and exact computation is the following finite combinatorial package.
+
+First, the short-correlation comparison against the true M\"obius word is represented exactly as a simultaneous signed-cut problem:
+\[
+ \boxed{
+ \frac{C_h(x)-C_h(\mu)}2
+ =\Cut_{G_h}(D(x)).
+ }
+\]
+The admissible discrepancy sets are not arbitrary cuts; they form the binary code image
+\[
+ \boxed{\mathbf1_D=Ab\pmod2}
+\]
+generated by odd-prime divisibility.  Every displacement edge is activated by a parity equation
+\[
+ q_e\cdot b=1,
+\]
+and its sign is determined internally by
+\[
+ \boxed{
+ -\mu(n)\mu(n+h)=(-1)^{|q_e|+h+1}.
+ }
+\]
+Consequently the first witness is an explicit threshold of weighted parity tests,
+\[
+ \boxed{
+ h_*(b)=
+ \min\left\{
+ h:
+ \sum_{q\cdot b=1}
+ m_h(q)(-1)^{|q|+h+1}>0
+ \right\}.
+ }
+\]
+No exact antecedent for this simultaneous displacement-cut filtration under multiplicative admissibility was found in the targeted literature search.
+
+Second, the exhaustive $N=110$ instance is completely resolved for the tested family:
+\[
+ 2^{28}=268{,}435{,}456
+\]
+states,
+\[
+ 9{,}311{,}936
+\]
+RHC states, and the exact final survivor chain
+\[
+ \boxed{13\to2\to0}
+\]
+at lags $9,10,11$, with
+\[
+ \boxed{H_{\max,0}(110)=11.}
+\]
+The two final states, their complete $109$-lag cut profiles, and the complete parity-form statistics for every lag are given in the tables above.  These data are not used to assert an asymptotic law; their value is that they expose the finite object to be explained combinatorially.
+
+The qualified novelty claim of this paper is therefore the simultaneous signed displacement-cut formulation restricted to the multiplicative M\"obius completion code, together with its exact parity-threshold reduction and complete finite $N=110$ resolution.
+
+\sloppy
+\begin{thebibliography}{99}
+
+\bibitem{Vandehey2012}
+J. Vandehey,
+\emph{On multiplicative functions with bounded partial sums},
+Integers 12 (2012), 741--755.
+DOI: 10.1515/integers-2012-0002.
+arXiv:1108.1487.
+
+\bibitem{AymoneSidoravicius2017}
+M. Aymone and V. Sidoravicius,
+\emph{Partial sums of biased random multiplicative functions},
+Journal of Number Theory 172 (2017), 343--382.
+DOI: 10.1016/j.jnt.2016.08.020.
+arXiv:1412.1157.
+
+\bibitem{KoukSound2020}
+D. Koukoulopoulos and K. Soundararajan,
+\emph{The structure of multiplicative functions with small partial sums},
+Discrete Analysis 2020:6 (2020), 19 pp.
+DOI: 10.19086/da.11963.
+arXiv:1909.13105.
+
+\bibitem{MRT2016}
+K. Matom\"aki, M. Radziwi{\l}{\l}, and T. Tao,
+\emph{Sign patterns of the Liouville and M\"obius functions},
+Forum of Mathematics, Sigma 4 (2016), e14.
+DOI: 10.1017/fms.2016.6.
+arXiv:1509.01545.
+
+\bibitem{Willms2013}
+J. Willms,
+\emph{Autocorrelations of binary sequences and run structure},
+IEEE Transactions on Information Theory 59 (2013), no. 8, 4985--4993.
+DOI: 10.1109/TIT.2013.2259293.
+arXiv:1206.4572.
+
+\bibitem{Zaslavsky1982}
+T. Zaslavsky,
+\emph{Signed graphs},
+Discrete Applied Mathematics 4 (1982), no. 1, 47--74.
+DOI: 10.1016/0166-218X(82)90033-6.
+
+\bibitem{Gallier2016}
+J. Gallier,
+\emph{Spectral theory of unsigned and signed graphs: applications to graph clustering, a survey},
+arXiv:1601.04692 (2016).
+
+\bibitem{Hurst2018}
+G. Hurst,
+\emph{Computations of the Mertens function and improved bounds on the Mertens conjecture},
+Mathematics of Computation 87 (2018), 1013--1028.
+DOI: 10.1090/mcom/3275.
+arXiv:1610.08551.
+
+\bibitem{Hurst2026}
+G. Hurst,
+\emph{Practical computations of the Mertens function: $M(10^{24})$ and $M(10^{25})$},
+arXiv:2607.07566 (2026).
+
+\end{thebibliography}
+\fussy
+
+\end{document}

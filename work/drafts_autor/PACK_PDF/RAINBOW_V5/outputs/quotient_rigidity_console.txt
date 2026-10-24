@@ -1,0 +1,475 @@
+
+VIOLET TRANSVERSE QUOTIENT RIGIDITY AUDIT
+============================================================
+Violet lobes            : 240
+q points / lobe         : 81
+Transverse beta fibres     : 49
+quotient families       : 5
+beta-order nulls        : 3000
+lobe-identity nulls     : 500
+
+QUOTIENT FAMILIES
+------------------------------------------------------------
+1. HERMITE_JET1
+2. ENDPOINT_VALUES
+3. HERMITE_JET2
+4. MINIMAL_BOUNDARY_SPLINE
+5. ORTHOGONAL_CUBIC
+
+NULL DESIGN FROZEN
+------------------------------------------------------------
+                nullFamily                repetitions           target       
+    __________________________________    ___________    ____________________
+
+    "beta_order_permutation"                 3000        "monotonicity"      
+    "violet_lobe_identity_permutation"        500        "same_lobe_identity"
+
+
+VIOLET LOBE BOUNDARIES
+------------------------------------------------------------
+first boundary = 14.134725142000
+last boundary  = 457.903893064000
+
+FIXED VIOLET PHASE PROJECTION
+------------------------------------------------------------
+max left endpoint residual  = 0.000e+00
+max right endpoint residual = 0.000e+00
+
+TRANSVERSE DOMAIN
+------------------------------------------------------------
+Violet beta       = 0.500000000000
+outer Transverse beta= 1.000000000000
+smallest delta    = 1.000e-04
+
+MINIMAL SPLINE ANCHORS
+------------------------------------------------------------
+q = 0.00000 0.10000 0.90000 1.00000 
+
+TRANSVERSE NUMERICAL AUDIT
+------------------------------------------------------------
+cutoff   512 vs  1024 : relative error 2.753e-13
+accepted cutoff = 512
+
+CONSTRUCTING COMPLETE TRANSVERSE PROJECTION
+------------------------------------------------------------
+elapsed = 0.42 s
+
+VIOLET BOUNDARY AUDIT
+------------------------------------------------------------
+max boundary residual    = 2.789e-09
+median boundary residual = 6.762e-10
+
+IDENTITY NULL beta ANCHORS
+------------------------------------------------------------
+beta = 0.500100 0.500356 0.501055 0.503750 0.513333 0.547408 0.640624 1.000000 
+
+============================================================
+QUOTIENT 1 / 5 : HERMITE_JET1
+============================================================
+usable Violet lobes = 240 / 240
+median residual norm = 1.04312080e+00
+
+SAME-LOBE IDENTITY NULL
+------------------------------------------------------------
+beta 0.5001000 | same 3.958500e-12 | wrong 1.153703e-02 | ratio 2914494851.243 | p 0.00199601
+beta 0.5003556 | same 5.029677e-11 | wrong 1.157151e-02 | ratio 230064698.089 | p 0.00199601
+beta 0.5010547 | same 4.441255e-10 | wrong 1.152208e-02 | ratio 25943287.085 | p 0.00199601
+beta 0.5037500 | same 5.640992e-09 | wrong 1.143660e-02 | ratio 2027410.367 | p 0.00199601
+beta 0.5133334 | same 7.228632e-08 | wrong 1.152719e-02 | ratio 159465.767 | p 0.00199601
+beta 0.5474079 | same 9.496236e-07 | wrong 1.148850e-02 | ratio 12097.957 | p 0.00199601
+beta 0.6406240 | same 9.118081e-06 | wrong 1.107278e-02 | ratio 1214.376 | p 0.00199601
+beta 1.0000000 | same 2.068791e-04 | wrong 9.913776e-03 | ratio 47.921 | p 0.00199601
+
+MONOTONICITY
+------------------------------------------------------------
+Violet defect                = 0.00000000e+00
+beta=1 defect                = 2.06879104e-04
+Spearman(beta,M)             = 1.0000000000
+beta-order null p            = 0.00033322226
+aggregate monotone steps     = 1.000000
+median lobe monotone steps   = 1.000000
+fully monotone lobes         = 240 / 240
+fully monotone lobe fraction = 1.000000
+largest downward step        = 0.00000000e+00
+
+============================================================
+QUOTIENT 2 / 5 : ENDPOINT_VALUES
+============================================================
+usable Violet lobes = 240 / 240
+median residual norm = 1.19464768e+00
+
+SAME-LOBE IDENTITY NULL
+------------------------------------------------------------
+beta 0.5001000 | same 3.214430e-10 | wrong 5.150306e-02 | ratio 160224563.815 | p 0.00199601
+beta 0.5003556 | same 4.067350e-09 | wrong 5.137514e-02 | ratio 12631108.543 | p 0.00199601
+beta 0.5010547 | same 3.587537e-08 | wrong 5.141996e-02 | ratio 1433294.089 | p 0.00199601
+beta 0.5037500 | same 4.578747e-07 | wrong 5.105822e-02 | ratio 111511.343 | p 0.00199601
+beta 0.5133334 | same 5.983640e-06 | wrong 5.080137e-02 | ratio 8490.046 | p 0.00199601
+beta 0.5474079 | same 8.443878e-05 | wrong 4.927459e-02 | ratio 583.554 | p 0.00199601
+beta 0.6406240 | same 1.038179e-03 | wrong 4.499926e-02 | ratio 43.344 | p 0.00199601
+beta 1.0000000 | same 3.460441e-02 | wrong 5.344308e-02 | ratio 1.544 | p 0.00199601
+
+MONOTONICITY
+------------------------------------------------------------
+Violet defect                = 0.00000000e+00
+beta=1 defect                = 3.46044086e-02
+Spearman(beta,M)             = 1.0000000000
+beta-order null p            = 0.00033322226
+aggregate monotone steps     = 1.000000
+median lobe monotone steps   = 1.000000
+fully monotone lobes         = 235 / 240
+fully monotone lobe fraction = 0.979167
+largest downward step        = 0.00000000e+00
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 805) 
+
+============================================================
+QUOTIENT 3 / 5 : HERMITE_JET2
+============================================================
+usable Violet lobes = 240 / 240
+median residual norm = 3.45118342e-01
+
+SAME-LOBE IDENTITY NULL
+------------------------------------------------------------
+beta 0.5001000 | same 8.357759e-13 | wrong 3.082108e-03 | ratio 3687721137.070 | p 0.00199601
+beta 0.5003556 | same 5.629497e-12 | wrong 3.102269e-03 | ratio 551073977.460 | p 0.00199601
+beta 0.5010547 | same 4.239298e-11 | wrong 3.079866e-03 | ratio 72650376.392 | p 0.00199601
+beta 0.5037500 | same 4.454536e-10 | wrong 3.126019e-03 | ratio 7017608.784 | p 0.00199601
+beta 0.5133334 | same 5.241745e-09 | wrong 3.134755e-03 | ratio 598036.592 | p 0.00199601
+beta 0.5474079 | same 6.629234e-08 | wrong 3.055833e-03 | ratio 46096.316 | p 0.00199601
+beta 0.6406240 | same 6.471478e-07 | wrong 3.053787e-03 | ratio 4718.840 | p 0.00199601
+beta 1.0000000 | same 1.157235e-05 | wrong 2.992368e-03 | ratio 258.579 | p 0.00199601
+
+MONOTONICITY
+------------------------------------------------------------
+Violet defect                = 0.00000000e+00
+beta=1 defect                = 1.15723489e-05
+Spearman(beta,M)             = 1.0000000000
+beta-order null p            = 0.00033322226
+aggregate monotone steps     = 1.000000
+median lobe monotone steps   = 1.000000
+fully monotone lobes         = 240 / 240
+fully monotone lobe fraction = 1.000000
+largest downward step        = 0.00000000e+00
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 805) 
+
+============================================================
+QUOTIENT 4 / 5 : MINIMAL_BOUNDARY_SPLINE
+============================================================
+usable Violet lobes = 240 / 240
+median residual norm = 7.17336513e-01
+
+SAME-LOBE IDENTITY NULL
+------------------------------------------------------------
+beta 0.5001000 | same 2.317257e-12 | wrong 6.757729e-03 | ratio 2916261680.904 | p 0.00199601
+beta 0.5003556 | same 2.928602e-11 | wrong 6.762898e-03 | ratio 230925836.410 | p 0.00199601
+beta 0.5010547 | same 2.578988e-10 | wrong 6.833639e-03 | ratio 26497365.036 | p 0.00199601
+beta 0.5037500 | same 3.273457e-09 | wrong 6.851944e-03 | ratio 2093182.986 | p 0.00199601
+beta 0.5133334 | same 4.198746e-08 | wrong 6.763107e-03 | ratio 161074.441 | p 0.00199601
+beta 0.5474079 | same 5.593201e-07 | wrong 6.789456e-03 | ratio 12138.768 | p 0.00199601
+beta 0.6406240 | same 5.630265e-06 | wrong 6.679134e-03 | ratio 1186.291 | p 0.00199601
+beta 1.0000000 | same 1.294810e-04 | wrong 6.036668e-03 | ratio 46.622 | p 0.00199601
+
+MONOTONICITY
+------------------------------------------------------------
+Violet defect                = 0.00000000e+00
+beta=1 defect                = 1.29481012e-04
+Spearman(beta,M)             = 1.0000000000
+beta-order null p            = 0.00033322226
+aggregate monotone steps     = 1.000000
+median lobe monotone steps   = 1.000000
+fully monotone lobes         = 240 / 240
+fully monotone lobe fraction = 1.000000
+largest downward step        = 0.00000000e+00
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 805) 
+
+============================================================
+QUOTIENT 5 / 5 : ORTHOGONAL_CUBIC
+============================================================
+usable Violet lobes = 240 / 240
+median residual norm = 1.67419187e-01
+
+SAME-LOBE IDENTITY NULL
+------------------------------------------------------------
+beta 0.5001000 | same 5.770495e-12 | wrong 1.553970e-02 | ratio 2692957270.920 | p 0.00199601
+beta 0.5003556 | same 7.297019e-11 | wrong 1.547189e-02 | ratio 212030307.248 | p 0.00199601
+beta 0.5010547 | same 6.427975e-10 | wrong 1.539226e-02 | ratio 23945743.281 | p 0.00199601
+beta 0.5037500 | same 8.164564e-09 | wrong 1.528175e-02 | ratio 1871717.229 | p 0.00199601
+beta 0.5133334 | same 1.049688e-07 | wrong 1.532739e-02 | ratio 146018.555 | p 0.00199601
+beta 0.5474079 | same 1.409576e-06 | wrong 1.529152e-02 | ratio 10848.315 | p 0.00199601
+beta 0.6406240 | same 1.438398e-05 | wrong 1.491129e-02 | ratio 1036.660 | p 0.00199601
+beta 1.0000000 | same 3.255597e-04 | wrong 1.377896e-02 | ratio 42.324 | p 0.00199601
+
+MONOTONICITY
+------------------------------------------------------------
+Violet defect                = 0.00000000e+00
+beta=1 defect                = 3.25559679e-04
+Spearman(beta,M)             = 1.0000000000
+beta-order null p            = 0.00033322226
+aggregate monotone steps     = 1.000000
+median lobe monotone steps   = 1.000000
+fully monotone lobes         = 240 / 240
+fully monotone lobe fraction = 1.000000
+largest downward step        = 0.00000000e+00
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 805) 
+
+============================================================
+CROSS-QUOTIENT RIGIDITY
+============================================================
+
+LOBES MONOTONE FOR EVERY Q
+------------------------------------------------------------
+235 / 240
+fraction = 0.97916667
+
+NUMBER OF Q FAMILIES PASSED BY EACH LOBE
+------------------------------------------------------------
+0 / 5 quotients : 0 lobes
+1 / 5 quotients : 0 lobes
+2 / 5 quotients : 0 lobes
+3 / 5 quotients : 0 lobes
+4 / 5 quotients : 5 lobes
+5 / 5 quotients : 235 lobes
+
+PAIRWISE SPEARMAN OF MEDIAN beta CURVES
+------------------------------------------------------------
+     1     1     1     1     1
+     1     1     1     1     1
+     1     1     1     1     1
+     1     1     1     1     1
+     1     1     1     1     1
+
+
+PAIRWISE SPEARMAN OF FULL beta x LOBE GEOMETRY
+------------------------------------------------------------
+    1.0000    0.9686    0.9804    0.9991    0.9940
+    0.9686    1.0000    0.9471    0.9721    0.9746
+    0.9804    0.9471    1.0000    0.9817    0.9798
+    0.9991    0.9721    0.9817    1.0000    0.9977
+    0.9940    0.9746    0.9798    0.9977    1.0000
+
+
+SAME-LOBE IDENTITY ROBUSTNESS
+------------------------------------------------------------
+beta 0.5001000 : 5 / 5 Q families at minimum null p   [ALL]
+beta 0.5003556 : 5 / 5 Q families at minimum null p   [ALL]
+beta 0.5010547 : 5 / 5 Q families at minimum null p   [ALL]
+beta 0.5037500 : 5 / 5 Q families at minimum null p   [ALL]
+beta 0.5133334 : 5 / 5 Q families at minimum null p   [ALL]
+beta 0.5474079 : 5 / 5 Q families at minimum null p   [ALL]
+beta 0.6406240 : 5 / 5 Q families at minimum null p   [ALL]
+beta 1.0000000 : 5 / 5 Q families at minimum null p   [ALL]
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+Warning: The assignment added rows to the table, but did not assign values to all of the table's existing variables. Those
+variables are extended with rows containing default values. 
+> In  .  (line 485)
+In mono2 (line 1007) 
+
+============================================================
+FINAL VIOLET / TRANSVERSE QUOTIENT RIGIDITY DIAGNOSIS
+============================================================
+            quotient             violetDefect    beta1Defect    spearmanBeta    orderNullP    aggregateStepFraction    medianLobeStepFraction    fullMonotoneLobes    fullMonotoneLobeFraction    maximumDownwardStep    beta1IdentityRatio
+    _________________________    ____________    ___________    ____________    __________    _____________________    ______________________    _________________    ________________________    ___________________    __________________
+
+    "HERMITE_JET1"                    0          0.00020688          1          0.00033322              1                        1                      240                         1                      0                   47.921      
+    "ENDPOINT_VALUES"                 0            0.034604          1          0.00033322              1                        1                      235                   0.97917                      0                   1.5444      
+    "HERMITE_JET2"                    0          1.1572e-05          1          0.00033322              1                        1                      240                         1                      0                   258.58      
+    "MINIMAL_BOUNDARY_SPLINE"         0          0.00012948          1          0.00033322              1                        1                      240                         1                      0                   46.622      
+    "ORTHOGONAL_CUBIC"                0          0.00032556          1          0.00033322              1                        1                      240                         1                      0                   42.324      
+
+
+CORE RESULT
+------------------------------------------------------------
+lobes fully monotone under EVERY quotient: 235 / 240 = 0.979167
+
+FULL MONOTONE COUNTS BY QUOTIENT
+------------------------------------------------------------
+HERMITE_JET1                 : 240 / 240
+ENDPOINT_VALUES              : 235 / 240
+HERMITE_JET2                 : 240 / 240
+MINIMAL_BOUNDARY_SPLINE      : 240 / 240
+ORTHOGONAL_CUBIC             : 240 / 240
+
+IDENTITY AT beta = 1
+------------------------------------------------------------
+HERMITE_JET1                 : same 2.06879e-04 | wrong 9.91378e-03 | ratio 47.921 | p 0.00199601
+ENDPOINT_VALUES              : same 3.46044e-02 | wrong 5.34431e-02 | ratio 1.544 | p 0.00199601
+HERMITE_JET2                 : same 1.15723e-05 | wrong 2.99237e-03 | ratio 258.579 | p 0.00199601
+MINIMAL_BOUNDARY_SPLINE      : same 1.29481e-04 | wrong 6.03667e-03 | ratio 46.622 | p 0.00199601
+ORTHOGONAL_CUBIC             : same 3.25560e-04 | wrong 1.37790e-02 | ratio 42.324 | p 0.00199601
+
+INTERPRETATION GATES
+------------------------------------------------------------
+RIGIDITY: monotonicity is highly robust but not universal across quotient constructions.
+IDENTITY: same-lobe Violet memory survives every tested quotient at every frozen beta anchor.
+
+No beta-dependent zeros were constructed or searched.
+Violet boundaries were used only to define the fixed Transverse projection q -> t_n(q).
+
+Output directory:
+VIOLET_TRANSVERSE_QUOTIENT_RIGIDITY_OUTPUT
+
+AUDIT COMPLETE
+>> 

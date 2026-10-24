@@ -1,0 +1,17 @@
+full sample: 883123 points, integrated autocorrelation time ~51
+
+thin   count      mean       sd      skew    exkurt    KS      p-value
+   1   883123   -0.0002  1.0036  -0.0178  +0.1198  0.00317  3.769e-08
+  51    17317   -0.0009  1.0036  -0.0140  +0.1699  0.00451  8.720e-01
+ 128     6900   +0.0004  1.0057  -0.0266  +0.0175  0.00775  7.979e-01
+ 256     3450   -0.0221  1.0104  -0.0710  +0.0134  0.01604  3.336e-01
+ 512     1725   -0.0650  1.0088  -0.1011  +0.0016  0.03812  1.296e-02
+
+excess kurtosis of Z by |M| (n >= 10^4) - test of the CLT approach:
+   |M| in [  12,  19):  excess kurtosis = +0.6764   (thinned: +0.6514)
+   |M| in [  19,  31):  excess kurtosis = +0.3376   (thinned: +0.3553)
+   |M| in [  31,  51):  excess kurtosis = +0.2127   (thinned: +0.1508)
+   |M| in [  51,  84):  excess kurtosis = +0.0311   (thinned: +0.0961)
+   |M| in [  84, 138):  excess kurtosis = +0.0575   (thinned: -0.0837)
+   |M| in [ 138, 225):  excess kurtosis = +0.0237   (thinned: -0.0129)
+   |M| in [ 225, 400):  excess kurtosis = -0.1434   (thinned: -0.1848)

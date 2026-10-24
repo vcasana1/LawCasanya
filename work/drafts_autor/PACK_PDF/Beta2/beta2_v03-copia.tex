@@ -1,0 +1,927 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\geometry{margin=1in}
+\usepackage[hidelinks]{hyperref}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\RH}{\mathrm{RH}}
+
+\title[The endpoint exponent law]{The endpoint exponent is the determinant constant:\\
+a universal $-\beta$ law for discrete Hankel determinants,\\
+with the full leading asymptotics of Hankel determinants of zeta values}
+
+\author{}
+\date{Version 03}
+
+\begin{document}
+
+\begin{abstract}
+Discrete Hankel determinants built from Dirichlet series decay on the scale $N^{2}\log N$.
+That scale has been known since Monien's Coulomb-gas analysis of $\det(\zeta(i+j+r))$, and
+Haynes and Zudilin recorded the \emph{expected} leading law
+$\log\det(\zeta(a(i+j)+b))=-a\,n^{2}\log n+O(n^{2})$ while proving, by an elementary argument, the
+one-sided estimate with coefficient $-a/2$.
+
+This paper asks a different question of the same object: not how small the determinant is, but
+\emph{what its leading constant is a function of}. No one-sided estimate can answer that, since a
+bound $\le-\kappa N^{2}\log N$ is consistent with every constant below $-\kappa$; identification
+requires both bounds, and both are available because the measures involved are positive.
+
+We prove that for \emph{any} positive discrete measure whose support approaches its single
+accumulation endpoint at a regularly varying rate
+$1-x(t)=t^{-\beta}L(t)$, and which satisfies only two coarse combinatorial conditions on the
+node scale and on the existence of a separated subfamily, the monomial Hankel determinant obeys
+\[
+\lim_{N\to\infty}\frac{\log D_{N}}{N^{2}\log N}=-\beta .
+\]
+The leading constant is therefore a single geometric invariant, the \emph{endpoint exponent},
+and nothing else: no counting law, no arithmetic, no lattice structure and no weight
+information survives at that order. Both bounds are elementary, and the lower bound is a single
+Cauchy--Binet term made legitimate by positivity.
+
+Two evaluations follow. First, unconditionally,
+$\log\det\bigl(\zeta(a(i+j)+b)\bigr)_{1\le i,j\le n}=-a\,n^{2}\log n+O(n^{2})$, the expected law of
+\eqref{eq:HZexpected} in full and in two-sided form, which also doubles the quantitative Diophantine
+constant obtainable by that route, from $\liminf\log q_{n}/(n\log n)\ge a/4$ to $\ge a/2$.
+Second, the Li--Cayley
+map $x(t)=(4t^{2}-1)/(4t^{2}+1)$, which carries the ordinates of the nontrivial zeros of $\zeta$
+to $(-1,1)$, has endpoint exponent $\beta=2$; hence every positive Gram system supported on those
+Cayley images has determinant constant exactly $-2$, and the Riemann--von Mangoldt refinement
+$T\log T$ cannot appear before the second order. The value $\beta=2$ is a one-line evaluation of a
+theorem whose content lies entirely in the map $\beta\mapsto-\beta$.
+
+A numerical section confirms the constant to three digits and, more importantly, documents a
+trap: naive local exponent estimators are biased at order $\log\log N/\log N$ by the slowly
+varying factor, so finite-$N$ fits drift far from $-\beta$ even when the theorem is exact.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{The scale is old; the constant is not}
+
+Let $f(s)=\sum_{m\ge1}a_{m}m^{-s}$ be a Dirichlet series and let
+\[
+H_{n}^{(a,b)}[f]:=\det_{1\le i,j\le n}\bigl(f(a(i+j)+b)\bigr).
+\]
+Monien \cite{Monien2009} derived a discrete Vandermonde representation for such determinants and,
+by a Coulomb-gas variational analysis, obtained the leading scale
+\begin{equation}
+\log H_{n}^{(r)}[\zeta]=-n^{2}\Bigl(\log (2n)-\tfrac32\Bigr)+o(n^{2}),
+\label{eq:monien}
+\end{equation}
+for $\det(\zeta(i+j+r))$. Monien himself notes that the passage from the discrete optimizer to a
+continuous density is assumed there, and suggests Poissonization as the route to a fully rigorous
+treatment; the case $r=0$ was subsequently justified through an explicit Riemann--Hilbert
+construction. So the presence of an $N^{2}\log N$ scale in discrete Hankel determinants is not new,
+and no novelty is claimed for it here.
+
+Haynes and Zudilin \cite{HaynesZudilin2015} studied the arithmetic-progression matrices
+$\det(\zeta(a(i+j)+b))$, which are the arithmetically interesting ones because for $a$ even and $b$
+odd they avoid the known transcendental values $\zeta(2k)$. They state the expected law
+\begin{equation}
+\log\det_{1\le i,j\le n}\bigl(\zeta(a(i+j)+b)\bigr)=-a\,n^{2}\log n+O(n^{2}),
+\label{eq:HZexpected}
+\end{equation}
+and then prove, by a short and completely elementary argument, the weaker one-sided estimate
+\begin{equation}
+\log\Bigl|\det_{1\le i,j\le n}\bigl(\zeta(a(i+j)+b)\bigr)\Bigr|\le-\frac a2\,n^{2}\log n+O(n^{2}).
+\label{eq:HZproved}
+\end{equation}
+The distance between \eqref{eq:HZexpected} and \eqref{eq:HZproved} is a clean factor of two.
+It would be a misreading to call it a gap they failed to close.
+
+\subsection{Why the sharp constant was of no interest there}
+\label{ss:whytwo}
+
+The sharp constant is irrelevant to the goal of \cite{HaynesZudilin2015}, for three independent
+reasons, and this is worth stating once so that the comparison below is not misread.
+
+The direction is wrong. Their mechanism is integrality: if the $\zeta(an+b)$ are rational with
+common denominators $q_{n}$, then $q_{n+1}\cdots q_{2n}H_{n}$ is a nonzero integer, hence at least
+$1$, so a \emph{small} determinant forces \emph{large} denominators. Only an upper bound on
+$|H_{n}|$ can enter such an argument; a lower bound is not a missing half of their proof but a
+statement their proof has no slot for. The resolution is wrong too: what carries their conclusion is
+the divergence of $\log n$, not the constant in front of it, and $-\tfrac a2n^{2}\log n$ and
+$-a\,n^{2}\log n$ yield the identical theorem $q_{n}^{1/n}\to\infty$. And the leading scale was
+already known from \cite{Monien2009}; the hard open question in that literature is the \emph{next}
+order, the explicit $n^{2}$ constant $\log2-\tfrac32$ of \eqref{eq:monien}. Discarding the
+Vandermonde factor is the natural move when one wants an upper bound and nothing else, and it is
+what makes their proof fit in half a page.
+
+This paper is downstream of the same representation --- $H_{n}$ written through row-linearity as a
+weighted sum of Vandermonde products over reciprocal integers --- but does not sharpen any estimate
+in it. It changes the question. We ask what the leading constant is a function of, and that cannot
+be answered by a bound in either direction alone: an estimate $\le-\kappa N^{2}\log N$ is compatible
+with every constant below $-\kappa$, however sharp its own $\kappa$. Identification needs both
+sides, and both sides are available because the measures are positive, so that every term of the
+Cauchy--Binet expansion is nonnegative and one well-chosen term is already a lower bound. That is
+the only substantive ingredient used here and not there.
+
+The answer is that the constant is a single geometric number, and the rest of this paper is that
+statement, its proof, and what it excludes.
+
+\subsection{The endpoint exponent}
+
+Write the determinant as a Gram determinant of a positive discrete measure
+$\mu=\sum_{j}w_{j}\delta_{x_{j}}$ whose atoms $x_{j}$ increase to a single accumulation endpoint,
+normalized to $1$. Parametrize the atoms as $x_{j}=x(t_{j})$ along an increasing parameter
+$t_{1}<t_{2}<\cdots\to\infty$, and define the \emph{endpoint exponent} $\beta>0$ by
+\begin{equation}
+1-x(t)=t^{-\beta}L(t),\qquad L \text{ slowly varying, i.e. } \log L(t)=o(\log t).
+\label{eq:endpoint_RV}
+\end{equation}
+This is the natural hypothesis rather than an ad hoc one: it is the standard regular-variation
+normal form for a monotone approach to an endpoint, and it is stable under exactly the
+reparametrizations that occur in practice. In particular, if a counting law replaces $t_{j}\asymp j$
+by $t_{j}\asymp j/\log j$, the induced factor $(\log j)^{2}$ is absorbed into $L$ and $\beta$ is
+untouched.
+
+\begin{theorem}[Endpoint-exponent law; informal statement]
+Under \eqref{eq:endpoint_RV} and two coarse combinatorial conditions --- the node sequence is not
+superlinearly dense on the logarithmic scale, and there exists a subfamily of $N$ atoms with
+polynomially controlled height and separation --- the monomial Hankel determinant of $\mu$ satisfies
+\[
+\lim_{N\to\infty}\frac{\log D_{N}[\mu]}{N^{2}\log N}=-\beta .
+\]
+The same limit holds for the Gram determinant in any polynomial basis whose leading coefficients
+$c_{n}$ satisfy $\sum_{n<N}\log|c_{n}|=O(N^{2})$.
+\end{theorem}
+
+The precise statement and proof are Theorem \ref{thm:endpoint} below. Three features are worth
+isolating before the technical version.
+
+\emph{It is a law, not an estimate.} The map $\beta\mapsto-\beta$ is a bijection between a geometric
+invariant of the support and the leading determinant constant. Every particular evaluation
+--- $\beta=1$ for $x_{m}=1/m$, $\beta=a$ for $x_{m}=m^{-a}$, $\beta=2$ for the Li--Cayley map --- is one
+line. The triviality of an evaluation says nothing about the theorem, in the same way that
+$\int x\dd x=x^{2}/2$ says nothing about the fundamental theorem of calculus.
+
+\emph{It is two-sided and elementary.} The upper bound is the extremal property of monic orthogonal
+polynomials against the competitor vanishing at the first $n$ atoms. The lower bound is a single
+term of the Cauchy--Binet expansion, which is legitimate precisely because $\mu$ is positive, so all
+terms of that expansion are nonnegative. No Riemann--Hilbert analysis, no equilibrium measure, no
+lattice.
+
+\emph{It says what cannot be in the constant.} Weights, provided they are subleading at scale
+$N^{2}\log N$; the fine counting law; any arithmetic input --- none of these survive to leading order.
+This is a negative statement of some force: if one hopes to see arithmetic in such a determinant,
+one must look at order $N^{2}$ or below.
+
+\subsection{What follows}
+
+Section \ref{sec:zeta} applies the theorem to $\det(\zeta(a(i+j)+b))$. The nodes are $m^{-a}$, so
+$\beta=a$, and all hypotheses hold with the sharpest possible error terms, giving
+\eqref{eq:HZexpected} unconditionally and in the two-sided $O(n^{2})$ form. Corollary
+\ref{cor:diophantine} converts this into the Diophantine statement of \cite{HaynesZudilin2015}
+with twice the constant. Section \ref{sec:cayley} evaluates $\beta$ for the Li--Cayley map and
+records the consequence $-2$. Section \ref{sec:numerics} reports high-precision computations, and
+documents why local exponent estimators are the wrong figure of merit here. Section
+\ref{sec:position} states plainly what in this paper was already known.
+
+\section{The endpoint-exponent law}
+\label{sec:law}
+
+Let
+\begin{equation}
+\mu=\sum_{j\ge1}w_{j}\,\delta_{x_{j}},\qquad 0<w_{j},\qquad x_{j}=x(t_{j})\uparrow1,
+\label{eq:measure}
+\end{equation}
+be a finite positive measure with distinct parameters $t_{1}<t_{2}<\cdots\to\infty$ and $x$
+increasing and differentiable. Write
+\begin{equation}
+D_{N}[\mu]:=\det\Bigl(\int x^{r+s}\dd\mu(x)\Bigr)_{r,s=0}^{N-1}.
+\label{eq:hankel}
+\end{equation}
+
+\begin{theorem}[Endpoint-exponent law]
+\label{thm:endpoint}
+Let $\beta>0$ and assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Endpoint power law.)} There are $c,C,t_{0}>0$ with, for $t\ge t_{0}$,
+\begin{equation}
+c\,t^{-\beta}\le1-x(t)\le C\,t^{-\beta},\qquad c\,t^{-\beta-1}\le x'(t)\le C\,t^{-\beta-1}.
+\label{eq:power_law}
+\end{equation}
+\item \textup{(No superlinear logarithmic density.)}
+\begin{equation}
+\log t_{j}\ge(1-o(1))\log j .
+\label{eq:node_scale}
+\end{equation}
+\item \textup{(A separated configuration.)} For every large $N$ there are support parameters
+$s_{N,1}<\cdots<s_{N,N}$ and $\eta_{N}\to0$ with
+\begin{equation}
+s_{N,N}\le N^{1+\eta_{N}},\qquad s_{N,b}-s_{N,a}\ge(b-a)N^{-\eta_{N}}\quad(1\le a<b\le N).
+\label{eq:separated}
+\end{equation}
+\item \textup{(Subleading weights.)}
+\begin{equation}
+\sum_{a=1}^{N}\log w(s_{N,a})\ge-o(N^{2}\log N).
+\label{eq:weights}
+\end{equation}
+\end{enumerate}
+Then
+\begin{equation}
+\boxed{\ \lim_{N\to\infty}\frac{\log D_{N}[\mu]}{N^{2}\log N}=-\beta.\ }
+\label{eq:limit}
+\end{equation}
+The same limit holds for the Gram determinant in any polynomial basis $p_{0},p_{1},\dots$ with
+$\deg p_{n}=n$ and leading coefficients $c_{n}$ obeying
+\begin{equation}
+\sum_{n=0}^{N-1}\log|c_{n}|=O(N^{2}).
+\label{eq:basis}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+\emph{Upper bound.} Since $\mu$ is a finite positive measure with infinite support, the monomials
+$1,x,\dots,x^{n}$ are linearly independent in $L^{2}(\mu)$: a nonzero polynomial has finitely many
+zeros while the support has infinitely many points. Hence the monic orthogonal polynomial $\pi_{n}$
+exists and is unique, and
+\[
+h_{n}:=\int|\pi_{n}|^{2}\dd\mu>0
+\]
+is the minimum of $\int|q|^{2}\dd\mu$ over monic $q$ of degree $n$. Triangular change of basis from
+monomials to monic orthogonal polynomials gives the exact identity
+\begin{equation}
+D_{N}[\mu]=\prod_{n=0}^{N-1}h_{n}.
+\label{eq:D_product}
+\end{equation}
+
+Take the monic competitor $q_{n}(x)=\prod_{j\le n}(x-x_{j})$. Since $x_{j}\uparrow1$, for $j>n$ and
+$1\le r\le n$ we have $0<x_{j}-x_{r}\le1-x_{r}$, hence
+$|q_{n}(x_{j})|\le\prod_{r\le n}(1-x_{r})$ for $j>n$. With $M:=\mu(\mathbb R)<\infty$,
+\begin{equation}
+h_{n}\le\int|q_{n}|^{2}\dd\mu=\sum_{j>n}w_{j}|q_{n}(x_{j})|^{2}
+\le M\prod_{r=1}^{n}(1-x_{r})^{2}.
+\label{eq:monic_upper}
+\end{equation}
+
+By (i), $\log(1-x_{j})\le\log C-\beta\log t_{j}$ for $j$ beyond a fixed index, and by (ii) there is
+$\varepsilon_{j}\to0$ with $\log t_{j}\ge(1-\varepsilon_{j})\log j$, so
+\begin{equation}
+\log(1-x_{j})\le-\beta\log j+\beta\varepsilon_{j}\log j+O(1).
+\end{equation}
+The error sums to $o(n\log n)$: given $\epsilon>0$ choose $J$ with $|\varepsilon_{j}|\le\epsilon$ for
+$j\ge J$, so $\sum_{J\le j\le n}|\varepsilon_{j}|\log j=O(\epsilon\, n\log n)$, and the finitely many
+$j<J$ contribute $O_{J}(1)$. Since $\sum_{j\le n}\log j=n\log n-n+O(\log n)$,
+\[
+\sum_{j\le n}\log(1-x_{j})\le-\beta n\log n+o(n\log n),
+\]
+whence by \eqref{eq:monic_upper}
+\begin{equation}
+\log h_{n}\le-2\beta n\log n+o(n\log n).
+\label{eq:h_upper}
+\end{equation}
+Summing over $0\le n<N$ preserves the scale: if $r_{n}=o(n\log n)$ then for every $\epsilon>0$ one
+has $|r_{n}|\le\epsilon n\log n$ for large $n$, so $\sum_{n<N}r_{n}=o(N^{2}\log N)$. Using
+$\sum_{n<N}n\log n=\tfrac12N^{2}\log N-\tfrac14N^{2}+O(N\log N)$ and \eqref{eq:D_product},
+\begin{equation}
+\log D_{N}[\mu]\le-\beta N^{2}\log N+o(N^{2}\log N).
+\label{eq:det_upper}
+\end{equation}
+
+\emph{Lower bound.} Fix $N$ large, take the parameters $s_{N,1}<\cdots<s_{N,N}$ from (iii) and put
+$y_{a}:=x(s_{N,a})$. The moment matrix generated by these selected atoms is $V_{N}W_{N}V_{N}^{T}$
+with $(V_{N})_{r,a}=y_{a}^{r}$ and $W_{N}=\operatorname{diag}(w(s_{N,1}),\dots,w(s_{N,N}))$. The full
+moment matrix is the sum of this positive semidefinite matrix and the contribution of the remaining
+atoms; equivalently, in the Cauchy--Binet expansion of the full determinant every term is
+nonnegative and the selected term occurs, so
+\begin{equation}
+D_{N}[\mu]\ \ge\ \Bigl(\prod_{a=1}^{N}w(s_{N,a})\Bigr)\prod_{1\le a<b\le N}(y_{b}-y_{a})^{2}.
+\label{eq:one_term}
+\end{equation}
+This is the only place where positivity is used, and it is what makes a lower bound available at
+all: for a signed measure the largest term of the expansion need not control the sum.
+
+For $a<b$, monotonicity and (i) give
+\[
+y_{b}-y_{a}=\int_{s_{N,a}}^{s_{N,b}}x'(u)\dd u\ \ge\ c\,s_{N,N}^{-\beta-1}(s_{N,b}-s_{N,a}),
+\]
+since $u\le s_{N,N}$ on the interval and $u\mapsto u^{-\beta-1}$ decreases. By (iii),
+\begin{equation}
+y_{b}-y_{a}\ \ge\ c\,(b-a)\,N^{-\beta-1-(\beta+2)\eta_{N}}.
+\label{eq:gap_lower}
+\end{equation}
+Taking logarithms and summing over the $\binom N2$ pairs,
+\begin{equation}
+2\sum_{a<b}\log(y_{b}-y_{a})\ \ge\ 2\sum_{a<b}\log(b-a)
+-2\bigl[\beta+1+(\beta+2)\eta_{N}\bigr]\binom N2\log N+O(N^{2}).
+\label{eq:vdm_lower}
+\end{equation}
+The identity $\prod_{a<b}(b-a)=\prod_{k<N}k!$ and Stirling give
+\begin{equation}
+\sum_{a<b}\log(b-a)=\tfrac12N^{2}\log N-\tfrac34N^{2}+O(N\log N),
+\label{eq:pairsum}
+\end{equation}
+so, since $\eta_{N}\to0$,
+\[
+2\sum_{a<b}\log(y_{b}-y_{a})\ \ge\ -\beta N^{2}\log N-o(N^{2}\log N).
+\]
+Hypothesis (iv) says exactly that the selected weights do not degrade this at leading scale.
+Inserting into \eqref{eq:one_term},
+\begin{equation}
+\log D_{N}[\mu]\ \ge\ -\beta N^{2}\log N-o(N^{2}\log N),
+\label{eq:det_lower}
+\end{equation}
+which together with \eqref{eq:det_upper} proves \eqref{eq:limit}.
+
+\emph{Polynomial bases.} Let $p_{n}(x)=c_{n}x^{n}+\cdots$ and let $C_{N}$ be the lower triangular
+matrix taking $(1,x,\dots,x^{N-1})^{T}$ to $(p_{0},\dots,p_{N-1})^{T}$, so
+$\det C_{N}=\prod_{n<N}c_{n}$. Then $G_{N}[p]=C_{N}H_{N}C_{N}^{T}$ exactly, hence
+$\log\det G_{N}[p]=\log D_{N}[\mu]+2\sum_{n<N}\log|c_{n}|$, and \eqref{eq:basis} makes the second
+term $O(N^{2})=o(N^{2}\log N)$.
+\end{proof}
+
+\subsection{The regularly varying form}
+
+Hypothesis (i) is stated with two-sided constants for readability, but the proof uses it only
+through $\log(1-x(t))=-\beta\log t+o(\log t)$ and through the integral lower bound for $x'$. Hence:
+
+\begin{theorem}[Regular-variation form]
+\label{thm:RV}
+Suppose $1-x(t)=t^{-\beta}L(t)$ and $x'(t)=\beta\,t^{-\beta-1}L(t)\bigl(1+o(1)\bigr)$ with $L$ slowly
+varying, i.e. $\log L(t)=o(\log t)$, and suppose \textup{(ii)--(iv)} of Theorem \ref{thm:endpoint}
+hold. Then \eqref{eq:limit} holds.
+\end{theorem}
+
+\begin{proof}
+In the upper bound replace $\log(1-x_{j})\le\log C-\beta\log t_{j}$ by
+$\log(1-x_{j})=-\beta\log t_{j}+\log L(t_{j})$ and note $\sum_{j\le n}\log L(t_{j})=o(n\log n)$,
+since $\log L(t)=o(\log t)$ and $\log t_{j}=O(\log j)$ on the relevant range. In the lower bound,
+\eqref{eq:gap_lower} acquires the extra factor $L(s_{N,N})$, and
+$\log L(N^{1+\eta_{N}})=o(\log N)$ contributes $o(N^{2}\log N)$ to \eqref{eq:vdm_lower}.
+\end{proof}
+
+\begin{remark}[Why regular variation is the right hypothesis, not an ad hoc one]
+\label{rem:RV}
+The condition $\log L(t)=o(\log t)$ is exactly what is needed for the exponent to be well defined,
+and it is exactly what makes the statement invariant under the reparametrizations that occur when a
+node sequence is indexed by height rather than by rank. If the nodes are indexed by a counting law
+with $t_{j}\asymp j/\log j$, then
+$1-x(t_{j})\asymp j^{-\beta}(\log j)^{\beta}$: the induced factor $(\log j)^{\beta}$ is slowly
+varying, so it is absorbed by $L$ and leaves $\beta$ invariant. Any hypothesis stated with
+$1-x(t_{j})\asymp j^{-\beta}$ and hard constants would fail here, and would have to be repaired case
+by case. This is the technical content of the phrase ``the counting law cannot appear in the leading
+coefficient.''
+\end{remark}
+
+\begin{remark}[What is universal]
+\label{rem:universal}
+Theorem \ref{thm:endpoint} shows the leading constant is the endpoint exponent and nothing else.
+The node counting law enters only through the verification that enough atoms exist at the right
+logarithmic scale; $t_{j}\asymp j$, $t_{j}\asymp j/\log j$, and all compatible logarithmic
+refinements give the same $-\beta$. Weights enter only through the one-sided condition (iv).
+Consequently arithmetic information, if it is present at all, can first appear at order $N^{2}$.
+\end{remark}
+
+\section{Hankel determinants of zeta values: the expected law, unconditionally}
+\label{sec:zeta}
+
+Fix positive integers $a$ and $b\ge0$ and set
+$H_{n}^{(a,b)}:=\det_{1\le i,j\le n}\bigl(\zeta(a(i+j)+b)\bigr)$. Expanding each entry,
+\begin{equation}
+\zeta(a(i+j)+b)=\sum_{m\ge1}m^{-b}\bigl(m^{-a}\bigr)^{i+j},
+\end{equation}
+so $H_{n}^{(a,b)}=D_{n}[\nu]$ is the monomial Hankel determinant \eqref{eq:hankel} of the positive
+discrete measure
+\begin{equation}
+\nu=\sum_{m\ge1}m^{-(b+2a)}\,\delta_{u_{m}},\qquad u_{m}=m^{-a},
+\label{eq:nu}
+\end{equation}
+in indices $r,s=0,\dots,n-1$. Two immediate consequences of positivity: $H_{n}^{(a,b)}>0$ for every
+$n$, so no nonvanishing argument is required; and the Cauchy--Binet lower bound of Theorem
+\ref{thm:endpoint} is available.
+
+The atoms of $\nu$ accumulate at $0$ rather than at $1$. Apply the reflection $x\mapsto1-x$: the
+change of basis from $\{1,x,\dots,x^{N-1}\}$ to $\{1,(1-x),\dots,(1-x)^{N-1}\}$ is triangular with
+diagonal entries $\pm1$, so the Gram determinants coincide. The reflected measure has atoms
+$x_{m}=1-m^{-a}\uparrow1$ with support map
+\begin{equation}
+x(t)=1-t^{-a},\qquad 1-x(t)=t^{-a},\qquad x'(t)=a\,t^{-a-1}.
+\end{equation}
+
+\begin{theorem}[Full leading asymptotics of $H_{n}^{(a,b)}$]
+\label{thm:zeta}
+For all positive integers $a$ and all integers $b\ge0$,
+\begin{equation}
+\boxed{\ \log\det_{1\le i,j\le n}\bigl(\zeta(a(i+j)+b)\bigr)=-a\,n^{2}\log n+O(n^{2}).\ }
+\label{eq:zeta_law}
+\end{equation}
+In particular $\log H_{n}^{(a,b)}/(n^{2}\log n)\to-a$. The statement is unconditional.
+\end{theorem}
+
+\begin{proof}
+Hypothesis (i) of Theorem \ref{thm:endpoint} holds with $\beta=a$ and constants $c=C=1$ for the
+first pair and $c=C=a$ for the second. Hypothesis (ii) holds with $t_{j}=j$ and no error at all.
+Hypothesis (iii) holds with $s_{N,a}=a$ and $\eta_{N}=0$: then $s_{N,N}=N$ and
+$s_{N,b}-s_{N,a}=b-a$. Hypothesis (iv) holds because
+$\sum_{m\le N}\log m^{-(b+2a)}=-(b+2a)\,N\log N+O(N)=o(N^{2}\log N)$.
+
+For the sharper error term, run the two bounds of Theorem \ref{thm:endpoint} with these exact data.
+In the upper bound, $\log(1-x_{j})=-a\log j$ exactly, so
+$\sum_{j\le n}\log(1-x_{j})=-a\,n\log n+O(n)$ and $\log h_{n}\le-2a\,n\log n+O(n)$; summing gives
+$\log H_{n}^{(a,b)}\le-a\,n^{2}\log n+O(n^{2})$. In the lower bound, $\eta_{N}=0$ turns
+\eqref{eq:gap_lower} into $y_{b}-y_{a}\ge a(b-a)N^{-a-1}$, and \eqref{eq:vdm_lower} together with
+\eqref{eq:pairsum} gives $-a\,n^{2}\log n+O(n^{2})$; the weight term is $O(n\log n)$.
+\end{proof}
+
+\begin{remark}[Relation to \cite{Monien2009} and \cite{HaynesZudilin2015}]
+\label{rem:position}
+For $a=1$, \eqref{eq:zeta_law} reproduces the leading term of \eqref{eq:monien} and is consistent
+with it; Monien's calculation is finer at order $n^{2}$ (it produces the explicit constant
+$\log 2-\tfrac32$) but is carried out for a single model and, in the general case, at a variational
+level the author himself flags as not fully rigorous. Theorem \ref{thm:zeta} is coarser at order
+$n^{2}$ and broader: it holds for every arithmetic progression, unconditionally, and it is two-sided.
+
+Against \cite{HaynesZudilin2015} the comparison is exact and there is no contradiction. They prove
+\eqref{eq:HZproved}, an upper bound with coefficient $-a/2$, and record $-a$ as expected; Theorem
+\ref{thm:zeta} supplies $-a$ in both directions, and their Theorem 1 is unaffected. In the present
+framework the factor two is located precisely: the leading behaviour is a product of two
+contributions of equal size, a weight contribution and a Vandermonde contribution, each
+$\exp(-\tfrac a2n^{2}\log n)$, and the estimate \eqref{eq:HZproved} retains the first and discards
+the second. Retaining the second requires positivity, which has no role in a one-sided bound; see
+\S\ref{ss:whytwo}.
+\end{remark}
+
+\begin{corollary}[Diophantine consequence, with twice the constant]
+\label{cor:diophantine}
+Let $a,b$ be positive integers and suppose all the numbers $\zeta(an+b)$, $n\ge1$, are rational.
+Let $q_{n}$ be the common denominator of $\zeta(a+b),\dots,\zeta(an+b)$. Then
+\begin{equation}
+\liminf_{n\to\infty}\frac{\log q_{n}}{n\log n}\ \ge\ \frac a2 .
+\end{equation}
+Consequently, either $\zeta(an+b)$ is irrational for infinitely many $n$, or $q_{n}$ grows at least
+like $n^{(a/2+o(1))n}$. The same argument fed with \eqref{eq:HZproved} yields only $a/4$.
+\end{corollary}
+
+\begin{proof}
+As in \cite{HaynesZudilin2015}, $q_{k}\mid q_{n}$ for $k\le n$ and
+\[
+q_{n+1}q_{n+2}\cdots q_{2n}\,H_{n}^{(a,b)}=\det_{1\le i,j\le n}\bigl(q_{i+n}\zeta(a(i+j)+b)\bigr)\in\mathbb Z .
+\]
+By positivity $H_{n}^{(a,b)}>0$ for every $n$, so the integer is nonzero and
+$q_{n+1}\cdots q_{2n}\,H_{n}^{(a,b)}\ge1$ for all $n$. Hence
+$\log(q_{n+1}\cdots q_{2n})\ge-\log H_{n}^{(a,b)}=a\,n^{2}\log n+O(n^{2})$ by Theorem \ref{thm:zeta}.
+Since $q_{k}\le q_{2n}$ for $k\le2n$, the left side is at most $n\log q_{2n}$, so
+$\log q_{2n}\ge a\,n\log n+O(n)$. Writing $N=2n$ gives
+$\log q_{N}\ge\tfrac a2N\log N+O(N)$. Replacing \eqref{eq:zeta_law} by \eqref{eq:HZproved}
+halves the right-hand side throughout.
+\end{proof}
+
+\begin{remark}
+Corollary \ref{cor:diophantine} does not decide the irrationality of any odd zeta value, and no such
+claim is made, and the qualitative conclusion $q_{n}^{1/n}\to\infty$ of \cite{HaynesZudilin2015}
+follows equally from either constant. It is recorded for one narrow purpose: it is the only place
+in this paper where the difference between $-a/2$ and $-a$ produces a different sentence, and it
+therefore certifies that the sharp constant is a real quantity rather than a cosmetic one.
+\end{remark}
+
+\section{The Li--Cayley exponent: $\beta=2$}
+\label{sec:cayley}
+
+The Cayley-type map underlying Li's criterion \cite{Li1997,BombieriLagarias1999} sends a nontrivial
+zero $\rho=\tfrac12+i\gamma$ of $\zeta$ to $z_{\rho}=1-1/\rho$, which lies on the unit circle exactly
+when $\rho$ is on the critical line. Its real part
+\begin{equation}
+x_{\gamma}:=\operatorname{Re}\Bigl(1-\frac1\rho\Bigr)=\frac{4\gamma^{2}-1}{4\gamma^{2}+1}\in(-1,1)
+\label{eq:cayley_map}
+\end{equation}
+is the natural real coordinate, and
+\begin{equation}
+1-x_{\gamma}=\frac{2}{4\gamma^{2}+1},
+\qquad\text{so}\qquad
+\log(1-x_{\gamma})=-2\log\gamma+O(\gamma^{-2}).
+\label{eq:cayley_endpoint}
+\end{equation}
+
+\begin{proposition}
+\label{prop:beta2}
+The map \eqref{eq:cayley_map}, viewed as $x(t)=(4t^{2}-1)/(4t^{2}+1)$, satisfies
+$1-x(t)\asymp t^{-2}$ and $x'(t)\asymp t^{-3}$. Its endpoint exponent is $\beta=2$.
+\end{proposition}
+
+\begin{proof}
+Immediate from \eqref{eq:cayley_endpoint} and $x'(t)=16t/(4t^{2}+1)^{2}$.
+\end{proof}
+
+Note the shape of \eqref{eq:cayley_endpoint}: the exponent is exactly $2$, with no logarithmic
+correction, and its derivation does not invoke the Riemann--von Mangoldt formula at all. That
+formula enters only when one insists on indexing by rank rather than by height, and Remark
+\ref{rem:RV} explains why that reindexing cannot move $\beta$.
+
+The two combinatorial hypotheses are supplied unconditionally by standard zero-counting.
+
+\begin{lemma}[Coarse location of distinct ordinates]
+\label{lem:coarse}
+Let $\gamma_{1}^{*}<\gamma_{2}^{*}<\cdots$ be the distinct positive ordinates. There are $c>0$ and
+$j_{0}$ with $\gamma_{j}^{*}\ge c\,j/\log j$ for $j\ge j_{0}$. No simplicity hypothesis is needed.
+\end{lemma}
+
+\begin{proof}
+Let $N^{*}(T)$ count distinct positive ordinates and $N(T)$ count them with multiplicity, so
+$N^{*}(T)\le N(T)$. Riemann--von Mangoldt gives $N(T)\ll T\log T$, hence
+$j\le N(\gamma_{j}^{*})\ll\gamma_{j}^{*}\log\gamma_{j}^{*}$. Multiple zeros only decrease $N^{*}$
+and so move the distinct ordinates upward; the bound is robust in multiplicity.
+\end{proof}
+
+\begin{lemma}[A deterministically separated subsequence]
+\label{lem:separated}
+There are $H>0$, $T_{0}>0$ and distinct positive ordinates $\widetilde\gamma_{j}$ with
+$T_{0}+2Hj\le\widetilde\gamma_{j}\le T_{0}+2Hj+H$ for all $j\ge1$. Hence
+$\widetilde\gamma_{j}\asymp j$ and $\widetilde\gamma_{b}-\widetilde\gamma_{a}\ge H(b-a)$.
+\end{lemma}
+
+\begin{proof}
+Write $N(T)=F(T)+R(T)$ with $F(T)=\frac T{2\pi}\log\frac T{2\pi}-\frac T{2\pi}$ and
+$R(T)=O(\log T)$, say $|R(T)|\le A\log T$ for $T\ge T_{1}$. For fixed $H\ge1$,
+$F(T+H)-F(T)=\frac H{2\pi}\log T+O_{H}(1)$. Choosing $H>4\pi A$ gives
+$N(T+H)-N(T)\ge(\frac H{2\pi}-2A+o(1))\log T>0$ for large $T$, so every interval $[T,T+H]$ with
+$T\ge T_{0}$ contains an ordinate. Apply this to the disjoint boxes $[T_{0}+2Hj,T_{0}+2Hj+H]$.
+\end{proof}
+
+\begin{corollary}[Universal Cayley constant]
+\label{cor:cayley}
+Let $\mu$ be any positive discrete measure supported on the Cayley images \eqref{eq:cayley_map} of
+the ordinates of the nontrivial zeros of $\zeta$, with weights satisfying \eqref{eq:weights} along
+the separated subsequence of Lemma \ref{lem:separated}, and let $D_{N}$ be its Gram determinant in
+any polynomial basis obeying \eqref{eq:basis}. Then
+\begin{equation}
+\boxed{\ \lim_{N\to\infty}\frac{\log D_{N}}{N^{2}\log N}=-2.\ }
+\end{equation}
+Moreover the value $-2$ is unchanged if the $T\log T$ counting law is replaced by a $T$ counting
+law, or by any logarithmic refinement compatible with \eqref{eq:node_scale} and
+\eqref{eq:separated}.
+\end{corollary}
+
+\begin{proof}
+Proposition \ref{prop:beta2} gives $\beta=2$; Lemma \ref{lem:coarse} gives \eqref{eq:node_scale};
+Lemma \ref{lem:separated} gives \eqref{eq:separated} with $\eta_{N}=0$ up to constants. Apply
+Theorem \ref{thm:endpoint}. The invariance statement is Remark \ref{rem:universal}.
+\end{proof}
+
+\begin{remark}[Where the Riemann--von Mangoldt refinement can first appear]
+Quantitatively, the upper bound in this setting carries a correction: from Lemma \ref{lem:coarse},
+$1-x_{\gamma_{j}^{*}}\ll(\log j)^{2}/j^{2}$, which propagates to
+\[
+\log D_{N}\le-2N^{2}\log N+2N^{2}\log\log N+O(N^{2}),
+\]
+while the Cauchy--Binet lower bound gives $-2N^{2}\log N+O(N^{2})$. The $N^{2}\log\log N$ term is not
+declared an artifact here: positivity guarantees that one favourable subset bounds the determinant
+from below, but not that the logarithm of the whole sum equals the logarithm of its largest term, so
+an entropy contribution may survive below the leading scale. Both bounds have the same leading
+coefficient $-2$, which is all that Corollary \ref{cor:cayley} asserts.
+\end{remark}
+
+\begin{remark}[Automorphic $L$-functions]
+Lagarias \cite{Lagarias2007} defines Li coefficients for principal automorphic $L$-functions and
+relates them to Weil's quadratic functional. Whenever a member of that class, under GRH, produces a
+positive Cayley zero measure with the same coarse counting and separation properties, Corollary
+\ref{cor:cayley} returns the same constant $-2$: degree and conductor may alter lower-order terms
+but not the endpoint exponent. This is a conditional universality statement, and the present paper
+does not construct the relevant measure for every such $L$-function.
+\end{remark}
+
+\section{Numerics, and a warning about local exponents}
+\label{sec:numerics}
+
+\subsection{Confirmation of $-a$}
+
+Table \ref{tab:zeta} reports $\log H_{n}^{(a,b)}$ computed at $2500$ decimal digits for
+$6\le n\le32$, together with the coefficient $c$ obtained by least squares in the model
+\begin{equation}
+\log H_{n}^{(a,b)}=c\,n^{2}\log n+d\,n^{2}+e\,n\log n+f\,n+g .
+\label{eq:fit_model}
+\end{equation}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ccrrrr}
+\toprule
+$a$ & $b$ & $\dfrac{\log H_{32}}{32^{2}\log32}$ & $\dfrac{\log H_{32}+a\cdot32^{2}\log32}{32^{2}}$ & fitted $c$ & fitted $d$\\
+\midrule
+1 & 0 & $-0.7961$ & $0.7067$ & $-0.9990$ & $0.8010$\\
+1 & 1 & $-0.8248$ & $0.6071$ & $-0.9984$ & $0.7975$\\
+2 & 1 & $-1.3962$ & $2.0925$ & $-1.9949$ & $2.4870$\\
+3 & 2 & $-2.0191$ & $3.3996$ & $-2.9905$ & $4.0725$\\
+\bottomrule
+\end{tabular}
+\caption{Hankel determinants of zeta values. Column 3 is the raw ratio, which is
+still far from $-a$ at $n=32$ because of the $O(n^{2})$ term; column 4 shows that the residual
+after subtracting $-a\,n^{2}\log n$ is indeed of size $n^{2}$; column 5 is the fitted leading
+coefficient from \eqref{eq:fit_model}, agreeing with $-a$ to three digits. All values computed at
+$2500$ digits.}
+\label{tab:zeta}
+\end{table}
+
+Two points deserve emphasis. The raw ratio $\log H_{32}/(32^{2}\log32)$ equals $-0.796$ when the
+true constant is $-1$: at $n=32$ the naive figure of merit is off by $20\%$, purely because
+$\log32\approx3.47$ is not large. And the residual column is flat in $n$, confirming the $O(n^{2})$
+error term of Theorem \ref{thm:zeta} rather than merely $o(n^{2}\log n)$.
+
+\subsection{Local exponents are the wrong figure of merit}
+
+For the Li--Cayley nodes the situation is worse, and instructively so. Write
+$S(M):=2\sum_{a\le M}\log\delta_{a}+2\sum_{a<b\le M}\log(\delta_{a}-\delta_{b})$ with
+$\delta_{j}=2/(4\gamma_{j}^{2}+1)$, the logarithm of the Cauchy--Binet term that Theorem
+\ref{thm:endpoint} shows to be leading. Using the first $140$ ordinates and, beyond that, the
+Riemann--von Mangoldt/Lambert approximation to $\gamma_{j}$, one finds
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+$M$ & $200$ & $600$ & $1400$ & $2600$ & $4000$\\
+\midrule
+$S(M)/(M^{2}\log M)$ & $-2.148$ & $-2.014$ & $-1.951$ & $-1.919$ & $-1.902$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The local ratio does not settle on $-2$; it drifts. The reason is exactly the slowly varying factor
+of Remark \ref{rem:RV}. With $\gamma_{j}\asymp j/\log j$ one has
+$\log\delta_{j}=-2\log j+2\log\log j+O(1)$, so
+\[
+\frac{S(M)}{M^{2}\log M}=-2+\frac{2\log\log M}{\log M}+O\Bigl(\frac1{\log M}\Bigr),
+\]
+and the correction decays like $1/\log M$: at $M=4000$ it is still of size $0.5$. Fitting
+$\log S$ against a basis that includes an $M^{2}\log\log M$ term restores the constant
+(e.g.\ $-2.09$ for the synthetic model $\delta_{j}=j^{-2}(\log j)^{2}$ at $M\le600$, against
+$-1.69$ for the naive basis; and $-2.00$ for $\delta_{j}=j^{-2}$, where no correction exists).
+
+The moral is methodological and worth stating flatly: an empirical exponent extracted from a
+finite range of $j$ measures the endpoint exponent \emph{plus} the local logarithmic derivative of
+$L$. It is not an estimator of $\beta$ at any accessible range, and a numerically slow approach to
+$-2$ is a property of the parametrization, not evidence against the constant. Theorem
+\ref{thm:endpoint} is, in this regime, the only reliable access to the coefficient.
+
+\section{What is new and what is not}
+\label{sec:position}
+
+For the avoidance of doubt, the following are \emph{not} claimed as novelties.
+
+\begin{itemize}
+\item The $N^{2}\log N$ decay scale of discrete Hankel determinants built from Dirichlet series.
+This is in \cite{Monien2009} and is recorded in \cite{HaynesZudilin2015}.
+\item The discrete Vandermonde / Cauchy--Binet representation of such determinants, which is
+\cite{Monien2009} and is also the engine of the elementary bound in \cite{HaynesZudilin2015}.
+\item The identity $D_{N}[\mu]=\prod_{n<N}h_{n}$ and the extremal characterization of $h_{n}$, which
+are textbook facts about orthogonal polynomials \cite{Chihara1978}.
+\item Discrete-Coulomb-gas and constrained-equilibrium methods, which are Johansson's
+\cite{Johansson2001}; nor the asymptotic theory of discrete orthogonal polynomials on infinite node
+sets with an accumulation point \cite{WuLinXuZhao2016}, or the general theory of orthogonal
+polynomials on sets of zero capacity \cite{StahlTotik1992,Totik2005Orthogonal}.
+\item The Li--Cayley map itself \cite{Li1997,BombieriLagarias1999} and its automorphic extension
+\cite{Lagarias2007}.
+\end{itemize}
+
+The following are the paper's contributions.
+
+\begin{itemize}
+\item \textbf{The law $\beta\mapsto-\beta$.} Theorems \ref{thm:endpoint} and \ref{thm:RV} identify
+the leading determinant constant with a single geometric invariant of the support --- the endpoint
+exponent --- under hypotheses that impose no lattice, no explicit node formula and no weight
+asymptotics. The statement is two-sided and the proof is elementary. We have not found this
+statement, in this generality, in the literature on Hankel determinant asymptotics or on discrete
+orthogonal polynomials; Johansson's framework is confined to uniform lattices, where the saturation
+constraint $\rho\le1$ encodes unit spacing, and the present supports are neither uniform nor
+lattice-like.
+\item \textbf{The zeta-value asymptotic in full.} Theorem \ref{thm:zeta} proves
+\eqref{eq:HZexpected} unconditionally, in two-sided $O(n^{2})$ form, for every arithmetic
+progression, without the Riemann--Hilbert apparatus needed for the single case $r=0$. This is the
+law recorded as expected in \cite{HaynesZudilin2015}, and it serves here as the test of the general
+principle on the one family where the right constant was already anticipated.
+\item \textbf{A quantitative Diophantine by-product.} Corollary \ref{cor:diophantine} doubles the
+denominator-growth constant obtainable by the method of \cite{HaynesZudilin2015}, without altering
+the qualitative conclusion they draw.
+\item \textbf{The evaluation $\beta_{\mathrm{Li\text-Cayley}}=2$.} Proposition \ref{prop:beta2} is a
+one-line computation, and that is the point: the content is in the theorem, not the evaluation. Its
+consequence, Corollary \ref{cor:cayley}, is a rigidity statement --- the leading determinant
+behaviour of every positive Gram system on Cayley images of zeta ordinates is $-2$, and the
+$T\log T$ counting law cannot reach it.
+\item \textbf{A negative structural conclusion.} Because the constant is purely geometric, any
+arithmetic signal in these determinants lives at order $N^{2}$ or below. Remark \ref{rem:universal}
+makes this precise, and Section \ref{sec:numerics} shows why the leading order is nonetheless hard
+to see numerically.
+\end{itemize}
+
+The discrete Vandermonde representation and the correct scale are due to \cite{Monien2009} and
+\cite{HaynesZudilin2015}; everything below the leading order in \eqref{eq:monien} is beyond the
+present methods and is not attempted. What is claimed is the change of question and its answer.
+
+\section{Conclusions: what the law is for}
+\label{sec:conclusions}
+
+The endpoint-exponent law is a statement about a leading constant, and leading constants are cheap
+to state and easy to dismiss. This section sets out, concretely, what follows from knowing that the
+constant is $-\beta$ and nothing else. Two of the consequences are quantitative and immediately
+usable; one is negative and, we think, the most valuable; one reframes a familiar phenomenon in
+numerical linear algebra.
+
+\subsection{A quantified precision barrier}
+\label{ss:conditioning}
+
+\begin{proposition}
+\label{prop:kappa}
+Let $\mu$ satisfy the hypotheses of Theorem \ref{thm:endpoint}, let $G_{N}$ be the $N\times N$ Gram
+matrix of \eqref{eq:hankel}, and let $\kappa_{2}(G_{N})=\lambda_{\max}/\lambda_{\min}$ be its
+spectral condition number. Then
+\begin{equation}
+\liminf_{N\to\infty}\frac{\log\kappa_{2}(G_{N})}{N\log N}\ \ge\ \beta .
+\label{eq:kappa}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$G_{N}$ is positive definite, so $\lambda_{\min}^{N}\le\prod_{i}\lambda_{i}=D_{N}[\mu]$, giving
+$\log\lambda_{\min}\le N^{-1}\log D_{N}[\mu]=-\beta N\log N+o(N\log N)$ by \eqref{eq:limit}.
+Also $\lambda_{\max}\ge(G_{N})_{00}=\mu(\mathbb R)=:M>0$. Hence
+$\log\kappa_{2}\ge\log M-N^{-1}\log D_{N}[\mu]=\beta N\log N+o(N\log N)$.
+\end{proof}
+
+The practical content is a lower bound on the working precision required to compute anything
+spectral about $G_{N}$ --- a Cholesky factorization, a smallest eigenvalue, a pivot sign. Roughly
+$\beta N\log N/\log10$ significant decimal digits are needed merely to separate the extreme
+eigenvalues. For the Li--Cayley value $\beta=2$:
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+$N$ & $50$ & $100$ & $200$ & $500$ & $1000$\\
+\midrule
+decimal digits & $\approx170$ & $\approx400$ & $\approx920$ & $\approx2700$ & $\approx6000$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This is not an empirical remark about any particular implementation. It is a proved lower bound
+that no algorithm can evade, since it is a property of the matrix and not of the method. Any
+programme that proposes to certify a positivity property of such a family numerically can read off
+its own cost before writing any code, and can recognize in advance the size at which the
+computation stops meaning anything in a given precision. In our experience this is the single most
+frequently useful consequence of the theorem.
+
+\subsection{A no-go: arithmetic cannot reach the leading order}
+\label{ss:nogo}
+
+By Theorem \ref{thm:endpoint} the constant $-\beta$ is a function of the support geometry alone.
+Nothing else survives to order $N^{2}\log N$: not the zero-counting law, not the weights beyond the
+one-sided condition \eqref{eq:weights}, not any lattice or spacing structure, and in particular no
+arithmetic input whatsoever. Remark \ref{rem:universal} states this, and Corollary
+\ref{cor:cayley} exhibits it: replacing the Riemann--von Mangoldt law $T\log T$ by a bare counting
+law $T$ leaves the constant at $-2$.
+
+Two consequences follow, and they point in the same direction.
+
+First, a methodological warning. An observed agreement between a computed determinant and its
+expected leading decay is \emph{not} evidence for any arithmetic hypothesis. It is a consequence of
+the support being where it is, and it would persist under substantial deformations of the zero
+configuration. A numerical check at leading order confirms a universality statement wearing
+arithmetic clothing.
+
+Second, a redirection of effort. If arithmetic information is present in these determinants at all,
+it lives at order $N^{2}$ or below --- exactly the order that Monien's variational analysis reaches
+for one model \eqref{eq:monien} and that our methods deliberately do not. Any programme hoping to
+extract spectral or arithmetic content from the bulk asymptotics of Li--Weil type matrices must be
+posed at that order. Section \ref{sec:numerics} shows that this is a demanding target: even the
+leading term is hard to see numerically, and the subleading one sits underneath an
+$N^{2}\log\log N$ correction whose status we have deliberately left open.
+
+We regard this as the most useful output of the paper. It closes an avenue, with proof rather than
+intuition, and it says where to look instead.
+
+\subsection{$\beta$ as a design parameter}
+
+Since $\beta$ is read off from the transform and $\beta$ alone controls both the determinant
+constant \eqref{eq:limit} and the conditioning bound \eqref{eq:kappa}, the endpoint exponent
+becomes a quantity one may choose rather than merely observe. If a construction admits a family of
+admissible maps sending the object of interest into $(-1,1)$, the map with the smallest endpoint
+exponent yields the numerically most tractable Gram family, at a rate that
+Proposition \ref{prop:kappa} makes explicit. The Cayley map \eqref{eq:cayley_map} is canonical for
+Li's criterion but is not forced by conditioning considerations, and $\beta=2$ is its price.
+
+We note without proof, since it requires the kernel formalism not developed here, that the same
+exponent also fixes the critical Schatten exponent $p_{c}=1/\beta$ of the associated integral
+kernel, so that $\beta=2$ gives $p_{c}=1/2$. Whether a kernel lies in a given trace ideal decides
+which analytic constructions --- Fredholm determinants, regularized traces --- are licensed at all,
+so the exponent has consequences beyond magnitude estimates. We record this as an indication and
+develop it elsewhere.
+
+\subsection{Why the extra $\log N$: discreteness, not size}
+
+It is worth isolating what the factor $\log N$ is measuring, because it is the feature that
+separates this regime from the classical one. For a measure supported on a compact set $E$ of
+positive logarithmic capacity, Szeg\H o--Widom theory gives $h_{n}^{1/n}\to\operatorname{cap}(E)^{2}$,
+so $\log D_{N}=\sum_{n<N}\log h_{n}\sim N^{2}\log\operatorname{cap}(E)$: order $N^{2}$, with no
+logarithm. The Hilbert matrix, the moment matrix of Lebesgue measure on $[0,1]$, is the standard
+instance.
+
+The supports considered here are countable and therefore of capacity zero
+\cite{StahlTotik1992,Totik2005Orthogonal}, so $h_{n}^{1/n}\to0$ and the $N^{2}$ law degenerates. The
+content of Theorem \ref{thm:endpoint} is that the degeneration is not arbitrary: it is exactly one
+factor of $\log N$, with a coefficient that is precisely the rate at which the atoms approach their
+accumulation point. In the language of numerical analysis, moment matrices on discrete supports
+with an accumulation point are worse conditioned than their continuous counterparts by a factor
+$\log N$ in the exponent, and $\beta$ says by how much. This statement is independent of $\zeta$ and
+of number theory, and is the form in which the result is likely to be useful outside the present
+context.
+
+\subsection{What the law does not do}
+
+For completeness, and because the surrounding literature invites the confusion: nothing here bears
+on the Riemann hypothesis. The theorem controls the \emph{magnitude} of determinants; Li's criterion
+and Weil positivity are statements about \emph{signs}, and a magnitude asymptotic is compatible with
+either sign behaviour. Nothing here proves the irrationality of any zeta value; Corollary
+\ref{cor:diophantine} improves a constant in a conditional statement and no more. And nothing here
+reaches the $N^{2}$ order at which, by \S\ref{ss:nogo}, the interesting information would have to
+live.
+
+\begin{thebibliography}{99}
+
+\bibitem{BombieriLagarias1999}
+E. Bombieri and J. C. Lagarias,
+\emph{Complements to Li's criterion for the Riemann hypothesis},
+J. Number Theory \textbf{77} (1999), no. 2, 274--287.
+DOI: 10.1006/jnth.1999.2392.
+
+\bibitem{Chihara1978}
+T. S. Chihara,
+\emph{An Introduction to Orthogonal Polynomials},
+Gordon and Breach, New York, 1978.
+
+\bibitem{HaynesZudilin2015}
+A. Haynes and W. Zudilin,
+\emph{Hankel determinants of zeta values},
+SIGMA \textbf{11} (2015), Paper 101, 5 pp.
+DOI: 10.3842/SIGMA.2015.101. arXiv:1510.01901.
+
+\bibitem{Johansson2001}
+K. Johansson,
+\emph{Discrete orthogonal polynomial ensembles and the Plancherel measure},
+Ann. of Math. (2) \textbf{153} (2001), no. 1, 259--296.
+DOI: 10.2307/2661375.
+
+\bibitem{Lagarias2007}
+J. C. Lagarias,
+\emph{Li coefficients for automorphic $L$-functions},
+Ann. Inst. Fourier (Grenoble) \textbf{57} (2007), no. 5, 1689--1740.
+DOI: 10.5802/aif.2311.
+
+\bibitem{Li1997}
+X.-J. Li,
+\emph{The positivity of a sequence of numbers and the Riemann hypothesis},
+J. Number Theory \textbf{65} (1997), no. 2, 325--333.
+DOI: 10.1006/jnth.1997.2137.
+
+\bibitem{Monien2009}
+H. Monien,
+\emph{Hankel determinants of Dirichlet series},
+arXiv:0901.1883 [math.NT] (2009).
+
+\bibitem{StahlTotik1992}
+H. Stahl and V. Totik,
+\emph{General Orthogonal Polynomials},
+Encyclopedia of Mathematics and its Applications, vol. 43,
+Cambridge University Press, Cambridge, 1992.
+DOI: 10.1017/CBO9780511759420.
+
+\bibitem{Totik2005Orthogonal}
+V. Totik,
+\emph{Orthogonal polynomials},
+Surveys in Approximation Theory \textbf{1} (2005), 70--125.
+
+\bibitem{WuLinXuZhao2016}
+X.-B. Wu, Y. Lin, S.-X. Xu and Y.-Q. Zhao,
+\emph{Uniform asymptotics for discrete orthogonal polynomials on infinite nodes with an
+accumulation point},
+Anal. Appl. (Singap.) \textbf{14} (2016), no. 5, 705--737.
+DOI: 10.1142/S0219530515500177.
+
+\end{thebibliography}
+
+\end{document}

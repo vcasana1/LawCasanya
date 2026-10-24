@@ -1,0 +1,684 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage[hidelinks]{hyperref}
+
+\title{Möbius-Admissible Completions, Discrepancy, and RH-Critical Excursions:\\A Literature and Research Map}
+\author{Víctor Casaña-Giner\\Bio Logic Crop Science S.L., E-46120 Alboraya (Valencia), Spain}
+\date{August 2026}
+
+\newcommand{\Om}{\Omega}
+\newcommand{\RHC}{\mathrm{RHC}}
+\newcommand{\RHFc}{\mathrm{RHFc}}
+\newcommand{\RHFl}{\mathrm{RHFl}}
+\newcommand{\BN}{B_N}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document is a research map for a deterministic extremal program around the Möbius summatory function.  The starting space is the full ternary cube $\{-1,0,1\}^N$.  Successive layers impose rigorous Möbius-specific information---squarefree support, multiplicative compatibility, partial prime information, residual closure, identities, local pattern constraints, and other arithmetic consequences---and the surviving completions are tested by the largest partial sum still admissible.  The purpose of the present document is not to claim novelty for the ingredients individually.  Most ingredients belong to well-developed literatures on multiplicative functions, discrepancy, random multiplicative functions, sign patterns, and the Mertens function.  Its role is to identify precisely which parts are known, which results can be converted into deterministic constraints, and where a genuinely different extremal-completion problem may remain.
+\end{abstract}
+
+\section{The organizing problem}
+Let
+\[
+ \Om_N^{(0)}=\{-1,0,1\}^N,\qquad |\Om_N^{(0)}|=3^N,
+\]
+and let $\Om_N^{(j)}\subseteq\Om_N^{(0)}$ be the set of words surviving a specified collection $\mathcal I_j$ of rigorous arithmetic constraints.  For $\omega=(\omega_1,\ldots,\omega_N)$ put
+\[
+ S_\omega(n)=\sum_{k\le n}\omega_k,
+ \qquad
+ B_N^{(j)}=\max_{\omega\in\Om_N^{(j)}}|S_\omega(N)|.
+\]
+The corresponding effective extremal exponent is
+\[
+ E_N^{(j)}=\frac{\log B_N^{(j)}}{\log N}-\frac12
+\]
+when $B_N^{(j)}>0$.  The central deterministic question is not whether a large excursion is improbable, but whether any arithmetically admissible completion producing it remains.
+
+A useful filtration has the schematic form
+\[
+\Om_N^{(0)}\supseteq
+\Om_N^{(\mathrm{sqf})}\supseteq
+\Om_N^{(\mathrm{mult})}\supseteq
+\Om_N^{(P_r)}\supseteq
+\Om_N^{(\mathrm{id})}\supseteq\cdots,
+\]
+where the precise information content of every layer must be stated independently of the actual unknown values one is attempting to bound.  Imposing the complete definition of Möbius together with complete factorization reduces the space to the unique true Möbius word and is therefore an endpoint check, not a nontrivial layer of the program.
+
+\section{RHC, RHFc, and RHFl}
+For a finite word, define its endpoint excess exponent by
+\[
+ e_N(\omega)=\frac{\log|S_\omega(N)|}{\log N}-\frac12,
+\]
+when $S_\omega(N)\ne0$.
+
+\paragraph{RHC.}
+An RHC (RH-critical) event is a finite excursion above the square-root scale,
+\[
+ |S_\omega(N)|>\sqrt N.
+\]
+Such an event is not incompatible with RH.  Factors of size $N^{o(1)}$, including powers of iterated logarithms, may produce arbitrarily large ratios to $\sqrt N$ while retaining exponent $1/2+o(1)$.
+
+\paragraph{RHFc.}
+For fixed $\delta>0$, an $\RHFc_\delta$ event is the finite candidate condition
+\[
+ |S_\omega(N)|>N^{1/2+\delta}.
+\]
+A single such event at finite $N$ does not falsify RH.  It becomes asymptotically incompatible with RH only if a fixed positive excess survives at unbounded scales in a manner forcing
+\[
+ \limsup_{N\to\infty}\frac{\log|M(N)|}{\log N}>\frac12.
+\]
+
+\paragraph{RHFl.}
+An RHFl event is genuinely local: it violates an explicit finite-$x$ consequence of RH.  If a theorem gives
+\[
+ \mathrm{RH}\Longrightarrow |M(x)|\le H_{\mathrm{RH}}(x)
+\]
+in an explicit range, then $|S_\omega(N)|>H_{\mathrm{RH}}(N)$ is locally incompatible with RH in that range.  Existing explicit RH-conditional estimates have thresholds far beyond the initial computational regime, so RHFl and RHFc must not be conflated.
+
+\section{Classical Mertens-function background}
+RH is equivalent to
+\[
+ M(x)=O_\varepsilon(x^{1/2+\varepsilon})
+ \qquad\text{for every }\varepsilon>0.
+\]
+This is an asymptotic statement with an $\varepsilon$-dependent constant; therefore no unit-constant inequality $|M(N)|\le N^{1/2+\varepsilon}$ at one finite $N$ is an RH consequence.  Ng studies the conditional distribution and extreme-value behavior of $M(x)$ under RH together with additional hypotheses, including a limiting distribution for the normalized summatory function and a heuristic extreme scale involving $\sqrt{x}(\log\log\log x)^{5/4}$ \cite{Ng2004}.  Explicit conditional estimates, such as those of Simonič, are useful for defining a genuine RHFl boundary but only in their stated ranges \cite{Simonic2022}.
+
+\section{Discrepancy and adversarial multiplicativity}
+The discrepancy literature is essential because it is deterministic and adversarial rather than probabilistic.  Tao proved the Erdős discrepancy problem: every $\{\pm1\}$ sequence has unbounded discrepancy on homogeneous arithmetic progressions \cite{Tao2016}.  For a completely multiplicative $\{\pm1\}$-valued sequence, discrepancy on a homogeneous progression factors through the ordinary partial sum, so the multiplicative specialization asks whether ordinary partial sums can remain bounded.  Earlier and related work studies multiplicative functions with bounded or forced-unbounded partial sums \cite{Coons2010,Vandehey2012}.
+
+The conceptual lesson for the present program is sharp: a severe reduction in the number of admissible multiplicative configurations need not imply a comparable reduction in the extremal partial sum.  Discrepancy results force excursions under structural constraints; the desired Möbius-side counterpart would be an upper-bound or contraction theorem showing that sufficiently strong Möbius-specific constraints forbid excursions of fixed power above $N^{1/2}$.
+
+\section{Structure of multiplicative functions with small sums}
+Koukoulopoulos and Soundararajan characterize strong structural consequences of unusually small partial sums of multiplicative functions \cite{KoukSound2020}.  This literature is close to the contrapositive viewpoint of the present program: instead of asking what structure follows from small sums, one asks how much a prescribed structure restricts the largest possible sum.  Any claimed novelty must therefore be phrased at the level of \emph{partial-information completion} and the quantitative contraction of its extremal envelope, not merely as an extremal problem over multiplicative functions.
+
+\section{Möbius-like multiplicative functions on squarefree and $k$-free support}
+Aymone gives explicit multiplicative functions supported on the squarefree integers, with prime values $f(p)=\pm1$, whose summatory functions satisfy $M_f(x)=o(\sqrt{x})$; under RH the construction can go beyond square-root cancellation \cite{Aymone2020}.  Aymone, Bueno, and Medeiros extend this to multiplicative functions supported on the $k$-free integers, constructing examples with partial sums $o(x^{1/k})$ and stronger conditional exponents under GRH \cite{AymoneBuenoMedeiros2022}.  Aymone also studies the Erdős discrepancy problem on squarefree and cubefree supports, proving unbounded partial sums for natural multiplicative sequences built from these supports \cite{Aymone2022Discrepancy}.
+
+These papers are especially important for the present program because they show that the layer ``squarefree support + multiplicativity + free prime signs'' already belongs to an established extremal literature.  Therefore a new contribution cannot consist merely of optimizing over prime signs on squarefree support.  Any distinct object must use genuinely Möbius-specific information closure or quantify the marginal effect of information that these model classes do not encode.
+
+\section{Random multiplicative functions as a scale reference}
+Wintner's Rademacher random multiplicative model is a classical probabilistic model for Möbius.  Modern work gives a detailed picture of its large fluctuations.  Harper proves almost sure arbitrarily large fluctuations at scale
+\[
+ \sqrt{x}(\log\log x)^{1/4+o(1)},
+\]
+showing in particular why crossing $\sqrt{x}$ is not itself an RH-false phenomenon \cite{Harper2023}.  Harper's high-moment work gives large-deviation information for Rademacher and Steinhaus random multiplicative sums \cite{Harper2019}.  Recent upper-bound work determines the matching logarithmic scale in these models \cite{DurkanPearceCrump2026}.
+
+These results are not evidence that RH is ``probable.''  Their role here is diagnostic: they identify a natural multiplicative fluctuation scale of the form $x^{1/2+o(1)}$ and therefore provide a reference against which deterministic RHC and RHFc envelopes can be interpreted.
+
+\section{Biased random multiplicative functions and RH-equivalent model statements}
+Aymone and Sidoravicius study random multiplicative functions supported on the squarefree integers whose prime values are biased toward the classical Möbius function \cite{AymoneSidoravicius2017}.  Their results include necessary and sufficient conditions for power-saving partial sums in biased models and an RH-equivalent statement formulated through a family of weakly biased random multiplicative functions.  This is a particularly close antecedent to any attempt to interpret progressive Möbius information probabilistically.
+
+For the present deterministic program the distinction is decisive: conditioning or biasing a probability law on prime values does not eliminate every exceptional completion.  Nevertheless, this literature supplies both warning and calibration: a filtration whose only new ingredient is a growing bias toward $\mu(p)=-1$ is unlikely to constitute a distinct research problem.
+
+\section{Local sign patterns and realizability}
+Matomäki, Radziwiłł, and Tao prove positive-density occurrence results for local sign patterns of Liouville and for the nine possible pairs $(\mu(n),\mu(n+1))$ \cite{MRT2016}.  This addresses local realizability of Möbius patterns, whereas the present completion problem concerns global prefixes $(1,\ldots,N)$ subject to simultaneous arithmetic constraints.  Nevertheless, sign-pattern theorems can become genuine constraints when a filtration contains translated windows or local-pattern requirements; they must not be reintroduced as if they were new combinatorial observations.
+
+\section{Partial multiplicativity and prescribed prime information}
+Vandehey explicitly studies weakened multiplicativity in which multiplicative relations are imposed only for primes in a finite prescribed set \cite{Vandehey2012}.  This is a direct antecedent of any layer parameterized merely by a finite set of known primes.  Consequently, ``reveal the first $r$ primes and optimize'' is not by itself a sufficiently distinct research object.
+
+The potentially different object is instead the \emph{closure} of partial Möbius information: after revealing a specified information set, include every value, zero, sign relation, residual primality conclusion, and multiplicative identity that follows logically from it, and optimize over all completions consistent with that closure.  The mathematical object is therefore a constraint-closure operator rather than a list of fixed prime signs.
+
+\section{Pretentiousness and inverse information from partial sums}
+The pretentious approach of Granville and Soundararajan organizes multiplicative functions through a quantitative distance measuring how closely one multiplicative function imitates another \cite{GranvilleSound2007}.  Koukoulopoulos--Soundararajan and subsequent work of Sachpazis develop inverse principles in which unusually small partial sums force strong average structure on prime values \cite{KoukSound2020,Sachpazis2024}.  This literature is relevant to the research map in two directions.  First, it shows that partial-sum behavior itself carries information about the underlying prime data.  Second, it provides candidate analytic constraints that could eventually replace brute-force propagation by structural inequalities.
+
+A future completion theorem should therefore be compared not only with discrepancy theory but also with these inverse theorems: if a proposed ``new'' constraint is already a consequence of pretentious distance or an inverse theorem for small sums, the literature result should be used directly.
+
+\section{Computational Mertens benchmarks}
+Direct computation of the true Mertens function is not the objective of the completion program, but it supplies indispensable controls.  Hurst computed all values through $10^{16}$ and improved numerical bounds associated with the disproved Mertens conjecture \cite{Hurst2018}.  A 2026 implementation computes isolated values through $10^{25}$, including $M(10^{24})$ and $M(10^{25})$, while retaining the classical $O(x^{2/3+\varepsilon})$ isolated-value framework \cite{Hurst2026}.  These computations make clear that finite verification of the true word can be pushed vastly farther than exhaustive enumeration of completion spaces.  Consequently, computational novelty must come from solving the adversarial completion problem, not from tabulating $M(N)$ itself.
+
+
+\section{Chudakov-type classification and bounded partial sums}
+A further novelty boundary comes from classification theorems for multiplicative functions with bounded partial sums. Klurman proves Chudakov's conjecture in a finite-range setting: under the appropriate hypotheses, a completely multiplicative function with bounded partial sums is forced into character-like structure \cite{Klurman2018}. Klurman, Mangerel, Pohoata, and Teräväinen subsequently develop sieve-theoretic tools for multiplicative functions whose partial sums stay close to their mean and obtain, among other consequences, strong rigidity statements for bounded partial sums \cite{KMPT2021}. Aymone gives additional classifications and constructions for complex-valued multiplicative functions with bounded partial sums \cite{Aymone2023Bounded}.
+
+These results occupy a large part of the naive extremal question ``which multiplicative assignments have bounded sums?''  The present program must therefore retain its finite-information aspect: the variable object is not a completed multiplicative function selected from a broad class, but the adversarial envelope of all completions consistent with a declared, incomplete Möbius information state.
+
+\section{Finite prime modifications and stability of partial sums}
+Aymone studies completely multiplicative functions obtained by modifying a primitive Dirichlet character at a finite set of primes, proving $\Omega$-bounds whose scale depends explicitly on the number of modified primes \cite{Aymone2023Modified}. This is very close to any experiment in which finitely many prime values are altered while all remaining prime data are frozen. It shows that the location and number of modified prime generators can leave a quantitative signature in the partial sums.
+
+Consequently, a layer obtained merely by ``freeing'' or ``fixing'' finitely many prime signs is not enough to define a new object. The potentially distinct ingredient is again the closure map: partial information must generate all deterministic Möbius consequences before the adversarial maximum is taken.
+
+\section{Further Möbius-like extremal constructions}
+Liu studies classes of multiplicative functions resembling Möbius and proves complementary $O$- and $\Omega$-results for their summatory functions \cite{Liu2022}. Together with the squarefree and $k$-free constructions already reviewed, this reinforces the point that extremizing partial sums over Möbius-like multiplicative families is itself established territory. The completion program should use these papers as test families: any proposed envelope theorem should be checked against known constructions that deliberately produce unusually small or unusually large sums.
+
+\section{Exponential-sum rigidity with multiplicative coefficients}
+Recent work of Bazin studies bounded exponential sums with multiplicative coefficients and develops structural consequences from boundedness, extending ideas related to Chudakov-type rigidity to more general oscillatory observables \cite{Bazin2025}. Although the observable differs from the ordinary Mertens sum, this literature is relevant methodologically: it supplies additional examples where a global bound forces pretentious or character-like structure. Such inverse mechanisms may eventually be convertible into deterministic pruning rules for a completion algorithm.
+
+\section{Targeted search for completion, query, and certificate formulations}
+A dedicated search was carried out for formulations under terms such as \emph{partial specification of multiplicative functions}, \emph{extension/completion of multiplicative functions}, \emph{reconstruction of Möbius from partial values}, \emph{query complexity of multiplicative functions}, and \emph{certificate complexity for Möbius}. The closest primary-source results located were partial multiplicativity on prescribed prime sets, inverse theorems from small partial sums, rigidity/classification results for bounded sums, finite modifications of characters, and probabilistic conditioning on prime values. No primary-source paper was located that defines the finite adversarial completion functional
+\[
+ \mathfrak B_N(\mathcal I)=\max_{\omega\in\mathcal C_N(\mathcal I)}\left|\sum_{n\le N}\omega_n\right|
+\]
+for a progressively closed body of Möbius-specific information and then studies its contraction as an information-complexity problem. This is a negative search result, not a proof of novelty, and should be updated as the bibliography grows.
+
+\section{Novelty-threat matrix}
+The following table is intended as a guardrail against rediscovery.
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{p{0.23\textwidth}p{0.29\textwidth}p{0.20\textwidth}p{0.20\textwidth}}
+\toprule
+Candidate idea & Closest established literature & Status & What would still be different \\
+\midrule
+\endfirsthead
+\toprule
+Candidate idea & Closest established literature & Status & What would still be different \\
+\midrule
+\endhead
+Free signs on squarefree support & Aymone; Aymone--Bueno--Medeiros; Liu & Occupied & Möbius-specific information closure \\
+Finite set of prescribed prime values & Vandehey; modified-character literature & Occupied & Optimize after full logical closure, not after raw prescriptions \\
+Bounded/unbounded multiplicative partial sums & Tao; Klurman; KMPT; Aymone & Occupied & RH-scale upper envelope under partial information \\
+Probabilistic progressive prime information & Aymone--Sidoravicius; random multiplicative literature & Occupied & Deterministic elimination of every surviving completion \\
+Inverse structure from small sums & Koukoulopoulos--Soundararajan; Sachpazis; Bazin & Occupied & Forward contraction from declared finite information \\
+Count of surviving words & Elementary combinatorics / CSP viewpoint & Not sufficient & Coupled with arithmetic closure and extremal envelope \\
+Adversarial Möbius completion envelope & No exact antecedent located in targeted search & Open search status & Formalize closure, information cost, and $N$-scaling \\
+Minimal information killing every $\RHFc_\delta$ completion & No exact antecedent located in targeted search & Open search status & Query/certificate complexity of RH-critical exclusion \\
+\bottomrule
+\end{longtable}
+\normalsize
+\setlength{\tabcolsep}{6pt}
+
+\section{The completion operator}
+Let $\mathcal I$ be a finite body of arithmetic information available at scale $N$.  Define
+\[
+ \mathcal C_N(\mathcal I)
+ =\{\omega\in\{-1,0,1\}^N:\omega\text{ satisfies every consequence of }\mathcal I\text{ included in the model}\}.
+\]
+The fundamental extremal functional is
+\[
+ \mathfrak B_N(\mathcal I)
+ =\max_{\omega\in\mathcal C_N(\mathcal I)}
+ \left|\sum_{n\le N}\omega_n\right|.
+\]
+For nested information sets $\mathcal I\subseteq\mathcal J$,
+\[
+ \mathcal C_N(\mathcal J)\subseteq\mathcal C_N(\mathcal I),
+ \qquad
+ \mathfrak B_N(\mathcal J)\le \mathfrak B_N(\mathcal I).
+\]
+The contraction produced by adding information is
+\[
+ \Delta_{\mathcal I\to\mathcal J}(N)
+ =\mathfrak B_N(\mathcal I)-\mathfrak B_N(\mathcal J),
+\]
+or, on the exponent scale,
+\[
+ \Delta E_{\mathcal I\to\mathcal J}(N)
+ =\frac{\log \mathfrak B_N(\mathcal I)-\log \mathfrak B_N(\mathcal J)}{\log N}.
+\]
+This distinguishes information that merely reduces the number of completions from information that actually contracts the dangerous extremal envelope.
+
+\section{Constraint families to be tested}
+The following layers should be treated as separate mathematical experiments.
+\begin{enumerate}
+\item Full ternary space $\{-1,0,1\}^N$.
+\item Möbius support information: $\mu(1)=1$, squarefree/non-squarefree constraints.
+\item Multiplicative compatibility with prime signs still free.
+\item Finite-prime partial multiplicativity, explicitly compared with the Vandehey-type antecedent.
+\item Sieve information available below a moving threshold, especially $p\le\sqrt N$.
+\item Residual closure by the first $r$ primes: factor extraction plus every forced residual-primality conclusion licensed by the chosen closure rule.
+\item Möbius identities that couple many coordinates without revealing them individually.
+\item Prefix or endpoint information, when it is part of the experiment, with its information cost recorded separately.
+\item Proven local pattern/correlation constraints when they can be encoded deterministically.
+\item The full Möbius word only as a terminal control, never as evidence that an intermediate filtration contracts.
+\end{enumerate}
+
+\section{Quantities to record at every layer}
+For every $(N,j)$ the computational record should contain at least
+\[
+ |\Om_N^{(j)}|,
+ \qquad
+ B_N^{(j)},
+ \qquad
+ E_N^{(j)},
+\]
+and the exact counts
+\[
+ \#\{\omega\in\Om_N^{(j)}:|S_\omega(N)|>\sqrt N\},
+\]
+\[
+ \#\{\omega\in\Om_N^{(j)}:|S_\omega(N)|>N^{1/2+\delta}\}
+\]
+for a declared grid of fixed $\delta>0$.  Counts are descriptive; the logical RH question depends on emptiness of the relevant admissible set.  The denominator $3^N$ should always be retained as the reference size of the original unconstrained space, while conditional proportions inside each surviving layer may be recorded separately.
+
+For pathwise experiments, endpoint constraints must be supplemented by persistence statistics, for example the number of increasing scales at which a fixed $\delta$ is exceeded.  RHF itself is asymptotic and cannot be certified by a single finite endpoint.
+
+\section{Literature-to-constraint map}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{p{0.18\textwidth}p{0.25\textwidth}p{0.27\textwidth}p{0.22\textwidth}}
+\toprule
+Literature & Object / mode & Direct use here & Main limitation \\
+\midrule
+\endfirsthead
+\toprule
+Literature & Object / mode & Direct use here & Main limitation \\
+\midrule
+\endhead
+Tao \cite{Tao2016} & Discrepancy of $\pm1$ sequences; deterministic & Forced excursions; adversarial benchmark & Not a square-root/RH-scale upper bound \\
+Vandehey \cite{Vandehey2012} & Partial multiplicativity on a finite prime set; deterministic & Antecedent for partial-prime layers & Does not build Möbius-specific closure \\
+Koukoulopoulos--Soundararajan \cite{KoukSound2020} & Multiplicative functions with small partial sums; structural & Benchmark for extremal sums and inverse constraints & Reverse direction from completion contraction \\
+Matomäki--Radziwiłł--Tao \cite{MRT2016} & Local Liouville/Möbius sign patterns; deterministic & Realizability and local constraints & Translated local windows, not global prefix completions \\
+Harper \cite{Harper2023,Harper2019} & Random multiplicative partial sums; probabilistic & Natural $x^{1/2+o(1)}$ scale and large deviations & Cannot eliminate exceptional deterministic completions \\
+Durkan--Pearce-Crump \cite{DurkanPearceCrump2026} & Sharp a.s. upper scale in random models & Reference scale for RHC & Random model, not Möbius \\
+Aymone \cite{Aymone2020} & Squarefree-supported Möbius-like functions; constructive & Shows free prime-sign squarefree layer is established territory & No progressive Möbius-specific closure \\
+Aymone--Bueno--Medeiros \cite{AymoneBuenoMedeiros2022} & $k$-free supported multiplicative functions; constructive & Extremal cancellation benchmark on restricted support & Different information model \\
+Aymone--Sidoravicius \cite{AymoneSidoravicius2017} & Biased random Möbius-like functions & Warning for progressive prime bias; RH-equivalent model results & Exceptional deterministic completions remain \\
+Granville--Soundararajan \cite{GranvilleSound2007} & Pretentious distance; analytic & Structural metric for prime information & Not a finite completion envelope \\
+Sachpazis \cite{Sachpazis2024} & Inverse structure from small partial sums & Candidate source of global constraints & Reverse/inverse direction \\
+Klurman \cite{Klurman2018} & Chudakov-type rigidity; completely multiplicative functions & Classification benchmark for bounded sums & Completed functions, not partial-information envelopes \\
+Klurman--Mangerel--Pohoata--Teräväinen \cite{KMPT2021} & Sieve/inverse structure for multiplicative partial sums & Rigidity and potential pruning inequalities & Does not optimize finite Möbius completions \\
+Aymone \cite{Aymone2023Modified} & Finite modifications of Dirichlet characters & Quantifies effects of finitely changed prime values & Remaining prime data are not an unknown completion state \\
+Liu \cite{Liu2022} & Möbius-like multiplicative functions; $O$/$\Omega$ bounds & Stress-test family for envelope claims & No progressive information filtration \\
+Bazin \cite{Bazin2025} & Bounded exponential sums with multiplicative coefficients & Further inverse/rigidity mechanisms & Different observable and no Möbius completion functional \\
+
+Hurst \cite{Hurst2018,Hurst2026} & Direct computation of $M(x)$ & Ground truth and scaling benchmark & Computes the unique true word, not admissible completions \\
+Ng \cite{Ng2004} & Conditional distribution of $M(x)$ & RH-compatible extreme scale & Uses RH plus additional hypotheses \\
+Simonič \cite{Simonic2022} & Explicit conditional bounds for $M(x)$ & Genuine RHFl boundary where applicable & Very large validity thresholds \\
+\bottomrule
+\end{longtable}
+\normalsize
+\setlength{\tabcolsep}{6pt}
+
+\section{Gap analysis}
+The following claims are \emph{not} candidates for novelty by themselves: enumerating ternary words; imposing squarefree support; parameterizing multiplicative functions by prime values; conditioning or prescribing finitely many prime values; asking whether multiplicative partial sums are bounded; studying large deviations of random multiplicative sums; or proving that particular local Möbius sign patterns occur.
+
+A potentially distinct problem remains if all of the following are essential:
+\begin{enumerate}
+\item the objects are finite Möbius-admissible \emph{completions}, not a probability model;
+\item information is represented by an explicit closure operator that propagates every permitted deterministic consequence;
+\item the objective is the adversarial maximum $\mathfrak B_N(\mathcal I)$ over all surviving completions;
+\item the information content is varied systematically, allowing marginal contraction to be assigned to particular arithmetic constraints;
+\item the target scale is the disappearance of every fixed-power excess $N^{1/2+\delta}$, not merely bounded discrepancy or small average behavior.
+\end{enumerate}
+A literature claim of novelty should be made only after a dedicated search for extremal completion, partial specification, reconstruction/query complexity, and constraint-satisfaction formulations for multiplicative functions.
+
+\section{Research questions}
+The initial program is organized around the following questions.
+\begin{enumerate}
+\item Which known Möbius constraints reduce only $|\Om_N^{(j)}|$, and which actually reduce $B_N^{(j)}$?
+\item Are the contraction points of $B_N^{(j)}$ controlled by primes, prime squares, large prime factors, residual-primality transitions, or another arithmetic statistic?
+\item Does a stable law emerge for $E_N^{(j)}$ as $N$ grows for any nontrivial family of information sets?
+\item Can one prove a power saving $B_N^{(j)}\ll N^{1-\eta}$ from a genuinely partial, generic information family?
+\item Can any explicit growing family $\mathcal I(N)$ force
+\[
+ \mathfrak B_N(\mathcal I(N))\le N^{1/2+o(1)}
+\]
+without encoding the Möbius word itself?
+\item What is the minimal information, under a declared information model, required to make the $\RHFc_\delta$ set empty?
+\item Which constraints are redundant for the extremal envelope even when they remove most admissible completions?
+\end{enumerate}
+
+\section{Computational protocol}
+Small-$N$ exhaustive enumeration is a validation instrument, not the intended asymptotic method.  Every implementation should reproduce exact counts from the $3^N$ reference space and then replace enumeration by state merging, constraint propagation, branch-and-bound, SAT/CSP methods, or analytic extremal bounds.  Two completions that are indistinguishable with respect to all future constraints and the objective should be merged into one state.  The central computational output is the extremal envelope, while exact multiplicities are retained as secondary information.
+
+The first benchmark range $N\le25$ is useful because all layers can be audited exactly.  Scaling beyond this range should occur only after the filtration has been checked for mathematical nonredundancy and the literature map has identified which constraints are already subsumed by known theorems.
+
+\section{Decision criterion for continuing the program}
+The program should be stress-tested before large-scale computation.  If increasingly strong generic Möbius constraints leave
+\[
+ E_N^{(j)}\approx\frac12,
+\]
+then the admissible maximum remains nearly linear and the known constraints provide little leverage toward RH.  A stable contraction to an exponent strictly below $1$ would already be a nontrivial extremal phenomenon.  A systematic drift of the strongest genuinely partial-information envelope toward
+\[
+ E_N^{(j)}=0
+\]
+would justify a deeper analytic program aimed at proving the contraction law.
+
+\section{Working checklist}
+Before adding a new layer $R$:
+\begin{enumerate}
+\item identify the theorem or elementary arithmetic fact that licenses $R$;
+\item search whether the same partial-information model has already been studied;
+\item specify exactly what information $R$ reveals and what it does not reveal;
+\item compute the closure of $R$ under the rules already admitted;
+\item record the change in $|\Om_N|$, $B_N$, $E_N$, RHC counts, and $\RHFc_\delta$ counts;
+\item distinguish a reduction in multiplicity from a reduction in the extremal envelope;
+\item attempt an analytic explanation of every persistent contraction point.
+\end{enumerate}
+
+\section{Canonical finite benchmark for $1\le N\le 25$}
+
+This section fixes a single reproducible finite benchmark. All counts are exact. The unrestricted ternary layer is computed by coefficient convolution of $(z^{-1}+1+z)^N$; the squarefree-support layer fixes $\mu(1)=1$, fixes zero on nonsquarefree indices, and leaves the remaining squarefree signs free; the multiplicative layer assigns free signs to the primes $p\le N$ and extends multiplicatively on squarefree integers; the last nonterminal layer additionally fixes only $\mu(2)=-1$. No true values $M(N)$ are used in these four layers.
+
+The strict endpoint classes used here are
+\[
+ \RHC_N=\{\omega:|S_\omega(N)|>\sqrt N\},
+ \qquad
+ \RHFc_{N,\delta}=\{\omega:|S_\omega(N)|>N^{1/2+\delta}\}.
+\]
+The original reference population $3^N$ is retained in every table. A terminal control layer obtained by imposing the full prime rule $\mu(p)=-1$ for every prime $p\le N$ contains exactly one word and is therefore excluded from the nontrivial filtration.
+
+\subsection{Surviving completion counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r}
+\toprule $N$ & $3^N$ & squarefree support & multiplicative & multiplicative $+\mu(2)=-1$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & squarefree support & multiplicative & multiplicative $+\mu(2)=-1$\\ \midrule\endhead
+1 & 3 & 1 & 1 & 1\\
+2 & 9 & 2 & 2 & 1\\
+3 & 27 & 4 & 4 & 2\\
+4 & 81 & 4 & 4 & 2\\
+5 & 243 & 8 & 8 & 4\\
+6 & 729 & 16 & 8 & 4\\
+7 & 2{,}187 & 32 & 16 & 8\\
+8 & 6{,}561 & 32 & 16 & 8\\
+9 & 19{,}683 & 32 & 16 & 8\\
+10 & 59{,}049 & 64 & 16 & 8\\
+11 & 177{,}147 & 128 & 32 & 16\\
+12 & 531{,}441 & 128 & 32 & 16\\
+13 & 1{,}594{,}323 & 256 & 64 & 32\\
+14 & 4{,}782{,}969 & 512 & 64 & 32\\
+15 & 14{,}348{,}907 & 1{,}024 & 64 & 32\\
+16 & 43{,}046{,}721 & 1{,}024 & 64 & 32\\
+17 & 129{,}140{,}163 & 2{,}048 & 128 & 64\\
+18 & 387{,}420{,}489 & 2{,}048 & 128 & 64\\
+19 & 1{,}162{,}261{,}467 & 4{,}096 & 256 & 128\\
+20 & 3{,}486{,}784{,}401 & 4{,}096 & 256 & 128\\
+21 & 10{,}460{,}353{,}203 & 8{,}192 & 256 & 128\\
+22 & 31{,}381{,}059{,}609 & 16{,}384 & 256 & 128\\
+23 & 94{,}143{,}178{,}827 & 32{,}768 & 512 & 256\\
+24 & 282{,}429{,}536{,}481 & 32{,}768 & 512 & 256\\
+25 & 847{,}288{,}609{,}443 & 32{,}768 & 512 & 256\\
+\bottomrule\end{longtable}\end{center}
+\subsection{Extremal envelope and effective exponent}
+\begin{center}\scriptsize\begin{longtable}{r rr rr rr rr}
+\toprule & \multicolumn{2}{c}{ternary} & \multicolumn{2}{c}{squarefree} & \multicolumn{2}{c}{multiplicative} & \multicolumn{2}{c}{$+\mu(2)=-1$}\\
+$N$ & $B_N$ & $E_N$ & $B_N$ & $E_N$ & $B_N$ & $E_N$ & $B_N$ & $E_N$\\ \midrule\endfirsthead
+\toprule $N$ & $B_0$ & $E_0$ & $B_{\rm sqf}$ & $E_{\rm sqf}$ & $B_{\rm mult}$ & $E_{\rm mult}$ & $B_2$ & $E_2$\\ \midrule\endhead
+1 & 1 & -- & 1 & -- & 1 & -- & 1 & --\\
+2 & 2 & +0.50000 & 2 & +0.50000 & 2 & +0.50000 & 0 & --\\
+3 & 3 & +0.50000 & 3 & +0.50000 & 3 & +0.50000 & 1 & -0.50000\\
+4 & 4 & +0.50000 & 3 & +0.29248 & 3 & +0.29248 & 1 & -0.50000\\
+5 & 5 & +0.50000 & 4 & +0.36135 & 4 & +0.36135 & 2 & -0.06932\\
+6 & 6 & +0.50000 & 5 & +0.39824 & 5 & +0.39824 & 1 & -0.50000\\
+7 & 7 & +0.50000 & 6 & +0.42078 & 6 & +0.42078 & 2 & -0.14379\\
+8 & 8 & +0.50000 & 6 & +0.36165 & 6 & +0.36165 & 2 & -0.16667\\
+9 & 9 & +0.50000 & 6 & +0.31546 & 6 & +0.31546 & 2 & -0.18454\\
+10 & 10 & +0.50000 & 7 & +0.34510 & 7 & +0.34510 & 1 & -0.50000\\
+11 & 11 & +0.50000 & 8 & +0.36719 & 8 & +0.36719 & 2 & -0.21094\\
+12 & 12 & +0.50000 & 8 & +0.33683 & 8 & +0.33683 & 2 & -0.22106\\
+13 & 13 & +0.50000 & 9 & +0.35663 & 9 & +0.35663 & 3 & -0.07168\\
+14 & 14 & +0.50000 & 10 & +0.37250 & 10 & +0.37250 & 2 & -0.23735\\
+15 & 15 & +0.50000 & 11 & +0.38547 & 11 & +0.38547 & 3 & -0.09432\\
+16 & 16 & +0.50000 & 11 & +0.36486 & 11 & +0.36486 & 3 & -0.10376\\
+17 & 17 & +0.50000 & 12 & +0.37706 & 12 & +0.37706 & 4 & -0.01070\\
+18 & 18 & +0.50000 & 12 & +0.35972 & 12 & +0.35972 & 4 & -0.02038\\
+19 & 19 & +0.50000 & 13 & +0.37112 & 13 & +0.37112 & 5 & +0.04660\\
+20 & 20 & +0.50000 & 13 & +0.35620 & 13 & +0.35620 & 5 & +0.03724\\
+21 & 21 & +0.50000 & 14 & +0.36682 & 14 & +0.36682 & 6 & +0.08852\\
+22 & 22 & +0.50000 & 15 & +0.37610 & 15 & +0.37610 & 5 & +0.02068\\
+23 & 23 & +0.50000 & 16 & +0.38426 & 16 & +0.38426 & 6 & +0.07144\\
+24 & 24 & +0.50000 & 16 & +0.37242 & 16 & +0.37242 & 6 & +0.06379\\
+25 & 25 & +0.50000 & 16 & +0.36135 & 16 & +0.36135 & 6 & +0.05664\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHC survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary RHC & squarefree RHC & multiplicative RHC & $+\mu(2)$ RHC\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary RHC & squarefree RHC & multiplicative RHC & $+\mu(2)$ RHC\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 8 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 42 & 1 & 1 & 0\\
+6 & 729 & 156 & 6 & 2 & 0\\
+7 & 2{,}187 & 548 & 7 & 3 & 0\\
+8 & 6{,}561 & 1{,}854 & 7 & 3 & 0\\
+9 & 19{,}683 & 3{,}014 & 7 & 3 & 0\\
+10 & 59{,}049 & 10{,}386 & 8 & 2 & 0\\
+11 & 177{,}147 & 34{,}938 & 37 & 7 & 0\\
+12 & 531{,}441 & 115{,}440 & 37 & 7 & 0\\
+13 & 1{,}594{,}323 & 376{,}196 & 46 & 10 & 0\\
+14 & 4{,}782{,}969 & 1{,}212{,}672 & 176 & 16 & 0\\
+15 & 14{,}348{,}907 & 3{,}874{,}980 & 232 & 10 & 0\\
+16 & 43{,}046{,}721 & 7{,}253{,}118 & 232 & 10 & 0\\
+17 & 129{,}140{,}163 & 23{,}469{,}114 & 299 & 15 & 0\\
+18 & 387{,}420{,}489 & 75{,}346{,}590 & 299 & 15 & 0\\
+19 & 1{,}162{,}261{,}467 & 240{,}301{,}818 & 1{,}093 & 53 & 8\\
+20 & 3{,}486{,}784{,}401 & 762{,}080{,}202 & 1{,}093 & 53 & 8\\
+21 & 10{,}460{,}353{,}203 & 2{,}405{,}119{,}464 & 1{,}471 & 33 & 4\\
+22 & 31{,}381{,}059{,}609 & 7{,}558{,}657{,}992 & 4{,}944 & 56 & 8\\
+23 & 94{,}143{,}178{,}827 & 23{,}667{,}691{,}934 & 6{,}885 & 82 & 8\\
+24 & 282{,}429{,}536{,}481 & 73{,}869{,}142{,}280 & 6{,}885 & 82 & 8\\
+25 & 847{,}288{,}609{,}443 & 150{,}937{,}165{,}552 & 6{,}885 & 82 & 8\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHFc$_{0.05}$ survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 8 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 42 & 1 & 1 & 0\\
+6 & 729 & 156 & 6 & 2 & 0\\
+7 & 2{,}187 & 548 & 7 & 3 & 0\\
+8 & 6{,}561 & 846 & 7 & 3 & 0\\
+9 & 19{,}683 & 3{,}014 & 7 & 3 & 0\\
+10 & 59{,}049 & 10{,}386 & 8 & 2 & 0\\
+11 & 177{,}147 & 34{,}938 & 37 & 7 & 0\\
+12 & 531{,}441 & 115{,}440 & 37 & 7 & 0\\
+13 & 1{,}594{,}323 & 200{,}592 & 46 & 10 & 0\\
+14 & 4{,}782{,}969 & 672{,}132 & 56 & 8 & 0\\
+15 & 14{,}348{,}907 & 2{,}220{,}600 & 232 & 10 & 0\\
+16 & 43{,}046{,}721 & 7{,}253{,}118 & 232 & 10 & 0\\
+17 & 129{,}140{,}163 & 23{,}469{,}114 & 299 & 15 & 0\\
+18 & 387{,}420{,}489 & 75{,}346{,}590 & 299 & 15 & 0\\
+19 & 1{,}162{,}261{,}467 & 141{,}568{,}470 & 378 & 23 & 0\\
+20 & 3{,}486{,}784{,}401 & 459{,}240{,}570 & 378 & 23 & 0\\
+21 & 10{,}460{,}353{,}203 & 1{,}479{,}280{,}662 & 1{,}471 & 33 & 4\\
+22 & 31{,}381{,}059{,}609 & 4{,}736{,}045{,}276 & 1{,}941 & 26 & 0\\
+23 & 94{,}143{,}178{,}827 & 15{,}082{,}716{,}810 & 6{,}885 & 82 & 8\\
+24 & 282{,}429{,}536{,}481 & 47{,}810{,}887{,}112 & 6{,}885 & 82 & 8\\
+25 & 847{,}288{,}609{,}443 & 150{,}937{,}165{,}552 & 6{,}885 & 82 & 8\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHFc$_{0.10}$ survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 8 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 42 & 1 & 1 & 0\\
+6 & 729 & 156 & 6 & 2 & 0\\
+7 & 2{,}187 & 226 & 7 & 3 & 0\\
+8 & 6{,}561 & 846 & 7 & 3 & 0\\
+9 & 19{,}683 & 3{,}014 & 7 & 3 & 0\\
+10 & 59{,}049 & 10{,}386 & 8 & 2 & 0\\
+11 & 177{,}147 & 16{,}854 & 9 & 3 & 0\\
+12 & 531{,}441 & 58{,}812 & 9 & 3 & 0\\
+13 & 1{,}594{,}323 & 200{,}592 & 46 & 10 & 0\\
+14 & 4{,}782{,}969 & 672{,}132 & 56 & 8 & 0\\
+15 & 14{,}348{,}907 & 1{,}157{,}538 & 67 & 5 & 0\\
+16 & 43{,}046{,}721 & 3{,}922{,}206 & 67 & 5 & 0\\
+17 & 129{,}140{,}163 & 13{,}105{,}098 & 299 & 15 & 0\\
+18 & 387{,}420{,}489 & 43{,}282{,}686 & 299 & 15 & 0\\
+19 & 1{,}162{,}261{,}467 & 141{,}568{,}470 & 378 & 23 & 0\\
+20 & 3{,}486{,}784{,}401 & 257{,}959{,}890 & 378 & 23 & 0\\
+21 & 10{,}460{,}353{,}203 & 851{,}645{,}150 & 470 & 17 & 0\\
+22 & 31{,}381{,}059{,}609 & 2{,}788{,}013{,}542 & 1{,}941 & 26 & 0\\
+23 & 94{,}143{,}178{,}827 & 9{,}060{,}478{,}368 & 2{,}517 & 40 & 0\\
+24 & 282{,}429{,}536{,}481 & 29{,}257{,}136{,}160 & 2{,}517 & 40 & 0\\
+25 & 847{,}288{,}609{,}443 & 93{,}945{,}019{,}352 & 2{,}517 & 40 & 0\\
+\bottomrule\end{longtable}\end{center}
+\subsection{RHFc$_{0.20}$ survivor counts}
+\begin{center}\scriptsize\begin{longtable}{r r r r r r}
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endfirsthead
+\toprule $N$ & $3^N$ & ternary & squarefree & multiplicative & $+\mu(2)$\\ \midrule\endhead
+1 & 3 & 0 & 0 & 0 & 0\\
+2 & 9 & 2 & 1 & 1 & 0\\
+3 & 27 & 2 & 1 & 1 & 0\\
+4 & 81 & 10 & 1 & 1 & 0\\
+5 & 243 & 12 & 1 & 1 & 0\\
+6 & 729 & 56 & 1 & 1 & 0\\
+7 & 2{,}187 & 226 & 7 & 3 & 0\\
+8 & 6{,}561 & 314 & 1 & 1 & 0\\
+9 & 19{,}683 & 1{,}250 & 1 & 1 & 0\\
+10 & 59{,}049 & 1{,}782 & 1 & 1 & 0\\
+11 & 177{,}147 & 7{,}020 & 9 & 3 & 0\\
+12 & 531{,}441 & 26{,}340 & 9 & 3 & 0\\
+13 & 1{,}594{,}323 & 39{,}860 & 10 & 4 & 0\\
+14 & 4{,}782{,}969 & 149{,}610 & 11 & 3 & 0\\
+15 & 14{,}348{,}907 & 544{,}068 & 67 & 5 & 0\\
+16 & 43{,}046{,}721 & 1{,}929{,}774 & 67 & 5 & 0\\
+17 & 129{,}140{,}163 & 3{,}125{,}622 & 79 & 8 & 0\\
+18 & 387{,}420{,}489 & 11{,}148{,}402 & 79 & 8 & 0\\
+19 & 1{,}162{,}261{,}467 & 39{,}021{,}138 & 92 & 12 & 0\\
+20 & 3{,}486{,}784{,}401 & 64{,}683{,}150 & 92 & 12 & 0\\
+21 & 10{,}460{,}353{,}203 & 227{,}686{,}670 & 106 & 11 & 0\\
+22 & 31{,}381{,}059{,}609 & 789{,}507{,}890 & 576 & 14 & 0\\
+23 & 94{,}143{,}178{,}827 & 2{,}702{,}576{,}730 & 697 & 22 & 0\\
+24 & 282{,}429{,}536{,}481 & 4{,}644{,}553{,}260 & 697 & 22 & 0\\
+25 & 847{,}288{,}609{,}443 & 15{,}993{,}177{,}852 & 697 & 22 & 0\\
+\bottomrule\end{longtable}\end{center}
+
+\subsection{Immediate finite observations}
+The benchmark separates three effects that should not be conflated. First, the number of admissible completions can collapse by many orders of magnitude while the extremal envelope does not move. In particular, at $N=25$ the squarefree-support layer has $32768$ words and the multiplicative layer only $512$, yet both have $B_{25}=16$. Second, the Möbius-specific orientation $\mu(2)=-1$ changes the extremal envelope sharply, from $16$ to $6$, leaving eight endpoint RHC completions but no $\RHFc_{0.10}$ completion. Third, these are endpoint statements only; no finite survivor is by itself an RH counterexample. The purpose of the benchmark is to measure deterministic contraction of the completion space and of its adversarial envelope.
+
+
+\section{Conclusion}
+The surrounding literature already contains most of the basic ingredients: adversarial discrepancy, partial multiplicativity, Chudakov-type rigidity and classification, finite modifications of character-like prime data, structural inverse theorems for multiplicative functions with small sums, random multiplicative fluctuation theory, Möbius sign-pattern results, and conditional information about $M(x)$.  The viable research question is therefore narrower.  It asks whether a hierarchy of explicitly closed, Möbius-specific partial-information sets has a quantitatively contracting adversarial envelope, and whether the contraction can ever force all fixed-power RHF candidates to disappear without simply revealing the Möbius sequence itself.  This document is intended to remain the literature and specification layer for that question.
+
+\begin{thebibliography}{99}
+
+\bibitem{Tao2016}
+T. Tao,
+\emph{The Erdős discrepancy problem},
+Discrete Analysis 2016:1 (2016), 29 pp.
+DOI: 10.19086/da.609.
+
+\bibitem{Coons2010}
+M. Coons,
+\emph{On the multiplicative Erdős discrepancy problem},
+arXiv:1003.5388 (2010).
+
+\bibitem{Vandehey2012}
+J. Vandehey,
+\emph{On multiplicative functions with bounded partial sums},
+Integers 12 (2012), 741--755.
+DOI: 10.1515/integers-2012-0002.
+
+\bibitem{KoukSound2020}
+D. Koukoulopoulos and K. Soundararajan,
+\emph{The structure of multiplicative functions with small partial sums},
+Discrete Analysis 2020:6 (2020), 19 pp.
+DOI: 10.19086/da.11963.
+
+\bibitem{MRT2016}
+K. Matomäki, M. Radziwiłł, and T. Tao,
+\emph{Sign patterns of the Liouville and Möbius functions},
+Forum of Mathematics, Sigma 4 (2016), e14.
+DOI: 10.1017/fms.2016.6.
+
+\bibitem{Harper2019}
+A. J. Harper,
+\emph{Moments of random multiplicative functions, II: High moments},
+Algebra \& Number Theory 13 (2019), 2277--2321.
+DOI: 10.2140/ant.2019.13.2277.
+
+\bibitem{Harper2023}
+A. J. Harper,
+\emph{Almost sure large fluctuations of random multiplicative functions},
+International Mathematics Research Notices 2023 (2023), 2095--2138.
+DOI: 10.1093/imrn/rnab299.
+
+\bibitem{DurkanPearceCrump2026}
+B. Durkan and A. Pearce-Crump,
+\emph{A sharp almost sure upper bound for partial sums of random multiplicative functions},
+arXiv:2607.29429 (2026).
+
+\bibitem{Aymone2020}
+M. Aymone,
+\emph{A note on multiplicative functions resembling the Möbius function},
+Journal of Number Theory 212 (2020), 113--121.
+DOI: 10.1016/j.jnt.2019.10.025.
+
+\bibitem{AymoneBuenoMedeiros2022}
+M. Aymone, C. Bueno, and K. Medeiros,
+\emph{Multiplicative functions supported on the $k$-free integers with small partial sums},
+The Ramanujan Journal 59 (2022), 713--728.
+arXiv:2101.00279.
+
+\bibitem{Aymone2022Discrepancy}
+M. Aymone,
+\emph{The Erdős discrepancy problem over the squarefree and cubefree integers},
+Mathematika 68 (2022), 51--73.
+DOI: 10.1112/mtk.12117.
+
+\bibitem{AymoneSidoravicius2017}
+M. Aymone and V. Sidoravicius,
+\emph{Partial sums of biased random multiplicative functions},
+Journal of Number Theory 172 (2017), 343--382.
+DOI: 10.1016/j.jnt.2016.08.020.
+
+\bibitem{GranvilleSound2007}
+A. Granville and K. Soundararajan,
+\emph{Pretentious multiplicative functions and an inequality for the zeta-function},
+in \emph{Anatomy of Integers}, CRM Proceedings and Lecture Notes 46 (2008).
+arXiv:math/0608407.
+
+\bibitem{Sachpazis2024}
+S. Sachpazis,
+\emph{On multiplicative functions with small partial sums},
+International Mathematics Research Notices 2024 (2024), 2937--2964.
+DOI: 10.1093/imrn/rnad071.
+
+
+\bibitem{Klurman2018}
+O. Klurman,
+\emph{On Chudakov's conjecture},
+arXiv:1707.07817 (2017/2018).
+
+\bibitem{KMPT2021}
+O. Klurman, A. P. Mangerel, C. Pohoata, and J. Teräväinen,
+\emph{Multiplicative functions that are close to their mean},
+Transactions of the American Mathematical Society 374 (2021), 7967--7990.
+arXiv:1911.06265.
+
+\bibitem{Aymone2023Bounded}
+M. Aymone,
+\emph{Complex valued multiplicative functions with bounded partial sums},
+preprint arXiv:2110.03401; subsequent developments in arXiv:2305.06260.
+
+\bibitem{Aymone2023Modified}
+M. Aymone,
+\emph{$\Omega$-bounds for the partial sums of some modified Dirichlet characters},
+Quarterly Journal of Mathematics 74 (2023), 1223--1235.
+arXiv:2210.06153.
+
+\bibitem{Liu2022}
+Q. Liu,
+\emph{Multiplicative functions resembling the Möbius function},
+arXiv:2205.00972 (2022).
+
+\bibitem{Bazin2025}
+P.-A. Bazin,
+\emph{Bounded exponential sums with multiplicative coefficients},
+arXiv:2506.12845 (2025).
+
+\bibitem{Hurst2018}
+G. Hurst,
+\emph{Computations of the Mertens function and improved bounds on the Mertens conjecture},
+Mathematics of Computation 87 (2018), 1013--1028.
+DOI: 10.1090/mcom/3275.
+
+\bibitem{Hurst2026}
+G. Hurst,
+\emph{Practical computations of the Mertens function: $M(10^{24})$ and $M(10^{25})$},
+arXiv:2607.07566 (2026).
+
+\bibitem{Ng2004}
+N. Ng,
+\emph{The distribution of the summatory function of the Möbius function},
+Proceedings of the London Mathematical Society 89 (2004), 361--389.
+DOI: 10.1112/S0024611504014741.
+
+\bibitem{Simonic2022}
+A. Simonič,
+\emph{Explicit estimates for the Mertens function under the Riemann hypothesis},
+arXiv:2109.11744.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,6756 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\title{Exponential Sums over Ordinates of Nontrivial Zeros of the Riemann Zeta Function}
+
+\author{R\^otkiv Ayn\"asac}
+\email{rotkivanyasac@gmail.com}
+\date{June 10, 2026}
+
+\begin{document}
+
+\begin{abstract}
+We study exponential sums formed from the ordinates of the nontrivial
+zeros of the Riemann zeta function through the geometry of their
+centered phase walk. Landau's fixed-real formula at \(X=e\) gives a
+logarithmic confinement baseline for
+the complete-zero walk
+\(Z_N=\sum_{k\le N}e^{\rho_k-\frac12}\), and under the Riemann Hypothesis
+(RH) this specializes to the unit phase walk
+\(S_N=\sum_{k\le N}e^{i\gamma_k}\). The main structural point is that
+centering forces an exact Brownian-bridge covariance kernel,
+equivalently the Green kernel of the finite Dirichlet Laplacian. This
+turns the centered moment into a weighted pair-correlation statistic and
+gives a sine-mode Green decomposition. The same modal language also
+expresses the Montgomery--GUE form factor as a constant-mode projection
+of the Green-modal vector. 
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\section{Introduction}
+\label{sec:introduction}
+
+The nontrivial zeros of the Riemann zeta function are written
+\(\rho=\beta+i\gamma\). Their ordinates \(\gamma\) enter both the
+Riemann--von Mangoldt counting formula and the fine-scale
+pair-correlation problem. The present paper studies these ordinates
+through the phase walk obtained from the increments \(e^{i\gamma_k}\).
+The basic objects are the endpoint sum \(S_N\), its triangular centroid
+\(C_N\), and the centered quadratic moment \(M_0(N)\).
+
+The preliminary sections recall the standard zeta-function background:
+the definition and analytic continuation of \(\zeta(s)\), the functional
+equation, the critical strip, the Riemann Hypothesis, Weyl
+equidistribution, Hlawka's theorem for zeta ordinates, and the
+Landau--Gonek distinction between resonant prime-power frequencies and
+non-resonant continuous frequencies. These are included to fix notation
+and to separate classical analytic estimates from the structural observation
+made here.
+
+The core construction begins with the complete-zero auxiliary walk
+
+\begin{equation}
+Z_N=\sum_{k=1}^{N}e^{\rho_k-\frac12},
+\label{eq:introduction_complete_zero_walk}
+\end{equation}
+
+with centroid \(\mathcal C_N\) and centered moment
+\(\mathcal M_0(N)\). Landau's fixed-real formula at \(X=e\) supplies the
+logarithmic confinement baseline. The new observation is that the centered
+phase-walk moment realizes this confinement through an exact
+Brownian-bridge/Green-kernel pair statistic, and that the same
+Green-modal language gives a natural expression of the Montgomery--GUE
+form factor.
+
+Thus the logical chain is
+
+\begin{equation}
+\begin{aligned}
+\text{centered phase-walk geometry}
+&\Longrightarrow
+\text{Brownian-bridge/Green kernel}
+\\
+&\Longrightarrow
+\text{weighted pair correlation}
+\\
+&\Longrightarrow
+\text{Green-modal expression of the Montgomery--GUE form factor}.
+\end{aligned}
+\label{eq:introduction_logical_chain}
+\end{equation}
+
+A central point of the paper is the separation between the fixed phase walk and the deformed phase-walk family. The original walk \(S_N=S_N(1)\) is the non-resonant Landau section associated with \(X=e\). The Montgomery--GUE statistics are obtained from the scaled endpoint \(S_N(t)\), with \(t=\tau\log(T/2\pi)\). The Green-modal framework places the fixed-frequency geometry and the Montgomery endpoint form factor in a common coordinate system.
+
+The Montgomery--GUE material below is formulated through exact finite
+Green-modal identities, formal equivalences, and the corresponding
+form-factor target.
+
+\section*{Notation}
+\label{sec:notation}
+\addcontentsline{toc}{section}{Notation}
+
+\begin{center}
+\begin{tabular}{p{0.30\textwidth}p{0.62\textwidth}}
+\(\rho_k=\beta_k+i\gamma_k\)
+&
+nontrivial zeros with positive ordinate, counted with multiplicity
+\\
+\(\gamma_k\)
+&
+ordinate of a zero, measured in radians
+\\
+\(e^{i\gamma_k}\)
+&
+unit phase associated with \(\gamma_k\)
+\\
+\(e^{it\gamma_k}\)
+&
+\(t\)-deformed ordinate phase
+\\
+\(B_k,\ \theta_k\)
+&
+lifted winding number and angular representative of \(\gamma_k\)
+\\
+\(e^{2\pi i x}\)
+&
+Weyl/modulo-one phase convention
+\\
+\(e^{\rho_k-\frac12}\)
+&
+complete-zero phase; equals \(e^{i\gamma_k}\) under RH
+\\
+\(S_N,\ C_N,\ M_0(N)\)
+&
+unit-phase endpoint, triangular centroid, and centered moment
+\\
+\(Z_N,\ \mathcal C_N,\ \mathcal M_0(N)\)
+&
+complete-zero endpoint, centroid, and centered moment
+\\
+\(W_N(j,k)\)
+&
+centering weight in the original ordinal variables
+\\
+\(r=N-j+1,\ s=N-k+1\)
+&
+reversed pair indices for \(W_N(j,k)\)
+\\
+\(r=N-k+1\)
+&
+reversed single index for endpoint/modal vectors
+\\
+\(K_N(r,s)\)
+&
+reversed Brownian-bridge/Green kernel
+\\
+\(\phi_m(r),\ \lambda_m\)
+&
+Dirichlet sine modes and Green eigenvalues
+\\
+\(A_m(N;t),\ \mathcal A_m(N)\)
+&
+unit-phase \(t\)-modal coefficient and complete-zero modal coefficient
+\\
+\(u_m\)
+&
+projection of the constant vector onto the \(m\)-th sine mode
+\\
+\(v_r,\ w_m\)
+&
+centroid weight vector and its sine-mode coefficients
+\\
+\(T_N,\ T_0,\ L_N\)
+&
+\(T_N=\gamma_N\); \(T_0\) is a representative local-window height; \(L_N=\log(T_N/2\pi)/(2\pi)\)
+\\
+\(t\)
+&
+Fourier parameter; smoothed Montgomery scaling:
+\(t=\tau\log(T_N/2\pi)+y\)
+\\
+\(\mathfrak F_N(\tau),\ F_N(\tau)\)
+&
+unsmoothed and smoothed Montgomery form factors
+\\
+\(\xi_{jk}\)
+&
+unfolded pair variable \(\xi_{jk}=\frac{\log(T_0/2\pi)}{2\pi}(\gamma_j-\gamma_k)\)
+\\
+\(\Sigma_N(\tau)\)
+&
+smoothed modal covariance matrix
+\\
+\(N_0(T),\ \widetilde\gamma_k\)
+&
+smooth Riemann--von Mangoldt main term and its inverse grid
+\\
+\(d_k,\ R_m(N;t)\)
+&
+zero displacement from the RVM grid and the corresponding modal residual
+\end{tabular}
+\end{center}
+
+\subsection*{Phase conventions}
+
+Throughout the paper, ordinates \(\gamma_k\) are real numbers measured
+in radians. The basic unit phase is therefore
+
+\begin{equation}
+e^{i\gamma_k}.
+\end{equation}
+
+For a real Fourier parameter \(t\), the corresponding \(t\)-deformed
+phase is
+
+\begin{equation}
+e^{it\gamma_k}.
+\end{equation}
+
+When uniform distribution modulo one is discussed, the standard Weyl
+notation is used:
+
+\begin{equation}
+e^{2\pi i m x_n}.
+\end{equation}
+
+Thus, if one writes \(x_n=\alpha\gamma_n\) modulo one, Weyl sums have
+the form
+
+\begin{equation}
+e^{2\pi i m\alpha\gamma_n}.
+\end{equation}
+
+Taking \(\alpha=1/(2\pi)\) and \(m=1\) gives exactly
+
+\begin{equation}
+e^{i\gamma_n}.
+\end{equation}
+
+The complete-zero phase is a different object:
+
+\begin{equation}
+e^{\rho_k-\frac12},
+\qquad
+\rho_k=\beta_k+i\gamma_k.
+\end{equation}
+
+Under RH this specializes to
+
+\begin{equation}
+e^{\rho_k-\frac12}=e^{i\gamma_k}.
+\end{equation}
+
+Thus the paper uses \(e^{i\gamma_k}\) for radian phases,
+\(e^{2\pi i x}\) only for modulo-one Weyl notation,
+\(e^{it\gamma_k}\) for Fourier deformation, and
+\(e^{\rho_k-\frac12}\) for complete-zero expressions.
+
+\section{The Riemann Zeta Function}
+\label{sec:zeta_function}
+
+This section contains standard material.
+The classical references are
+\cite{Titchmarsh1986},
+\cite{Edwards2001},
+and
+\cite{IwaniecKowalski2004}.
+
+\subsection{Definition}
+\label{subsec:zeta_definition}
+
+\begin{definition}
+\label{def:zeta_function}
+
+The Riemann zeta function is defined for
+$\Re(s)>1$
+by the absolutely convergent series
+
+\begin{equation}
+\zeta(s)
+=
+\sum_{n=1}^{\infty}
+\frac{1}{n^{s}}.
+\label{eq:zeta_dirichlet_series}
+\end{equation}
+
+\end{definition}
+
+Euler showed that the same function admits the product expansion
+
+\begin{equation}
+\zeta(s)
+=
+\prod_{p}
+\left(
+1-p^{-s}
+\right)^{-1},
+\qquad
+\Re(s)>1,
+\label{eq:euler_product}
+\end{equation}
+
+where the product extends over all prime numbers.
+Equation
+\eqref{eq:euler_product}
+establishes the fundamental connection between
+$\zeta(s)$
+and the distribution of primes.
+
+\subsection{Analytic Continuation}
+\label{subsec:analytic_continuation}
+
+A classical theorem of Riemann states that
+$\zeta(s)$
+admits a meromorphic continuation to the whole complex plane,
+with a unique simple pole at
+
+\begin{equation}
+s=1.
+\label{eq:zeta_pole}
+\end{equation}
+
+See
+\cite{Edwards2001}
+or
+\cite{Titchmarsh1986}.
+
+\subsection{Functional Equation}
+\label{subsec:functional_equation}
+
+Define
+
+\begin{equation}
+\xi(s)
+=
+\frac12
+s(s-1)
+\pi^{-s/2}
+\Gamma\!\left(\frac{s}{2}\right)
+\zeta(s).
+\label{eq:xi_definition}
+\end{equation}
+
+The completed zeta function satisfies
+
+\begin{equation}
+\xi(s)
+=
+\xi(1-s).
+\label{eq:functional_equation}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+\zeta(s)
+=
+2^{s}
+\pi^{\,s-1}
+\sin\!\left(\frac{\pi s}{2}\right)
+\Gamma(1-s)
+\zeta(1-s).
+\label{eq:functional_equation_zeta}
+\end{equation}
+
+The symmetry encoded by
+\eqref{eq:functional_equation}
+plays a central role in the study of the zeros of
+$\zeta(s)$.
+
+\subsection{Special Values and Basic Identities}
+\label{subsec:special_values}
+
+Among the classical identities are
+
+\begin{equation}
+\zeta(2)
+=
+\frac{\pi^{2}}{6},
+\label{eq:zeta2}
+\end{equation}
+
+and more generally
+
+\begin{equation}
+\zeta(2m)
+=
+(-1)^{m+1}
+\frac{B_{2m}(2\pi)^{2m}}
+{2(2m)!},
+\qquad
+m\ge 1,
+\label{eq:zeta_even_values}
+\end{equation}
+
+where
+$B_{2m}$
+denotes the Bernoulli numbers.
+
+These identities are standard and may be found in
+\cite{Titchmarsh1986}
+or
+\cite{Edwards2001}.
+
+\subsection{The Zeros of the Zeta Function}
+\label{subsec:zeta_zeros}
+
+The zeros of
+$\zeta(s)$
+are traditionally divided into two classes.
+
+\begin{definition}
+\label{def:trivial_zeros}
+
+The trivial zeros are located at
+
+\begin{equation}
+s=-2,-4,-6,\ldots.
+\label{eq:trivial_zeros}
+\end{equation}
+
+\end{definition}
+
+All remaining zeros are called nontrivial zeros.
+
+\begin{definition}
+\label{def:nontrivial_zero}
+
+A nontrivial zero is a complex number
+
+\begin{equation}
+\rho
+=
+\beta+i\gamma
+\label{eq:rho_definition}
+\end{equation}
+
+such that
+
+\begin{equation}
+\zeta(\rho)=0,
+\label{eq:rho_zero_condition}
+\end{equation}
+
+with
+
+\begin{equation}
+0<\beta<1.
+\label{eq:critical_strip}
+\end{equation}
+
+\end{definition}
+
+The region
+\eqref{eq:critical_strip}
+is known as the critical strip.
+
+The functional equation implies that the nontrivial zeros occur in
+symmetric sets
+
+\begin{equation}
+\rho,
+\quad
+\overline{\rho},
+\quad
+1-\rho,
+\quad
+1-\overline{\rho}.
+\label{eq:zero_symmetry}
+\end{equation}
+
+\begin{definition}
+\label{def:zeta_zero_counting_function}
+
+For \(T>0\), let
+
+\begin{equation}
+N_\zeta(T)
+=
+\#\{\rho=\beta+i\gamma:\zeta(\rho)=0,\ 0<\beta<1,\ 0<\gamma\leq T\},
+\label{eq:zeta_zero_counting_function}
+\end{equation}
+
+where zeros are counted with multiplicity.
+
+\end{definition}
+
+The Riemann--von Mangoldt formula gives the asymptotic estimate
+
+\begin{equation}
+N_\zeta(T)
+=
+\frac{T}{2\pi}
+\log\!\left(
+\frac{T}{2\pi}
+\right)
+-
+\frac{T}{2\pi}
++
+O(\log T).
+\label{eq:riemann_von_mangoldt}
+\end{equation}
+
+See
+\cite{Titchmarsh1986}
+or
+\cite{Edwards2001}.
+
+\section{The Riemann Hypothesis}
+\label{sec:riemann_hypothesis}
+
+This section contains standard material.
+
+\begin{conjecture}[Riemann Hypothesis]
+\label{conj:RH}
+
+Every nontrivial zero of the Riemann zeta function satisfies
+
+\begin{equation}
+\Re(\rho)
+=
+\frac12.
+\label{eq:RH}
+\end{equation}
+
+\end{conjecture}
+
+Assuming
+\eqref{eq:RH},
+all nontrivial zeros can be written as
+
+\begin{equation}
+\rho_n
+=
+\frac12
++
+i\gamma_n.
+\label{eq:RH_zeros}
+\end{equation}
+
+The sequence of positive ordinates is written as
+
+\begin{equation}
+0<\gamma_1
+\leq
+\gamma_2
+\leq
+\gamma_3
+\leq
+\cdots,
+\label{eq:gamma_ordering}
+\end{equation}
+
+with multiplicities counted. This sequence is the principal object
+studied throughout this work.
+
+The Riemann Hypothesis is one of the most important open problems in
+mathematics and has deep implications for the distribution of prime
+numbers.
+Comprehensive discussions may be found in
+\cite{Titchmarsh1986},
+\cite{Edwards2001},
+and
+\cite{IwaniecKowalski2004}.
+
+\section{Uniform Distribution of Zeta Ordinates}
+\label{sec:uniform_distribution_zeta_ordinates}
+
+The study of exponential sums over the ordinates of the nontrivial
+zeros is closely related to the theory of uniform distribution modulo
+one.
+
+The fundamental tool is Weyl's criterion.
+
+\begin{theorem}[Weyl Criterion]
+\label{thm:weyl_criterion}
+
+Let $(x_n)$ be a sequence of real numbers.
+
+Then $(x_n)$ is uniformly distributed modulo one if and only if
+
+\begin{equation}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{2\pi i m x_n}
+=
+0
+\qquad
+(m\neq 0).
+\label{eq:weyl_criterion}
+\end{equation}
+
+\end{theorem}
+
+A natural question is therefore whether the scaled ordinates
+\(\alpha\gamma_n\) are uniformly distributed modulo one. The first
+systematic investigation of this problem appears in the work of
+Rademacher \cite{Rademacher1956}, who studied the height-truncated sums
+
+\begin{equation}
+A_\alpha(T)
+=
+\sum_{0<\gamma\le T}
+e^{2\pi i \alpha \gamma}.
+\label{eq:rademacher_sum}
+\end{equation}
+
+Subsequent work by Hlawka established the corresponding
+equidistribution theorem.
+
+\begin{theorem}[Hlawka, 1975]
+\label{thm:hlawka}
+
+For every nonzero real number \(\alpha\), the sequence
+\(\alpha\gamma_n\) is uniformly distributed modulo one. Equivalently,
+
+\begin{equation}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{2\pi i m \alpha \gamma_n}
+=
+0
+\qquad
+(m\neq 0).
+\label{eq:hlawka_weyl}
+\end{equation}
+
+\end{theorem}
+
+Taking \(\alpha=1/(2\pi)\) and \(m=1\) in
+\eqref{eq:hlawka_weyl} gives
+
+\begin{equation}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{i\gamma_n}
+=
+0.
+\label{eq:SN_normalized_cancellation}
+\end{equation}
+
+This is the classical normalized cancellation of the ordinal phase sums.
+The consequences for the main objects of the paper are recorded after
+those objects are defined.
+
+The exceptional frequencies that survive averaging are described by the
+Landau--Gonek theory discussed in Subsection~\ref{sec:prime_power_frequencies}.
+
+\subsection{The Landau--Gonek Formula}
+\label{sec:prime_power_frequencies}
+
+\begin{definition}[von Mangoldt Function]
+\label{def:von_mangoldt_function}
+
+The von Mangoldt function is defined by
+
+\begin{equation}
+\Lambda(\ell)
+=
+\begin{cases}
+\log p,
+&
+\ell=p^{m},
+\quad p \text{ prime},
+\quad m\ge 1,
+\\[1ex]
+0,
+&
+\text{otherwise}.
+\end{cases}
+\label{eq:von_mangoldt}
+\end{equation}
+
+\end{definition}
+
+The function \(\Lambda(\ell)\) therefore detects prime powers and assigns
+to each prime power \(p^m\) the weight \(\log p\).
+
+
+The arithmetic weights which appear in the Landau--Gonek formula
+originate in the logarithmic derivative of the Euler product. For
+\(\Re(s)>1\), the identity
+
+\begin{equation}
+-\frac{\zeta'(s)}{\zeta(s)}
+=
+\sum_{\ell=1}^{\infty}
+\frac{\Lambda(\ell)}{\ell^s}
+\label{eq:log_derivative_von_mangoldt_bridge}
+\end{equation}
+
+holds. Equivalently, the Chebyshev function
+
+\begin{equation}
+\psi(x)
+=
+\sum_{\ell\leq x}\Lambda(\ell)
+\label{eq:chebyshev_function_von_mangoldt_bridge}
+\end{equation}
+
+is the von Mangoldt weighted summatory function naturally coupled to
+the zeros through the explicit formula. Thus the same von Mangoldt weights which
+occur in the logarithmic derivative also determine the arithmetic
+frequencies that appear in Landau--Gonek sums over zero ordinates.
+
+\subsection{Chebyshev function in logarithmic frequency}
+\label{subsec:chebyshev_logarithmic_frequency}
+
+Let
+
+\begin{equation}
+\psi(x)=\sum_{n\le x}\Lambda(n)
+\end{equation}
+
+be the Chebyshev function. In the logarithmic variable
+
+\begin{equation}
+u=\log x,
+\end{equation}
+
+write
+
+\begin{equation}
+\Psi(u)=\psi(e^u).
+\end{equation}
+
+The classical explicit formula may be written schematically, away from
+prime-power discontinuities and with the usual interpretation of the
+zero sum, as
+
+\begin{equation}
+\Psi(u)
+=
+e^u
+-
+\sum_\rho \frac{e^{\rho u}}{\rho}
+-
+\log(2\pi)
+-
+\frac12\log(1-e^{-2u}).
+\label{eq:chebyshev_log_frequency_explicit_formula}
+\end{equation}
+
+Thus the zero contribution to \(\Psi(u)\) is built from the exponential
+modes
+
+\begin{equation}
+e^{\rho u}.
+\end{equation}
+
+Formally differentiating with respect to \(u\) gives
+
+\begin{equation}
+\frac{d}{du}\Psi(u)
+=
+e^u
+-
+\sum_\rho e^{\rho u}
+-
+\frac{e^{-2u}}{1-e^{-2u}},
+\label{eq:chebyshev_log_frequency_formal_derivative}
+\end{equation}
+
+again in the regularized or distributional sense appropriate to the
+explicit formula.
+
+Consequently, the spectral quantity
+
+\begin{equation}
+\sum_\rho e^{\rho u}
+\end{equation}
+
+is the logarithmic-frequency zero side associated with the Chebyshev
+function. The special value \(u=1\) corresponds to the continuous
+frequency
+
+\begin{equation}
+X=e^u=e.
+\end{equation}
+
+At this point one obtains the complete-zero phase
+
+\begin{equation}
+e^{\rho-\frac12}
+=
+e^{-\frac12}e^{\rho}.
+\end{equation}
+
+Under RH,
+
+\begin{equation}
+\rho=\frac12+i\gamma,
+\end{equation}
+
+and hence
+
+\begin{equation}
+e^{\rho-\frac12}=e^{i\gamma}.
+\end{equation}
+
+Thus the ordinate phase sum
+
+\begin{equation}
+\sum_{0<\gamma\le T}e^{i\gamma}
+\end{equation}
+
+is, under RH, the \(u=1\) specialization of the
+logarithmic-frequency zero side of the explicit formula.
+
+This passage should not be read as an ordinary pointwise Fourier
+inversion from \(\psi(x)\) to \(S_N\). The explicit formula is a
+regularized identity. Height truncation, smoothing, or distributional
+interpretation is needed to make the zero sum precise. The ordinal sum
+\(S_N\) is then related to the height-truncated sum through the
+height-to-ordinal bridge.
+
+This regularized Chebyshev discussion is separate from the later
+application of Landau's fixed-real formula at \(X=e\). The Landau input
+used for the logarithmic bound is the height-truncated fixed-\(X\)
+estimate in Proposition~\ref{prop:landau_fixed_real_formula}; it does
+not use a symmetric truncation, smoothing in height, or a distributional
+interpretation at \(u=1\).
+
+In this regularized logarithmic-frequency sense, the height-truncated
+phase sums
+
+\begin{equation}
+S_x(T)
+=
+\sum_{0<\gamma\leq T}x^{i\gamma},
+\qquad x\in\mathbb N,\ x>1,
+\label{eq:SxT_definition}
+\end{equation}
+
+may be viewed as logarithmic-frequency probes of the zero side of the
+explicit formula. Prime powers are distinguished because they are
+precisely the support of \(\Lambda\).
+
+Unlike the metric theory of Hlawka,
+the Landau--Gonek formula studies special frequencies associated with
+prime powers.
+
+For a fixed integer \(x>1\), the behaviour of \eqref{eq:SxT_definition}
+depends strongly on the arithmetic nature of \(x\).
+
+It plays a central role in the explicit formulae relating prime numbers
+and nontrivial zeros of the Riemann zeta function
+\cite{Landau1911,Titchmarsh1986,IwaniecKowalski2004}.
+
+The classical Landau formula is naturally stated for the zero sum
+
+\begin{equation}
+L_x(T)
+=
+\sum_{0<\gamma\le T}
+x^\rho.
+\label{eq:landau_zero_sum}
+\end{equation}
+
+For a fixed integer \(x>1\), Landau's formula gives
+
+\begin{equation}
+L_x(T)
+=
+-
+\frac{T}{2\pi}
+\Lambda(x)
++
+O(\log T).
+\label{eq:landau_zero_sum_asymptotic}
+\end{equation}
+
+In particular, when \(x\) is a prime power,
+
+\begin{equation}
+x=p^m,
+\label{eq:prime_power_condition}
+\end{equation}
+
+the von Mangoldt term in \eqref{eq:landau_zero_sum_asymptotic} is
+nonzero.
+
+Assuming the Riemann Hypothesis, each nontrivial zero has the form
+
+\begin{equation}
+\rho
+=
+\frac{1}{2}
++
+i\gamma.
+\label{eq:RH_zero_decomposition}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+x^\rho
+=
+\sqrt{x}\,x^{i\gamma}.
+\label{eq:xrho_phase_decomposition}
+\end{equation}
+
+Thus the passage from Landau's zero sum in \(x^\rho\) to the pure phase
+sum in \(x^{i\gamma}\) introduces the factor \(x^{-1/2}\).
+
+
+The modern quantitative form of this phenomenon is due to Gonek
+\cite{Gonek1993},
+who refined Landau's original argument using the explicit formula.
+
+\begin{theorem}[Landau--Gonek, phase form under RH]
+\label{thm:landau_gonek_formula}
+
+For frequencies associated with prime powers,
+the pure phase sum \eqref{eq:SxT_definition} admits, under the Riemann
+Hypothesis, a main term proportional to the von Mangoldt function
+divided by \(\sqrt{x}\).
+
+In the fixed-\(x\) form,
+
+\begin{equation}
+\sum_{0<\gamma\le T}
+x^{\,i\gamma}
+=
+-
+\frac{T}{2\pi}
+\frac{\Lambda(x)}{\sqrt{x}}
++
+O(\log T).
+\label{eq:landau_gonek_asymptotic}
+\end{equation}
+
+\end{theorem}
+
+Consequently,
+prime powers define distinguished resonant frequencies for exponential
+sums over the ordinates of the nontrivial zeros.
+
+This phenomenon stands in sharp contrast with the metric
+equidistribution results discussed earlier in this section.
+
+\begin{remark}
+\label{rem:prime_power_resonances}
+
+Theorem~\ref{thm:landau_gonek_formula} shows that exponential sums over
+the ordinates of the zeta zeros possess distinguished resonant
+frequencies indexed by prime powers.
+
+From the viewpoint of Weyl equidistribution,
+these frequencies are exceptional:
+they generate a nonzero main term at the Landau--Gonek scale.
+
+The contrast between the generic behaviour described by
+Theorem~\ref{thm:hlawka}
+and the resonant behaviour described by
+Theorem~\ref{thm:landau_gonek_formula}
+is one of the central themes underlying the study of exponential sums
+over zeta ordinates.
+
+\end{remark}
+
+
+\section[The Exponential Sum SN]{The Exponential Sum \texorpdfstring{\(S_N\)}{SN}}
+\label{sec:SN_definition}
+
+This section introduces the main objects investigated in this paper.
+
+\subsection{Definition of the Phase Walk}
+\label{subsec:phase_walk}
+
+For each ordinate
+\(\gamma_n\)
+we associate the unit complex phase
+
+\begin{equation}
+z_n
+=
+e^{i\gamma_n}.
+\label{eq:phase_definition}
+\end{equation}
+
+\begin{definition}
+\label{def:SN}
+
+The cumulative exponential sum is defined by
+
+\begin{equation}
+S_N
+=
+\sum_{k=1}^{N}
+e^{i\gamma_k}.
+\label{eq:SN_definition}
+\end{equation}
+
+\end{definition}
+
+Equivalently,
+
+\begin{equation}
+S_N
+=
+\sum_{k=1}^{N}
+\cos(\gamma_k)
++
+i
+\sum_{k=1}^{N}
+\sin(\gamma_k).
+\label{eq:SN_real_imag}
+\end{equation}
+
+The sequence
+
+\begin{equation}
+S_1,S_2,\ldots,S_N
+\label{eq:SN_trajectory}
+\end{equation}
+
+defines a trajectory in the complex plane obtained by successively
+adding the unit vectors
+\(e^{i\gamma_k}\).
+
+\begin{definition}
+\label{def:CN}
+
+The centroid of the phase-walk trajectory is defined by
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{n=1}^{N}
+S_n.
+\label{eq:CN_definition}
+\end{equation}
+
+\end{definition}
+
+Using the definition of \(S_n\), the centroid can also be written as
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{n=1}^{N}
+\sum_{k=1}^{n}
+e^{i\gamma_k}.
+\label{eq:CN_double_sum}
+\end{equation}
+
+Interchanging the order of summation gives the weighted form
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}.
+\label{eq:CN_weighted}
+\end{equation}
+
+Thus \(C_N\) is not the simple average of the phases.
+It is the average of the partial sums \(S_n\), or equivalently a
+triangularly weighted average of the increments \(e^{i\gamma_k}\).
+
+The geometric and distributional properties of the trajectory
+\((S_n)\), together with the behaviour of its centroid \(C_N\),
+constitute the central subject of the present paper.
+
+\begin{remark}
+\label{rem:equidistribution_not_centroid}
+
+Classical equidistribution gives normalized cancellation of the phase
+increments. Its precise consequences for the endpoint \(S_N\) and for the
+triangular centroid \(C_N\) are isolated in Section~\ref{sec:non_resonant_triangular_lg_structure}.
+
+\end{remark}
+
+\section{A Logarithmic Quadratic Bound for the Centered Phase Walk}
+\label{sec:M0_logarithmic_quadratic_bound}
+
+This section separates the height-truncated statement from the ordinal
+statement and keeps track of possible multiplicities at the boundary
+height. The natural object before imposing RH is the complete-zero phase
+\(e^{\rho-1/2}\). Under RH this becomes the unit phase \(e^{i\gamma}\)
+used in the original walk \(S_N\).
+
+\begin{definition}[Fixed-real Landau resonance function]
+\label{def:fixed_real_landau_resonance_function}
+
+For \(X>1\), define
+
+\begin{equation}
+\Lambda_{\mathbb R}(X)
+=
+\begin{cases}
+\log p,
+&
+X=p^m,\quad p\ {\rm prime},\quad m\in\mathbb N,\\[4pt]
+0,
+&
+\text{otherwise}.
+\end{cases}
+\label{eq:fixed_real_landau_resonance_function}
+\end{equation}
+
+This is the fixed-real Landau resonance function. It agrees with the von
+Mangoldt weight at integral prime powers and is zero away from them. It
+is not the ordinary von Mangoldt function on the integers, but the
+fixed-real extension appearing in Landau's formula.
+
+\end{definition}
+
+\begin{proposition}[Landau's fixed-real formula]
+\label{prop:landau_fixed_real_formula}
+
+Let \(X>1\) be fixed and real, and write
+
+\begin{equation}
+X^\rho
+=
+\exp(\rho\log X),
+\label{eq:fixed_real_power_convention}
+\end{equation}
+
+where \(\log X\) denotes the real logarithm. Then, as \(T\to\infty\),
+
+\begin{equation}
+\sum_{0<\gamma\le T}
+X^\rho
+=
+-
+\frac{T}{2\pi}
+\Lambda_{\mathbb R}(X)
++
+O_X(\log T),
+\label{eq:landau_fixed_real_formula}
+\end{equation}
+
+where the sum is over the nontrivial zeros \(\rho=\beta+i\gamma\) of
+\(\zeta(s)\) with positive ordinate, counted with multiplicity. The
+implied constant may depend on the fixed value of \(X\). No uniformity in
+\(X\) is used in this paper.
+
+Equivalently, for each fixed \(X>1\) there are constants \(C_L(X)>0\)
+and \(T_L(X)\ge2\) such that, for all \(T\ge T_L(X)\),
+
+\begin{equation}
+\left|
+\sum_{0<\gamma\le T}
+X^\rho
++
+\frac{T}{2\pi}
+\Lambda_{\mathbb R}(X)
+\right|
+\le
+C_L(X)\log T.
+\label{eq:landau_fixed_real_formula_quantitative}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+This is Landau's fixed-frequency formula. Landau proved the formula for
+fixed \(X>1\). The fixed-real formulation used here is the form recalled
+by Kaczorowski, Languasco, and Perelli in the displayed fixed-\(X\)
+formula in the introduction of
+\cite{KaczorowskiLanguascoPerelli2000}
+(J. Kaczorowski, A. Languasco, A. Perelli,
+\emph{A note on Landau's formula}, Functiones et Approximatio
+Commentarii Mathematici \textbf{28} (2000), 173--186):
+
+\begin{equation}
+\sum_{0<\gamma\le T}X^\rho
+=
+-
+\frac{T}{2\pi}
+\Lambda_{\mathbb R}(X)
++
+O_X(\log T),
+\qquad T\to\infty,
+\end{equation}
+
+where \(\Lambda_{\mathbb R}(X)=\log p\) if \(X=p^m\), \(p\) prime, and
+\(\Lambda_{\mathbb R}(X)=0\) otherwise. Uniform versions in \(X\) belong
+to the Landau--Gonek line of results, beginning with Gonek's work. The
+present paper uses only the single fixed value \(X=e\), so Landau's
+fixed-\(X\) form is sufficient.
+
+The convention \eqref{eq:fixed_real_power_convention} fixes the meaning
+of \(X^\rho\) for real \(X>1\). No smoothing, regularization, or
+limiting approximation of \(X=e\) by integer frequencies is used in this
+application of the fixed-real formula.
+\end{proof}
+
+\begin{remark}[No approximation by integer frequencies]
+\label{rem:no_integer_approximation_for_e}
+
+The use of \(X=e\) below is not obtained by approximating \(e\) by
+integers. Such an approximation would require a uniform Landau--Gonek
+theorem in \(X\), because the factor \(X^{i\gamma}\) is sensitive to
+\(\log X\) at height \(T\). Instead,
+Proposition~\ref{prop:landau_fixed_real_formula} is applied directly at
+the single fixed real frequency \(X=e\).
+
+\end{remark}
+
+\begin{remark}[Arithmetic term and error constants]
+\label{rem:landau_arithmetic_term_error_constants}
+
+The Landau formula used here is not an error-free identity. It has an
+arithmetic main term and an analytic error term. In the notation of
+Proposition~\ref{prop:landau_fixed_real_formula},
+
+\begin{equation}
+\sum_{0<\gamma\le T}X^\rho
+=
+-
+\frac{T}{2\pi}\Lambda_{\mathbb R}(X)
++
+E_L(T;X),
+\qquad
+|E_L(T;X)|\le C_L(X)\log T
+\end{equation}
+
+for \(T\ge T_L(X)\). At the non-resonant fixed value \(X=e\), the
+arithmetic term vanishes because \(\Lambda_{\mathbb R}(e)=0\), and the
+complete-zero height sum is controlled by the remaining error term:
+
+\begin{equation}
+|\mathcal Z(T)|
+\le
+C_L(e)\log T
+\qquad (T\ge T_L(e)).
+\end{equation}
+
+Thus \(C_L(e)\) is the fixed-\(X=e\) error constant supplied by the
+chosen quantitative Landau formulation; it is not an additional
+identity.
+
+\end{remark}
+
+\begin{corollary}[The non-resonant frequency \(X=e\)]
+\label{cor:landau_nonresonant_frequency_e}
+
+At the fixed real frequency \(X=e\),
+
+\begin{equation}
+\Lambda_{\mathbb R}(e)=0.
+\label{eq:lambda_real_e_zero}
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+\sum_{0<\gamma\le T}
+e^{\rho}
+=
+O(\log T),
+\label{eq:sum_e_rho_log_bound}
+\end{equation}
+
+and therefore
+
+\begin{equation}
+\mathcal Z(T)
+:=
+\sum_{0<\gamma\le T}
+e^{\rho-\frac12}
+=
+O(\log T).
+\label{eq:complete_zero_height_walk_log_bound}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+The number \(e\) is not an integral prime power. Hence, by
+Definition~\ref{def:fixed_real_landau_resonance_function},
+
+\begin{equation}
+\Lambda_{\mathbb R}(e)=0.
+\end{equation}
+
+Applying Proposition~\ref{prop:landau_fixed_real_formula} with \(X=e\)
+gives
+
+\begin{equation}
+\sum_{0<\gamma\le T}e^{\rho}
+=
+O(\log T).
+\end{equation}
+
+Finally,
+
+\begin{equation}
+e^{\rho-\frac12}
+=
+e^{-1/2}e^{\rho},
+\end{equation}
+
+so
+
+\begin{equation}
+\mathcal Z(T)
+=
+e^{-1/2}
+\sum_{0<\gamma\le T}e^{\rho}
+=
+O(\log T).
+\end{equation}
+
+This proves \eqref{eq:complete_zero_height_walk_log_bound}.
+\end{proof}
+
+\begin{remark}[Height truncation and multiplicities]
+\label{rem:height_truncation_multiplicity_safe}
+
+Corollary~\ref{cor:landau_nonresonant_frequency_e} gives the primary
+height-truncated estimate. It counts every zero at a given ordinate with
+its multiplicity. The ordinal theorem below passes from height
+truncation to \(Z_N\) by isolating the boundary block of zeros at the
+last ordinate.
+
+\end{remark}
+
+\begin{definition}[Ordinal complete-zero walk]
+\label{def:ordinal_complete_zero_walk}
+
+Let \(\rho_k=\beta_k+i\gamma_k\) denote the nontrivial zeros with
+positive ordinate, ordered by nondecreasing ordinate and counted with
+multiplicity. Define
+
+\begin{equation}
+Z_N
+=
+\sum_{k=1}^{N}e^{\rho_k-\frac12},
+\label{eq:ZN_definition}
+\end{equation}
+
+Its centroid is
+
+\begin{equation}
+\mathcal C_N
+=
+\frac1N
+\sum_{n=1}^{N}Z_n,
+\label{eq:calC_definition}
+\end{equation}
+
+and its centered quadratic moment is
+
+\begin{equation}
+\mathcal M_0(N)
+=
+\frac1N
+\sum_{n=1}^{N}
+\left|Z_n-\mathcal C_N\right|^2.
+\label{eq:calM0_definition}
+\end{equation}
+
+\end{definition}
+
+\begin{lemma}[Multiplicity at a fixed ordinate]
+\label{lem:multiplicity_fixed_ordinate}
+
+Let \(m(\Gamma)\) denote the number of nontrivial zeros with positive
+ordinate equal to \(\Gamma\), counted with multiplicity. There is an
+absolute constant \(C_{\rm RVM}>0\), coming only from the
+Riemann--von Mangoldt estimate in unit intervals, such that for all
+\(\Gamma\ge2\),
+
+\begin{equation}
+m(\Gamma)\le C_{\rm RVM}\log \Gamma.
+\label{eq:fixed_ordinate_multiplicity_bound}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+It suffices to consider \(\Gamma\) large; bounded values of \(\Gamma\)
+are absorbed into the implied constant. By definition,
+
+\begin{equation}
+m(\Gamma)
+\le
+N_\zeta(\Gamma+1)-N_\zeta(\Gamma-1).
+\end{equation}
+
+The Riemann--von Mangoldt formula gives, for some absolute
+\(C_{\rm RVM}\) and all \(T\ge2\),
+
+\begin{equation}
+N_\zeta(T+1)-N_\zeta(T-1)\le C_{\rm RVM}\log T,
+\end{equation}
+
+and hence \(m(\Gamma)\le C_{\rm RVM}\log \Gamma\).
+\end{proof}
+
+\begin{lemma}[Height-to-ordinal passage with multiplicities, effective form]
+\label{prop:height_to_ordinal_with_multiplicities}
+\label{thm:ZN_log_bound}
+
+Let the nontrivial zeros with positive ordinate be ordered by
+nondecreasing ordinate and counted with multiplicity:
+
+\begin{equation}
+\rho_k=\beta_k+i\gamma_k,
+\qquad
+0<\gamma_1\le\gamma_2\le\cdots.
+\end{equation}
+
+Define
+
+\begin{equation}
+Z_N
+=
+\sum_{k=1}^{N}e^{\rho_k-\frac12}.
+\end{equation}
+
+There are positive constants
+\(C_L(e),C_{\rm RVM},C_{\rm ord},T_0,N_0\). Put
+
+\begin{equation}
+C_Z
+=
+C_{\rm ord}\left(C_L(e)+e^{1/2}C_{\rm RVM}\right),
+\label{eq:CZ_constant_definition}
+\end{equation}
+
+Then, for every \(N\ge N_0\),
+
+\begin{equation}
+|Z_N|\le C_Z\log N.
+\label{eq:ZN_log_bound_quantitative}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+Z_N
+=
+O(\log N).
+\label{eq:ZN_log_bound_result}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+By Landau's fixed-real formula at \(X=e\), there are constants
+\(C_L(e)>0\) and \(T_L\ge2\) such that, for all \(T\ge T_L\),
+
+\begin{equation}
+\left|
+\mathcal Z(T)
+\right|
+=
+\left|
+\sum_{0<\Im\rho\le T}e^{\rho-\frac12}
+\right|
+\le
+C_L(e)\log T.
+\label{eq:effective_landau_e_height_bound}
+\end{equation}
+
+Let
+
+\begin{equation}
+\Gamma_N=\gamma_N.
+\end{equation}
+
+For this proof write \(T_N=\Gamma_N\). Let
+
+\begin{equation}
+I_N=\{k:\gamma_k=T_N\}
+\end{equation}
+
+be the full multiplicity block at height \(T_N\), and let
+\(J_N\subseteq I_N\) be the part of that block included among the first
+\(N\) zeros. Since the positive ordinates form a discrete multiset, one
+may choose \(T_N^-<T_N\) with no zero ordinate in
+\((T_N^-,T_N)\). Then the height-truncated sum up to \(T_N^-\)
+contains exactly the first zeros before the boundary block, while
+\(B_N\) contains exactly the selected part \(J_N\) of the boundary
+block:
+
+\begin{equation}
+Z_N
+=
+\mathcal Z(T_N^-)+B_N,
+\label{eq:ZN_height_bridge}
+\end{equation}
+
+where
+
+\begin{equation}
+B_N=\sum_{k\in J_N}e^{\rho_k-\frac12}.
+\label{eq:boundary_block_partial_sum}
+\end{equation}
+
+If \(T_N\ge T_0:=\max(T_L,2)\), then
+\eqref{eq:effective_landau_e_height_bound} gives
+
+\begin{equation}
+|\mathcal Z(T_N^-)|
+\le
+C_L(e)\log T_N.
+\label{eq:ZN_log_TN_bound}
+\end{equation}
+
+Moreover,
+
+\begin{equation}
+|B_N|
+\le
+\sum_{k\in J_N}
+\left|e^{\rho_k-\frac12}\right|
+=
+\sum_{k\in J_N}
+e^{\beta_k-\frac12}.
+\end{equation}
+
+Since \(0<\beta_k<1\),
+
+\begin{equation}
+e^{\beta_k-\frac12}\le e^{1/2}.
+\end{equation}
+
+Thus
+
+\begin{equation}
+|B_N|
+\le
+e^{1/2}m(T_N)
+ \le
+e^{1/2}
+\left(
+N_\zeta(T_N+1)-N_\zeta(T_N-1)
+\right)
+\le
+e^{1/2}C_{\rm RVM}\log T_N.
+\end{equation}
+Here the last estimate is Lemma~\ref{lem:multiplicity_fixed_ordinate},
+which uses only the Riemann--von Mangoldt formula in a unit interval and
+does not require simple ordinates.
+Therefore
+
+\begin{equation}
+|Z_N|
+\le
+\left(C_L(e)+e^{1/2}C_{\rm RVM}\right)\log T_N.
+\label{eq:ZN_log_GammaN_bound}
+\end{equation}
+
+Finally, the Riemann--von Mangoldt formula
+\eqref{eq:riemann_von_mangoldt} implies \(T_N=\gamma_N\ll N\log N\) for
+\(N\) large. Hence there is a constant \(C_{\rm ord}>0\) such that
+
+\begin{equation}
+\log T_N
+\le
+C_{\rm ord}\log N
+\label{eq:ZN_log_TN_log_N_bound}
+\end{equation}
+
+for every \(N\ge N_0\), after increasing \(N_0\) if necessary so that
+\(T_N\ge T_0\). Substituting this estimate in
+\eqref{eq:ZN_log_GammaN_bound} gives
+\eqref{eq:ZN_log_bound_quantitative} with \(C_Z\) as in
+\eqref{eq:CZ_constant_definition}.
+
+The \(O(\log N)\) statement follows immediately.
+\end{proof}
+
+\begin{remark}[From asymptotic notation to explicit inequalities]
+\label{rem:explicit_constants_logarithmic_bound}
+
+The preceding proof is the exact mechanism by which the asymptotic
+notation is converted into an explicit inequality. Once constants are
+fixed, the conversion is mechanical. Landau's fixed-real formula at
+\(X=e\) supplies \(C_L(e)\) and \(T_L\) such that
+
+\begin{equation}
+|\mathcal Z(T_N^-)|\le C_L(e)\log T_N
+\qquad (T_N\ge T_0).
+\end{equation}
+
+The boundary block is controlled by Riemann--von Mangoldt in a unit
+interval:
+
+\begin{equation}
+|B_N|
+\le e^{1/2}m(T_N)
+\le e^{1/2}C_{\rm RVM}\log T_N.
+\end{equation}
+
+The exact decomposition
+
+\begin{equation}
+Z_N=\mathcal Z(T_N^-)+B_N
+\end{equation}
+
+therefore gives
+
+\begin{equation}
+|Z_N|
+\le
+\left(C_L(e)+e^{1/2}C_{\rm RVM}\right)\log T_N
+\end{equation}
+
+for all sufficiently large \(N\). Finally, the ordinal height relation
+\(\log T_N\le C_{\rm ord}\log N\), valid for \(N\ge N_0\) after fixing
+the ordinal threshold, gives
+
+\begin{equation}
+|Z_N|\le C_Z\log N,
+\qquad
+C_Z=C_{\rm ord}\left(C_L(e)+e^{1/2}C_{\rm RVM}\right).
+\end{equation}
+
+Thus effective claims require the constants \(C_L(e)\), \(C_{\rm RVM}\),
+\(C_{\rm ord}\), and the threshold \(N_0\) to be fixed. The big-\(O\)
+statement records the same chain without specifying their values. Here
+\(C_L(e)\) comes from the fixed-\(X=e\) Landau error term,
+\(C_{\rm RVM}\) comes from the Riemann--von Mangoldt unit-interval
+multiplicity bound, and \(C_{\rm ord}\) comes from the height-to-ordinal
+comparison \(\log T_N\le C_{\rm ord}\log N\).
+
+\end{remark}
+
+\begin{corollary}[Complete-zero logarithmic confinement, effective form]
+\label{cor:complete_zero_logarithmic_confinement}
+\label{cor:calC_log_bound}
+\label{thm:calM0_log_square_bound}
+
+With \(C_Z\) and \(N_0\) as in
+Lemma~\ref{prop:height_to_ordinal_with_multiplicities}, for every
+\(N\ge N_0\),
+
+\begin{equation}
+|\mathcal C_N|\le C_Z\log N,
+\label{eq:calC_log_bound_quantitative}
+\end{equation}
+
+and
+
+\begin{equation}
+\mathcal M_0(N)\le 4C_Z^2(\log N)^2.
+\label{eq:calM0_log_square_bound_quantitative}
+\end{equation}
+
+The factor \(4\) comes only from the triangle inequality
+\(|Z_n-\mathcal C_N|\le |Z_n|+|\mathcal C_N|\), giving
+\(|Z_n-\mathcal C_N|\le2C_Z\log N\) before squaring.
+
+In particular,
+
+\begin{equation}
+\mathcal C_N
+=
+O(\log N).
+\label{eq:calC_log_bound_result}
+\end{equation}
+
+\begin{equation}
+\mathcal M_0(N)
+=
+O\!\left((\log N)^2\right).
+\label{eq:calM0_log_square_bound}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{prop:height_to_ordinal_with_multiplicities} gives
+\(|Z_n|\le C_Z\log n\) for all \(n\ge N_0\). Increasing \(N_0\), if
+necessary, to absorb the finitely many values \(n<N_0\), we have, for
+every \(N\ge N_0\) and every \(1\le n\le N\),
+
+\begin{equation}
+|Z_n|\le C_Z\log N.
+\label{eq:Zn_uniform_log_bound}
+\end{equation}
+
+By definition,
+
+\begin{equation}
+|\mathcal C_N|
+\leq
+\frac1N
+\sum_{n=1}^{N}|Z_n|
+\le
+C_Z\log N.
+\label{eq:calC_average_log_bound}
+\end{equation}
+
+This proves \eqref{eq:calC_log_bound_quantitative} and hence
+\eqref{eq:calC_log_bound_result}. Thus
+
+\begin{equation}
+|\mathcal C_N|
+\le
+C_Z\log N.
+\label{eq:calC_uniform_log_bound}
+\end{equation}
+
+Together with \eqref{eq:Zn_uniform_log_bound}, this gives
+
+\begin{equation}
+|Z_n-\mathcal C_N|
+\leq
+|Z_n|+|\mathcal C_N|
+\le
+2C_Z\log N,
+\qquad
+1\leq n\leq N.
+\label{eq:complete_zero_centered_uniform_log_bound}
+\end{equation}
+
+Squaring and averaging gives
+\eqref{eq:calM0_log_square_bound_quantitative}, and hence
+\eqref{eq:calM0_log_square_bound}.
+\end{proof}
+
+\subsection{Specialization under the Riemann Hypothesis}
+\label{subsec:M0_RH_specialization}
+
+\begin{corollary}[Specialization under RH]
+\label{cor:RH_specialization_complete_zero_walk}
+\label{cor:M0_log_square_bound_RH}
+
+Assume RH. Then
+
+\begin{equation}
+\rho_k
+=
+\frac12+i\gamma_k,
+\label{eq:rho_k_RH_specialization}
+\end{equation}
+
+and hence
+
+\begin{equation}
+e^{\rho_k-\frac12}
+=
+e^{i\gamma_k}.
+\label{eq:complete_zero_phase_RH_specialization}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+Z_N=S_N,
+\qquad
+\mathcal C_N=C_N,
+\qquad
+\mathcal M_0(N)=M_0(N).
+\label{eq:complete_zero_RH_identification}
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+M_0(N)
+=
+O\!\left((\log N)^2\right).
+\label{eq:M0_log_square_bound_RH}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+The identities follow directly from
+\(e^{\rho_k-\frac12}=e^{i\gamma_k}\) under RH and from the definitions of
+the complete-zero and unit-phase centroids and centered moments. The
+bound for \(M_0(N)\) follows from
+Corollary~\ref{cor:complete_zero_logarithmic_confinement}.
+\end{proof}
+
+Here
+
+\begin{equation}
+M_0(N)
+=
+\frac1N
+\sum_{n=1}^{N}|S_n-C_N|^2.
+\label{eq:M0_definition}
+\end{equation}
+
+\subsection{Roadmap of the logarithmic bound}
+\label{subsec:logarithmic_bound_roadmap}
+
+The logic of this section is as follows. Landau's fixed-real formula is
+applied directly at the single non-resonant value \(X=e\), giving the
+height-truncated estimate for \(\mathcal Z(T)\). The
+height-to-ordinal Lemma~\ref{prop:height_to_ordinal_with_multiplicities}
+then passes from \(T\)-truncation to \(N\)-truncation by isolating the
+boundary block \(B_N\) and bounding its multiplicity through
+Riemann--von Mangoldt. This gives \(Z_N=O(\log N)\) with constants
+coming only from Landau at \(X=e\) and from the unit-interval RVM bound.
+Averaging the prefix sums yields the complete-zero centroid and centered
+moment estimates. Under RH these complete-zero estimates specialize to
+the unit-phase objects \(S_N\), \(C_N\), and \(M_0(N)\). The remaining
+subsections show that the centered moment is exactly a
+Brownian-bridge/Green-kernel weighted pair statistic.
+
+\subsection{Pair-correlation form}
+\label{subsec:M0_pair_correlation_form}
+
+The preceding estimate has an exact weighted pair-correlation form. Since
+
+\begin{equation}
+Z_n
+=
+\sum_{k=1}^{n}e^{\rho_k-\frac12},
+\label{eq:Zn_prefix_for_pair_form}
+\end{equation}
+
+we have
+
+\begin{equation}
+|Z_n|^2
+=
+\sum_{j,k\leq n}
+e^{\rho_j-\frac12}e^{\overline{\rho_k}-\frac12}.
+\label{eq:Zn_square_pair_expansion}
+\end{equation}
+
+Moreover,
+
+\begin{equation}
+\mathcal M_0(N)
+=
+\frac1N
+\sum_{n=1}^{N}|Z_n|^2
+-
+|\mathcal C_N|^2.
+\label{eq:calM0_uncentered_minus_centroid}
+\end{equation}
+
+Using the triangular form of \(\mathcal C_N\),
+
+\begin{equation}
+\mathcal C_N
+=
+\frac1N
+\sum_{k=1}^{N}(N-k+1)e^{\rho_k-\frac12},
+\label{eq:calC_triangular_form}
+\end{equation}
+
+we obtain
+
+\begin{equation}
+\mathcal M_0(N)
+=
+\sum_{j,k=1}^{N}
+W_N(j,k)
+e^{\rho_j-\frac12}e^{\overline{\rho_k}-\frac12},
+\label{eq:calM0_pair_kernel_identity}
+\end{equation}
+
+where
+
+\begin{equation}
+W_N(j,k)
+=
+\frac{N-\max(j,k)+1}{N}
+-
+\frac{(N-j+1)(N-k+1)}{N^2}.
+\label{eq:WN_definition}
+\end{equation}
+
+Equivalently, setting
+
+\begin{equation}
+a=N-j+1,
+\qquad
+b=N-k+1,
+\label{eq:reverse_ordinal_variables_for_WN}
+\end{equation}
+
+we may write
+
+\begin{equation}
+W_N(j,k)
+=
+\frac{\min(a,b)}{N}
+-
+\frac{ab}{N^2}.
+\label{eq:WN_brownian_bridge_form}
+\end{equation}
+
+The trace of the centering kernel is explicit:
+
+\begin{equation}
+\sum_{j=1}^{N}W_N(j,j)
+=
+\frac{N^2-1}{6N}.
+\label{eq:WN_diagonal_trace}
+\end{equation}
+
+Combining \eqref{eq:calM0_pair_kernel_identity} with
+Corollary~\ref{thm:calM0_log_square_bound}, we obtain
+
+\begin{equation}
+\sum_{j,k=1}^{N}
+W_N(j,k)e^{\rho_j-\frac12}e^{\overline{\rho_k}-\frac12}
+=
+O\!\left((\log N)^2\right).
+\label{eq:weighted_pair_correlation_bound}
+\end{equation}
+
+This is a Brownian-bridge weighted pair-correlation cancellation for the
+complete-zero walk.
+
+Here and below, the phrase ``Brownian-bridge'' refers to the exact
+algebraic equality of the centering kernel with the finite
+Brownian-bridge covariance kernel. No probabilistic approximation, no
+Gaussian process limit, and no distributional convergence statement is
+being asserted at this point.
+
+Under RH, the pair-correlation identity
+\eqref{eq:calM0_pair_kernel_identity} becomes
+
+\begin{equation}
+M_0(N)
+=
+\sum_{j,k=1}^{N}
+W_N(j,k)e^{i(\gamma_j-\gamma_k)}.
+\label{eq:M0_pair_kernel_identity_RH}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+\sum_{j,k=1}^{N}
+W_N(j,k)e^{i(\gamma_j-\gamma_k)}
+=
+O\!\left((\log N)^2\right).
+\label{eq:weighted_pair_correlation_bound_RH}
+\end{equation}
+
+\begin{lemma}[Diagonal and off-diagonal balance]
+\label{lem:diagonal_off_diagonal_balance}
+
+Assume RH, so that the phase increments have unit modulus. Then
+
+\begin{equation}
+M_0(N)=D_N+O_N,
+\end{equation}
+
+where
+
+\begin{equation}
+D_N
+=
+\sum_{j=1}^{N}W_N(j,j)
+=
+\frac{N^2-1}{6N},
+\label{eq:diagonal_contribution_DN_RH}
+\end{equation}
+
+and
+
+\begin{equation}
+O_N
+=
+\sum_{\substack{1\le j,k\le N\\j\ne k}}
+W_N(j,k)e^{i(\gamma_j-\gamma_k)}.
+\label{eq:off_diagonal_contribution_ON_RH}
+\end{equation}
+
+Consequently, if
+\(M_0(N)=O((\log N)^2)\), then
+
+\begin{equation}
+O_N
+=
+-
+\frac{N^2-1}{6N}
++
+O\!\left((\log N)^2\right).
+\label{eq:off_diagonal_cancellation_law_RH}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Under RH,
+
+\begin{equation}
+|e^{i\gamma_j}|=1,
+\end{equation}
+
+and hence the diagonal part of the pair statistic is
+
+\begin{equation}
+D_N
+=
+\sum_{j=1}^{N}W_N(j,j).
+\end{equation}
+
+From
+
+\begin{equation}
+W_N(j,k)
+=
+\frac{N-\max(j,k)+1}{N}
+-
+\frac{(N-j+1)(N-k+1)}{N^2},
+\end{equation}
+
+we get
+
+\begin{equation}
+W_N(j,j)
+=
+\frac{N-j+1}{N}
+-
+\frac{(N-j+1)^2}{N^2}.
+\end{equation}
+
+Put
+
+\begin{equation}
+a=N-j+1.
+\end{equation}
+
+As \(j\) runs from \(1\) to \(N\), \(a\) runs from \(N\) down to \(1\).
+Therefore
+
+\begin{equation}
+D_N
+=
+\sum_{a=1}^{N}
+\left(
+\frac{a}{N}
+-
+\frac{a^2}{N^2}
+\right).
+\end{equation}
+
+Using
+
+\begin{equation}
+\sum_{a=1}^{N}a=\frac{N(N+1)}2,
+\qquad
+\sum_{a=1}^{N}a^2=\frac{N(N+1)(2N+1)}6,
+\end{equation}
+
+we obtain
+
+\begin{equation}
+D_N
+=
+\frac{N+1}{2}
+-
+\frac{(N+1)(2N+1)}{6N}
+=
+\frac{N^2-1}{6N}.
+\end{equation}
+
+Since \(M_0(N)=D_N+O_N\), the claimed off-diagonal identity follows
+immediately from \(M_0(N)=O((\log N)^2)\).
+\end{proof}
+
+Thus the logarithmic bound on the centered moment is much stronger than
+the diagonal size. The diagonal contribution has order \(N\), while the
+full centered moment is only \(O((\log N)^2)\). Therefore the
+off-diagonal contribution must cancel the diagonal to accuracy
+\(O((\log N)^2)\) for this specific Brownian-bridge kernel.
+
+In the complete-zero setting the diagonal contains the factor
+
+\begin{equation}
+e^{\rho_j-\frac12}e^{\overline{\rho_j}-\frac12}
+=
+e^{2\beta_j-1}.
+\end{equation}
+
+Thus the complete-zero diagonal is
+
+\begin{equation}
+\sum_{j=1}^{N}W_N(j,j)e^{2\beta_j-1}.
+\label{eq:complete_zero_diagonal_contribution}
+\end{equation}
+
+Only under RH does this reduce to
+
+\begin{equation}
+\sum_{j=1}^{N}W_N(j,j)
+=
+\frac{N^2-1}{6N}.
+\end{equation}
+
+Thus the RH specialization recovers the original centered phase walk and
+identifies its logarithmic quadratic confinement with Brownian-bridge
+weighted off-diagonal cancellation.
+
+\subsection{The Brownian-bridge Green kernel forced by centering}
+\label{subsec:what_is_new_present_formulation}
+
+The logarithmic bound follows from Landau's fixed-real formula at \(X=e\),
+together with the elementary passage from endpoint bounds to
+centered quadratic bounds.
+
+The estimate itself is classical in origin. The structural point of the
+present formulation is different: the centered phase-walk moment forces
+an exact Green-kernel pair statistic. Thus the centroid geometry
+converts a one-dimensional phase walk into a weighted pair-correlation
+statistic with Brownian-bridge covariance kernel.
+
+Starting from the complete-zero phase-walk centroid \(\mathcal C_N\),
+the centered quadratic moment \(\mathcal M_0(N)\) produces an exact
+pair-correlation identity with the explicit weight
+\eqref{eq:WN_definition}. After the change of variables
+\eqref{eq:reverse_ordinal_variables_for_WN}, this weight becomes
+\eqref{eq:WN_brownian_bridge_form}. This is the standard discrete
+Brownian-bridge covariance kernel, equivalently the Green kernel of the
+discrete Dirichlet Laplacian on the corresponding finite interval.
+
+Thus the structural point is the way the centered geometry of the
+zeta-zero phase walk forces exactly this Green/Brownian-bridge kernel and
+therefore converts the centroid problem into a precise weighted
+pair-correlation statistic of the zeta zeros.
+
+This is an algebraic identity between finite quadratic forms and kernels.
+It is not a claim that the zeta-zero phase walk converges to a Brownian
+bridge, nor that the modal coefficients are Gaussian. Any probabilistic
+or distributional strengthening would require additional hypotheses and
+error estimates not used in the present argument.
+
+In short:
+
+\begin{equation}
+\begin{aligned}
+\text{centered phase-walk geometry}
+&\Longrightarrow
+\text{Brownian-bridge Green kernel}
+\\
+&\Longrightarrow
+\text{weighted pair correlation of zeta zeros}.
+\end{aligned}
+\label{eq:phase_walk_green_kernel_pair_correlation}
+\end{equation}
+
+Landau's fixed-real formula at \(X=e\) supplies the logarithmic
+confinement baseline. The new observation is that the centered
+phase-walk moment realizes this
+confinement through an exact Brownian-bridge/Green-kernel pair statistic,
+and that the same Green-modal language gives a natural expression of the
+Montgomery--GUE form factor.
+
+In the RH/unit-phase specialization, the diagonal part of the
+Brownian-bridge pair statistic has size \eqref{eq:WN_diagonal_trace}.
+The logarithmic bound therefore expresses a near-total off-diagonal
+cancellation against this specific Green kernel. The structural
+contribution is the identification of the precise kernel and geometric
+object through which Landau non-resonance appears in the phase-walk
+formulation.
+
+\subsection{Spectral lifting and the Green-kernel modal decomposition}
+\label{subsec:spectral_lifting_green_kernel_modal_decomposition}
+
+The centered phase-walk moment is not only a scalar statistic. It is an
+exact Hermitian Green-kernel energy, and the Green kernel admits a
+complete spectral decomposition.
+
+\begin{lemma}[Lifted phase representation]
+\label{lem:lifted_phase_representation}
+
+For every ordinate \(\gamma_k>0\), define
+
+\begin{equation}
+B_k=
+\left\lfloor \frac{\gamma_k}{2\pi}\right\rfloor,
+\qquad
+\theta_k=\gamma_k-2\pi B_k\in[0,2\pi).
+\label{eq:angular_lifting_ordinate}
+\end{equation}
+
+Then
+
+\begin{equation}
+\gamma_k=2\pi B_k+\theta_k,
+\label{eq:lifting_recovers_ordinate}
+\end{equation}
+
+and
+
+\begin{equation}
+e^{i\gamma_k}=e^{i\theta_k}.
+\label{eq:phase_depends_on_theta}
+\end{equation}
+
+Moreover, for every pair \(j,k\),
+
+\begin{equation}
+\gamma_j-\gamma_k
+=
+2\pi(B_j-B_k)+(\theta_j-\theta_k).
+\label{eq:lifted_pair_difference}
+\end{equation}
+
+Consequently, for every real \(t\),
+
+\begin{equation}
+e^{it(\gamma_j-\gamma_k)}
+=
+e^{i2\pi t(B_j-B_k)}
+e^{it(\theta_j-\theta_k)}.
+\label{eq:lifted_pair_difference_t_phase}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+The identity \(\gamma_k=2\pi B_k+\theta_k\) is the Euclidean
+decomposition of the real number \(\gamma_k\) modulo \(2\pi\). Since
+\(B_k\in\mathbb Z\),
+
+\begin{equation}
+e^{i\gamma_k}
+=
+e^{i(2\pi B_k+\theta_k)}
+=
+e^{i2\pi B_k}e^{i\theta_k}
+=
+e^{i\theta_k}.
+\end{equation}
+
+Subtracting the decompositions for \(\gamma_j\) and \(\gamma_k\) gives
+\eqref{eq:lifted_pair_difference}. Multiplying by \(it\) and
+exponentiating gives \eqref{eq:lifted_pair_difference_t_phase}.
+\end{proof}
+
+Thus the ordinary phase walk
+
+\begin{equation}
+S_N=\sum_{k=1}^{N}e^{i\gamma_k}
+\end{equation}
+
+can be formed from the angular representatives alone:
+
+\begin{equation}
+S_N=\sum_{k=1}^{N}e^{i\theta_k}.
+\end{equation}
+
+However, the angular representatives alone do not determine
+\(\gamma_k\). The additional winding integers \(B_k\) restore the full
+ordinate:
+
+\begin{equation}
+\gamma_k=2\pi B_k+\theta_k.
+\end{equation}
+
+For \(t=1\), the winding is invisible:
+
+\begin{equation}
+e^{i\gamma_k}=e^{i\theta_k}.
+\end{equation}
+
+For general real \(t\),
+
+\begin{equation}
+e^{it\gamma_k}
+=
+e^{i2\pi tB_k}e^{it\theta_k},
+\end{equation}
+
+so the winding data are needed to reconstruct the true real-frequency
+phase. In finite-\(N\) verification, \(B_k\) is not
+an additional hypothesis: it is computed directly from the ordinate by
+\eqref{eq:angular_lifting_ordinate}. For Montgomery scaling
+\(t=\tau\log(T_N/2\pi)+y\), retaining \(B_k\) is essential because the factor
+\(e^{i2\pi tB_k}\) is generally nontrivial.
+
+There are two reversed-index conventions in the paper. For pair
+variables \(j,k\), we use
+
+\begin{equation}
+r=N-j+1,
+\qquad
+s=N-k+1.
+\label{eq:green_kernel_reversed_indices}
+\end{equation}
+
+In these variables the Green/Brownian weight is
+
+\begin{equation}
+K_N(r,s)
+=
+\frac{\min(r,s)}{N}
+-
+\frac{rs}{N^2},
+\qquad
+1\le r,s\le N-1.
+\label{eq:KN_green_kernel_definition}
+\end{equation}
+
+Thus \(W_N(j,k)=K_N(r,s)\). For a single endpoint vector indexed by
+\(k\), we use
+
+\begin{equation}
+r=N-k+1,
+\qquad
+x_r(t)=e^{it\gamma_{N-r+1}}.
+\end{equation}
+
+These are the same reversal convention applied respectively to a pair
+of indices and to a single index.
+
+This is, as a finite matrix identity, the covariance kernel of the
+discrete Brownian bridge, equivalently the Green kernel of the discrete
+Dirichlet Laplacian on the finite interval. The terminology identifies
+the kernel; it does not introduce a random process into the proof.
+
+
+\begin{lemma}[Orthonormality of the Dirichlet sine basis]
+\label{lem:dirichlet_sine_orthonormality}
+
+For \(1\le m,r\le N-1\), define
+\begin{equation}
+\phi_m(r)
+=
+\sqrt{\frac{2}{N}}\,
+\sin\left(\frac{\pi m r}{N}\right).
+\label{eq:dirichlet_sine_modes}
+\end{equation}
+
+Then
+\begin{equation}
+\sum_{r=1}^{N-1}
+\phi_m(r)\overline{\phi_\ell(r)}
+=
+\delta_{m\ell}.
+\label{eq:dirichlet_sine_orthonormality}
+\end{equation}
+
+Since the functions \(\phi_m\) are real-valued, this is equivalently
+\[
+\sum_{r=1}^{N-1}
+\phi_m(r)\phi_\ell(r)
+=
+\delta_{m\ell}.
+\]
+Consequently, \(\{\phi_m\}_{m=1}^{N-1}\) is an orthonormal basis of
+\(\mathbb C^{N-1}\).
+
+\end{lemma}
+
+\begin{proof}
+
+It is enough to prove
+\begin{equation}
+\sum_{r=1}^{N-1}
+\sin\left(\frac{\pi m r}{N}\right)
+\sin\left(\frac{\pi \ell r}{N}\right)
+=
+\frac{N}{2}\delta_{m\ell}.
+\label{eq:unnormalized_sine_orthogonality}
+\end{equation}
+
+Using
+\[
+\sin a\sin b
+=
+\frac12\bigl(\cos(a-b)-\cos(a+b)\bigr),
+\]
+we obtain
+\begin{equation}
+\sum_{r=1}^{N-1}
+\sin\left(\frac{\pi m r}{N}\right)
+\sin\left(\frac{\pi \ell r}{N}\right)
+=
+\frac12
+\left(
+C_{m-\ell}-C_{m+\ell}
+\right),
+\label{eq:sine_inner_product_Cq_reduction}
+\end{equation}
+where
+\begin{equation}
+C_q
+=
+\sum_{r=1}^{N-1}
+\cos\left(\frac{\pi q r}{N}\right).
+\label{eq:Cq_cosine_sum_definition}
+\end{equation}
+
+We compute \(C_q\) explicitly. Let
+\[
+\omega_q=e^{i\pi q/N}.
+\]
+If \(\omega_q\ne1\), then
+\begin{equation}
+\sum_{r=1}^{N-1}e^{i\pi q r/N}
+=
+\sum_{r=1}^{N-1}\omega_q^r
+=
+\frac{\omega_q(1-\omega_q^{N-1})}{1-\omega_q}.
+\label{eq:Cq_geometric_sum}
+\end{equation}
+Taking real parts gives \(C_q\). Equivalently, for \(0\le q\le 2N-1\),
+\begin{equation}
+C_q
+=
+\begin{cases}
+N-1, & q=0,\\[4pt]
+0, & q\ {\rm odd},\\[4pt]
+-1, & q\ {\rm even},\ q\ne0,\ 2N.
+\end{cases}
+\label{eq:Cq_values}
+\end{equation}
+Also \(C_{-q}=C_q\), since cosine is even.
+
+In the present application,
+\[
+1\le m,\ell\le N-1.
+\]
+Hence
+\begin{equation}
+0\le |m-\ell|\le N-2,
+\qquad
+2\le m+\ell\le 2N-2.
+\label{eq:Cq_index_range}
+\end{equation}
+Thus the exceptional value \(q=2N\) never occurs in \(m+\ell\), and \(q=0\) occurs only in \(m-\ell\) when \(m=\ell\).
+
+If \(m=\ell\), then \(m-\ell=0\) and \(m+\ell=2m\), with
+\[
+2\le 2m\le 2N-2.
+\]
+Therefore
+\[
+C_{m-\ell}=C_0=N-1,
+\qquad
+C_{m+\ell}=C_{2m}=-1.
+\]
+Consequently,
+\begin{equation}
+\sum_{r=1}^{N-1}
+\sin^2\left(\frac{\pi m r}{N}\right)
+=
+\frac12\bigl((N-1)-(-1)\bigr)
+=
+\frac{N}{2}.
+\label{eq:diagonal_sine_norm}
+\end{equation}
+
+If \(m\ne\ell\), there are two cases. If \(m\) and \(\ell\) have different parity, then \(m-\ell\) and \(m+\ell\) are odd, so
+\[
+C_{m-\ell}=C_{m+\ell}=0.
+\]
+If \(m\) and \(\ell\) have the same parity, then \(m-\ell\) and \(m+\ell\) are even. Since \(m\ne\ell\), the first is nonzero, and the second is always nonzero. Both lie in the permitted range away from \(2N\), so
+\[
+C_{m-\ell}=C_{m+\ell}=-1.
+\]
+In both subcases,
+\[
+C_{m-\ell}-C_{m+\ell}=0.
+\]
+Hence
+\[
+\sum_{r=1}^{N-1}
+\sin\left(\frac{\pi m r}{N}\right)
+\sin\left(\frac{\pi \ell r}{N}\right)
+=
+0
+\qquad(m\ne\ell).
+\]
+
+Multiplying by the normalization factor \(2/N\) gives
+\[
+\sum_{r=1}^{N-1}
+\phi_m(r)\overline{\phi_\ell(r)}
+=
+\delta_{m\ell},
+\]
+which is \eqref{eq:dirichlet_sine_orthonormality}. Since there are \(N-1\) orthonormal vectors in the \(N-1\)-dimensional space
+\(\mathbb C^{N-1}\), they form an orthonormal basis.
+
+\end{proof}
+
+
+The Green kernel has the spectral decomposition
+
+\begin{equation}
+K_N(r,s)
+=
+\sum_{m=1}^{N-1}
+\lambda_m\phi_m(r)\phi_m(s),
+\label{eq:KN_spectral_decomposition}
+\end{equation}
+
+where
+
+\begin{equation}
+\lambda_m
+=
+\frac{1}
+{4N\sin^2\left(\frac{\pi m}{2N}\right)}.
+\label{eq:KN_spectral_eigenvalues}
+\end{equation}
+
+\begin{proposition}[Elementary Green-kernel limits]
+\label{prop:elementary_green_kernel_limits}
+
+As \(N\to\infty\),
+
+\begin{equation}
+\frac{N^2-1}{6N}
+\sim
+\frac{N}{6}.
+\label{eq:WN_trace_asymptotic}
+\end{equation}
+
+For each fixed \(m\ge1\),
+
+\begin{equation}
+\lambda_m
+=
+\frac{1}
+{4N\sin^2\left(\frac{\pi m}{2N}\right)}
+\sim
+\frac{N}{\pi^2m^2}.
+\label{eq:green_eigenvalue_fixed_m_asymptotic}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+The first statement is immediate from
+\((N^2-1)/(6N)=N/6-1/(6N)\). For fixed \(m\),
+\(\sin(\pi m/(2N))\sim \pi m/(2N)\), which gives
+\eqref{eq:green_eigenvalue_fixed_m_asymptotic}.
+\end{proof}
+
+Under RH, the phase increments are
+
+\begin{equation}
+q_k=e^{i\gamma_k}.
+\label{eq:RH_phase_increments_qk}
+\end{equation}
+
+Define the modal coefficients
+
+\begin{equation}
+A_m(N)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)
+q_{N-r+1}.
+\label{eq:RH_modal_coefficients_Am}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+A_m(N)
+=
+\sum_{r=1}^{N-1}
+\sqrt{\frac{2}{N}}
+\sin\left(\frac{\pi m r}{N}\right)
+e^{i\gamma_{N-r+1}}.
+\label{eq:RH_modal_coefficients_Am_expanded}
+\end{equation}
+
+Then the centered quadratic moment has the exact modal identity
+
+\begin{equation}
+M_0(N)
+=
+\sum_{m=1}^{N-1}
+\lambda_m |A_m(N)|^2.
+\label{eq:M0_green_kernel_modal_identity}
+\end{equation}
+
+For the complete-zero walk, put
+
+\begin{equation}
+q_k=e^{\rho_k-\frac12}.
+\label{eq:complete_zero_increments_qk}
+\end{equation}
+
+Then
+
+\begin{equation}
+\mathcal M_0(N)
+=
+\sum_{m=1}^{N-1}
+\lambda_m |\mathcal A_m(N)|^2,
+\label{eq:calM0_green_kernel_modal_identity}
+\end{equation}
+
+where
+
+\begin{equation}
+\mathcal A_m(N)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)
+e^{\rho_{N-r+1}-\frac12}.
+\label{eq:complete_zero_modal_coefficients}
+\end{equation}
+
+Expanding the squared modulus gives
+
+\begin{equation}
+|\mathcal A_m(N)|^2
+=
+\sum_{r,s=1}^{N-1}
+\phi_m(r)\phi_m(s)
+e^{\rho_{N-r+1}-\frac12}
+e^{\overline{\rho_{N-s+1}}-\frac12}.
+\label{eq:complete_zero_modal_energy_expansion}
+\end{equation}
+
+Under RH this reduces to the unit phase identity
+
+\begin{equation}
+e^{\rho_{N-r+1}-\frac12}
+e^{\overline{\rho_{N-s+1}}-\frac12}
+=
+e^{i\gamma_{N-r+1}}e^{-i\gamma_{N-s+1}}
+=
+e^{i(\gamma_{N-r+1}-\gamma_{N-s+1})}.
+\label{eq:complete_zero_modal_energy_RH_reduction}
+\end{equation}
+
+\begin{lemma}[Complete-zero modal Parseval bound]
+\label{lem:complete_zero_modal_parseval_bound}
+
+\begin{equation}
+\sum_{m=1}^{N-1}|\mathcal A_m(N)|^2
+=
+\sum_{k=2}^{N}e^{2\beta_k-1}.
+\label{eq:complete_zero_modal_parseval_identity}
+\end{equation}
+
+\begin{equation}
+\sum_{m=1}^{N-1}|\mathcal A_m(N)|^2
+\le
+e(N-1),
+\label{eq:complete_zero_modal_parseval_bound}
+\end{equation}
+
+and hence
+
+\begin{equation}
+|\mathcal A_m(N)|
+\le
+\sqrt{e(N-1)}.
+\label{eq:complete_zero_modal_bound}
+\end{equation}
+
+Under RH this becomes
+
+\begin{equation}
+\sum_{m=1}^{N-1}|\mathcal A_m(N)|^2=N-1,
+\qquad
+|\mathcal A_m(N)|
+\le
+\sqrt{N-1}.
+\label{eq:complete_zero_modal_bound_RH}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Apply Parseval to the vector
+
+\begin{equation}
+z_r=e^{\rho_{N-r+1}-\frac12}.
+\end{equation}
+
+Then
+
+\begin{equation}
+\sum_{m=1}^{N-1}|\mathcal A_m(N)|^2
+=
+\sum_{r=1}^{N-1}
+|z_r|^2.
+\end{equation}
+
+Since
+
+\begin{equation}
+\left|e^{\rho_k-\frac12}\right|^2
+=
+e^{2\beta_k-1},
+\end{equation}
+
+we get
+
+\begin{equation}
+\sum_{m=1}^{N-1}|\mathcal A_m(N)|^2
+=
+\sum_{k=2}^{N}e^{2\beta_k-1}.
+\end{equation}
+
+The bound follows from \(0<\beta_k<1\). Under RH, \(\beta_k=1/2\), so
+every factor is \(1\).
+\end{proof}
+
+This shows that the Brownian-bridge identity is not merely a scalar
+rewriting of \(M_0(N)\). It supplies a canonical Hermitian spectral frame
+for the centered phase-walk geometry. The scalar moment \(M_0(N)\) is
+the total Green energy, while the quantities \(|A_m(N)|^2\) are its
+modal energy components.
+
+The lifted representation \eqref{eq:angular_lifting_ordinate} ensures
+that the use of the circular phases \(e^{i\gamma_k}\) does not destroy
+the real ordinate information, provided the winding integers \(B_k\) are
+retained. Therefore the Green-kernel modal representation can be
+formulated together with real pair differences
+\eqref{eq:lifted_pair_difference}.
+
+\subsection{Green-generated Fourier pair statistics}
+\label{subsec:green_generated_fourier_pair_statistics}
+
+The preceding phase walk corresponds to the single frequency \(t=1\).
+For pair-correlation analysis one may allow the real Fourier parameter
+\(t\). The corresponding Green-weighted statistic is
+
+\begin{equation}
+M_0(N;t)
+=
+\sum_{j,k=1}^{N}
+W_N(j,k)e^{it(\gamma_j-\gamma_k)}.
+\label{eq:t_deformed_green_statistic}
+\end{equation}
+
+For \(t=1\), this recovers the original centered phase-walk statistic.
+With
+
+\begin{equation}
+A_m(N;t)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)
+e^{it\gamma_{N-r+1}}.
+\label{eq:t_modal_coefficient}
+\end{equation}
+
+\begin{lemma}[Uniform finite-\(N\) modal bounds]
+\label{lem:finite_modal_bounds}
+
+For every \(N\ge2\), every \(1\le m\le N-1\), and every real \(t\),
+
+\begin{equation}
+|A_m(N;t)|
+\le
+\sqrt{N-1}.
+\label{eq:unit_phase_modal_bound}
+\end{equation}
+
+Moreover,
+
+\begin{equation}
+\sum_{m=1}^{N-1}|A_m(N;t)|^2
+=
+N-1.
+\label{eq:unit_phase_modal_parseval_identity}
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+\frac1N
+\sum_{m=1}^{N-1}|A_m(N;t)|^2
+\le
+1.
+\label{eq:unit_phase_modal_normalized_parseval_bound}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+By Cauchy--Schwarz,
+
+\begin{equation}
+|A_m(N;t)|
+\le
+\left(
+\sum_{r=1}^{N-1}|\phi_m(r)|^2
+\right)^{1/2}
+\left(
+\sum_{r=1}^{N-1}|e^{it\gamma_{N-r+1}}|^2
+\right)^{1/2}.
+\end{equation}
+
+The sine functions \(\phi_m\) form an orthonormal basis of
+\(\mathbb C^{N-1}\), hence
+
+\begin{equation}
+\sum_{r=1}^{N-1}|\phi_m(r)|^2=1.
+\end{equation}
+
+Also,
+
+\begin{equation}
+|e^{it\gamma_{N-r+1}}|=1,
+\end{equation}
+
+so
+
+\begin{equation}
+\sum_{r=1}^{N-1}|e^{it\gamma_{N-r+1}}|^2=N-1.
+\end{equation}
+
+This gives \eqref{eq:unit_phase_modal_bound}.
+
+For the second identity, set
+
+\begin{equation}
+x_r(t)=e^{it\gamma_{N-r+1}}.
+\end{equation}
+
+The coefficients \(A_m(N;t)\) are precisely the sine-basis coefficients
+of the vector \(x(t)\). By Parseval,
+
+\begin{equation}
+\sum_{m=1}^{N-1}|A_m(N;t)|^2
+=
+\sum_{r=1}^{N-1}|x_r(t)|^2
+=
+N-1.
+\end{equation}
+\end{proof}
+
+Since the estimate is pointwise in \(t\), it applies uniformly to the
+Montgomery scaling
+
+\begin{equation}
+t=\tau\log(T_N/2\pi)+y.
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+|A_m(N;\tau\log(T_N/2\pi)+y)|^2\,dy
+\le
+N-1,
+\label{eq:modal_weighted_y_integral_bound}
+\end{equation}
+
+because
+
+\begin{equation}
+\int_{-\infty}^{\infty}e^{-2|y|}\,dy=1.
+\end{equation}
+
+The exact modal identity is
+
+\begin{equation}
+M_0(N;t)
+=
+\sum_{m=1}^{N-1}
+\lambda_m
+|A_m(N;t)|^2.
+\label{eq:t_deformed_green_modal_identity}
+\end{equation}
+
+This is the \(t\)-deformed Green energy identity. In lifted variables,
+
+\begin{equation}
+e^{it(\gamma_j-\gamma_k)}
+=
+e^{it[2\pi(B_j-B_k)+(\theta_j-\theta_k)]}.
+\label{eq:t_family_lifted_fourier_phase}
+\end{equation}
+
+Thus the \(t\)-deformed Green statistic is a Fourier statistic of the
+lifted real pair differences, not merely of circular phases. It is,
+however, Green-weighted. The unweighted Montgomery form factor is
+obtained from the endpoint projection identity below, rather than from a
+single scalar value of \(M_0(N;t)\).
+
+\subsection{Endpoint projection and Green deweighting}
+\label{subsec:endpoint_projection_green_deweighting}
+
+For later Montgomery scaling, retain
+
+\begin{equation}
+T_N=\gamma_N,
+\qquad
+L_N=\frac{\log(T_N/2\pi)}{2\pi}.
+\label{eq:form_factor_TN_LN}
+\end{equation}
+
+For every real \(t\), define
+
+\begin{equation}
+q_k(t)=e^{it\gamma_k}.
+\label{eq:form_factor_qk_t}
+\end{equation}
+
+In reversed variables,
+
+\begin{equation}
+r=N-k+1,
+\label{eq:form_factor_reversed_index}
+\end{equation}
+
+put
+
+\begin{equation}
+x_r(t)
+=
+q_{N-r+1}(t)
+=
+e^{it\gamma_{N-r+1}},
+\qquad
+1\le r\le N-1.
+\label{eq:form_factor_reversed_phase_vector}
+\end{equation}
+
+The Green/Brownian sine basis is
+
+\begin{equation}
+\phi_m(r)
+=
+\sqrt{\frac2N}
+\sin\left(\frac{\pi m r}{N}\right),
+\qquad
+1\le m,r\le N-1.
+\label{eq:form_factor_sine_basis}
+\end{equation}
+
+The modal space is \(\mathbb C^{N-1}\): the endpoint projection below
+separates the first term \(e^{it\gamma_1}\), and the modal vector is built
+from \(x_r(t)=e^{it\gamma_{N-r+1}}\), \(1\le r\le N-1\), corresponding to
+the ordinates \(k=2,\ldots,N\).
+
+The modal coefficients are
+
+\begin{equation}
+A_m(N;t)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)x_r(t)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)e^{it\gamma_{N-r+1}}.
+\label{eq:form_factor_modal_coefficients}
+\end{equation}
+
+Let
+
+\begin{equation}
+A(N;t)
+=
+(A_1(N;t),\ldots,A_{N-1}(N;t))^T.
+\label{eq:green_modal_vector_A}
+\end{equation}
+
+The Green-modal energy is
+
+\begin{equation}
+\mathcal E_N(t)
+=
+A(N;t)^*\Lambda_NA(N;t)
+=
+\sum_{m=1}^{N-1}
+\lambda_m|A_m(N;t)|^2,
+\label{eq:green_modal_energy_EN}
+\end{equation}
+
+where
+
+\begin{equation}
+\Lambda_N=\operatorname{diag}(\lambda_1,\ldots,\lambda_{N-1})
+\label{eq:green_modal_lambda_matrix}
+\end{equation}
+
+and
+
+\begin{equation}
+\lambda_m
+=
+\frac{1}{4N\sin^2\left(\frac{\pi m}{2N}\right)}.
+\label{eq:form_factor_green_eigenvalues}
+\end{equation}
+
+In the notation of the centered \(t\)-phase walk,
+
+\begin{equation}
+\mathcal E_N(t)=M_0(N;t).
+\label{eq:green_modal_energy_equals_M0}
+\end{equation}
+
+\begin{lemma}[Exact modal inversion]
+\label{lem:exact_modal_inversion}
+
+Let
+
+\begin{equation}
+x_r(t)=e^{it\gamma_{N-r+1}},
+\qquad
+1\le r\le N-1,
+\end{equation}
+
+and define
+
+\begin{equation}
+A_m(N;t)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)x_r(t).
+\end{equation}
+
+Then
+
+\begin{equation}
+x_r(t)
+=
+\sum_{m=1}^{N-1}
+A_m(N;t)\phi_m(r),
+\qquad
+1\le r\le N-1.
+\label{eq:exact_modal_inversion}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+The result is the expansion of \(x(t)\in\mathbb C^{N-1}\) in the
+orthonormal basis \(\{\phi_m\}_{m=1}^{N-1}\). Since the \(\phi_m\) are
+real-valued,
+
+\begin{equation}
+A_m(N;t)
+=
+\sum_{r=1}^{N-1}\phi_m(r)x_r(t)
+\end{equation}
+
+are precisely the basis coefficients. Hence
+\eqref{eq:exact_modal_inversion} follows.
+\end{proof}
+
+\begin{lemma}[General modal deweighting]
+\label{lem:general_modal_deweighting}
+
+Let \(a=(a_1,\ldots,a_{N-1})^T\in\mathbb C^{N-1}\), and define
+
+\begin{equation}
+\eta_m
+=
+\sum_{r=1}^{N-1}\phi_m(r)a_r,
+\qquad
+1\le m\le N-1.
+\label{eq:general_deweighting_eta_definition}
+\end{equation}
+
+Then, for every real \(t\),
+
+\begin{equation}
+a^*x(t)
+=
+\eta^*A(N;t).
+\label{eq:general_deweighting_exact_recovery}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+a^*x(t)
+=
+(\Lambda_N^{-1}\eta)^*\Lambda_NA(N;t).
+\label{eq:general_deweighting_green_metric_recovery}
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+|a^*x(t)|^2
+\le
+(\eta^*\Lambda_N^{-1}\eta)\,\mathcal E_N(t).
+\label{eq:general_deweighting_green_bound}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:dirichlet_sine_orthonormality}, both \(x(t)\) and
+\(a\) have exact sine-basis expansions,
+
+\begin{equation}
+x(t)=\sum_{m=1}^{N-1}A_m(N;t)\phi_m,
+\qquad
+a=\sum_{m=1}^{N-1}\eta_m\phi_m.
+\end{equation}
+
+Taking the Hermitian inner product gives
+\eqref{eq:general_deweighting_exact_recovery}. Since
+
+\begin{equation}
+\eta^*A(N;t)
+=
+(\Lambda_N^{-1}\eta)^*\Lambda_NA(N;t),
+\end{equation}
+
+\eqref{eq:general_deweighting_green_metric_recovery} follows. Applying
+Cauchy--Schwarz in the \(\Lambda_N\)-metric gives
+
+\begin{equation}
+|\eta^*A(N;t)|^2
+\le
+(\eta^*\Lambda_N^{-1}\eta)
+(A(N;t)^*\Lambda_NA(N;t)),
+\end{equation}
+
+which is \eqref{eq:general_deweighting_green_bound}.
+\end{proof}
+
+\begin{lemma}[Constant-mode projection]
+\label{lem:constant_mode_projection}
+
+Define
+
+\begin{equation}
+u_m
+=
+\sum_{r=1}^{N-1}\phi_m(r).
+\label{eq:constant_mode_projection_um}
+\end{equation}
+
+Then
+
+\begin{equation}
+u_m
+=
+\begin{cases}
+\displaystyle
+\sqrt{\dfrac2N}
+\cot\left(\dfrac{\pi m}{2N}\right),
+&
+m\ {\rm odd},
+\\[8pt]
+0,
+&
+m\ {\rm even}.
+\end{cases}
+\label{eq:constant_mode_coefficients_um}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Using
+
+\begin{equation}
+\sum_{r=1}^{N-1}\sin(rx)
+=
+\frac{
+\sin\left(\frac{(N-1)x}{2}\right)
+\sin\left(\frac{Nx}{2}\right)
+}{
+\sin\left(\frac{x}{2}\right)
+},
+\label{eq:finite_sine_sum_identity}
+\end{equation}
+
+with
+
+\begin{equation}
+x=\frac{\pi m}{N},
+\end{equation}
+
+we obtain
+
+\begin{equation}
+\sum_{r=1}^{N-1}
+\sin\left(\frac{\pi mr}{N}\right)
+=
+\frac{
+\sin\left(\frac{\pi m}{2}-\frac{\pi m}{2N}\right)
+\sin\left(\frac{\pi m}{2}\right)
+}{
+\sin\left(\frac{\pi m}{2N}\right)
+}.
+\end{equation}
+
+If \(m\) is even, then
+
+\begin{equation}
+\sin\left(\frac{\pi m}{2}\right)=0,
+\end{equation}
+
+and the sum is zero.
+If \(m\) is odd, then
+
+\begin{equation}
+\sin\left(\frac{\pi m}{2}\right)=(-1)^{(m-1)/2},
+\end{equation}
+
+and
+
+\begin{equation}
+\sin\left(\frac{\pi m}{2}-\frac{\pi m}{2N}\right)
+=
+(-1)^{(m-1)/2}
+\cos\left(\frac{\pi m}{2N}\right).
+\end{equation}
+
+Therefore
+
+\begin{equation}
+\sum_{r=1}^{N-1}
+\sin\left(\frac{\pi mr}{N}\right)
+=
+\frac{
+\cos\left(\frac{\pi m}{2N}\right)
+}{
+\sin\left(\frac{\pi m}{2N}\right)
+}
+=
+\cot\left(\frac{\pi m}{2N}\right).
+\label{eq:sine_sum_odd_even}
+\end{equation}
+
+Multiplying by the normalization factor \(\sqrt{2/N}\) gives
+\eqref{eq:constant_mode_coefficients_um}.
+\end{proof}
+
+\begin{lemma}[Endpoint recovery from Green-modal coordinates]
+\label{cor:endpoint_projection}
+
+Let
+
+\begin{equation}
+u_m=\sum_{r=1}^{N-1}\phi_m(r).
+\end{equation}
+
+Then
+
+\begin{equation}
+\sum_{k=2}^{N}e^{it\gamma_k}
+=
+\sum_{m=1}^{N-1}
+u_mA_m(N;t).
+\label{eq:endpoint_without_first_modal_recovery}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+\sum_{k=1}^{N}e^{it\gamma_k}
+=
+e^{it\gamma_1}
++
+\sum_{m=1}^{N-1}u_mA_m(N;t).
+\label{eq:ordinary_exponential_sum_modal_projection}
+\end{equation}
+
+Since
+
+\begin{equation}
+u_m
+=
+\begin{cases}
+\displaystyle
+\sqrt{\dfrac2N}
+\cot\left(\dfrac{\pi m}{2N}\right),
+&
+m\ {\rm odd},
+\\[6pt]
+0,
+&
+m\ {\rm even},
+\end{cases}
+\end{equation}
+
+this may also be written as
+
+\begin{equation}
+\sum_{k=1}^{N}e^{it\gamma_k}
+=
+e^{it\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+u_mA_m(N;t).
+\label{eq:ordinary_exponential_sum_odd_modal_projection}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+By exact modal inversion,
+
+\begin{equation}
+x_r(t)
+=
+\sum_{m=1}^{N-1}
+A_m(N;t)\phi_m(r).
+\end{equation}
+
+Summing over \(r\) gives
+
+\begin{equation}
+\sum_{r=1}^{N-1}x_r(t)
+=
+\sum_{m=1}^{N-1}
+A_m(N;t)
+\sum_{r=1}^{N-1}\phi_m(r)
+=
+\sum_{m=1}^{N-1}u_mA_m(N;t).
+\label{eq:constant_projection_modal_identity}
+\end{equation}
+
+Since \(x_r(t)=e^{it\gamma_{N-r+1}}\), the change of variables
+\(k=N-r+1\) gives
+
+\begin{equation}
+\sum_{r=1}^{N-1}x_r(t)
+=
+\sum_{k=2}^{N}e^{it\gamma_k}.
+\end{equation}
+
+Adding the missing endpoint \(e^{it\gamma_1}\) gives
+
+\begin{equation}
+\sum_{k=1}^{N}e^{it\gamma_k}
+=
+e^{it\gamma_1}
++
+\sum_{m=1}^{N-1}u_mA_m(N;t).
+\end{equation}
+
+The parity reduction follows from Lemma~\ref{lem:constant_mode_projection}.
+\end{proof}
+
+The even modes \(A_m(N;t)\) are not zero in general. They disappear from
+the endpoint sum only because their projection coefficient \(u_m\)
+vanishes. They still contribute to the centered Green energy
+
+\begin{equation}
+M_0(N;t)
+=
+\sum_{m=1}^{N-1}
+\lambda_m|A_m(N;t)|^2.
+\label{eq:centered_energy_all_modes_after_endpoint}
+\end{equation}
+
+Thus
+
+\begin{equation}
+\text{the endpoint projection sees only odd Green modes,}
+\label{eq:endpoint_sees_odd_modes}
+\end{equation}
+
+whereas
+
+\begin{equation}
+\text{the centered Green energy sees all modes.}
+\label{eq:centered_energy_sees_all_modes}
+\end{equation}
+
+\subsection{Unconditional Green deweighting of the endpoint projection}
+\label{subsec:unconditional_green_deweighting_endpoint_projection}
+\leavevmode\par\nobreak
+
+Let \(u=(u_1,\ldots,u_{N-1})^T\).
+
+\begin{theorem}[Unconditional finite Green deweighting]
+\label{thm:unconditional_finite_green_deweighting}
+
+For every \(N\ge2\) and every real \(t\),
+
+\begin{equation}
+\left|
+\sum_{k=2}^{N}e^{it\gamma_k}
+\right|^2
+\le
+2N\,\mathcal E_N(t).
+\label{eq:finite_green_deweighting}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+\frac1N
+\left|
+\sum_{k=2}^{N}e^{it\gamma_k}
+\right|^2
+\le
+2\,\mathcal E_N(t).
+\label{eq:finite_green_deweighting_normalized}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+By the endpoint projection identity without the first endpoint,
+
+\begin{equation}
+\sum_{k=2}^{N}e^{it\gamma_k}
+=
+u^*A(N;t).
+\label{eq:endpoint_without_first_uA}
+\end{equation}
+
+Since \(\Lambda_N\) is positive definite,
+
+\begin{equation}
+u^*A(N;t)
+=
+(\Lambda_N^{-1/2}u)^*
+(\Lambda_N^{1/2}A(N;t)).
+\end{equation}
+
+By Cauchy--Schwarz,
+
+\begin{equation}
+|u^*A(N;t)|^2
+\le
+(u^*\Lambda_N^{-1}u)
+(A(N;t)^*\Lambda_NA(N;t)).
+\label{eq:green_deweighting_cauchy}
+\end{equation}
+
+It remains to compute \(u^*\Lambda_N^{-1}u\). From
+Lemma~\ref{lem:constant_mode_projection},
+
+\begin{equation}
+u^*\Lambda_N^{-1}u
+=
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+|u_m|^2\lambda_m^{-1}.
+\end{equation}
+
+Since
+
+\begin{equation}
+\lambda_m^{-1}
+=
+4N\sin^2\left(\frac{\pi m}{2N}\right),
+\end{equation}
+
+we get, for odd \(m\),
+
+\begin{equation}
+|u_m|^2\lambda_m^{-1}
+=
+\frac2N
+\cot^2\left(\frac{\pi m}{2N}\right)
+4N
+\sin^2\left(\frac{\pi m}{2N}\right)
+=
+8\cos^2\left(\frac{\pi m}{2N}\right).
+\end{equation}
+
+It remains to sum these terms over odd \(m\). Write
+\(\cos^2 x=(1+\cos(2x))/2\). For odd \(m\),
+\(2x=\pi m/N\). We use the finite cosine sum
+
+\begin{equation}
+\sum_{\ell=1}^{J}\cos((2\ell-1)x)
+=
+\frac{\sin(2Jx)}{2\sin x}.
+\end{equation}
+
+If \(N=2J\), then
+
+\begin{equation}
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+\cos\left(\frac{\pi m}{N}\right)
+=
+\sum_{\ell=1}^{J}
+\cos\left(\frac{(2\ell-1)\pi}{2J}\right)
+=
+\frac{\sin \pi}{2\sin(\pi/(2J))}
+=
+0.
+\end{equation}
+
+Hence
+
+\begin{equation}
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+\cos^2\left(\frac{\pi m}{2N}\right)
+=
+\frac12 J
+=
+\frac N4.
+\end{equation}
+
+If \(N=2J+1\), then
+
+\begin{equation}
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+\cos\left(\frac{\pi m}{N}\right)
+=
+\sum_{\ell=1}^{J}
+\cos\left(\frac{(2\ell-1)\pi}{2J+1}\right)
+=
+\frac{\sin(2J\pi/(2J+1))}{2\sin(\pi/(2J+1))}
+=
+\frac12.
+\end{equation}
+
+Therefore
+
+\begin{equation}
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+\cos^2\left(\frac{\pi m}{2N}\right)
+=
+\frac12 J+\frac14
+=
+\frac{2J+1}{4}
+=
+\frac N4.
+\end{equation}
+
+Thus, for every \(N\ge2\),
+
+\begin{equation}
+\sum_{\substack{1\le m\le N-1\\m\ {\rm odd}}}
+\cos^2\left(\frac{\pi m}{2N}\right)
+=
+\frac N4,
+\end{equation}
+
+and we obtain
+
+\begin{equation}
+u^*\Lambda_N^{-1}u=2N.
+\end{equation}
+
+Hence
+
+\begin{equation}
+\left|
+\sum_{k=2}^{N}e^{it\gamma_k}
+\right|^2
+=
+|u^*A(N;t)|^2
+\le
+2N\,A(N;t)^*\Lambda_NA(N;t)
+=
+2N\,\mathcal E_N(t).
+\end{equation}
+\end{proof}
+
+This theorem is unconditional: it uses only the ordinates \(\gamma_k\),
+the finite sine basis, and the Green metric.
+As a growth estimate it is generally weaker than the logarithmic endpoint
+control obtained from Landau's fixed-real formula at \(X=e\); its role is
+to record the exact Green deweighting of the endpoint functional.
+
+The coefficient vector \(A(N;t)\) determines the endpoint projection
+exactly through \(u^*A(N;t)\). By contrast, the scalar Green energy
+
+\begin{equation}
+\mathcal E_N(t)=A(N;t)^*\Lambda_NA(N;t)
+\end{equation}
+
+does not determine the endpoint projection by itself, since it discards
+modal direction and phase information. It gives a one-sided estimate, not
+an exact inversion. The exact Green-metric recovery identity is
+
+\begin{equation}
+u^*A(N;t)
+=
+(\Lambda_N^{-1}u)^*\Lambda_NA(N;t).
+\label{eq:green_metric_endpoint_recovery_identity}
+\end{equation}
+
+Thus the scalar Green energy controls the endpoint projection from above.
+Exact endpoint recovery uses the coefficient vector \(A(N;t)\),
+equivalently the weighted modal data \(\Lambda_NA(N;t)\), through the
+linear functional in \eqref{eq:green_metric_endpoint_recovery_identity}.
+
+\begin{corollary}[Centroid deweighting]
+\label{cor:centroid_green_deweighting}
+
+For real \(t\), define the \(t\)-deformed triangular centroid
+
+\begin{equation}
+C_N(t)
+=
+\frac1N
+\sum_{k=1}^{N}
+(N-k+1)e^{it\gamma_k}.
+\label{eq:t_deformed_centroid_definition}
+\end{equation}
+
+Let \(v=(v_1,\ldots,v_{N-1})^T\) be given in reversed variables by
+
+\begin{equation}
+v_r=\frac rN,
+\qquad
+1\le r\le N-1.
+\label{eq:centroid_deweighting_vector_v}
+\end{equation}
+
+and define its sine coefficients by
+
+\begin{equation}
+w_m
+=
+\sum_{r=1}^{N-1}v_r\phi_m(r).
+\label{eq:centroid_deweighting_coefficients_wm}
+\end{equation}
+
+Then
+
+\begin{equation}
+C_N(t)-e^{it\gamma_1}
+=
+w^*A(N;t).
+\label{eq:centroid_exact_modal_recovery}
+\end{equation}
+
+Moreover,
+
+\begin{equation}
+w^*\Lambda_N^{-1}w
+=
+N-1,
+\label{eq:centroid_green_dual_norm}
+\end{equation}
+
+and therefore
+
+\begin{equation}
+|C_N(t)-e^{it\gamma_1}|^2
+\le
+(N-1)\mathcal E_N(t).
+\label{eq:centroid_green_deweighting_bound}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Using \(r=N-k+1\) for \(k=2,\ldots,N\), the definition
+\eqref{eq:t_deformed_centroid_definition} gives
+
+\begin{equation}
+C_N(t)-e^{it\gamma_1}
+=
+\sum_{r=1}^{N-1}\frac rN x_r(t)
+=
+v^*x(t).
+\label{eq:centroid_reversed_linear_functional}
+\end{equation}
+
+By exact modal inversion, \(x(t)=\sum_m A_m(N;t)\phi_m\), while
+\(v=\sum_m w_m\phi_m\). Hence \(v^*x(t)=w^*A(N;t)\), proving
+\eqref{eq:centroid_exact_modal_recovery}.
+
+It remains to compute the Green dual norm. In physical variables,
+\eqref{eq:physical_green_inverse} gives \(K_N^{-1}=NL_N\), where \(L_N\)
+is the finite Dirichlet Laplacian. Hence
+
+\begin{equation}
+w^*\Lambda_N^{-1}w
+=
+v^*K_N^{-1}v
+=
+N\,v^*L_Nv.
+\label{eq:centroid_green_dual_norm_physical}
+\end{equation}
+
+For \(v_r=r/N\),
+
+\begin{equation}
+v^*L_Nv
+=
+v_1^2
++
+\sum_{r=1}^{N-2}(v_{r+1}-v_r)^2
++
+v_{N-1}^2
+=
+\frac{N-1}{N}.
+\label{eq:centroid_laplacian_quadratic_form}
+\end{equation}
+
+Thus \(w^*\Lambda_N^{-1}w=N-1\). Applying Cauchy--Schwarz in the
+\(\Lambda_N\)-metric gives
+
+\begin{equation}
+|w^*A(N;t)|^2
+\le
+(w^*\Lambda_N^{-1}w)
+(A(N;t)^*\Lambda_NA(N;t))
+=
+(N-1)\mathcal E_N(t),
+\label{eq:centroid_deweighting_cauchy}
+\end{equation}
+
+which is \eqref{eq:centroid_green_deweighting_bound}.
+\end{proof}
+
+This Green bound is generally weaker than the logarithmic centroid bound
+obtained by averaging Landau's endpoint estimate. Its role is structural:
+it gives the exact Green deweighting of the triangular centroid
+functional.
+
+\begin{remark}[Physical-space Green inverse]
+\label{rem:physical_space_green_inverse}
+
+In reversed variables,
+
+\begin{equation}
+K_N(r,s)
+=
+\frac{\min(r,s)}{N}
+-
+\frac{rs}{N^2},
+\qquad
+1\le r,s\le N-1.
+\end{equation}
+
+This matrix is positive definite and satisfies
+
+\begin{equation}
+K_N^{-1}=N L_N,
+\label{eq:physical_green_inverse}
+\end{equation}
+
+where \(L_N\) is the discrete Dirichlet Laplacian
+
+\begin{equation}
+L_N=
+\begin{pmatrix}
+2&-1&0&\cdots&0\\
+-1&2&-1&\cdots&0\\
+0&-1&2&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&-1\\
+0&0&0&-1&2
+\end{pmatrix}.
+\end{equation}
+
+For the constant vector \(\mathbf 1=(1,\ldots,1)^T\),
+
+\begin{equation}
+\mathbf 1^*K_N^{-1}\mathbf 1
+=
+N\,\mathbf 1^*L_N\mathbf 1
+=
+2N.
+\end{equation}
+
+Therefore, for every \(x\in\mathbb C^{N-1}\),
+
+\begin{equation}
+|\mathbf 1^*x|^2
+\le
+(\mathbf 1^*K_N^{-1}\mathbf 1)(x^*K_Nx)
+=
+2N\,x^*K_Nx.
+\end{equation}
+
+Taking \(x_r=e^{it\gamma_{N-r+1}}\) gives
+
+\begin{equation}
+\left|
+\sum_{k=2}^{N}e^{it\gamma_k}
+\right|^2
+\le
+2N\,\mathcal E_N(t).
+\end{equation}
+
+This is the operator inversion behind the deweighting estimate.
+\end{remark}
+
+Let
+
+\begin{equation}
+t=\tau\log(T_N/2\pi)+y.
+\label{eq:deweighting_montgomery_t}
+\end{equation}
+
+Define the endpoint form factor without the first endpoint by
+
+\begin{equation}
+F_N^{(2)}(\tau)
+=
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+\sum_{k=2}^{N}
+e^{i(\tau\log(T_N/2\pi)+y)\gamma_k}
+\right|^2dy.
+\label{eq:smoothed_endpoint_form_factor_without_first}
+\end{equation}
+
+\begin{corollary}[Unconditional smoothed deweighting bound]
+\label{cor:unconditional_smoothed_deweighting_bound}
+
+For every \(N\ge2\) and every real \(\tau\),
+
+\begin{equation}
+F_N^{(2)}(\tau)
+\le
+2
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy.
+\label{eq:smoothed_deweighting_bound_without_first}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:unconditional_finite_green_deweighting}
+pointwise with \(t=\tau\log(T_N/2\pi)+y\). Then integrate against
+\(e^{-2|y|}dy\) and divide by \(N\).
+\end{proof}
+
+Define the full smoothed endpoint form factor by
+
+\begin{equation}
+F_N(\tau)
+=
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+\sum_{k=1}^{N}
+e^{i(\tau\log(T_N/2\pi)+y)\gamma_k}
+\right|^2dy.
+\label{eq:smoothed_form_factor_integral}
+\end{equation}
+
+\begin{corollary}[Full endpoint bound]
+\label{cor:full_endpoint_bound}
+
+For every \(N\ge2\), every real \(\tau\), and every \(\eta>0\),
+
+\begin{equation}
+F_N(\tau)
+\le
+2(1+\eta)
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy
++
+\frac{1+\eta^{-1}}{N}.
+\label{eq:full_endpoint_deweighting_bound}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Use
+\(|a+b|^2\le (1+\eta)|a|^2+(1+\eta^{-1})|b|^2\) with
+
+\begin{equation}
+t=\tau\log(T_N/2\pi)+y,
+\qquad
+a=\sum_{k=2}^{N}e^{it\gamma_k},
+\qquad
+b=e^{it\gamma_1}.
+\end{equation}
+
+Here \(|b|=1\), and the \(a\)-term is controlled by
+Corollary~\ref{cor:unconditional_smoothed_deweighting_bound}.
+\end{proof}
+
+\begin{corollary}[Asymptotic deweighting consequence]
+\label{cor:asymptotic_deweighting_consequence}
+
+For every fixed \(\tau\in\mathbb R\),
+
+\begin{equation}
+\limsup_{N\to\infty}F_N(\tau)
+\le
+2
+\limsup_{N\to\infty}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy,
+\label{eq:asymptotic_deweighting_consequence}
+\end{equation}
+
+with values allowed in \([0,\infty]\). More generally, if
+
+\begin{equation}
+\limsup_{N\to\infty}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy
+\le L(\tau),
+\end{equation}
+
+then
+
+\begin{equation}
+\limsup_{N\to\infty}F_N(\tau)
+\le
+2L(\tau).
+\end{equation}
+
+If the preceding bound holds uniformly for \(\tau\) in a compact
+interval, then the same \(\limsup\) estimate holds uniformly on that
+interval.
+\end{corollary}
+
+\begin{proof}
+From Corollary~\ref{cor:full_endpoint_bound},
+
+\begin{equation}
+F_N(\tau)
+\le
+2(1+\eta)
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy
++
+\frac{1+\eta^{-1}}{N}.
+\end{equation}
+
+Taking \(\limsup_{N\to\infty}\) gives
+
+\begin{equation}
+\limsup_{N\to\infty}F_N(\tau)
+\le
+2(1+\eta)
+\limsup_{N\to\infty}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy.
+\end{equation}
+
+Letting \(\eta\downarrow0\) gives the result.
+\end{proof}
+
+The deweighting estimate gives one-sided control of the endpoint
+projection by the Green energy. Exact recovery of the endpoint
+projection is vectorial:
+
+\begin{equation}
+u^*A(N;t)
+=
+(\Lambda_N^{-1}u)^*
+\Lambda_NA(N;t).
+\label{eq:vectorial_endpoint_recovery}
+\end{equation}
+
+Thus the scalar energy
+
+\begin{equation}
+A(N;t)^*\Lambda_NA(N;t)
+\end{equation}
+
+controls the size of the endpoint projection, while the weighted modal
+data
+
+\begin{equation}
+\Lambda_NA(N;t)
+\end{equation}
+
+contain the phase information needed for exact recovery.
+
+\subsection{The Green-modal form factor and the Montgomery--GUE target}
+\label{subsec:green_modal_form_factor_montgomery_gue_target}
+
+We now connect the Green/Brownian modal framework with the Montgomery
+pair-correlation form factor \cite{Montgomery1973}.
+
+For the unsmoothed Montgomery scaling put
+
+\begin{equation}
+t=2\pi\tau L_N=\tau\log(T_N/2\pi).
+\label{eq:montgomery_scaling_t_tau}
+\end{equation}
+
+Then
+
+\begin{equation}
+e^{it\gamma_k}
+=
+e^{i\tau\log(T_N/2\pi)\gamma_k}
+=
+(T_N/2\pi)^{i\tau\gamma_k}.
+\label{eq:montgomery_scaling_phase}
+\end{equation}
+
+Define the unsmoothed normalized form factor
+
+\begin{equation}
+\mathfrak F_N(\tau)
+=
+\frac1N
+\left|
+\sum_{k=1}^{N}
+e^{i2\pi\tau L_N\gamma_k}
+\right|^2.
+\label{eq:unsmoothed_normalized_form_factor}
+\end{equation}
+
+Using \eqref{eq:ordinary_exponential_sum_odd_modal_projection}, this
+becomes
+
+\begin{equation}
+\mathfrak F_N(\tau)
+=
+\frac1N
+\left|
+e^{i2\pi\tau L_N\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ \mathrm{odd}}}
+\sqrt{\frac2N}
+\cot\left(\frac{\pi m}{2N}\right)
+A_m(N;2\pi\tau L_N)
+\right|^2.
+\label{eq:unsmoothed_form_factor_modal_projection}
+\end{equation}
+
+Thus the Montgomery form factor is exactly the squared norm of the
+constant Green-modal projection.
+
+The same \(F_N(\tau)\) has the standard Montgomery double-sum form. Let
+
+\begin{equation}
+w(x)=\frac{4}{4+x^2}.
+\label{eq:montgomery_smoothing_weight}
+\end{equation}
+
+We use the Fourier identity
+
+\begin{equation}
+w(x)
+=
+\int_{-\infty}^{\infty}
+e^{-2|y|}e^{ixy}\,dy.
+\label{eq:montgomery_weight_fourier_identity}
+\end{equation}
+
+By \eqref{eq:montgomery_weight_fourier_identity}, the endpoint-integral
+definition \eqref{eq:smoothed_form_factor_integral} is equivalent to
+
+\begin{equation}
+F_N(\tau)
+=
+\frac1N
+\sum_{j,k=1}^{N}
+(T_N/2\pi)^{i\tau(\gamma_j-\gamma_k)}
+w(\gamma_j-\gamma_k).
+\label{eq:smoothed_montgomery_form_factor}
+\end{equation}
+
+Using the endpoint projection identity,
+
+\begin{equation}
+F_N(\tau)
+=
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+e^{i(\tau\log(T_N/2\pi)+y)\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ \mathrm{odd}}}
+u_mA_m(N;\tau\log(T_N/2\pi)+y)
+\right|^2
+dy.
+\label{eq:smoothed_form_factor_green_modal}
+\end{equation}
+
+This is exact for every \(N\). It is the smoothed Montgomery form factor
+written entirely in Green-modal coordinates.
+
+\begin{proposition}[Finite-to-limit equivalence]
+\label{prop:finite_to_limit_green_modal_form_factor}
+
+For each \(N\), identity \eqref{eq:smoothed_form_factor_green_modal} is
+exact. Consequently, the limiting assertion
+
+\begin{equation}
+F_N(\tau)\to \min(|\tau|,1)
+\end{equation}
+
+is equivalent to convergence of the corresponding Green-modal endpoint
+projection
+
+\begin{equation}
+e^{it\gamma_1}+u^*A(N;t),
+\qquad
+t=\tau\log(T_N/2\pi)+y.
+\end{equation}
+
+The elementary modal bounds above give uniform finite-\(N\) control. The
+finite Green deweighting theorem gives one-sided endpoint control from
+the Green energy, as recorded in
+Corollary~\ref{cor:asymptotic_deweighting_consequence}. The
+Montgomery--GUE target is then an asymptotic statement about the
+endpoint projection, or equivalently about the modal expression in
+\eqref{eq:smoothed_form_factor_green_modal}.
+
+\end{proposition}
+
+
+\subsection{From the deformed phase walk to the sine kernel}
+\label{subsec:deformed_phase_walk_sine_kernel}
+
+We reserve \(j,k,n,N\) for ordinal indices of zeros, while \(T\),
+\(T_N\), and \(T_0\) denote heights. For a prefix of length \(N\), we
+write
+
+\begin{equation}
+T_N=\gamma_N.
+\label{eq:TN_as_gammaN_deformed_walk}
+\end{equation}
+
+For a local window, \(T_0\) denotes a representative height of the
+window, for instance its central or mean height. Thus the Montgomery
+scaling is
+
+\begin{equation}
+t=\tau\log(T_N/2\pi)
+\label{eq:prefix_montgomery_scaling_log_TN_over_2pi}
+\end{equation}
+
+for prefixes and
+
+\begin{equation}
+t=\tau\log(T_0/2\pi)
+\label{eq:local_window_montgomery_scaling_log_T0_over_2pi}
+\end{equation}
+
+for local windows.
+
+The original phase walk is the fixed section of a deformed family:
+
+\begin{equation}
+S_N=S_N(1)=\sum_{k=1}^{N}e^{i\gamma_k},
+\qquad
+S_N(t)=\sum_{k=1}^{N}e^{it\gamma_k}.
+\label{eq:fixed_and_deformed_phase_walks}
+\end{equation}
+
+The section \(t=1\) corresponds to the fixed real frequency \(X=e\).
+Its role in the present paper is the fixed-frequency non-resonant
+confinement supplied by Landau's formula, together with the associated
+centroid and Green-weighted centered moment. The Montgomery observable
+belongs to the full deformed family \(S_N(t)\), in the local scaling
+\eqref{eq:prefix_montgomery_scaling_log_TN_over_2pi} or
+\eqref{eq:local_window_montgomery_scaling_log_T0_over_2pi}.
+
+Squaring the deformed endpoint gives all ordered pairs:
+
+\begin{equation}
+\begin{aligned}
+|S_N(t)|^2
+&=
+\left(\sum_{j\le N}e^{it\gamma_j}\right)
+\left(\sum_{k\le N}e^{-it\gamma_k}\right)  \\
+&=
+\sum_{j,k\le N}e^{it(\gamma_j-\gamma_k)}.
+\end{aligned}
+\label{eq:deformed_endpoint_pair_expansion}
+\end{equation}
+
+Thus the Montgomery form factor is a statistic of pair differences
+\(\gamma_j-\gamma_k\), not only of consecutive gaps.
+
+For a local window of length \(W\), centered near height \(T_0\), define
+the unfolded pair variable
+
+\begin{equation}
+\xi_{jk}
+=
+\frac{\log(T_0/2\pi)}{2\pi}
+(\gamma_j-\gamma_k).
+\label{eq:unfolded_pair_variable_xi_jk}
+\end{equation}
+
+With \(t=\tau\log(T_0/2\pi)\), one has
+
+\begin{equation}
+e^{it(\gamma_j-\gamma_k)}
+=
+e^{i2\pi\tau\xi_{jk}}.
+\label{eq:deformed_phase_as_unfolded_pair_fourier_phase}
+\end{equation}
+
+Consequently, for the window endpoint,
+
+\begin{equation}
+\frac1W
+\left|
+S_W(\tau\log(T_0/2\pi))
+\right|^2
+=
+\frac1W
+\sum_{j,k\le W}
+e^{i2\pi\tau\xi_{jk}}.
+\label{eq:window_endpoint_fourier_pair_correlation}
+\end{equation}
+
+Thus \(S_W(t)\) gives the Fourier transform of the unfolded pair
+correlation attached to the local window. In Fourier variables the
+Montgomery--GUE target is the form factor
+
+\begin{equation}
+F(\tau)=\min(|\tau|,1),
+\label{eq:montgomery_gue_form_factor_target_deformed_walk}
+\end{equation}
+
+while in unfolded pair variables it is the sine-kernel pair correlation
+
+\begin{equation}
+R_2(\xi)
+=
+1-
+\left(
+\frac{\sin \pi\xi}{\pi\xi}
+\right)^2.
+\label{eq:sine_kernel_pair_correlation_target_deformed_walk}
+\end{equation}
+
+These are dual descriptions of the same pair-correlation structure: the
+ramp-plateau is the Fourier-side form factor, and the sine kernel is the
+side of unfolded differences.
+
+The endpoint reconstruction identity gives the same statement in
+Green-modal coordinates:
+
+\begin{equation}
+S_N(t)
+=
+e^{it\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ {\rm odd}}}
+u_m A_m(N;t).
+\label{eq:deformed_endpoint_green_modal_reconstruction}
+\end{equation}
+
+Hence the smoothed Montgomery form factor is
+
+\begin{equation}
+F_N(\tau)
+=
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+e^{i(\tau\log(T_N/2\pi)+y)\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ {\rm odd}}}
+u_m A_m(N;\tau\log(T_N/2\pi)+y)
+\right|^2dy.
+\label{eq:deformed_endpoint_green_modal_smoothed_form_factor}
+\end{equation}
+
+This uses the standard local normalization \(\log(T_N/2\pi)\), consistent
+with the Riemann--von Mangoldt mean spacing.
+
+The Green energy and the Montgomery endpoint projection are different
+outputs of the same vector \(A(N;t)\). The Green-energy output is
+
+\begin{equation}
+A(N;t)\longmapsto A(N;t)^*\Lambda_N A(N;t)
+=
+\sum_{m=1}^{N-1}\lambda_m |A_m(N;t)|^2,
+\label{eq:green_energy_output_from_modal_vector}
+\end{equation}
+
+which is the \(t\)-deformed centered Green moment. The endpoint output is
+
+\begin{equation}
+A(N;t)\longmapsto
+\frac1N
+\left|
+e^{it\gamma_1}+u^*A(N;t)
+\right|^2,
+\label{eq:montgomery_endpoint_output_from_modal_vector}
+\end{equation}
+
+which is the Montgomery form-factor observable. The Green energy
+\(A^*\Lambda A\) and the Montgomery endpoint projection
+\(N^{-1}|e^{it\gamma_1}+u^*A|^2\) are distinct observables. They are two
+different outputs of the same modal vector \(A(N;t)\).
+
+This framework separates the fixed-frequency confinement of \(S_N(1)\)
+from the Montgomery--GUE behaviour encoded by the deformed family
+\(S_N(t)\). The Fourier-side form factor and the unfolded pair-side
+sine-kernel are two dual descriptions of the same pair-correlation
+structure.
+
+\subsection{Finite modal identities and the scaled modal variable}
+\label{subsec:finite_modal_identities_scaled_modal_variable}
+
+\begin{lemma}[Finite modal integration]
+\label{lem:finite_modal_integration}
+
+For each fixed \(N\), each fixed \(\tau\), and the smoothed Montgomery
+parameter \(t_N(\tau,y)=\tau\log(T_N/2\pi)+y\), the \(y\)-integral in the
+smoothed form factor may be interchanged with the finite modal sums in
+\eqref{eq:smoothed_form_factor_green_modal}. More explicitly,
+
+\begin{equation}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+e^{it_N(\tau,y)\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ {\rm odd}}}
+u_mA_m(N;t_N(\tau,y))
+\right|^2dy
+\end{equation}
+
+is the integral of a finite sum of continuous functions of \(y\), and
+the interchange is justified by finite linearity of the integral. No
+interchange of an infinite modal sum with the limit \(N\to\infty\) is
+used.
+
+\end{lemma}
+
+\begin{proof}
+For fixed \(N\), the modal expansion contains at most \(N-1\) terms. For
+each \(m\), the coefficient \(A_m(N;t_N(\tau,y))\) is a finite sum of
+exponentials in \(y\). Hence it is continuous and bounded by
+\eqref{eq:unit_phase_modal_bound}. Since
+\(\int_{\mathbb R}e^{-2|y|}\,dy=1\), every term is integrable against the
+smoothing weight. The desired interchange is therefore only the
+linearity of integration over a finite sum.
+\end{proof}
+
+\begin{lemma}[Smoothed modal \(L^2\) control]
+\label{lem:smoothed_modal_L2_control}
+
+For every fixed \(N\), \(\tau\), and \(1\le m\le N-1\),
+
+\begin{equation}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+|A_m(N;t_N(\tau,y))|^2\,dy
+\le
+N-1.
+\label{eq:single_mode_smoothed_L2_control}
+\end{equation}
+
+Moreover,
+
+\begin{equation}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\sum_{m=1}^{N-1}|A_m(N;t_N(\tau,y))|^2\,dy
+=
+N-1.
+\label{eq:all_modes_smoothed_L2_control}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+The first bound is \eqref{eq:modal_weighted_y_integral_bound}. For the
+second identity, use Parseval
+\eqref{eq:unit_phase_modal_parseval_identity} pointwise in
+\(t=t_N(\tau,y)\), then integrate against \(e^{-2|y|}\). The exchange of
+the finite sum over \(m\) with the \(y\)-integral is justified by
+Lemma~\ref{lem:finite_modal_integration}.
+\end{proof}
+
+The Green-modal decomposition is a finite-dimensional identity. For each
+fixed \(N\),
+
+\begin{equation}
+\mathcal E_N(t)
+=
+A(N;t)^*\Lambda_NA(N;t)
+=
+\sum_{m=1}^{N-1}\lambda_m|A_m(N;t)|^2
+\end{equation}
+
+contains only \(N-1\) terms. Hence no convergence issue is involved in
+the identity itself. Lemma~\ref{lem:finite_modal_integration} records the
+only exact interchange between \(y\)-integration and modal summation used
+below, while Lemma~\ref{lem:smoothed_modal_L2_control} records the
+finite-\(N\) \(L^2\) domination used in the smoothed covariance
+estimates.
+
+The passage \(N\to\infty\) is a different question. In the Montgomery
+scaling
+
+\begin{equation}
+t=\tau\log(T_N/2\pi)+y,
+\end{equation}
+
+the local zero spacing satisfies heuristically
+
+\begin{equation}
+\gamma_{k+1}-\gamma_k\sim \frac{2\pi}{\log(T_N/2\pi)}.
+\end{equation}
+
+Thus
+
+\begin{equation}
+t(\gamma_{k+1}-\gamma_k)
+\sim
+2\pi\tau.
+\end{equation}
+
+Consequently, as a function of the index \(k\), the vector
+
+\begin{equation}
+e^{it\gamma_k}
+\end{equation}
+
+has macroscopic oscillation. In the sine basis
+
+\begin{equation}
+\phi_m(r)
+=
+\sqrt{\frac2N}
+\sin\left(\frac{\pi mr}{N}\right),
+\end{equation}
+
+such oscillations are naturally represented by modal indices of order
+\(N\), not by finitely many fixed modes \(m=O(1)\).
+
+Therefore a low-mode truncation \(m\le M\) with fixed \(M\) is not a
+natural approximation to the Montgomery endpoint projection. Any genuine
+modal limiting theorem in the Montgomery regime should be formulated
+using the scaled modal variable
+
+\begin{equation}
+\theta=\frac{m}{N}
+\end{equation}
+
+or an equivalent frequency-window formulation.
+
+The unconditional limiting statement obtained in the present paper is
+instead the finite Green deweighting consequence
+
+\begin{equation}
+F_N(\tau)
+\le
+2(1+\eta)
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy
++
+\frac{1+\eta^{-1}}{N},
+\end{equation}
+
+and hence
+
+\begin{equation}
+\limsup_{N\to\infty}F_N(\tau)
+\le
+2
+\limsup_{N\to\infty}
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(\tau\log(T_N/2\pi)+y)\,dy.
+\end{equation}
+
+This uses only finite-\(N\) identities and finite-\(N\) inequalities; it
+does not require an unproved interchange of an infinite modal sum with
+the limit \(N\to\infty\).
+
+\subsection{Smoothed modal covariance and conditional form-factor criteria}
+\label{subsec:smoothed_modal_covariance_criteria}
+
+The pointwise bound \eqref{eq:unit_phase_modal_bound} and the Parseval
+identity \eqref{eq:unit_phase_modal_parseval_identity} are unconditional
+finite-dimensional estimates. They are useful for normalization, but
+they do not by themselves determine the Montgomery form factor. The
+form factor depends on the correlated modal contraction in the
+constant-mode direction.
+
+For fixed \(\tau\), put
+
+\begin{equation}
+t_N(\tau,y)=\tau\log(T_N/2\pi)+y.
+\label{eq:modal_covariance_t_parameter}
+\end{equation}
+
+Define the smoothed modal covariance matrix
+
+\begin{equation}
+\Sigma_N(\tau)
+=
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+A(N;t_N(\tau,y))A(N;t_N(\tau,y))^*
+\,dy.
+\label{eq:smoothed_modal_covariance_matrix}
+\end{equation}
+
+Thus
+
+\begin{equation}
+\Sigma_N(\tau)_{m\ell}
+=
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+A_m(N;t_N(\tau,y))
+\overline{A_\ell(N;t_N(\tau,y))}
+\,dy.
+\label{eq:smoothed_modal_covariance_entries}
+\end{equation}
+
+\begin{proposition}[Exact modal covariance expression for \(F_N\)]
+\label{prop:modal_covariance_expression_for_FN}
+
+One has
+
+\begin{align}
+F_N(\tau)
+&=
+\frac1N
++
+\frac{2}{N}
+\Re
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+e^{-it_N(\tau,y)\gamma_1}
+u^*A(N;t_N(\tau,y))
+\,dy
+\nonumber\\
+&\qquad
++
+\frac1N
+u^*\Sigma_N(\tau)u.
+\label{eq:FN_modal_covariance_expansion}
+\end{align}
+
+Moreover, if
+
+\begin{equation}
+\frac1N u^*\Sigma_N(\tau)u=O(1),
+\label{eq:modal_covariance_boundedness_assumption}
+\end{equation}
+
+then the middle term in \eqref{eq:FN_modal_covariance_expansion} is
+\(o(1)\), and therefore
+
+\begin{equation}
+F_N(\tau)
+=
+\frac1N u^*\Sigma_N(\tau)u+o(1).
+\label{eq:FN_as_modal_covariance_contraction}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Starting from \eqref{eq:smoothed_form_factor_green_modal} and using
+\(t=t_N(\tau,y)\), expand the square. The first term gives
+
+\begin{equation}
+\frac1N
+\int_{-\infty}^{\infty}e^{-2|y|}\,dy
+=
+\frac1N.
+\end{equation}
+
+The quadratic modal term is exactly
+
+\begin{equation}
+\frac1N
+u^*
+\left(
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+A(N;t_N(\tau,y))A(N;t_N(\tau,y))^*
+\,dy
+\right)
+u
+=
+\frac1N u^*\Sigma_N(\tau)u.
+\end{equation}
+
+This gives \eqref{eq:FN_modal_covariance_expansion}. For the middle
+term, Cauchy--Schwarz gives
+
+\begin{align}
+&\left|
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+e^{-it_N(\tau,y)\gamma_1}
+u^*A(N;t_N(\tau,y))\,dy
+\right|^2
+\nonumber\\
+&\qquad\le
+\left(\int_{-\infty}^{\infty}e^{-2|y|}\,dy\right)
+\left(
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+|u^*A(N;t_N(\tau,y))|^2\,dy
+\right)
+\nonumber\\
+&\qquad=
+u^*\Sigma_N(\tau)u.
+\label{eq:modal_covariance_middle_term_bound}
+\end{align}
+
+Hence the middle term is bounded by
+
+\begin{equation}
+\frac{2}{N}
+\left(u^*\Sigma_N(\tau)u\right)^{1/2}.
+\end{equation}
+
+Under \eqref{eq:modal_covariance_boundedness_assumption}, this is
+\(O(N^{-1/2})=o(1)\). This proves
+\eqref{eq:FN_as_modal_covariance_contraction}.
+\end{proof}
+
+\begin{conjecture}[Modal covariance form of Montgomery]
+\label{conj:modal_covariance_montgomery}
+
+For each fixed \(\tau\in\mathbb R\), the smoothed modal covariance
+contraction satisfies
+
+\begin{equation}
+\frac1N
+u^*\Sigma_N(\tau)u
+\longrightarrow
+\min(|\tau|,1).
+\label{eq:modal_covariance_montgomery_conjecture}
+\end{equation}
+
+\end{conjecture}
+
+\begin{corollary}[Modal covariance criterion for the Montgomery form factor]
+\label{cor:modal_covariance_montgomery_criterion}
+
+Fix \(\tau\in\mathbb R\). All convergence in this corollary concerns the
+smoothed \(y\)-averaged form factor \(F_N(\tau)\) defined in
+\eqref{eq:smoothed_form_factor_integral}, pointwise in this fixed value
+of \(\tau\). Suppose that
+
+\begin{equation}
+\frac1N
+u^*\Sigma_N(\tau)u
+\longrightarrow
+L(\tau)
+\label{eq:modal_covariance_convergence_assumption}
+\end{equation}
+
+for a finite limit \(L(\tau)\). Then
+
+\begin{equation}
+F_N(\tau)
+\longrightarrow
+L(\tau).
+\label{eq:FN_converges_to_modal_covariance_limit}
+\end{equation}
+
+In particular, the Montgomery--GUE form-factor target is equivalent, in
+this modal language, to
+Conjecture~\ref{conj:modal_covariance_montgomery}, namely to the
+conditional modal covariance contraction
+
+\begin{equation}
+\frac1N
+u^*\Sigma_N(\tau)u
+\longrightarrow
+\min(|\tau|,1).
+\label{eq:modal_covariance_montgomery_target}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+The convergence assumption \eqref{eq:modal_covariance_convergence_assumption}
+implies the boundedness condition
+\eqref{eq:modal_covariance_boundedness_assumption}. The conclusion follows
+from Proposition~\ref{prop:modal_covariance_expression_for_FN}.
+\end{proof}
+
+\begin{remark}[Individual modal bounds versus modal covariance]
+\label{rem:individual_bounds_vs_modal_covariance}
+
+The estimates \eqref{eq:unit_phase_modal_bound} and
+\eqref{eq:unit_phase_modal_parseval_identity} are unconditional. They do
+not determine the Montgomery form factor, because \(F_N(\tau)\) depends
+on the rank-one modal contraction \(u^*\Sigma_N(\tau)u\), which includes
+correlations between different modes. Thus individual modal bounds
+provide finite control, while the limiting form factor is governed by
+the smoothed modal covariance in the constant-mode direction \(u\).
+
+\end{remark}
+
+The Green energy gives a useful one-sided consequence. Since
+\eqref{eq:finite_green_deweighting} gives
+
+\begin{equation}
+|u^*A(N;t)|^2
+\le
+2N\,\mathcal E_N(t),
+\end{equation}
+
+one has
+
+\begin{equation}
+\frac1N u^*\Sigma_N(\tau)u
+=
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+|u^*A(N;t_N(\tau,y))|^2\,dy
+\le
+2
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\mathcal E_N(t_N(\tau,y))\,dy.
+\label{eq:modal_covariance_controlled_by_green_energy}
+\end{equation}
+
+Consequently, a bound on the smoothed Green energy gives a bound on the
+modal covariance contraction and hence on \(F_N(\tau)\), but not exact
+recovery of the limiting form factor unless the covariance contraction
+itself is controlled.
+
+The Montgomery--GUE target in this notation is
+
+\begin{equation}
+F_N(\tau)
+\longrightarrow
+\min(|\tau|,1).
+\label{eq:montgomery_form_factor_target}
+\end{equation}
+
+Equivalently, the Green-modal target is
+
+\begin{equation}
+\begin{aligned}
+&
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+e^{i(\tau\log(T_N/2\pi)+y)\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ \mathrm{odd}}}
+u_mA_m(N;\tau\log(T_N/2\pi)+y)
+\right|^2
+dy
+\\
+&\hspace{5cm}
+\longrightarrow
+\min(|\tau|,1).
+\end{aligned}
+\label{eq:green_modal_montgomery_target}
+\end{equation}
+
+This is the Green-modal form of the Montgomery form-factor conjecture.
+
+\begin{remark}[Fixed frequencies versus Montgomery scaling]
+\label{rem:fixed_landau_frequencies_vs_montgomery_scaling}
+
+Landau fixed-frequency formulas concern fixed frequencies. The
+non-integer fixed frequency used in the complete-zero walk is covered by
+Proposition~\ref{prop:landau_fixed_real_formula}; at \(X=e\) it gives
+
+\begin{equation}
+\sum_{0<\gamma\le T}e^{\rho}
+=
+O(\log T).
+\label{eq:fixed_frequency_landau_in_montgomery_remark}
+\end{equation}
+
+For integral prime-power frequencies the fixed-frequency Landau--Gonek
+main term has negative sign and is supported at the arithmetic
+resonances \(X=p^m\). In the fixed-real notation
+\(\Lambda_{\mathbb R}(e)=0\), since \(e\) is not an integral prime power.
+
+Under RH, the \(X=e\) formula gives the corresponding fixed-frequency phase
+statement
+
+\begin{equation}
+\sum_{0<\gamma\le T}e^{i\gamma}
+=
+O(\log T).
+\label{eq:fixed_frequency_phase_form_montgomery_remark}
+\end{equation}
+
+Montgomery's form factor belongs to a different regime. In the present
+ordinal normalization the frequency is \(N\)-dependent; one takes
+
+\begin{equation}
+X_N=(T_N/2\pi)^\tau,
+\qquad
+t=\tau\log(T_N/2\pi),
+\label{eq:moving_montgomery_frequency}
+\end{equation}
+
+After squaring and smoothing, the diagonal prime contributions in the
+explicit formula accumulate over the growing range
+
+\begin{equation}
+n\le (T_N/2\pi)^{|\tau|}.
+\label{eq:moving_montgomery_prime_range}
+\end{equation}
+
+At the formal explicit-formula level, this is the standard ramp mechanism
+
+\begin{equation}
+F_N(\tau)
+\sim
+\frac1{\log T_N}
+\sum_{n\le (T_N/2\pi)^{|\tau|}}
+\frac{\Lambda(n)^2}{n}
+\sim
+|\tau|,
+\qquad
+0<|\tau|<1.
+\label{eq:fixed_vs_moving_ramp_mechanism}
+\end{equation}
+
+The fixed frequency \(X=e\) is non-resonant for the phase walk \(S_N\),
+whereas the Montgomery scaling \(X_N=(T_N/2\pi)^\tau\) explores a growing
+arithmetic range after squaring and smoothing.
+
+\end{remark}
+
+Thus the form-factor target has ramp
+
+\begin{equation}
+F_N(\tau)\to |\tau|,
+\qquad
+0<|\tau|<1.
+\label{eq:montgomery_ramp_limit}
+\end{equation}
+
+and saturation
+
+\begin{equation}
+F_N(\tau)\to 1,
+\qquad
+|\tau|\ge 1.
+\label{eq:montgomery_saturation_limit}
+\end{equation}
+
+Together these give
+
+\begin{equation}
+F_N(\tau)\to\min(|\tau|,1).
+\label{eq:montgomery_ramp_saturation_combined}
+\end{equation}
+
+Finally connect this to the sine kernel. With the convention
+
+\begin{equation}
+\widehat f(\tau)
+=
+\int_{\mathbb R}f(u)e^{-2\pi i\tau u}\,du,
+\label{eq:fourier_transform_convention}
+\end{equation}
+
+one has
+
+\begin{equation}
+\widehat{
+\left(
+\frac{\sin \pi u}{\pi u}
+\right)^2
+}
+=
+(1-|\tau|)_+.
+\label{eq:sine_square_fourier_transform}
+\end{equation}
+
+Since
+
+\begin{equation}
+\min(|\tau|,1)-1
+=
+-(1-|\tau|)_+,
+\label{eq:form_factor_minus_one_triangle}
+\end{equation}
+
+the corresponding limiting pair-correlation density is
+
+\begin{equation}
+R_2(u)
+=
+1-
+\left(\frac{\sin \pi u}{\pi u}\right)^2.
+\label{eq:gue_pair_correlation_density}
+\end{equation}
+
+The Green/Brownian framework does not merely rewrite the centered moment
+\(M_0(N;t)\). It also supplies a canonical modal representation of the
+Montgomery form factor. The Green energy is the diagonal quadratic form
+
+\begin{equation}
+A(N;t)^*\Lambda_N A(N;t),
+\label{eq:green_energy_matrix_form}
+\end{equation}
+
+whereas the Montgomery form factor is the rank-one constant-mode
+contraction
+
+\begin{equation}
+\frac1N
+\left|
+e^{it\gamma_1}+u^*A(N;t)
+\right|^2.
+\label{eq:form_factor_rank_one_contraction}
+\end{equation}
+
+Thus the same Green-modal vector \(A(N;t)\) carries both the centered
+phase-walk energy and the pair-correlation form factor. In this
+language, the Montgomery--GUE form-factor target is the limiting energy
+\(\min(|\tau|,1)\) of the constant-mode Green projection in the unfolded
+scaling
+
+\begin{equation}
+t=\tau\log(T_N/2\pi).
+\label{eq:form_factor_unfolded_scaling_final}
+\end{equation}
+
+\subsection{Riemann--von Mangoldt background and modal residuals}
+\label{subsec:rvm_background_modal_residuals}
+
+The Green-modal representation also separates a smooth counting
+background from the genuine zero fluctuations. Define the smooth
+Riemann--von Mangoldt main term
+
+\begin{equation}
+N_0(T)
+=
+\frac{T}{2\pi}\log\frac{T}{2\pi}
+-
+\frac{T}{2\pi}
++
+\frac78.
+\label{eq:rvm_smooth_counting_function}
+\end{equation}
+
+We use RVM as shorthand for Riemann--von Mangoldt in the notation below.
+The corresponding RVM grid is the deterministic grid obtained by
+inverting this smooth counting function.
+
+Let
+
+\begin{equation}
+\widetilde\gamma_k=N_0^{-1}(k),
+\label{eq:rvm_grid_ordinate}
+\end{equation}
+
+and define the residual displacement
+
+\begin{equation}
+d_k=\gamma_k-\widetilde\gamma_k.
+\label{eq:rvm_residual_displacement}
+\end{equation}
+
+The modal coefficient decomposes as
+
+\begin{equation}
+A_m(N;t)
+=
+A_m^{\mathrm{RVM}}(N;t)+R_m(N;t),
+\label{eq:rvm_modal_decomposition}
+\end{equation}
+
+where
+
+\begin{equation}
+A_m^{\mathrm{RVM}}(N;t)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)
+e^{it\widetilde\gamma_{N-r+1}},
+\label{eq:rvm_background_mode}
+\end{equation}
+
+and
+
+\begin{equation}
+R_m(N;t)
+=
+\sum_{r=1}^{N-1}
+\phi_m(r)
+e^{it\widetilde\gamma_{N-r+1}}
+\left(
+e^{itd_{N-r+1}}-1
+\right).
+\label{eq:rvm_residual_mode}
+\end{equation}
+
+\begin{lemma}[Parseval bound for the RVM modal residual]
+\label{lem:rvm_residual_parseval_bound}
+
+Let
+
+\begin{equation}
+\widetilde\gamma_k=N_0^{-1}(k),
+\qquad
+d_k=\gamma_k-\widetilde\gamma_k,
+\end{equation}
+
+and define \(R_m(N;t)\) by \eqref{eq:rvm_residual_mode}. Then
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+=
+\sum_{k=2}^{N}
+|e^{itd_k}-1|^2.
+\label{eq:rvm_residual_parseval_bound}
+\end{equation}
+
+Consequently,
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+\le
+4(N-1).
+\label{eq:rvm_residual_uniform_bound}
+\end{equation}
+
+Moreover,
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+\le
+t^2\sum_{k=2}^{N}|d_k|^2.
+\label{eq:rvm_residual_small_displacement_bound}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Set
+
+\begin{equation}
+b_r(t)
+=
+e^{it\widetilde\gamma_{N-r+1}}
+\left(
+e^{itd_{N-r+1}}-1
+\right),
+\qquad
+1\le r\le N-1.
+\end{equation}
+
+Then
+
+\begin{equation}
+R_m(N;t)
+=
+\sum_{r=1}^{N-1}\phi_m(r)b_r(t).
+\end{equation}
+
+Since
+
+\begin{equation}
+\phi_m(r)
+=
+\sqrt{\frac2N}
+\sin\left(\frac{\pi mr}{N}\right),
+\qquad
+1\le m,r\le N-1,
+\end{equation}
+
+is an orthonormal sine basis of \(\mathbb C^{N-1}\), Parseval's identity
+gives
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+=
+\sum_{r=1}^{N-1}|b_r(t)|^2.
+\end{equation}
+
+Because
+
+\begin{equation}
+|e^{it\widetilde\gamma_{N-r+1}}|=1,
+\end{equation}
+
+we have
+
+\begin{equation}
+|b_r(t)|^2
+=
+\left|
+e^{itd_{N-r+1}}-1
+\right|^2.
+\end{equation}
+
+Changing variables \(k=N-r+1\), this becomes
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+=
+\sum_{k=2}^{N}|e^{itd_k}-1|^2.
+\end{equation}
+
+The bound
+
+\begin{equation}
+|e^{ix}-1|\le2
+\end{equation}
+
+gives
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+\le
+4(N-1).
+\end{equation}
+
+The sharper small-displacement estimate follows from
+
+\begin{equation}
+|e^{ix}-1|\le |x|,
+\end{equation}
+
+which gives
+
+\begin{equation}
+|e^{itd_k}-1|^2
+\le
+t^2|d_k|^2.
+\end{equation}
+
+Summing over \(k\) proves the final bound.
+\end{proof}
+
+The estimate \(4(N-1)\) is a universal Parseval bound. It is sharp at
+this level of information: without further control on the phases
+\(td_k\), the individual quantities \(|e^{itd_k}-1|\) may be as large as
+\(2\), so no \(o(N)\) improvement follows from orthogonality alone.
+
+For fixed \(t\), the refinement
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+\le
+t^2\sum_{k=2}^{N}|d_k|^2
+\end{equation}
+
+can be stronger if the displacements
+\(d_k=\gamma_k-\widetilde\gamma_k\) are square-summably small on average.
+In Montgomery scaling, however,
+
+\begin{equation}
+t=\tau\log(T_N/2\pi)+y,
+\end{equation}
+
+and the products \(td_k\) need not be small. Thus the Parseval estimate
+gives uniform modal boundedness after normalization,
+
+\begin{equation}
+\frac1N\sum_{m=1}^{N-1}|R_m(N;t)|^2\le4,
+\label{eq:rvm_residual_normalized_bound}
+\end{equation}
+
+and it shows that the RVM residual has controlled total modal energy.
+
+Thus \(A_m^{\mathrm{RVM}}\) is the calculable smooth background, while
+\(R_m\) is the modal remainder caused by replacing the synthetic
+Riemann--von Mangoldt grid ordinates \(\widetilde\gamma_k\) with the
+actual zero ordinates \(\gamma_k\). The RVM grid alone is rigid after
+unfolding; it is not a GUE process. The Green-modal form factor
+separates this smooth background from the residual fluctuations that
+carry the arithmetic and spectral information of the actual zeros.
+
+\section[Supplementary Exact Product Forms for SN and CN]{Supplementary Exact Product Forms for \texorpdfstring{\(S_N\)}{SN} and \texorpdfstring{\(C_N\)}{CN}}
+\label{sec:product_forms_SN_CN}
+
+This supplementary section gives exact algebraic reformulations of the
+cumulative sum \(S_N\) and of the centroid \(C_N\) in terms of finite
+products associated with the phases \(e^{i\gamma_k}\). These identities
+are complementary algebraic structure; the main structural result of the
+paper remains the Brownian-bridge/Green-kernel formulation developed
+above.
+
+\subsection{A Finite Product Identity}
+\label{subsec:finite_product_identity}
+
+We first record the elementary identity on which the product
+formulation is based.
+
+\begin{lemma}[Logarithmic coefficients of a finite product]
+\label{lem:finite_product_logarithmic_coefficients}
+
+Let \(a_1,\ldots,a_N\) be complex numbers, and define
+
+\begin{equation}
+P(z)
+=
+\prod_{k=1}^{N}
+(1-a_k z).
+\label{eq:finite_product_definition}
+\end{equation}
+
+For \(|z|\) sufficiently small,
+
+\begin{equation}
+\log P(z)
+=
+-
+\sum_{m\ge 1}
+\frac{z^m}{m}
+\sum_{k=1}^{N}
+a_k^m.
+\label{eq:finite_product_logarithmic_expansion}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+-
+\left.
+\frac{d}{dz}
+\log P(z)
+\right|_{z=0}
+=
+\sum_{k=1}^{N}
+a_k.
+\label{eq:first_logarithmic_coefficient}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Since \(P(z)\) is a finite product,
+
+\begin{equation}
+\log P(z)
+=
+\sum_{k=1}^{N}
+\log(1-a_k z).
+\label{eq:finite_product_logarithm_sum}
+\end{equation}
+
+Using
+
+\begin{equation}
+\log(1-w)
+=
+-
+\sum_{m\ge 1}
+\frac{w^m}{m}
+\label{eq:log_one_minus_w_expansion}
+\end{equation}
+
+for \(|w|\) sufficiently small, we obtain
+
+\begin{align}
+\log P(z)
+&=
+-
+\sum_{k=1}^{N}
+\sum_{m\ge 1}
+\frac{(a_k z)^m}{m}
+\label{eq:finite_product_expansion_first}
+\\
+&=
+-
+\sum_{m\ge 1}
+\frac{z^m}{m}
+\sum_{k=1}^{N}
+a_k^m.
+\label{eq:finite_product_expansion_second}
+\end{align}
+
+Differentiating at \(z=0\) gives
+\eqref{eq:first_logarithmic_coefficient}.
+
+\end{proof}
+\subsection[The Phase Product and the Sum SN]{The Phase Product and the Sum \texorpdfstring{\(S_N\)}{SN}}
+\label{subsec:phase_product_SN}
+
+We now apply Lemma~\ref{lem:finite_product_logarithmic_coefficients}
+to the phases
+
+\begin{equation}
+a_k
+=
+e^{i\gamma_k}.
+\label{eq:phase_product_ak}
+\end{equation}
+
+\begin{definition}[Phase product]
+\label{def:phase_product}
+
+The phase product associated with the first \(N\) ordinates is
+
+\begin{equation}
+P_N(z)
+=
+\prod_{k=1}^{N}
+\left(1-z e^{i\gamma_k}\right).
+\label{eq:phase_product_definition}
+\end{equation}
+
+\end{definition}
+
+The zeros of \(P_N\) are
+
+\begin{equation}
+z
+=
+e^{-i\gamma_k},
+\qquad
+k=1,\ldots,N.
+\label{eq:phase_product_zeros}
+\end{equation}
+
+Thus all zeros of \(P_N\) lie on the unit circle.
+
+For each integer \(m\ge 1\), define the \(m\)-th phase sum by
+
+\begin{equation}
+S_N^{(m)}
+=
+\sum_{k=1}^{N}
+e^{im\gamma_k}.
+\label{eq:higher_phase_sum_definition}
+\end{equation}
+
+Then Lemma~\ref{lem:finite_product_logarithmic_coefficients} gives
+
+\begin{equation}
+\log P_N(z)
+=
+-
+\sum_{m\ge 1}
+\frac{S_N^{(m)}}{m}
+z^m.
+\label{eq:phase_product_logarithmic_expansion}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+S_N
+=
+S_N^{(1)}.
+\label{eq:SN_first_phase_mode}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+S_N
+=
+-
+\left.
+\frac{d}{dz}
+\log P_N(z)
+\right|_{z=0}.
+\label{eq:SN_logarithmic_derivative}
+\end{equation}
+
+Thus \(S_N\) is the first logarithmic coefficient of the phase product
+\(P_N\).
+
+\subsection{Polynomial Form and Elementary Symmetric Coefficients}
+\label{subsec:elementary_symmetric_coefficients}
+
+It is also useful to consider the monic polynomial
+
+\begin{equation}
+Q_N(z)
+=
+\prod_{k=1}^{N}
+\left(z-e^{i\gamma_k}\right).
+\label{eq:monic_phase_polynomial}
+\end{equation}
+
+Expanding \(Q_N\), one obtains
+
+\begin{equation}
+Q_N(z)
+=
+z^N
+-
+e_1^{(N)}z^{N-1}
++
+e_2^{(N)}z^{N-2}
+-
+\cdots
++
+(-1)^N e_N^{(N)}.
+\label{eq:monic_phase_polynomial_expansion}
+\end{equation}
+
+Here
+
+\begin{equation}
+e_r^{(N)}
+=
+\sum_{1\le k_1<\cdots<k_r\le N}
+e^{i(\gamma_{k_1}+\cdots+\gamma_{k_r})}.
+\label{eq:elementary_symmetric_phase_coefficients}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+e_1^{(N)}
+=
+\sum_{k=1}^{N}
+e^{i\gamma_k}
+=
+S_N.
+\label{eq:first_elementary_coefficient_SN}
+\end{equation}
+
+Hence
+
+\begin{equation}
+Q_N(z)
+=
+z^N
+-
+S_N z^{N-1}
++
+e_2^{(N)}z^{N-2}
+-
+\cdots
++
+(-1)^N e_N^{(N)}.
+\label{eq:monic_phase_polynomial_SN_coefficient}
+\end{equation}
+
+This identifies \(S_N\) as the first elementary symmetric coefficient
+of the phases \(e^{i\gamma_k}\).
+
+\subsection{Product Form of the Centroid}
+\label{subsec:product_form_centroid}
+
+The centroid was defined by
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{n=1}^{N}
+S_n.
+\label{eq:CN_definition_product_section}
+\end{equation}
+
+For each \(n\le N\), define the partial phase product
+
+\begin{equation}
+P_n(z)
+=
+\prod_{k=1}^{n}
+\left(1-z e^{i\gamma_k}\right).
+\label{eq:partial_phase_product_definition}
+\end{equation}
+
+By \eqref{eq:SN_logarithmic_derivative}, applied with \(N\) replaced by
+\(n\), one has
+
+\begin{equation}
+S_n
+=
+-
+\left.
+\frac{d}{dz}
+\log P_n(z)
+\right|_{z=0}.
+\label{eq:Sn_partial_product_logarithmic_derivative}
+\end{equation}
+
+Substitution into \eqref{eq:CN_definition_product_section} gives
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\sum_{n=1}^{N}
+\left.
+\frac{d}{dz}
+\log P_n(z)
+\right|_{z=0}.
+\label{eq:CN_sum_logarithmic_derivatives}
+\end{equation}
+
+By linearity of differentiation,
+
+\begin{equation}
+C_N
+=
+-
+\left.
+\frac{d}{dz}
+\left(
+\frac{1}{N}
+\sum_{n=1}^{N}
+\log P_n(z)
+\right)
+\right|_{z=0}.
+\label{eq:CN_average_logarithmic_derivative}
+\end{equation}
+\begin{definition}[Accumulated phase product]
+\label{def:accumulated_phase_product}
+
+The accumulated phase product is defined by
+
+\begin{equation}
+\mathcal{P}_N(z)
+=
+\prod_{n=1}^{N}
+P_n(z).
+\label{eq:accumulated_phase_product_definition}
+\end{equation}
+
+\end{definition}
+
+Since
+
+\begin{equation}
+\log \mathcal{P}_N(z)
+=
+\sum_{n=1}^{N}
+\log P_n(z),
+\label{eq:accumulated_phase_product_logarithm}
+\end{equation}
+
+we obtain the exact product identity
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\left.
+\frac{d}{dz}
+\log \mathcal{P}_N(z)
+\right|_{z=0}.
+\label{eq:CN_accumulated_product_logarithmic_derivative}
+\end{equation}
+
+Thus \(C_N\) is the normalized first logarithmic coefficient of the
+accumulated phase product \(\mathcal{P}_N\).
+
+\subsection{The Triangular Product}
+\label{subsec:triangular_phase_product}
+
+Using the definition of \(P_n\),
+
+\begin{equation}
+\mathcal{P}_N(z)
+=
+\prod_{n=1}^{N}
+\prod_{k=1}^{n}
+\left(1-z e^{i\gamma_k}\right).
+\label{eq:accumulated_phase_product_double_product}
+\end{equation}
+
+Changing the order of multiplication gives
+
+\begin{equation}
+\mathcal{P}_N(z)
+=
+\prod_{k=1}^{N}
+\left(1-z e^{i\gamma_k}\right)^{N-k+1}.
+\label{eq:triangular_phase_product}
+\end{equation}
+
+Combining
+\eqref{eq:CN_accumulated_product_logarithmic_derivative}
+and
+\eqref{eq:triangular_phase_product},
+one obtains
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\left.
+\frac{d}{dz}
+\log
+\prod_{k=1}^{N}
+\left(1-z e^{i\gamma_k}\right)^{N-k+1}
+\right|_{z=0}.
+\label{eq:CN_triangular_product_logarithmic_derivative}
+\end{equation}
+
+Differentiating explicitly gives
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}.
+\label{eq:CN_triangular_weighted_sum}
+\end{equation}
+
+This is the triangular weighted form of the centroid.
+
+\subsection{Triangular Harmonic Interpretation}
+\label{subsec:triangular_harmonic_interpretation}
+
+The usual empirical measure of the phases is
+
+\begin{equation}
+\nu_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+\delta_{e^{i\gamma_k}}.
+\label{eq:uniform_empirical_phase_measure}
+\end{equation}
+
+Its first moment is
+
+\begin{equation}
+\int_{\mathbb T}
+z\,d\nu_N(z)
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+e^{i\gamma_k}
+=
+\frac{S_N}{N}.
+\label{eq:uniform_empirical_phase_first_moment}
+\end{equation}
+
+The centroid \(C_N\), by contrast, corresponds to the triangularly
+weighted finite measure
+
+\begin{equation}
+\mu_N^{\triangle}
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)
+\delta_{e^{i\gamma_k}}.
+\label{eq:triangular_phase_measure}
+\end{equation}
+
+Its first moment is
+
+\begin{equation}
+\int_{\mathbb T}
+z\,d\mu_N^{\triangle}(z)
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}
+=
+C_N.
+\label{eq:triangular_phase_measure_first_moment}
+\end{equation}
+
+Therefore \(C_N\) is the first harmonic of a triangularly weighted phase
+measure, whereas \(S_N/N\) is the first harmonic of the uniformly
+weighted empirical phase measure.
+
+\subsection{Local Analytic Interpretation at the Origin}
+\label{subsec:local_analytic_interpretation_origin}
+
+From \eqref{eq:phase_product_logarithmic_expansion},
+
+\begin{equation}
+\log P_N(z)
+=
+-
+S_N z
++
+O(z^2)
+\qquad
+(z\to 0).
+\label{eq:phase_product_local_expansion}
+\end{equation}
+
+Thus
+
+\begin{equation}
+S_N
+=
+-
+\left.
+\frac{d}{dz}
+\log P_N(z)
+\right|_{z=0}.
+\label{eq:SN_local_analytic_interpretation}
+\end{equation}
+
+Similarly, \eqref{eq:CN_accumulated_product_logarithmic_derivative}
+identifies \(C_N\) as the normalized local logarithmic derivative of
+the accumulated phase product \(\mathcal{P}_N\) at the origin.
+
+Consequently, \(S_N\) and \(C_N\) are local logarithmic derivatives at
+the origin of two finite products associated with the phases
+\(e^{i\gamma_k}\): the ordinary phase product \(P_N\) and the accumulated
+phase product \(\mathcal{P}_N\), respectively.
+
+\begin{remark}
+\label{rem:product_form_summary}
+
+The identities above are exact finite-\(N\) identities.
+
+They do not depend on the Riemann Hypothesis, on random matrix models,
+or on probabilistic assumptions about the zeros.
+
+They show that \(S_N\) is the first logarithmic coefficient of the
+ordinary phase product \(P_N\), while \(C_N\) is the normalized first
+logarithmic coefficient of the accumulated product
+\(\mathcal{P}_N\).
+
+\end{remark}
+
+
+\section[Supplementary Non-Resonant Triangular Landau--Gonek Structure of SN and CN]{Supplementary Non-Resonant Triangular Landau--Gonek Structure of \texorpdfstring{\(S_N\)}{SN} and \texorpdfstring{\(C_N\)}{CN}}
+\label{sec:non_resonant_triangular_lg_structure}
+
+This supplementary section records rigorous structural identities for
+the ordinal sum \(S_N\), the height-truncated sums \(S_X(T)\), and the
+centroid \(C_N\). The Landau--Gonek phase formulas recalled here are literature-based; the
+terminology describing \(C_N\) as a triangular non-resonant transform is
+an original structural interpretation of the identities below.
+
+\subsection{Ordinal and height truncations}
+\label{subsec:ordinal_and_height_truncations}
+
+The sum \(S_N\) is an ordinal truncation: \(N\) is a positive integer
+and counts the first \(N\) ordinates in the ordered list
+\eqref{eq:gamma_ordering}. By contrast, height truncations are cut off by
+an analytic height \(T\) on the ordinate axis. The counting function
+\(N_\zeta(T)\), defined in \eqref{eq:zeta_zero_counting_function},
+translates the height \(T\) into the corresponding ordinal number of
+zeros. Thus \(N\) is not identified with \(T\).
+
+\begin{definition}
+\label{def:continuous_height_phase_sum}
+
+For \(X\in\mathbb{R}_{>0}\) and \(T>0\), define
+
+\begin{equation}
+S_X(T)
+=
+\sum_{0<\gamma\leq T}X^{i\gamma},
+\label{eq:continuous_height_phase_sum}
+\end{equation}
+
+where zeros are counted with multiplicity and
+
+\begin{equation}
+X^{i\gamma}:=\exp(i\gamma\log X)
+\label{eq:continuous_power_real_log}
+\end{equation}
+
+with the real logarithm of \(X\).
+
+\end{definition}
+
+\begin{theorem}[Height-to-ordinal bridge]
+\label{thm:height_to_ordinal_bridge}
+
+For every \(T>0\),
+
+\begin{equation}
+S_e(T)
+=
+\sum_{0<\gamma\leq T}e^{i\gamma}
+=
+\sum_{k=1}^{N_\zeta(T)}e^{i\gamma_k}
+=
+S_{N_\zeta(T)}.
+\label{eq:height_to_ordinal_bridge}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+The ordered sequence \eqref{eq:gamma_ordering} lists the positive
+ordinates of the nontrivial zeros with multiplicity. By definition,
+\(N_\zeta(T)\) is exactly the number of entries in this list whose
+ordinate is at most \(T\). Therefore the height-truncated multiset
+\(\{\gamma:0<\gamma\leq T\}\), counted with multiplicity, is the same
+multiset as \(\{\gamma_k:1\leq k\leq N_\zeta(T)\}\). Summing
+\(e^{i\gamma}\) over these two identical multisets gives the first two
+equalities in \eqref{eq:height_to_ordinal_bridge}. The last equality is
+precisely the ordinal definition \eqref{eq:SN_definition} with
+\(N=N_\zeta(T)\).
+\end{proof}
+
+\begin{corollary}[Ordinal recovery away from ambiguity]
+\label{cor:ordinal_recovery_from_height}
+
+For every height \(T>0\) such that \(N_\zeta(T)=N\),
+
+\begin{equation}
+S_N=S_e(T).
+\label{eq:ordinal_recovery_from_height}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Substitute the hypothesis \(N_\zeta(T)=N\) into
+\eqref{eq:height_to_ordinal_bridge}.
+\end{proof}
+
+\subsection{Continuous phase sums}
+\label{subsec:continuous_phase_sums}
+
+The parameter \(X\) in \eqref{eq:continuous_height_phase_sum} is a
+positive real continuous frequency. The definition
+\eqref{eq:continuous_power_real_log} avoids any multivalued complex
+logarithm.
+
+\begin{lemma}[The continuous frequency \(X=e\)]
+\label{lem:e_continuous_frequency_phase}
+
+At the continuous frequency \(X=e\), the height-truncated phase sum is
+
+\begin{equation}
+S_e(T)
+=
+\sum_{0<\gamma\leq T}e^{i\gamma}.
+\label{eq:e_continuous_frequency_phase_sum}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+By the definition of the continuous power with positive real base, for every
+\(X\in\mathbb{R}_{>0}\), the identity
+\begin{equation}
+X^{i\gamma}
+=
+\exp(i\gamma\log X).
+\label{eq:continuous_power_identity_in_e_lemma}
+\end{equation}
+holds. Taking \(X=e\), and using \(\log e=1\), gives
+\begin{equation}
+X^{i\gamma}\big|_{X=e}
+=
+e^{i\gamma}
+=
+\exp(i\gamma).
+\label{eq:e_frequency_power_evaluation}
+\end{equation}
+Substituting this identity into the definition of \(S_X(T)\) with \(X=e\)
+proves the claim.
+\end{proof}
+
+\begin{remark}
+\label{rem:continuous_not_arithmetic_frequency}
+
+The frequency \(X=e\) is a fixed positive real frequency. In the
+arithmetic Landau--Gonek formula, resonances occur at integral prime
+powers. With the extended convention
+
+\begin{equation}
+\Lambda_{\mathbb R}(X)=0
+\end{equation}
+
+away from prime powers, one has
+
+\begin{equation}
+\Lambda_{\mathbb R}(e)=0.
+\end{equation}
+
+Equivalently, \(e\) is non-resonant because it is not an integral prime
+power.
+\end{remark}
+
+\subsection{Arithmetic Landau--Gonek resonances}
+\label{subsec:arithmetic_landau_gonek_resonances}
+
+Landau--Gonek resonances are arithmetic. In this subsection
+\(X\in\mathbb{R}_{>0}\) denotes a continuous frequency, while
+\(x\in\mathbb{N}\), \(x>1\), denotes an arithmetic frequency.
+
+\begin{definition}
+\label{def:prime_power_resonance_set}
+
+The arithmetic resonance set is
+
+\begin{equation}
+\mathcal R
+=
+\{p^m:\ p\ \text{prime},\ m\in\mathbb N\}.
+\label{eq:prime_power_resonance_set}
+\end{equation}
+
+\end{definition}
+
+For fixed \(x\in\mathbb N\), \(x>1\), the Landau--Gonek formula under RH
+has the phase form
+
+\begin{equation}
+\sum_{0<\gamma\leq T}x^{i\gamma}
+=
+-
+\frac{T}{2\pi}
+\frac{\Lambda(x)}{\sqrt{x}}
++
+O(\log T).
+\label{eq:landau_gonek_new_section_phase_form}
+\end{equation}
+
+The main term is supported on the prime-power set \(\mathcal R\).
+
+\begin{theorem}[Non-resonance of \(e\)]
+\label{thm:e_non_resonant}
+
+The continuous frequency \(X=e\) is not an arithmetic Landau--Gonek
+resonance:
+
+\begin{equation}
+e\notin\mathcal R.
+\label{eq:e_not_in_resonance_set}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+Every element of \(\mathcal R\) is a positive integer, so
+\(\mathcal R\subset\mathbb N\). The number \(e\) is irrational, hence
+\(e\notin\mathbb N\). Therefore \(e\notin\mathcal R\).
+\end{proof}
+
+\begin{remark}
+\label{rem:no_mangoldt_at_e}
+
+In the extended real-frequency notation,
+\(\Lambda_{\mathbb R}(X)=0\) away from integral prime powers. Thus
+\(\Lambda_{\mathbb R}(e)=0\), equivalently \(X=e\) is non-resonant
+because it is not an integral prime power.
+\end{remark}
+
+\subsection{The centroid as a triangular non-resonant transform}
+\label{subsec:centroid_triangular_non_resonant_transform}
+
+The centroid identity is purely ordinal and contains no height variable.
+It follows from the definitions in Section~\ref{sec:SN_definition}.
+
+\begin{theorem}[Triangular centroid identity]
+\label{thm:triangular_centroid_identity}
+
+For every positive integer \(N\),
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}\sum_{n=1}^{N}S_n
+=
+\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^{n}e^{i\gamma_k}
+=
+\frac{1}{N}\sum_{k=1}^{N}(N-k+1)e^{i\gamma_k}.
+\label{eq:triangular_centroid_identity}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+The first equality is the definition \eqref{eq:CN_definition}. Replacing
+\(S_n\) by its defining sum gives the second equality, which is
+\eqref{eq:CN_double_sum}. In the double sum, the term
+\(e^{i\gamma_k}\) appears exactly for those indices \(n\) with
+\(k\leq n\leq N\). There are \(N-k+1\) such indices. Collecting equal
+terms gives the final expression, already recorded in
+\eqref{eq:CN_weighted}.
+\end{proof}
+
+\begin{corollary}[Triangular non-resonant centroid transform]
+
+The centroid \(C_N\) is a triangularly weighted non-resonant phase sum associated with the continuous frequency \(X=e\).
+
+\end{corollary}
+
+\begin{proof}
+
+By the triangular centroid identity,
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}.
+\label{eq:triangular_centroid_identity_recalled}
+\end{equation}
+Thus \(C_N\) is a triangularly weighted sum of the phases \(e^{i\gamma_k}\).
+
+By the continuous-frequency identity at \(X=e\), these phases coincide with the continuous-frequency phases \(X^{i\gamma_k}\) evaluated at \(X=e\). Since \(e\) is not contained in the arithmetic resonance set
+\begin{equation}
+\mathcal R
+=
+\{p^m:\ p\ \text{prime},\ m\in\mathbb N\},
+\label{eq:prime_power_resonance_set_recalled}
+\end{equation}
+the triangularly weighted ordinal sum defining \(C_N\) is non-resonant in the Landau--Gonek prime-power sense.
+
+\end{proof}
+
+\subsection{Equidistribution consequences}
+\label{subsec:equidistribution_consequences_non_resonant}
+
+Hlawka's theorem, applied with \(\alpha=1/(2\pi)\), implies the
+normalized cancellation already stated in \eqref{eq:SN_normalized_cancellation}.
+The next consequence records the same fact in the notation of this
+section.
+
+\begin{corollary}[Normalized cancellation at \(X=e\)]
+\label{cor:non_resonant_normalized_cancellation}
+
+The ordinal phase sums at the continuous frequency \(X=e\) satisfy
+
+\begin{equation}
+\frac{S_N}{N}\longrightarrow 0
+\qquad
+(N\to\infty).
+\label{eq:non_resonant_normalized_cancellation}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Equation \eqref{eq:SN_normalized_cancellation} is obtained from Hlawka's
+equidistribution theorem and Weyl's criterion with
+\(\alpha=1/(2\pi)\). Since \(e^{i\gamma_k}\) is the phase associated with
+\(X=e\) by Lemma~\ref{lem:e_continuous_frequency_phase}, the result is
+exactly \eqref{eq:non_resonant_normalized_cancellation}.
+\end{proof}
+
+
+
+\begin{theorem}[Sublinear centroid growth under normalized cancellation]
+\label{thm:sublinear_centroid_growth}
+
+Assume that
+
+\begin{equation}
+\frac{S_N}{N}\longrightarrow 0
+\qquad
+(N\to\infty).
+\label{eq:sublinear_centroid_assumption}
+\end{equation}
+
+Then
+
+\begin{equation}
+\frac{C_N}{N}\longrightarrow 0
+\qquad
+(N\to\infty).
+\label{eq:sublinear_centroid_conclusion_normalized}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+C_N=o(N).
+\label{eq:sublinear_centroid_conclusion_little_o}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+By definition,
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}\sum_{n=1}^{N}S_n.
+\label{eq:sublinear_centroid_definition_used}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+\frac{C_N}{N}
+=
+\frac{1}{N^2}\sum_{n=1}^{N}S_n.
+\label{eq:centroid_over_N_average_partial_sums}
+\end{equation}
+
+Let \(\varepsilon>0\). Since
+
+\begin{equation}
+\frac{S_n}{n}\longrightarrow 0,
+\label{eq:partial_sum_normalized_n_limit}
+\end{equation}
+
+there exists \(N_0\in\mathbb{N}\) such that
+
+\begin{equation}
+|S_n|\leq \varepsilon n
+\label{eq:partial_sum_epsilon_bound}
+\end{equation}
+
+for every \(n\geq N_0\). For \(N\geq N_0\), split the sum as
+
+\begin{equation}
+\frac{C_N}{N}
+=
+\frac{1}{N^2}\sum_{n=1}^{N_0-1}S_n
++
+\frac{1}{N^2}\sum_{n=N_0}^{N}S_n.
+\label{eq:centroid_sum_split}
+\end{equation}
+
+Taking absolute values gives
+
+\begin{equation}
+\left|\frac{C_N}{N}\right|
+\leq
+\frac{1}{N^2}\sum_{n=1}^{N_0-1}|S_n|
++
+\frac{1}{N^2}\sum_{n=N_0}^{N}|S_n|.
+\label{eq:centroid_sum_split_abs}
+\end{equation}
+
+The first numerator is fixed, hence
+
+\begin{equation}
+\frac{1}{N^2}\sum_{n=1}^{N_0-1}|S_n|
+\longrightarrow 0.
+\label{eq:centroid_initial_block_vanishes}
+\end{equation}
+
+For the second term, using \eqref{eq:partial_sum_epsilon_bound}, we
+obtain
+
+\begin{equation}
+\frac{1}{N^2}\sum_{n=N_0}^{N}|S_n|
+\leq
+\frac{\varepsilon}{N^2}\sum_{n=N_0}^{N}n
+\leq
+\frac{\varepsilon}{N^2}\sum_{n=1}^{N}n.
+\label{eq:centroid_tail_bound}
+\end{equation}
+
+Since
+
+\begin{equation}
+\sum_{n=1}^{N}n
+=
+\frac{N(N+1)}{2},
+\label{eq:sum_first_N_integers_centroid}
+\end{equation}
+
+it follows that
+
+\begin{equation}
+\frac{\varepsilon}{N^2}\sum_{n=1}^{N}n
+=
+\frac{\varepsilon}{2}\left(1+\frac{1}{N}\right).
+\label{eq:centroid_tail_bound_evaluated}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+\limsup_{N\to\infty}
+\left|\frac{C_N}{N}\right|
+\leq
+\frac{\varepsilon}{2}.
+\label{eq:centroid_limsup_epsilon}
+\end{equation}
+
+Since \(\varepsilon>0\) is arbitrary, this proves
+\eqref{eq:sublinear_centroid_conclusion_normalized}, equivalently
+\eqref{eq:sublinear_centroid_conclusion_little_o}.
+
+\end{proof}
+
+\begin{corollary}[Equidistribution does not force centroid convergence]
+\label{cor:equidistribution_does_not_force_CN_zero}
+
+The normalized cancellation in
+Corollary~\ref{cor:non_resonant_normalized_cancellation} implies only
+
+\begin{equation}
+C_N=o(N),
+\label{eq:centroid_little_o_only_statement}
+\end{equation}
+
+and does not imply
+
+\begin{equation}
+C_N\longrightarrow 0.
+\label{eq:centroid_zero_not_implied_statement}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+The sublinear estimate follows from
+Theorem~\ref{thm:sublinear_centroid_growth}. However, sublinear growth
+alone does not imply convergence to zero. For example, the scalar sequence
+
+\begin{equation}
+a_N=\sqrt N
+\label{eq:scalar_sublinear_example}
+\end{equation}
+
+satisfies
+
+\begin{equation}
+\frac{a_N}{N}\longrightarrow 0,
+\label{eq:scalar_sublinear_example_normalized}
+\end{equation}
+
+but does not converge to zero. Therefore normalized cancellation of the
+endpoint does not, by itself, force centroid convergence to zero.
+\end{proof}
+
+\subsection{Structural conclusion}
+\label{subsec:structural_conclusion_non_resonant}
+
+The preceding results separate the ordinal, height-truncated, and
+arithmetic layers of the construction. The sum \(S_N\) is an ordinal
+phase walk, while \(S_X(T)\) is a height-truncated phase sum; the counting
+function \(N_\zeta(T)\) provides the bridge between the two. The phase
+\(e^{i\gamma}\) corresponds to the continuous frequency \(X=e\). In the
+arithmetic Landau--Gonek formula the resonant frequencies are the
+integral prime powers. The present use of \(X=e\) is a fixed positive
+real frequency.
+
+The Chebyshev and logarithmic-derivative viewpoint explains the
+arithmetic origin of the resonant frequencies: the weights \(\Lambda(x)\)
+arise from
+
+\begin{equation}
+-\frac{\zeta'(s)}{\zeta(s)}
+=
+\sum_{\ell=1}^{\infty}\frac{\Lambda(\ell)}{\ell^s},
+\label{eq:structural_conclusion_log_derivative_bridge}
+\end{equation}
+
+and the Landau--Gonek main terms are supported on prime powers. With the
+extended real convention \(\Lambda_{\mathbb R}(X)=0\) away from prime
+powers, one has \(\Lambda_{\mathbb R}(e)=0\). Equivalently, \(e\) is
+non-resonant because it is not an integral prime power. Thus neither the
+phase walk \(S_N\) nor the triangular centroid \(C_N\) receives a direct
+Chebyshev--Landau main term. The centroid is a triangular non-resonant
+phase transform at the continuous frequency \(X=e\).
+
+This interpretation is compatible with Weyl and Hlawka
+equidistribution and with the Landau--Gonek prime-power resonance
+formula. Equidistribution gives normalized cancellation of the
+increments, and Theorem~\ref{thm:sublinear_centroid_growth} gives the
+sublinear bound \(C_N=o(N)\). Landau--Gonek identifies arithmetic
+resonances at prime powers, whereas the present construction uses the
+non-arithmetic frequency \(X=e\). The conclusion is structural: it
+separates the ordinal and arithmetic layers and records the
+non-resonant role of the triangular centroid.
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+The paper isolates the following outputs.
+
+\subsection{Complete-zero logarithmic confinement}
+\label{subsec:conclusion_complete_zero_confinement}
+\leavevmode\par\nobreak
+
+Landau's fixed-real formula at \(X=e\) gives a logarithmic confinement
+baseline for the complete-zero walk:
+
+\begin{equation}
+Z_N=O(\log N),
+\qquad
+\mathcal C_N=O(\log N),
+\qquad
+\mathcal M_0(N)=O\!\left((\log N)^2\right).
+\label{eq:conclusion_complete_zero_bounds}
+\end{equation}
+
+Under RH this specializes to the original unit phase walk through
+
+\begin{equation}
+Z_N=S_N,
+\qquad
+\mathcal C_N=C_N,
+\qquad
+\mathcal M_0(N)=M_0(N).
+\label{eq:conclusion_RH_specialized_objects}
+\end{equation}
+
+\subsection{Exact centered pair statistic}
+\label{subsec:conclusion_exact_pair_statistic}
+\leavevmode\par\nobreak
+
+In the complete-zero setting,
+
+\begin{equation}
+\mathcal M_0(N)
+=
+\sum_{j,k=1}^{N}
+W_N(j,k)
+e^{\rho_j-\frac12}
+e^{\overline{\rho_k}-\frac12}.
+\label{eq:conclusion_complete_zero_pair_statistic}
+\end{equation}
+
+Under RH, this becomes the exact centered pair statistic
+
+\begin{equation}
+M_0(N)
+=
+\sum_{j,k=1}^{N}
+W_N(j,k)e^{i(\gamma_j-\gamma_k)}
+\label{eq:conclusion_RH_exact_pair_statistic}
+\end{equation}
+
+Here \(W_N\) is the exact centering kernel
+
+\begin{equation}
+W_N(j,k)
+=
+\frac{N-\max(j,k)+1}{N}
+-
+\frac{(N-j+1)(N-k+1)}{N^2}.
+\label{eq:conclusion_WN_definition}
+\end{equation}
+
+It is the weight forced by subtracting the triangular centroid before
+forming the quadratic moment.
+
+\subsection{Brownian-bridge/Green kernel}
+\label{subsec:conclusion_brownian_green_kernel}
+\leavevmode\par\nobreak
+
+After reversing indices, the kernel becomes
+
+\begin{equation}
+K_N(r,s)
+=
+\frac{\min(r,s)}{N}
+-
+\frac{rs}{N^2},
+\label{eq:conclusion_brownian_green_kernel}
+\end{equation}
+
+the discrete Brownian-bridge covariance kernel, equivalently the Green
+kernel of the discrete Dirichlet Laplacian. This is the central
+structural point of the paper.
+
+\subsection{Lifted phases and Green-modal coordinates}
+\label{subsec:conclusion_lifted_phases_green_modal_coordinates}
+\leavevmode\par\nobreak
+
+There is no modal shortcut hidden in the notation. The lifted phase
+representation in Lemma~\ref{lem:lifted_phase_representation} separates
+the angular representative \(\theta_k\) from the winding number \(B_k\).
+For \(t=1\), the winding is invisible in \(e^{i\gamma_k}\); for real
+frequency deformations \(e^{it\gamma_k}\), and in particular in the
+Montgomery scaling, the winding data are part of the phase.
+
+The modal basis is the normalized Dirichlet sine basis
+\eqref{eq:dirichlet_sine_modes}. Its orthonormality is proved in
+Lemma~\ref{lem:dirichlet_sine_orthonormality}, and exact modal inversion
+is Lemma~\ref{lem:exact_modal_inversion}. Thus the coefficient vector
+\(A(N;t)\) is genuine coordinate data, not a heuristic compression.
+
+With these coordinates, the Green kernel diagonalizes and yields
+
+\begin{equation}
+\mathcal E_N(t)
+=
+A(N;t)^*\Lambda_NA(N;t)
+=
+\sum_{m=1}^{N-1}
+\lambda_m|A_m(N;t)|^2.
+\label{eq:conclusion_green_energy_modal_decomposition}
+\end{equation}
+
+Under RH at \(t=1\), this is the centered phase-walk moment \(M_0(N)\).
+
+\subsection{Exact recovery versus scalar energy bounds}
+\label{subsec:conclusion_exact_recovery_scalar_bounds}
+\leavevmode\par\nobreak
+
+Put
+
+\begin{equation}
+S_N(t)
+=
+\sum_{k=1}^{N}e^{it\gamma_k}.
+\label{eq:conclusion_t_deformed_endpoint}
+\end{equation}
+
+The endpoint is recovered exactly from the Green-modal coefficient data:
+
+\begin{equation}
+S_N(t)
+=
+e^{it\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ \mathrm{odd}}}
+u_mA_m(N;t).
+\label{eq:conclusion_endpoint_projection}
+\end{equation}
+
+Even modes vanish from the endpoint sum only because their projection
+onto the constant vector is zero; they still contribute to the centered
+Green energy.
+
+The scalar Green energy alone does not recover the endpoint or the
+centroid: it discards modal direction and phase information. Exact
+recovery uses the coefficient vector \(A(N;t)\), equivalently the
+weighted modal data \(\Lambda_NA(N;t)\), as in
+\eqref{eq:green_metric_endpoint_recovery_identity}. The scalar energy
+gives only one-sided deweighting estimates. From
+\eqref{eq:finite_green_deweighting} and
+\eqref{eq:centroid_green_deweighting_bound},
+
+\begin{equation}
+\left|S_N(t)-e^{it\gamma_1}\right|^2
+\le
+2N\,\mathcal E_N(t),
+\label{eq:conclusion_endpoint_weak_green_bound}
+\end{equation}
+
+and
+
+\begin{equation}
+\left|C_N(t)-e^{it\gamma_1}\right|^2
+\le
+(N-1)\mathcal E_N(t).
+\label{eq:conclusion_centroid_weak_green_bound}
+\end{equation}
+
+Consequently, if \(\mathcal E_N(1)=O((\log N)^2)\), the Green bounds give
+only the weaker estimates
+
+\begin{equation}
+S_N=O(\sqrt N\log N),
+\qquad
+C_N=O(\sqrt N\log N).
+\label{eq:conclusion_weak_green_bounds_at_t_one}
+\end{equation}
+
+The logarithmic bounds in \eqref{eq:conclusion_complete_zero_bounds} are
+stronger and come from Landau's fixed-real formula at \(X=e\), not from
+the scalar Green-energy inequality.
+
+\subsection{Green-modal Montgomery formulation}
+\label{subsec:conclusion_green_modal_montgomery}
+\leavevmode\par\nobreak
+
+The smoothed Montgomery form factor can be written as
+
+\begin{equation}
+F_N(\tau)
+=
+\frac1N
+\int_{-\infty}^{\infty}
+e^{-2|y|}
+\left|
+e^{i(\tau\log(T_N/2\pi)+y)\gamma_1}
++
+\sum_{\substack{1\le m\le N-1\\ m\ \mathrm{odd}}}
+u_mA_m(N;\tau\log(T_N/2\pi)+y)
+\right|^2dy.
+\label{eq:conclusion_green_modal_montgomery}
+\end{equation}
+
+Thus the Montgomery--GUE form-factor target can be expressed as a
+statement about the Green-modal endpoint projection:
+
+\begin{equation}
+F_N(\tau)\to\min(|\tau|,1).
+\label{eq:conclusion_montgomery_target}
+\end{equation}
+
+The finite modal bounds on individual \(A_m(N;t)\) are unconditional, but
+they do not determine this limit. The conditional modal covariance
+criterion is stated in
+Corollary~\ref{cor:modal_covariance_montgomery_criterion}: the limiting
+form factor is governed by the rank-one contraction
+\(N^{-1}u^*\Sigma_N(\tau)u\), not by pointwise modal bounds alone.
+
+The final logical division is therefore sharp: Landau gives the strong
+logarithmic confinement estimates; the Green kernel gives the exact
+structural identity, the modal decomposition, and the exact deweighting
+of linear functionals. The scalar Green energy supplies canonical upper
+bounds, not exact recovery of endpoint-type quantities.
+
+\subsection{RVM residual decomposition}
+\label{subsec:conclusion_rvm_residual_decomposition}
+\leavevmode\par\nobreak
+
+Here RVM means Riemann--von Mangoldt. Let
+\(\widetilde\gamma_k=N_0^{-1}(k)\) denote the synthetic ordinates
+obtained by inverting the smooth Riemann--von Mangoldt counting main
+term. These ordinates form the rigid RVM background against which the
+true zeta ordinates \(\gamma_k\) are compared, and write
+\(d_k=\gamma_k-\widetilde\gamma_k\) for the residual displacement.
+
+The modes split as
+
+\begin{equation}
+A_m(N;t)=A_m^{\mathrm{RVM}}(N;t)+R_m(N;t),
+\label{eq:conclusion_rvm_modal_split}
+\end{equation}
+
+with
+
+\begin{equation}
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+=
+\sum_{k=2}^{N}|e^{itd_k}-1|^2
+\le
+4(N-1).
+\label{eq:conclusion_rvm_residual_bound}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+\frac1N
+\sum_{m=1}^{N-1}|R_m(N;t)|^2
+\le
+4.
+\label{eq:conclusion_rvm_residual_normalized_bound}
+\end{equation}
+
+Thus \(A_m^{\mathrm{RVM}}(N;t)\) is the modal coefficient computed from
+the synthetic RVM ordinates \(\widetilde\gamma_k\), while \(R_m(N;t)\) is
+the residual modal difference contributed by replacing those synthetic
+ordinates with the true zero ordinates. In other words, \(R_m\) measures
+the mode-by-mode remainder between the synthetic RVM grid and the actual
+zeros.
+
+The main contribution of the paper is the identification of the
+Brownian-bridge/Green kernel hidden in the centered phase-walk geometry.
+This kernel converts the centroid problem into an exact weighted
+pair-correlation statistic and provides a natural Green-modal language
+in which the Montgomery--GUE form factor can be expressed.
+The centered moment gives an exact Green-kernel weighted pair statistic.
+The Green-modal coordinates give an exact endpoint representation of the
+Montgomery form factor, while the scalar Green energy gives the
+corresponding one-sided deweighting estimate.
+
+\subsection{Structural separation}
+\label{subsec:conclusion_structural_separation}
+\leavevmode\par\nobreak
+
+The fixed-frequency objects \(S_N(1)\), \(C_N\), and \(M_0(N)\)
+describe non-resonant Landau cancellation and Green-weighted centered
+geometry. The Montgomery--GUE statistics are seen through the deformed
+endpoint family \(S_N(t)\). In Fourier variables this gives the form
+factor, while in the unfolded pair variable
+
+\begin{equation}
+\xi_{jk}
+=
+\frac{\log(T_0/2\pi)}{2\pi}
+(\gamma_j-\gamma_k)
+\label{eq:conclusion_unfolded_pair_variable_xi}
+\end{equation}
+
+it gives the sine-kernel pair correlation. The Green-modal vector
+\(A(N;t)\) is the common coordinate system linking these two regimes.
+
+\begin{thebibliography}{99}
+\sloppy
+\hbadness=10000
+
+\bibitem{Riemann1859}
+B. Riemann,
+\emph{\"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse},
+Monatsberichte der Berliner Akademie,
+1859,
+671--680.
+
+Reprinted in:
+
+B. Riemann,
+\emph{Gesammelte Mathematische Werke},
+Dover Publications,
+1953.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+Second Edition,
+revised by D. R. Heath-Brown,
+Oxford University Press,
+1986.
+
+\bibitem{Edwards2001}
+H. M. Edwards,
+\emph{Riemann's Zeta Function},
+Dover Publications,
+2001.
+
+\bibitem{IwaniecKowalski2004}
+H. Iwaniec and E. Kowalski,
+\emph{Analytic Number Theory},
+American Mathematical Society,
+2004.
+
+\bibitem{Weyl1916}
+H. Weyl,
+\emph{\"Uber die Gleichverteilung von Zahlen mod. Eins},
+Mathematische Annalen
+\textbf{77} (1916),
+313--352.
+doi:10.1007/BF01475864.
+
+\bibitem{Rademacher1956}
+H. Rademacher,
+\emph{On the distribution of the values of the zeta function},
+Colloquium Mathematicum
+\textbf{4} (1956),
+79--81.
+
+\bibitem{Hlawka1975}
+E. Hlawka,
+\emph{\"Uber die Gleichverteilung gewisser Folgen,
+die mit den Nullstellen der Zetafunktion zusammenh\"angen},
+Sitzungsberichte der
+\"Osterreichischen Akademie der Wissenschaften,
+Mathematisch-Naturwissenschaftliche Klasse,
+Abteilung II
+\textbf{184} (1975),
+459--471.
+
+\bibitem{Landau1911}
+E. Landau,
+\emph{\"Uber die Nullstellen der Zetafunktion},
+Mathematische Annalen
+\textbf{71} (1911),
+548--564.
+doi:10.1007/BF01456881.
+
+\bibitem{Gonek1985}
+S. M. Gonek,
+\emph{A formula of Landau and mean values of \(\zeta(s)\)},
+in:
+\emph{Topics in Analytic Number Theory},
+edited by S. W. Graham and J. D. Vaaler,
+University of Texas Press,
+Austin,
+1985,
+92--97.
+
+\bibitem{Gonek1993}
+S. M. Gonek,
+\emph{An explicit formula of Landau and its applications to the theory of the zeta-function},
+in:
+\emph{A Tribute to Emil Grosswald:
+Number Theory and Related Analysis},
+Contemporary Mathematics
+\textbf{143},
+American Mathematical Society,
+1993,
+395--413.
+
+\bibitem{Odlyzko1987}
+A. M. Odlyzko,
+\emph{On the distribution of spacings between zeros of the zeta function},
+Mathematics of Computation
+\textbf{48} (1987),
+273--308.
+doi:10.1090/S0025-5718-1987-0866115-0.
+
+\bibitem{KaczorowskiLanguascoPerelli2000}
+J. Kaczorowski,
+A. Languasco,
+A. Perelli,
+\emph{A note on Landau's formula},
+Functiones et Approximatio Commentarii Mathematici
+\textbf{28} (2000),
+173--186.
+doi:10.7169/facm/1538186693.
+
+\bibitem{Montgomery1973}
+H. L. Montgomery,
+\emph{The pair correlation of zeros of the zeta function},
+in:
+\emph{Analytic Number Theory},
+Proceedings of Symposia in Pure Mathematics
+\textbf{24},
+American Mathematical Society,
+1973,
+181--193.
+
+\bibitem{Borwein2008}
+P. Borwein,
+S. Choi,
+B. Rooney,
+A. Weirathmueller,
+\emph{The Riemann Hypothesis:
+A Resource for the Afficionado and Virtuoso Alike},
+Springer,
+2008.
+
+\bibitem{FordZaharescu2005}
+K. Ford and A. Zaharescu,
+\emph{Unnormalized Differences Between Zeros of the Riemann Zeta Function},
+Acta Arithmetica
+\textbf{117} (2005),
+163--176.
+doi:10.4064/aa117-2-5.
+
+\bibitem{FordSoundararajanZaharescu2024}
+K. Ford,
+K. Soundararajan,
+A. Zaharescu,
+\emph{The Distribution of the Ordinates of the Zeros of the Riemann Zeta Function},
+arXiv:2407.14173,
+2024.
+
+\bibitem{Fujii1978}
+A. Fujii,
+\emph{On the uniformity of the distribution of the zeros of the
+Riemann zeta function},
+Journal f\"ur die reine und angewandte Mathematik
+\textbf{302} (1978),
+167--205.
+
+\end{thebibliography}
+
+\end{document}

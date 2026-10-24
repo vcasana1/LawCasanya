@@ -1,0 +1,18 @@
+Raw-binary data export
+source = data/g_hp.npy
+source sha256 = 2a3eb56f7c9e269c9291e8a31b96cc155c72e8d1307ca58d992c662fe8eb3e36
+destination = data/g_hp.bin
+destination sha256 = 80c7bb512e210922397fd36b5bdfb97239cc0c5ee73dc1ec57a919ce41b367b2
+count = 22491
+dtype = little-endian IEEE-754 float64
+byte count = 179928
+round-trip exact = True
+
+source = data/gammas.npy
+source sha256 = 5362c5c5e682167d956e460c17959209e900435f524acbc93d14ed41a43e601e
+destination = data/gammas.bin
+destination sha256 = 5d99a93b6d2df679714b6bc46b3cf16e20b3eb8e22566e6595e8582ac2502742
+count = 22491
+dtype = little-endian IEEE-754 float64
+byte count = 179928
+round-trip exact = True

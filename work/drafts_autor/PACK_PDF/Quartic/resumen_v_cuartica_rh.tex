@@ -1,0 +1,397 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Resumen de la via cuartica auto-rec\'iproca hacia la funci\'on xi}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{1. Objetivo}
+
+Queremos usar una familia cuartica basada solamente en
+\[
+t^4+t^{-4}
+\]
+para construir una regularizacion de la funcion xi de Riemann sin perder la
+linea critica
+\[
+s=\frac12+iz.
+\]
+La cuestion no es afirmar que esto demuestra RH, sino identificar si la
+estructura cuartica produce algo mas que la simetria funcional conocida.
+
+\section*{2. Bloque cuartico basico}
+
+El bloque crudo es
+\[
+I_{m,a}(z)
+=
+\int_0^\infty
+t^{2iz}
+e^{-\pi(m^2t^4+a^2t^{-4})}\,dt,
+\qquad m\ge1,\ a>0.
+\]
+Con el cambio \(y=t^4\),
+\[
+I_{m,a}(z)
+=
+\frac12
+\left(\frac{a}{m}\right)^{\frac14+\frac{iz}{2}}
+K_{\frac14+\frac{iz}{2}}(2\pi ma).
+\]
+Aqui aparece de forma natural el orden
+\[
+\nu=\frac14+\frac{iz}{2}.
+\]
+
+En el limite formal \(a\downarrow0\),
+\[
+I_{m,0}(z)
+=
+\frac14
+\pi^{-\nu}\Gamma(\nu)m^{-2\nu},
+\qquad
+\nu=\frac14+\frac{iz}{2}.
+\]
+Como
+\[
+2\nu=\frac12+iz=s,
+\]
+se obtiene
+\[
+2\sum_{m\ge1}I_{m,0}(z)
+=
+\frac12
+\pi^{-s/2}\Gamma(s/2)\zeta(s).
+\]
+Por tanto,
+\[
+\xi(s)
+=
+\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)
+=
+s(s-1)\left(2\sum_{m\ge1}I_{m,0}(z)\right),
+\]
+con
+\[
+s=\frac12+iz,
+\qquad
+s(s-1)=-(z^2+\tfrac14).
+\]
+
+\section*{3. Por que el exponente correcto es \(t^{2iz}\)}
+
+El exponente debe mantener
+\[
+s=\frac12+iz.
+\]
+Si se elige mal, se llega a lineas laterales como
+\[
+\zeta\left(\frac14+\frac{iz}{2}\right)
+\quad\text{o}\quad
+\zeta\left(\frac32+2iz\right).
+\]
+La linea \(\Re(s)=3/2\) es cero-libre pero no sirve para RH. La linea
+\(\Re(s)=1/4\) no es segura: excluir ceros alli seria ya contenido fuerte
+relacionado con RH. Por tanto hay que conservar exactamente
+\[
+s=\frac12+iz.
+\]
+
+\section*{4. Factor critico de auto-reciprocidad}
+
+La transformada
+\[
+F(z)=\int_0^\infty t^{2iz}V(t)\,dt
+\]
+sera par, \(F(z)=F(-z)\), si el nucleo cumple
+\[
+V(t)=t^{-2}V(1/t).
+\]
+El factor \(t^{-2}\) no es decorativo: es el jacobiano de \(t\mapsto1/t\) y
+es el factor que protege la geometria critica.
+
+Por tanto, el bloque auto-reciproco critico es
+\[
+\widetilde V_{m,a}(t)
+=
+\frac12\left[
+e^{-\pi(m^2t^4+a^2t^{-4})}
++
+t^{-2}e^{-\pi(m^2t^{-4}+a^2t^4)}
+\right].
+\]
+Entonces
+\[
+\widetilde V_{m,a}(t)=t^{-2}\widetilde V_{m,a}(1/t),
+\]
+y
+\[
+\widetilde I_{m,a}(z)
+=
+\int_0^\infty t^{2iz}\widetilde V_{m,a}(t)\,dt
+=
+\frac12\left(I_{m,a}(z)+I_{m,a}(-z)\right).
+\]
+En forma cerrada,
+\[
+\widetilde I_{m,a}(z)
+=
+\frac14\left[
+\left(\frac{a}{m}\right)^{\frac14+\frac{iz}{2}}
+K_{\frac14+\frac{iz}{2}}(2\pi ma)
++
+\left(\frac{a}{m}\right)^{\frac14-\frac{iz}{2}}
+K_{\frac14-\frac{iz}{2}}(2\pi ma)
+\right].
+\]
+
+\section*{5. Funcion regularizada centrada}
+
+La version centrada natural es
+\[
+\widetilde F_a(z)=2\sum_{m\ge1}\widetilde I_{m,a}(z),
+\]
+y
+\[
+\widetilde X_a(z)
+=
+-(z^2+\tfrac14)\widetilde F_a(z).
+\]
+Formalmente,
+\[
+\widetilde X_a(z)\longrightarrow \xi\left(\frac12+iz\right)
+\]
+cuando \(a\downarrow0\), despues de tratar los terminos polares o
+elementales explicitos que aparecen en la regularizacion.
+
+\section*{6. Identidad exacta de Mobius}
+
+La identidad de eliminacion exacta es
+\[
+\sum_{d\ge1}\mu(d)\bigl(\vartheta(d^2x)-1\bigr)
+=2e^{-\pi x}.
+\]
+Aplicada con \(x=a^2t^{-4}\),
+\[
+\boxed{
+\sum_{d\ge1}\mu(d)
+\bigl(\vartheta(d^2a^2t^{-4})-1\bigr)
+=
+2e^{-\pi a^2t^{-4}}.
+}
+\]
+Esto elimina exactamente todos los modos del segundo theta salvo el modo
+unitario. Esta es una parte no trivial de la arquitectura: no es simplemente
+poner un filtro externo, sino una proyeccion aritmetica exacta dentro del
+nucleo cuartico.
+
+\section*{7. Que es estandar y que no}
+
+Es estandar:
+\[
+\text{``hacer un nucleo auto-reciproco para obtener una transformada par''.}
+\]
+Tambien es estandar que el jacobiano correcto bajo \(t\mapsto1/t\) sea
+\[
+t^{-2}.
+\]
+
+No es tan estandar la combinacion simultanea:
+\[
+\text{Mobius exacto}
++
+\text{regularizacion }t^4+t^{-4}
++
+\text{auto-reciprocidad critica}
++
+\text{limite hacia }\xi(1/2+iz).
+\]
+La pregunta real es si esta arquitectura produce una restriccion nueva sobre
+ceros, no solo la simetria funcional.
+
+\section*{8. Obstaculo principal: ceros de los bloques}
+
+Para \(z\in\mathbb R\),
+\[
+\widetilde I_{m,a}(z)
+=
+\Re\left[
+\frac12
+\left(\frac{a}{m}\right)^{\frac14+\frac{iz}{2}}
+K_{\frac14+\frac{iz}{2}}(2\pi ma)
+\right].
+\]
+Si el orden fuera puramente imaginario, \(K_{i\tau}(x)\), hay teoria clasica
+favorable. Pero aqui el orden esta desplazado:
+\[
+\nu=\frac14+\frac{iz}{2}.
+\]
+Ese desplazamiento real \(1/4\) mantiene la linea critica, pero rompe la
+situacion mas favorable. No hay razon inmediata para que
+\[
+\Re\left[A^{1/4+iz/2}K_{1/4+iz/2}(x)\right]
+\]
+tenga solo ceros reales como funcion de \(z\). Demostrarlo seria muy dificil
+y probablemente falso en general.
+
+Incluso si cada bloque individual tuviera ceros reales, la suma
+\[
+\sum_{m\ge1}\widetilde I_{m,a}(z)
+\]
+no preservaria automaticamente esa propiedad. La suma de funciones con ceros
+reales no tiene, en general, ceros reales.
+
+Conclusion: no parece razonable intentar probar que
+\[
+\widetilde X_a
+\]
+tiene solo ceros reales para todo \(a>0\).
+
+\section*{9. Flujo en \(a\)}
+
+Para el bloque crudo,
+\[
+\partial_a I_{m,a}(z)
+=
+-2\pi a\, I_{m,a}(z+2i),
+\]
+salvo normalizaciones si se incluye el factor polinomico de completado.
+
+Despues de simetrizar,
+\[
+\widetilde I_{m,a}(z)
+=\frac12(I_{m,a}(z)+I_{m,a}(-z)),
+\]
+el flujo deja de ser escalar y se vuelve bilateral:
+\[
+z\mapsto z+2i,
+\qquad
+z\mapsto z-2i.
+\]
+Esto conserva la geometria critica, pero introduce un sistema par/impar o
+bilateral. La dificultad no es ya mantener la linea \(1/2\); eso lo hace el
+factor \(t^{-2}\). La dificultad es extraer de este sistema una condicion
+nueva sobre los ceros.
+
+\section*{10. Linea quarter}
+
+La version quarter aparece al reescalar
+\[
+w=2s.
+\]
+Si
+\[
+w=\frac12+i\gamma,
+\]
+entonces
+\[
+s=\frac{w}{2}
+=
+\frac14+\frac{i\gamma}{2}.
+\]
+Esto no cambia la dificultad: solo desplaza la geometria de la linea
+\(\Re(w)=1/2\) a
+\[
+\Re(s)=1/4.
+\]
+Lo peligroso es confundir esta linea quarter reescalada con la linea
+\(\Re(s)=1/4\) de la zeta original. Excluir ceros de
+\[
+\zeta\left(\frac14+it\right)
+\]
+no es conocido y seria contenido fuerte relacionado con RH.
+
+\section*{11. Diagnostico}
+
+La modificacion correcta de \(V\) es:
+\[
+\boxed{
+\widetilde V_{m,a}(t)
+=
+\frac12\left[
+e^{-\pi(m^2t^4+a^2t^{-4})}
++
+t^{-2}e^{-\pi(m^2t^{-4}+a^2t^4)}
+\right].
+}
+\]
+Esta eleccion:
+\begin{itemize}
+\item mantiene el centro critico \(s=1/2+iz\);
+\item mantiene la estructura cuartica \(t^4+t^{-4}\);
+\item permite usar la eliminacion exacta de Mobius;
+\item produce una familia regularizada que converge formalmente a
+  \(\xi(1/2+iz)\).
+\end{itemize}
+
+Pero por ahora no da una demostracion de RH. El obstaculo principal no es la
+simetria, sino encontrar una restriccion adicional sobre ceros a partir de:
+\[
+\text{bloques }K_{1/4+iz/2},
+\qquad
+\text{flujo bilateral }z\mapsto z\pm2i,
+\qquad
+\text{proyeccion de Mobius}.
+\]
+
+\section*{12. Preguntas concretas para consultar}
+
+\begin{enumerate}
+\item \textbf{Bloques individuales.} Hay resultados conocidos sobre ceros
+reales de
+\[
+\Re\left[A^{1/4+iz/2}K_{1/4+iz/2}(x)\right]?
+\]
+Si no, hay contraejemplos numericos?
+
+\item \textbf{Suma en \(m\).} La suma
+\[
+\sum_{m\ge1}\widetilde I_{m,a}(z)
+\]
+pertenece a alguna clase de funciones con restricciones de ceros, o
+probablemente no?
+
+\item \textbf{Flujo bilateral.} La ecuacion en \(a\) con desplazamientos
+\[
+z\mapsto z\pm2i
+\]
+tiene alguna cantidad conservada, desigualdad de fase, o identidad tipo Turan
+que no sea equivalente a RH?
+
+\item \textbf{Terminos elementales.} Al simetrizar y usar theta, aparecen
+correcciones elementales cuarticas/polares. Se pueden sustraer de forma
+canonica para que el limite sea exactamente \(\xi(1/2+iz)\)?
+
+\item \textbf{Originalidad.} La combinacion
+\[
+\text{Mobius exacto}+\text{cuartica auto-reciproca critica}
+\]
+esta ya estudiada en alguna forma conocida?
+\end{enumerate}
+
+\section*{13. Veredicto corto}
+
+La via no se cae por la escala: el factor \(t^{-2}\) arregla exactamente el
+centro critico. Tampoco es solo una multiplicacion externa de \(\xi\). La
+parte prometedora es la identidad exacta de Mobius dentro del nucleo cuartico.
+
+El muro visible es otro: no hay, de momento, un mecanismo claro que convierta
+esa regularizacion en control de ceros. En particular, la estrategia
+\[
+\widetilde X_a \text{ tiene todos sus ceros reales para } a>0
+\]
+parece demasiado fuerte y probablemente falsa.
+
+La ruta razonable es usar \(\widetilde X_a\) como regularizacion centrada de
+\(\xi\), no como una familia RH intermedia, y buscar una identidad nueva en el
+limite \(a\downarrow0\).
+
+\end{document}

@@ -1,0 +1,123 @@
+ORDINAL / HEIGHT / MULTIPLICITY AUDIT — v14
+============================================
+
+Primary convention
+------------------
+The zero positions are indexed by
+  k = 1,2,...,N,
+with N only the final value of k in a finite truncation.
+There are never two equal values of k. What may repeat is the ordinate:
+  gamma_k = gamma_{k+1} = ...
+Each repeated occurrence occupies its own ordinal slot and shifts every later k.
+
+Multiplicity accounting
+-----------------------
+1. Critical line:
+   If 1/2+i gamma has algebraic multiplicity m, the positive ordinate gamma occupies
+   m consecutive ordinal slots.
+
+2. Off the critical line:
+   If beta+i gamma, beta != 1/2, has multiplicity m, functional-equation and
+   conjugation symmetry also give 1-beta+i gamma with multiplicity m. Hence the
+   upper-half-plane enumeration contains 2m slots with the same positive ordinate
+   gamma. The lower conjugates at -gamma are not indexed.
+
+3. Coincident configurations:
+   If several zero factors share the same positive ordinate, the block length is the
+   total upper-half-plane algebraic multiplicity at that ordinate. All endpoint
+   corrections use that total block length.
+
+Why a height cutoff is not automatically the same as k=N
+---------------------------------------------------------
+A classical height sum at gamma_N includes every zero with ordinate <= gamma_N and
+therefore the whole repeated-ordinate block at gamma_N. The ordinal sum through k=N
+may stop inside that block. The difference is exactly the unused part of the one
+terminal block. Therefore every external height theorem is used in this order:
+  (i) evaluate the complete height sum at gamma_N;
+  (ii) remove the unused terminal slots if N is inside a repeated block;
+  (iii) convert the gamma_N scale to the N scale.
+No formal substitution height=N is used.
+
+Transport lemma
+---------------
+For every ordinal slot k, including slots inside a repeated-ordinate block,
+  k = M(gamma_k) + O(log(2+gamma_k)),
+so
+  k asymp gamma_k log(2+gamma_k),
+  gamma_k asymp k/log(2+k).
+No RH or simplicity assumption is used.
+
+External results and dependent statements
+-----------------------------------------
+A. Hlawka equidistribution.
+   The complete-height result counts zeros with multiplicity. Evaluating at gamma_N
+   and correcting only the unused terminal slots yields
+     sum_{k<=N} exp(i gamma_k) = o(N).
+
+B. Ford--Zaharescu second-order distribution.
+   Precise input: Ford--Zaharescu (2005), Corollary 2, which gives the second-order
+   formula for every C^2 test function. For f(u)=exp(2*pi*i*u) and
+   alpha=1/(2*pi), the mean vanishes and the secondary density g_alpha is identically
+   zero because alpha is non-resonant. Thus the COMPLETE height sum satisfies
+     sum_{0<gamma<=gamma_N} exp(i gamma) = o(gamma_N).
+   Correcting the possibly partial terminal block by O(nu(gamma_N)) and then using
+   gamma_N asymp N/log N gives
+     sum_{k<=N} exp(i gamma_k) = o(N/log N).
+   Ordinary equidistribution alone would only give o(N) on the ordinal scale and is
+   insufficient for the stronger rate.
+
+C. Level 1.
+   The Stieltjes argument is first carried out over complete ordinate blocks.
+   For an arbitrary N, completing the terminal block changes the ordinal-defect sum
+   by O(log^2(2+gamma_N)). This remains o(N), including critical-line multiplicity
+   and off-line repeated pairs. The Ford--Zaharescu input used inside the proof is
+   exactly item B above.
+
+D. H versus M clock replacement.
+   This step is already ordinal:
+     sum_{k<=N}(r_k^(M)-r_k)exp(i gamma_k)=O(log^2(2+gamma_N))=o(N).
+   Repeated ordinates are counted slot by slot. No extra height-to-index assumption is
+   introduced beyond the transport lemma.
+
+E. True-zero M-weighted statistic.
+   The needed B_N=o(N/log N) is item B with the terminal-block correction. Abel
+   summation is then performed directly in the ordinal variable k and gives
+     sum_{k<=N} k exp(i gamma_k)=o(N^2/log N).
+   The identity M(gamma_k)=k+O(log(2+gamma_k)) remains valid inside repeated blocks.
+
+F. Selberg second moment.
+   At the endpoint height gamma_N,
+     integral_0^{gamma_N} S(t)^2 dt << gamma_N log log gamma_N.
+   Dividing by N and using the transport lemma gives o(1). If N lies inside a
+   repeated block, gamma_N is unchanged while N differs from the complete block index
+   by only O(nu(gamma_N)); this does not alter the asymptotic conversion.
+
+G. Uniform Landau/Gonek input under RH.
+   The classical formula is applied to the complete block at gamma_N. Under RH an
+   algebraic multiplicity-m zero still contributes m equal terms. The possible partial
+   terminal block contributes O(nu(gamma_N)), after which the result is expressed in N.
+   Off-line blocks do not arise in this RH-conditional step.
+
+H. Fujii horizontal moment.
+   A_2 is deliberately kept as a complete-height quantity. No partial ordinal A_2 is
+   defined inside a common-ordinate block, because off-line zeros at the same gamma can
+   have different beta values and their within-block order is arbitrary.
+
+I. Holomorphic centroid, Theorem 10.1.
+   Both terms in C_N^zeta(u)-C^zeta(u) are now explicitly bounded. The finite weighted
+   term is <= N^{-1} sum_{k>=1} k exp(-y gamma_k), and the tail is bounded by the same
+   convergent majorant. Repeated ordinates are separate k-slots and are included in the
+   majorant with their multiplicity.
+
+J. Completed-zero defect and RH criterion.
+   A critical-line multiplicity m contributes equally to C^zeta and C^xi and hence zero
+   defect. An off-line pair beta+i gamma and 1-beta+i gamma of multiplicity m contributes
+   m times the paired nonnegative defect. The infinite absolutely convergent series is
+   independent of arbitrary within-block ordering.
+
+K. RVM residual corollary (formerly Theorem 10.4).
+   R_RVM-A_RVM=D identically, so the statement is now a Corollary and its proof is
+   immediate from the preceding RH-equivalence theorem. If RH fails, repeated positive
+   ordinates insert additional ordinal slots and therefore shift all subsequent tau_k.
+   Thus gamma_k-tau_k is always the exact ordinally paired Lambert residual, but off RH
+   it is not the displacement obtained by freezing a hypothetical RH enumeration.

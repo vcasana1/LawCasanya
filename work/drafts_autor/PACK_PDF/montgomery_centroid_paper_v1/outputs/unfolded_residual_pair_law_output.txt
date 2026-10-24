@@ -1,0 +1,25 @@
+Exact unfolded RVM-residual pair analysis
+input = data/g_hp.bin
+input sha256 = 80c7bb512e210922397fd36b5bdfb97239cc0c5ee73dc1ec57a919ce41b367b2
+ordinates = 22491
+ordinate range = [14.134725141735, 19999.275621078454]
+analysis tail starts at ordinal = 1201
+eta statistics: mean=-1.298000e-06, sd=0.299245, min=-0.948472, max=+0.957006
+max reconstruction error in M(gamma[k+h])-M(gamma[k]) = h+eta[k+h]-eta[k]: 0.000e+00
+positive pair density: population=21291, max_lag=16, bin_width=0.080, RMSE on 0.2<=s<=6 = 0.0362
+Hann-windowed connected form factor: gap cutoff=8.0, RMSE on 0.1<=alpha<=1.8 = 0.0410
+integer residual modes (the unfolded ordinal carrier is constant):
+  m       |sum exp(2*pi*i*m*eta_k)|      /sqrt(H)
+  1              2907.775976       19.927963
+  2                79.116220        0.542210
+  3                63.535015        0.435427
+selected windowed connected form-factor values:
+  alpha        measured      windowed GUE
+  0.25          0.2140          0.2500
+  0.50          0.4633          0.5000
+  0.75          0.7302          0.7500
+  1.00          0.9830          0.9816
+  1.25          1.0809          1.0000
+  1.50          1.0167          1.0000
+  2.00          1.0042          1.0000
+figure = figures/unfolded_residual_pair_law.png

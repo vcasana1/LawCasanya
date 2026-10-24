@@ -1,0 +1,1526 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\geometry{margin=1in}
+\raggedbottom
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\mob}{\mu}
+\newcommand{\Mert}{M}
+\newcommand{\Sq}{Q}
+\newcommand{\PS}{\mathcal P}
+
+\title[Research programme through alpha]{Research Programme through Alpha: Exact Pairing, Energy and Analytic Obligations}
+\author{}
+\date{Version 12 --- 7 September 2026}
+
+% hyperref must be loaded last
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+\maketitle
+Independent chapter of Version 12. The results below do not constitute a proof of RH.
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+\clearpage
+
+\section{Research programme through alpha: exact pairing and analytic obligations}
+\label{sec:alpha-programme}
+
+This independently readable chapter states the research programme, proves
+its intermediate identities, and compares its remaining obligations with
+established approaches. The comparison concerns the cited works, not every
+proposed RH proof. An equivalence theorem, a conditional theorem, and a
+speculative model are not all failed mathematics.
+
+The active route is exact cancellation between sign-specific ordinal pairs,
+retaining unfinished pairs at every integer cutoff. No estimate of RH
+strength is assumed. The prime number theorem (PNT) and elementary squarefree
+counting are used explicitly as unconditional background. Statements are
+separated into proved results, classical transfers, unresolved targets,
+and excluded universal mechanisms.
+
+\subsection{Step 0: independent notation and target}
+\label{subsec:a12-definitions}
+Let $\mu$ be the usual M\"obius function, $p_j$ the $j$th prime, and $p_0=0$.
+For real $x\ge1$ define the step functions
+\begin{equation}
+\label{eq:a12-counts}
+N_\pm(x)=\#\{n\le x:\mu(n)=\pm1\},\quad
+Q(x)=N_+(x)+N_-(x),\quad M(x)=N_+(x)-N_-(x).
+\end{equation}
+The transform and its cumulative sum are
+\begin{equation}
+\label{eq:a12-S}
+S(n)=
+\begin{cases}
+p_{N_+(n)},&\mu(n)=1,\\
+-p_{N_-(n)},&\mu(n)=-1,\\
+1,&\mu(n)=0,
+\end{cases}
+\qquad SS(x)=\sum_{n\le x}S(n).
+\end{equation}
+Set $w_j=p_j-j$ and $D_w(m)=\sum_{j=1}^m w_j$, with $D_w(0)=0$.
+For $\mu(n)\ne0$, let $j(n)$ be the occurrence number within its own sign.
+The index $j(n)$ is not used at nonsquarefree integers. Define
+\begin{equation}
+\label{eq:a12-series}
+\alpha(s)=\sum_{n\ge1}S(n)n^{-s},\qquad
+\delta(s)=\sum_{\substack{n\ge1\\\mu(n)\ne0}}\mu(n)w_{j(n)}n^{-s}.
+\end{equation}
+Let $s_1<s_2<\cdots$ enumerate the squarefree integers. Write
+\begin{equation}
+\label{eq:a12-pairs}
+\begin{aligned}
+\varepsilon_q&=\mu(s_q),&
+R(q)&=\sum_{\ell\le q}\varepsilon_\ell=M(s_q),\qquad R(0)=0,\\
+\alpha_j&=\text{ordinal position of the $j$th $+1$},&
+\beta_j&=\text{ordinal position of the $j$th $-1$},\\
+a_j&=s_{\alpha_j},&b_j&=s_{\beta_j},\\
+d_j&=\beta_j-\alpha_j,&\Delta_j&=b_j-a_j.
+\end{aligned}
+\end{equation}
+The function $\alpha(s)$ differs from the ordinal $\alpha_j$.
+The physical positions $a_j,b_j$ avoid a clash with the analytic blocks
+$A(s),B(s)$. Never identify $d_j$, $\Delta_j$, and $w_j$.
+The notation $D_w$ also differs from a lifetime generating function $D(z)$.
+Finally set
+\begin{equation}
+\label{eq:a12-H}
+c_0=\frac3{\pi^2},\qquad
+\Theta=\sup_{\rho\ {\rm nontrivial}}\Re\rho,\qquad
+\mathcal H=\{s:\Re s>3/2\}.
+\end{equation}
+The target is exclusion of nontrivial zeros with $\Re\rho>1/2$.
+The functional equation supplies the other half of the strip.
+
+\subsection{Step 1: decomposition and genuine pole statements}
+\label{subsec:a12-decomposition}
+
+\begin{proposition}[Exact decomposition and domains]
+\label{prop:a12-decomposition}
+The series in \eqref{eq:a12-series} converge absolutely for $\Re s>2$,
+and in that domain
+\begin{equation}
+\label{eq:a12-ABCD}
+\boxed{\alpha(s)=A(s)+B(s)+C(s)+\delta(s),}
+\end{equation}
+where
+\begin{align}
+A(s)&=\zeta(s)-\frac{\zeta(s)}{\zeta(2s)},\label{eq:a12-A}\\
+B(s)&=c_0\frac{s}{(s-1)\zeta(s-1)},\label{eq:a12-B}\\
+C(s)&=\frac{s}{2}\int_1^\infty
+M(x)(Q(x)+1-2c_0x)x^{-s-1}\,dx.\label{eq:a12-C}
+\end{align}
+The blocks $A,B$ are meromorphic on $\mathbb C$.
+The integral for $C$ is holomorphic on $\mathcal H$ unconditionally;
+more precisely, its domain includes $\Re s>\Theta+1/2$.
+\end{proposition}
+\begin{proof}
+The bound $p_j\ll j\log(2j)$ majorises both coefficient sequences by
+$O(n\log(2n))$. The signed ordinal coefficients have the partial sum
+\begin{equation}
+\label{eq:a12-ordinal}
+\sum_{\substack{n\le x\\\mu(n)\ne0}}\mu(n)j(n)
+=\frac{N_+(N_++1)-N_-(N_-+1)}2=\frac{M(x)(Q(x)+1)}2.
+\end{equation}
+Partial summation gives the integral of this expression against
+$sx^{-s-1}\,dx$. Splitting $Q+1=2c_0x+(Q+1-2c_0x)$ and using
+\begin{equation}
+\label{eq:a12-Mellin}
+\int_1^\infty M(x)x^{-z-1}\,dx=\frac1{z\zeta(z)}
+\qquad(\Re z>1)
+\end{equation}
+gives $B+C$. The zero row contributes $A$.
+The unconditional estimates $Q(x)=2c_0x+O(\sqrt x)$ and $|M(x)|\le x$
+give local uniform absolute convergence of the $C$ integral for $\Re s>3/2$.
+The classical bound $M(x)=O_\epsilon(x^{\Theta+\epsilon})$ gives the
+refined domain \cite{Titchmarsh1986}.
+\end{proof}
+
+\begin{proposition}[Poles of the ordinal main block]
+\label{prop:a12-poles}
+A nontrivial zero $\rho$ of $\zeta$ gives a pole of $B$ at $1+\rho$ with
+the same order. For a simple zero,
+\begin{equation}
+\label{eq:a12-residue}
+\operatorname*{Res}_{s=1+\rho}B(s)
+=c_0\frac{1+\rho}{\rho\zeta'(\rho)}.
+\end{equation}
+There is also a simple pole at $s=1$ of residue $-2c_0$, and the shifted
+trivial-zero poles $s=1-2k$, $k\ge1$. The point $s=2$ is a zero, not a pole.
+\end{proposition}
+\begin{proof}
+Use the local factorisation of $\zeta(s-1)$ at its zeros.
+The prefactor $c_0s/(s-1)$ is finite and nonzero at every shifted zero.
+At $s=1$ use $\zeta(0)=-1/2$; at $s=2$ use the pole of $\zeta$ at $1$.
+\end{proof}
+
+No corresponding pole count for the full $\alpha$ has been proved.
+Critical-line zero theorems transfer to $B$, not automatically to $\alpha$:
+continuation and noncancellation of the other blocks must first be checked.
+Holomorphy of $\delta$ alone does not remove a pole of $B$ from $\alpha$.
+Nor does extending $\delta$ across $3/2$ extend $C$ across that line.
+
+\subsection{Step 2: exact pairing without linearisation}
+\label{subsec:a12-exact-pairing}
+\begin{proposition}[Pairs, oriented integrals, and unit cuts]
+\label{prop:a12-exact-pairing}
+For $\Re s>2$,
+\begin{equation}
+\label{eq:a12-delta-pairs}
+\delta(s)=\sum_{j\ge1}w_j(a_j^{-s}-b_j^{-s}).
+\end{equation}
+For each pair and every complex $s$,
+\begin{equation}
+\label{eq:a12-exact-integral}
+a_j^{-s}-b_j^{-s}=s\int_{a_j}^{b_j}x^{-s-1}\,dx.
+\end{equation}
+With
+\begin{equation}
+\label{eq:a12-U}
+u_q=\frac{q+R(q)}2,\quad v_q=\frac{q-R(q)}2,\quad
+U(q)=D_w(u_q)-D_w(v_q),
+\end{equation}
+the initial half-plane has the representation
+\begin{equation}
+\label{eq:a12-unit-cut}
+\boxed{\delta(s)=\sum_{q\ge1}U(q)(s_q^{-s}-s_{q+1}^{-s}).}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Absolute convergence allows occurrence matching.
+Differentiating $x^{-s}$ proves the oriented integral, including $s=0$.
+Telescoping gives
+\begin{equation}
+\label{eq:a12-telescope}
+a_j^{-s}-b_j^{-s}=\operatorname{sgn}(d_j)
+\sum_{q=\min(\alpha_j,\beta_j)}^{\max(\alpha_j,\beta_j)-1}
+(s_q^{-s}-s_{q+1}^{-s}).
+\end{equation}
+At cut $q$ the open labels are exactly
+$\min(u_q,v_q)<j\le\max(u_q,v_q)$, all with orientation
+$\operatorname{sgn}R(q)$. Their signed weight is $U(q)$.
+The bound $|U(Q(x))|\ll x^2\log(2x)$ gives an integrable absolute majorant
+$|s|x^{1-\Re s}\log(2x)$ when $\Re s>2$, justifying the rearrangement.
+\end{proof}
+In particular,
+\begin{equation}
+\label{eq:a12-U-block}
+U(q)=\operatorname{sgn}R(q)
+\sum_{j=\min(u_q,v_q)+1}^{\max(u_q,v_q)}w_j.
+\end{equation}
+The kernel in \eqref{eq:a12-unit-cut} is local, but its coefficient still
+contains every long open pair. At one cut all these contributions have the
+same sign. Useful cancellation must occur across different cuts.
+
+PNT already gives $\alpha_j,\beta_j\sim2j$ and $a_j,b_j\sim j/c_0$.
+Thus $d_j=o(j)$ and $\Delta_j=o(j)$ unconditionally: eventually excluding
+a macroscopic relative separation does not require RH. This relative
+smallness supplies no square-root cancellation, and a Taylor argument
+would still need uniform summable errors. The exact formulas avoid that
+requirement entirely.
+
+\subsection{Step 3: the nonpolynomial duration observable}
+\label{subsec:a12-duration}
+For this step take a balanced finite word of length $Q=2J$, so $R(Q)=0$.
+All its $J$ pairs are complete. Define half-open cut intervals and duration tails:
+\begin{equation}
+\label{eq:a12-halfopen}
+I_j=[\min(\alpha_j,\beta_j),\max(\alpha_j,\beta_j)),\qquad
+V_J(r)=\sum_{j=1}^J(|d_j|-r)_+.
+\end{equation}
+\begin{proposition}[Two-cut identity]
+\label{prop:a12-two-cut}
+For $0\le r<Q$,
+\begin{equation}
+\label{eq:a12-V}
+\boxed{V_J(r)=\frac12\sum_{q=0}^{Q-r-1}
+(|R(q)+R(q+r)|-r)_+.}
+\end{equation}
+For $r\ge Q$ use an empty sum. In particular,
+\begin{equation}
+\label{eq:a12-V-zero}
+V_J(0)=\sum_{q=0}^{Q-1}|R(q)|\ge J.
+\end{equation}
+For $0<z<1$,
+\begin{equation}
+\label{eq:a12-Phi}
+\Phi_J(z):=\sum_{j=1}^Jz^{|d_j|}
+=J-(1-z)V_J(0)+(1-z)^2\sum_{r=1}^{Q-1}z^{r-1}V_J(r).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Using $N_\pm(q)=(q\pm R(q))/2$ in the ordinal clock, pairs opening with
+plus and crossing both cuts have labels $N_-(q+r)<j\le N_+(q)$.
+Those opening with minus have labels $N_+(q+r)<j\le N_-(q)$.
+Their disjoint counts give
+\begin{equation}
+\label{eq:a12-Cr}
+C_r(q)=
+(N_+(q)-N_-(q+r))_++(N_-(q)-N_+(q+r))_+
+=\tfrac12(|R(q)+R(q+r)|-r)_+.
+\end{equation}
+An interval of length $\ell$ contains both cuts for $(\ell-r)_+$ choices
+of $q$. Double counting proves \eqref{eq:a12-V}. The case $r=0$ and
+$|d_j|\ge1$ give \eqref{eq:a12-V-zero}.
+Finally, sum the finite identity
+\begin{equation}
+\label{eq:a12-single-duration}
+z^\ell=1-(1-z)\ell+
+(1-z)^2\sum_{r=1}^{\ell-1}z^{r-1}(\ell-r)
+\end{equation}
+over the pairs.
+\end{proof}
+
+\begin{proposition}[Order survives a one-time height histogram]
+\label{prop:a12-order-example}
+The words $\mathrm{I}=++-+--+-$ and $\mathrm{II}=++--++--$ have the same
+height histogram but different duration tails and transforms.
+\end{proposition}
+\begin{proof}
+Their height lists are $(1,2,1,2,1,0,1,0)$ and $(1,2,1,0,1,2,1,0)$:
+both contain two zeros, four ones, and two twos.
+Their durations are $(2,3,2,1)$ and $(2,2,2,2)$, respectively. Therefore
+\begin{equation}
+\label{eq:a12-order-separation}
+V_{\rm I}(2)=1,\quad V_{\rm II}(2)=0,\qquad
+\Phi_{\rm I}(z)-\Phi_{\rm II}(z)=z(1-z)^2>0.
+\end{equation}
+Their quadratic duration sums also differ, $18$ versus $16$.
+Not every quadratic functional is insensitive to order.
+\end{proof}
+
+Order sensitivity is not yet arithmetic specificity. If $F_+,F_-$ are the
+distribution functions of the empirical probability measures
+$J^{-1}\sum_j\delta_{\alpha_j}$ and $J^{-1}\sum_j\delta_{\beta_j}$, then
+\begin{equation}
+\label{eq:a12-Wasserstein}
+\frac{V_J(0)}J=\frac1J\sum_j|\alpha_j-\beta_j|
+=\int_{\mathbb R}|F_+(t)-F_-(t)|\,dt.
+\end{equation}
+This is the classical one-dimensional monotone Wasserstein transport
+identity \cite{Vallender1974}. Neither monotone matching nor its first
+absolute cost is claimed as new.
+\subsubsection{What fixed-lag arithmetic input actually controls}
+\label{subsubsec:a12-local-input}
+The squarefree-clock two-point theorem obtained from Tao's logarithmic
+two-point theorem \cite{Tao2016} gives, for every fixed $r\ge1$,
+\begin{equation}
+\label{eq:a12-window-input}
+\frac1{\log X}\sum_{q\le X}\frac{(R(q+r)-R(q))^2}{q}\longrightarrow r.
+\end{equation}
+The clock transfer keeps a physical separation and a squarefree-sieve
+modulus fixed when applying the two-affine-form theorem.
+The error from omitted prime squares tends to zero as the sieve cutoff
+subsequently tends to infinity. Large physical separations have vanishing
+logarithmic tail because
+$\sum_{q\le X}(s_{q+r}-s_q)=O_r(X)$ by telescoping.
+Expanding the increment square then gives $r$ diagonal terms and finitely
+many correlations. These successive limits do not give uniformity in
+growing $r$.
+
+The precise relation to the duration observable is
+\begin{equation}
+\label{eq:a12-local-error}
+\left|C_r(q)-\left(|R(q)|-\frac r2\right)_+\right|
+\le\frac12|R(q+r)-R(q)|.
+\end{equation}
+It follows from the $1$-Lipschitz property of absolute value and positive part.
+Cauchy--Schwarz gives
+\begin{equation}
+\label{eq:a12-local-average}
+\limsup_{X\to\infty}\frac1{\log X}
+\sum_{q\le X}\frac{|C_r(q)-(|R(q)|-r/2)_+|}{q}
+\le\frac{\sqrt r}{2}.
+\end{equation}
+The unestimated main term depends on the absolute height. A theorem on
+fixed increments is therefore not automatically a bound for $V_J(r)$,
+even for fixed $r$. Moreover $V_J$ is unsigned and lacks the weights $w_j$;
+both transfers to $\delta$ require additional argument.
+
+\begin{remark}[Height, area, and prime energy are different]
+\label{rem:a12-scales}
+Let $H=\max_{q\le Q}|R(q)|$. The $H$ pairs active at a cut of height
+$\pm H$ each have duration at least $H$: for the $t$th active label,
+at least $H-t$ steps separate its opening from the cut and at least $t$
+steps separate the cut from its closing. Hence
+\begin{equation}
+\label{eq:a12-V-height}
+V_J(r)\ge H(H-r)_+.
+\end{equation}
+In particular $V_J(0)$ is an area, not a height.
+The bound $V_J(0)\ll_\epsilon J^{1/2+\epsilon}$ for every $\epsilon>0$
+is impossible because $V_J(0)\ge J$.
+A square-root-plus-$\epsilon$ height bound instead gives an area bound
+$O_\epsilon(J^{3/2+\epsilon})$.
+The cubic negative-excursion prime-separation energy is a different functional.
+\end{remark}
+
+\subsection{Step 4: holomorphy for a fixed duration cutoff}
+\label{subsec:a12-short-pairs}
+
+\begin{theorem}[Unconditional bounded-duration holomorphy]
+\label{thm:a12-short}
+For every fixed $L\ge1$ the series
+\begin{equation}
+\label{eq:a12-short}
+\delta_{\le L}(s)=\sum_{|d_j|\le L}w_j(a_j^{-s}-b_j^{-s})
+\end{equation}
+converges normally by pairs in $\Re s>1$ and is holomorphic there.
+For $\sigma=\Re s>1$,
+\begin{equation}
+\label{eq:a12-short-bound}
+\sum_{|d_j|\le L}w_j|a_j^{-s}-b_j^{-s}|
+\ll L|s|\left(\frac{\log2}{\sigma-1}+\frac1{(\sigma-1)^2}\right).
+\end{equation}
+The proof uses no Mertens estimate, density theorem, or linearisation.
+\end{theorem}
+\begin{proof}
+At physical cut $x$, put $q=Q(x)$. An active ordinal interval of length
+at most $L$ opened within the last $L$ positions. There are at most $L$
+such intervals, and each has label $j\le q\le x$, so
+$w_j\ll x\log(2x)$. The exact integral and Tonelli give
+\begin{align}
+\sum_{|d_j|\le L}w_j|a_j^{-s}-b_j^{-s}|
+&\le |s|\int_1^\infty x^{-\sigma-1}
+\sum_{\substack{|d_j|\le L\\\min(a_j,b_j)\le x<\max(a_j,b_j)}}w_j\,dx
+\label{eq:a12-short-majorant}\\
+&\ll L|s|\int_1^\infty x^{-\sigma}\log(2x)\,dx.
+\nonumber
+\end{align}
+The last integral equals the parenthesis in \eqref{eq:a12-short-bound}.
+On any compact set use its minimum real part and maximum $|s|$ to obtain
+a summable majorant for the suprema of the paired terms.
+\end{proof}
+
+This theorem also holds for arbitrary sign-occurrence lists in an
+increasing integer clock and weights $|w_j|\ll j\log(2j)$.
+Its generality is useful, but it is not an arithmetic cancellation theorem.
+
+For $\Re s>2$, dominated convergence gives
+$\delta_{\le L}\to\delta$ locally uniformly as $L\to\infty$.
+The displayed bound grows with $L$; it does not justify this limit on
+$\mathcal H$.
+
+\subsection{Step 5: long pairs and the sign involution}
+\label{subsec:a12-long-pairs}
+Large rank and large duration are different: an alternating word has
+$|d_j|=1$ at every rank, however large $w_j$ becomes.
+
+\begin{proposition}[Universal antisymmetry does not delete the long tail]
+\label{prop:a12-no-universal-tail}
+Sign reversal and ordinal matching alone do not justify discarding all
+pairs of duration greater than a fixed $L$.
+\end{proposition}
+\begin{proof}
+For $H>L$, take the auxiliary balanced word $(+1)^H(-1)^H$ on any
+increasing positive clock. Every duration equals $H$, but for real
+$\sigma>0$,
+\begin{equation}
+\label{eq:a12-tail-counterexample}
+\delta_{\le L}(\sigma)=0,\qquad
+\sum_{j=1}^H w_j(s_j^{-\sigma}-s_{H+j}^{-\sigma})>0.
+\end{equation}
+There are no short pairs. This disproves the claimed universal deletion,
+not a possible cancellation specific to the genuine M\"obius word.
+\end{proof}
+
+The global sign flip gives
+\begin{equation}
+\label{eq:a12-signflip}
+R\mapsto-R,\qquad d_j\mapsto-d_j,\qquad \delta(s)\mapsto-\delta(s).
+\end{equation}
+It has no action on $s$ and gives no equation under $s\mapsto3-s$.
+The zero row of $\alpha$ is unchanged, so the whole transform does not
+simply change sign either.
+
+If a universal functional satisfies
+$F(\varepsilon)\ge c\,\Psi(\|d(\varepsilon)\|_\infty)$ for both signs,
+then its evenisation
+$[F(\varepsilon)+F(-\varepsilon)]/2$ has the same lower bound.
+Thus odd cancellation alone cannot explain such universal coercivity.
+This does not exclude all even, nonpolynomial, or arithmetic-specific
+functionals.
+
+\subsection{Step 6: the precise original-order target}
+\label{subsec:a12-cauchy}
+For integer $X$ let
+\begin{equation}
+\label{eq:a12-delta-X}
+\delta_X(s)=\sum_{j\ge1}w_j
+\bigl(\mathbf1_{a_j\le X}a_j^{-s}-\mathbf1_{b_j\le X}b_j^{-s}\bigr).
+\end{equation}
+This is a finite sum in the original integer ordering.
+
+\subsubsection{The unfinished-pair term}
+\label{subsubsec:a12-boundary}
+Put $m_X=\min(N_+(X),N_-(X))$ and $h_X=|N_+(X)-N_-(X)|$. Exactly,
+\begin{equation}
+\label{eq:a12-boundary-split}
+\delta_X(s)=\sum_{j\le m_X}w_j(a_j^{-s}-b_j^{-s})+E_X(s),
+\end{equation}
+where
+\begin{equation}
+\label{eq:a12-boundary-term}
+E_X(s)=
+\begin{cases}
+\displaystyle\sum_{j=m_X+1}^{m_X+h_X}w_j a_j^{-s},
+ &N_+(X)>N_-(X),\\[2mm]
+\displaystyle-\sum_{j=m_X+1}^{m_X+h_X}w_j b_j^{-s},
+ &N_-(X)>N_+(X),\\
+0,&N_+(X)=N_-(X).
+\end{cases}
+\end{equation}
+At a real argument all terms of $E_X$ have the same sign.
+Convergence along balanced prefixes or after completing every pair does
+not justify convergence at arbitrary integer cutoffs.
+
+\subsubsection{Unresolved Cauchy estimate}
+\label{subsubsec:a12-target}
+The central target is, for every compact $K\subset\mathcal H$,
+\begin{equation}
+\label{eq:a12-target}
+\boxed{\lim_{X\to\infty}
+\sup_{\substack{Y\in\mathbb N\\Y\ge X}}
+\sup_{s\in K}|\delta_Y(s)-\delta_X(s)|=0.}
+\end{equation}
+A concrete sufficient estimate is
+$|\delta_Y(s)-\delta_X(s)|\le\eta_K(X)$ for all such $Y,s$, where an
+independently controlled $\eta_K(X)$ tends to zero.
+Complete short pairs, complete long pairs, and pairs cut by either endpoint
+must be handled with compatible uniformity.
+
+This is locally uniform convergence of original partial sums, not absolute
+convergence of individual integer terms, whose threshold remains $2$.
+A different grouping that gives analytic continuation is not automatically
+a proof of \eqref{eq:a12-target}.
+
+\subsection{Step 7: the rigorous transfer to RH}
+\label{subsec:a12-transfer}
+\begin{proposition}[The exact coefficient sum and its scale]
+\label{prop:a12-W-scale}
+Let $W(x)=\sum_{n\le x,\ \mu(n)\ne0}\mu(n)w_{j(n)}$. Then
+\begin{equation}
+\label{eq:a12-W}
+W(x)=D_w(N_+(x))-D_w(N_-(x))
+=SS(x)-\lfloor x\rfloor+Q(x)-\frac{M(x)(Q(x)+1)}2.
+\end{equation}
+There is $e(x)\to0$ such that, for sufficiently large $x$,
+\begin{equation}
+\label{eq:a12-W-scale}
+W(x)=c_0x\log x\,M(x)(1+e(x)),
+\end{equation}
+with both sides zero when $M(x)=0$.
+\end{proposition}
+\begin{proof}
+The difference of cumulative weights gives the first identity, and
+\eqref{eq:a12-ordinal} gives the second. PNT implies $Q(x)\sim2c_0x$ and
+$M(x)=o(x)$, hence both counters are $c_0x(1+o(1))$.
+Uniformly between them, $w_j=p_j-j\sim j\log j\sim c_0x\log x$.
+The block has signed length $M(x)$. This uses PNT, not an RH-sized bound.
+\end{proof}
+
+\begin{theorem}[Original-order criterion and RH]
+\label{thm:a12-transfer}
+The Cauchy target \eqref{eq:a12-target} is equivalent to RH.
+It is also equivalent to convergence of the ordinary series $\delta(\sigma)$
+for every real $\sigma>3/2$.
+\end{theorem}
+\begin{proof}
+Real convergence and Kronecker's lemma give $W(x)=o(x^\sigma)$.
+Consequently \eqref{eq:a12-W-scale} gives
+\begin{equation}
+\label{eq:a12-Kronecker}
+M(x)=o\left(\frac{x^{\sigma-1}}{\log x}\right).
+\end{equation}
+Taking $\sigma=3/2+\epsilon/2$ for each $\epsilon>0$ yields the
+Littlewood criterion for RH \cite{Littlewood1912,Titchmarsh1986}.
+Its needed direction follows because these estimates make
+$z\int_1^\infty M(x)x^{-z-1}\,dx$ holomorphic for $\Re z>1/2$.
+It agrees with $1/\zeta(z)$ for $\Re z>1$, so no zero is possible to
+the right of $1/2$; symmetry completes RH.
+
+Conversely, under RH, $M(x)=O_\eta(x^{1/2+\eta})$ gives
+$W(x)=O_\eta(x^{3/2+\eta}\log x)$.
+For compact $K\subset\mathcal H$ choose
+$0<\eta<\min_{s\in K}(\Re s-3/2)$. Partial summation gives exactly
+\begin{equation}
+\label{eq:a12-Abel-tail}
+\delta_Y(s)-\delta_X(s)
+=W(Y)Y^{-s}-W(X)X^{-s}
++s\int_X^Y W(x)x^{-s-1}\,dx.
+\end{equation}
+All terms tend to zero uniformly in $Y\ge X$ and $s\in K$.
+\end{proof}
+
+This is a classical transfer in new coefficients, not a proof of its
+unresolved premise. In the forward direction the Mertens estimate is
+a conclusion. Assuming it while proving the premise would be circular.
+
+The standard abscissa formula and the classical identification of the
+Mertens growth exponent with $\Theta$ also yield
+\begin{equation}
+\label{eq:a12-abscissae}
+\sigma_c(\alpha)=\sigma_c(\delta)=1+\Theta.
+\end{equation}
+Indeed $W$ has growth exponent $1+\Theta$; the signed prime part of $SS$
+has the same exponent, whereas $\lfloor x\rfloor-Q(x)=O(x)$.
+The abscissae refer to the original ordering, not to arbitrary paired
+rearrangements. An abscissa is not automatically a line of poles.
+
+The ordinary series $\alpha(3/2)$ diverges. Otherwise Kronecker's lemma
+would give $SS(x)=o(x^{3/2})$ and the same signed prime-block asymptotic
+would force $M(x)=o(\sqrt x/\log x)$, contrary to
+$M(x)=\Omega_\pm(\sqrt x)$ \cite{Ng2004,OdlyzkoTeRiele1985}.
+The stronger constants of the Mertens-conjecture disproof are unnecessary.
+Divergence of this series does not decide whether a continuation could
+have a finite value at the real point $3/2$.
+\subsection{Step 8: the separate continuation-and-poles route}
+\label{subsec:a12-continuation}
+The meromorphic route has a different sufficient objective:
+\begin{equation}
+\label{eq:a12-analytic-criterion}
+\boxed{
+\begin{aligned}
+\mathrm{RH}&\Longleftrightarrow B\in\mathcal O(\mathcal H)\\
+&\Longleftrightarrow
+\alpha-\delta\text{ admits holomorphic continuation to }\mathcal H.
+\end{aligned}}
+\end{equation}
+The first equivalence follows from Proposition~\ref{prop:a12-poles} and
+zeta symmetry; the second uses $A,C\in\mathcal O(\mathcal H)$ and
+\eqref{eq:a12-ABCD}, initially on $\Re s>2$.
+Separate holomorphy of both $\alpha$ and $\delta$ suffices; holomorphy of
+$\delta$ alone does not.
+
+Subtracting $\delta$ leaves the zero row and the ordinal part.
+Without a new independent estimate, this returns to a classical shifted
+reciprocal-zeta problem. There is no assumed global bijection between
+the poles of the full $\alpha$ and the zeros of $\zeta$.
+
+\subsubsection{8A: contours}
+\label{subsubsec:a12-contours}
+A contour route must establish continuation, control away from poles,
+and a count excluding poles. Uniform polynomial growth on a strip
+containing poles is impossible without removing their neighbourhoods
+or their principal parts. Furthermore,
+\begin{equation}
+\label{eq:a12-argument-principle}
+\frac1{2\pi i}\oint_\Gamma\frac{\alpha'}{\alpha}\,ds
+=N_{\rm zeros}(\Gamma)-N_{\rm poles}(\Gamma).
+\end{equation}
+A zero integral is not a zero pole count. A lower bound on a separating
+curve does not supply the missing interior count.
+For RH it suffices to work in the open half-plane $\mathcal H$;
+a strip crossing its boundary is not intrinsically necessary.
+
+\subsubsection{8B: positivity and the correctly shifted Li map}
+\label{subsubsec:a12-Li}
+One first needs a completed function with proved divisor, controlled
+growth, and an appropriate convergent product.
+For candidate poles $\varpi=1+\rho$, the transferred expression is
+\begin{equation}
+\label{eq:a12-Li}
+\lambda_n^\alpha=
+\lim_{T\to\infty}\sum_{\substack{\varpi=1+\rho\\|\Im\varpi|\le T}}
+\left[1-\left(\frac{\varpi-2}{\varpi-1}\right)^n\right],
+\end{equation}
+with multiplicities and the displayed summation convention.
+The map is not an arbitrary $1-\varpi_0/\varpi$:
+\begin{equation}
+\label{eq:a12-Li-circle}
+\left|\frac{\varpi-2}{\varpi-1}\right|=1
+\quad\Longleftrightarrow\quad\Re\varpi=\frac32.
+\end{equation}
+Li's theorem gives a criterion, not automatic positivity \cite{Li1997}.
+An ordinal implementation must derive the relevant form and prove every
+required inequality. Generic Gram positivity is insufficient.
+The sign involution supplies neither the divisor nor the completion.
+
+\subsubsection{8C: spectral realisation}
+\label{subsubsec:a12-spectral}
+A spectral programme would require:
+\begin{enumerate}[label=(\roman*)]
+\item a specified Hilbert space and densely defined self-adjoint operator;
+\item a justified determinant, regularised when necessary;
+\item an exact relation between its divisor and the relevant analytic divisor;
+\item an affine spectral map taking real spectrum to $\Re s=3/2$.
+\end{enumerate}
+Reality of a spectrum matters only after the divisor relation is proved.
+An arbitrary real-spectrum matrix, or an operator defined using already
+known zero ordinates, does not provide that relation independently.
+
+\subsection{Step 9: corrected rules and excluded shortcuts}
+\label{subsec:a12-rules}
+\begin{enumerate}[label=\textup{R\arabic*.},leftmargin=*]
+\item Do not assume an RH-equivalent estimate for $M,SS,W,d_j$ or a
+corresponding abscissa while trying to prove it. An independently proved
+equivalent assertion is not circular; neither is an unconditional bound.
+\item Distinguish original-order convergence, absolute convergence by
+pairs, and analytic continuation. Retain unfinished-pair boundary terms.
+\item Use the exact integral \eqref{eq:a12-exact-integral}. The presence of
+a displacement in an identity is not circular; assuming an RH-sized
+bound for it would be.
+\item Do not transfer poles or a functional equation from a single
+summand to $\alpha$. Coefficient size alone does not force a symmetry line.
+\item A power-saving prime-sum remainder requires a specified main term.
+A finite inverse-logarithm expansion does not supply it. This obstructs
+that approximation scheme, not every possible analytic continuation.
+\item A prime-index block of length $|M(x)|$ is not automatically a
+physical prime interval of length $\sqrt x$. No argument here identifies
+a single missing $\epsilon$ in a prime-interval bound as the sole obstacle.
+\item Fixed-lag logarithmic cancellation does not estimate the absolute
+height in \eqref{eq:a12-local-error}, growing lags, or the full signed
+weighted tail without further proof.
+\item An identity valid for every sign word is not by itself arithmetic
+specificity. Auxiliary words test a universal mechanism; they are not
+asserted to be the M\"obius sequence.
+\item Quadratic comparison theorems prove their stated comparisons only.
+Proposition~\ref{prop:a12-order-example} refutes the claim that every
+quadratic functional loses order.
+\item The off-boundary assertion
+\begin{equation}
+\label{eq:a12-L2-correction}
+\int_1^\infty M(x)^2x^{-2\sigma-1}\,dx<\infty
+\quad\text{for every }\sigma>1/2
+\end{equation}
+is equivalent to RH without simplicity of zeros. RH implies finiteness
+by choosing a smaller exponent. Conversely, Cauchy--Schwarz makes the
+Mellin integral of $M$ analytic to the right of $1/2$.
+The stronger weak Mertens condition
+$\int_1^X M(x)^2x^{-2}\,dx=O(\log X)$ has additional simplicity and
+negative-moment consequences \cite{Ng2004}.
+The active route here does not assume a quadratic estimate.
+\item Balanced finite words justify combinatorial identities, not
+replacement of all integer cutoffs by balanced cutoffs in an infinite
+analytic argument.
+\end{enumerate}
+
+\subsection{Step 10: comparison with established research programmes}
+\label{subsec:a12-literature}
+Each comparison separates what the cited work proves from what would
+still be needed for RH. The missing implication identified here is a
+logical assessment, not a claim that the programme is impossible or
+that its authors' valid theorem is erroneous.
+
+\subsubsection{10A: Mertens criteria and conditional moments}
+\label{subsubsec:a12-lit-Mertens}
+The Mellin identity \eqref{eq:a12-Mellin} and the Littlewood criterion
+connect cancellation of $\mu$ to zero exclusion
+\cite{Littlewood1912,Titchmarsh1986}.
+Replacing a Mertens bound by one for $SS$ or $W$ does not independently
+prove it. The additional occurrence-pair representation is the distinction
+here, not a weaker convergence threshold.
+
+Ng's distributional and moment theorems explicitly use RH and additional
+negative-moment hypotheses \cite{Ng2004}. Using their conclusions without
+those hypotheses to prove RH would reverse the logical direction.
+Here finite pairing identities and bounded-duration holomorphy are
+unconditional, but the infinite-tail estimate remains missing.
+
+\subsubsection{10B: Nyman--Beurling and B\'aez-Duarte}
+\label{subsubsec:a12-lit-NB}
+Let $\{y\}=y-\lfloor y\rfloor$. In $L^2(0,\infty)$ set
+\begin{equation}
+\label{eq:a12-NB}
+\rho_a(x)=\left\{\frac1{ax}\right\},\qquad
+\mathcal B_{\mathbb N}=\operatorname{span}\{\rho_a:a\in\mathbb N\}.
+\end{equation}
+B\'aez-Duarte's strengthening makes RH equivalent to
+$\mathbf1_{(0,1)}\in\overline{\mathcal B_{\mathbb N}}$
+\cite{BaezDuarte2002}. The missing RH step is the approximation, not
+nonnegativity of a squared norm.
+
+The present route has two actual occurrence clocks and fixed prime
+weights rather than freely selected approximating coefficients.
+Its target is nevertheless an infinite convergence statement.
+An arithmetic definition without mentioning zeta zeros is not unique
+to this construction, nor does it remove that obligation.
+
+\subsubsection{10C: Li--Weil positivity}
+\label{subsubsec:a12-lit-Li}
+Bombieri and Lagarias relate Li's criterion to general inequalities for
+complex multisets and to the Guinand--Weil explicit formula
+\cite{BombieriLagarias1999}. A positivity reformulation need not be
+specific to the original zeta notation. The unsupplied step is positivity
+for every required index or admissible test.
+
+Ordinal pairing gives explicit finite kernels, but their automatic Gram
+nonnegativity is not the needed arithmetic positivity. No equality between
+an ordinal form and the required Li--Weil form is established here.
+The shift $\rho\mapsto1+\rho$ in \eqref{eq:a12-Li} is an exact coordinate
+change, not a new positivity mechanism.
+
+\subsubsection{10D: Hilbert--P\'olya, Berry--Keating, and Connes}
+\label{subsubsec:a12-lit-spectral}
+Berry and Keating study an $xp$-based spectral interpretation and
+explicitly identify substantial speculative gaps \cite{BerryKeating1999}.
+Matching a spectral density or a semiclassical count would not identify
+every eigenvalue with a zeta zero. The exact divisor relation is essential.
+
+Connes supplies a different framework: critical zeros appear as an
+absorption spectrum, and hypothetical off-critical zeros as resonances.
+His work reduces RH to a trace-formula assertion \cite{Connes1998}.
+The existence of that spectral interpretation does not already exclude
+the resonances.
+
+Here the starting data are discrete occurrence lists and an exact finite
+summation identity, without postulating an operator. This changes the
+starting object but supplies no self-adjoint realisation. Adopting a
+spectral route would still require all four obligations of Step 8C.
+
+\subsubsection{10E: de Bruijn--Newman deformation}
+\label{subsubsec:a12-lit-Newman}
+In the de Bruijn--Newman family all zeros are real precisely beyond a
+threshold $\Lambda$. RH is equivalent to $\Lambda\le0$.
+Rodgers and Tao prove $\Lambda\ge0$ \cite{RodgersTao2018}.
+That proves Newman's conjecture, not the complementary inequality needed
+for RH; it is not a defect in their theorem.
+
+The present duration cutoff $L$ is not a heat-flow parameter.
+Holomorphy for every fixed $L$ does not give monotonic zero motion or a
+threshold theorem. Any such additional structure would need a proof.
+
+\subsubsection{10F: local correlations and short intervals}
+\label{subsubsec:a12-lit-local}
+Tao's logarithmic two-point theorem and the short-interval results of
+Matom\"aki and Radziwi\l\l establish genuine arithmetic cancellation in
+their respective regimes \cite{Tao2016,MatomakiRadziwill2016}.
+Neither states the weighted original-order Cauchy estimate
+\eqref{eq:a12-target}. Equation \eqref{eq:a12-local-error} identifies
+a specific unestimated height term, so describing the observable as local
+does not license an exchange of limits.
+
+The distinctive interface is an exact relation between matched-pair tails
+and two-time heights. The inherited theorem controls its increment error,
+not automatically its absolute height, sign, rank weight, or full tail.
+
+\subsubsection{10G: rigorous computation and statistical models}
+\label{subsubsec:a12-lit-numerics}
+Platt and Trudgian rigorously verify RH through height $3\cdot10^{12}$
+\cite{PlattTrudgian2021}. Their theorem certifies that finite interval; it
+does not quantify over all heights.
+
+Likewise, the present finite-word checks validate finite identities, and
+the numerical controls test mechanisms over a bounded range. Neither
+bounds the supremum over all $Y\ge X$ in \eqref{eq:a12-target}.
+A statistical resemblance, or its absence, does not supply a
+deterministic infinite-tail estimate.
+
+\subsection{Step 11: precise distinctiveness and limits of novelty}
+\label{subsec:a12-distinctiveness}
+The combination studied here has six demonstrated features:
+\begin{enumerate}[label=(\roman*),leftmargin=*]
+\item Ordinary primes are attached to separately numbered positive and
+negative occurrences of $\mu$, with an explicit zero row.
+\item Position, ordinal growth, and prime displacement separate exactly:
+the ordinal partial sum is $M(Q+1)/2$, and the excess is
+$D_w(N_+)-D_w(N_-)$.
+\item Integer-clock, squarefree-clock, inverse-pair, and active-cut
+descriptions have exact transition identities.
+\item Nonpolynomial duration observables distinguish paths having the
+same one-time height histogram.
+\item Every fixed-duration paired subseries is holomorphic for $\Re s>1$,
+with an explicit cutoff-dependent majorant.
+\item The original-order boundary term and the two-time height remainder
+remain visible instead of being suppressed by a rearrangement.
+\end{enumerate}
+
+These features describe this construction; they do not establish priority
+for each ingredient. Monotone transport, layer counting, Mellin transforms,
+partial summation, convergence-abscissa formulae, and positivity criteria
+have classical antecedents. The sign flip is generic, and the
+bounded-duration theorem applies to much more than the M\"obius word.
+
+The complete transform is a lossless encoding, not additional independent
+arithmetic data: $\mu(n)=0$ is detected by $S(n)=1$, and otherwise $\mu(n)$
+is the sign of $S(n)$. At one endpoint, $SS(n)$ depends only on $(M(n),Q(n))$.
+Duration data distinguish different histories, not two copies of an
+identical full input trajectory.
+
+The defensible difference from the cited programmes is the particular
+rank-prime encoding and its exact pair/cut interfaces.
+No exhaustive literature theorem establishes a difference from every other
+construction, and no theorem here proves the remaining RH-equivalent
+estimate easier than the classical one. Its potential value would be a
+new, independently controlled arithmetic mechanism at those interfaces;
+that mechanism is still unresolved.
+
+\subsection{Step 12: complete execution order and present status}
+\label{subsec:a12-execution}
+\begin{enumerate}[label=\textup{P\arabic*.},leftmargin=*]
+\item Fix clocks, weights, and finite-cut conventions: completed.
+\item Establish the initial series and $A+B+C+\delta$: completed.
+\item Separate poles of $B$ from unproved claims about $\alpha$: completed.
+\item Prove the exact pair integral and unit-cut reorganisation: completed.
+\item Prove the duration identity and order-sensitive example: completed.
+\item Determine the scope of the fixed-lag theorem: completed; an
+absolute-height remainder is left unestimated.
+\item Prove fixed-duration holomorphy: completed.
+\item Exclude universal tail deletion by sign antisymmetry: completed;
+M\"obius-specific cancellation is not excluded.
+\item Establish weighted signed cancellation uniformly over durations,
+including unfinished pairs: unresolved.
+\item Deduce \eqref{eq:a12-target}: unresolved because P9 is missing.
+\item Apply Theorem~\ref{thm:a12-transfer} only after proving its premise:
+the implication is proved; the premise is not.
+\item Alternatively prove \eqref{eq:a12-analytic-criterion}. Contours,
+positivity, and spectral constructions are admissible only with their
+additional obligations verified; none is a completed substitute.
+\end{enumerate}
+
+The next mathematical work is P9, not declaring a pole line or promoting a
+finite computation into an infinite bound. This chapter is an audited
+research programme with explicit intermediate results, not a proof of RH.
+
+\subsection{Step 13: the energy of SS and its exact critical threshold}
+\label{subsec:a12-SS-energy}
+For real $x$, the correct step-function subtraction is
+\begin{equation}
+\label{eq:a12-T-real}
+T(x)=SS(x)-\lfloor x\rfloor+Q(x)
+=\mathcal P(N_+(x))-\mathcal P(N_-(x)),\qquad
+\mathcal P(m)=\sum_{j\le m}p_j.
+\end{equation}
+Define the nonnegative, possibly infinite quantity
+\begin{equation}
+\label{eq:a12-I}
+\boxed{\mathcal I(\sigma)=\int_1^\infty
+\bigl(SS(x)-\lfloor x\rfloor+Q(x)\bigr)^2x^{-2\sigma-1}\,dx.}
+\end{equation}
+Using $x$ instead of $\lfloor x\rfloor$ changes $T$ by $-\{x\}$.
+Since $\{x\}$ is bounded, this change does not affect finiteness of
+\eqref{eq:a12-I} for $\sigma>0$.
+
+\begin{proposition}[Energy comparison, including the logarithmic weight]
+\label{prop:a12-energy-comparison}
+For sufficiently large $x_0>1$ and any real $\sigma$,
+\begin{equation}
+\label{eq:a12-energy-comparison}
+\mathcal I(\sigma)<\infty
+\quad\Longleftrightarrow\quad
+\int_{x_0}^\infty M(x)^2(\log x)^2
+x^{-2(\sigma-1)-1}\,dx<\infty.
+\end{equation}
+More precisely, the two nonnegative integrands have asymptotic ratio
+$c_0^2=9/\pi^4$, wherever $M(x)\ne0$, and both vanish when $M(x)=0$.
+\end{proposition}
+\begin{proof}
+The exact prime block in \eqref{eq:a12-T-real} has $|M(x)|$ terms.
+PNT gives $M(x)=o(x)$, $Q(x)\sim2c_0x$, and
+$p_j\sim j\log j$. Every index in the block is therefore
+$(1+o(1))c_0x$, uniformly over that block. Consequently
+\begin{equation}
+\label{eq:a12-T-asymptotic}
+T(x)=c_0x\log x\,M(x)(1+o(1)).
+\end{equation}
+This is a two-sided comparison in absolute value for all sufficiently
+large $x$, with the zero case treated exactly. Squaring and integrating
+proves the assertion. The finite initial interval causes no issue.
+\end{proof}
+
+\begin{theorem}[A zero forces energy divergence even at its endpoint]
+\label{thm:a12-energy-zero}
+If $\zeta(\rho)=0$ for a nontrivial zero $\rho=\beta+i\gamma$, then
+\begin{equation}
+\label{eq:a12-energy-zero}
+\boxed{\mathcal I(\sigma)=\infty\qquad(\sigma\le1+\beta).}
+\end{equation}
+In particular, unconditionally $\mathcal I(3/2)=\infty$.
+\end{theorem}
+\begin{proof}
+Suppose instead that $\mathcal I(1+\beta)<\infty$. By
+Proposition~\ref{prop:a12-energy-comparison},
+\begin{equation}
+\label{eq:a12-Jbeta}
+J_\beta:=\int_{x_0}^\infty
+M(x)^2(\log x)^2x^{-2\beta-1}\,dx<\infty.
+\end{equation}
+For $\varepsilon\ge0$, Cauchy--Schwarz gives the uniform estimate
+\begin{align}
+\left|\int_{x_0}^\infty
+M(x)x^{-\beta-\varepsilon-i\gamma-1}\,dx\right|
+&\le J_\beta^{1/2}
+\left(\int_{x_0}^\infty
+\frac{x^{-2\varepsilon-1}}{(\log x)^2}\,dx\right)^{1/2}
+\notag\\
+&\le \frac{J_\beta^{1/2}}{\sqrt{\log x_0}}.
+\label{eq:a12-energy-boundary-CS}
+\end{align}
+The same bound with absolute values inside the first integral proves
+absolute convergence at the boundary. The full integral
+$F(z)=\int_1^\infty M(x)x^{-z-1}\,dx$ is holomorphic for $\Re z>\beta$
+and remains bounded as $z=\rho+\varepsilon$ tends to $\rho$ from the right.
+On $\Re z>1$, it equals $1/(z\zeta(z))$. The identity theorem, applied to
+$z\zeta(z)F(z)=1$ away from $z=1$, propagates that identity throughout
+$\Re z>\beta$. It either already excludes a zero in this open half-plane,
+or contradicts boundedness when $z\to\rho$.
+Thus the endpoint integral diverges.
+For $\sigma\le1+\beta$, its integrand is at least that of the endpoint
+because $x\ge1$. Existence of a critical-line zero gives the final claim.
+\end{proof}
+
+\begin{corollary}[RH expressed as the energy of SS]
+\label{cor:a12-energy-RH}
+\begin{equation}
+\label{eq:a12-energy-RH}
+\boxed{\mathrm{RH}\quad\Longleftrightarrow\quad
+\mathcal I(\sigma)<\infty\ \hbox{for every }\sigma>3/2.}
+\end{equation}
+More generally,
+\begin{equation}
+\label{eq:a12-energy-abscissa}
+\inf\{\sigma\in\mathbb R:\mathcal I(\sigma)<\infty\}=1+\Theta.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Under RH, $M(x)\ll_\epsilon x^{1/2+\epsilon}$. For a given $\sigma>3/2$,
+choose $\epsilon<\sigma-3/2$ and use
+\eqref{eq:a12-energy-comparison}. Conversely, a zero with $\beta>1/2$
+contradicts the claimed finiteness at any
+$3/2<\sigma\le1+\beta$, by Theorem~\ref{thm:a12-energy-zero}.
+The functional equation then gives RH. The same argument with
+$M(x)\ll_\epsilon x^{\Theta+\epsilon}$ proves
+\eqref{eq:a12-energy-abscissa}. If the supremum $\Theta$ is attained by a
+zero, the integral diverges at $1+\Theta$; no endpoint assertion is
+inferred from a supremum that is not known to be attained.
+\end{proof}
+
+This proof transfers through $M$ using an explicit two-sided comparison;
+it does not assume a pole correspondence for the Mellin transform of $T$.
+Indeed the exact initial-half-plane identity is
+\begin{equation}
+\label{eq:a12-T-Mellin}
+s\int_1^\infty T(x)x^{-s-1}\,dx
+=\alpha(s)-A(s)=B(s)+C(s)+\delta(s).
+\end{equation}
+The term $\delta$ cannot be silently included in a holomorphic remainder.
+The logarithmic factor is also useful:
+it makes the boundary Cauchy--Schwarz integral
+$\int dx/(x\log^2x)$ finite in
+\eqref{eq:a12-energy-boundary-CS}.
+Off-boundary finiteness for every $\sigma>3/2$ does not impose simplicity
+of zeta zeros; it is different from a bounded critical mean-square
+condition.
+
+\subsection{Step 14: explicit poles and an attempted isolation of delta's singularities}
+\label{subsec:a12-pole-attempt}
+This step separates the meromorphic blocks from singularity claims that
+still depend on the remainder.
+
+\subsubsection{14A: what the two explicit zeta blocks actually imply}
+\label{subsubsec:a12-A-poles}
+The pole statement for $B$ is Proposition~\ref{prop:a12-poles}.
+For $A$, the pole at $s=1$ has residue $1-1/\zeta(2)$.
+At $s_0=\rho/2$, where $\rho$ is a nontrivial zero of multiplicity $m$,
+the potential pole order is
+\begin{equation}
+\label{eq:a12-A-order}
+\max\{m-\operatorname{ord}_{s=\rho/2}\zeta(s),0\}.
+\end{equation}
+For a simple zero with $\zeta(\rho/2)\ne0$ its residue is
+\begin{equation}
+\label{eq:a12-A-residue}
+\operatorname*{Res}_{s=\rho/2}A(s)
+=-\frac{\zeta(\rho/2)}{2\zeta'(\rho)}.
+\end{equation}
+At negative odd integers $A$ has simple poles arising from $\zeta(2s)$;
+at negative even integers the numerator's simple zero cancels the
+denominator's simple zero. Both $s=0$ and $s=1/2$ are regular.
+These are poles of the displayed block, not assertions about their
+survival in $\alpha$ outside the established common domain.
+In particular, claiming that all poles lie on $3/2$ would already require
+specifying nontrivial poles and proving what happens to the other blocks.
+
+\subsubsection{14B: a differentiated ordinal block}
+\label{subsubsec:a12-delta-model}
+The partial sum of the coefficients of $\delta$ is exactly
+\begin{equation}
+\label{eq:a12-W-pole}
+W(x)=D_w(N_+(x))-D_w(N_-(x))
+=T(x)-\frac{M(x)(Q(x)+1)}2.
+\end{equation}
+For $\Re s>2$, introduce
+\begin{equation}
+\label{eq:a12-Pdelta}
+F_\zeta(z)=\frac1{z\zeta(z)},\qquad
+P_\delta(s)=-c_0sF_\zeta'(s-1)=\frac{B(s)}s-B'(s).
+\end{equation}
+Differentiation under the absolutely convergent Mellin integral gives the
+exact decomposition
+\begin{align}
+\delta(s)&=P_\delta(s)+E_\delta(s),\label{eq:a12-delta-split}\\
+E_\delta(s)&=s\int_1^\infty
+\bigl(W(x)-c_0x\log x\,M(x)\bigr)x^{-s-1}\,dx.
+\label{eq:a12-Edelta}
+\end{align}
+The factor $B(s)/s$ has its natural removable interpretation at $s=0$.
+
+\begin{proposition}[Explicit higher-order pole candidates]
+\label{prop:a12-Pdelta}
+At $s_0=1+\rho$, if $\rho$ is a zero of multiplicity $m$, the explicit
+meromorphic function $P_\delta$ has a pole of order $m+1$.
+For a simple zero, with
+$r_\rho=c_0(1+\rho)/(\rho\zeta'(\rho))$,
+\begin{equation}
+\label{eq:a12-Pdelta-Laurent}
+P_\delta(s)=
+\frac{r_\rho}{(s-s_0)^2}
++\frac{r_\rho/s_0}{s-s_0}+O(1).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Insert $B(s)=r_\rho/(s-s_0)+b_0+O(s-s_0)$ into
+$B(s)/s-B'(s)$. In higher multiplicity, differentiation raises the
+leading pole order by one with a nonzero leading coefficient.
+\end{proof}
+
+This locates poles of $P_\delta$, and supplies a precise candidate
+principal part for $\delta$. It does not establish any pole of $\delta$.
+For example, holomorphy of $E_\delta$ in a neighbourhood of $s_0$ would
+make \eqref{eq:a12-Pdelta-Laurent} the principal part of $\delta$ there.
+No such neighbourhood is presently proved. The comparison
+$W(x)=c_0x\log x\,M(x)(1+o(1))$ alone gives no power saving in the
+Mellin remainder. The integral \eqref{eq:a12-Edelta} is justified for
+$\Re s>1+\Theta$ by the classical growth bound, but this does not cross
+the candidate singularities.
+
+For orientation, the first five positive critical ordinates give the
+following numerical coefficients. These are evaluations of the explicit
+blocks, not a computation of a continuation of $\delta$.
+\begin{center}
+\small
+\begin{tabular}{rrr}
+\toprule
+$\gamma$ in $\rho=1/2+i\gamma$&
+$\Re r_\rho$&$\Im r_\rho$\\
+\midrule
+14.1347251417&0.3751535752&$-0.0871438181$\\
+21.0220396388&0.2639742227&$ 0.0461618613$\\
+25.0108575801&0.2065891363&$-0.0811247572$\\
+30.4248761259&0.2042801902&$ 0.1128180994$\\
+32.9350615877&0.1811319824&$-0.1250906057$\\
+\bottomrule
+\end{tabular}
+\end{center}
+At each listed $s_0=3/2+i\gamma$, $r_\rho$ is the residue of $B$ and the
+double-pole coefficient of $P_\delta$.
+The accompanying code evaluates the Laurent limits independently.
+
+\subsubsection{14C: why a relative asymptotic does not prove meromorphy}
+\label{subsubsec:a12-branch-model}
+Here is an explicit control example, unrelated to any assumed formula
+for the true $W$. For $x\ge e$ take
+$W_{\rm mod}(x)=x^{s_0}(\log x+\log\log x)$.
+The second term is $o(x^{s_0}\log x)$ in modulus. Nevertheless, putting
+$z=s-s_0$ and $\Re z>0$ gives
+\begin{align}
+\int_e^\infty W_{\rm mod}(x)x^{-s-1}\,dx
+&=\int_1^\infty e^{-zu}(u+\log u)\,du\notag\\
+&=\frac{e^{-z}(1+z)}{z^2}+\frac{E_1(z)}z,
+\label{eq:a12-branch-example}
+\end{align}
+where the exponential integral satisfies
+$E_1(z)=-\gamma_{\!E}-\log z+O(z)$ near zero in a slit domain
+\cite{DLMF}. Thus a double-pole main term can coexist with a logarithmic
+branch singularity in a relatively smaller remainder.
+An actual meromorphic continuation for $\delta$ must exclude such
+possibilities by additional information, rather than by interpreting
+an asymptotic logarithmic weight as an exact pole order.
+
+\subsection{Step 15: audit of five routes suggested by the Connes survey}
+\label{subsec:a12-Connes-survey}
+The source for this comparison is Connes's 2026 survey, specifically
+Sections 2.1.3, 2.2.3--2.2.4, 4.1, and 6.4--6.6
+\cite{Connes2026}. Its conditional programmes and proved equivalences
+are not failed theorems. The following distinctions determine which
+parts transfer to the present object.
+
+\subsubsection{15A: stability of poles is local and conditional}
+\label{subsubsec:a12-pole-stability}
+If $F$ is meromorphic near $s_0$ and $H$ is holomorphic there, the negative
+powers of the Laurent series of $F+H$ equal those of $F$.
+This elementary fact proves stability of every pole and its principal
+part under a holomorphic additive perturbation.
+The Borchsenius--Jessen result discussed in the survey illustrates very
+different behaviour for zeros after adding a nonzero constant.
+It does not prove that every conceivable perturbation destroys a zero
+alignment.
+
+For $\alpha=B+(A+C+\delta)$, the stability argument is available precisely
+where $A+C+\delta$ is known to be holomorphic.
+It supplies no holomorphy of that perturbation and no unconditional
+bijection from the zeros of $\zeta$ to the poles of $\alpha$.
+The exact pole bijection currently belongs to $B$.
+
+\subsubsection{15B: Voronin universality does not forbid a polynomial lower bound}
+\label{subsubsec:a12-universality}
+Voronin's theorem gives approximation to fixed nonvanishing targets on
+suitable compact subsets of $1/2<\Re z<1$ by vertical translates of
+$\zeta$. The approximation tolerance and the translation height are
+different quantifiers. Qualitative universality does not assert an
+error smaller than every inverse power of that height.
+
+There is a concrete countercheck to the proposed obstruction. Euler
+summation gives
+\begin{equation}
+\label{eq:a12-zeta-elementary}
+\zeta(z)=\frac{z}{z-1}
+-z\int_1^\infty \{x\}x^{-z-1}\,dx\qquad(\Re z>0,\ z\ne1).
+\end{equation}
+On $3/2+\eta\le\Re s\le2-\eta$, for $0<\eta<1/4$ and $|\Im s|\ge1$,
+it implies $|\zeta(s-1)|\le C_\eta(1+|\Im s|)$. Hence at every regular
+point of $B$ in this closed substrip,
+\begin{equation}
+\label{eq:a12-B-lower}
+\boxed{|B(s)|\ge\frac{c_\eta}{1+|\Im s|}.}
+\end{equation}
+Thus the factor containing $1/\zeta(s-1)$ actually has a polynomial
+lower bound compatible with universality. This proves nothing comparable
+for the sum $\alpha$, where cancellation between summands is possible.
+It does disprove the assertion that universality alone closes the entire
+contour route. The other contour obligations of this chapter remain.
+
+\subsubsection{15C: a finite prime window is not yet Weil positivity}
+\label{subsubsec:a12-Weil-window}
+Use the symmetric multiplicative convention of the survey's Section 4.1:
+$g^*(x)=\overline{g(x^{-1})}$, Haar measure $dx/x$, and Mellin--Fourier
+transform $\widehat g(t)=\int_0^\infty g(x)x^{-it}\,dx/x$.
+The Weil criterion has the form
+\begin{equation}
+\label{eq:a12-Weil}
+\sum_v W_v(g*g^*)\le0
+\quad\hbox{for all admissible }g,\qquad
+\widehat g(i/2)=\widehat g(-i/2)=0,
+\end{equation}
+with the survey's sign convention. Its nonarchimedean terms are
+\begin{equation}
+\label{eq:a12-Weil-primes}
+W_p(f)=(\log p)\sum_{m\ge1}p^{-m/2}
+\bigl(f(p^m)+f(p^{-m})\bigr).
+\end{equation}
+If $g$ is supported in $[\lambda^{-1},\lambda]$, then $g*g^*$ is
+supported in $[\lambda^{-2},\lambda^2]$; only prime powers
+$p^m\le\lambda^2$ occur. The archimedean term is still essential, and
+RH requires all windows and all admissible tests.
+
+By contrast, $E_{\rm mid}=\operatorname{sgn}(M)\sum_i \tau_i g_i$ is
+linear in the consecutive prime gaps $g_i$. Its square is a rank-one
+quadratic expression in that gap vector. It is not the Weil form merely
+because only finitely many primes occur. Here $\tau_i$ denotes the triangular
+gap weight of the residual, distinct from $w_j=p_j-j$.
+Even asking whether a finite vector belongs to the domain of
+$QW_\lambda$ requires an embedding into the function space.
+A quadratic form is not itself a subspace to which a vector can be
+orthogonal.
+
+A well-posed finite test would specify a linear map
+\begin{equation}
+\label{eq:a12-Weil-embedding}
+\mathcal J_\lambda:\mathbb R^k\longrightarrow
+\{g\in C_c^\infty((\lambda^{-1},\lambda)):
+\widehat g(\pm i/2)=0\}
+\end{equation}
+and calculate the pulled-back matrix
+$H_{ij}=QW_\lambda(\mathcal J_\lambda e_i,\mathcal J_\lambda e_j)$.
+Then $\tau^\mathsf{T}H\tau$ is defined and checkable.
+No canonical embedding, equality with $E_{\rm mid}$, or implication
+covering all admissible tests is established by the finite-window
+observation. That is the precise missing identification.
+
+\subsubsection{15D: an exact determinant with entries zero or signed primes}
+\label{subsubsec:a12-determinant}
+The proposed finite algebraic construction is possible.
+First recall why the classical Redheffer determinant works. Let
+$Z_{ij}=\mathbf1_{i\mid j}$ for $1\le i,j\le n$.
+It is upper triangular with determinant $1$, and
+$(Z^{-1})_{ij}=\mu(j/i)$ when $i\mid j$, zero otherwise.
+Replacing its first column by the all-ones vector gives
+$R_n=Z+(\mathbf1-e_1)e_1^\mathsf{T}$. The determinant lemma yields
+\begin{equation}
+\label{eq:a12-Redheffer}
+\det R_n=1+e_1^\mathsf{T}Z^{-1}(\mathbf1-e_1)
+=\sum_{j\le n}\mu(j)=M(n).
+\end{equation}
+This is the classical divisor-incidence construction recalled in
+\cite{Connes2026}.
+
+For the present transform, a different elementary encoding suffices.
+Put
+\begin{equation}
+\label{eq:a12-prime-block-matrix}
+U=\begin{pmatrix}2&3\\3&5\end{pmatrix},\qquad
+U^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix},\qquad \det U=1.
+\end{equation}
+Given column blocks $u_i,v_i\in\mathbb Z^2$, form
+\begin{equation}
+\label{eq:a12-bordered-matrix}
+\mathcal R(u,v)=
+\begin{pmatrix}
+U&0&\cdots&0&u_1\\
+0&U&\cdots&0&u_2\\
+\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&0&\cdots&U&u_m\\
+v_1^\mathsf{T}&v_2^\mathsf{T}&\cdots&v_m^\mathsf{T}&0
+\end{pmatrix}.
+\end{equation}
+\begin{theorem}[Prime-entry determinant representation]
+\label{thm:a12-determinants}
+There are explicit integer matrices $\mathcal R_T(n)$ of size
+$2Q(n)+1$ and $\mathcal R_{SS}(n)$ of size $2n+1$, all of whose entries
+belong to $\{0\}\cup\{\pm p_j:j\ge1\}$, such that
+\begin{equation}
+\label{eq:a12-det-identities}
+\boxed{\det\mathcal R_T(n)=T(n),\qquad
+\det\mathcal R_{SS}(n)=SS(n).}
+\end{equation}
+\end{theorem}
+\begin{proof}
+The Schur complement of the diagonal block
+$D=\operatorname{diag}(U,\ldots,U)$ gives
+\begin{equation}
+\label{eq:a12-Schur}
+\det\mathcal R(u,v)=-\sum_{i=1}^m v_i^\mathsf{T}U^{-1}u_i.
+\end{equation}
+For any zero or signed prime $t_i$, choose
+$u_i=(t_i,0)^\mathsf{T}$ and $v_i=(-2,-3)^\mathsf{T}$.
+Then
+$v_i^\mathsf{T}U^{-1}u_i=(-10+9)t_i=-t_i$.
+For $\mathcal R_T(n)$ use the $Q(n)$ signed-prime summands $S(s_q)$.
+
+For $\mathcal R_{SS}(n)$ use one block per integer $i\le n$.
+If $\mu(i)\ne0$, use the preceding choice with $t_i=S(i)$.
+If $\mu(i)=0$, choose instead
+$u_i=(5,7)^\mathsf{T}$ and $v_i=(-2,-7)^\mathsf{T}$.
+In this case $U^{-1}u_i=(4,-1)^\mathsf{T}$ and
+$-v_i^\mathsf{T}U^{-1}u_i=1=S(i)$.
+Every entry is zero or a signed prime, and summing the contributions
+in \eqref{eq:a12-Schur} proves both identities.
+\end{proof}
+For example, at $n=4$ the transformed sequence is $(2,-2,-3,1)$, giving
+$\det\mathcal R_T(4)=-3$ and $\det\mathcal R_{SS}(4)=-2$.
+
+This settles the existence question, but the block construction encodes
+any sum of signed primes, with a separate gadget for a unit summand.
+It is not a newly proved divisor-incidence constraint.
+The already established transfer gives
+\begin{equation}
+\label{eq:a12-det-RH}
+\mathrm{RH}\quad\Longleftrightarrow\quad
+|\det\mathcal R_T(n)|\ll_\epsilon n^{3/2+\epsilon}
+\quad\hbox{for every }\epsilon>0.
+\end{equation}
+The determinant growth estimate remains unproved.
+Neither the representation nor the general Hadamard determinant
+inequality supplies this bound. The construction is finite and testable;
+its RH-strength estimate still requires the original arithmetic cancellation.
+
+\subsubsection{15E: what regularising the pair measure actually gives}
+\label{subsubsec:a12-GW}
+The Guinand--Weil formula applies to an admissible test function.
+A signed atomic measure is not such a function until regularised.
+The finite regularisation can be worked out exactly, with no continuation
+of $\delta$ assumed.
+Set $c_n=\mu(n)w_{j(n)}$ at squarefree $n$ and $c_n=0$ otherwise, and
+\begin{equation}
+\label{eq:a12-GW-regularise}
+\nu_X=\sum_{n\le X}c_n\delta_{\log n},\qquad
+h_{X,\varepsilon}=\varphi_\varepsilon*\nu_X,\qquad
+f_{X,\varepsilon,s}(x)=x^{-s}h_{X,\varepsilon}(\log x),
+\end{equation}
+where $\varphi_\varepsilon\in C_c^\infty(\mathbb R)$.
+This $\nu_X$ retains unfinished pairs; it is the logarithmic pushforward
+of the original-order coefficient measure. Write
+\begin{equation}
+\label{eq:a12-Phi-eps}
+\Phi_\varepsilon(v)=\int_{\mathbb R}\varphi_\varepsilon(u)e^{vu}\,du,
+\qquad \delta_X(s)=\sum_{n\le X}c_nn^{-s}.
+\end{equation}
+For the unnormalised Mellin convention
+$\widetilde f(z)=\int_0^\infty f(x)x^{z-1}\,dx$, direct substitution gives
+\begin{equation}
+\label{eq:a12-GW-Mellin}
+\widetilde f_{X,\varepsilon,s}(z)
+=\Phi_\varepsilon(z-s)\delta_X(s-z).
+\end{equation}
+Using the survey's Section 2.1.3 convention, the explicit formula becomes
+\begin{align}
+\sum_\rho\Phi_\varepsilon(\rho-s)\delta_X(s-\rho)
+={}&\Phi_\varepsilon(-s)\delta_X(s)
++\Phi_\varepsilon(1-s)\delta_X(s-1)\notag\\
+&-\sum_v W_v(f_{X,\varepsilon,s}).
+\label{eq:a12-GW-finite}
+\end{align}
+Zeros are counted with multiplicity. At fixed $X,\varepsilon,s$ the
+smooth compact support gives rapid vertical decay of the Mellin
+transform, so the zero sum is legitimate. Here the unnormalised local
+terms are
+\begin{equation}
+\label{eq:a12-GW-local}
+W_p(f)=(\log p)\sum_{m\ge1}
+\bigl(f(p^m)+p^{-m}f(p^{-m})\bigr);
+\end{equation}
+the $p^{-m/2}$ in \eqref{eq:a12-Weil-primes} belongs to the different,
+symmetric normalisation.
+
+Equation \eqref{eq:a12-GW-finite} is a proved finite regularised identity.
+It is not a closed continuation formula for $\delta(s)$: it also
+contains $\delta_X(s-1)$, all the shifted values $\delta_X(s-\rho)$,
+and local terms depending on the regularisation and cutoff.
+Passing to $X\to\infty$ and then removing the regularisation requires
+uniform summability or another justified limiting procedure.
+That arithmetic estimate is not supplied by admissibility of each
+finite test. This route remains meaningful, with the limiting step
+explicit, rather than bypassing the unresolved control of $\delta$.
+
+\subsubsection{15F: the survey's current programme and the remaining work here}
+\label{subsubsec:a12-survey-status}
+The survey's Sections 6.4--6.6 distinguish several established
+constructions from further obligations: a simplicity and evenness
+property for the lowest eigenfunction of the truncated Weil form, and
+sufficient control relating that eigenfunction to another family of
+approximants. Convergence for one family cannot simply be transferred
+to another because they appear related. This comparison is recorded
+without pursuing an operator route in the present programme.
+
+The same logical issue occurs here: every fixed-duration
+$\delta_{\le L}$ can be holomorphic in a large half-plane while the
+limit as $L\to\infty$ has singularities. The new determinant identity,
+the finite Guinand--Weil identity, and the energy equivalence are
+established intermediate statements. None supplies the missing
+uniform arithmetic estimate.
+
+\begin{center}
+\fbox{\parbox{0.91\linewidth}{
+What remains unresolved is the arithmetic estimation of the signed,
+weighted two-time terms, including unfinished pairs.
+The two-cut identity is exact; by itself it does not control $\delta$.
+The explicit poles of $B$ and $P_\delta$ have been located.
+The singularities of the full $\delta$, and their effect on $\alpha$,
+remain unproved without control of $E_\delta$ or another valid
+continuation mechanism.}}
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Ng2004}
+N. Ng,
+The distribution of the summatory function of the M\"obius function,
+\emph{Proc. London Math. Soc.} (3) \textbf{89} (2004), 361--389.
+DOI: 10.1112/S0024611504014741; arXiv:math/0310381.
+\bibitem{OdlyzkoTeRiele1985}
+A. M. Odlyzko and H. J. J. te Riele,
+Disproof of the Mertens conjecture,
+\emph{J. Reine Angew. Math.} \textbf{357} (1985), 138--160.
+DOI: 10.1515/crll.1985.357.138.
+\bibitem{Littlewood1912}
+J. E. Littlewood,
+Quelques cons\'equences de l'hypoth\`ese que la fonction $\zeta(s)$ de Riemann
+n'a pas de z\'eros dans le demi-plan $\Re s>1/2$,
+\emph{C. R. Acad. Sci. Paris} \textbf{154} (1912), 263--266.
+\bibitem{MatomakiRadziwill2016}
+K. Matom\"aki and M. Radziwi\l\l,
+Multiplicative functions in short intervals,
+\emph{Ann. of Math.} (2) \textbf{183} (2016), no.~3, 1015--1056.
+DOI: 10.4007/annals.2016.183.3.6; arXiv:1501.04585.
+\bibitem{Tao2016}
+T. Tao,
+The logarithmically averaged Chowla and Elliott conjectures for two-point correlations,
+\emph{Forum Math. Pi} \textbf{4} (2016), e8, 36 pp.
+DOI: 10.1017/fmp.2016.6; arXiv:1509.05422.
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D. R. Heath-Brown, Clarendon Press, Oxford, 1986.
+\bibitem{Li1997}
+X.-J. Li,
+The positivity of a sequence of numbers and the Riemann hypothesis,
+\emph{J. Number Theory} \textbf{65} (1997), no.~2, 325--333.
+\href{https://doi.org/10.1006/jnth.1997.2137}{DOI: 10.1006/jnth.1997.2137}.
+\bibitem{BombieriLagarias1999}
+E. Bombieri and J. C. Lagarias,
+Complements to Li's criterion for the Riemann hypothesis,
+\emph{J. Number Theory} \textbf{77} (1999), no.~2, 274--287.
+\href{https://doi.org/10.1006/jnth.1999.2392}{DOI: 10.1006/jnth.1999.2392}.
+\bibitem{BaezDuarte2002}
+L. B\'aez-Duarte,
+A strengthening of the Nyman--Beurling criterion for the Riemann hypothesis,
+preprint, 2002.
+\href{https://arxiv.org/abs/math/0202141}{arXiv:math/0202141}.
+\bibitem{BerryKeating1999}
+M. V. Berry and J. P. Keating,
+$H=xp$ and the Riemann zeros,
+in \emph{Supersymmetry and Trace Formulae}, NATO ASI Series, vol.~370,
+1999, pp.~355--367.
+\href{https://doi.org/10.1007/978-1-4615-4875-1_19}{DOI: 10.1007/978-1-4615-4875-1\_19}.
+\bibitem{Connes1998}
+A. Connes,
+Trace formula in noncommutative geometry and the zeros of the Riemann zeta
+function, preprint, 1998.
+\href{https://arxiv.org/abs/math/9811068}{arXiv:math/9811068}.
+\bibitem{RodgersTao2018}
+B. Rodgers and T. Tao,
+The de Bruijn--Newman constant is non-negative,
+preprint, 2018, revised version 5, 2021.
+\href{https://arxiv.org/abs/1801.05914v5}{arXiv:1801.05914v5}.
+\bibitem{PlattTrudgian2021}
+D. Platt and T. Trudgian,
+The Riemann hypothesis is true up to $3\cdot10^{12}$,
+\emph{Bull. Lond. Math. Soc.} \textbf{53} (2021), 792--797.
+\href{https://doi.org/10.1112/blms.12460}{DOI: 10.1112/blms.12460};
+\href{https://arxiv.org/abs/2004.09765}{arXiv:2004.09765}.
+\bibitem{Vallender1974}
+S. S. Vallender,
+Calculation of the Wasserstein distance between probability distributions on
+the line, \emph{Theory Probab. Appl.} \textbf{18} (1974), no.~4, 784--786.
+\href{https://doi.org/10.1137/1118101}{DOI: 10.1137/1118101}.
+\bibitem{Connes2026}
+A. Connes,
+The Riemann Hypothesis: Past, Present and a Letter Through Time,
+preprint, version 1, February 2026.
+\href{https://arxiv.org/abs/2602.04022v1}{arXiv:2602.04022v1}.
+\bibitem{DLMF}
+NIST Digital Library of Mathematical Functions,
+Sections 6.6 and 25.10, consulted 7 September 2026.
+\href{https://dlmf.nist.gov/6.6}{dlmf.nist.gov/6.6};
+\href{https://dlmf.nist.gov/25.10}{dlmf.nist.gov/25.10}.
+\end{thebibliography}
+\end{document}

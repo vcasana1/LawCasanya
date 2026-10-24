@@ -1,0 +1,38 @@
+Core theorem compatibility checks
+input = data/g_hp.bin
+input sha256 = 80c7bb512e210922397fd36b5bdfb97239cc0c5ee73dc1ec57a919ce41b367b2
+ordinates = 22491
+ordinate range = [14.134725141735, 19999.275621078454]
+
+Level-one exact-clock reduction
+C_N = +0.777204389314 +0.768179110409i
+Q_N^(H) = +0.777328038812 +0.768246161499i
+|C_N-Q_N^(H)| = 1.406593295109e-04
+midpoint clock-defect sd = 0.297362294
+
+Conditional complex centroid limit
+L = +0.776894260793254 +0.767855668864547i
+|C_N-L| = 4.481005826362e-04
+Re(C_N-L) = +3.101285209060e-04
+Im(C_N-L) = +3.234415444553e-04
+
+Pair identities at N=512 (direct O(N^2) sum versus closed form)
+triangular pair closure error = 9.663e-13
+trajectory pair closure error = 1.108e-12
+full-N triangular asymptotic remainder = 9.713774055e-04
+full-N trajectory energy E_N = 3.575354169
+full-N E_N/log(N)^2 = 0.035604769
+full-N max_(n<=N)|S_n|/log(N) = 0.404122685
+
+Centroid inversion finite-difference closure
+u=0.250000000000: max closure error = 1.836e-12
+u=0.500000000000: max closure error = 1.792e-12
+u=1.000000000000: max closure error = 4.566e-12
+u=0.693147180560: max closure error = 3.570e-09
+u=2.000000000000: max closure error = 7.388e-12
+
+Montgomery identity, N=192, alpha=0.65
+direct weighted pair sum = 194.792615792839
+smoothed trace integral = 194.792615832027
+absolute quadrature discrepancy = 3.919e-08
+figure = figures/core_theorem_compatibility.png

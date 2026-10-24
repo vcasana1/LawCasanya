@@ -1,0 +1,14 @@
+Lambert centroid and lattice-pair counterexample
+input = data/rvm_tau_2001052.bin
+input sha256 = ae9d35415ee924504638d96e9778a2f63f20e9c1d2ae14ce3ecf35f775bce57a
+levels = 2001052
+max float64 |M(tau_k)-(k-1/2)| = 4.657e-10
+C_N^M = +0.041570229566 +1.757541724624i
+successive-doubling convergence check
+mean |C_(2N)-C_N|*N/log(N)^2 = 0.018281615
+sd = 0.008659363
+min = 0.000958714
+max = 0.036188306
+unfolded pair locations = positive integers exactly in the defining clock
+comparison process = continuous 1-sinc(s)^2 density
+figure = figures/rvm_counterexample_validation.png

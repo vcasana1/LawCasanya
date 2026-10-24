@@ -1,0 +1,1341 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{mathtools,amssymb,amsfonts,amsthm}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Zcal}{\mathcal Z}
+\newcommand{\Acal}{\mathscr A}
+\newcommand{\dd}{\,d}
+
+\title[Transform Properties of the Riemann Zeta Function]{Transform Properties of the Riemann Zeta Function:\\Critical-Line Phase Coordinates, Quarter-Turn Geometry, Exact Length Isometry, and Monotone Area Action}
+\author{Víctor Casaña-Giner}
+\address{Bio Logic Crop Science S.L.}
+\thanks{ORCID: 0000-0002-8252-2608}
+\date{Version 7 --- August 2026}
+
+\begin{document}
+
+\begin{abstract}
+For $1/2\le \sigma\le 1$ consider the two-real-variable zeta transform
+\[
+\Zcal(\sigma,t)=\zeta(\sigma+it).
+\]
+The elementary Cauchy--Riemann identity $\Zcal_\sigma=-i\Zcal_t$ has a rigid geometric content.  We collect and prove its exact consequences, beginning from the critical-line Hardy representation and the natural zero-to-zero phase coordinate.  The two coordinate derivatives are orthogonal and isometric; the pullback metric is conformal; arbitrary oblique sections obey an exact length law; longitudinal and transverse length measures and all corresponding $L^p$ energies coincide; the Jacobian equals the common quadratic energy density; the map is harmonic; and every $t$-derivative satisfies the same quarter-turn equation.  For arcs whose moving endpoints remain on a fixed line through the origin, the oriented line action has derivative exactly equal to the positive Dirichlet energy, so its increment equals the oriented area swept by the transform.  We also record the fixed phase-coordinate generator attached to a critical-line zero interval and its exact coefficient derivative.  For the orthogonal--cubic quotient we prove nonvanishing of every projected state, projective immersion, unavoidable forcing of $\sigma=1/2$ by the Violet node class, and global projective injectivity of the full family.  No hypothesis on the location or statistics of the nontrivial zeros is used in the transform identities themselves.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\section{The vertical zeta family and the critical-line trace}
+
+\begin{definition}[Vertical zeta family]
+For
+\[
+\frac12\le \sigma\le 1,
+\]
+define
+\begin{equation}
+\boxed{\Zcal(\sigma,t)=\zeta(\sigma+it).}
+\label{eq:zeta-transform}
+\end{equation}
+The critical-line member is
+\begin{equation}
+\boxed{\Zcal_0(t):=\Zcal\!\left(\frac12,t\right)=\zeta\!\left(\frac12+it\right).}
+\label{eq:critical-member}
+\end{equation}
+\end{definition}
+
+The classical Hardy representation is
+\begin{equation}
+\boxed{
+\Zcal_0(t)=Z(t)e^{-i\vartheta(t)},\qquad Z(t)\in\R.
+}
+\label{eq:hardy}
+\end{equation}
+Thus the associated three-dimensional trace is
+\begin{equation}
+\Gamma(t)=\bigl(t,\Re\Zcal_0(t),\Im\Zcal_0(t)\bigr)
+=\bigl(t,Z(t)\cos\vartheta(t),-Z(t)\sin\vartheta(t)\bigr).
+\label{eq:trace}
+\end{equation}
+Differentiating gives
+\begin{equation}
+\boxed{
+\partial_t\Zcal_0(t)
+=e^{-i\vartheta(t)}\bigl(Z'(t)-i\vartheta'(t)Z(t)\bigr),
+}
+\label{eq:hardy-derivative}
+\end{equation}
+and therefore
+\begin{equation}
+\boxed{
+|\partial_t\Zcal_0(t)|^2
+=Z'(t)^2+\vartheta'(t)^2Z(t)^2.
+}
+\label{eq:critical-speed}
+\end{equation}
+
+\begin{proof}
+Equation \eqref{eq:hardy-derivative} follows by the product rule, and taking the squared modulus gives \eqref{eq:critical-speed} because $Z,Z',\vartheta'$ are real.
+\end{proof}
+
+\section{Zero-to-zero intervals and the uniform phase coordinate}
+
+Let $\gamma_n<\gamma_{n+1}$ be consecutive ordinates at which
+\[
+\Zcal_0(\gamma_n)=\Zcal_0(\gamma_{n+1})=0.
+\]
+On the open interval $I_n=(\gamma_n,\gamma_{n+1})$, the real function $Z$ has constant sign.  Put
+\[
+\varepsilon_n=\operatorname{sgn}Z(t),\qquad t\in I_n,
+\]
+and define
+\begin{equation}
+\Omega_n=\vartheta(\gamma_{n+1})-\vartheta(\gamma_n).
+\label{eq:Omega}
+\end{equation}
+After the fixed rotation
+\[
+\widehat \Zcal_{0,n}(t)
+=\varepsilon_n e^{i\vartheta(\gamma_n)}\Zcal_0(t),
+\]
+one has
+\begin{equation}
+\widehat \Zcal_{0,n}(t)
+=|Z(t)|e^{-i[\vartheta(t)-\vartheta(\gamma_n)]}.
+\label{eq:rotated-critical}
+\end{equation}
+
+\begin{lemma}[Global validity of the phase coordinate]
+\label{lem:phase-coordinate-validity}
+For every pair $\gamma_n<\gamma_{n+1}$ of consecutive positive ordinates of zeros of the critical-line function $\Zcal_0(t)$,
+\begin{equation}
+\boxed{
+\vartheta'(t)>0
+\qquad
+(\gamma_n\le t\le\gamma_{n+1}),
+}
+\label{eq:theta-prime-positive}
+\end{equation}
+and therefore
+\begin{equation}
+\boxed{\Omega_n>0.}
+\label{eq:Omega-positive}
+\end{equation}
+Consequently \eqref{eq:tn} below defines a unique smooth increasing diffeomorphism
+\[
+t_n:[0,1]\longrightarrow[\gamma_n,\gamma_{n+1}],
+\]
+and
+\begin{equation}
+\boxed{
+t_n'(q)=\frac{\Omega_n}{\vartheta'(t_n(q))}>0.
+}
+\label{eq:tnprime}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+From the defining formula for the Riemann--Siegel phase,
+\[
+\vartheta(t)
+=\Im\log\Gamma\!\left(\frac14+\frac{it}{2}\right)
+-\frac t2\log\pi,
+\]
+one obtains
+\begin{equation}
+\vartheta'(t)
+=\frac12\Re\psi\!\left(\frac14+\frac{it}{2}\right)
+-\frac12\log\pi
+\label{eq:theta-digamma}
+\end{equation}
+and
+\begin{equation}
+\vartheta''(t)
+=-\frac14\Im\psi'\!\left(\frac14+\frac{it}{2}\right).
+\label{eq:theta-trigamma}
+\end{equation}
+For $\Re z>0$ the trigamma series is absolutely convergent,
+\[
+\psi'(z)=\sum_{k=0}^{\infty}\frac1{(k+z)^2}.
+\]
+Putting $z=\frac14+\frac{it}{2}$ gives, for $t>0$,
+\[
+\Im\frac1{(k+\frac14+\frac{it}{2})^2}
+=
+-\frac{(k+\frac14)t}
+{\bigl((k+\frac14)^2+t^2/4\bigr)^2}<0.
+\]
+Termwise summation is legitimate by absolute convergence, hence
+\[
+\Im\psi'\!\left(\frac14+\frac{it}{2}\right)<0,
+\qquad
+\boxed{\vartheta''(t)>0\quad(t>0).}
+\]
+Thus $\vartheta'$ is strictly increasing on $(0,\infty)$.
+
+It remains only to locate its sign before the first positive critical-line zero.  At $t=14$, the absolutely convergent digamma representation gives
+\[
+\psi(z)=-\gamma+\sum_{k=0}^{\infty}
+\left(\frac1{k+1}-\frac1{k+z}\right),
+\qquad \Re z>0,
+\]
+At $z=\frac14+7i$, write
+\[
+T_k=\frac1{k+1}-\frac{k+\frac14}{(k+\frac14)^2+49}.
+\]
+A direct simplification gives
+\[
+T_k=
+\frac{\frac{781}{16}-\frac{3k}{4}}
+{(k+1)((k+\frac14)^2+49)}.
+\]
+For $k\ge66$ one has $|T_k|\le3/(4k^2)$, and therefore, for
+$N\ge66$,
+\[
+\left|\sum_{k=N}^{\infty}T_k\right|
+\le\frac34\sum_{k=N}^{\infty}\frac1{k^2}
+\le\frac{3}{4(N-1)}.
+\]
+Taking $N=200$ and using directed bounds for the finite sum, $\gamma$
+and $\log\pi$ yields the rigorous enclosure
+\[
+-\gamma+\sum_{k=0}^{199}T_k>1.9488313744452,
+\qquad
+\left|\sum_{k=200}^{\infty}T_k\right|<0.003768844222,
+\]
+and hence
+\[
+\boxed{\vartheta'(14)>0.40016>0.}
+\]
+The first positive critical-line zero satisfies
+\[
+\gamma_1=14.134725141734\ldots>14.
+\]
+Since $\vartheta'$ is strictly increasing,
+\[
+\vartheta'(t)>\vartheta'(14)>0
+\qquad(t\ge\gamma_1).
+\]
+Every interval $[\gamma_n,\gamma_{n+1}]$ under consideration lies in this range, proving \eqref{eq:theta-prime-positive}.  Hence $\vartheta$ is strictly increasing on the interval and
+\[
+\Omega_n
+=\vartheta(\gamma_{n+1})-\vartheta(\gamma_n)>0,
+\]
+which proves \eqref{eq:Omega-positive}.
+
+Therefore the restriction of $\vartheta$ to $[\gamma_n,\gamma_{n+1}]$ is one-to-one with nonvanishing derivative.  Its inverse is smooth, and
+\[
+t_n(q)
+=\vartheta^{-1}\!\left(\vartheta(\gamma_n)+\Omega_nq\right)
+\]
+is the unique smooth increasing map onto $[\gamma_n,\gamma_{n+1}]$.  Differentiating its defining identity gives
+\[
+\vartheta'(t_n(q))t_n'(q)=\Omega_n,
+\]
+which yields \eqref{eq:tnprime}.
+\end{proof}
+
+\begin{definition}[Uniform phase coordinate]
+Define $q\in[0,1]$ by
+\begin{equation}
+q=\frac{\vartheta(t)-\vartheta(\gamma_n)}{\Omega_n},
+\label{eq:q}
+\end{equation}
+or equivalently define $t_n(q)$ by
+\begin{equation}
+\boxed{
+\vartheta(t_n(q))=\vartheta(\gamma_n)+\Omega_nq.
+}
+\label{eq:tn}
+\end{equation}
+\end{definition}
+
+With
+\[
+r_n(q)=|Z(t_n(q))|,
+\]
+the rotated critical-line arc becomes
+\begin{equation}
+\boxed{
+\widehat \Zcal_{0,n}(q)=r_n(q)e^{-i\Omega_nq},
+\qquad r_n(q)>0\ (0<q<1),\quad r_n(0)=r_n(1)=0.
+}
+\label{eq:linear-phase-arc}
+\end{equation}
+Thus every zero-to-zero interval has exactly linear phase in its own natural coordinate.
+
+For the complete vertical family, keep the same fixed map $q\mapsto t_n(q)$ and define
+\begin{equation}
+\Zcal_{\sigma,n}(q)=\Zcal(\sigma,t_n(q)).
+\label{eq:fixed-coordinate-family}
+\end{equation}
+No zero is moved or searched as $\sigma$ varies.
+
+\section{Exact quarter-turn identity}
+
+\begin{theorem}[Quarter-turn relation]
+On every open set avoiding the pole $(\sigma,t)=(1,0)$,
+\begin{equation}
+\boxed{\Zcal_\sigma=-i\Zcal_t.}
+\label{eq:quarter-turn}
+\end{equation}
+Consequently
+\begin{equation}
+\boxed{
+|\Zcal_\sigma|=|\Zcal_t|,
+\qquad
+\Re\!\left(\overline{\Zcal_\sigma}\Zcal_t\right)=0.
+}
+\label{eq:isometry-orthogonality}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Since $\Zcal(\sigma,t)=\zeta(\sigma+it)$,
+\[
+\Zcal_\sigma=\zeta'(\sigma+it),
+\qquad
+\Zcal_t=i\zeta'(\sigma+it).
+\]
+Hence $\Zcal_\sigma=-i\Zcal_t$.  Multiplication by $-i$ preserves modulus and rotates by a right angle, giving \eqref{eq:isometry-orthogonality}.
+\end{proof}
+
+\begin{corollary}[Cauchy--Riemann form]
+Writing $\Zcal=X+iY$,
+\begin{equation}
+X_\sigma=Y_t,
+\qquad
+Y_\sigma=-X_t.
+\label{eq:CR}
+\end{equation}
+\end{corollary}
+
+\section{The fixed generator in the phase coordinate}
+
+By Lemma~\ref{lem:phase-coordinate-validity}, the phase map is globally valid on every positive zero-to-zero interval and
+\begin{equation}
+\vartheta'(t_n(q))t_n'(q)=\Omega_n,
+\qquad
+t_n'(q)=\frac{\Omega_n}{\vartheta'(t_n(q))}>0.
+\label{eq:phase-jacobian}
+\end{equation}
+
+\begin{theorem}[Autonomous phase-coordinate evolution]
+For each fixed zero-to-zero interval,
+\begin{equation}
+\boxed{
+\partial_\sigma \Zcal_{\sigma,n}
+=L_n\Zcal_{\sigma,n},
+\qquad
+L_n=-ia_n(q)\partial_q,
+\qquad
+a_n(q)=\frac{\vartheta'(t_n(q))}{\Omega_n}.
+}
+\label{eq:generator}
+\end{equation}
+The coefficient $a_n$ is independent of $\sigma$.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:quarter-turn}, $\partial_\sigma\Zcal=-i\partial_t\Zcal$.  The chain rule and \eqref{eq:tnprime} give
+\[
+\partial_t
+=\frac{1}{t_n'(q)}\partial_q
+=\frac{\vartheta'(t_n(q))}{\Omega_n}\partial_q,
+\]
+which is \eqref{eq:generator}.
+\end{proof}
+
+\begin{lemma}[Derivative of the transport coefficient]
+\begin{equation}
+\boxed{
+a_n'(q)=\frac{\vartheta''(t_n(q))}{\vartheta'(t_n(q))}.}
+\label{eq:aprime}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Differentiate $a_n(q)=\vartheta'(t_n(q))/\Omega_n$ and substitute $t_n'(q)=\Omega_n/\vartheta'(t_n(q))$ from \eqref{eq:tnprime}.
+\end{proof}
+
+\section{Conformal metric and arbitrary sections}
+
+\begin{theorem}[Exact conformal metric]
+For a tangent vector $v=a\,\partial_\sigma+b\,\partial_t$,
+\begin{equation}
+\boxed{|d\Zcal(v)|^2=|\Zcal_t|^2(a^2+b^2).}
+\label{eq:directional}
+\end{equation}
+Equivalently,
+\begin{equation}
+\boxed{
+\Zcal^*(ds_\C^2)=|\Zcal_t|^2(d\sigma^2+dt^2).
+}
+\label{eq:metric}
+\end{equation}
+Hence the transform is conformal at every point where $\Zcal_t\ne0$.
+\end{theorem}
+
+\begin{proof}
+Using \eqref{eq:quarter-turn},
+\[
+d\Zcal(v)=a\Zcal_\sigma+b\Zcal_t=(b-ia)\Zcal_t.
+\]
+Taking moduli proves \eqref{eq:directional} and \eqref{eq:metric}.
+\end{proof}
+
+\begin{corollary}[Arbitrary oblique section]
+For a $C^1$ curve $s\mapsto(\sigma(s),t(s))$,
+\begin{equation}
+\boxed{
+\left|\frac{d}{ds}\Zcal(\sigma(s),t(s))\right|
+=|\Zcal_t|\sqrt{\sigma'(s)^2+t'(s)^2}.
+}
+\label{eq:oblique-speed}
+\end{equation}
+Thus
+\begin{equation}
+L[\Zcal\circ\gamma]
+=\int |\Zcal_t(\sigma(s),t(s))|
+\sqrt{\sigma'(s)^2+t'(s)^2}\dd s.
+\label{eq:oblique-length}
+\end{equation}
+\end{corollary}
+
+\section{Exact longitudinal--transverse length isometry}
+
+For a measurable $E$ in a fixed $t$-section define
+\[
+\mathcal L_\parallel(\sigma;E)=\int_E|\Zcal_t(\sigma,t)|\dd t,
+\qquad
+\mathcal L_\perp(\sigma;E)=\int_E|\Zcal_\sigma(\sigma,t)|\dd t.
+\]
+
+\begin{theorem}[Equality of length measures]
+For every admissible $\sigma$ and measurable $E$,
+\begin{equation}
+\boxed{
+\mathcal L_\perp(\sigma;E)=\mathcal L_\parallel(\sigma;E).
+}
+\label{eq:length-equality}
+\end{equation}
+Equivalently, the two absolutely continuous length measures coincide:
+\begin{equation}
+\boxed{
+|\Zcal_\sigma(\sigma,t)|\dd t
+=|\Zcal_t(\sigma,t)|\dd t.
+}
+\label{eq:length-measures}
+\end{equation}
+Consequently, whenever the denominators are nonzero,
+\begin{equation}
+\boxed{
+\frac{\mathcal L_\perp(\sigma;E_1)}{\mathcal L_\perp(\sigma;E_2)}
+=
+\frac{\mathcal L_\parallel(\sigma;E_1)}{\mathcal L_\parallel(\sigma;E_2)}.
+}
+\label{eq:length-ratios}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Equation \eqref{eq:isometry-orthogonality} gives equality of the densities pointwise.  Integration proves \eqref{eq:length-equality}; the ratio identity follows by division.
+\end{proof}
+
+\begin{corollary}[$L^p$ energy isometry]
+For every $p>0$ for which the integrals exist,
+\begin{equation}
+\boxed{
+\int_E|\Zcal_\sigma|^p\dd t
+=
+\int_E|\Zcal_t|^p\dd t.
+}
+\label{eq:Lp}
+\end{equation}
+In particular the quadratic longitudinal and transverse energies agree.
+\end{corollary}
+
+\begin{proof}
+Raise $|\Zcal_\sigma|=|\Zcal_t|$ to the power $p$ and integrate.
+\end{proof}
+
+\section{Infinitesimal distance between fibres and arbitrary directions}
+
+\begin{theorem}[Infinitesimal inter-fibre $L^1$ distance]
+Let $E$ be compact and assume $\Zcal$ is $C^1$ on a neighborhood of $\{\sigma\}\times E$.  Then
+\begin{equation}
+\boxed{
+\lim_{h\to0}\frac1{|h|}
+\int_E|\Zcal(\sigma+h,t)-\Zcal(\sigma,t)|\dd t
+=\mathcal L_\parallel(\sigma;E).
+}
+\label{eq:interfibre}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Uniform differentiability on the compact set gives
+\[
+\Zcal(\sigma+h,t)-\Zcal(\sigma,t)
+=h\Zcal_\sigma(\sigma,t)+o(|h|)
+\]
+uniformly in $t\in E$.  Divide by $|h|$, take moduli, integrate, and use $|\Zcal_\sigma|=|\Zcal_t|$.
+\end{proof}
+
+\begin{theorem}[Infinitesimal displacement in any parameter direction]
+For fixed real $a,b$,
+\begin{equation}
+\boxed{
+\lim_{h\to0}
+\frac{|\Zcal(\sigma+ha,t+hb)-\Zcal(\sigma,t)|}{|h|}
+=\sqrt{a^2+b^2}\,|\Zcal_t(\sigma,t)|.
+}
+\label{eq:any-direction}
+\end{equation}
+On compact $E$ the corresponding integrated limit is
+\begin{equation}
+\boxed{
+\lim_{h\to0}\frac1{|h|}
+\int_E|\Zcal(\sigma+ha,t+hb)-\Zcal(\sigma,t)|\dd t
+=
+\sqrt{a^2+b^2}\int_E|\Zcal_t|\dd t.
+}
+\label{eq:any-direction-integrated}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Taylor expansion gives the first-order term $h(a\Zcal_\sigma+b\Zcal_t)$.  Apply \eqref{eq:directional}.  Uniformity on compact sets gives the integrated statement.
+\end{proof}
+
+\section{Jacobian and positive area density}
+
+\begin{theorem}[Jacobian identity]
+Writing $\Zcal=X+iY$, the Jacobian of $(\sigma,t)\mapsto(X,Y)$ is
+\begin{equation}
+\boxed{
+J_{\Zcal}=X_\sigma Y_t-X_tY_\sigma
+=|\Zcal_t|^2=|\Zcal_\sigma|^2\ge0.
+}
+\label{eq:jacobian}
+\end{equation}
+It is strictly positive exactly at regular points.
+\end{theorem}
+
+\begin{proof}
+Use \eqref{eq:CR}:
+\[
+J_{\Zcal}=Y_t^2+X_t^2=|\Zcal_t|^2.
+\]
+The second equality follows from \eqref{eq:isometry-orthogonality}.
+\end{proof}
+
+Thus the common quantity $|\Zcal_t|^2$ is simultaneously longitudinal energy density, transverse energy density, conformal scale squared, and oriented area density.
+
+\section{Strictly monotone line action}
+
+Fix a line through the origin,
+\[
+\ell_\chi=e^{i\chi}\R.
+\]
+Suppose $t_-(\sigma)<t_+(\sigma)$ are $C^1$ functions satisfying
+\[
+\Zcal(\sigma,t_\pm(\sigma))=\rho_\pm(\sigma)e^{i\chi},
+\qquad \rho_\pm(\sigma)\in\R.
+\]
+Define
+\begin{equation}
+\boxed{
+\Acal_\chi(\sigma)
+=\frac12\operatorname{Im}
+\int_{t_-(\sigma)}^{t_+(\sigma)}
+\overline{\Zcal(\sigma,t)}\Zcal_t(\sigma,t)\dd t.
+}
+\label{eq:action}
+\end{equation}
+
+\begin{theorem}[Strict monotonicity of the line action]
+Under the preceding hypotheses,
+\begin{equation}
+\boxed{
+\Acal_\chi'(\sigma)
+=
+\int_{t_-(\sigma)}^{t_+(\sigma)}|\Zcal_t(\sigma,t)|^2\dd t.
+}
+\label{eq:action-derivative}
+\end{equation}
+Hence $\Acal_\chi'\ge0$, and $\Acal_\chi'>0$ whenever the arc is nonconstant.
+\end{theorem}
+
+\begin{proof}
+Write $z=\Zcal$.  Differentiation with moving endpoints gives
+\begin{align*}
+\Acal_\chi'
+={}&\frac12\operatorname{Im}\int_{t_-}^{t_+}
+(\overline{z_\sigma}z_t+\overline z z_{t\sigma})\dd t
++\frac12\operatorname{Im}
+\left[\overline z z_t t_\pm'\right]_{t_-}^{t_+}.
+\end{align*}
+Integrating the $z_{t\sigma}$ term by parts gives
+\begin{align*}
+\Acal_\chi'
+={}&\int_{t_-}^{t_+}\operatorname{Im}(\overline{z_\sigma}z_t)\dd t
++\frac12\operatorname{Im}
+\left[\overline z\,(z_\sigma+z_tt_\pm')\right]_{t_-}^{t_+}.
+\end{align*}
+At each endpoint, $z=\rho e^{i\chi}$ and the total derivative is $\rho'e^{i\chi}$, so $\overline z\,dz/d\sigma=\rho\rho'\in\R$ and the boundary contribution vanishes.  Finally $z_\sigma=-iz_t$, hence
+\[
+\operatorname{Im}(\overline{z_\sigma}z_t)
+=\operatorname{Im}(i|z_t|^2)=|z_t|^2.
+\]
+This proves \eqref{eq:action-derivative}.
+\end{proof}
+
+\begin{corollary}[Local continuation of transverse line cuts]
+If at $\sigma_0$ the transform has intersections with $\ell_\chi$ at $t_-^0<t_+^0$ and
+\[
+\partial_t\operatorname{Im}\bigl(e^{-i\chi}\Zcal(\sigma_0,t_\pm^0)\bigr)\ne0,
+\]
+then the implicit function theorem gives local $C^1$ continuations $t_\pm(\sigma)$ and \eqref{eq:action-derivative} holds on that neighborhood.
+\end{corollary}
+
+\begin{proof}
+Apply the implicit function theorem to
+\[
+F(\sigma,t)=\operatorname{Im}(e^{-i\chi}\Zcal(\sigma,t)).
+\]
+The displayed derivative is exactly $F_t(\sigma_0,t_\pm^0)$.
+\end{proof}
+
+\section{Action, energy, and swept area}
+
+\begin{theorem}[Exact action--energy--area identity]
+Let $\sigma_1<\sigma_2$ lie on a regular branch of the moving cuts.  Then
+\begin{equation}
+\boxed{
+\Acal_\chi(\sigma_2)-\Acal_\chi(\sigma_1)
+=\int_{\sigma_1}^{\sigma_2}\int_{t_-(\sigma)}^{t_+(\sigma)}
+|\Zcal_t|^2\dd t\dd\sigma
+=\iint_D J_{\Zcal}\dd\sigma\dd t,
+}
+\label{eq:action-area}
+\end{equation}
+where $D$ is the corresponding parameter strip between the two moving cuts.
+\end{theorem}
+
+\begin{proof}
+Integrate \eqref{eq:action-derivative} in $\sigma$ and substitute the Jacobian identity \eqref{eq:jacobian}.
+\end{proof}
+
+By the planar area formula, the last integral in \eqref{eq:action-area} is the Euclidean area of the image counted with multiplicity:
+\begin{equation}
+\boxed{
+\iint_D J_{\Zcal}(\sigma,t)\dd\sigma\dd t
+=
+\int_{\C} N(\Zcal,D;w)\dd A(w),
+}
+\label{eq:area-multiplicity}
+\end{equation}
+where $N(\Zcal,D;w)$ denotes the number of preimages of $w$ in $D$, counted almost everywhere.  Since $J_{\Zcal}=|\Zcal_t|^2\ge0$, there is no cancellation of orientation on the regular set.  In particular, if $\Zcal$ is injective on $D$, then $N(\Zcal,D;w)=1$ almost everywhere on $\Zcal(D)$ and $0$ outside it, and therefore
+\begin{equation}
+\boxed{
+\Acal_\chi(\sigma_2)-\Acal_\chi(\sigma_1)
+=\operatorname{Area}(\Zcal(D)).
+}
+\label{eq:ordinary-area}
+\end{equation}
+Thus, without injectivity the action increment is area counted with multiplicity, while under injectivity it is the ordinary Euclidean area of the image.
+
+\begin{corollary}[No regular action cycle]
+If the arc is nonconstant on a set of positive parameter area, then it cannot return at $\sigma_2>\sigma_1$ to a configuration with the same oriented line action while remaining on the same regular cut branch.
+\end{corollary}
+
+\begin{proof}
+The right-hand side of \eqref{eq:action-area} is strictly positive.
+\end{proof}
+
+\section{Critical-line value of the action}
+
+On a zero-to-zero interval in the uniform phase coordinate, \eqref{eq:linear-phase-arc} gives
+\[
+\overline{\widehat \Zcal}_{0,n}\,\partial_q\widehat \Zcal_{0,n}
+=r_nr_n'-i\Omega_nr_n^2.
+\]
+Hence the oriented action of the critical-line arc closed through the origin is
+\begin{equation}
+\boxed{
+\Acal_{0,n}
+=-\frac{\Omega_n}{2}\int_0^1r_n(q)^2\dd q.
+}
+\label{eq:critical-action}
+\end{equation}
+This is an exact amplitude--phase formula attached to the zero interval.
+
+\section{Harmonicity and the differential hierarchy}
+
+\begin{theorem}[Harmonicity]
+The transform satisfies
+\begin{equation}
+\boxed{\Zcal_{\sigma\sigma}+\Zcal_{tt}=0.}
+\label{eq:harmonic}
+\end{equation}
+Thus both real coordinates $X$ and $Y$ are harmonic in $(\sigma,t)$.
+\end{theorem}
+
+\begin{proof}
+Differentiate \eqref{eq:quarter-turn} with respect to $\sigma$:
+\[
+\Zcal_{\sigma\sigma}=-i\Zcal_{t\sigma}
+=-i(-i\Zcal_{tt})=-\Zcal_{tt}.
+\]
+\end{proof}
+
+\begin{theorem}[Differential hierarchy]
+For every integer $m\ge0$,
+\begin{equation}
+\boxed{
+\partial_\sigma(\partial_t^m\Zcal)
+=-i\partial_t(\partial_t^m\Zcal).
+}
+\label{eq:hierarchy}
+\end{equation}
+Consequently every $t$-derivative inherits the same local conformal, length, Jacobian, and harmonic identities on its regular set.
+\end{theorem}
+
+\begin{proof}
+Differentiate \eqref{eq:quarter-turn} $m$ times with respect to $t$ and commute derivatives.
+\end{proof}
+
+\section{Flatness of the induced metric}
+
+On a simply connected regular region write
+\[
+\lambda(\sigma,t)=\log|\Zcal_t(\sigma,t)|.
+\]
+
+\begin{theorem}[Harmonic conformal factor]
+Where $\Zcal_t\ne0$,
+\begin{equation}
+\boxed{\lambda_{\sigma\sigma}+\lambda_{tt}=0.}
+\label{eq:logharmonic}
+\end{equation}
+Consequently the conformal metric
+\[
+ds^2=e^{2\lambda}(d\sigma^2+dt^2)
+\]
+has Gaussian curvature zero.
+\end{theorem}
+
+\begin{proof}
+The function $\Zcal_t$ is holomorphic as a function of $s=\sigma+it$ on the regular region, so $\log|\Zcal_t|$ is harmonic.  For a conformal metric $e^{2\lambda}(dx^2+dy^2)$, the Gaussian curvature is $-e^{-2\lambda}\Delta\lambda$, which vanishes by \eqref{eq:logharmonic}.
+\end{proof}
+
+
+\section{Status of the orthogonal--cubic projective extension}
+\label{sec:oc-status}
+
+For completeness, we record separately the present logical status of the
+orthogonal--cubic projective construction associated with a fixed
+zero-to-zero phase cell.  Let
+\[
+ \mathcal H=L^2([0,1],dq;\mathbb C),\qquad
+ \mathcal P_3=\operatorname{span}\{1,q,q^2,q^3\},\qquad
+ Q_\perp=I-\Pi_3,
+\]
+where $\Pi_3$ is the orthogonal projector onto $\mathcal P_3$, and set
+\[
+ u_{\sigma,n}=Q_\perp W_{\sigma,n},
+ \qquad
+ M_n(\sigma)
+ =1-
+ \frac{|\langle u_{1/2,n},u_{\sigma,n}\rangle|^2}
+ {\|u_{1/2,n}\|^2\|u_{\sigma,n}\|^2}
+\]
+whenever the projected states are nonzero.  The exact Gram-kernel identity is
+\[
+ M_n'(\sigma)
+ =2\bigl(1-M_n(\sigma)\bigr)
+ \int_{1/2}^{\sigma}\mathcal C_n(\alpha,\sigma)\,d\alpha,
+\]
+with
+\[
+ \mathcal C_n(\sigma,\sigma)
+ =P_n(\sigma)
+ =\frac{\|u_{\sigma,n}\wedge u_{\sigma,n}'\|^2}
+ {\|u_{\sigma,n}\|^4}\ge0
+\]
+on the regular projective set.
+
+
+\subsection{Pole separation, critical forcing, and global projective rigidity}
+
+Define the holomorphic phase extension
+\begin{equation}
+\Theta(z)=\frac{1}{2i}\left[
+\log\Gamma\!\left(\frac14+\frac{iz}{2}\right)
+-\log\Gamma\!\left(\frac14-\frac{iz}{2}\right)
+\right]-\frac z2\log\pi,
+\label{eq:Theta-extension}
+\end{equation}
+on the strip
+\[
+S=\{z\in\C:|\Im z|<1/2\},
+\]
+and put
+\begin{equation}
+q_n(z)=\frac{\Theta(z)-\Theta(\gamma_n)}{\Omega_n}.
+\label{eq:q-holomorphic-extension}
+\end{equation}
+The two Gamma arguments in \eqref{eq:Theta-extension} have positive real
+part on $S$, so compatible holomorphic logarithms exist there.  At the
+lower boundary point $z_0=-i/2$, one has at most logarithmic growth,
+\begin{equation}
+q_n(z)=O\!\left(1+|\log(z-z_0)|\right)
+\qquad(z\longrightarrow z_0,\ z\in S).
+\label{eq:q-boundary-growth}
+\end{equation}
+
+\begin{lemma}[Pole-separation lemma]
+\label{lem:pole-separation}
+Let $1/2\le\alpha<\beta\le1$, let $\lambda\in\C^\times$, and let
+$p_3\in\mathcal P_3$.  Then the identity
+\begin{equation}
+\zeta(\alpha+i t_n(q))-\lambda\zeta(\beta+i t_n(q))=p_3(q)
+\label{eq:two-fibre-polynomial-identity}
+\end{equation}
+cannot hold on a nonempty real $q$-interval.
+\end{lemma}
+
+\begin{proof}
+If \eqref{eq:two-fibre-polynomial-identity} held almost everywhere, continuity
+would make it hold everywhere on the interval.  Replacing $q$ by the real
+phase coordinate and applying the identity theorem gives the meromorphic
+identity
+\[
+\zeta(\alpha+iz)-\lambda\zeta(\beta+iz)=p_3(q_n(z))
+\]
+on $S$.  Set
+\[
+z_\beta=-i(1-\beta).
+\]
+Because $\beta>\alpha\ge1/2$, one has $\beta>1/2$, hence
+$z_\beta\in S$.  Moreover,
+\[
+\beta+iz_\beta=1,
+\qquad
+\alpha+iz_\beta=1-(\beta-\alpha)\ne1.
+\]
+Thus the second zeta term has a simple pole at $z_\beta$, whereas the
+first zeta term and $p_3(q_n(z))$ are holomorphic there.  Since
+$\lambda\ne0$, the pole cannot cancel, a contradiction.
+\end{proof}
+
+\begin{proposition}[Nonvanishing of every orthogonal--cubic state]
+\label{prop:projected-state-nonzero}
+For every fixed positive phase cell and every $1/2\le\sigma\le1$,
+\begin{equation}
+\boxed{u_{\sigma,n}=Q_\perp W_{\sigma,n}\ne0.}
+\label{eq:projected-state-nonzero}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Suppose first that $\sigma>1/2$ and $Q_\perp W_{\sigma,n}=0$.  Then
+$W_{\sigma,n}=p_3$ in $L^2$ for some $p_3\in\mathcal P_3$; continuity
+upgrades this to pointwise equality.  Analytic continuation gives
+\[
+\zeta(\sigma+iz)=p_3(q_n(z))
+\]
+on $S$.  At $z_\sigma=-i(1-\sigma)\in S$, the left side has a simple
+pole and the right side is holomorphic, a contradiction.
+
+For $\sigma=1/2$, approach the boundary point $z_0=-i/2$ from within
+$S$.  Writing $z=z_0+w$, one has
+\[
+\zeta\!\left(\frac12+iz\right)
+=\zeta(1+iw)=\frac{1}{iw}+O(1),
+\]
+whereas \eqref{eq:q-boundary-growth} gives
+\[
+p_3(q_n(z))=O\!\left(1+|\log w|^3\right).
+\]
+A simple pole cannot equal a cubic polynomial in a logarithm.  This
+again gives a contradiction.
+\end{proof}
+
+\begin{proposition}[Global projective immersion]
+\label{prop:global-projective-immersion}
+For every fixed positive phase cell and every $1/2\le\sigma\le1$,
+\begin{equation}
+\boxed{
+u_{\sigma,n}\wedge \partial_\sigma u_{\sigma,n}\ne0.
+}
+\label{eq:global-projective-immersion}
+\end{equation}
+Consequently
+\begin{equation}
+\boxed{
+P_n(\sigma)
+=\frac{\|u_{\sigma,n}\wedge\partial_\sigma u_{\sigma,n}\|^2}
+{\|u_{\sigma,n}\|^4}>0.
+}
+\label{eq:global-P-positive}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If the wedge vanished, Proposition~\ref{prop:projected-state-nonzero}
+would give a constant $c\in\C$ such that
+\[
+Q_\perp\bigl(\partial_\sigma W_{\sigma,n}-cW_{\sigma,n}\bigr)=0.
+\]
+Hence, for some $p_3\in\mathcal P_3$,
+\begin{equation}
+\zeta'(\sigma+i t_n(q))-c\zeta(\sigma+i t_n(q))=p_3(q).
+\label{eq:stationary-pole-identity}
+\end{equation}
+For $\sigma>1/2$, continue to $z_\sigma=-i(1-\sigma)\in S$.  The
+$\zeta'$ term has a double pole, the zeta term has at most a simple pole,
+and the right side is holomorphic.  The double pole cannot cancel.
+
+For $\sigma=1/2$, let $z=z_0+w$ as above.  Then
+\[
+\zeta'(1+iw)=\frac{1}{w^2}+O(1),
+\qquad
+\zeta(1+iw)=\frac{1}{iw}+O(1),
+\]
+up to the immaterial nonzero constant in the double-pole term, while
+$p_3(q_n(z))=O(1+|\log w|^3)$.  Again the double pole is impossible.
+Thus the wedge never vanishes, and \eqref{eq:global-P-positive} follows.
+\end{proof}
+
+\begin{theorem}[Unavoidable critical-line forcing by the Violet node class]
+\label{thm:critical-line-forcing}
+For every fixed Violet zero-to-zero phase cell and every
+$1/2\le\sigma\le1$,
+\begin{equation}
+\boxed{
+[Q_\perp W_{\sigma,n}]
+=[Q_\perp W_{1/2,n}]
+\quad\Longleftrightarrow\quad
+\sigma=\frac12.
+}
+\label{eq:critical-line-forcing}
+\end{equation}
+Equivalently,
+\begin{equation}
+\boxed{M_n(\sigma)=0\quad\Longleftrightarrow\quad\sigma=\frac12.}
+\label{eq:critical-M-forcing}
+\end{equation}
+Thus the value $1/2$ is forced by the orthogonal--cubic Violet node
+class; it is not merely a freely chosen reference label.
+\end{theorem}
+
+\begin{proof}
+The reverse implication is immediate.  If $\sigma>1/2$ and the classes
+were equal, Proposition~\ref{prop:projected-state-nonzero} would give
+$\lambda\in\C^\times$ and $p_3\in\mathcal P_3$ such that
+\[
+\zeta\!\left(\frac12+i t_n(q)\right)
+-\lambda\zeta(\sigma+i t_n(q))=p_3(q).
+\]
+This contradicts Lemma~\ref{lem:pole-separation} with
+$\alpha=1/2$ and $\beta=\sigma$.  Hence $\sigma=1/2$ is unavoidable.
+\end{proof}
+
+\begin{corollary}[Global projective injectivity of Rainbow]
+\label{cor:global-projective-injectivity}
+For every fixed positive phase cell and all $\alpha,\beta\in[1/2,1]$,
+\begin{equation}
+\boxed{
+[Q_\perp W_{\alpha,n}]
+=[Q_\perp W_{\beta,n}]
+\quad\Longleftrightarrow\quad
+\alpha=\beta.
+}
+\label{eq:global-projective-injectivity}
+\end{equation}
+Therefore every Rainbow parameter determines a distinct
+orthogonal--cubic projective class.
+\end{corollary}
+
+\begin{proof}
+If $\alpha\ne\beta$, interchange them if necessary and assume
+$\alpha<\beta$.  Equality of the projective classes gives
+$\lambda\in\C^\times$ and $p_3\in\mathcal P_3$ satisfying
+\[
+\zeta(\alpha+i t_n(q))-\lambda\zeta(\beta+i t_n(q))=p_3(q),
+\]
+contradicting Lemma~\ref{lem:pole-separation}.
+\end{proof}
+
+\begin{theorem}[Strict initial orthogonal--cubic separation]
+\label{thm:strict-initial-separation}
+For every fixed positive phase cell, at $\sigma_0=1/2$ one has
+\begin{equation}
+\boxed{
+M_n(\sigma_0)=0,
+\qquad
+M_n'(\sigma_0)=0,
+\qquad
+M_n''(\sigma_0)=2P_n(\sigma_0)>0.
+}
+\label{eq:strict-initial-second-derivative}
+\end{equation}
+Consequently there exists $\varepsilon_n>0$ such that
+\begin{equation}
+\boxed{
+M_n'(\sigma)>0
+\qquad
+(1/2<\sigma<1/2+\varepsilon_n).
+}
+\label{eq:strict-initial-monotonicity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The definition gives $M_n(\sigma_0)=0$.  In the exact identity
+\[
+M_n'(\sigma)
+=2(1-M_n(\sigma))
+\int_{\sigma_0}^{\sigma}\mathcal C_n(\alpha,\sigma)\,d\alpha,
+\]
+the integral vanishes at $\sigma=\sigma_0$, so
+$M_n'(\sigma_0)=0$.  Differentiating once more at $\sigma_0$ gives
+\[
+M_n''(\sigma_0)
+=2\mathcal C_n(\sigma_0,\sigma_0)
+=2P_n(\sigma_0).
+\]
+Proposition~\ref{prop:global-projective-immersion} gives
+$P_n(\sigma_0)>0$.  Continuity of $M_n''$ then implies
+$M_n'(\sigma)>0$ on a sufficiently small right neighborhood of
+$\sigma_0$.
+\end{proof}
+
+\subsection{Conditional global monotonicity criterion}
+
+The modal argument proves a complete criterion for global orthogonal--cubic monotonicity. We record it explicitly, separating the proved implication from the two estimates required to apply it unconditionally to the zeta phase-cell family.  Let the exact reflection decomposition be
+\[
+u_\sigma=\mathsf X_\sigma+\mathsf Y_\sigma,
+\]
+where $\mathsf X$ is the symmetric core and $\mathsf Y$ is the
+antisymmetric remainder.  Put
+\[
+K_+(\alpha,\sigma)=\langle\mathsf X_\alpha,\mathsf X_\sigma\rangle,
+\qquad
+K(\alpha,\sigma)=\langle u_\alpha,u_\sigma\rangle,
+\]
+\[
+\Delta_\sigma^{(+)}=\mathsf X_\sigma\wedge\mathsf X_\sigma',
+\qquad
+\Delta_\sigma=u_\sigma\wedge u_\sigma',
+\qquad
+E_\sigma=\Delta_\sigma-\Delta_\sigma^{(+)},
+\]
+and
+\[
+A_+(\alpha,\sigma)
+=\langle\Delta_\alpha^{(+)},\Delta_\sigma^{(+)}\rangle.
+\]
+
+Write the symmetric-core Pl\"ucker coordinates as
+\[
+D_{jk}(\sigma)=\widetilde b_j(\sigma)\widetilde b_k'(\sigma)-\widetilde b_j'(\sigma)\widetilde b_k(\sigma),
+\]
+where fixed modal signs have been chosen so that $\widetilde b_m(\sigma)>0$ on $[1/2,1]$. Suppose
+\begin{equation}
+D_{m,m+1}(\sigma)>0
+\qquad\left(\frac12\le\sigma\le1\right).
+\label{eq:adjacent-chebyshev}
+\end{equation}
+Then, for $j<k$,
+\[
+\frac{D_{jk}}{\widetilde b_j\widetilde b_k}
+=\sum_{\ell=j}^{k-1}\left(
+\frac{\widetilde b_{\ell+1}'}{\widetilde b_{\ell+1}}-
+\frac{\widetilde b_{\ell}'}{\widetilde b_{\ell}}\right)>0,
+\]
+so every $D_{jk}$ is positive. Consequently
+\[
+A_+(\alpha,\sigma)=\sum_{j<k}D_{jk}(\alpha)D_{jk}(\sigma)>0.
+\]
+For a fixed adjacent pair $m_0,m_0+1$, put
+\[
+d_{*,n}=\min_{\sigma\in[1/2,1]}D_{m_0,m_0+1}(\sigma)>0,
+\qquad
+B_n=\max_{\sigma\in[1/2,1]}\|\mathsf X_\sigma\|.
+\]
+Then
+\begin{equation}
+\boxed{
+\Re\frac{A_+(\alpha,\sigma)}{K_+(\alpha,\sigma)^2}
+\ge\frac{d_{*,n}^2}{B_n^4}=: \mu_n>0.
+}
+\label{eq:mu-core}
+\end{equation}
+
+Define
+\[
+U_0=\sup\|\mathsf X_\sigma\|,\quad
+U_1=\sup\|\mathsf X_\sigma'\|,\quad
+y_0=\sup\|\mathsf Y_\sigma\|,\quad
+y_1=\sup\|\mathsf Y_\sigma'\|,
+\]
+\[
+k_*=\inf_{\alpha,\sigma}K_+(\alpha,\sigma)>0,
+\quad
+\eta_*=\frac{2U_0y_0+y_0^2}{k_*},
+\quad
+e_*=U_0y_1+y_0U_1+y_0y_1,
+\]
+\[
+\varepsilon_*=\frac{2e_*U_0U_1+e_*^2}{k_*^2},
+\qquad
+R_*=\frac{U_0^2U_1^2}{k_*^2}.
+\]
+
+\begin{lemma}[Exact reflection-perturbation estimate]
+\label{lem:exact-reflection-perturbation}
+If $\eta_*<1$, then $K(\alpha,\sigma)\ne0$ and
+\begin{equation}
+\Re\frac{\langle\Delta_\alpha,\Delta_\sigma\rangle}
+{K(\alpha,\sigma)^2}
+\ge
+\Re\frac{A_+(\alpha,\sigma)}{K_+(\alpha,\sigma)^2}
+-\frac{\varepsilon_*+R_*\eta_*(2+\eta_*)}{(1-\eta_*)^2}.
+\label{eq:exact-reflection-perturbation}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $\delta K=K-K_+$.  Cauchy--Schwarz gives
+\[
+|\delta K|
+\le2U_0y_0+y_0^2
+=\eta_*k_*
+\le\eta_*|K_+|.
+\]
+Hence
+\[
+|K|\ge(1-\eta_*)|K_+|
+\ge(1-\eta_*)k_*>0.
+\]
+Moreover,
+\[
+E_\sigma
+=\mathsf X_\sigma\wedge\mathsf Y_\sigma'
++\mathsf Y_\sigma\wedge\mathsf X_\sigma'
++\mathsf Y_\sigma\wedge\mathsf Y_\sigma',
+\]
+so $\|E_\sigma\|\le e_*$.  Therefore
+\[
+\left|
+\langle\Delta_\alpha,\Delta_\sigma\rangle
+-A_+(\alpha,\sigma)
+\right|
+\le2e_*U_0U_1+e_*^2.
+\]
+After division by $|K|^2$, this contribution is at most
+$\varepsilon_* /(1-\eta_*)^2$.
+
+Finally set $\delta=\delta K/K_+$.  Since $|\delta|\le\eta_*$,
+\[
+\left|\frac{K_+^2}{K^2}-1\right|
+=\left|\frac1{(1+\delta)^2}-1\right|
+\le\frac{\eta_*(2+\eta_*)}{(1-\eta_*)^2}.
+\]
+Using $|A_+|\le U_0^2U_1^2$ and $|K_+|\ge k_*$ gives the remaining
+error term in \eqref{eq:exact-reflection-perturbation}.  Taking real
+parts completes the proof.
+\end{proof}
+
+\begin{theorem}[Global orthogonal--cubic monotonicity criterion]
+\label{thm:oc-global-criterion}
+Assume the fixed modal signs and \eqref{eq:adjacent-chebyshev}. If
+\begin{equation}
+\boxed{
+\eta_*<1,
+\qquad
+\varepsilon_*+R_*\eta_*(2+\eta_*)
+\le\mu_n(1-\eta_*)^2,
+}
+\label{eq:perturbative-global-criterion}
+\end{equation}
+then
+\begin{equation}
+\boxed{
+\mathcal C_n(\alpha,\sigma)\ge0
+\qquad\left(\frac12\le\alpha\le\sigma\le1\right),
+}
+\label{eq:C-global-from-criterion}
+\end{equation}
+and consequently
+\begin{equation}
+\boxed{
+M_n'(\sigma)\ge0
+\qquad\left(\frac12\le\sigma\le1\right).
+}
+\label{eq:M-global-from-criterion}
+\end{equation}
+Hence the orthogonal--cubic Fubini--Study separation from the critical-line fibre never decreases.
+\end{theorem}
+
+\begin{proof}
+The symmetric-core estimate \eqref{eq:mu-core}, together with Lemma~\ref{lem:exact-reflection-perturbation}, gives
+\[
+\mathcal C_n(\alpha,\sigma)
+\ge\mu_n-\frac{\varepsilon_*+R_*\eta_*(2+\eta_*)}{(1-\eta_*)^2}.
+\]
+Condition \eqref{eq:perturbative-global-criterion} makes the right-hand side nonnegative, proving \eqref{eq:C-global-from-criterion}. The exact projective derivative identity then yields
+\[
+M_n'(\sigma)=2(1-M_n(\sigma))\int_{1/2}^{\sigma}\mathcal C_n(\alpha,\sigma)\,d\alpha\ge0.
+\]
+Finally, with $M_n=\sin^2\Theta_n$,
+\[
+M_n'=\sin(2\Theta_n)\Theta_n',
+\]
+so $\Theta_n'\ge0$ wherever $0<\Theta_n<\pi/2$, and the nondecreasing conclusion extends through the endpoints by continuity.
+\end{proof}
+
+\begin{remark}
+The theorem is a proved implication. Its unconditional application to the actual zeta phase-cell family requires proving \eqref{eq:adjacent-chebyshev} and \eqref{eq:perturbative-global-criterion} for that family. The earlier derivation itself identified exactly these two estimates as the remaining tasks; they are not silently assumed here.
+\end{remark}
+
+\begin{table}[htbp]
+\centering
+\caption{Logical status of the principal orthogonal--cubic statements.}
+\label{tab:oc-status}
+\begin{tabular}{p{0.62\textwidth}p{0.25\textwidth}}
+\toprule
+Statement & Status\\
+\midrule
+$u_{\sigma,n}\neq0$ on the full parameter interval & proved in Proposition~\ref{prop:projected-state-nonzero}\\
+$u_{\sigma,n}\wedge u_{\sigma,n}'\neq0$ on the full parameter interval & proved in Proposition~\ref{prop:global-projective-immersion}\\
+$P_n(\sigma)>0$ on the full parameter interval & proved in \eqref{eq:global-P-positive}\\
+Strict positivity of $\mathcal C_n(\alpha,\sigma)$ in a neighborhood of the diagonal & proved locally by continuity from $P_n(\sigma)>0$\\
+$M_n'(\sigma)>0$ immediately to the right of $\sigma=1/2$ & proved in Theorem~\ref{thm:strict-initial-separation}\\
+$M_n(\sigma)=0\iff \sigma=1/2$ & proved unconditionally by Theorem~\ref{thm:critical-line-forcing}\\
+$[Q_\perp W_{\alpha,n}]=[Q_\perp W_{\beta,n}]\iff\alpha=\beta$ & proved unconditionally by Corollary~\ref{cor:global-projective-injectivity}\\
+No return to the initial orthogonal--cubic projective class & proved, equivalent to the preceding uniqueness statement\\
+No projective stationary point & proved from $u_{\sigma,n}\wedge u_{\sigma,n}'\neq0$\\
+$M_n'(\sigma)\ge0$ for every $1/2\le\sigma\le1$ & proved under Theorem~\ref{thm:oc-global-criterion}; two zeta-specific estimates remain to be verified unconditionally\\
+Global TP2: $\mathcal C_n(\alpha,\sigma)\ge0$ on the full parameter triangle & proved under the same explicit criterion; unconditional verification for the zeta family remains open\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The critical-line forcing theorem and global projective injectivity are
+unconditional and exclude every repeated orthogonal--cubic projective class. Global
+monotonicity is stronger. The conditional argument above proves it from the
+explicit Chebyshev and perturbative inequalities
+\eqref{eq:adjacent-chebyshev}--\eqref{eq:perturbative-global-criterion}; what
+remains is their unconditional verification for the actual zeta phase-cell family.
+
+\section{General holomorphic-transform principle}
+
+The preceding transform identities are not peculiar to the zeta function.
+
+\begin{theorem}[Holomorphic quarter-turn principle]
+Let $f$ be holomorphic on a domain in $\C$ and put
+\[
+F(x,y)=f(x+iy).
+\]
+Then
+\[
+F_x=-iF_y,
+\]
+and every theorem above that uses only this identity, differentiability, and the stated endpoint conditions holds verbatim for $F$.
+\end{theorem}
+
+\begin{proof}
+The proof is identical: $F_x=f'(x+iy)$ and $F_y=if'(x+iy)$.
+\end{proof}
+
+\section{Logical separation of universal and zeta-specific structure}
+
+The quarter-turn geometry, conformal metric, length isometries, Jacobian identity, harmonicity, differential hierarchy, and line-action law are universal consequences of holomorphy.  The critical-line representation \eqref{eq:hardy}, the zero-to-zero intervals, the phase coordinate \eqref{eq:tn}, and the explicit amplitude--phase action \eqref{eq:critical-action} are the additional zeta-specific structures used here.  None of the transform theorems requires the Riemann hypothesis, pair correlation, a zero-density hypothesis, or a statistical model for the zeros.
+
+The equality of longitudinal and transverse lengths is a statement at the same value of $\sigma$.  It does not assert that longitudinal lengths at two distinct vertical fibres are scalar multiples of one another.
+
+\section{Information, zeros, and the exact scope of monotonicity}
+
+In the half-plane $\Re s>1$ one has
+\[
+\zeta(s)=\sum_{m\ge1}m^{-s},
+\]
+whose Dirichlet coefficients are all equal to $1$ and therefore positive.
+On $1/2\le\Re s\le1$ the ordinary Dirichlet series does not converge;
+the transform there is defined by analytic continuation, not by a new
+convergent positive-coefficient Dirichlet series.
+
+The coordinate map $s=\sigma+it$ and the phase reparametrization
+$t=t_n(q)$ are invertible and lose no information.  Hence zeros are
+preserved exactly before projection:
+\[
+W_{\sigma,n}(q)=0
+\quad\Longleftrightarrow\quad
+\zeta(\sigma+i t_n(q))=0.
+\]
+The quotient $Q_\perp$, however, removes the cubic component, so zeros
+are not invariants of an arbitrary class in $\mathcal H/\mathcal P_3$.
+Projectivization additionally removes a nonzero complex scale.  What is
+proved here is the stronger restricted statement that these losses do
+not identify two members of the Rainbow family:
+\[
+\sigma\longmapsto[Q_\perp W_{\sigma,n}]
+\]
+is injective.  Thus $\sigma$ and consequently the original fibre and
+its zeros are recoverable on the Rainbow image, although an arbitrary
+$L^2$ function and its discarded cubic component are not recoverable
+from the quotient class.
+
+Finally, three different sign statements must be kept separate.  The
+Jacobian identity
+\[
+J_{\Zcal}=|\Zcal_t|^2\ge0
+\]
+is unconditional on the full regular transform domain.  The line action
+is strictly increasing on every persistent regular branch of fixed-line
+cuts.  The global orthogonal--cubic inequality $M_n'(\sigma)\ge0$ is
+proved by Theorem~\ref{thm:oc-global-criterion} under the explicit
+Chebyshev and perturbative estimates; their verification for the actual
+zeta phase-cell family remains the stated global sign problem.
+
+\begin{thebibliography}{9}
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh, revised by D. R. Heath-Brown,
+\emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+Oxford University Press, 1986.
+
+\bibitem{Ahlfors1979}
+L. V. Ahlfors,
+\emph{Complex Analysis}, 3rd ed.,
+McGraw--Hill, 1979.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,1790 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\DeclareMathOperator{\ord}{ord}
+\newcommand{\RH}{\mathrm{RH}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\title[Finite-Height Exponential Criteria]{Finite-Height Atomic and Exponential-Polynomial Criteria for the Riemann Hypothesis}
+
+\author{}
+\address{}
+\email{}
+\date{Version 9, August 3, 2026}
+
+\begin{document}
+
+\begin{abstract}
+For a fixed height $H$ with $N(H)>0$, two normalized finite sums are associated with the nontrivial zeros $\rho=\beta+i\gamma$ of the Riemann zeta function:
+\begin{equation}
+L_H(x)=\frac{1}{N(H)}\sum_{0<\gamma\leq H}x^{\rho-1/2},
+\qquad
+M_H(x)=\frac{1}{N(H)}\sum_{0<\gamma\leq H}x^{i\gamma}.
+\label{eq:abstract_definitions}
+\end{equation}
+The first retains the horizontal coordinates of the zeros, whereas the second retains only their ordinates.  We prove an exact decomposition of $L_H-M_H$ into positive defects localized at the distinct ordinates.  After the logarithmic change of variable $x=e^y$, the difference is shown to be a finite exponential polynomial with constant complex exponents and constant coefficients.  This yields three finite-height equivalences: equality on a set with an accumulation point, equality of the associated atomic measures at one fixed $x\neq1$, and vanishing of a nonnegative second derivative at $y=0$ are each equivalent to every zero up to height $H$ lying on the critical line.  Consequently, each criterion along any unbounded sequence of heights is equivalent to the Riemann Hypothesis.  The finite-height arguments use only the functional-equation symmetry of the zeros, finiteness below a fixed height, positivity, and uniqueness of finite exponential polynomials; no formula of Landau type is used.  In a logically separate triadic arithmetic section we prove an iterable sesquilinear contraction on every fixed active shell by using a fresh pair of primes at each level.  The exact channel identities yield finite-depth quantitative estimates but do not supply an identity connecting the arithmetic channels to the horizontal zero coordinates.  
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\section{Introduction}
+\label{sec:introduction}
+
+Let $\zeta(s)$ denote the Riemann zeta function.  Its nontrivial zeros lie in the critical strip $0<\Re s<1$, occur with finite multiplicity, and satisfy the symmetries
+\begin{equation}
+\rho\longmapsto \overline{\rho},
+\qquad
+\rho\longmapsto 1-\rho,
+\qquad
+\rho\longmapsto 1-\overline{\rho},
+\label{eq:zero_symmetries}
+\end{equation}
+which follow from the functional equation and conjugation; see, for example, \cite{Titchmarsh1986,Edwards1974}.  In particular, if
+\begin{equation}
+\rho=\frac12+\delta+i\tau
+\label{eq:zero_delta_parameterization}
+\end{equation}
+with $\tau>0$, then
+\begin{equation}
+1-\overline{\rho}=\frac12-\delta+i\tau
+\label{eq:paired_zero_same_ordinate}
+\end{equation}
+occurs with the same multiplicity.
+
+There are no nontrivial real zeros: in particular,
+\begin{equation}
+\zeta(\sigma)\neq0
+\qquad(0<\sigma<1).
+\label{eq:no_nontrivial_real_zeros}
+\end{equation}
+Thus every nontrivial zero has nonzero ordinate.  This standard fact will be used explicitly when the positive-ordinate criteria are promoted to global formulations; see \cite{Titchmarsh1986,Edwards1974}.
+
+Fix a height $H>0$ with $N(H)>0$.  We compare two finite objects.  The complete-zero sum weights a zero by its full displacement from the critical line, whereas the ordinate-only sum discards that horizontal displacement.  The central question is whether equality of these two finite functions forces the zeros under consideration onto the critical line.
+
+The answer is affirmative.  The key point is not merely that the difference is analytic.  After the substitution $x=e^y$, it becomes a finite sum of exponentials $e^{\lambda y}$ with constant complex exponents $\lambda$ and constant coefficients.  The apparent $y$-dependence of the ordinate-local coefficients disappears after expanding the hyperbolic cosine.  Uniqueness of exponential polynomials then rules out every off-line exponent.
+
+A second argument is even more local.  The functional-equation symmetry makes the value and first derivative of the difference vanish automatically at $y=0$.  Its second derivative is
+\begin{equation}
+\frac{2}{N(H)}
+\sum_{\substack{\rho=\beta+i\gamma\\0<\gamma\leq H\\\beta>1/2}}
+\left(\beta-\frac12\right)^2,
+\label{eq:introduction_second_moment}
+\end{equation}
+a nonnegative finite sum.  Thus a single second-order equality at $x=1$ already characterizes the finite-height Riemann Hypothesis.
+
+The finite-height part is self-contained apart from standard facts about the zero symmetries and the identity theorem for holomorphic functions.  It uses no explicit formula, prime sum, zero-density estimate, pair-correlation result, or Landau--Gonek formula.  The later arithmetic part is separate and invokes Tao's proved logarithmically averaged two-point Elliott theorem only to certify orthogonality between distinct fixed arithmetic branches.
+
+\section{Finite zero sets and normalized transforms}
+\label{sec:definitions}
+
+\begin{definition}[Finite zero multiset {\normalfont[Standard]}]
+\label{def:zero_multiset}
+For $H>0$, let
+\begin{equation}
+\mathcal Z_H
+=
+\left\{
+\rho=\beta+i\gamma:\zeta(\rho)=0,\ 0<\gamma\leq H
+\right\}
+\label{eq:zero_multiset}
+\end{equation}
+be the multiset of nontrivial zeros with positive ordinate at most $H$, each repeated according to its multiplicity.  Define
+\begin{equation}
+N(H)=|\mathcal Z_H|.
+\label{eq:NH_definition}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+\label{rem:finiteness}
+The multiset $\mathcal Z_H$ is finite for every fixed $H$ because the zeros of a nonzero meromorphic function are isolated and a compact rectangle contains only finitely many of them.  The classical Riemann--von Mangoldt formula provides a much sharper count, but no asymptotic counting formula is needed here \cite{Titchmarsh1986}.
+\end{remark}
+
+\begin{definition}[Complete and ordinate-only transforms {\normalfont[New formulation, unconditional]}]
+\label{def:transforms}
+Assume $N(H)>0$.  For $x>0$, define
+\begin{align}
+L_H(x)
+&=
+\frac{1}{N(H)}
+\sum_{\rho=\beta+i\gamma\in\mathcal Z_H}
+ x^{\rho-1/2},
+\label{eq:LH_definition}
+\\
+M_H(x)
+&=
+\frac{1}{N(H)}
+\sum_{\rho=\beta+i\gamma\in\mathcal Z_H}
+ x^{i\gamma}.
+\label{eq:MH_definition}
+\end{align}
+The powers are defined using the real logarithm,
+\begin{equation}
+x^z=e^{z\log x}
+\qquad(x>0,\ z\in\mathbb C).
+\label{eq:real_log_power}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+\label{rem:multiplicity}
+Assume $N(H)>0$.
+The sum defining $M_H$ repeats $x^{i\gamma}$ once for every zero at ordinate $\gamma$.  Equivalently, if $m(\tau)$ denotes the total multiplicity at a distinct ordinate $\tau$, then
+\begin{equation}
+M_H(x)
+=
+\frac{1}{N(H)}
+\sum_{0<\tau\leq H}m(\tau)x^{i\tau}.
+\label{eq:MH_grouped}
+\end{equation}
+\end{remark}
+
+\begin{definition}[Finite-height Riemann property {\normalfont[Definition]}]
+\label{def:RH_H}
+We write $\RH(H)$ for the assertion
+\begin{equation}
+\Re\rho=\frac12
+\qquad
+\text{for every }\rho\in\mathcal Z_H.
+\label{eq:RH_H_definition}
+\end{equation}
+\end{definition}
+
+\section{The exact ordinate-local defect}
+\label{sec:atomic_defect}
+
+\begin{definition}[Horizontal defect at one ordinate {\normalfont[New formulation, unconditional]}]
+\label{def:Dx}
+For a distinct ordinate $0<\tau\leq H$ and $x>0$, define
+\begin{equation}
+D_x(\tau)
+=
+\sum_{\substack{\rho=\beta+i\tau\in\mathcal Z_H\\\beta>1/2}}
+\left[
+\cosh\left(\left(\beta-\frac12\right)\log x\right)-1
+\right],
+\label{eq:Dx_definition}
+\end{equation}
+where multiplicities are retained.
+\end{definition}
+
+\begin{proposition}[Positivity and local vanishing {\normalfont[Unconditional]}]
+\label{prop:Dx_positivity}
+For every $x>0$ and $0<\tau\leq H$,
+\begin{equation}
+D_x(\tau)\geq0.
+\label{eq:Dx_nonnegative}
+\end{equation}
+If $x\neq1$, then
+\begin{equation}
+D_x(\tau)=0
+\label{eq:Dx_zero}
+\end{equation}
+if and only if every zero at ordinate $\tau$ lies on the critical line.
+\end{proposition}
+
+\begin{proof}
+Every summand in \eqref{eq:Dx_definition} is nonnegative because
+\begin{equation}
+\cosh u-1\geq0
+\qquad(u\in\mathbb R),
+\label{eq:cosh_positivity}
+\end{equation}
+with equality if and only if $u=0$.  If $x\neq1$, then $\log x\neq0$.  Hence a summand vanishes exactly when $\beta-1/2=0$.  The functional-equation symmetry pairs every zero with $\beta<1/2$ to one with $\beta>1/2$ at the same ordinate and with the same multiplicity.  Therefore the absence of terms with $\beta>1/2$ is equivalent to all zeros at that ordinate satisfying $\beta=1/2$.
+\end{proof}
+
+\begin{theorem}[Exact finite-height defect identity {\normalfont[New theorem, unconditional]}]
+\label{thm:defect_identity}
+Assume $N(H)>0$.
+For every $x>0$,
+\begin{equation}
+\boxed{
+L_H(x)-M_H(x)
+=
+\frac{2}{N(H)}
+\sum_{0<\tau\leq H}
+D_x(\tau)e^{i\tau\log x}.
+}
+\label{eq:defect_identity}
+\end{equation}
+The outer sum is over distinct positive ordinates.
+\end{theorem}
+
+\begin{proof}
+Starting from Definitions~\ref{def:transforms}, group the terms by their distinct ordinates:
+\begin{align}
+L_H(x)-M_H(x)
+&=
+\frac{1}{N(H)}
+\sum_{0<\tau\leq H}
+ e^{i\tau\log x}
+\sum_{\rho=\beta+i\tau}
+\left(x^{\beta-1/2}-1\right).
+\label{eq:defect_grouped_first}
+\end{align}
+Fix $\tau$.  Zeros on the critical line contribute zero.  For an off-line pair
+\begin{equation}
+\frac12+\delta+i\tau,
+\qquad
+\frac12-\delta+i\tau,
+\qquad
+\delta>0,
+\label{eq:off_line_pair}
+\end{equation}
+the contribution to the inner sum in \eqref{eq:defect_grouped_first} is
+\begin{align}
+x^\delta-1+x^{-\delta}-1
+&=
+2\cosh(\delta\log x)-2
+\label{eq:pair_contribution_first}
+\\
+&=
+2\left[\cosh(\delta\log x)-1\right].
+\label{eq:pair_contribution_second}
+\end{align}
+Summing over all off-line pairs with multiplicity gives
+\begin{equation}
+\sum_{\rho=\beta+i\tau}
+\left(x^{\beta-1/2}-1\right)
+=2D_x(\tau).
+\label{eq:inner_sum_Dx}
+\end{equation}
+Substitution of \eqref{eq:inner_sum_Dx} into \eqref{eq:defect_grouped_first} proves \eqref{eq:defect_identity}.
+\end{proof}
+
+\begin{remark}
+\label{rem:not_constant_coefficients_yet}
+The representation \eqref{eq:defect_identity} must not be used directly as a constant-coefficient exponential polynomial in the variable $y=\log x$, because $D_{e^y}(\tau)$ depends on $y$.  The constant-coefficient form is obtained only after expanding every hyperbolic cosine, as carried out in Section~\ref{sec:exponential_polynomial}.
+\end{remark}
+
+\section{Atomic measure formulation}
+\label{sec:atomic_measures}
+
+\begin{definition}[Complete and ordinate-only atomic measures {\normalfont[New formulation, unconditional]}]
+\label{def:atomic_measures}
+For fixed $H$ with $N(H)>0$ and $x>0$, define
+\begin{align}
+\nu_{H,x}
+&=
+\frac{1}{N(H)}
+\sum_{0<\tau\leq H}
+\left(
+\sum_{\rho=\beta+i\tau}x^{\beta-1/2}
+\right)
+e^{i\tau\log x}\delta_\tau,
+\label{eq:nu_measure}
+\\
+\mu_{H,x}
+&=
+\frac{1}{N(H)}
+\sum_{0<\tau\leq H}
+m(\tau)e^{i\tau\log x}\delta_\tau.
+\label{eq:mu_measure}
+\end{align}
+\end{definition}
+
+\begin{theorem}[Positive atomic difference {\normalfont[New theorem, unconditional]}]
+\label{thm:atomic_difference}
+Assume $N(H)>0$.
+For every $x>0$,
+\begin{equation}
+\boxed{
+\frac12e^{-i(\log x)t}
+\left(\nu_{H,x}-\mu_{H,x}\right)
+=
+\frac{1}{N(H)}
+\sum_{0<\tau\leq H}D_x(\tau)\delta_\tau,
+}
+\label{eq:atomic_difference}
+\end{equation}
+where multiplication by $e^{-i(\log x)t}$ is understood atomwise.  The measure on the right is nonnegative.
+\end{theorem}
+
+\begin{proof}
+At an ordinate $\tau$, the coefficient of $\nu_{H,x}-\mu_{H,x}$ is
+\begin{equation}
+\frac{e^{i\tau\log x}}{N(H)}
+\sum_{\rho=\beta+i\tau}
+\left(x^{\beta-1/2}-1\right).
+\label{eq:atomic_coefficient_difference}
+\end{equation}
+By \eqref{eq:inner_sum_Dx}, this equals
+\begin{equation}
+\frac{2e^{i\tau\log x}}{N(H)}D_x(\tau).
+\label{eq:atomic_coefficient_Dx}
+\end{equation}
+Demodulation and division by two give \eqref{eq:atomic_difference}.  Positivity follows from Proposition~\ref{prop:Dx_positivity}.
+\end{proof}
+
+\begin{corollary}[One-parameter atomic criterion {\normalfont[New theorem, unconditional]}]
+\label{cor:atomic_criterion}
+Let $H>0$ with $N(H)>0$.
+For any fixed $x>0$ with $x\neq1$,
+\begin{equation}
+\boxed{
+\nu_{H,x}=\mu_{H,x}
+\quad\Longleftrightarrow\quad
+\RH(H).
+}
+\label{eq:atomic_criterion}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+If $\RH(H)$ holds, then every weight $x^{\beta-1/2}$ equals one, so the measures coincide.  Conversely, equality of the measures makes the positive measure on the right of \eqref{eq:atomic_difference} zero.  Every mass $D_x(\tau)$ therefore vanishes.  Proposition~\ref{prop:Dx_positivity} gives $\RH(H)$.
+\end{proof}
+
+\begin{remark}[No atom-separating windows are required]
+\label{rem:no_atom_separating_windows}
+The measures in Definition~\ref{def:atomic_measures} have finite support on distinct ordinates.  Equality of two such atomic measures is equality of the coefficient at each atom.  Equivalently, the nonnegative measure on the right of \eqref{eq:atomic_difference} is zero if and only if every one of its atomic masses is zero.  No auxiliary family of disjoint windows separating the ordinates is required.
+\end{remark}
+
+\section{Expansion as a finite exponential polynomial}
+\label{sec:exponential_polynomial}
+
+\begin{definition}
+\label{def:FH}
+Let $H>0$ with $N(H)>0$.  For $y\in\mathbb R$, define
+\begin{equation}
+F_H(y)
+=
+L_H(e^y)-M_H(e^y).
+\label{eq:FH_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Constant-coefficient expansion {\normalfont[New theorem, unconditional]}]
+\label{prop:constant_coefficient_expansion}
+Assume $N(H)>0$.
+The function $F_H$ extends to an entire function of $y\in\mathbb C$ and admits the finite expansion
+\begin{equation}
+F_H(y)
+=
+\frac{1}{N(H)}
+\sum_{\rho=\beta+i\gamma\in\mathcal Z_H}
+\left[
+ e^{(\beta-1/2+i\gamma)y}-e^{i\gamma y}
+\right].
+\label{eq:FH_direct_expansion}
+\end{equation}
+Equivalently, after grouping symmetric pairs,
+\begin{equation}
+F_H(y)
+=
+\frac{1}{N(H)}
+\sum_{0<\tau\leq H}
+\sum_{\delta>0}
+m_H(\delta,\tau)
+\left[
+ e^{(\delta+i\tau)y}
++e^{(-\delta+i\tau)y}
+-2e^{i\tau y}
+\right],
+\label{eq:FH_pair_expansion}
+\end{equation}
+where $m_H(\delta,\tau)$ is the multiplicity of the zero $1/2+\delta+i\tau$ in $\mathcal Z_H$.  Both exponents and coefficients in \eqref{eq:FH_pair_expansion} are constant.
+\end{proposition}
+
+\begin{proof}
+Substituting $x=e^y$ into \eqref{eq:LH_definition} and \eqref{eq:MH_definition} gives
+\begin{align}
+L_H(e^y)
+&=
+\frac{1}{N(H)}
+\sum_{\rho=\beta+i\gamma\in\mathcal Z_H}
+ e^{(\beta-1/2+i\gamma)y},
+\label{eq:LH_y}
+\\
+M_H(e^y)
+&=
+\frac{1}{N(H)}
+\sum_{\rho=\beta+i\gamma\in\mathcal Z_H}
+ e^{i\gamma y}.
+\label{eq:MH_y}
+\end{align}
+Their difference is \eqref{eq:FH_direct_expansion}.  It is entire because it is a finite sum of entire exponentials.
+
+For a pair \eqref{eq:off_line_pair}, the corresponding part of \eqref{eq:FH_direct_expansion} is
+\begin{equation}
+ e^{(\delta+i\tau)y}
++e^{(-\delta+i\tau)y}
+-2e^{i\tau y}.
+\label{eq:pair_expanded_y}
+\end{equation}
+Summing these terms with multiplicity gives \eqref{eq:FH_pair_expansion}.  No $y$-dependent coefficient remains.
+\end{proof}
+
+\begin{remark}
+\label{rem:constant_coefficient_scope}
+The factors $e^{(\beta-1/2)y}-1$ and $D_{e^y}(\tau)$ are indeed functions of $y$.  This does not obstruct the uniqueness argument because they are not retained as coefficients.  Expanding them produces the constant-coefficient expression \eqref{eq:FH_pair_expansion}.
+\end{remark}
+
+\section{Uniqueness of finite exponential polynomials}
+\label{sec:uniqueness}
+
+The following standard lemma is included with proof.  It is a finite-dimensional form of uniqueness for exponential polynomials; related general theory may be found in \cite{Boas1954}.
+
+\begin{lemma}[Uniqueness lemma {\normalfont[Classical, unconditional]}]
+\label{lem:exponential_uniqueness}
+Let $\lambda_1,\ldots,\lambda_r\in\mathbb C$ be distinct and let $a_1,\ldots,a_r\in\mathbb C$.  If
+\begin{equation}
+G(y)=\sum_{j=1}^{r}a_je^{\lambda_jy}
+\label{eq:G_exponential_polynomial}
+\end{equation}
+vanishes on a nonempty open interval of the real axis, then
+\begin{equation}
+a_1=\cdots=a_r=0.
+\label{eq:all_coefficients_zero}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The function $G$ is entire.  Since its zero set contains a real interval and therefore has an accumulation point in $\mathbb C$, the identity theorem gives
+\begin{equation}
+G(y)=0
+\qquad(y\in\mathbb C).
+\label{eq:G_identically_zero}
+\end{equation}
+Fix $y_0\in\mathbb C$.  Differentiating \eqref{eq:G_identically_zero} for $k=0,\ldots,r-1$ yields
+\begin{equation}
+\sum_{j=1}^{r}
+a_je^{\lambda_jy_0}\lambda_j^k=0.
+\label{eq:derivative_system}
+\end{equation}
+This is a linear system for the quantities $a_je^{\lambda_jy_0}$ with Vandermonde matrix
+\begin{equation}
+V=(\lambda_j^{k})_{0\leq k\leq r-1,\ 1\leq j\leq r}.
+\label{eq:vandermonde_matrix}
+\end{equation}
+Its determinant is
+\begin{equation}
+\det V
+=
+\prod_{1\leq j<k\leq r}(\lambda_k-\lambda_j),
+\label{eq:vandermonde_determinant}
+\end{equation}
+which is nonzero because the exponents are distinct.  Hence
+\begin{equation}
+a_je^{\lambda_jy_0}=0
+\qquad(1\leq j\leq r).
+\label{eq:weighted_coefficients_zero}
+\end{equation}
+Since exponentials never vanish, \eqref{eq:all_coefficients_zero} follows.
+\end{proof}
+
+\section{The finite-height interval criterion}
+\label{sec:interval_criterion}
+
+\begin{theorem}[Finite-height interval criterion {\normalfont[New theorem, unconditional]}]
+\label{thm:finite_height_interval}
+Let $H>0$ with $N(H)>0$.  The following assertions are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\RH(H)$ holds.
+\item $L_H(x)=M_H(x)$ for every $x>0$.
+\item There exists a nonempty open interval $J\subset(0,\infty)$ such that
+\begin{equation}
+L_H(x)=M_H(x)
+\qquad(x\in J).
+\label{eq:interval_equality}
+\end{equation}
+\item There exists a subset $E\subset(0,\infty)$ having an accumulation point in $(0,\infty)$ such that
+\begin{equation}
+L_H(x)=M_H(x)
+\qquad(x\in E).
+\label{eq:accumulation_equality}
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Assume (i).  Then every zero in $\mathcal Z_H$ satisfies $\beta=1/2$.  Consequently,
+\begin{equation}
+x^{\rho-1/2}=x^{i\gamma}
+\label{eq:termwise_RH_equality}
+\end{equation}
+for every $x>0$, and summation gives (ii).  The implications (ii)$\Rightarrow$(iii)$\Rightarrow$(iv) are immediate.
+
+Assume (iv).  Under the homeomorphism $y=\log x$, the set
+\begin{equation}
+\log E=\{\log x:x\in E\}
+\label{eq:log_E}
+\end{equation}
+has an accumulation point on the real axis.  By \eqref{eq:FH_definition},
+\begin{equation}
+F_H(y)=0
+\qquad(y\in\log E).
+\label{eq:FH_zero_on_logE}
+\end{equation}
+Proposition~\ref{prop:constant_coefficient_expansion} shows that $F_H$ is entire, so the identity theorem gives
+\begin{equation}
+F_H(y)\equiv0.
+\label{eq:FH_identically_zero}
+\end{equation}
+
+Suppose, for contradiction, that $\RH(H)$ fails.  Then there is a zero
+\begin{equation}
+\rho_0=\frac12+\delta_0+i\tau_0
+\label{eq:chosen_offline_zero}
+\end{equation}
+with $\delta_0>0$.  In the grouped expansion \eqref{eq:FH_pair_expansion}, the exponential
+\begin{equation}
+e^{(\delta_0+i\tau_0)y}
+\label{eq:chosen_exponential}
+\end{equation}
+has coefficient
+\begin{equation}
+\frac{m_H(\delta_0,\tau_0)}{N(H)}>0.
+\label{eq:chosen_positive_coefficient}
+\end{equation}
+No negative term in \eqref{eq:FH_pair_expansion} has the same exponent.  Indeed, an exponent $-\delta+i\tau$ has negative real part, an exponent $i\tau$ has real part zero, and another exponent $\delta+i\tau$ agrees with $\delta_0+i\tau_0$ only when both parameters agree, in which case the multiplicities add positively.  After grouping equal exponents, the coefficient in \eqref{eq:chosen_positive_coefficient} therefore remains nonzero.
+
+This contradicts Lemma~\ref{lem:exponential_uniqueness} applied to \eqref{eq:FH_identically_zero}.  Hence $\RH(H)$ holds, proving (iv)$\Rightarrow$(i).
+\end{proof}
+
+\begin{remark}
+\label{rem:single_point_insufficient}
+Assume $N(H)>0$.
+Equality at the single point $x=1$ is automatic:
+\begin{equation}
+L_H(1)=M_H(1)=1.
+\label{eq:equality_at_one}
+\end{equation}
+It contains no information about the horizontal coordinates.  The interval or accumulation-point hypothesis in Theorem~\ref{thm:finite_height_interval} is what activates analytic uniqueness.
+\end{remark}
+
+\section{A sharper second-derivative criterion}
+\label{sec:second_derivative}
+
+The interval criterion can be strengthened substantially.  The second derivative at the single logarithmic point $y=0$ already detects every off-line pair through a positive sum.
+
+\begin{proposition}[Automatic zeroth and first order agreement {\normalfont[Unconditional]}]
+\label{prop:automatic_orders}
+Assume $N(H)>0$.
+The function $F_H$ satisfies
+\begin{align}
+F_H(0)&=0,
+\label{eq:FH_zero_order}
+\\
+F_H'(0)&=0.
+\label{eq:FH_first_order}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:FH_zero_order} follows from \eqref{eq:equality_at_one}.  Differentiating \eqref{eq:FH_direct_expansion} gives
+\begin{equation}
+F_H'(0)
+=
+\frac{1}{N(H)}
+\sum_{\rho=\beta+i\gamma\in\mathcal Z_H}
+\left(\beta-\frac12\right).
+\label{eq:FH_first_derivative_sum}
+\end{equation}
+At each fixed ordinate, the functional-equation symmetry pairs $\beta-1/2$ with its negative and preserves multiplicity.  The sum is therefore zero.
+\end{proof}
+
+\begin{theorem}[Positive curvature identity {\normalfont[New theorem, unconditional]}]
+\label{thm:positive_curvature}
+Assume $N(H)>0$.
+The logarithmic second derivative of the defect is
+\begin{equation}
+\boxed{
+F_H''(0)
+=
+\frac{2}{N(H)}
+\sum_{\substack{0<\tau\leq H\\\delta>0}}
+m_H(\delta,\tau)\delta^2
+=
+\frac{2}{N(H)}
+\sum_{\substack{\rho=\beta+i\gamma\in\mathcal Z_H\\\beta>1/2}}
+\left(\beta-\frac12\right)^2.
+}
+\label{eq:positive_curvature_identity}
+\end{equation}
+In particular, $F_H''(0)$ is real and nonnegative.
+\end{theorem}
+
+\begin{proof}
+Differentiate the contribution of one symmetric pair in \eqref{eq:FH_pair_expansion} twice.  At $y=0$ it gives
+\begin{align}
+&(\delta+i\tau)^2+(-\delta+i\tau)^2-2(i\tau)^2
+\label{eq:pair_second_derivative_first}
+\\
+&\qquad=
+\left(\delta^2+2i\delta\tau-\tau^2\right)
++
+\left(\delta^2-2i\delta\tau-\tau^2\right)
++2\tau^2
+\label{eq:pair_second_derivative_second}
+\\
+&\qquad=2\delta^2.
+\label{eq:pair_second_derivative_result}
+\end{align}
+Summation over all pairs with multiplicity and division by $N(H)$ yields \eqref{eq:positive_curvature_identity}.
+\end{proof}
+
+\begin{corollary}[Finite-height curvature criterion {\normalfont[New theorem, unconditional]}]
+\label{cor:curvature_criterion}
+Let $H>0$ with $N(H)>0$.
+The following assertions are equivalent:
+\begin{align}
+\RH(H)
+&,
+\label{eq:curvature_equiv_RH}
+\\
+F_H''(0)&=0.
+\label{eq:curvature_equiv_zero}
+\end{align}
+Equivalently,
+\begin{equation}
+\boxed{
+\left.
+\frac{\dd^2}{\dd y^2}
+L_H(e^y)
+\right|_{y=0}
+=
+\left.
+\frac{\dd^2}{\dd y^2}
+M_H(e^y)
+\right|_{y=0}
+\quad\Longleftrightarrow\quad
+\RH(H).
+}
+\label{eq:second_derivative_criterion}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+If $\RH(H)$ holds, the sum in \eqref{eq:positive_curvature_identity} is empty.  Conversely, every term on the right of \eqref{eq:positive_curvature_identity} is nonnegative.  If the sum vanishes, then no $\delta>0$ occurs.  Functional-equation symmetry then places every zero in $\mathcal Z_H$ on the critical line.
+\end{proof}
+
+\begin{corollary}[Euler-operator form {\normalfont[Unconditional]}]
+\label{cor:euler_operator}
+Let $H>0$ with $N(H)>0$.
+Let
+\begin{equation}
+\mathcal E=x\frac{\dd}{\dd x}.
+\label{eq:euler_operator}
+\end{equation}
+Then
+\begin{equation}
+\boxed{
+\left.
+\mathcal E^2\bigl(L_H(x)-M_H(x)\bigr)
+\right|_{x=1}
+=
+\frac{2}{N(H)}
+\sum_{\substack{\rho\in\mathcal Z_H\\\Re\rho>1/2}}
+\left(\Re\rho-\frac12\right)^2.
+}
+\label{eq:euler_operator_identity}
+\end{equation}
+Consequently, the left side vanishes if and only if $\RH(H)$ holds.
+\end{corollary}
+
+\begin{proof}
+Under $x=e^y$, the operator $\dd/\dd y$ equals $x\dd/\dd x=\mathcal E$.  Apply Theorem~\ref{thm:positive_curvature}.
+\end{proof}
+
+\section{Global formulations equivalent to the Riemann Hypothesis}
+\label{sec:global_equivalences}
+
+\begin{theorem}[Unbounded-height interval criterion {\normalfont[New theorem, unconditional]}]
+\label{thm:global_interval_criterion}
+The Riemann Hypothesis is equivalent to the existence of an unbounded sequence $H_j\to\infty$, with $N(H_j)>0$, such that for each $j$ there exists a subset $E_j\subset(0,\infty)$ having an accumulation point in $(0,\infty)$ and
+\begin{equation}
+L_{H_j}(x)=M_{H_j}(x)
+\qquad(x\in E_j).
+\label{eq:global_interval_hypothesis}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+If $\RH$ holds, then $\RH(H_j)$ holds for every $H_j$, and Theorem~\ref{thm:finite_height_interval} gives equality for every $x>0$.
+
+Conversely, suppose the stated condition holds.  Let $\rho=\beta+i\gamma$ be any nontrivial zero with $\gamma>0$.  Choose $j$ such that $H_j\geq\gamma$.  Theorem~\ref{thm:finite_height_interval} applied at height $H_j$ gives $\RH(H_j)$, so $\beta=1/2$.  Conjugation then treats zeros with negative ordinate as well.  Equation~\eqref{eq:no_nontrivial_real_zeros} excludes a remaining zero with ordinate zero.  Thus every nontrivial zero lies on the critical line.
+\end{proof}
+
+\begin{theorem}[Unbounded-height curvature criterion {\normalfont[New theorem, unconditional]}]
+\label{thm:global_curvature_criterion}
+The Riemann Hypothesis is equivalent to the existence of an unbounded sequence $H_j\to\infty$, with $N(H_j)>0$, such that
+\begin{equation}
+F_{H_j}''(0)=0
+\qquad(j\geq1).
+\label{eq:global_curvature_hypothesis}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Under $\RH$, Corollary~\ref{cor:curvature_criterion} gives \eqref{eq:global_curvature_hypothesis} for every height with $N(H)>0$.  Conversely, each equality in \eqref{eq:global_curvature_hypothesis} implies $\RH(H_j)$.  Since the sequence is unbounded, every zero with positive ordinate is eventually included.  Conjugation treats zeros with negative ordinate, and \eqref{eq:no_nontrivial_real_zeros} excludes nontrivial zeros with ordinate zero.
+\end{proof}
+
+\begin{theorem}[Unbounded-height atomic criterion {\normalfont[New theorem, unconditional]}]
+\label{thm:global_atomic_criterion}
+Fix any $x_0>0$ with $x_0\neq1$.  The Riemann Hypothesis is equivalent to the existence of an unbounded sequence $H_j\to\infty$, with $N(H_j)>0$, such that
+\begin{equation}
+\nu_{H_j,x_0}=\mu_{H_j,x_0}
+\qquad(j\geq1).
+\label{eq:global_atomic_hypothesis}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Apply Corollary~\ref{cor:atomic_criterion} at every $H_j$.  The resulting finite-height assertions exhaust all zeros with positive ordinate.  Conjugation treats zeros with negative ordinate, and \eqref{eq:no_nontrivial_real_zeros} excludes nontrivial zeros with ordinate zero.
+\end{proof}
+
+\section{Logical scope and remaining problem}
+\label{sec:scope}
+
+\begin{proposition}[What has been proved {\normalfont[Unconditional]}]
+\label{prop:scope_proved}
+For every finite height $H$ with $N(H)>0$, each of the following is an exact criterion for $\RH(H)$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item equality of $L_H$ and $M_H$ on any set with an interior accumulation point;
+\item equality of the complete and ordinate-only atomic measures at any fixed $x\neq1$;
+\item vanishing of the positive curvature $F_H''(0)$.
+\end{enumerate}
+Along any unbounded sequence of heights, each criterion is equivalent to the full Riemann Hypothesis.
+\end{proposition}
+
+\begin{proof}
+The three finite-height assertions are Theorem~\ref{thm:finite_height_interval}, Corollary~\ref{cor:atomic_criterion}, and Corollary~\ref{cor:curvature_criterion}.  Their global versions are Theorems~\ref{thm:global_interval_criterion}, \ref{thm:global_atomic_criterion}, and \ref{thm:global_curvature_criterion}.
+\end{proof}
+
+\subsection{Normalized convergence does not activate the criteria}
+\label{subsec:normalized_convergence_insufficient}
+
+\begin{proposition}[Model obstruction to normalized convergence {\normalfont[Unconditional]}]
+\label{prop:normalized_convergence_insufficient}
+The identity \eqref{eq:positive_curvature_identity} has the following precise limitation: the convergence
+\begin{equation}
+F_{H_j}''(0)\longrightarrow0
+\qquad(j\longrightarrow\infty)
+\label{eq:normalized_curvature_convergence}
+\end{equation}
+can occur for sequences of symmetric finite multisets for which a fixed off-line pair persists.  Thus the identity controls an average, whereas the finite-height criteria require exact vanishing at each relevant height.
+\end{proposition}
+
+\begin{proof}
+Identity~\eqref{eq:positive_curvature_identity} is the normalized nonnegative moment
+\begin{equation}
+F_{H_j}''(0)
+=
+\frac{2}{N(H_j)}
+\sum_{\substack{\rho\in\mathcal Z_{H_j}\\\Re\rho>1/2}}
+\left(\Re\rho-\frac12\right)^2.
+\label{eq:normalized_curvature_average}
+\end{equation}
+From this identity alone, a fixed off-line pair with horizontal displacement $\delta_0>0$ contributes only
+\begin{equation}
+\frac{2\delta_0^2}{N(H_j)},
+\label{eq:fixed_offline_pair_dilution}
+\end{equation}
+which tends to zero as $N(H_j)\to\infty$.  More formally, symmetric finite multisets consisting of one fixed off-line pair and an increasing number of critical-line zeros have normalized curvature tending to zero while failing the corresponding finite-height critical-line property at every stage.  This model proves the stated limitation of the normalized identity; it does not assert the existence of such a zero configuration for the Riemann zeta function.  Exact vanishing, or an additional estimate preventing such dilution, is indispensable.
+\end{proof}
+
+\subsection{A finite triadic contraction and its precise obstruction}
+\label{subsec:triadic_contraction_obstruction}
+
+The following calculation records the one-step contraction of a linear prime average and its invariant component.
+
+\begin{proposition}[Finite triadic averaging {\normalfont[Unconditional]}]
+\label{prop:finite_triadic_averaging}
+Let $j\geq2$, $q=3^j$, $U_j=(\mathbb Z/q\mathbb Z)^\times$, and $\zeta_q=e^{2\pi i/q}$.  Define
+\begin{equation}
+c_j(u)
+=
+-\frac32(-1)^{j-1}3^{-j}\bigl(1+\zeta_q^u\bigr)
+\qquad(u\in U_j),
+\label{eq:triadic_coefficient_vector}
+\end{equation}
+and let
+\begin{equation}
+(\Pi_{a,j}T)(u)=T(au)
+\qquad(a\in U_j).
+\label{eq:triadic_permutation_operator}
+\end{equation}
+All inner products and norms in this subsection are taken in $\ell^2(U_j)$ with counting measure and with the convention
+\begin{equation}
+\langle f,g\rangle_{\ell^2(U_j)}
+=
+\sum_{u\in U_j}f(u)\overline{g(u)}.
+\label{eq:triadic_inner_product_convention}
+\end{equation}
+With this convention,
+\begin{equation}
+\Pi_{a,j}^*=\Pi_{a^{-1},j}.
+\label{eq:triadic_adjoint_formula}
+\end{equation}
+
+\noindent
+For the two-prime average
+\begin{equation}
+\mathcal A_j=\frac12\bigl(\Pi_{5,j}+\Pi_{7,j}\bigr),
+\label{eq:two_prime_triadic_average}
+\end{equation}
+one has
+\begin{equation}
+\|\mathcal A_j^*c_j\|_2^2
+=
+\frac34\|c_j\|_2^2.
+\label{eq:one_step_triadic_contraction}
+\end{equation}
+Nevertheless,
+\begin{equation}
+\|(\mathcal A_j^*)^kc_j\|_2
+\geq
+\frac{1}{\sqrt2}\|c_j\|_2
+\qquad(k\geq1),
+\label{eq:triadic_invariant_lower_bound}
+\end{equation}
+and the pointwise inequality
+\begin{equation}
+|\langle \mathcal A_jT,c_j\rangle|
+<
+|\langle T,c_j\rangle|
+\label{eq:false_pointwise_contraction}
+\end{equation}
+does not hold for arbitrary channel vectors $T$.
+\end{proposition}
+
+\begin{proof}
+Write
+\begin{equation}
+\alpha_j=-\frac32(-1)^{j-1}3^{-j}.
+\label{eq:triadic_alpha}
+\end{equation}
+For units $a,b$ modulo $q$, expansion of \eqref{eq:triadic_coefficient_vector} gives
+\begin{equation}
+\langle \Pi_{a,j}^*c_j,\Pi_{b,j}^*c_j\rangle
+=
+|\alpha_j|^2\bigl(\varphi(q)+r_q(a^{-1}-b^{-1})\bigr),
+\label{eq:triadic_ramanujan_inner_product}
+\end{equation}
+where
+\begin{equation}
+r_q(d)=\sum_{u\in U_j}\zeta_q^{du}
+\label{eq:ramanujan_sum_definition}
+\end{equation}
+is the Ramanujan sum.  Since
+\begin{equation}
+v_3(5^{-1}-7^{-1})=v_3(7-5)=0,
+\label{eq:inverse_difference_valuation}
+\end{equation}
+one has $r_{3^j}(5^{-1}-7^{-1})=0$, while
+\begin{equation}
+\|c_j\|_2^2=2|\alpha_j|^2\varphi(q).
+\label{eq:triadic_coefficient_norm}
+\end{equation}
+Consequently the normalized cross inner product is $1/2$, which proves \eqref{eq:one_step_triadic_contraction}.
+
+On the other hand,
+\begin{equation}
+\sum_{u\in U_j}\zeta_q^u=0,
+\label{eq:primitive_root_sum_zero}
+\end{equation}
+so the orthogonal projection $P_0$ onto the constant vectors satisfies
+\begin{equation}
+P_0c_j=\alpha_j\mathbf 1,
+\qquad
+\|P_0c_j\|_2^2=\frac12\|c_j\|_2^2.
+\label{eq:triadic_invariant_projection}
+\end{equation}
+Every multiplicative permutation fixes constant vectors.  Hence \eqref{eq:triadic_invariant_lower_bound} follows.  Finally, \eqref{eq:one_step_triadic_contraction} and the unchanged nonzero constant component show that $\mathcal A_j^*c_j$ is not a scalar multiple of $c_j$.  There therefore exists a vector $T$ orthogonal to $c_j$ but not to $\mathcal A_j^*c_j$.  For that $T$, the right side of \eqref{eq:false_pointwise_contraction} is zero and the left side is nonzero.  Thus the displayed pointwise inequality cannot hold for arbitrary $T$.
+\end{proof}
+
+\begin{remark}[The missing sesquilinear diagonal]
+\label{rem:missing_sesquilinear_diagonal}
+For a finite prime set $\mathcal P$, put
+\begin{equation}
+z_a(T)=\langle \Pi_{a,j}T,c_j\rangle
+\qquad(a\in\mathcal P).
+\label{eq:branch_amplitudes}
+\end{equation}
+The square of the averaged coherent contribution is the sesquilinear expression
+\begin{equation}
+\left|
+\frac{1}{|\mathcal P|}\sum_{a\in\mathcal P}z_a(T)
+\right|^2
+=
+\frac{1}{|\mathcal P|^2}
+\sum_{a,b\in\mathcal P}z_a(T)\overline{z_b(T)}.
+\label{eq:sesquilinear_branch_average}
+\end{equation}
+Its loss relative to the diagonal branch energy is
+\begin{align}
+\mathcal V_{\mathcal P,j}(T)
+&=
+\frac{1}{|\mathcal P|}\sum_{a\in\mathcal P}|z_a(T)|^2
+-
+\left|
+\frac{1}{|\mathcal P|}\sum_{a\in\mathcal P}z_a(T)
+\right|^2
+\label{eq:sesquilinear_variance_first}
+\\
+&=
+\frac{1}{2|\mathcal P|^2}
+\sum_{a,b\in\mathcal P}|z_a(T)-z_b(T)|^2.
+\label{eq:sesquilinear_variance_second}
+\end{align}
+A genuinely iterable arithmetic contraction would require a quantitative lower bound for \eqref{eq:sesquilinear_variance_first} on the actual arithmetic channel vectors, together with a transfer identity showing that the corresponding diagonal branch energy reproduces the same family at the next step.  Neither conclusion follows from \eqref{eq:one_step_triadic_contraction}.  Thus the missing input is a closed sesquilinear diagonal estimate, not another explicit linear formula or another finite $p$-adic decomposition.
+\end{remark}
+
+\subsection{Arithmetic iteration with fresh prime pairs}
+\label{subsec:fresh_prime_arithmetic_iteration}
+
+We now pass from the finite permutation operator to an operator on arithmetic sequences.  This logarithmic Liouville-correlation analysis is logically separate from the finite-height zero criteria proved above.
+
+Let $\lambda(n)=(-1)^{\Omega(n)}$ be the Liouville function and remove its local factor at $3$ by defining
+\begin{equation}
+f(n)
+=
+\lambda(n)(-1)^{v_3(n)}
+=
+\lambda\!\left(\frac{n}{3^{v_3(n)}}\right).
+\label{eq:three_free_liouville_function}
+\end{equation}
+Then $f$ is completely multiplicative, $f(3)=1$, and
+\begin{equation}
+f(p)=-1
+\qquad(p\neq3\text{ prime}).
+\label{eq:three_free_liouville_prime_values}
+\end{equation}
+Put
+\begin{align}
+\eta_3(n)
+&=
+(-1)^{v_3(n)+v_3(n+1)},
+\label{eq:triadic_valuation_parity_arithmetic}
+\\
+b_3(n)
+&=
+f(n)f(n+1).
+\label{eq:triadic_residual_factor_arithmetic}
+\end{align}
+Complete multiplicativity gives the exact factorization
+\begin{equation}
+\lambda(n)\lambda(n+1)=\eta_3(n)b_3(n).
+\label{eq:adjacent_liouville_triadic_factorization}
+\end{equation}
+
+On $\mathbb Z_3$ with normalized Haar measure, let $\mathcal F_k$ be the sigma-algebra of residue classes modulo $3^k$, let
+\begin{equation}
+m_k=\mathbb E(\eta_3\mid\mathcal F_k),
+\label{eq:triadic_conditional_expectation_arithmetic}
+\end{equation}
+and define
+\begin{equation}
+\Delta_1=m_1,
+\qquad
+\Delta_k=m_k-m_{k-1}
+\quad(k\geq2).
+\label{eq:triadic_shells_arithmetic}
+\end{equation}
+The centered martingale decomposition and its energies are
+\begin{align}
+\eta_3
+&=
+\sum_{k\geq1}\Delta_k,
+\label{eq:triadic_shell_decomposition_arithmetic}
+\\
+E_1=\|\Delta_1\|_{L^2(\mathbb Z_3)}^2
+&=
+\frac12,
+\label{eq:triadic_first_energy_arithmetic}
+\\
+E_k=\|\Delta_k\|_{L^2(\mathbb Z_3)}^2
+&=
+3^{1-k}
+\qquad(k\geq2).
+\label{eq:triadic_higher_energies_arithmetic}
+\end{align}
+For each layer define
+\begin{equation}
+F_k(n)=f(n+1)\Delta_k(n).
+\label{eq:arithmetic_layer_definition}
+\end{equation}
+
+For complex sequences $G_1,G_2$, set
+\begin{align}
+\mathcal H_X
+&=
+\sum_{n\leq X}\frac1n,
+\label{eq:harmonic_normalizer_arithmetic}
+\\
+\langle G_1,G_2\rangle_{\log,X}
+&=
+\frac1{\mathcal H_X}
+\sum_{n\leq X}\frac{G_1(n)\overline{G_2(n)}}{n},
+\label{eq:logarithmic_inner_product_arithmetic}
+\\
+\|G\|_{\log,X}^2
+&=
+\langle G,G\rangle_{\log,X}.
+\label{eq:logarithmic_norm_arithmetic}
+\end{align}
+For every positive integer $a$, let
+\begin{equation}
+(U_aG)(n)=G(an).
+\label{eq:arithmetic_dilation_operator}
+\end{equation}
+Since $|f|=1$ and multiplication by an integer coprime to $3$ permutes the triadic residue classes,
+\begin{equation}
+\|U_aF_k\|_{\log,X}^2\longrightarrow E_k
+\qquad(X\to\infty, 3\nmid a)
+\label{eq:dilated_layer_energy_limit}
+\end{equation}
+for every fixed $a$ and $k$.
+
+\begin{lemma}[Decorrelations of distinct arithmetic branches]
+\label{lem:distinct_arithmetic_branch_decorrelation}
+For every fixed layer $k$ and every pair of distinct positive integers $a,b$ with $3\nmid ab$,
+\begin{equation}
+\langle U_aF_k,U_bF_k\rangle_{\log,X}
+\longrightarrow0
+\qquad(X\to\infty).
+\label{eq:distinct_arithmetic_branch_decorrelation}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The product $\Delta_k(an)\Delta_k(bn)$ is periodic modulo $3^k$.  On a fixed residue class $n=3^kt+s$, the two multiplicative factors are evaluated at
+\begin{equation}
+f(a3^kt+as+1),
+\qquad
+f(b3^kt+bs+1).
+\label{eq:arithmetic_branch_affine_forms}
+\end{equation}
+The determinant of these affine forms is
+\begin{equation}
+(a3^k)(bs+1)-(b3^k)(as+1)
+=
+3^k(a-b)\neq0.
+\label{eq:arithmetic_branch_affine_determinant}
+\end{equation}
+The function $f$ differs from $\lambda$ at only the prime $3$, so it satisfies the same nonpretentiousness condition.  Tao's logarithmically averaged Elliott theorem, specifically Corollary~5 of \cite{Tao2016}, applies to the two fixed nonproportional affine forms.  Replacing $(3^kt+s)^{-1}$ by $(3^kt)^{-1}$ creates an absolutely summable error.  Summation over the finitely many residue classes proves \eqref{eq:distinct_arithmetic_branch_decorrelation}.
+\end{proof}
+
+Choose pairs of primes
+\begin{equation}
+(p_1,q_1),(p_2,q_2),\ldots,
+\label{eq:fresh_prime_pairs}
+\end{equation}
+such that all the primes are mutually distinct and none equals $3$.  Define
+\begin{align}
+B_s
+&=
+\frac12\bigl(U_{p_s}+U_{q_s}\bigr),
+\label{eq:fresh_pair_operator}
+\\
+G_{r,k}
+&=
+B_r\cdots B_1F_k.
+\label{eq:iterated_arithmetic_layer}
+\end{align}
+For $\varepsilon=(\varepsilon_1,\ldots,\varepsilon_r)\in\{0,1\}^r$, put
+\begin{equation}
+m_\varepsilon
+=
+\prod_{s=1}^r
+\begin{cases}
+p_s,&\varepsilon_s=0,\\
+q_s,&\varepsilon_s=1.
+\end{cases}
+\label{eq:arithmetic_branch_slope}
+\end{equation}
+Then
+\begin{equation}
+G_{r,k}
+=
+2^{-r}
+\sum_{\varepsilon\in\{0,1\}^r}U_{m_\varepsilon}F_k.
+\label{eq:iterated_branch_expansion}
+\end{equation}
+Unique factorization gives
+\begin{equation}
+m_\varepsilon=m_{\varepsilon'}
+\quad\Longleftrightarrow\quad
+\varepsilon=\varepsilon'.
+\label{eq:branch_slope_injectivity}
+\end{equation}
+
+\begin{theorem}[Exact logarithmic contraction with fresh prime pairs]
+\label{thm:fresh_prime_exponential_contraction}
+For every fixed $r,k\geq1$,
+\begin{align}
+\lim_{X\to\infty}
+\|G_{r,k}\|_{\log,X}^2
+&=
+2^{-r}E_k,
+\label{eq:fresh_prime_squared_contraction}
+\\
+\lim_{X\to\infty}
+\|G_{r,k}\|_{\log,X}
+&=
+2^{-r/2}\sqrt{E_k}.
+\label{eq:fresh_prime_norm_contraction}
+\end{align}
+Thus the arithmetic contraction is iterable toward zero after the logarithmic limit is taken at each fixed depth.
+\end{theorem}
+
+\begin{proof}
+Expanding \eqref{eq:iterated_branch_expansion} gives
+\begin{equation}
+\|G_{r,k}\|_{\log,X}^2
+=
+4^{-r}
+\sum_{\varepsilon,\varepsilon'\in\{0,1\}^r}
+\langle U_{m_\varepsilon}F_k,
+U_{m_{\varepsilon'}}F_k\rangle_{\log,X}.
+\label{eq:iterated_norm_expansion}
+\end{equation}
+The $2^r$ diagonal terms tend to $E_k$ by \eqref{eq:dilated_layer_energy_limit}.  Every off-diagonal term tends to zero by Lemma~\ref{lem:distinct_arithmetic_branch_decorrelation} and \eqref{eq:branch_slope_injectivity}.  Hence the limit of \eqref{eq:iterated_norm_expansion} is $4^{-r}2^rE_k=2^{-r}E_k$, proving both assertions.
+\end{proof}
+
+\begin{corollary}[Contraction in one active degree]
+\label{cor:one_active_degree_contraction}
+To obtain a strict iterable contraction it is enough to fix one degree $k$ with $E_k>0$.  For that single degree and every $r\geq1$,
+\begin{equation}
+\lim_{X\to\infty}
+\frac{\|G_{r,k}\|_{\log,X}^2}{\|F_k\|_{\log,X}^2}
+=
+2^{-r}.
+\label{eq:one_active_degree_relative_contraction}
+\end{equation}
+In particular, neither cancellation of the complete shell expansion nor the ordinary Cesaro form of Chowla is required for the decisive one-degree contraction lemma.
+\end{corollary}
+
+\begin{proof}
+Divide \eqref{eq:fresh_prime_squared_contraction} by
+$\lim_{X\to\infty}\|F_k\|_{\log,X}^2=E_k>0$.
+\end{proof}
+
+\begin{proposition}[Noninvertibility boundary of the contraction]
+\label{prop:contraction_noninvertibility_boundary}
+For every fixed active degree $k$, the decay of the transferred iterates does not, by itself, imply that the original layer vanishes.  More precisely,
+\begin{align}
+\lim_{X\to\infty}\|F_k\|_{\log,X}^2
+&=E_k>0,
+\label{eq:original_active_layer_positive_energy}
+\\
+\lim_{r\to\infty}\lim_{X\to\infty}
+\|G_{r,k}\|_{\log,X}^2
+&=
+\lim_{r\to\infty}2^{-r}E_k=0.
+\label{eq:transferred_iterates_vanish_with_positive_source}
+\end{align}
+Consequently,
+\begin{equation}
+\boxed{
+\lim_{r\to\infty}\lim_{X\to\infty}
+\|G_{r,k}\|_{\log,X}=0
+\quad\not\Longrightarrow\quad
+F_k=0.}
+\label{eq:contraction_does_not_invert}
+\end{equation}
+Thus the averaging operators $B_s$ lose information, so decay alone cannot be read backward.  Subsection~\ref{subsec:depth_uniform_audit} determines the exact scope of lower bounds involving the transferred energy.
+\end{proposition}
+
+\begin{proof}
+The first identity is \eqref{eq:dilated_layer_energy_limit} with $a=1$.  The second is Theorem~\ref{thm:fresh_prime_exponential_contraction} followed by $r\to\infty$.  Since $E_k>0$, the same nonzero original layer coexists with arbitrarily small transferred iterates, proving \eqref{eq:contraction_does_not_invert}.
+\end{proof}
+
+\subsection{Depth-uniform and finite-depth defect bounds}
+\label{subsec:depth_uniform_audit}
+
+The exact decay in Theorem~\ref{thm:fresh_prime_exponential_contraction} determines the effect of the depth quantifier: a fixed positive quantity cannot be bounded above by the same geometrically decaying channel energy at every depth.
+
+\begin{proposition}[Impossibility for a positive fixed atom {\normalfont[Unconditional]}]
+\label{prop:positive_atom_uniform_domination_impossible}
+Fix a distinct positive ordinate $\tau$, a degree $k\geq1$, and constants $x>0$, $x\neq1$, and $\eta>0$.  If
+\begin{equation}
+\eta D_x(\tau)
+\leq
+\liminf_{X\to\infty}
+\|G_{r,k}\|_{\log,X}^2
+\qquad(r\geq0),
+\label{eq:atomwise_persistent_channel_detection}
+\end{equation}
+then $D_x(\tau)=0$.  Equivalently, if $D_x(\tau)>0$, no fixed pair $(k,\eta)$ can satisfy \eqref{eq:atomwise_persistent_channel_detection} simultaneously for all transfer depths.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:fresh_prime_exponential_contraction} makes the right side of \eqref{eq:atomwise_persistent_channel_detection} equal to $2^{-r}E_k$.  Therefore
+\begin{equation}
+0\leq\eta D_x(\tau)\leq2^{-r}E_k
+\qquad(r\geq0).
+\label{eq:uniform_atom_squeeze}
+\end{equation}
+Letting $r\to\infty$ gives $\eta D_x(\tau)=0$, and $\eta>0$ gives the conclusion.
+\end{proof}
+
+\begin{corollary}[Impossibility of all-depth domination for a positive atom]
+\label{cor:all_depth_condition_impossible}
+If $D_x(\tau)>0$, then
+\begin{equation}
+\boxed{
+\forall k\geq1\ \forall\eta>0\ \exists r\geq0:
+\quad
+\eta D_x(\tau)>2^{-r}E_k.}
+\label{eq:explicit_all_depth_impossibility}
+\end{equation}
+Consequently, no fixed degree and no fixed positive coupling can dominate the same positive atom through all transfer depths.
+\end{corollary}
+
+\begin{proof}
+For fixed $k$ and $\eta$, choose any integer
+\begin{equation}
+r>\log_2\!\left(\frac{E_k}{\eta D_x(\tau)}\right).
+\label{eq:explicit_failure_depth}
+\end{equation}
+Then $2^{-r}E_k<\eta D_x(\tau)$.  The exact channel identity identifies $2^{-r}E_k$ with the limiting transferred energy.
+\end{proof}
+
+\begin{proposition}[Finite-depth channel estimate {\normalfont[Unconditional reduction]}]
+\label{prop:finite_depth_channel_estimate}
+Fix one depth $R\geq0$, one degree $k\geq1$, and one prescribed coupling $\eta>0$.  The finite-depth inequality
+\begin{equation}
+\eta D_x(\tau)
+\leq
+\liminf_{X\to\infty}\|G_{R,k}\|_{\log,X}^2
+\label{eq:finite_depth_channel_coupling}
+\end{equation}
+is equivalent to the quantitative bound
+\begin{equation}
+D_x(\tau)\leq\frac{2^{-R}E_k}{\eta}.
+\label{eq:finite_depth_defect_bound}
+\end{equation}
+At a single fixed depth, \eqref{eq:finite_depth_channel_coupling} is compatible with $D_x(\tau)>0$ and yields the explicit upper bound \eqref{eq:finite_depth_defect_bound}.
+\end{proposition}
+
+\begin{proof}
+Apply Theorem~\ref{thm:fresh_prime_exponential_contraction} at the single fixed depth $R$ and divide by $\eta>0$.
+\end{proof}
+
+\begin{remark}[Finite-depth scope]
+\label{rem:changing_depth_quantifiers}
+Proposition~\ref{prop:finite_depth_channel_estimate} makes a finite quantitative assertion and does not assume persistence to infinite depth.  A closed transfer identity showing that a prescribed coupling propagates from depth $r$ to depth $r+1$ would extend this estimate through the iterated channel.  The contraction theorem alone gives no such propagation of a zero defect.  Such an identity would be a sufficient mechanism, not a condition known to be necessary.
+\end{remark}
+
+\subsection{Alternative exact routes and the channel--curvature boundary}
+\label{subsec:alternative_routes_channel_boundary}
+
+The second derivative is not the only exact finite-height route.  Without introducing any further observable, the results already proved give two alternatives: equality $L_H=M_H$ on a set with an accumulation point, and equality $\nu_{H,x}=\mu_{H,x}$ at one fixed $x\neq1$.  Each is equivalent to $\RH(H)$.  The curvature equality $F_H''(0)=0$ is a third equivalent route.
+
+\begin{proposition}[What the present channels do not calculate {\normalfont[Unconditional audit]}]
+\label{prop:channels_do_not_calculate_curvature}
+The identities proved in the arithmetic section do not give a formula for $F_H''(0)$ in terms of $F_k$, $G_{r,k}$, their shell energies, or their transferred resonances.  In particular, the contraction
+\begin{equation}
+\lim_{X\to\infty}\|G_{r,k}\|_{\log,X}^2=2^{-r}E_k
+\label{eq:channel_decay_recalled}
+\end{equation}
+does not evaluate or force the vanishing of
+\begin{equation}
+F_H''(0)
+=
+\frac{2}{N(H)}
+\sum_{\substack{\rho\in\mathcal Z_H\\\Re\rho>1/2}}
+\left(\Re\rho-\frac12\right)^2.
+\label{eq:curvature_recalled_for_audit}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:curvature_recalled_for_audit} is Theorem~\ref{thm:positive_curvature} and contains the horizontal zero coordinates.  The definitions of $F_k$, $G_{r,k}$, $E_k$, and the transferred resonances contain the Liouville function, triadic shells, dilations, and logarithmic averages, but no height $H$, no horizontal zero coordinate, and no proved identity coupling these data to \eqref{eq:curvature_recalled_for_audit}.  Moreover, \eqref{eq:original_active_layer_positive_energy} and \eqref{eq:transferred_iterates_vanish_with_positive_source} show inside the arithmetic system itself that transferred decay coexists with positive source energy.  Hence none of the displayed arithmetic identities yields the claimed curvature evaluation or vanishing.  This proves the stated limitation of the present framework; it does not assert that no additional identity could ever be discovered.
+\end{proof}
+
+\begin{remark}[Status of a possible future bridge]
+\label{rem:future_bridge_status}
+An independently proved identity or inequality that genuinely implies any one of the three equivalent finite-height equalities would be sufficient to prove $\RH(H)$.  Such a particular arithmetic mechanism is not known to be necessary: the interval, atomic, and curvature criteria already provide different equivalent targets.  Accordingly, no unproved channel-to-zero coupling is labelled ``necessary'' in this article.
+\end{remark}
+
+\begin{proposition}[Sesquilinear variance at every arithmetic level]
+\label{prop:fresh_prime_sesquilinear_variance}
+Let
+\begin{equation}
+G=G_{r-1,k},
+\qquad
+V_p=U_{p_r}G,
+\qquad
+V_q=U_{q_r}G.
+\label{eq:new_branch_families}
+\end{equation}
+Define the two-branch variance
+\begin{equation}
+\mathcal V_r(X)
+=
+\frac{\|V_p\|_{\log,X}^2+\|V_q\|_{\log,X}^2}{2}
+-
+\left\|\frac{V_p+V_q}{2}\right\|_{\log,X}^2.
+\label{eq:arithmetic_two_branch_variance}
+\end{equation}
+Then
+\begin{align}
+\mathcal V_r(X)
+&=
+\frac14\|V_p-V_q\|_{\log,X}^2,
+\label{eq:arithmetic_variance_difference_form}
+\\
+\lim_{X\to\infty}\mathcal V_r(X)
+&=
+\frac12
+\lim_{X\to\infty}
+\frac{\|V_p\|_{\log,X}^2+\|V_q\|_{\log,X}^2}{2}.
+\label{eq:relative_half_variance}
+\end{align}
+Thus the relative variance is $\delta=1/2$ at every fixed level.
+\end{proposition}
+
+\begin{proof}
+The first identity is the parallelogram law.  The branch slopes in $V_p$ have the form $p_rm_\varepsilon$, while those in $V_q$ have the form $q_rm_{\varepsilon'}$.  They are all distinct by unique factorization, so Lemma~\ref{lem:distinct_arithmetic_branch_decorrelation} gives
+\begin{equation}
+\langle V_p,V_q\rangle_{\log,X}\longrightarrow0.
+\label{eq:new_branch_family_orthogonality}
+\end{equation}
+Theorem~\ref{thm:fresh_prime_exponential_contraction} gives
+\begin{equation}
+\|V_p\|_{\log,X}^2,
+\ \|V_q\|_{\log,X}^2
+\longrightarrow
+2^{-(r-1)}E_k.
+\label{eq:new_branch_family_energies}
+\end{equation}
+Substitution in \eqref{eq:arithmetic_two_branch_variance} proves \eqref{eq:relative_half_variance}.
+\end{proof}
+
+\begin{theorem}[Closure and contraction of transferred triadic resonances]
+\label{thm:transferred_triadic_resonance_contraction}
+For all fixed $r,j,k\geq1$,
+\begin{equation}
+\limsup_{X\to\infty}
+\left|
+2^{-r}
+\sum_{\varepsilon\in\{0,1\}^r}
+\left\langle
+b_3\Delta_j,
+U_{m_\varepsilon}(b_3\Delta_k)
+\right\rangle_{\log,X}
+\right|
+\leq
+2^{-r/2}\sqrt{E_jE_k}.
+\label{eq:layer_resonance_contraction}
+\end{equation}
+If
+\begin{equation}
+\mathcal R_r(X)
+=
+2^{-r}
+\sum_{\varepsilon\in\{0,1\}^r}
+\left\langle
+b_3\eta_3,
+U_{m_\varepsilon}(b_3\eta_3)
+\right\rangle_{\log,X},
+\label{eq:complete_transferred_resonance}
+\end{equation}
+then
+\begin{equation}
+\limsup_{X\to\infty}|\mathcal R_r(X)|
+\leq
+2^{-r/2}
+\left(\sum_{k\geq1}\sqrt{E_k}\right)^2
+\longrightarrow0
+\qquad(r\to\infty).
+\label{eq:complete_resonance_exponential_decay}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For $3\nmid m$, complete multiplicativity and $f(n)^2=1$ give
+\begin{equation}
+b_3(n)b_3(mn)
+=
+f(m)f(n+1)f(mn+1).
+\label{eq:residual_transfer_identity}
+\end{equation}
+Consequently,
+\begin{equation}
+b_3(n)b_3(mn)\Delta_j(n)\Delta_k(mn)
+=
+f(m)F_j(n)F_k(mn).
+\label{eq:closed_layer_transfer_identity}
+\end{equation}
+Every $m_\varepsilon$ contains exactly $r$ primes distinct from $3$, and hence
+\begin{equation}
+f(m_\varepsilon)=(-1)^r.
+\label{eq:branch_slope_sign}
+\end{equation}
+It follows that the average inside \eqref{eq:layer_resonance_contraction} equals
+\begin{equation}
+(-1)^r\langle F_j,G_{r,k}\rangle_{\log,X}.
+\label{eq:closed_resonance_pairing}
+\end{equation}
+Cauchy--Schwarz, \eqref{eq:dilated_layer_energy_limit}, and Theorem~\ref{thm:fresh_prime_exponential_contraction} prove \eqref{eq:layer_resonance_contraction}.
+
+Finally,
+\begin{equation}
+\sum_{k\geq1}\sqrt{E_k}
+=
+\frac1{\sqrt2}
++
+\sum_{k\geq2}3^{(1-k)/2}
+<\infty.
+\label{eq:summable_triadic_shell_norms}
+\end{equation}
+Expanding $\eta_3=\sum_k\Delta_k$, applying \eqref{eq:layer_resonance_contraction}, and summing the absolutely convergent majorant over $j,k$ proves \eqref{eq:complete_resonance_exponential_decay}.
+\end{proof}
+
+\subsection{A single diagonal scale for all fixed layers}
+\label{subsec:single_diagonal_scale}
+
+The preceding fresh-prime theorem first fixes the depth and then lets $X$ tend to infinity.  A separate diagonalization produces one slowly growing prime scale that works for every fixed shell and for the complete summable shell expansion.
+
+For $Q\geq5$, define
+\begin{align}
+w_\ell
+&=
+\frac{\log\ell}{\ell},
+\label{eq:diagonal_prime_weights}
+\\
+W(Q)
+&=
+\sum_{\substack{\ell\leq Q\\\ell\ {\rm prime},\ \ell\neq3}}w_\ell,
+\label{eq:diagonal_prime_weight_sum}
+\\
+P_Q
+&=
+\frac1{W(Q)}
+\sum_{\substack{\ell\leq Q\\\ell\ {\rm prime},\ \ell\neq3}}
+w_\ell U_\ell,
+\label{eq:diagonal_prime_average}
+\\
+D(Q)
+&=
+\frac1{W(Q)^2}
+\sum_{\substack{\ell\leq Q\\\ell\ {\rm prime},\ \ell\neq3}}w_\ell^2.
+\label{eq:diagonal_prime_ratio}
+\end{align}
+The standard estimates $W(Q)\asymp\log Q$ and $\sum_\ell w_\ell^2<\infty$ give
+\begin{equation}
+D(Q)\ll\frac1{(\log Q)^2}.
+\label{eq:diagonal_prime_ratio_decay}
+\end{equation}
+
+\begin{theorem}[One slowly growing scale for all fixed layers]
+\label{thm:single_slow_scale_all_layers}
+There exists a nondecreasing step function $Q(X)\to\infty$ satisfying
+\begin{equation}
+\log Q(X)=o(\log X)
+\label{eq:slow_scale_subpower_condition}
+\end{equation}
+such that, for every fixed $k\geq1$,
+\begin{equation}
+\|P_{Q(X)}F_k\|_{\log,X}\longrightarrow0.
+\label{eq:single_scale_fixed_layer_contraction}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Choose a strictly increasing sequence $Q_r\to\infty$ such that
+\begin{equation}
+D(Q_r)<2^{-4r}.
+\label{eq:slow_scale_Qr_choice}
+\end{equation}
+For fixed $r$, the family
+\begin{equation}
+\left\{
+\langle U_\ell F_k,U_qF_k\rangle_{\log,X}:
+k\leq r,
+\ \ell,q\leq Q_r,
+\ \ell\neq q
+\right\}
+\label{eq:finite_family_for_diagonalization}
+\end{equation}
+is finite.  Lemma~\ref{lem:distinct_arithmetic_branch_decorrelation} therefore allows one to choose a strictly increasing sequence $X_r\to\infty$ so that, for every $X\geq X_r$ and every $k\leq r$,
+\begin{equation}
+\frac1{W(Q_r)^2}
+\sum_{\substack{\ell,q\leq Q_r\\
+\ell,q\ {\rm prime},\ \ell,q\neq3\\
+\ell\neq q}}
+w_\ell w_q
+\left|
+\langle U_\ell F_k,U_qF_k\rangle_{\log,X}
+\right|
+<2^{-2r}.
+\label{eq:weighted_finite_off_diagonal_bound}
+\end{equation}
+By enlarging $X_r$ if necessary, one may also require
+\begin{align}
+\max_{\substack{k\leq r\\
+\ell\leq Q_r,\ \ell\ {\rm prime},\ \ell\neq3}}
+\left|
+\|U_\ell F_k\|_{\log,X}^2-E_k
+\right|
+&<2^{-2r}
+\qquad(X\geq X_r),
+\label{eq:weighted_finite_diagonal_bound}
+\\
+\frac{\log Q_r}{\log X_r}
+&<2^{-r}.
+\label{eq:slow_scale_endpoint_requirement}
+\end{align}
+Define
+\begin{equation}
+Q(X)=Q_r
+\qquad(X_r\leq X<X_{r+1}).
+\label{eq:slow_step_scale_definition}
+\end{equation}
+Then \eqref{eq:slow_scale_endpoint_requirement} implies \eqref{eq:slow_scale_subpower_condition}.  Expanding the squared norm of \eqref{eq:diagonal_prime_average} gives, whenever $r\geq k$ and $X_r\leq X<X_{r+1}$,
+\begin{equation}
+\|P_{Q(X)}F_k\|_{\log,X}^2
+\leq
+\bigl(E_k+2^{-2r}\bigr)2^{-4r}+2^{-2r}.
+\label{eq:single_scale_fixed_layer_bound}
+\end{equation}
+The right side tends to zero, proving \eqref{eq:single_scale_fixed_layer_contraction}.
+\end{proof}
+
+\begin{remark}[Endpoint correction]
+\label{rem:slow_scale_endpoint_correction}
+Uniformly for $\ell\leq Q(X)$,
+\begin{align}
+\frac1{\mathcal H_X}
+\sum_{X/\ell<n\leq X}\frac1n
+&\leq
+\frac{\log\ell+O(1)}{\log X}
+\label{eq:slow_scale_endpoint_first}
+\\
+&\leq
+\frac{\log Q(X)+O(1)}{\log X}
+=o(1).
+\label{eq:slow_scale_endpoint_second}
+\end{align}
+Thus the cutoff $n\leq X$ and the natural dilation cutoff $\ell n\leq X$ yield the same limit along this scale.
+\end{remark}
+
+\begin{theorem}[Single-scale contraction of the complete triadic expansion]
+\label{thm:single_scale_complete_shell_contraction}
+Let
+\begin{equation}
+F(n)=f(n+1)\eta_3(n)=\sum_{k\geq1}F_k(n).
+\label{eq:complete_arithmetic_shell_function}
+\end{equation}
+For the scale in Theorem~\ref{thm:single_slow_scale_all_layers},
+\begin{equation}
+\|P_{Q(X)}F\|_{\log,X}\longrightarrow0.
+\label{eq:single_scale_complete_contraction}
+\end{equation}
+Moreover,
+\begin{equation}
+\sum_{j,k\geq1}
+\langle F_j,P_{Q(X)}F_k\rangle_{\log,X}
+\longrightarrow0,
+\label{eq:single_scale_joint_shell_pairings}
+\end{equation}
+where the double series is interpreted through rectangular partial sums.
+\end{theorem}
+
+\begin{proof}
+The shell norms are summable.  For $J\geq1$,
+\begin{equation}
+\sum_{k>J}\sqrt{E_k}
+=
+\sum_{k>J}3^{(1-k)/2}
+=
+\frac{3^{-J/2}}{1-3^{-1/2}}.
+\label{eq:complete_shell_norm_tail}
+\end{equation}
+Minkowski's inequality, permutation of triadic residue classes by $\ell\neq3$, and \eqref{eq:slow_scale_endpoint_second} give
+\begin{equation}
+\limsup_{X\to\infty}
+\left\|
+P_{Q(X)}\sum_{k>J}F_k
+\right\|_{\log,X}
+\leq
+\sum_{k>J}\sqrt{E_k}.
+\label{eq:transferred_complete_shell_tail}
+\end{equation}
+For fixed $J$, Theorem~\ref{thm:single_slow_scale_all_layers} gives
+\begin{equation}
+\sum_{k\leq J}
+\|P_{Q(X)}F_k\|_{\log,X}
+\longrightarrow0.
+\label{eq:finite_shell_block_contraction}
+\end{equation}
+First let $X\to\infty$ and then $J\to\infty$ to obtain \eqref{eq:single_scale_complete_contraction}.  Finally,
+\begin{equation}
+\left|
+\langle F,P_{Q(X)}F\rangle_{\log,X}
+\right|
+\leq
+\|F\|_{\log,X}\|P_{Q(X)}F\|_{\log,X}
+\longrightarrow0.
+\label{eq:complete_single_scale_pairing_bound}
+\end{equation}
+The summable majorant in \eqref{eq:complete_shell_norm_tail} permits expansion in rectangular partial sums and proves \eqref{eq:single_scale_joint_shell_pairings}.
+\end{proof}
+
+\begin{question}[Prescribed-scale bilinear target]
+\label{question:prescribed_scale_bilinear_target}
+For a prescribed growing scale $Q=Q(X)$, can one prove, for each fixed $k$,
+\begin{equation}
+\left|
+\frac1{W(Q)^2}
+\sum_{\substack{\ell,q\leq Q\\
+\ell,q\ {\rm prime},\ \ell,q\neq3\\
+\ell\neq q}}
+w_\ell w_q
+\langle U_\ell F_k,U_qF_k\rangle_{\log,X}
+\right|
+=o(1)?
+\label{eq:prescribed_weighted_bilinear_estimate}
+\end{equation}
+This is an averaged bilinear estimate over the two prime towers; it does not require a uniform estimate for every individual pair $(\ell,q)$.  The polynomial scale $Q=X^\theta$ is a particularly strong instance not supplied by the diagonal argument.
+\end{question}
+
+\begin{warning}[Polynomial scales and endpoints]
+\label{warn:polynomial_scale_endpoint_boundary}
+For fixed $\theta>0$, the choice $Q=X^\theta$ gives
+\begin{equation}
+\frac{\log Q}{\log X}=\theta,
+\label{eq:polynomial_scale_endpoint_ratio}
+\end{equation}
+not $o(1)$.  Thus \eqref{eq:prescribed_weighted_bilinear_estimate} would control the interior off-diagonal average, but it would not by itself identify $n\leq X$ with the natural cutoff $\ell n\leq X$.  A polynomial-scale proof must retain the natural cutoff, control the endpoint separately, or subsequently send $\theta\to0$.
+\end{warning}
+
+\begin{warning}[Exact scope of the contraction]
+\label{warn:fresh_prime_iteration_scope}
+The finite operator in Proposition~\ref{prop:finite_triadic_averaging} remains noniterable because of its invariant coefficient component.  Theorem~\ref{thm:fresh_prime_exponential_contraction} and Corollary~\ref{cor:one_active_degree_contraction} overcome that particular obstruction after passing to the full arithmetic sequences and using a fresh prime pair at every level.  They establish a stable sesquilinear contraction on any one fixed active degree.  It is not necessary to prove the ordinary Cesaro form of Chowla or to control every shell simultaneously in order to prove that arithmetic contraction theorem.
+\end{warning}
+
+\begin{remark}
+\label{rem:no_Landau}
+No Landau formula or uniform variant is used in the finite-height zero criteria.  Those proofs depend only on the finite zero symmetries, positivity of $\cosh u-1$, the identity theorem, and a finite Vandermonde determinant.  The separate arithmetic analysis in Subsection~\ref{subsec:fresh_prime_arithmetic_iteration} additionally uses Tao's logarithmically averaged Elliott theorem.
+\end{remark}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+For a fixed height $H$ with $N(H)>0$, the normalized complete-zero transform $L_H$ and the ordinate-only transform $M_H$ differ by an explicitly positive atomic defect localized at the distinct ordinates.  The scalar difference is
+\begin{equation}
+L_H(x)-M_H(x)
+=
+\frac{2}{N(H)}
+\sum_{0<\tau\leq H}D_x(\tau)e^{i\tau\log x},
+\label{eq:conclusion_defect}
+\end{equation}
+where each $D_x(\tau)$ is nonnegative and, for $x\neq1$, vanishes precisely when the zeros at that ordinate lie on the critical line.
+
+After the logarithmic substitution $x=e^y$, the defect is not used in the misleading form ``a $y$-dependent coefficient times $e^{i\tau y}$.''  Expanding the hyperbolic cosine yields the genuine constant-coefficient exponential polynomial
+\begin{equation}
+F_H(y)
+=
+\frac{1}{N(H)}
+\sum_{\tau,\delta>0}
+m_H(\delta,\tau)
+\left[
+ e^{(\delta+i\tau)y}
++e^{(-\delta+i\tau)y}
+-2e^{i\tau y}
+\right].
+\label{eq:conclusion_exponential_polynomial}
+\end{equation}
+Its uniqueness implies that equality of $L_H$ and $M_H$ on any set with an accumulation point forces every horizontal displacement $\delta$ to vanish.
+
+The local expansion at $y=0$ gives a still sharper characterization.  The value and first derivative vanish automatically by symmetry, while
+\begin{equation}
+F_H''(0)
+=
+\frac{2}{N(H)}
+\sum_{\substack{\rho\in\mathcal Z_H\\\Re\rho>1/2}}
+\left(\Re\rho-\frac12\right)^2.
+\label{eq:conclusion_curvature}
+\end{equation}
+Thus finite-height critical-line containment is equivalent to a single positive curvature being zero.  Exhausting the zeros through any unbounded sequence of heights converts each finite criterion into an equivalent formulation of the Riemann Hypothesis.
+
+The triadic arithmetic analysis supplies a further ingredient.  For any one fixed active shell $k$, a fresh pair of primes at each level produces the exact logarithmic contraction
+\begin{equation}
+\lim_{X\to\infty}\|G_{r,k}\|_{\log,X}^2=2^{-r}E_k,
+\label{eq:conclusion_one_degree_contraction}
+\end{equation}
+and the associated sesquilinear variance has the uniform relative value $1/2$.  This is a genuine unconditional arithmetic theorem.  It proves contraction of the transferred channel, not disappearance of its positive source energy and not a statement about the horizontal coordinates of zeta zeros.  Ordinary Cesaro Chowla cancellation and simultaneous contraction of every degree are not prerequisites for this arithmetic lemma.
+
+The exact status of the conditions in this article is consequently as follows.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item For fixed $H$, interval or accumulation-set equality of $L_H$ and $M_H$, one-point equality of the atomic measures at any fixed $x\neq1$, and the curvature equality $F_H''(0)=0$ are each necessary and sufficient for $\RH(H)$.  Along an unbounded sequence of heights, each is necessary and sufficient for the full Riemann Hypothesis.
+\item The arithmetic channel contraction \eqref{eq:conclusion_one_degree_contraction} is unconditional, but it does not close the zero-side criteria by itself.  The missing step is an explicit identity coupling a channel quantity to one of the three equivalent finite-height equalities.
+\item An identity connecting the existing branches or channels to any of the three exact zero-side equalities would provide a sufficient route.  No particular identity of this kind is shown to be necessary.
+\end{enumerate}
+
+In particular, the second derivative cannot presently be calculated from the displayed branch and channel identities.  Its exact formula \eqref{eq:conclusion_curvature} uses the horizontal zero coordinates, whereas the arithmetic identities contain no proved coupling to those coordinates.  The interval and atomic-measure equivalences are rigorous alternatives to the derivative criterion.  Thus the arithmetic contraction is a complete result on the channel side, while the coupling identity required to close the zero-side criteria remains the precise outstanding relation.
+
+\begin{thebibliography}{99}
+
+\bibitem{Boas1954}
+R.~P. Boas, Jr.,
+\emph{Entire Functions},
+Pure and Applied Mathematics, vol.~5,
+Academic Press, New York, 1954.
+
+\bibitem{Edwards1974}
+H.~M. Edwards,
+\emph{Riemann's Zeta Function},
+Academic Press, New York, 1974.
+ISBN 978-0-12-232750-6.
+
+\bibitem{Tao2016}
+T.~Tao,
+\emph{The Logarithmically Averaged Chowla and Elliott Conjectures for Two-Point Correlations},
+Forum of Mathematics, Pi \textbf{4} (2016), e8.
+doi: 10.1017/fmp.2016.6; arXiv:1509.05422.
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D.~R. Heath-Brown,
+Clarendon Press, Oxford, 1986.
+ISBN 978-0-19-853369-6.
+
+\end{thebibliography}
+
+\end{document}

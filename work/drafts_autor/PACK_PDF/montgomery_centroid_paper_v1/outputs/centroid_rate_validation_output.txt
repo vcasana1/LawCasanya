@@ -1,0 +1,13 @@
+Independent centroid-rate validation
+input = data/g_hp.bin
+input sha256 = 80c7bb512e210922397fd36b5bdfb97239cc0c5ee73dc1ec57a919ce41b367b2
+ordinates = 22491
+conditional limit = 0.77689426079325363 +0.767855668864547i
+mean of |C_N-L|*N/log(N) = 1.144738
+standard deviation = 0.258893
+minimum = 0.665957
+maximum = 1.764019
+prediction at N=2001052 = 8.30024047e-06
+full-table observed discrepancy = 8.71620000e-06
+observed/predicted = 1.050114
+figure = figures/centroid_rate_validation.png

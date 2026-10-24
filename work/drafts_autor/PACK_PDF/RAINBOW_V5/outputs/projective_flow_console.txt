@@ -1,0 +1,189 @@
+VIOLET TRANSVERSE PROJECTIVE FLOW AUDIT
+============================================================
+Violet lobes             : 240
+q samples/lobe           : 121
+quotient families        : 5
+
+FIXED VIOLET LOBES
+------------------------------------------------------------
+first boundary = 14.134725142000
+last boundary  = 457.903893064000
+
+VIOLET PHASE PROJECTION
+------------------------------------------------------------
+left endpoint error  = 0.000e+00
+right endpoint error = 0.000e+00
+
+DENSE TRANSVERSE DOMAIN
+------------------------------------------------------------
+beta samples          = 270
+Violet beta           = 0.500000000000
+outer Transverse beta    = 1.000000000000
+first positive delta  = 1.000e-05
+
+TRANSVERSE / TRANSVERSE DERIVATIVE AUDIT
+------------------------------------------------------------
+cutoff   512 vs  1024 : W 2.198e-13   W_beta 7.694e-13
+accepted cutoff = 512
+
+BUILDING DIFFERENTIAL TRANSVERSE
+------------------------------------------------------------
+elapsed = 3.40 s
+
+VIOLET BOUNDARY AUDIT
+------------------------------------------------------------
+max residual    = 2.789e-09
+median residual = 6.762e-10
+
+============================================================
+DIFFERENTIAL QUOTIENT 1 / 5 : HERMITE_JET1
+============================================================
+usable Violet lobes = 240 / 240
+
+M_beta SIGN
+------------------------------------------------------------
+nonnegative derivative samples = 64556 / 64560 = 0.999938042
+lobes M_beta >= 0 for all beta = 239 / 240
+median strict-positive fraction/lobe = 1.000000000
+worst lobe minimum M_beta = -4.062613213653e-09
+
+PROJECTIVE SPEED P
+------------------------------------------------------------
+minimum P           = 4.168428031193e-06
+invalid negative P  = 0
+
+ANALYTIC DERIVATIVE vs FINITE DIFFERENCE
+------------------------------------------------------------
+median relative error = 2.613782e-05
+maximum relative error = 4.290827e-01
+
+============================================================
+DIFFERENTIAL QUOTIENT 2 / 5 : ENDPOINT_VALUES
+============================================================
+usable Violet lobes = 240 / 240
+
+M_beta SIGN
+------------------------------------------------------------
+nonnegative derivative samples = 64299 / 64560 = 0.995957249
+lobes M_beta >= 0 for all beta = 227 / 240
+median strict-positive fraction/lobe = 1.000000000
+worst lobe minimum M_beta = -8.740625682281e+00
+
+PROJECTIVE SPEED P
+------------------------------------------------------------
+minimum P           = 3.541283878850e-05
+invalid negative P  = 0
+
+ANALYTIC DERIVATIVE vs FINITE DIFFERENCE
+------------------------------------------------------------
+median relative error = 6.948234e-05
+maximum relative error = 1.550959e-02
+
+============================================================
+DIFFERENTIAL QUOTIENT 3 / 5 : HERMITE_JET2
+============================================================
+usable Violet lobes = 240 / 240
+
+M_beta SIGN
+------------------------------------------------------------
+nonnegative derivative samples = 62735 / 64560 = 0.971731722
+lobes M_beta >= 0 for all beta = 182 / 240
+median strict-positive fraction/lobe = 0.981412639
+worst lobe minimum M_beta = -9.120348025057e-07
+
+PROJECTIVE SPEED P
+------------------------------------------------------------
+minimum P           = 1.274145393637e-07
+invalid negative P  = 0
+
+ANALYTIC DERIVATIVE vs FINITE DIFFERENCE
+------------------------------------------------------------
+median relative error = 2.159731e-05
+maximum relative error = 7.063851e-01
+
+============================================================
+DIFFERENTIAL QUOTIENT 4 / 5 : MINIMAL_BOUNDARY_SPLINE
+============================================================
+usable Violet lobes = 240 / 240
+
+M_beta SIGN
+------------------------------------------------------------
+nonnegative derivative samples = 64544 / 64560 = 0.999752169
+lobes M_beta >= 0 for all beta = 239 / 240
+median strict-positive fraction/lobe = 1.000000000
+worst lobe minimum M_beta = -1.178868743956e-07
+
+PROJECTIVE SPEED P
+------------------------------------------------------------
+minimum P           = 1.992848812193e-06
+invalid negative P  = 0
+
+ANALYTIC DERIVATIVE vs FINITE DIFFERENCE
+------------------------------------------------------------
+median relative error = 2.743406e-05
+maximum relative error = 6.617263e-01
+
+============================================================
+DIFFERENTIAL QUOTIENT 5 / 5 : ORTHOGONAL_CUBIC
+============================================================
+usable Violet lobes = 240 / 240
+
+M_beta SIGN
+------------------------------------------------------------
+nonnegative derivative samples = 64560 / 64560 = 1.000000000
+lobes M_beta >= 0 for all beta = 240 / 240
+median strict-positive fraction/lobe = 1.000000000
+worst lobe minimum M_beta = 3.411731949397e-10
+
+PROJECTIVE SPEED P
+------------------------------------------------------------
+minimum P           = 1.054223934460e-05
+invalid negative P  = 0
+
+ANALYTIC DERIVATIVE vs FINITE DIFFERENCE
+------------------------------------------------------------
+median relative error = 2.694430e-05
+maximum relative error = 9.808939e-01
+
+============================================================
+CROSS-QUOTIENT DIFFERENTIAL RIGIDITY
+============================================================
+lobes with M_beta >= 0 for EVERY beta and EVERY Q:
+173 / 240 = 0.720833333
+
+BY QUOTIENT
+------------------------------------------------------------
+HERMITE_JET1                 : 239 / 240
+ENDPOINT_VALUES              : 227 / 240
+HERMITE_JET2                 : 182 / 240
+MINIMAL_BOUNDARY_SPLINE      : 239 / 240
+ORTHOGONAL_CUBIC             : 240 / 240
+
+LOBE FAILURES
+------------------------------------------------------------
+HERMITE_JET1                 : 233
+ENDPOINT_VALUES              : 91 127 135 159 184 186 196 199 205 212 215 220 233
+HERMITE_JET2                 : 4 26 27 32 40 45 47 51 53 57 63 65 68 75 77 78 80 82 87 88 100 104 111 112 113 117 130 131 135 141 147 159 164 167 168 169 170 171 181 190 192 193 196 197 202 203 204 205 212 218 222 226 227 228 235 236 238 239
+MINIMAL_BOUNDARY_SPLINE      : 81
+ORTHOGONAL_CUBIC             : none
+
+============================================================
+FINAL VIOLET TRANSVERSE PROJECTIVE FLOW DIAGNOSIS
+============================================================
+HERMITE_JET1: nonnegative sample fraction 0.999938042; 239/240 full paths; min M_beta -4.062613213653e-09; min P 4.168428031193e-06.
+ENDPOINT_VALUES: nonnegative sample fraction 0.995957249; 227/240 full paths; min M_beta -8.740625682281; min P 3.541283878850e-05.
+HERMITE_JET2: nonnegative sample fraction 0.971731722; 182/240 full paths; min M_beta -9.120348025057e-07; min P 1.274145393637e-07.
+MINIMAL_BOUNDARY_SPLINE: nonnegative sample fraction 0.999752169; 239/240 full paths; min M_beta -1.178868743956e-07; min P 1.992848812193e-06.
+ORTHOGONAL_CUBIC: nonnegative sample fraction 1.000000000; 240/240 full paths; min M_beta 3.411731949397e-10; min P 1.054223934460e-05.
+
+CORE DIFFERENTIAL RESULT
+------------------------------------------------------------
+lobes satisfying M_beta >= 0 for EVERY beta and EVERY quotient:
+173 / 240 = 0.720833333
+
+DIFFERENTIAL SIGN LAW FAILS materially somewhere in the tested Transverse geometry.
+
+No beta-dependent zeros were constructed or searched.
+Violet was used only as beta=1/2 and as the fixed lobe reference of the Transverse projection.
+
+AUDIT COMPLETE

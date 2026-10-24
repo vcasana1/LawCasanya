@@ -1,0 +1,39 @@
+=== Exact prime/ordinal identities ===
+max |SS_pos-(n-Q+M)|                 : 0
+max |SS_ord-(n-Q+M(Q+1)/2)|         : 0
+max |SS-SS_ord-(D(N+)-D(N-))|       : 0
+endpoint N                             : 1000000
+endpoint (Q,M,n-Q)                    : 607926 212 392074
+endpoint T_ord, T_prime               : 64440262 915270668
+endpoint amplitude ratio              : 14.203397683268
+endpoint squared-energy ratio         : 201.736505749070
+
+=== Level-crossing audit ===
+squarefree crossings tested           : 607926
+max increment-formula error           : 0
+returns reaching level zero           : 3269
+
+=== Same-level SS collisions, squarefree clock ===
+levels with collisions                : [(-1, 60), (0, 348)]
+
+=== Complete negative excursions ===
+number of complete negative excursions: 1637
+nontrivial excursions with H >= 2       : 804
+max exact-identity error               : 0
+largest excursions: H, A, cubic bound, ratio, physical endpoints
+ 368    22400089790     16611888  1348.437323    804155    960379
+ 278     5347218990      7161558   746.655824    572307    630789
+ 258     3848772056      5724418   672.342945    322502    371658
+ 204     1072678560      2829820   379.062470    515503    545737
+ 154      357154416      1217370   293.381976    219290    243231
+ 134      496460104       801990   619.035280    135659    162379
+ 132      126849124       766612   165.467178     91813    100873
+ 132      103286636       766612   134.731306    503437    510978
+ 113      103630764       480928   215.480829     56381     64835
+ 101       59962154       343400   174.613145    206799    213917
+
+=== Finite occupancy diagnostics (not proofs) ===
+M         support=    680 maxmult= 5433 H1= 8.878644904 E2=2.527952982000e-03 H2= 8.627814654 pairs=1263476491
+SS_pos    support= 392288 maxmult=   22 H1=18.254030460 E2=3.951554000000e-06 H2=17.949148446 pairs=1475777
+SS_ord    support= 982577 maxmult=   11 H1=19.894000586 E2=1.043556000000e-06 H2=19.870060548 pairs=21778
+SS_prime  support= 997816 maxmult=    4 H1=19.927179697 E2=1.004424000000e-06 H2=19.925200163 pairs=2212

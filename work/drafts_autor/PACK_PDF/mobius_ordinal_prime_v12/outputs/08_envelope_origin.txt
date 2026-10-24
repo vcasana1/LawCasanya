@@ -1,0 +1,6 @@
+wrote fig7_envelope.png, fig8_spectrum.png
+
+corr(log RMS-envelope, log |M|^{3/2} log n) over n >= 5e4 : 0.9939
+control with n log n only (no M)                        : 0.4442
+true M     peaks [14.55 20.92 25.47 30.02 32.74 40.93 50.03]  mean dist to nearest gamma = 0.263
+surrogate  peaks [10.01 12.73 15.46 17.28 24.56 28.2  30.93 33.65]  mean dist to nearest gamma = 1.738

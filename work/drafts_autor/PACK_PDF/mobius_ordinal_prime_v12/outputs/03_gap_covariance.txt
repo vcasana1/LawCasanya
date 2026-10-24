@@ -1,0 +1,34 @@
+=== exact antisymmetric gap identity ===
+random n tested            : 4000
+mismatches                 : 0
+max absolute error         : 0.000e+00
+
+=== weight-norm formula  sum w^2 ===
+sum w^2 = h(h^2-1)/12  (h odd),  h(h-1)(h-2)/12  (h even) : True
+check   : h=7 -> 28.0 (closed 28.0) ; h=8 -> 28.0 (closed 28.0)
+asymptotics: sum w^2 / (h^3/12) at h=370 : 0.991907
+=== local gap statistics, prime index band [50000, 305000) ===
+mean gap                 = 14.5927
+log p at band centre     = 14.6984
+Var(g)                   = 145.9308
+Var(g) / log^2 p         = 0.6755   (Cramer/Poisson model predicts 1)
+
+gap autocorrelation rho(d), d = 1..10:
+  -0.0463  -0.0225  -0.0132  -0.0057  -0.0069  -0.0061  -0.0060  -0.0064  -0.0053  -0.0028
+sum_{d>=1} rho(d) over d<=420 = 0.4646
+
+max |M(n)| for n <= 10^6 = 368
+kappa(h) = w^T R w / w^T w  (1 under independence):
+   h =    3   kappa = 1.0463   sqrt(kappa) = 1.0229
+   h =    5   kappa = 1.0206   sqrt(kappa) = 1.0103
+   h =   10   kappa = 0.9532   sqrt(kappa) = 0.9763
+   h =   20   kappa = 0.9094   sqrt(kappa) = 0.9536
+   h =   40   kappa = 0.8514   sqrt(kappa) = 0.9227
+   h =   80   kappa = 0.7869   sqrt(kappa) = 0.8871
+   h =  160   kappa = 0.7381   sqrt(kappa) = 0.8591
+   h =  320   kappa = 0.6871   sqrt(kappa) = 0.8289
+   h =  368   kappa = 0.6757   sqrt(kappa) = 0.8220
+
+=== test on 883123 values of n (n >= 10^4, |M| >= 12) ===
+independent-gap model : RMS(E_mid)/RMS(sd_pred) = 0.8527   RMS Z = 0.89629   mean Z = -1.879e-04   median|Z| = 0.59617   corr(|E_mid|,sd) = 0.6756
+covariance-corrected   : RMS(E_mid)/RMS(sd_pred) = 1.0031   RMS Z = 1.00357   mean Z = -2.129e-04   median|Z| = 0.66941   corr(|E_mid|,sd) = 0.6756

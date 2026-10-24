@@ -1,0 +1,43 @@
+FULL-DATA NUMERICAL SUMMARY
+
+True zeros file in original computation : zeross.bin
+RVM file in original computation : zLamb.bin
+N                   : 2001052
+gamma_1                : 14.134725142000001
+gamma_N                : 1132490.658714411081746
+
+RVM inversion check
+max |N0(gammaR)-(k-1/2)|        : 6.984919309616e-10
+RMS inversion error           : 1.291471749125e-10
+
+Ordinal/counting defect statistics
+mean                  : +4.217087319048e-08
+std                   : 3.321575981829e-01
+RMS                   : 3.321575151871e-01
+minimum                 : -1.332480525995e+00
+maximum                 : +1.299366447928e+00
+
+Zero-position residual
+mean                  : -1.730666072268e-07
+std                   : 1.880663467688e-01
+RMS                   : 1.880662997770e-01
+minimum                 : -9.478608912142e-01
+maximum                 : +9.937108509876e-01
+corr(d,dLinearARVM)           : 0.999999998947
+RMS[d-dLinearARVM]           : 8.631393815533e-06
+max exact secant recovery error     : 1.110223024625e-16
+
+Final centroids
+C_zeta                 : +0.776907119554635 +0.767844590760710i
+|C_zeta|                : 1.092323206736524
+C_RVM              : +0.041570219277352 +1.757541749592316i
+|C_RVM|             : 1.758033300222378
+C_zeta-C_RVM              : +0.735336900277283 -0.989697158831606i
+
+Centroid identity checks
+|Czeta-weighted-Czeta-direct|      : 1.725931232211e-13
+|CRVM-weighted-CRVM-direct|       : 4.889339040155e-14
+
+Exact-clock statistic
+Q_N^(H)                 : +0.776905882507509 +0.767853218705326i
+|C_zeta-Q_N^(H)|            : 8.7162e-06

@@ -1,0 +1,18 @@
+DAMPED CENTROID RH-EQUIVALENCE NUMERICAL CHECK
+gamma_1             = 14.1347251417000
+hypothetical delta       = 0.05000000
+universal logical range     = 0 < y <= 12.566370614359172
+
+ y    exp(-y gamma_1)    positive pair defect    direct difference
+1.0000   7.267195903693e-07     1.816420507677e-09     1.816420507677e-09
+0.5000   8.524784984792e-04     5.327713121764e-07     5.327713121764e-07
+0.2000   5.919341192473e-02     5.919291864796e-06     5.919291864789e-06
+0.1415   1.353266751645e-01     6.773833048767e-06     6.773833048757e-06
+0.1000   2.432969624240e-01     6.082411388894e-06     6.082411388886e-06
+0.0500   4.932514190795e-01     3.082819763621e-06     3.082819763578e-06
+
+quadratic-model optimum 2/gamma_1 = 0.141495499908918
+pair defect at y_opt       = 6.773833057413e-06
+
+At y=4*pi and |delta|<1/2, one has |y*delta|<2*pi;
+therefore the only possible multiple of 2*pi is zero.

@@ -1,0 +1,10 @@
+Lambert--RVM binary generation
+count = 2001052
+output = data/rvm_tau_2001052.bin
+output sha256 = ae9d35415ee924504638d96e9778a2f63f20e9c1d2ae14ce3ecf35f775bce57a
+dtype = little-endian IEEE-754 float64
+byte count = 16008416
+tau_1 = 14.521346953065626
+tau_N = 1132490.722587621538
+strictly increasing = True
+max extended-precision |M(tau_k)-(k-1/2)| = 4.547e-13

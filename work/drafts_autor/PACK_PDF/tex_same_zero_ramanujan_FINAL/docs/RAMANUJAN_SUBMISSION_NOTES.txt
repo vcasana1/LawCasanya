@@ -1,0 +1,34 @@
+RAMANUJAN JOURNAL SUBMISSION PACKAGE
+====================================
+
+Format
+------
+- Springer Nature LaTeX template used.
+- Document class: \documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+- Numerical references in square brackets.
+- No table of contents.
+- Abstract length is within the journal's 150--250-word range.
+- Six keywords.
+- MSC 2020: 11M26, 11M06, 11K06.
+- Flat submission directory.
+- Four figures only: Fig1.png--Fig4.png.
+
+Author metadata
+---------------
+Víctor Casaña-Giner
+Universidad Nacional de Educación a Distancia
+C/ Bravo Murillo, 38, 28015 Madrid, Spain
+vcasana1@alumno.uned.es
+ORCID: 0000-0002-8252-2608
+
+AI declaration
+--------------
+The manuscript keeps verbatim the AI-use declaration requested from the latest JNT manuscript:
+
+Codex was used to check English usage and LaTeX formatting, to independently double-check computations in Python, and to generate reproducibility scripts and figures. Claude was used to identify potential inconsistencies and to suggest independent numerical checks. All mathematical claims and numerical values included in the final manuscript were independently audited against the stated definitions and cited literature by the author, who assumes sole responsibility for the content.
+
+Data
+----
+zeross.bin: 2,001,052 float64 values.
+zLamb.bin: 2,001,052 float64 values.
+No truncated binary dataset is accepted by the supplied scripts.

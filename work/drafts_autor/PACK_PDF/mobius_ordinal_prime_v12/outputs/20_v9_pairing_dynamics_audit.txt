@@ -1,0 +1,128 @@
+=== V9 ordinal pairing and dynamics audit ===
+N=1000000  squarefree Q(N)=607926  positive=304069  negative=303857
+endpoint identity d=R(alpha)+R(beta): True
+endpoint identity 2e=R(beta)-R(alpha): True
+Lipschitz |2e|<=|d|: True
+
+=== balanced-prefix quadratic identities ===
+Q=488868 J=244434
+M2= 5341503922  D2= 10646184520  E2= 36823324  D2+E2= 10683007844  2M2= 10683007844
+parallelogram exact: True
+M2<=D2<=2M2: True
+D2/(2M2)=0.99655309  E2/(2M2)=0.00344691  E2/D2=0.00345883
+parallelogram total (identity)=10683007844 exact=True
+parallelogram total (reverse)=10683007844 exact=True
+parallelogram total (random)=10683007844 exact=True
+
+=== local ordinal statistics ===
+pooled same-sign gap frequencies P(gap=k), k=1..6:
+0.500544 0.249105 0.124996 0.062603 0.031492 0.015762
+Var(d[j+1]-d[j])=4.012027
+corr eps(q) eps(q+1) = +0.00108731
+corr eps(q) eps(q+2) = -0.00140478
+corr eps(q) eps(q+3) = -0.00135379
+corr eps(q) eps(q+5) = +0.00148539
+corr eps(q) eps(q+10) = +0.00023687
+corr eps(q) eps(q+50) = -0.00193790
+
+conditional RMS(2e)/sqrt(|d|) and RMS(2e)/|d|:
+|d|=[15,24): count=12563  rms2e/sqrt(mean|d|)=1.005691  rms2e/mean|d|=0.231000
+|d|=[56,88): count=31869  rms2e/sqrt(mean|d|)=1.022764  rms2e/mean|d|=0.120502
+|d|=[136,212): count=42279  rms2e/sqrt(mean|d|)=0.979009  rms2e/mean|d|=0.074926
+|d|=[328,511): count=60827  rms2e/sqrt(mean|d|)=0.980373  rms2e/mean|d|=0.048558
+
+=== signed third moment ===
+fit exponent sum |R|^3 = 2.480953
+fit exponent |sum R^3| = 2.568074
+ratio |sum R^3|/sum|R|^3 near Q=48469: 0.164094
+ratio |sum R^3|/sum|R|^3 near Q=607926: 0.277563
+H3 increment identity exact: True
+
+=== generating-function identity ===
+t=0.05  D_from_d=-69.646799429690  D_from_sinh=-69.646799429690  absdiff=0.000e+00
+t=0.10  D_from_d=-30.253396870689  D_from_sinh=-30.253396870689  absdiff=0.000e+00
+t=0.20  D_from_d=-11.762450958937  D_from_sinh=-11.762450958937  absdiff=0.000e+00
+
+(-1)^N_-(q) = product eps exact: True
+prefix autocorrelation identity h=1: True  mean=+0.00034708
+prefix autocorrelation identity h=2: True  mean=+0.00108895
+prefix autocorrelation identity h=3: True  mean=+0.00107744
+prefix autocorrelation identity h=4: True  mean=-0.00039479
+
+=== active blocks and cut kernels ===
+cut=30383 h=27 card_ok=True sum_lifetimes=1355 kernel_sum=1355 exact=True
+cut=482219 h=31 card_ok=True sum_lifetimes=1598 kernel_sum=1598 exact=True
+cut=139095 h=63 card_ok=True sum_lifetimes=8347 kernel_sum=8347 exact=True
+cut=59842 h=62 card_ok=True sum_lifetimes=8288 kernel_sum=8288 exact=True
+cut=52320 h=64 card_ok=True sum_lifetimes=7461 kernel_sum=7461 exact=True
+cut=425964 h=196 card_ok=True sum_lifetimes=82489 kernel_sum=82489 exact=True
+cut=3582 h=8 card_ok=True sum_lifetimes=130 kernel_sum=130 exact=True
+cut=126197 h=51 card_ok=True sum_lifetimes=4592 kernel_sum=4592 exact=True
+two-cut survival kernel: 12/12 exact
+multi-cut collapse follows because intervals contain all ordered cuts iff they contain the two extremes
+random-weight active-block identity abs error = 1.659e-09
+character energy mod 4 max abs error=0.000e+00
+character energy mod 5 max abs error=0.000e+00
+character energy mod 8 max abs error=0.000e+00
+
+=== universal coding / recovery tests ===
+universal roundtrip L=10: True
+universal roundtrip L=100: True
+universal roundtrip L=1000: True
+universal roundtrip L=10000: True
+N=10 recovered Q=7 actual Q=7 exact=True
+N=100 recovered Q=61 actual Q=61 exact=True
+N=1000 recovered Q=608 actual Q=608 exact=True
+N=10000 recovered Q=6083 actual Q=6083 exact=True
+N=123456 recovered Q=75047 actual Q=75047 exact=True
+N=999983 recovered Q=607917 actual Q=607917 exact=True
+N=1000000 recovered Q=607926 actual Q=607926 exact=True
+
+fixed points <= available range: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+fixed set equals first ten primes: True
+first negative squarefree composite: 30
+phi(p)>p for every prime 31<=p<=1e6: True
+preimage(2)=[1, 2]
+preimage(3)=[3, 6]
+preimage(5)=[5, 10]
+preimage(7)=[7, 14]
+preimage(11)=[11, 15]
+preimage(13)=[13, 21]
+preimage(17)=[17, 22]
+preimage(19)=[19, 26]
+preimage(23)=[23, 33]
+preimage(29)=[29, 34]
+
+=== SS collisions and parity ===
+SS(n)=n mod 2 for all 2<=n<=1e6: True
+length-two collision equivalence with |Delta_j|=1: True
+first SS values: [2, 0, -3, -2, -7, -4, -11, -10, -9, -4, -15, -14]
+known collision SS(6)=SS(10): -4 -4 True
+non-Sidon witness 2+(-4)=0+(-2): -2 -2
+
+=== corrected self-dynamics fibres and prime-index map ===
+phi(A_j)=p_j for all complete j: True
+phi(B_j)=p_j for all complete j: True
+first ten A_j: [1, 6, 10, 14, 15, 21, 22, 26, 33, 34]
+first ten B_j: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+A_j nonprime for all A_j<=N: True
+f(j)=j+C_-(p_j) exact through p<=N: True
+f strictly increasing: True
+f(j)=j for j=1..10: True
+f(j)>j for every available j>=11: True
+first 20 f(j): [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 16, 17, 18, 19, 20, 22, 24]
+B_j prime iff j in f(N) on fully checked range: True
+prime-index source counts (finite verification):
+J=   100 image=    66 sources=    34 source_fraction=0.340000 image/asym=0.923871
+J=  1000 image=   466 sources=   534 source_fraction=0.534000 image/asym=0.978463
+J= 10000 image=  3529 sources=  6471 source_fraction=0.647100 image/asym=0.987982
+J= 50000 image= 15061 sources= 34939 source_fraction=0.698780 image/asym=0.990658
+J= 70000 image= 20442 sources= 49558 source_fraction=0.707971 image/asym=0.990296
+component predecessor/leaf rule exact for first 50000 targets: True
+N=10 recovered M=-1 actual M=-1 exact=True
+N=100 recovered M=1 actual M=1 exact=True
+N=1000 recovered M=2 actual M=2 exact=True
+N=10000 recovered M=-23 actual M=-23 exact=True
+N=123456 recovered M=45 actual M=45 exact=True
+N=999983 recovered M=213 actual M=213 exact=True
+N=1000000 recovered M=212 actual M=212 exact=True

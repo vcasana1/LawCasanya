@@ -1,0 +1,31 @@
+Connected Montgomery form factor
+input = data/g_hp.bin
+input sha256 = 80c7bb512e210922397fd36b5bdfb97239cc0c5ee73dc1ec57a919ce41b367b2
+ordinates = 22491
+terminal height = 19999.275621078454
+log(T/(2*pi)) = 8.065574267
+max ordinal lag = 500
+normalized-gap bin width = 0.0100
+plateau RMS of Off(alpha), 1<=alpha<=4 = 0.019680
+log(T/(2*pi))/sqrt(N) = 0.053781
+plateau RMS coefficient = 0.3659
+finite-ramp RMSE, 0.2<=alpha<=1 = 0.054321
+selected values:
+  alpha        Off(alpha)       F(alpha)
+  0.10         +0.538975        1.538975
+  0.25         -0.625376        0.374624
+  0.50         -0.462208        0.537792
+  0.75         -0.172110        0.827890
+  1.00         +0.042061        1.042061
+  1.25         +0.019714        1.019714
+  1.50         +0.008867        1.008867
+  2.00         -0.015371        0.984629
+  3.00         -0.000053        0.999947
+  4.00         -0.019568        0.980432
+plateau scaling over prefix tables:
+  N        log(T/(2*pi))      RMS Off       RMS*sqrt(N)/log
+    2811         6.277301       0.038853            0.3282
+    5623         6.865380       0.032949            0.3599
+   11246         7.461733       0.023658            0.3362
+   22491         8.065574       0.019844            0.3690
+figure = figures/connected_form_factor.png

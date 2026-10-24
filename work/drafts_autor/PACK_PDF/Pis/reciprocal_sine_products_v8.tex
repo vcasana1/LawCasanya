@@ -1,0 +1,2099 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{microtype}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\hypersetup{
+ colorlinks=true,
+ linkcolor=blue,
+ citecolor=blue,
+ urlcolor=blue,
+ pdftitle={Reciprocal Sine Products and Centered Euclidean Kernels},
+ pdfauthor={Victor Casana-Giner}
+}
+\urlstyle{same}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Numerical experiment}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\Li}{\operatorname{Li}}
+
+\title{Reciprocal Sine Products and Centered Euclidean Kernels}
+\author{V\'ictor Casa\~na-Giner}
+\address{Bio Logic Crop Science S.L.}
+\email{\href{mailto:vcasana@biologiccropscience.com}
+{vcasana@biologiccropscience.com}}
+\thanks{ORCID: \href{https://orcid.org/0000-0002-8252-2608}
+{0000-0002-8252-2608}.}
+\date{Version 8 --- August 2026}
+
+\begin{document}
+
+\begin{abstract}
+For integers \(n\geq3\), consider
+\[
+ P(n)=\prod_{k=2}^{n-1}\sin\!\left(\frac{\pi n}{k}\right).
+\]
+We record exact residue, gamma, Fourier, divisor-indexed, and Euclidean
+forms of this varying-denominator product.  The elementary block argument
+for the fractional parts \(\{n/k\}\) gives the limiting density
+\(\rho(t)=\psi_1(1+t)\) and the scale
+\(\log|P(n)|=-Cn+O(\sqrt n\log n)\) on the nonzero locus.  Specializing
+a theorem of Saffari--Vaughan to the diagonal range improves the uniform
+counting discrepancy from \(O(\sqrt n)\) to
+\(O(n^{1/3}\log n)\); after the logarithmic endpoint singularities are
+retained explicitly this gives, for primes,
+\[
+ \log|P(p)|=-Cp+O\!\left(p^{1/3}(\log p)^2\right).
+\]
+The same input sharpens the zero-omitted product and its primitive divisor
+component, and moves the half-plane of absolute convergence of the
+associated Dirichlet series from \(\Re s>3/2\) to \(\Re s>4/3\).
+
+For prime arguments the reciprocal Fourier modes admit an exact centering,
+and their partial sums are a single Dirichlet-kernel quadrature defect.
+The exact Parseval identity for the rotated logarithmic product now yields
+\(\|\mathscr R_p\|_2\ll p^{1/3}\log p\).  More specifically, the
+unrotated remainder sees only the folded discrepancy
+\(H_p(t)=D_p(t)-D_p(1-t)\).  We prove the exact formula
+\[
+ \log|P(p)|+Cp-2\log2
+ =-\pi\int_0^{1/2}H_p(t)\cot(\pi t)\,dt,
+\]
+show that the extreme singular range \(t\le p^{-2/3}\) contributes only
+\(O(p^{1/3}\log p)\), using the current Li--Yang divisor bound, and isolate
+the remaining logarithmic loss to the mesoscopic interval
+\(p^{-2/3}\le t\le1/2\).  An exact regular-grid representation of
+\(H_p\) as a symmetric difference of reciprocal sawtooth sums is also
+proved, with all endpoint corrections displayed.
+
+Finally, writing \(s_k=k\|p/k\|\) separates the singular logarithm into a
+smooth bounded-variation term and an integer core \(S_p=\prod s_k\).  The
+core has exact shifted-divisor and gamma factorizations; the corrected
+gamma formula is verified numerically and a uniform Stirling expansion
+shows that the complementary-divisor sector \(q\le p^{1/3}\) can be
+smoothed at total cost \(O(p^{1/3}\log p)\).  Extensive numerical audits
+are included, in particular exhaustive one-sided jump maxima for the
+folded discrepancy.  The observed bound \(\max|H_p|\asymp p^{1/3}\) is
+stated only as a numerical conjecture.  The finite encodings of
+\(\pi,\mu,\Lambda\), and \(\Psi\) remain exact reorganizations of classical
+arithmetic data and do not sharpen the von Koch criterion for the Riemann
+hypothesis.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+\label{sec:introduction}
+
+This paper studies the diagonal, varying-denominator product
+\begin{equation}\label{eq:P-def-intro}
+ P(n)=\prod_{k=2}^{n-1}\sin\!\left(\frac{\pi n}{k}\right).
+\end{equation}
+It differs from the classical complete product with a fixed denominator
+and from Sudler products, in which the frequency is fixed while the number
+of factors grows.  Fixed-denominator products, partial rational sine
+products, and Sudler products have extensive theories; see
+\cite{Washington1997,OSullivan2016,GrepstadEtAl2019}.  The distribution of
+fractional parts of \(x/n\) is likewise classical
+\cite{SaffariVaughan1977}.  For the specific diagonal family
+\(\{n/k\}\), the same explicit pushforward density used below was also
+written out in a public 2023 derivation \cite{MikeTeX2023}.
+
+The aim here is structural and quantitative.  We derive exact identities
+for \eqref{eq:P-def-intro}, first by an elementary block argument and then
+by importing the sharper diagonal discrepancy estimate of Saffari and
+Vaughan.  The latter improves the proved logarithmic remainder to
+\(O(p^{1/3}(\log p)^2)\) on prime arguments.  The product-specific step is
+then to exploit the reflection symmetry of the logarithmic sine kernel:
+the unrotated remainder depends only on a folded discrepancy, and its
+extreme singular part can be treated through symmetric shifted-divisor
+counts.  We also isolate an integer core and a complementary-divisor gamma
+factorization, retaining all floor and residue terms until their total cost
+is proved.  Separately, the Euclidean Lambert kernel, the floor-sensitive
+Clausen remainder, and the exact finite encodings of classical arithmetic
+functions are retained from the earlier development.  Whenever a
+calculation reaches an established theorem or identity, that input is
+stated with a reference.  In particular, the appearances of \(\mu\),
+\(\Lambda\), \(\zeta\), and \(\Psi\) below do not furnish new information
+about their size or analytic continuation.
+
+\section{Exact forms}
+\label{sec:exact-forms}
+
+For \(n\geq3\), write
+\begin{equation}\label{eq:quotient-residue}
+ m_k=\left\lfloor\frac nk\right\rfloor,
+ \qquad r_k=n\bmod k,
+ \qquad 0\leq r_k<k.
+\end{equation}
+
+\subsection{Residues and sign}
+
+The identity
+\begin{equation}\label{eq:sine-residue}
+ \sin\!\left(\frac{\pi n}{k}\right)
+ =(-1)^{m_k}\sin\!\left(\frac{\pi r_k}{k}\right)
+\end{equation}
+separates the sign from the nonnegative residue factor.
+
+\begin{proposition}\label{prop:residue-sign}
+For every integer \(n\geq3\),
+\begin{equation}\label{eq:residue-form}
+ P(n)=(-1)^{n+1+\lfloor\sqrt n\rfloor}
+ \prod_{k=2}^{n-1}\sin\!\left(\frac{\pi(n\bmod k)}{k}\right).
+\end{equation}
+For odd \(n\), the sign exponent reduces modulo two to
+\(\lfloor\sqrt n\rfloor\).
+\end{proposition}
+
+\begin{proof}
+The sign exponent before reduction is
+\[
+ \sum_{k=2}^{n-1}\left\lfloor\frac nk\right\rfloor=D(n)-n-1,
+ \qquad D(n)=\sum_{j\leq n}d(j).
+\]
+Since \(d(j)\) is odd exactly when \(j\) is a square,
+\(D(n)\equiv\lfloor\sqrt n\rfloor\pmod2\).  Formula
+\eqref{eq:residue-form} follows.
+\end{proof}
+
+Taking absolute values of roots of unity gives
+\begin{equation}\label{eq:finite-root-form}
+ P(n)=(-1)^{n+1+\lfloor\sqrt n\rfloor}2^{-(n-2)}
+ \prod_{k=2}^{n-1}\left|1-e^{2\pi i n/k}\right|.
+\end{equation}
+
+\subsection{Gamma, Fourier, and shifted-divisor forms}
+
+Euler's reflection formula gives, whenever every factor is nonzero,
+\begin{equation}\label{eq:gamma-form}
+ P(n)=\frac{\pi^{n-2}}
+ {\displaystyle\prod_{k=2}^{n-1}\Gamma(n/k)\Gamma(1-n/k)}.
+\end{equation}
+The Abel-regularized Fourier series of \(\log|2\sin\pi t|\) gives
+\begin{equation}\label{eq:fourier-form}
+ \log|P(n)|=-(n-2)\log2
+ -\lim_{u\uparrow1}\sum_{j\geq1}\frac{u^j}{j}
+ \sum_{k=2}^{n-1}\cos\!\left(\frac{2\pi jn}{k}\right).
+\end{equation}
+The inner sums are reciprocal-phase exponential sums of the type appearing
+in the Dirichlet divisor problem; see \cite{GrahamKolesnik1991}.
+
+For a nonzero residue \(r=n\bmod k\), one has \(k\mid n-r\) and \(k>r\),
+and the converse is immediate.  Hence
+\begin{equation}\label{eq:divisor-indexed}
+ |P(n)|=\prod_{r=1}^{n-2}
+ \prod_{\substack{k\mid n-r\\k>r}}
+ \sin\!\left(\frac{\pi r}{k}\right)
+\end{equation}
+whenever \(P(n)\ne0\).  More locally,
+\begin{equation}\label{eq:shifted-divisors}
+ r_k=s\iff k\mid n-s,
+ \qquad k-r_k=s\iff k\mid n+s.
+\end{equation}
+
+\section{Block distribution and exponential scale}
+\label{sec:block-scale}
+
+Partition the indices by
+\(m=\lfloor n/k\rfloor\) and \(t=\{n/k\}\).  The block \(m\)
+corresponds to \(n/(m+1)<k\leq n/m\).
+Here \(\psi_0\) and \(\psi_1\) denote the di- and trigamma functions.
+The distribution of fractional parts of \(x/n\) belongs to the classical
+framework of Saffari and Vaughan \cite{SaffariVaughan1977}.  For the exact
+family \(\{n/k\}\), the interval decomposition and the resulting density
+\(\sum_{m\geq1}(m+t)^{-2}\) were also displayed explicitly in the 2023
+public derivation \cite{MikeTeX2023}.  The following short proof records the
+uniform estimate needed here.
+
+\begin{theorem}\label{thm:block-count}
+Uniformly for \(0\leq t\leq1\),
+\begin{equation}\label{eq:block-count}
+ \#\left\{2\leq k\leq n-1:\left\{\frac nk\right\}\leq t\right\}
+ =n\bigl(\psi_0(1+t)-\psi_0(1)\bigr)+O(\sqrt n).
+\end{equation}
+Consequently, for every continuous \(f:[0,1]\to\C\),
+\begin{equation}\label{eq:weak-density}
+ \frac1n\sum_{k=2}^{n-1}f\!\left(\left\{\frac nk\right\}\right)
+ \longrightarrow\int_0^1 f(t)\rho(t)\dd t,
+ \qquad
+ \rho(t)=\psi_1(1+t)=\sum_{m\geq1}\frac1{(m+t)^2}.
+\end{equation}
+The density has total mass one.
+\end{theorem}
+
+\begin{proof}
+Within block \(m\), the additional condition \(\{n/k\}\leq t\) selects
+an interval containing
+\[
+ \frac{n}{m}-\frac{n}{m+t}+O(1)
+ =\frac{nt}{m(m+t)}+O(1)
+\]
+integers.  Summing for \(m\leq M\), and bounding both the omitted indices
+and the main-term tail by \(O(n/M)\), gives total error
+\(O(M+n/M)\).  Choose \(M=\lfloor\sqrt n\rfloor\) and use
+\[
+ \sum_{m\geq1}\frac{t}{m(m+t)}
+ =\sum_{m\geq1}\left(\frac1m-\frac1{m+t}\right)
+ =\psi_0(1+t)-\psi_0(1).
+\]
+Weak convergence gives \eqref{eq:weak-density}, and differentiation gives
+the density.  Its mass is
+\(\sum_{m\geq1}(1/m-1/(m+1))=1\).
+\end{proof}
+
+\medskip
+\noindent\textbf{Collapse principle.}
+For every continuous \(F:[0,1]\to\mathbb C\),
+\begin{equation}\label{eq:collapse}
+ \frac1n\sum_{k=2}^{n-1}F\!\left(\left\{\frac nk\right\}\right)
+ \longrightarrow
+ \int_0^1 F(t)\,\psi_1(1+t)\dd t.
+\end{equation}
+This is exactly the weak-convergence statement \eqref{eq:weak-density}:
+writing \(u=k/n\), the grid points become Lebesgue distributed on
+\((0,1]\) and \(\{n/k\}=\{1/u\}\).  Hence the diagonal geometry fixes a
+single limiting pushforward class.  The observable \(F\) changes the tested
+integral, but not the underlying measure.
+
+The principle explains why several apparently different constructions in
+this paper return to the same object.  The residue, gamma, Fourier, and
+shifted-divisor formulas of Section~\ref{sec:exact-forms} are exact
+representations of the same diagonal observable; for
+\(F(t)=\log|\sin\pi t|\), the endpoint singularities require the separate
+truncation estimate in Theorem~\ref{thm:scale}, but the limiting measure is
+unchanged.  At the other end of the paper, the proof of
+Proposition~\ref{prop:Clausen-main} again uses
+\(g(u)=\operatorname{Cl}_2(2\pi\{1/u\})\), now with totient weights.
+Accordingly, changing the kernel changes the tested observable and its
+arithmetic weights, not the underlying fractional-part pushforward class.
+
+The measure in \eqref{eq:weak-density} is the one-step pushforward of
+Lebesgue measure by the Gauss map \(u\mapsto\{1/u\}\).  Its block masses
+are \(1/(m(m+1))\), not the invariant Gauss--Kuzmin digit law; compare
+\cite{Mayer1989}.  For example, the limiting proportion of negative sine
+factors is
+\begin{equation}\label{eq:negative-proportion}
+ \sum_{\substack{m\geq1\\m\ {\rm odd}}}\frac1{m(m+1)}=\log2.
+\end{equation}
+
+The logarithmic singularities at the endpoints require a separate
+estimate.
+
+\begin{theorem}\label{thm:scale}
+Along integers for which \(P(n)\ne0\),
+\begin{equation}\label{eq:scale}
+ \log|P(n)|=-Cn+O(\sqrt n\log n),
+\end{equation}
+where
+\begin{align}
+ C
+ &=-\int_0^1\log(\sin\pi t)\,\psi_1(1+t)\dd t\label{eq:C-density}\\
+ &=-\int_1^\infty\frac{\log|\sin\pi u|}{u^2}\dd u
+ =-\int_0^1\log\left|\sin\frac{\pi}{u}\right|\dd u
+ =0.7437948618\ldots.\label{eq:C-integrals}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+For a nonzero factor,
+\(\sin(\pi r_k/k)\geq\sin(\pi/k)\geq2/k\).  Thus the indices
+\(k\leq\sqrt n\) contribute \(O(\sqrt n\log n)\).
+
+For \(k>\sqrt n\), there are fewer than \(\sqrt n\) blocks.  Within each
+block, \(k\mapsto\{n/k\}\) is monotone and
+\(t\mapsto\log\sin(\pi t)\) has two monotone pieces.  Comparing the sum
+with its integral therefore costs \(O(\log n)\) per block after the
+singular endpoints are trimmed at the nearest admissible sample.  The
+aggregate error is \(O(\sqrt n\log n)\).
+
+With \(u=n/x\), the main integral is
+\[
+ n\int_{1+1/(n-1)}^{\sqrt n}
+ \frac{\log|\sin\pi u|}{u^2}\dd u.
+\]
+Extending the upper limit to infinity costs \(O(\sqrt n)\).  At the lower endpoint the omitted integral is
+\[
+ n\int_1^{1+1/(n-1)}\frac{\log|\sin\pi u|}{u^2}\dd u
+ =-\log n+O(1),
+\]
+which is absorbed by the stated \(O(\sqrt n\log n)\) remainder.  This proves
+\eqref{eq:scale}.  The substitutions \(u=m+t\) and \(u\mapsto1/u\) give
+\eqref{eq:C-density}--\eqref{eq:C-integrals}.
+\end{proof}
+
+\begin{remark}[Endpoint contribution]\label{rem:endpoint-log}
+The lower-end calculation in the proof isolates a contribution
+\(+\log n+O(1)\) when the main integral is extended down to \(u=1\).
+Since the proven global error is \(O(\sqrt n\log n)\), this observation is
+not asserted as a second-order asymptotic term.  In particular,
+Theorem~\ref{thm:scale} claims only the first-order law \(-Cn\) with the
+stated remainder.
+\end{remark}
+
+\subsection{Saffari--Vaughan refinement of the diagonal discrepancy}
+
+The preceding proof is elementary but not quantitatively optimal.  The
+standard case of Saffari--Vaughan \cite[Theorem~1 and Corollary~1.1]{SaffariVaughan1977}
+contains the sharper diagonal estimate needed here.
+
+\begin{theorem}[Saffari--Vaughan specialization]\label{thm:SV-specialization}
+Uniformly for \(0\le t\le1\),
+\begin{equation}\label{eq:SV-specialization}
+ \#\left\{2\le k\le n-1:\left\{\frac nk\right\}\le t\right\}
+ =nF(t)+O\!\left(n^{1/3}\log n\right),
+ \qquad F(t)=\psi_0(1+t)-\psi_0(1).
+\end{equation}
+The choice of strict or non-strict endpoint convention changes the count by
+at most the multiplicity of the corresponding jump and does not alter the
+stated estimate.
+\end{theorem}
+
+\begin{proof}
+Saffari and Vaughan normalize the count by the length \(y\).  In their
+Theorem~1 the error is \(O(x^{1/3}y^{-1}\log x)\).  Set \(x=y=n\) and use
+their Corollary~1.1, whose limiting function is
+\[
+ \sum_{m\ge1}\frac{t}{m(m+t)}
+ =\psi_0(1+t)-\psi_0(1)=F(t).
+\]
+Multiplying the normalized estimate by \(n\) gives
+\eqref{eq:SV-specialization}; removing the two endpoints \(k=1,n\) costs
+only \(O(1)\).
+\end{proof}
+
+\begin{theorem}[Improved prime logarithmic scale]\label{thm:prime-third-scale}
+For every prime \(p\),
+\begin{equation}\label{eq:prime-third-scale}
+ \log|P(p)|=-Cp+O\!\left(p^{1/3}(\log p)^2\right).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Put \(g(t)=\log|2\sin\pi t|\), and let
+\(E_p\ll p^{1/3}\log p\) denote the uniform discrepancy supplied by
+Theorem~\ref{thm:SV-specialization}.  Choose
+\(\delta=p^{-2/3}\).  On \([\delta,1-\delta]\), Stieltjes integration by
+parts gives an error
+\[
+ O\!\left(E_p\operatorname{Var}_{[\delta,1-\delta]}g\right)
+ =O\!\left(p^{1/3}(\log p)^2\right),
+\]
+because \(g'(t)=\pi\cot(\pi t)\) and the truncated variation is
+\(O(\log(1/\delta))\).
+
+At either endpoint, Theorem~\ref{thm:SV-specialization} gives
+\(O(p\delta+E_p)\) sample points.  Primality implies
+\(\|p/k\|\ge1/k\ge1/p\), so every sampled logarithm is \(O(\log p)\) in
+absolute value.  The corresponding endpoint integrals are
+\(O(p\delta\log p)\).  These contributions are again
+\(O(p^{1/3}(\log p)^2)\).  Finally,
+\[
+ \sum_{k=2}^{p-1}g(p/k)-p\int_0^1g(t)\rho(t)\,dt
+ =\log|P(p)|+Cp-2\log2,
+\]
+which proves the result.
+\end{proof}
+
+The same constant has the convergent representation
+\begin{equation}\label{eq:C-series}
+ C=\log2+\sum_{j\geq1}\frac1j
+ \left[1-2\pi j\left(\frac\pi2-\operatorname{Si}(2\pi j)\right)\right].
+\end{equation}
+
+\begin{proposition}\label{prop:C-strict}
+The constant \(C\) satisfies \(C>\log2\).
+\end{proposition}
+
+\begin{proof}
+Put \(g(t)=\log(2\sin\pi t)\).  Then
+\(C-\log2=-\sum_{m\geq1}I_m\), where
+\[
+ I_m=\int_0^{1/2}g(t)
+ \bigl((m+t)^{-2}+(m+1-t)^{-2}\bigr)\dd t.
+\]
+On \((0,1/2)\), \(g\) is strictly increasing, the factor multiplying it
+is strictly decreasing, and \(\int_0^{1/2}g(t)\dd t=0\).  The reversed
+Chebyshev integral inequality gives \(I_m<0\); see
+\cite{HardyLittlewoodPolya1952}.  Summing proves the assertion.
+\end{proof}
+
+
+\section{Centered reciprocal frequencies and quantitative rotated bounds}
+\label{sec:frequency-centered}
+
+For prime arguments, the reciprocal Fourier modes can be centered against
+the same density before the singular Fourier series is summed.
+
+\subsection{Centered modes and the exact prime remainder}
+
+For \(j\ge1\), define
+\begin{equation}\label{eq:cj-def}
+ c_j=\int_0^1\cos(2\pi jt)\rho(t)\,dt,
+ \qquad \rho(t)=\psi_1(1+t).
+\end{equation}
+Periodicity and the block expansion of \(\rho\) give
+\begin{equation}\label{eq:cj-integral}
+ c_j=\int_1^\infty\frac{\cos(2\pi ju)}{u^2}\,du
+ =1-2\pi j\left(\frac\pi2-\operatorname{Si}(2\pi j)\right),
+\end{equation}
+and repeated integration by parts gives
+\begin{equation}\label{eq:cj-asymptotic}
+ c_j=\frac{1}{2\pi^2j^2}-\frac{3}{2\pi^4j^4}+O(j^{-6}).
+\end{equation}
+Thus
+\begin{equation}\label{eq:C-cj}
+ C=\log2+\sum_{j\ge1}\frac{c_j}{j}.
+\end{equation}
+For a prime \(p\), put
+\begin{equation}\label{eq:Sj-Deltaj}
+ S_j(p)=\sum_{k=2}^{p-1}\cos\!\left(\frac{2\pi jp}{k}\right),
+ \qquad \Delta_j(p)=S_j(p)-pc_j.
+\end{equation}
+
+\begin{theorem}[Exact centered Fourier remainder]\label{thm:centered-Fourier-prime}
+For every prime \(p\),
+\begin{equation}\label{eq:centered-Fourier-prime}
+ \log|P(p)|+Cp
+ =2\log2-\lim_{u\uparrow1}\sum_{j\ge1}\frac{u^j}{j}\Delta_j(p).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Insert \(S_j(p)=pc_j+\Delta_j(p)\) into
+\eqref{eq:fourier-form} and use \eqref{eq:C-cj}.  The Abel regularization is
+unchanged from \eqref{eq:fourier-form}.
+\end{proof}
+
+\subsection{A single quadrature defect for the cumulative modes}
+
+Set
+\begin{equation}\label{eq:BJ-def}
+ B_J(p)=\sum_{j=1}^J\Delta_j(p),
+ \qquad K_J(t)=\sum_{j=1}^J\cos(2\pi jt).
+\end{equation}
+
+\begin{proposition}[Exact reciprocal quadrature identity]\label{prop:BJ-quadrature}
+For every prime \(p\) and every integer \(J\ge1\),
+\begin{equation}\label{eq:BJ-quadrature}
+ B_J(p)=\sum_{k=2}^{p-1}K_J\!\left(\frac pk\right)
+ -\int_0^pK_J\!\left(\frac px\right)\,dx,
+\end{equation}
+where the integral at \(x=0\) is improper.
+\end{proposition}
+
+\begin{proof}
+By definition,
+\[
+ B_J(p)=\sum_{k=2}^{p-1}K_J(p/k)
+ -p\int_0^1K_J(t)\rho(t)\,dt.
+\]
+Since \(\rho(t)=\sum_{m\ge1}(m+t)^{-2}\) and \(K_J\) is one-periodic,
+\[
+ \int_0^1K_J(t)\rho(t)\,dt
+ =\int_1^\infty\frac{K_J(u)}{u^2}\,du.
+\]
+The substitution \(x=p/u\) gives \eqref{eq:BJ-quadrature}.
+\end{proof}
+
+\begin{remark}\label{rem:BJ-current-role}
+The quadrature identity is exact, but a formerly considered bound
+\(|B_J(p)|\ll\sqrt{pJ}\) would only imply an \(O(\sqrt p)\) pointwise
+remainder.  Theorem~\ref{thm:prime-third-scale} is asymptotically stronger,
+so such a square-root criterion is no longer the quantitative target of
+this paper.  In particular, no complete-period average in the Fourier index
+is used to infer a short-frequency estimate.
+\end{remark}
+
+\subsection{Exact energy identity and the strengthened rotated theorem}
+
+For a prime \(p\), define
+\begin{equation}\label{eq:Np-Dp}
+ N_p(t)=\#\left\{2\le k\le p-1:\left\{\frac pk\right\}\le t\right\},
+ \qquad D_p(t)=N_p(t)-pF(t)+2t.
+\end{equation}
+Then \(D_p(0)=D_p(1)=0\), and
+Theorem~\ref{thm:SV-specialization} gives
+\begin{equation}\label{eq:Dp-uniform}
+ \|D_p\|_\infty\ll p^{1/3}\log p.
+\end{equation}
+For \(j\ge1\), put
+\begin{equation}\label{eq:Aj-def}
+ A_j(p)=\sum_{k=2}^{p-1}e^{2\pi i jp/k}
+ -p\int_0^1e^{2\pi ijt}\rho(t)\,dt.
+\end{equation}
+
+\begin{lemma}[Exact energy identity]\label{lem:Aj-energy}
+With \(\overline D_p=\int_0^1D_p(t)\,dt\),
+\begin{equation}\label{eq:Aj-energy}
+ \sum_{j\ge1}\frac{|A_j(p)|^2}{j^2}
+ =2\pi^2\int_0^1|D_p(t)-\overline D_p|^2\,dt
+ \ll p^{2/3}(\log p)^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The signed measure
+\[
+ d\mu_p(t)=\sum_{k=2}^{p-1}\delta_{\{p/k\}}(dt)
+ -p\rho(t)\,dt+2\,dt
+\]
+has cumulative function \(D_p\) and total mass zero.  Thus
+\[
+ A_j(p)=-2\pi i j\int_0^1D_p(t)e^{2\pi ijt}\,dt.
+\]
+Parseval applied to \(D_p-\overline D_p\) proves the identity; the final
+bound follows from \eqref{eq:Dp-uniform}.
+\end{proof}
+
+For \(\theta\in\mathbb R/\mathbb Z\), define
+\begin{equation}\label{eq:rotated-remainder}
+ \mathscr R_p(\theta)=
+ \sum_{k=2}^{p-1}\log\left|2\sin\pi\left(\frac pk+\theta\right)\right|
+ -p\int_0^1\log|2\sin\pi(t+\theta)|\rho(t)\,dt.
+\end{equation}
+
+\begin{theorem}[Quantitative rotated \(L^2\) bound]\label{thm:rotated-L2}
+For every prime \(p\),
+\begin{equation}\label{eq:rotated-L2}
+ \int_0^1|\mathscr R_p(\theta)|^2\,d\theta
+ =\frac12\sum_{j\ge1}\frac{|A_j(p)|^2}{j^2}
+ =\pi^2\int_0^1|D_p(t)-\overline D_p|^2\,dt
+ \ll p^{2/3}(\log p)^2.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:theta-zero-original}
+ \mathscr R_p(0)=\log|P(p)|+Cp-2\log2.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The Fourier coefficients of
+\(g(t)=\log|2\sin\pi t|\) are
+\(\widehat g(j)=-1/(2|j|)\) for \(j\ne0\).  Hence
+\(\widehat{\mathscr R_p}(j)=-A_j(p)/(2j)\) for \(j\ge1\), and Parseval
+with Lemma~\ref{lem:Aj-energy} proves \eqref{eq:rotated-L2}.  The value at
+\(\theta=0\) follows from
+\(\int_0^1g(t)\rho(t)\,dt=-C+\log2\).
+\end{proof}
+
+\begin{corollary}\label{cor:rotated-Chebyshev}
+For every \(\lambda>0\),
+\begin{equation}\label{eq:rotated-exceptional}
+ \operatorname{meas}\left\{\theta:\ |\mathscr R_p(\theta)|>
+ \lambda p^{1/3}\log p\right\}\ll\lambda^{-2}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply Chebyshev's inequality to \eqref{eq:rotated-L2}.
+\end{proof}
+
+\section{Folded discrepancy and localization of the logarithmic loss}
+\label{sec:folded-discrepancy}
+
+The logarithmic sine kernel is reflection invariant, so the unrotated
+remainder does not see the full discrepancy \(D_p\).
+
+\begin{definition}\label{def:Hp}
+For \(0\le t\le1/2\), put
+\begin{equation}\label{eq:Hp-def}
+ H_p(t)=D_p(t)-D_p(1-t).
+\end{equation}
+Also define
+\begin{equation}\label{eq:Mp-Ffold}
+ M_p(t)=\#\left\{2\le k\le p-1:\left\|\frac pk\right\|\le t\right\},
+ \qquad F_{\rm fold}(t)=1+F(t)-F(1-t).
+\end{equation}
+Away from the finitely many boundary points, and with the corresponding
+one-sided convention at a boundary,
+\begin{equation}\label{eq:Hp-Mp}
+ H_p(t)=M_p(t)-pF_{\rm fold}(t)+4t.
+\end{equation}
+In particular \(H_p(0)=H_p(1/2)=0\).
+\end{definition}
+
+\begin{theorem}[Exact folded Stieltjes formula]\label{thm:folded-Stieltjes}
+For every prime \(p\),
+\begin{equation}\label{eq:folded-Stieltjes}
+ \log|P(p)|+Cp-2\log2
+ =-\pi\int_0^{1/2}H_p(t)\cot(\pi t)\,dt,
+\end{equation}
+where the integral is improper at zero.
+\end{theorem}
+
+\begin{proof}
+With \(g(t)=\log|2\sin\pi t|\), the left side is
+\(\int_0^1 g\,dD_p\).  Since \(D_p(0)=D_p(1)=0\), Stieltjes integration
+by parts gives
+\[
+ -\pi\int_0^1D_p(t)\cot(\pi t)\,dt.
+\]
+On the second half substitute \(t\mapsto1-t\) and use
+\(\cot(\pi(1-t))=-\cot(\pi t)\).  The two halves combine into
+\eqref{eq:folded-Stieltjes}.
+\end{proof}
+
+Let
+\begin{equation}\label{eq:theta-star}
+ \theta_*=0.3144831759741\ldots,
+\end{equation}
+the exponent in the current Li--Yang bound
+\(\Delta(x)=O_\eps(x^{\theta_*+\eps})\) for the Dirichlet divisor problem
+\cite{LiYang2023}.
+
+\begin{proposition}[Extreme folded range]\label{prop:extreme-folded-range}
+For every fixed \(\eps>0\), uniformly for \(0<t\le1/2\),
+\begin{equation}\label{eq:Mp-divisor-bound}
+ M_p(t)\ll pt\log p+p^{\theta_*+\eps}.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:Hp-divisor-bound}
+ H_p(t)\ll pt\log p+p^{\theta_*+\eps},
+\end{equation}
+and, for sufficiently small fixed \(\eps>0\),
+\begin{equation}\label{eq:extreme-integral}
+ \int_0^{p^{-2/3}}|H_p(t)|\,|\cot(\pi t)|\,dt
+ \ll p^{1/3}\log p.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For each counted denominator let
+\[
+ s_k=k\left\|\frac pk\right\|=\min(p\bmod k,k-(p\bmod k)).
+\]
+Then \(s_k\) is a positive integer, \(s_k\le pt\), and
+\(k\mid p-s_k\) or \(k\mid p+s_k\).  Hence
+\[
+ M_p(t)\le\sum_{1\le s\le pt}\bigl(d(p-s)+d(p+s)\bigr).
+\]
+Apply the Li--Yang estimate for the summatory divisor function at the two
+endpoints of the interval \([p-pt,p+pt]\).  This gives
+\eqref{eq:Mp-divisor-bound}.  Since \(F_{\rm fold}(0)=0\) and
+\(F_{\rm fold}'(t)=\rho(t)+\rho(1-t)\) is bounded on \([0,1/2]\),
+\eqref{eq:Hp-Mp} gives \eqref{eq:Hp-divisor-bound}.
+
+For \(t<1/p\), \(M_p(t)=0\), hence \(H_p(t)=O(pt)\).  On
+\([1/p,p^{-2/3}]\), use \eqref{eq:Hp-divisor-bound} and
+\(|\cot(\pi t)|\ll1/t\).  The \(pt\log p\) term integrates to
+\(O(p^{1/3}\log p)\), while the divisor-error term contributes
+\(O(p^{\theta_*+\eps}\log p)=o(p^{1/3}\log p)\) if
+\(\eps<1/3-\theta_*\).
+\end{proof}
+
+\begin{corollary}[Mesoscopic location of the remaining logarithm]\label{cor:mesoscopic-log}
+Theorem~\ref{thm:prime-third-scale} can be recovered from
+\eqref{eq:folded-Stieltjes}, and the only range in that argument capable of
+producing the second logarithm is
+\begin{equation}\label{eq:mesoscopic-range}
+ p^{-2/3}\le t\le\frac12.
+\end{equation}
+Indeed,
+\begin{equation}\label{eq:mesoscopic-current-bound}
+ \int_{p^{-2/3}}^{1/2}|H_p(t)|\,|\cot(\pi t)|\,dt
+ \ll p^{1/3}(\log p)^2
+\end{equation}
+by \(\|H_p\|_\infty\ll p^{1/3}\log p\).
+\end{corollary}
+
+\subsection{Exact regular-grid representation}
+
+To remove endpoint ambiguity, define the strict count
+\begin{equation}\label{eq:N-strict}
+ N_p^{<}(t)=\#\left\{2\le k\le p-1:\left\{\frac pk\right\}<t\right\},
+ \quad
+ D_p^{<}(t)=N_p^{<}(t)-pF(t)+2t,
+\end{equation}
+and \(H_p^{<}(t)=D_p^{<}(t)-D_p^{<}(1-t)\).
+
+\begin{theorem}[Exact reciprocal sawtooth identity]\label{thm:Hp-grid}
+For \(0<t<1\),
+\begin{equation}\label{eq:Hp-grid}
+\begin{aligned}
+ H_p^{<}(t)
+={}&\sum_{m=1}^{p}
+ \left(\left\{\frac{p}{m+t}\right\}
+       -\left\{\frac{p}{m+1-t}\right\}\right)\\
+&+p\left[\psi_0(p+2-t)-\psi_0(p+1+t)\right]+4t-2.
+\end{aligned}
+\end{equation}
+At a jump, switching from \(<\) to \(\le\) adds exactly the corresponding
+jump multiplicity.  Away from jumps, \(H_p^{<}=H_p\).
+\end{theorem}
+
+\begin{proof}
+Include temporarily the two endpoint denominators \(k=1,p\).  For strict
+counting, partition by \(m=\lfloor p/k\rfloor\):
+\[
+ \#\left\{1\le k\le p:\left\{\frac pk\right\}<t\right\}
+ =\sum_{m=1}^{p}
+ \left(\left\lfloor\frac pm\right\rfloor
+       -\left\lfloor\frac{p}{m+t}\right\rfloor\right).
+\]
+Use \(\lfloor x\rfloor=x-\{x\}\) and
+\[
+ \sum_{m=1}^{p}\left(\frac1m-\frac1{m+t}\right)
+ =\psi_0(p+1)-\psi_0(p+1+t)+F(t).
+\]
+After removing \(k=1,p\), this yields an exact formula for
+\(D_p^{<}(t)\).  Subtract the same formula with \(t\) replaced by \(1-t\):
+the terms \(\{p/m\}\) and \(\psi_0(p+1)\) cancel, leaving
+\eqref{eq:Hp-grid}.
+\end{proof}
+
+The smooth correction in \eqref{eq:Hp-grid} satisfies
+\begin{equation}\label{eq:Hp-grid-smooth-asymp}
+ p\left[\psi_0(p+2-t)-\psi_0(p+1+t)\right]+4t-2
+ =2t-1+O(p^{-1})
+\end{equation}
+uniformly for \(0\le t\le1\).  This explains why omitting it in numerical
+reconstructions produces a bounded, \(t\)-dependent residual rather than a
+divergent error.
+
+\begin{lemma}[Where the continuous maximum occurs]\label{lem:Hp-jumps}
+On every open interval between consecutive jump points of \(M_p\),
+\(H_p\) is strictly decreasing.  Hence the supremum of \(|H_p|\) on
+\([0,1/2]\) is attained as a one-sided value at a jump.
+\end{lemma}
+
+\begin{proof}
+Between jumps, \eqref{eq:Hp-Mp} gives
+\[
+ H_p'(t)=4-p\bigl(\rho(t)+\rho(1-t)\bigr).
+\]
+The function in parentheses is convex and symmetric about \(1/2\), hence
+its minimum is
+\[
+ 2\psi_1(3/2)=\pi^2-8>4/3.
+\]
+Thus \(H_p'(t)<0\) for every prime \(p\ge3\).
+\end{proof}
+
+\begin{remark}[Numerical conjecture]\label{rem:Hp-conjecture}
+The exhaustive jump computations in Section~\ref{sec:numerical-audit}
+suggest
+\begin{equation}\label{eq:Hp-conjecture}
+ \sup_{p^{-2/3}\le t\le1/2}|H_p(t)|\ll p^{1/3}.
+\end{equation}
+No proof of \eqref{eq:Hp-conjecture} is given.  If it holds, then
+Theorem~\ref{thm:folded-Stieltjes} and
+Proposition~\ref{prop:extreme-folded-range} imply the sharper product bound
+\begin{equation}\label{eq:Hp-conjecture-consequence}
+ \log|P(p)|=-Cp+O(p^{1/3}\log p).
+\end{equation}
+\end{remark}
+
+\section{Integer singular core and complementary-divisor factorization}
+\label{sec:integer-core}
+
+The logarithmic singularity can be separated from a smooth
+bounded-variation term.  For a prime \(p\), set
+\begin{equation}\label{eq:sk-def}
+ s_k=k\left\|\frac pk\right\|
+ =\min(p\bmod k,k-(p\bmod k)),
+ \qquad 2\le k\le p-1,
+\end{equation}
+and
+\begin{equation}\label{eq:h-def}
+ h(u)=\log\frac{\sin\pi u}{\pi u},\qquad 0<u\le\frac12,
+ \quad h(0)=0.
+\end{equation}
+Then \(h'(u)=\pi\cot(\pi u)-1/u<0\) and
+\begin{equation}\label{eq:h-variation}
+ \operatorname{Var}_{[0,1/2]}h=\log\frac\pi2.
+\end{equation}
+
+\begin{proposition}[Exact smooth/integer split]\label{prop:integer-split}
+Let
+\begin{equation}\label{eq:Sp-def}
+ S_p=\prod_{k=2}^{p-1}s_k.
+\end{equation}
+Then
+\begin{equation}\label{eq:integer-split}
+ \log|P(p)|=(p-2)\log\pi+\log S_p-\log((p-1)!)
+ +\sum_{k=2}^{p-1}h\!\left(\frac{s_k}{k}\right).
+\end{equation}
+Define
+\begin{align}
+ J_0&=\int_0^{1/2}\log u\,[\rho(u)+\rho(1-u)]\,du,
+ \label{eq:J0-def}\\
+ H_0&=\int_0^{1/2}h(u)\,[\rho(u)+\rho(1-u)]\,du.
+ \label{eq:H0-def}
+\end{align}
+Then
+\begin{equation}\label{eq:C-JH}
+ \log\pi+J_0+H_0=-C,
+\end{equation}
+and, with
+\begin{equation}\label{eq:Acore-def}
+ \mathcal A(p)=\log S_p-\log((p-1)!)-pJ_0,
+\end{equation}
+we have
+\begin{equation}\label{eq:Acore-isolation}
+ \log|P(p)|+Cp
+ =\mathcal A(p)-2\log\pi+O(p^{1/3}\log p).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The identity
+\[
+ \log\sin(\pi u)=\log\pi+\log u+h(u)
+\]
+with \(u=s_k/k\) gives \eqref{eq:integer-split}.  Folding the density gives
+\eqref{eq:C-JH}.  Since \(h\) has bounded variation independent of \(p\),
+Theorem~\ref{thm:SV-specialization} applied to the folded distribution gives
+\[
+ \sum_{k=2}^{p-1}h(s_k/k)=pH_0+O(p^{1/3}\log p).
+\]
+Substitution proves \eqref{eq:Acore-isolation}.
+\end{proof}
+
+Numerically,
+\begin{equation}\label{eq:JH-numerical}
+ J_0=-1.750632969245044\ldots,
+ \qquad H_0=-0.137891778443756\ldots.
+\end{equation}
+Thus every fluctuation larger than \(p^{1/3}\log p\) in the proved
+\(O(p^{1/3}(\log p)^2)\) remainder must reside in the explicit integer
+core \(\mathcal A(p)\).
+
+\subsection{A symmetric shifted-divisor count}
+
+For an integer \(S\) with \(1\le S<(p-1)/2\), let
+\begin{equation}\label{eq:NpS-def}
+ \mathcal N_p(S)=\#\{2\le k\le p-1:s_k\le S\}.
+\end{equation}
+
+\begin{proposition}\label{prop:NpS-exact}
+One has the exact identity
+\begin{equation}\label{eq:NpS-exact}
+\begin{aligned}
+ \mathcal N_p(S)
+={}&S-2+\sum_{n=p-S}^{p+S}d(n)\\
+&-\sum_{k=1}^{2S}
+ \left(\left\lfloor\frac{p+S}{k}\right\rfloor
+       -\left\lfloor\frac{p-S-1}{k}\right\rfloor\right).
+\end{aligned}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+All \(2\le k\le2S\) satisfy \(s_k\le k/2\le S\).  For \(k>2S\), the
+condition \(s_k\le S\) is equivalent to the existence of a unique integer
+\(q\) such that \(|p-qk|\le S\).  Counting the pairs \((q,k)\) by the
+integer \(n=qk\in[p-S,p+S]\), and then subtracting the divisors
+\(k\le2S\), gives \eqref{eq:NpS-exact}; the divisor \(k=1\) must be
+included in the correction sum.
+\end{proof}
+
+\subsection{Complementary divisors and the corrected gamma factorization}
+
+Every \(k\ge3\) belongs to exactly one of the branches
+\(p-s_k=qk\) or \(p+s_k=qk\).  The condition \(k>2s_k\) gives
+\begin{equation}\label{eq:Sp-progression-log}
+\begin{aligned}
+ \log S_p
+={}&\sum_{q\ge1}\ \sum_{\substack{s\equiv p\ (q)\\(2q+1)s<p}}\log s\\
+&+\sum_{q\ge2}\ \sum_{\substack{s\equiv-p\ (q)\\(2q-1)s<p}}\log s.
+\end{aligned}
+\end{equation}
+The exceptional denominator \(k=2\) has \(s_2=1\) and does not affect the
+logarithm.
+
+For \(q\ge2\), put
+\begin{equation}\label{eq:gamma-parameters}
+ a_q=p\bmod q,\quad \alpha_q=\frac{a_q}{q},\quad
+ X_q^- =\left\lfloor\frac{p-1}{2q+1}\right\rfloor,\quad
+ X_q^+ =\left\lfloor\frac{p-1}{2q-1}\right\rfloor,
+\end{equation}
+and
+\begin{align}
+ n_-(q)&=\max\left(0,1+\left\lfloor\frac{X_q^--a_q}{q}\right\rfloor\right),
+ \label{eq:nminus}\\
+ n_+(q)&=\max\left(0,1+\left\lfloor\frac{X_q^+-(q-a_q)}{q}\right\rfloor\right).
+ \label{eq:nplus}
+\end{align}
+
+\begin{proposition}[Corrected gamma factorization]\label{prop:gamma-core}
+For \(q\ge2\), define
+\begin{equation}\label{eq:Gq-correct}
+\begin{aligned}
+ \mathcal G_q(p)
+={}&q^{n_-(q)+n_+(q)}\frac{|\sin(\pi p/q)|}{\pi}\\
+&\times
+ \Gamma\!\left(n_-(q)+\alpha_q\right)
+ \Gamma\!\left(n_+(q)+1-\alpha_q\right).
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}\label{eq:Sp-gamma}
+ S_p=\left\lfloor\frac{p-1}{3}\right\rfloor!
+ \prod_{q=2}^{(p-1)/2}\mathcal G_q(p).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first progression in \eqref{eq:Sp-progression-log} is
+\(a_q,a_q+q,\ldots,a_q+(n_--1)q\), whose product is
+\[
+ q^{n_-}\frac{\Gamma(n_-+\alpha_q)}{\Gamma(\alpha_q)}.
+\]
+The second progression starts at \(q-a_q\) and contributes
+\[
+ q^{n_+}\frac{\Gamma(n_++1-\alpha_q)}{\Gamma(1-\alpha_q)}.
+\]
+Euler reflection gives
+\[
+ \frac1{\Gamma(\alpha_q)\Gamma(1-\alpha_q)}
+ =\frac{\sin(\pi\alpha_q)}{\pi}
+ =\frac{|\sin(\pi p/q)|}{\pi}.
+\]
+For \(q=1\), the first branch contributes
+\(1\cdot2\cdots\lfloor(p-1)/3\rfloor\).  Multiplication gives
+\eqref{eq:Sp-gamma}.
+\end{proof}
+
+\begin{proposition}[Uniform low-complementary-divisor smoothing]\label{prop:low-q-stirling}
+Let \(2\le Q\le p^{1/3}\).  Put
+\[
+ Y_q^- =\frac{p-1}{q(2q+1)},\qquad
+ Y_q^+ =\frac{p-1}{q(2q-1)}
+\]
+and
+\begin{equation}\label{eq:Mq-smooth}
+\begin{aligned}
+ \mathcal M_q(p)
+={}&\left(Y_q^--\frac12\right)
+ \log\frac{p-1}{2q+1}-Y_q^-\\
+&+\left(Y_q^+-\frac12\right)
+ \log\frac{p-1}{2q-1}-Y_q^+.
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}\label{eq:low-q-stirling}
+ \sum_{q=2}^{Q}\log\mathcal G_q(p)
+ =\sum_{q=2}^{Q}\mathcal M_q(p)
+ +O\!\left(Q\log p+\frac{Q^3}{p}\right).
+\end{equation}
+In particular, at \(Q=\lfloor p^{1/3}\rfloor\),
+\begin{equation}\label{eq:low-q-third}
+ \sum_{q\le p^{1/3}}\log\mathcal G_q(p)
+ =\sum_{q\le p^{1/3}}\mathcal M_q(p)+O(p^{1/3}\log p).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For \(q\le Q\), the two large gamma arguments in
+\eqref{eq:Gq-correct} have the form
+\[
+ z_q^-=Y_q^-+\eta_q^-,\qquad
+ z_q^+=Y_q^++\eta_q^+,
+ \qquad 0<\eta_q^\pm\le1,
+\]
+with \(Y_q^\pm\asymp p/q^2\).  Stirling's formula, uniformly in this
+range, gives
+\[
+ \log\Gamma(z)=\left(z-\frac12\right)\log z-z
+ +\frac12\log(2\pi)+O(z^{-1}).
+\]
+Moving \(z_q^\pm\) to \(Y_q^\pm\) costs \(O(\log p)\) per \(q\), while
+the two Stirling remainders sum to
+\(O(\sum_{q\le Q}q^2/p)=O(Q^3/p)\).  Finally
+\(|\sin(\pi p/q)|\gg1/q\), so the explicit sine factor costs only
+\(O(\log q)\) per \(q\), already contained in \(O(Q\log p)\).
+\end{proof}
+
+\begin{remark}\label{rem:gamma-limitation}
+The gamma factorization is exact and the low-\(q\) smoothing is a genuine
+localization statement.  It does not, by itself, improve
+Theorem~\ref{thm:prime-third-scale}: substituting the reflected sine
+factors back into the complete product reconstructs a complementary part of
+the original product.  Any sharper global estimate must therefore control
+the remaining high-\(q\) shifted-divisor sector or the folded discrepancy,
+rather than rely on gamma reflection alone.
+\end{remark}
+
+\section{Primitive divisor decomposition}
+\label{sec:primitive}
+
+To obtain finite logarithms for every integer, omit precisely the zero
+divisor factors:
+\begin{equation}\label{eq:Ptilde}
+ \widetilde P(n)=
+ \prod_{\substack{2\leq k\leq n-1\\k\nmid n}}
+ \left|\sin\!\left(\frac{\pi n}{k}\right)\right|,
+ \qquad
+ \widetilde\lambda(n)=\log\widetilde P(n).
+\end{equation}
+Define \(L(1)=0\) and, for \(d\geq2\),
+\begin{equation}\label{eq:L-def}
+ L(d)=\sum_{\substack{2\leq k\leq d-1\\(k,d)=1}}
+ \log\sin\!\left(\frac{\pi(d\bmod k)}{k}\right).
+\end{equation}
+
+\begin{theorem}\label{thm:primitive}
+For every \(n\geq1\),
+\begin{equation}\label{eq:primitive}
+ \widetilde\lambda(n)=\sum_{d\mid n}L(d),
+ \qquad L=\mu*\widetilde\lambda.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For \(k\nmid n\), put \(g=(n,k)\), \(d=n/g\), and \(k=gk'\).
+Then \((d,k')=1\), \(2\leq k'<d\), and
+\(\{n/k\}=\{d/k'\}\).  Conversely, a divisor \(d\mid n\) and a
+primitive index \(2\leq k'<d\) reconstruct \(k=(n/d)k'\).  This is a
+bijection between the factors on the two sides.  The second formula is the
+standard M\"obius inversion formula \cite[Chapter~2]{Apostol1976}.
+\end{proof}
+
+The same bijection works for every function of \(\{n/k\}\); thus the
+divisor convolution itself is not sine-specific.  With
+\begin{equation}\label{eq:RL-def}
+ R_L(d)=L(d)+C\varphi(d),
+ \qquad \widetilde R(n)=\widetilde\lambda(n)+Cn,
+\end{equation}
+the classical identity \(\sum_{d\mid n}\varphi(d)=n\) gives
+\begin{equation}\label{eq:R-convolution}
+ \widetilde R=\mathbf1*R_L.
+\end{equation}
+
+\begin{corollary}\label{cor:tilde-scale}
+Uniformly for \(n\geq2\),
+\begin{equation}\label{eq:tilde-scale}
+ \widetilde\lambda(n)=-Cn+O\!\left(n^{1/3}(\log n)^2\right),
+ \qquad R_L(n)=O_\eps(n^{1/3+\eps}).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:SV-specialization} to the full reciprocal
+fractional-part multiset and delete the zero factors \(k\mid n\).  This
+changes the distribution function by at most \(d(n)\), and every remaining
+logarithm has size \(O(\log n)\).  Thus the proof of
+Theorem~\ref{thm:prime-third-scale} gives
+\(O(n^{1/3}(\log n)^2+d(n)\log n)\), and the divisor term is absorbed.
+M\"obius inversion in \eqref{eq:R-convolution} gives
+\[
+ |R_L(n)|\le\sum_{d\mid n}|\widetilde R(n/d)|
+ \ll n^{1/3}(\log n)^2\sum_{d\mid n}d^{-1/3}
+ =O_\eps(n^{1/3+\eps}).
+\]
+\end{proof}
+
+For \(\Re s>4/3\), absolute convergence and
+\eqref{eq:R-convolution} give the standard Dirichlet-series identity
+\begin{equation}\label{eq:AB}
+ A(s)=\zeta(s)B(s),
+ \qquad
+ A(s)=\sum_{n\geq1}\frac{\widetilde R(n)}{n^s},
+ \quad B(s)=\sum_{n\geq1}\frac{R_L(n)}{n^s}.
+\end{equation}
+This is exactly the Dirichlet-series image of a divisor convolution; no
+continuation of \(A\) or \(B\) is asserted; compare
+\cite[Chapter~2]{Apostol1976}.
+
+\section{Euclidean Lambert expansion and centered kernel}
+\label{sec:centered-kernel}
+
+Put
+\begin{equation}\label{eq:ell-H}
+ \ell(x)=\log\sin(\pi x),
+ \qquad
+ H_k(z)=\sum_{\substack{1\leq r<k\\(r,k)=1}}
+ \ell\!\left(\frac rk\right)z^r.
+\end{equation}
+
+\begin{theorem}\label{thm:Lambert}
+For \(|z|<1\),
+\begin{equation}\label{eq:Lambert}
+ \mathcal G(z):=\sum_{n\geq2}L(n)z^n
+ =\sum_{k\geq2}\frac{z^k}{1-z^k}H_k(z).
+\end{equation}
+Moreover, \(H_k(z)=z^kH_k(z^{-1})\) as an identity of Laurent
+polynomials.
+\end{theorem}
+
+\begin{proof}
+Write \(n=mk+r\) in every summand of \(L(n)\), with \(m\geq1\),
+\(1\leq r<k\), and \((r,k)=1\).  Absolute convergence for \(|z|<1\)
+allows the rearrangement
+\[
+ \sum_{n\geq2}L(n)z^n
+ =\sum_{k\geq2}\sum_{\substack{1\leq r<k\\(r,k)=1}}
+ \ell(r/k)z^r\sum_{m\geq1}z^{mk}.
+\]
+The involution \(r\mapsto k-r\) proves the reflection identity.
+\end{proof}
+
+\begin{theorem}\label{thm:centered}
+For \(u\in\R\), define
+\begin{equation}\label{eq:Vk}
+ V_k(u)=e^{iku/2}H_k(e^{-iu})-H_k(1).
+\end{equation}
+Then \(V_k\) is real, even, and nonnegative, with
+\begin{equation}\label{eq:Vk-positive}
+ V_k(u)=2\sum_{\substack{1\leq r<k/2\\(r,k)=1}}
+ \left[-\ell\!\left(\frac rk\right)\right]
+ \left[1-\cos\!\left(\left(\frac k2-r\right)u\right)\right].
+\end{equation}
+The kernel \(V_k(u-v)\) is conditionally negative definite.  Thus, if
+\(\sum_jc_j=0\),
+\begin{equation}\label{eq:CND}
+ \sum_{i,j}c_i\overline{c_j}V_k(u_i-u_j)\leq0.
+\end{equation}
+On the Laplace axis,
+\begin{equation}\label{eq:Delta}
+ \Delta_k(t)=e^{kt/2}H_k(e^{-t})-H_k(1)\leq0
+ \qquad(t\geq0).
+\end{equation}
+Moreover, for every \(j\geq1\),
+\begin{equation}\label{eq:Delta-even-derivatives}
+ \Delta_k^{(2j)}(0)
+ =2\sum_{\substack{1\leq r<k/2\\(r,k)=1}}
+ \ell(r/k)\left(\frac k2-r\right)^{2j}\leq0,
+\end{equation}
+with strict inequality whenever the reduced-residue set contains a point
+distinct from \(k/2\).
+\end{theorem}
+
+\begin{proof}
+Pair \(r\) with \(k-r\).  Since \(\ell(r/k)<0\) away from the central
+point, the pairing gives \eqref{eq:Vk-positive}.  Writing
+\(a_{k,r}=k/2-r\) and \(w_{k,r}=-2\ell(r/k)>0\), the quadratic form in
+\eqref{eq:CND} equals
+\[
+ -\frac12\sum_r w_{k,r}
+ \left(\left|\sum_jc_je^{ia_{k,r}u_j}\right|^2
+ +\left|\sum_jc_je^{-ia_{k,r}u_j}\right|^2\right),
+\]
+because the constant term is zero.  This is the standard negative-type
+form of Schoenberg \cite{Schoenberg1938}.  Replacing \(u\) by \(-it\)
+gives
+\[
+ \Delta_k(t)=2\sum_r\ell(r/k)
+ \bigl(\cosh(a_{k,r}t)-1\bigr)\leq0.
+\]
+Differentiating this finite sum at the origin gives
+\eqref{eq:Delta-even-derivatives}.
+\end{proof}
+
+\begin{remark}[Universality of the centered sign]\label{rem:universal-centered}
+The proof of Theorem~\ref{thm:centered} uses only reflection symmetry
+under \(r\mapsto k-r\) and the inequality \(\ell(r/k)<0\) away from the
+central point.  Consequently, \eqref{eq:Vk-positive}, conditional negative
+definiteness, \eqref{eq:Delta}, and \eqref{eq:Delta-even-derivatives}
+remain valid verbatim if the reduced residues are replaced by any subset
+\(S_k\subseteq\{1,\ldots,k-1\}\) satisfying
+\(r\in S_k\Longleftrightarrow k-r\in S_k\).  Coprimality therefore plays
+no role in these signs.
+
+For the reduced-residue block, the arithmetic content is instead carried
+by the positive spectral measure
+\begin{equation}\label{eq:nu-k}
+ \nu_k=\sum_{\substack{1\leq r<k/2\\(r,k)=1}}
+ \left[-\ell\!\left(\frac rk\right)\right]
+ \left(\delta_{k/2-r}+\delta_{-(k/2-r)}\right),
+\end{equation}
+for which
+\[
+ V_k(u)=\int_{\mathbb R}\bigl(1-\cos(\xi u)\bigr)\,d\nu_k(\xi).
+\]
+Thus the atoms \(k/2-r\) and their weights, not positivity by itself,
+retain the reduced-residue arithmetic.  In particular, the signs
+\(\mathcal D(t)<0\) and \(\kappa>0\) below are termwise signs; the
+asymptotic size and spectral distribution are the nontrivial information.
+\end{remark}
+
+The complete value of a block is classical:
+\begin{equation}\label{eq:H-classical}
+ H_k(1)=\Lambda(k)-\varphi(k)\log2.
+\end{equation}
+Indeed, this is \(\Phi_k(1)=e^{\Lambda(k)}\), discussed further in
+Section~\ref{sec:recoveries}.  The centered kernel subtracts this total
+mass before retaining the frequencies \(k/2-r\).
+
+Define
+\begin{equation}\label{eq:mathcalD}
+ \mathcal D(t)=\sum_{k\geq2}
+ \frac{e^{-3kt/2}}{1-e^{-kt}}\Delta_k(t),
+ \qquad t>0.
+\end{equation}
+
+\begin{proposition}\label{prop:D-scale}
+As \(t\downarrow0\),
+\begin{equation}\label{eq:D-scale}
+ \mathcal D(t)\sim-\frac{\kappa}{t^2},
+\end{equation}
+where
+\begin{equation}\label{eq:kappa}
+ \kappa=-\frac6{\pi^2}\int_0^\infty
+ \frac{y e^{-3y/2}}{1-e^{-y}}
+ \int_0^1\ell(x)
+ \left[\cosh\!\left(y\left(x-\frac12\right)\right)-1\right]
+ \dd x\dd y>0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Insert \eqref{eq:Delta} into \eqref{eq:mathcalD}.  With
+\[
+ F(y,x)=\frac{e^{-3y/2}}{1-e^{-y}}\ell(x)
+ \bigl(e^{-y(x-1/2)}-1\bigr),
+\]
+one obtains
+\[
+ t^2\mathcal D(t)
+ =t^2\sum_{k\geq2}\sum_{\substack{1\leq r<k\\(r,k)=1}}
+ F(tk,r/k).
+\]
+For fixed \(0<\delta<1/2\) and \(0<\eta<M<\infty\), truncate to
+\(\delta\leq r/k\leq1-\delta\) and \(\eta\leq tk\leq M\).  On this
+compact region the weight is bounded and continuous, so the classical
+primitive-lattice Riemann-sum limit obtained by M\"obius inversion gives
+\[
+ t^2\sum_{k\geq1}\sum_{\substack{1\leq r<k\\(r,k)=1}}
+ F(tk,r/k)
+ \longrightarrow\frac6{\pi^2}\int_0^\infty y
+ \int_0^1F(y,x)\dd x\dd y
+\]
+after the three truncations are removed; see
+\cite[Chapter~XVIII]{HardyWright2008}.  We now justify that removal.
+
+For \(0<x\leq1/2\),
+\begin{equation}\label{eq:ell-bound-D}
+ |\ell(x)|\ll1+\log(1/x),
+\end{equation}
+and the same bound holds near \(1\) by reflection.  Also
+\[
+ \left|\frac{e^{-3y/2}}{1-e^{-y}}
+ \bigl(e^{-y(x-1/2)}-1\bigr)\right|
+ \leq \frac{y e^{-y}}{2(1-e^{-y})}=:h(y),
+\]
+where \(h(y)=O(1)\) as \(y\downarrow0\) and
+\(h(y)\ll y e^{-y}\) as \(y\to\infty\).  From
+\eqref{eq:ell-bound-D} and Stirling's estimate for
+\(\sum_{r\leq \delta k}\log r\), uniformly in \(k\),
+\begin{equation}\label{eq:boundary-discrete}
+ \sum_{1\leq r\leq\delta k}|\ell(r/k)|
+ \ll k\delta\bigl(1+|\log\delta|\bigr)+\log(2k).
+\end{equation}
+Hence the two endpoint strips contribute, in the limit superior as
+\(t\downarrow0\), at most
+\(O(\delta(1+|\log\delta|))\); the term containing \(\log(2k)\)
+is \(o(1)\).
+
+For the \(y\)-tails, the complete sine product gives the exact bound
+\[
+ \sum_{r=1}^{k-1}|\ell(r/k)|
+ =(k-1)\log2-\log k\ll k.
+\]
+Therefore the range \(tk<\eta\) contributes \(O(\eta^2)\), while the
+range \(tk>M\) contributes
+\[
+ O\!\left(\int_M^\infty y h(y)\dd y\right)
+ =O\!\left((1+M)^2e^{-M}\right),
+\]
+uniformly for sufficiently small \(t\).  Let first \(t\downarrow0\), then
+\(\delta,\eta\downarrow0\), and finally \(M\to\infty\).  This proves the
+untruncated limit despite the logarithmic endpoint singularities.
+
+Finally, the symmetry \(\ell(x)=\ell(1-x)\) replaces the exponential
+bracket by the hyperbolic cosine in \eqref{eq:kappa}.  The resulting
+integral is absolutely convergent by the same bounds.  Since
+\(\ell(x)<0\) for \(0<x<1\), except at \(x=1/2\), and
+\(\cosh(y(x-1/2))-1\geq0\), the inner integral in
+\eqref{eq:kappa} is strictly negative for every \(y>0\); hence
+\(\kappa>0\).
+\end{proof}
+
+\section{Incomplete reduced-residue sums}
+\label{sec:clausen}
+
+For \(0\leq S<m\), put
+\begin{equation}\label{eq:Hpartial}
+ \mathcal H(m,S)=\sum_{s=1}^{S}
+ \log\!\left(2\sin\frac{\pi s}{m}\right),
+ \qquad
+ \operatorname{Cl}_2(\theta)=\sum_{j\geq1}\frac{\sin(j\theta)}{j^2}.
+\end{equation}
+The Clausen function and its relation to the dilogarithm are classical;
+see \cite{Lewin1981}.
+
+\begin{proposition}\label{prop:moving-sieve}
+For \(q>1\) and \(0\leq R<q\),
+\begin{equation}\label{eq:moving-sieve}
+ \sum_{\substack{1\leq r\leq R\\(r,q)=1}}
+ \log\!\left(2\sin\frac{\pi r}{q}\right)
+ =\sum_{e\mid q}\mu(e)\,
+ \mathcal H\!\left(\frac qe,\left\lfloor\frac Re\right\rfloor\right).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Insert \(\mathbf1_{(r,q)=1}=\sum_{e\mid(r,q)}\mu(e)\) and write
+\(r=es\).  Then \(r\leq R\) is equivalent to
+\(s\leq\lfloor R/e\rfloor\), while \(r/q=s/(q/e)\).
+\end{proof}
+
+The floor in \eqref{eq:moving-sieve} is essential:
+\begin{equation}\label{eq:floor-phase}
+ \frac{\lfloor R/e\rfloor}{q/e}
+ =\frac{R-(R\bmod e)}q.
+\end{equation}
+Thus the Clausen phases are not exactly independent of \(e\).
+
+\begin{lemma}\label{lem:partial-sine}
+For \(1\leq S<m\), with \(a=S/m\),
+\begin{align}
+ \mathcal H(m,S)
+ &=-\frac{m}{2\pi}\operatorname{Cl}_2(2\pi a)
+ +\frac12\log(2\pi S)
+ +\frac12\log\!\left(\frac{\sin(\pi a)}{\pi a}\right)
+ +E(m,S),\label{eq:partial-sine}\\
+ |E(m,S)|
+ &\leq\frac1{12S}
+ +\frac12\log\!\left(\frac{\pi a}{\sin(\pi a)}\right).
+ \label{eq:partial-sine-error}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Split
+\[
+ \log(2\sin\pi x)=\log(2\pi x)
+ +g(x),\qquad g(x)=\log\!\left(\frac{\sin\pi x}{\pi x}\right).
+\]
+Stirling's formula with its elementary remainder treats the first term.
+For the second, first-order Euler summation gives
+\[
+ \sum_{s=1}^{S}g(s/m)
+ =m\int_0^ag(x)\dd x+\frac12g(a)+E_g,
+ \qquad |E_g|\leq\frac12\int_0^a|g'(x)|\dd x=-\frac12g(a).
+\]
+Finally,
+\[
+ \int_0^S\log\!\left(2\sin\frac{\pi t}{m}\right)\dd t
+ =-\frac{m}{2\pi}\operatorname{Cl}_2(2\pi S/m).
+\]
+These are the standard Euler--Maclaurin ingredients for partial rational
+sine products; compare \cite{OSullivan2016}.
+\end{proof}
+
+\begin{theorem}\label{thm:Clausen}
+For \(q>1\) and \(0\leq R<q\),
+\begin{equation}\label{eq:Clausen}
+ \sum_{\substack{1\leq r\leq R\\(r,q)=1}}
+ \log\!\left(2\sin\frac{\pi r}{q}\right)
+ =-\frac{\varphi(q)}{2\pi}
+ \operatorname{Cl}_2\!\left(2\pi\frac Rq\right)
+ +\frac12\Lambda(q)+\eps(q,R),
+\end{equation}
+where, uniformly in \(R\),
+\begin{equation}\label{eq:epsilon-bound}
+ |\eps(q,R)|\ll d(q)\log(2q).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:epsilon-mean}
+ \sum_{R=0}^{q-1}\eps(q,R)=0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For \(R=0\), take \(\eps(q,0)=-\Lambda(q)/2\).  Suppose \(R\geq1\).
+Apply Lemma~\ref{lem:partial-sine} to every divisor \(e\mid q\) with
+\(e\leq R\), and put
+\(a_e=e\lfloor R/e\rfloor/q\) and \(a=R/q\).  Since
+\(|a-a_e|<e/q\), the classical modulus estimate
+\[
+ |\operatorname{Cl}_2(2\pi x)-\operatorname{Cl}_2(2\pi y)|
+ \ll |x-y|\log\frac{2}{|x-y|}
+\]
+follows by integrating
+\(\operatorname{Cl}_2'(\theta)=-\log|2\sin(\theta/2)|\).  It shows that
+replacing \(a_e\) by \(a\), after multiplication by \(q/e\),
+costs \(O(1+\log(q/e))\) per divisor.  The divisors \(e>R\) satisfy the
+same total bound because
+\(|\operatorname{Cl}_2(2\pi a)|\ll a\log(2/a)\).  The Clausen terms then
+collapse by
+\(\sum_{e\mid q}\mu(e)/e=\varphi(q)/q\).
+
+For \(e\leq R\),
+\(\log\lfloor R/e\rfloor=\log R-\log e+O(1)\).  Completing the divisor
+sums and using the known identities
+\[
+ \sum_{e\mid q}\mu(e)=0,
+ \qquad \sum_{e\mid q}\mu(e)\log e=-\Lambda(q)
+\]
+extracts \(\Lambda(q)/2\).  The sinc terms and the remainders in
+\eqref{eq:partial-sine-error} contribute at most
+\(O(d(q)\log(2q))\).  This proves \eqref{eq:epsilon-bound}.
+
+For the mean, pair \(r\) with \(q-r\) and use the complete cyclotomic
+product to obtain
+\[
+ \sum_{R=0}^{q-1}\sum_{\substack{r\leq R\\(r,q)=1}}
+ \log\!\left(2\sin\frac{\pi r}{q}\right)=\frac q2\Lambda(q).
+\]
+Also \(\sum_{R=0}^{q-1}\operatorname{Cl}_2(2\pi R/q)=0\).  Summing
+\eqref{eq:Clausen} over \(R\) gives \eqref{eq:epsilon-mean}.
+\end{proof}
+
+At the moving cutoffs relevant to the diagonal product, define
+\begin{equation}\label{eq:mathcalE}
+ \mathcal E(X)=\sum_{q=2}^{X-1}\eps\bigl(q,X\bmod q\bigr).
+\end{equation}
+The uniform bound \eqref{eq:epsilon-bound} and the elementary estimate
+\(\sum_{q\leq X}d(q)\ll X\log X\) give only
+\begin{equation}\label{eq:mathcalE-bound}
+ \mathcal E(X)\ll X(\log X)^2.
+\end{equation}
+Thus the pointwise Clausen decomposition does not, by direct summation of
+its remainders, reach the \(\sqrt X\)-scale; any sharper use of the formula
+must exploit cancellation or additional structure in the moving
+remainders.
+
+The totient-weighted Clausen aggregate has an elementary quadratic mean.
+
+\begin{proposition}\label{prop:Clausen-main}
+As \(X\to\infty\) through the integers,
+\begin{equation}\label{eq:Clausen-main}
+ \sum_{q<X}\varphi(q)
+ \operatorname{Cl}_2\!\left(2\pi\left\{\frac Xq\right\}\right)
+ =c_{\rm Cl}X^2+o(X^2),
+\end{equation}
+where
+\begin{equation}\label{eq:cCl}
+ c_{\rm Cl}=\frac6{\pi^2}\int_0^1
+ \operatorname{Cl}_2(2\pi t)
+ \sum_{m\geq1}\frac{\dd t}{(m+t)^3}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Set \(f(t)=\operatorname{Cl}_2(2\pi t)\) and
+\(g(u)=f(\{1/u\})\).  Since \(f(0)=f(1)=0\), the bounded function \(g\)
+is Riemann integrable on \([0,1]\).  Partial summation with the classical
+estimate
+\(\sum_{n\leq y}\varphi(n)=3y^2/\pi^2+O(y\log y)\) gives
+\[
+ \frac1{X^2}\sum_{q<X}\varphi(q)g(q/X)
+ \longrightarrow\frac6{\pi^2}\int_0^1ug(u)\dd u.
+\]
+Substitute \(v=1/u\) and split \(v\) into the intervals
+\([m,m+1]\) to obtain \eqref{eq:cCl}.  The mean value of \(\varphi\) is
+standard; see \cite[Chapter~3]{Apostol1976}.
+\end{proof}
+
+\section{Arithmetic encodings}
+\label{sec:recoveries}
+
+This section records finite codings obtained from the zeros and complete
+reduced-residue values of the product.  The prime indicator, the Boolean
+M\"obius formula, and the cyclotomic recovery of \(\Lambda\) are exact
+encodings; they are not analytic estimates.  The exact Chebyshev reduction
+and the totient obstruction, which make genuinely different statements, are
+separated into the next section.
+
+\subsection{Prime counting and a normalized count}
+
+Adopt the empty-product convention \(P(2)=1\).  Since \(P(n)=0\) exactly
+when \(n\) has a divisor \(k\) with \(2\leq k<n\),
+\begin{equation}\label{eq:prime-count}
+ \pi(X)=1+\sum_{n=3}^{X}\left\lceil|P(n)|\right\rceil.
+\end{equation}
+This is an indicator formula of the same general kind as other exact but
+computationally inefficient prime formulas; compare Willans
+\cite{Willans1964}.
+
+The exponential scale supplies a numerically stable normalization.  Put
+\begin{equation}\label{eq:critical-beta}
+ \beta_c=\frac{\log2}{C},
+ \qquad
+ S_c(X)=\sum_{2\leq n\leq X}|P(n)|^{\beta_c/n},
+\end{equation}
+where \(0^a=0\) for \(a>0\).  For a prime \(p\), write
+\(R(p)=\log|P(p)|+Cp\).  Theorem~\ref{thm:prime-third-scale} gives
+\(R(p)=O(p^{1/3}(\log p)^2)\), hence
+\begin{equation}\label{eq:critical-weight}
+ |P(p)|^{\beta_c/p}
+ =\frac12+O\!\left(p^{-2/3}(\log p)^2\right).
+\end{equation}
+The elementary Chebyshev bound \(\pi(x)\ll x/\log x\) and partial
+summation imply
+\begin{equation}\label{eq:normalized-count}
+ S_c(X)=\frac12\pi(X)+O(X^{1/3}\log X).
+\end{equation}
+Consequently, the classical von Koch criterion may still be written as
+\begin{equation}\label{eq:RH-normalized-count}
+ \mathrm{RH}\quad\Longleftrightarrow\quad
+ 2S_c(X)-\Li(X)=O(\sqrt X\log X).
+\end{equation}
+Indeed,
+\begin{equation}\label{eq:RH-normalized-difference}
+ 2S_c(X)-\Li(X)
+ =\pi(X)-\Li(X)+O(X^{1/3}\log X),
+\end{equation}
+and the added term is \(o(\sqrt X\log X)\).  Thus the strengthened
+product remainder sharpens the approximation of \(S_c\) to \(\pi/2\), but
+it does not sharpen or alter the von Koch criterion itself; see
+\cite[Chapter~XIV]{TitchmarshHeathBrown1986}.
+
+\subsection{A Boolean formula for the M\"obius function}
+
+Define the Boolean quantities
+\begin{equation}\label{eq:ABC}
+ A(k)=\lceil|P(k)|\rceil,
+ \quad
+ B_k(n)=\left\lceil\left|\sin\frac{\pi n}{k}\right|\right\rceil,
+ \quad
+ C_k(n)=\left\lceil\left|\sin\frac{\pi n}{k^2}\right|\right\rceil.
+\end{equation}
+
+\begin{proposition}\label{prop:mobius-boolean}
+For every \(n\geq1\),
+\begin{equation}\label{eq:mobius-boolean}
+ \mu(n)=\prod_{k=2}^{n}
+ \left[1-A(k)+A(k)C_k(n)\bigl(2B_k(n)-1\bigr)\right].
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If \(k\) is composite, then \(A(k)=0\) and the \(k\)-factor is \(1\).
+If \(k\) is prime, the factor is \(1\), \(-1\), or \(0\) according as
+\(k\nmid n\), \(k\mid n\) but \(k^2\nmid n\), or \(k^2\mid n\).
+The product is therefore zero on nonsquarefree integers and otherwise is
+\((-1)^{\omega(n)}\), the standard definition of \(\mu(n)\).
+\end{proof}
+
+Formula \eqref{eq:mobius-boolean} is a finite Boolean encoding of prime
+exponents.  It does not avoid the primality and divisibility tests encoded
+by its sine zeros.
+
+\subsection{Cyclotomic recovery of the von Mangoldt function}
+
+For \(q\geq2\), define the complete reduced-residue sum
+\begin{equation}\label{eq:J}
+ J(q)=\sum_{\substack{1\leq r<q\\(r,q)=1}}
+ \log\sin\!\left(\frac{\pi r}{q}\right).
+\end{equation}
+The classical cyclotomic evaluation
+\begin{equation}\label{eq:cyclotomic-Lambda}
+ \prod_{\substack{1\leq r<q\\(r,q)=1}}
+ 2\sin\!\left(\frac{\pi r}{q}\right)
+ =\Phi_q(1)=e^{\Lambda(q)}
+\end{equation}
+gives the known identity
+\begin{equation}\label{eq:J-Lambda}
+ J(q)=\Lambda(q)-\varphi(q)\log2.
+\end{equation}
+See \cite[Lemma~2.2]{HerreraMoree2018} and
+\cite[Chapters~1--2]{Washington1997}.  Thus the complete value
+\(H_q(1)\) in \eqref{eq:H-classical} recovers \(\Lambda(q)\); this is a
+cyclotomic identity, not a new formula for the distribution of prime
+powers.
+
+\section{Exact Chebyshev reduction and totient obstruction}
+\label{sec:chebyshev-obstruction}
+
+The following results are not merely alternative codings of arithmetic
+functions.  The first removes an auxiliary normalization exactly; the second
+shows that a natural termwise asymptotic decomposition is impossible at the
+scale relevant to the prime error term.
+
+\subsection{Closed totient block and four-term identity}
+
+Write \(\Psi(X)=\sum_{m\leq X}\Lambda(m)\).  For an integer \(X\geq2\),
+let
+\begin{align}
+ T(X)&=\sum_{n\leq X}\varphi(n),\label{eq:T-def}\\
+ \mathcal B_X&=\sum_{q=2}^{X-1}
+ \left(\left\lfloor\frac Xq\right\rfloor-1\right)\varphi(q),
+ &Q_X&=\sum_{q=2}^{X-1}
+ \sum_{\substack{1\leq r\leq X\bmod q\\(r,q)=1}}
+ \log\sin\!\left(\frac{\pi r}{q}\right).
+ \label{eq:BQ}
+\end{align}
+
+\begin{proposition}[Closed form for the totient block]\label{prop:B-closed}
+For every integer \(X\geq2\),
+\begin{equation}\label{eq:B-closed}
+ \mathcal B_X=\frac{X^2-X}{2}+1-T(X).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The classical divisor identity \(\sum_{d\mid m}\varphi(d)=m\) gives
+\[
+ \sum_{q\leq X}\left\lfloor\frac Xq\right\rfloor\varphi(q)
+ =\sum_{m\leq X}\sum_{q\mid m}\varphi(q)
+ =\sum_{m\leq X}m=\frac{X(X+1)}2.
+\]
+Removing the terms \(q=1\) and \(q=X\), and then subtracting
+\(\sum_{q=2}^{X-1}\varphi(q)=T(X)-1-\varphi(X)\), yields
+\eqref{eq:B-closed} exactly.
+\end{proof}
+
+\begin{proposition}\label{prop:Chebyshev}
+For every \(X\geq2\),
+\begin{equation}\label{eq:Chebyshev}
+ \boxed{\displaystyle
+ \Psi(X)=\log(X!)-(\log2)\,\mathcal B_X+Q_X
+ -\sum_{n\leq X}L(n).}
+\end{equation}
+In particular, the normalization constant \(C\) cancels identically.
+\end{proposition}
+
+\begin{proof}
+Sum \(L(n)\) first over \(n\leq X\) and then over its denominator \(q\).
+For fixed \(q\), the residues consist of
+\(\lfloor X/q\rfloor-1\) complete reduced-residue cycles and a terminal
+segment.  Formula \eqref{eq:J-Lambda} gives
+\[
+ \sum_{n\leq X}L(n)
+ =\sum_{q=2}^{X-1}
+ \left(\left\lfloor\frac Xq\right\rfloor-1\right)
+ \bigl(\Lambda(q)-\varphi(q)\log2\bigr)+Q_X.
+\]
+The standard identity
+\[
+ \sum_{q\leq X}\left\lfloor\frac Xq\right\rfloor\Lambda(q)
+ =\log(X!)
+\]
+follows by summing \(\log m=\sum_{q\mid m}\Lambda(q)\) over
+\(m\leq X\).  Hence
+\[
+ \sum_{q=2}^{X-1}
+ \left(\left\lfloor\frac Xq\right\rfloor-1\right)\Lambda(q)
+ =\log(X!)-\Psi(X),
+\]
+and rearrangement gives \eqref{eq:Chebyshev}.  Equivalently, in the
+normalization \(R_L=L+C\varphi\), one has
+\(\sum_{n\leq X}R_L(n)=\sum_{n\leq X}L(n)+CT(X)\), so the two
+\(CT(X)\) terms in the previous normalized form cancel exactly.
+\end{proof}
+
+Combining Propositions~\ref{prop:B-closed} and \ref{prop:Chebyshev} gives
+the four-term form
+\begin{equation}\label{eq:Chebyshev-four-term}
+ \Psi(X)=\log(X!)-(\log2)\frac{X^2-X+2}{2}
+ +\left[(\log2)T(X)+Q_X-\sum_{n\leq X}L(n)\right].
+\end{equation}
+This form makes an unavoidable cancellation visible.
+
+\subsection{A proved obstruction to termwise estimation}
+
+\begin{proposition}[Totient obstruction to termwise estimation]
+\label{prop:totient-obstruction}
+Let
+\begin{equation}\label{eq:Ephi}
+ E_\varphi(X)=T(X)-\frac3{\pi^2}X^2.
+\end{equation}
+Then
+\begin{equation}\label{eq:Ephi-Omega}
+ \limsup_{X\to\infty}\frac{|E_\varphi(X)|}{X}>0.
+\end{equation}
+Consequently, if
+\begin{equation}\label{eq:MQ}
+ M_Q(X)=X-\log(X!)+(\log2)
+ \left(\frac{X^2-X+2}{2}-\frac3{\pi^2}X^2\right),
+\end{equation}
+then
+\begin{equation}\label{eq:QminusL-Omega}
+ \limsup_{X\to\infty}\frac1X
+ \left|Q_X-\sum_{n\leq X}L(n)-M_Q(X)\right|>0.
+\end{equation}
+Thus the \(\Omega(X)\) fluctuation in
+\(Q_X-\sum_{n\leq X}L(n)\) is forced by the totient term; it is larger
+than the \(O(\sqrt X\log^2X)\) precision required by the von Koch form of
+the Riemann-hypothesis error term for \(\Psi\).
+\end{proposition}
+
+\begin{proof}
+For a prime \(p\),
+\begin{align*}
+ E_\varphi(p)-E_\varphi(p-1)
+ &=\varphi(p)-\frac3{\pi^2}\bigl(p^2-(p-1)^2\bigr)\\
+ &=\left(1-\frac6{\pi^2}\right)p+O(1).
+\end{align*}
+The coefficient is positive.  Therefore at least one of
+\(|E_\varphi(p)|\) and \(|E_\varphi(p-1)|\) is at least a fixed positive
+multiple of \(p\) for every sufficiently large prime \(p\), proving
+\eqref{eq:Ephi-Omega}.
+
+From \eqref{eq:Chebyshev-four-term},
+\begin{equation}\label{eq:QminusL-decomp}
+ Q_X-\sum_{n\leq X}L(n)-M_Q(X)
+ =\Psi(X)-X-(\log2)E_\varphi(X).
+\end{equation}
+The prime number theorem gives \(\Psi(X)-X=o(X)\), whereas
+\eqref{eq:Ephi-Omega} supplies an \(\Omega(X)\) term.  This proves
+\eqref{eq:QminusL-Omega}.  In particular, replacing \(T(X)\) by its
+quadratic main term before combining it with
+\(Q_X-\sum_{n\leq X}L(n)\) necessarily leaves an error of order \(X\)
+along a subsequence.  The cancellation in the bracket of
+\eqref{eq:Chebyshev-four-term} must therefore be retained.
+\end{proof}
+
+Thus \eqref{eq:Chebyshev} remains a finite reorganization of the classical
+divisor identity for \(\Lambda\), but \eqref{eq:QminusL-Omega} identifies
+precisely where a term-by-term asymptotic treatment fails: the dominant
+uncancelled fluctuation is totient rather than prime.
+
+\section{Numerical audit}
+\label{sec:numerical-audit}
+
+\begin{experiment}\label{exp:audit}
+All computations in this section check finite identities, constants, and
+finite-range conjectural diagnostics.  None is used in a proof.  The
+standalone script \texttt{v8\_numeric\_audit.py} reproduces the new tables.
+\end{experiment}
+
+\subsection{Previously established finite checks}
+
+Independent quadrature of \eqref{eq:C-integrals} and summation of
+\eqref{eq:C-series} agree to \(7\times10^{-13}\), with
+\[
+ C=0.7437948618394\ldots,
+ \qquad C-\log2=0.0506476813\ldots.
+\]
+The divisor decomposition \eqref{eq:primitive} was checked for every
+\(n\le1200\); the largest floating-point discrepancy was
+\(2.3\times10^{-13}\).
+
+For the exact cumulative-frequency object \eqref{eq:BJ-quadrature}, direct
+evaluation at \(p=100003\) gives
+\[
+ \frac{B_{1000}}{\sqrt{1000p}}=-0.269309229,
+ \quad
+ \frac{B_{2000}}{\sqrt{2000p}}=-0.578604231,
+ \quad
+ \frac{B_{3000}}{\sqrt{3000p}}=-0.427901820.
+\]
+These values are retained only as a diagnostic of the exact quadrature
+identity; Section~\ref{sec:frequency-centered} no longer uses a square-root
+\(B_J\) criterion as the best pointwise route.
+
+The two sides of the Lambert identity \eqref{eq:Lambert}, truncated at
+index \(200\), agreed to \(8.7\times10^{-19}\) at \(z=0.3\) and to
+\(6.7\times10^{-16}\) at \(z=0.7\).  Direct quadrature gives
+\(\kappa=0.05826334\ldots\).  The exact sieve
+\eqref{eq:moving-sieve} was checked for all \(2\le q\le300\) and
+\(0\le R<q\), with maximum discrepancy \(2.18\times10^{-14}\).  The
+Boolean identity \eqref{eq:mobius-boolean} and prime count
+\eqref{eq:prime-count} were checked through \(n=20000\); the closed totient
+form \eqref{eq:B-closed} has zero integer discrepancy for every
+\(3\le X\le300\), and the simplified Chebyshev identity was checked at
+\(X=50,100,200,300\) to \(1.7\times10^{-12}\).
+
+\subsection{Smooth/integer split and gamma audit}
+
+Quadrature of \eqref{eq:J0-def}--\eqref{eq:H0-def} gives
+\[
+ J_0=-1.750632969245044\ldots,
+ \qquad H_0=-0.137891778443756\ldots,
+\]
+and
+\[
+ \log\pi+J_0+H_0=-0.743794861839401\ldots=-C
+\]
+to the displayed precision.  Identity \eqref{eq:integer-split} was checked
+directly at \(p=1009\) and \(p=10007\), with discrepancies
+\(-4.55\times10^{-13}\) and \(5.46\times10^{-12}\), respectively.
+
+For \(p=10007\), Proposition~\ref{prop:NpS-exact} gives exact integer
+agreement at each tested cutoff:
+\[
+\begin{array}{c|rrrrr}
+ S&3&7&15&30&60\\ \hline
+ \mathcal N_p(S)&75&119&206&374&658\\
+ \text{right side of \eqref{eq:NpS-exact}}&75&119&206&374&658
+\end{array}
+\]
+The corrected gamma factorization is sensitive to the direction of the
+Pochhammer quotients.  At the same prime,
+\[
+ \log S_p\ \text{(direct)}=64659.426286523681\ldots,
+\]
+while \eqref{eq:Sp-gamma} gives
+\[
+ 64659.426286523696\ldots,
+\]
+a discrepancy of \(-1.46\times10^{-11}\).  The reflected factor is
+therefore \(|\sin(\pi p/q)|/\pi\), not its reciprocal.
+
+\subsection{Exact regular-grid identity for the folded discrepancy}
+
+Equation \eqref{eq:Hp-grid} was compared with a direct strict count, not
+with a reconstruction from the same formula.  Representative values are
+\[
+\begin{array}{c|c|r|r|r}
+ p&t&H_p^{<}(t)&\text{right side of \eqref{eq:Hp-grid}}&\text{difference}\\ \hline
+1009&0.073& 4.573630754732& 4.573630754732&-3.7\cdot10^{-13}\\
+1009&0.123& 2.586401744951& 2.586401744951& 3.0\cdot10^{-13}\\
+10007&0.073&4.575725433698&4.575725433686&1.1\cdot10^{-11}\\
+10007&0.271&-3.885421385915&-3.885421385923&8.4\cdot10^{-12}\\
+100003&0.123&-15.233017145323&-15.233017145309&-1.4\cdot10^{-11}\\
+100003&0.271&-6.681468857360&-6.681468857427&6.7\cdot10^{-11}
+\end{array}
+\]
+At an exact jump, a computation using \(\le\) instead of \(<\) differs by
+the corresponding integer jump, as stated in
+Theorem~\ref{thm:Hp-grid}.  Omitting the digamma and boundary corrections
+leaves a bounded residual approaching \(2t-1\), in agreement with
+\eqref{eq:Hp-grid-smooth-asymp}.
+
+\subsection{A failed pure-area localized count}
+
+The stronger heuristic
+\[
+ \#\{k\le\sqrt p:\|p/k\|<\delta\}
+ \stackrel{?}{=}O(\delta\sqrt p)+O(1)
+\]
+is false as a natural uniform model because divisor-rich shifts create
+spikes.  For
+\[
+ p=1441439,\qquad K=1200,\qquad \delta=2/1200,
+\]
+the direct count is \(30\), while \(\delta\sqrt p=2.000999\ldots\).
+Here \(p+1=1441440\) has many divisors in the relevant range.  No argument
+in this version uses the rejected pure-area estimate.
+
+\subsection{Exhaustive folded-discrepancy maxima}
+
+By Lemma~\ref{lem:Hp-jumps}, evaluating both one-sided values at every jump
+is exhaustive for the continuous supremum.  On the mesoscopic interval
+\(p^{-2/3}\le t\le1/2\) we obtain
+\[
+\begin{array}{r|r|r|r}
+ p&\max|H_p|&\max|H_p|/p^{1/3}&\max|H_p|/(p^{1/3}\log p)\\ \hline
+1009&7.127365&0.710611&0.102738\\
+5003&15.867216&0.927735&0.108917\\
+10007&14.505816&0.673143&0.073080\\
+20011&19.008938&0.700167&0.070695\\
+50021&24.758911&0.671966&0.062103\\
+100003&40.335013&0.868983&0.075479\\
+300007&41.881577&0.625623&0.049607
+\end{array}
+\]
+The first normalized column stays between \(0.62\) and \(0.93\) on this
+sample, whereas division by the additional \(\log p\) decreases overall.
+This is finite evidence for \eqref{eq:Hp-conjecture}, not a proof.
+
+At \(p=1000003\), the exact one-sided jump maxima in dyadic bands are
+\[
+\begin{array}{c|r@{\qquad}c|r}
+[t_0,t_1)&\max|H_p|&[t_0,t_1)&\max|H_p|\\ \hline
+{}[1/4,1/2)&44.5111 &[1/64,1/32)&33.8653\\
+{}[1/8,1/4)&40.9914 &[1/128,1/64)&31.6146\\
+{}[1/16,1/8)&41.5335 &[1/256,1/128)&31.2187\\
+{}[1/32,1/16)&44.9391 &[1/512,1/256)&21.1153\\
+{}[1/1024,1/512)&22.6831 &[1/2048,1/1024)&14.0273\\
+{}[1/4096,1/2048)&12.3144 &[1/8192,1/4096)&7.3583
+\end{array}
+\]
+The maximum over these displayed bands is \(44.9391\ldots\), while
+\(p^{1/3}=100.0001\ldots\).
+
+\subsection{Normalized prime-count scale}
+
+The deterministic majorant entering \eqref{eq:normalized-count} is
+\[
+ \sum_{p\le X}p^{-2/3}(\log p)^2.
+\]
+Its values are
+\[
+\begin{array}{r|r|r|r}
+X&\text{sum}&X^{1/3}\log X&\text{ratio}\\ \hline
+10^4&400.225&198.431&2.017\\
+10^5&1181.741&534.383&2.211\\
+10^6&3238.226&1381.551&2.344
+\end{array}
+\]
+This only checks the expected \(X^{1/3}\log X\) order of the auxiliary
+normalization error.  It does not test the von Koch remainder
+\(\pi(X)-\Li(X)\).
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The diagonal reciprocal sine product has two quantitatively distinct
+levels.  The elementary block decomposition gives the density
+\(\rho(t)=\psi_1(1+t)\) and an \(O(\sqrt n\log n)\) logarithmic remainder.
+The sharper Saffari--Vaughan discrepancy replaces this, on primes, by the
+proved bound
+\[
+ \log|P(p)|=-Cp+O(p^{1/3}(\log p)^2),
+\]
+and propagates to the zero-omitted product, the primitive component
+\(R_L(n)=O_\eps(n^{1/3+\eps})\), and absolute convergence of the associated
+Dirichlet series for \(\Re s>4/3\).  The exact rotated Parseval identity
+simultaneously improves to
+\(\|\mathscr R_p\|_2\ll p^{1/3}\log p\).
+
+The product-specific information begins after this imported discrepancy
+estimate.  Reflection of the logarithmic sine kernel folds the full
+reciprocal discrepancy into \(H_p(t)=D_p(t)-D_p(1-t)\).  The exact
+Stieltjes formula \eqref{eq:folded-Stieltjes} shows that the extreme
+singular range contributes only \(O(p^{1/3}\log p)\); the second logarithm
+in the current pointwise theorem can arise only in the mesoscopic range
+\(p^{-2/3}\le t\le1/2\).  The exact sawtooth identity
+\eqref{eq:Hp-grid} puts this folded object on a regular reciprocal grid,
+including the digamma and boundary corrections that are numerically
+essential.  Exhaustive finite computations support, but do not prove, the
+stronger bound \(H_p(t)\ll p^{1/3}\), which would remove one logarithm from
+the product remainder.
+
+The singular logarithm also separates into a bounded-variation term and the
+integer core \(S_p=\prod s_k\).  The latter is an exact statistic of the
+symmetric shifted divisors of \(p-s\) and \(p+s\), admits the corrected
+gamma factorization \eqref{eq:Sp-gamma}, and has a low-complementary-divisor
+sector that can be smoothed to precision \(O(p^{1/3}\log p)\).  Gamma
+reflection alone does not close the remaining pointwise problem.
+
+The later Euclidean Lambert, Clausen, cyclotomic, M\"obius, totient, and
+Chebyshev identities remain exact structural reorganizations.  The improved
+prime normalization now satisfies
+\[
+ S_c(X)=\frac12\pi(X)+O(X^{1/3}\log X),
+\]
+but this sharper auxiliary approximation is still absorbed inside the
+classical von Koch scale and therefore does not yield new information about
+the zeros of \(\zeta\).  The unresolved mathematical problem specific to
+the present product is the mesoscopic folded discrepancy, not the Riemann
+hypothesis.
+
+\begin{thebibliography}{99}
+\raggedright
+
+\bibitem{Apostol1976}
+T.~M. Apostol,
+\emph{Introduction to Analytic Number Theory},
+Springer, New York, 1976.
+\href{https://doi.org/10.1007/978-1-4757-5579-4}
+{doi:10.1007/978-1-4757-5579-4}.
+
+\bibitem{GrahamKolesnik1991}
+S.~W. Graham and G.~Kolesnik,
+\emph{Van der Corput's Method of Exponential Sums},
+London Mathematical Society Lecture Note Series 126,
+Cambridge University Press, Cambridge, 1991.
+\href{https://doi.org/10.1017/CBO9780511661976}
+{doi:10.1017/CBO9780511661976}.
+
+\bibitem{GrepstadEtAl2019}
+S.~Grepstad, L.~Kaltenb\"ock, and M.~Neum\"uller,
+\emph{On the asymptotic behaviour of the sine product
+\(\prod_{r=1}^n|2\sin(\pi r\alpha)|\)},
+arXiv:1909.00980 (2019).
+\url{https://arxiv.org/abs/1909.00980}.
+
+\bibitem{HardyLittlewoodPolya1952}
+G.~H. Hardy, J.~E. Littlewood, and G.~P\'olya,
+\emph{Inequalities}, 2nd ed., Cambridge University Press, Cambridge, 1952.
+
+\bibitem{HardyWright2008}
+G.~H. Hardy and E.~M. Wright,
+\emph{An Introduction to the Theory of Numbers}, 6th ed.,
+Oxford University Press, Oxford, 2008.
+
+\bibitem{HerreraMoree2018}
+J.~Herrera-Poyatos and P.~Moree,
+\emph{Coefficients and higher order derivatives of cyclotomic polynomials:
+old and new}, MPIM Preprint 2018 (46).
+\url{https://archive.mpim-bonn.mpg.de/1354/}.
+
+\bibitem{Lewin1981}
+L.~Lewin,
+\emph{Polylogarithms and Associated Functions},
+North-Holland, New York, 1981.
+
+\bibitem{LiYang2023}
+X.~Li and X.~Yang,
+\emph{An improvement on Gauss's circle problem and Dirichlet's divisor problem},
+arXiv:2308.14859 (2023), preprint.
+\url{https://arxiv.org/abs/2308.14859}.
+
+\bibitem{Mayer1989}
+D.~H. Mayer,
+\emph{Continued fractions and related transformations},
+MPIM Preprint 1989 (73).
+\url{https://archive.mpim-bonn.mpg.de/1282/}.
+
+\bibitem{OSullivan2016}
+C.~O'Sullivan,
+\emph{Asymptotics for the partial fractions of the restricted partition
+generating function I},
+International Journal of Number Theory \textbf{12} (2016), 1421--1474.
+\href{https://doi.org/10.1142/S1793042116500895}
+{doi:10.1142/S1793042116500895}.
+
+\bibitem{MikeTeX2023}
+MikeTeX,
+\emph{Distribution of the fractional parts of \(n/1,n/2,\ldots,n/n\) as
+\(n\) tends to infinity},
+Mathematics Stack Exchange, question 4831482, 21 December 2023.
+\url{https://math.stackexchange.com/questions/4831482/}.
+
+\bibitem{SaffariVaughan1977}
+B.~Saffari and R.~C. Vaughan,
+\emph{On the fractional parts of \(x/n\) and related sequences. II},
+Annales de l'Institut Fourier \textbf{27} (1977), no.~2, 1--30.
+\href{https://doi.org/10.5802/aif.649}{doi:10.5802/aif.649}.
+
+\bibitem{Schoenberg1938}
+I.~J. Schoenberg,
+\emph{Metric spaces and positive definite functions},
+Transactions of the American Mathematical Society \textbf{44} (1938),
+522--536.
+\href{https://doi.org/10.1090/S0002-9947-1938-1501980-0}
+{doi:10.1090/S0002-9947-1938-1501980-0}.
+
+\bibitem{TitchmarshHeathBrown1986}
+E.~C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+revised by D.~R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\bibitem{Washington1997}
+L.~C. Washington,
+\emph{Introduction to Cyclotomic Fields}, 2nd ed.,
+Graduate Texts in Mathematics 83, Springer, New York, 1997.
+\href{https://doi.org/10.1007/978-1-4612-1934-7}
+{doi:10.1007/978-1-4612-1934-7}.
+
+\bibitem{Willans1964}
+C.~P. Willans,
+\emph{On formulae for the nth prime number},
+The Mathematical Gazette \textbf{48} (1964), no.~366, 413--415.
+\href{https://doi.org/10.2307/3611701}{doi:10.2307/3611701}.
+
+\end{thebibliography}
+
+\end{document}

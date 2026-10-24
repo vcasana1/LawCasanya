@@ -1,0 +1,481 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Ftwo}{\mathbb F_2}
+\newcommand{\BH}{\mathcal B}
+\newcommand{\Mert}{M}
+\newcommand{\e}{\mathrm e}
+
+\title{Finite-Lag Extinction for Multiplicative Squarefree Completions\\and the Mertens Endpoint}
+\author{V\'ictor Casa\~na--Giner}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We formulate a finite-lag extinction mechanism for multiplicative squarefree completions of the M\"obius word.  The argument has three exact components.  First, admissible discrepancy sets are linear cuts over the odd-prime sign cube.  Second, a moving-window inequality controls the endpoint by the first $H$ correlations.  Third, any completion whose first $H$ correlations do not exceed those of M\"obius must have endpoint bounded by a Fej\'er-weighted M\"obius correlation functional.  This yields an explicit extinction index $H(N,\delta)$ whenever the corresponding finite-window inequality is satisfied.  Since the M\"obius point survives every lag identically, any uniform preterminal estimate for that index immediately implies the classical bound $M(N)=O_\delta(N^{1/2+\delta})$, hence the Riemann hypothesis.  All steps up to this final uniform preterminal estimate are proved below.  The final estimate is isolated explicitly so that no circularity is hidden in the closure.
+\end{abstract}
+
+\section{Admissible multiplicative completions}
+
+Let
+\[
+Q(N):=\#\{n\le N:\mu(n)\neq 0\}.
+\]
+For each odd prime $p\le N$, choose $\sigma_p\in\{-1,+1\}$ and fix
+\[
+\sigma_2=-1.
+\]
+The associated admissible completion is
+\[
+x_n=
+\begin{cases}
+\displaystyle\prod_{p\mid n}\sigma_p,& n\ \text{squarefree},\\[1ex]
+0,& n\ \text{not squarefree}.
+\end{cases}
+\]
+Thus every admissible completion has the same squarefree support as $\mu$ and
+\[
+C_0(x):=\sum_{n\le N}x_n^2=Q(N)=C_0(\mu).
+\]
+The M\"obius word itself is obtained by taking $\sigma_p=-1$ for every prime $p$.
+
+Let
+\[
+T:=\{p\le N:\ p\ \text{odd prime and }\sigma_p=+1\},
+\]
+and let $t\in\Ftwo^{\pi(N)-1}$ be its indicator vector.  For a squarefree integer $n$, let
+\[
+v(n)\in\Ftwo^{\pi(N)-1}
+\]
+be the indicator vector of the odd prime factors of $n$.
+
+\begin{lemma}[Admissible discrepancy sets]
+For every squarefree $n\le N$,
+\[
+\frac{x_n}{\mu(n)}=(-1)^{\langle v(n),t\rangle}.
+\]
+Hence, with
+\[
+D(x):=\{n\le N:x_n\neq\mu(n)\},
+\]
+one has
+\[
+\boxed{\quad n\in D(x)\iff \langle v(n),t\rangle=1.\quad}
+\]
+\end{lemma}
+
+\begin{proof}
+Since $\mu(n)=\prod_{p\mid n}(-1)$ on the squarefree support,
+\[
+\frac{x_n}{\mu(n)}
+=\prod_{p\mid n}(-\sigma_p).
+\]
+The factor $-\sigma_p$ equals $-1$ exactly when $p\in T$.  The prime $2$ contributes trivially because $\sigma_2=-1$.  Therefore the quotient is precisely
+$(-1)^{\langle v(n),t\rangle}$.
+\end{proof}
+
+\section{Lag graphs and exact cut identities}
+
+For $1\le h<N$, define
+\[
+C_h(x):=\sum_{n\le N-h}x_nx_{n+h},
+\qquad
+S(x):=\sum_{n\le N}x_n.
+\]
+Let $G_h$ be the graph whose vertices are the squarefree integers $n\le N$ and whose edges are
+\[
+e=\{n,n+h\}
+\]
+whenever both endpoints are squarefree.  Give each edge the sign
+\[
+w_h(e):=-\mu(n)\mu(n+h)\in\{\pm1\}.
+\]
+Let
+\[
+u_e:=v(n)\oplus v(n+h)\in\Ftwo^{\pi(N)-1}
+\]
+and
+\[
+a_h(q):=\sum_{e:\,u_e=q}w_h(e).
+\]
+Finally define the correlation displacement
+\[
+d_h(x):=C_h(x)-C_h(\mu).
+\]
+
+\begin{lemma}[Exact signed-cut identity]
+For every admissible completion $x$,
+\[
+\boxed{
+ d_h(x)=2\sum_{e\in\partial_hD(x)}w_h(e)
+}
+\]
+where $\partial_hD(x)$ is the set of edges of $G_h$ with exactly one endpoint in $D(x)$.  Equivalently,
+\[
+d_h(x)=2(A_h-B_h),
+\]
+where $A_h$ and $B_h$ count crossing edges of weight $+1$ and $-1$, respectively.
+\end{lemma}
+
+\begin{proof}
+Write $x_n=\varepsilon_n\mu(n)$ on the squarefree support, where $\varepsilon_n=-1$ exactly on $D(x)$.  Then
+\[
+x_nx_{n+h}-\mu(n)\mu(n+h)
+=\mu(n)\mu(n+h)(\varepsilon_n\varepsilon_{n+h}-1).
+\]
+The parenthesis is $0$ off the cut and $-2$ on the cut.  Since
+$w_h(e)=-\mu(n)\mu(n+h)$, summation gives the formula.
+\end{proof}
+
+\begin{lemma}[Walsh form]
+Let
+\[
+W_h(t):=\sum_q a_h(q)(-1)^{\langle q,t\rangle}.
+\]
+Then
+\[
+\boxed{\quad d_h(t)=-C_h(\mu)-W_h(t).\quad}
+\]
+\end{lemma}
+
+\begin{proof}
+By the previous section, an edge $e$ crosses the discrepancy cut exactly when
+\[
+\langle u_e,t\rangle=1.
+\]
+Therefore
+\[
+\mathbf 1_{\{\langle u_e,t\rangle=1\}}
+=\frac12\left(1-(-1)^{\langle u_e,t\rangle}\right).
+\]
+Substituting into the signed-cut identity gives
+\[
+d_h(t)
+=\sum_e w_h(e)-\sum_e w_h(e)(-1)^{\langle u_e,t\rangle}.
+\]
+Since
+\[
+\sum_e w_h(e)=-C_h(\mu),
+\]
+and grouping equal $u_e=q$ gives $W_h(t)$, the claim follows.
+\end{proof}
+
+\begin{remark}
+At $t=0$, one has $W_h(0)=\sum_e w_h(e)=-C_h(\mu)$, hence $d_h(0)=0$ identically.  Thus the M\"obius point is never removed by any strict positive-lag witness.
+\end{remark}
+
+\section{The survivor filtration}
+
+\begin{definition}
+For $0\le H<N$, define
+\[
+\boxed{
+\BH_H(N):=
+\left\{t\in\Ftwo^{\pi(N)-1}:d_h(t)\le0\ \text{for every }1\le h\le H\right\}.
+}
+\]
+Thus
+\[
+\BH_0(N)\supseteq\BH_1(N)\supseteq\cdots\supseteq\BH_{N-1}(N).
+\]
+\end{definition}
+
+The M\"obius point corresponds to $t=0$, and from $d_h(0)=0$ one obtains the exact survival property
+\[
+\boxed{\quad 0\in\BH_H(N)\quad\text{for every }H<N.\quad}
+\]
+
+For a completion $x$, define its first positive witness by
+\[
+h_*(x):=\min\{h\ge1:d_h(x)>0\},
+\]
+with $h_*(x)=+\infty$ if no such lag exists.  Then
+\[
+x\in\BH_H(N)\iff h_*(x)>H.
+\]
+
+\section{The moving-window inequality}
+
+\begin{lemma}[Window inequality]
+Let $x\in\mathbb R^N$ be arbitrary and let $1\le H<N$.  Then
+\[
+\boxed{
+S(x)^2\le
+\frac{N+H}{H+1}
+\left[
+C_0(x)+2\sum_{h=1}^{H}
+\left(1-\frac{h}{H+1}\right)C_h(x)
+\right].
+}
+\]
+No boundedness or multiplicativity assumption is required.
+\end{lemma}
+
+\begin{proof}
+Let $B$ be the moving-sum matrix of window length $H+1$:
+\[
+(Bx)_k:=\sum_{n=k-H}^{k}x_n,
+\qquad k=1,\dots,N+H,
+\]
+where $x_n=0$ outside $1\le n\le N$.  Put
+\[
+T:=\frac1{H+1}B^{\mathsf T}B.
+\]
+A direct calculation gives
+\[
+T_{nm}=\max\left(0,1-\frac{|n-m|}{H+1}\right),
+\]
+and therefore
+\[
+x^{\mathsf T}Tx
+=C_0(x)+2\sum_{h=1}^{H}
+\left(1-\frac{h}{H+1}\right)C_h(x).
+\]
+Each coordinate $x_n$ occurs in exactly $H+1$ moving windows, so
+\[
+\mathbf 1^{\mathsf T}Bx=(H+1)S(x).
+\]
+Cauchy--Schwarz over the $N+H$ windows yields
+\[
+(H+1)^2S(x)^2
+\le
+(N+H)\|Bx\|_2^2
+=(N+H)(H+1)x^{\mathsf T}Tx.
+\]
+Dividing by $H+1$ proves the result.
+\end{proof}
+
+\begin{remark}
+If $T$ is invertible, the sharp quadratic-form constant is
+\[
+R(N,H)=\mathbf1^{\mathsf T}T^{-1}\mathbf1,
+\]
+whereas the argument above gives the explicit bound
+\[
+R(N,H)\le\frac{N+H}{H+1}.
+\]
+The sharp constant is not needed below.
+\end{remark}
+
+\section{Fej\'er-weighted M\"obius energy}
+
+Let
+\[
+F_H(\theta)
+:=\sum_{|h|\le H}
+\left(1-\frac{|h|}{H+1}\right)e^{2\pi i h\theta}
+\ge0
+\]
+be the normalized Fej\'er kernel of degree $H$.  It satisfies
+\[
+\int_0^1F_H(\theta)\,d\theta=1.
+\]
+Define
+\[
+\widehat\mu_N(\theta):=\sum_{n\le N}\mu(n)e^{2\pi i n\theta}
+\]
+and
+\[
+\boxed{
+\Phi_H(N)
+:=Q(N)+2\sum_{h=1}^{H}
+\left(1-\frac{h}{H+1}\right)C_h(\mu).
+}
+\]
+By Fourier expansion,
+\[
+\Phi_H(N)
+=
+\int_0^1|\widehat\mu_N(\theta)|^2F_H(\theta)\,d\theta
+\ge0.
+\]
+
+\section{Finite-lag extinction}
+
+\begin{lemma}[Extinction bound]
+Let $x$ be an admissible completion at scale $N$, and let $1\le H<N$.  Assume
+\[
+C_h(x)\le C_h(\mu)
+\qquad(1\le h\le H),
+\]
+equivalently $x\in\BH_H(N)$.  Then
+\[
+\boxed{
+S(x)^2\le
+\frac{N+H}{H+1}\,\Phi_H(N).
+}
+\]
+\end{lemma}
+
+\begin{proof}
+Every admissible completion has
+\[
+C_0(x)=Q(N)=C_0(\mu).
+\]
+The coefficients
+\[
+1-\frac{h}{H+1}
+\]
+are positive.  Hence
+\[
+C_0(x)+2\sum_{h=1}^{H}
+\left(1-\frac{h}{H+1}\right)C_h(x)
+\le
+\Phi_H(N).
+\]
+Apply the window inequality.
+\end{proof}
+
+\begin{definition}[Explicit extinction index]
+For $\delta\ge0$, define
+\[
+\boxed{
+H(N,\delta)
+:=\min\left\{
+1\le H<N:
+\frac{N+H}{H+1}\Phi_H(N)
+\le N^{1+2\delta}
+\right\},
+}
+\]
+whenever the set is nonempty.
+\end{definition}
+
+\begin{corollary}[Contrapositive extinction]
+If $H(N,\delta)$ exists and an admissible completion satisfies
+\[
+|S(x)|>N^{1/2+\delta},
+\]
+then
+\[
+\boxed{\quad h_*(x)\le H(N,\delta).\quad}
+\]
+Equivalently,
+\[
+\boxed{
+\BH_{H(N,\delta)}(N)
+\cap
+\{t:|S(t)|>N^{1/2+\delta}\}
+=\varnothing.
+}
+\]
+\end{corollary}
+
+\begin{proof}
+If $h_*(x)>H(N,\delta)$, then $x\in\BH_{H(N,\delta)}(N)$.  The extinction bound gives
+\[
+S(x)^2
+\le
+\frac{N+H(N,\delta)}{H(N,\delta)+1}\Phi_{H(N,\delta)}(N)
+\le N^{1+2\delta},
+\]
+contradicting the assumed strict excursion.
+\end{proof}
+
+\section{The M\"obius point and the closure mechanism}
+
+The preceding result applies to every admissible completion.  The M\"obius word is the distinguished point $t=0$.  Two identities hold simultaneously:
+\[
+S(0)=\sum_{n\le N}\mu(n)=M(N)
+\]
+and
+\[
+d_h(0)=0\qquad(1\le h<N).
+\]
+Thus M\"obius survives every finite level of the filtration.
+
+\begin{theorem}[Finite extinction implies the Mertens square-root bound]
+Fix $\delta>0$ and $N$.  Suppose there exists an integer $H<N$ such that
+\[
+\frac{N+H}{H+1}\Phi_H(N)\le N^{1+2\delta}.
+\]
+Then
+\[
+\boxed{|M(N)|\le N^{1/2+\delta}.}
+\]
+\end{theorem}
+
+\begin{proof}
+Assume instead that
+\[
+|M(N)|>N^{1/2+\delta}.
+\]
+For $x=\mu$, one has $S(x)=M(N)$ and $d_h(x)=0$ for every $h$.  Hence
+\[
+\mu\in\BH_H(N)
+\]
+while simultaneously
+\[
+|S(\mu)|>N^{1/2+\delta}.
+\]
+This contradicts the contrapositive extinction statement, which says that no admissible completion with such an endpoint can remain in $\BH_H(N)$.
+\end{proof}
+
+\begin{theorem}[Uniform preterminal extinction criterion for RH]
+Assume that for every $\delta>0$ there exists $N_0(\delta)$ such that for every $N\ge N_0(\delta)$ there exists an integer $H=H(N,\delta)<N$ satisfying
+\[
+\boxed{
+\frac{N+H}{H+1}\Phi_H(N)\le N^{1+2\delta}.
+}
+\tag{UE}
+\]
+Then the Riemann hypothesis holds.
+\end{theorem}
+
+\begin{proof}
+By the previous theorem,
+\[
+|M(N)|\le N^{1/2+\delta}
+\qquad(N\ge N_0(\delta)).
+\]
+After absorbing the finitely many smaller $N$ into the implied constant,
+\[
+M(N)=O_\delta(N^{1/2+\delta})
+\qquad\text{for every }\delta>0.
+\]
+The classical Mertens-form equivalence then yields the Riemann hypothesis.
+\end{proof}
+
+\section{What is proved and what remains}
+
+The logical chain established above is exact:
+\[
+\boxed{
+\begin{array}{c}
+\text{admissible multiplicative cube}\\[1mm]
+\Downarrow\\[1mm]
+\text{signed-cut survivor filtration }\BH_H(N)\\[1mm]
+\Downarrow\\[1mm]
+\text{moving-window extinction bound}\\[1mm]
+\Downarrow\\[1mm]
+\BH_H(N)\cap\{|S|>N^{1/2+\delta}\}=\varnothing
+\quad\text{whenever (UE) holds}\\[1mm]
+\Downarrow\\[1mm]
+0\in\BH_H(N)\ \forall H\\[1mm]
+\Downarrow\\[1mm]
+|M(N)|\le N^{1/2+\delta}\\[1mm]
+\Downarrow\\[1mm]
+\mathrm{RH}.
+\end{array}
+}
+\]
+
+The only global statement not supplied by the finite-lag lemmas themselves is the uniform preterminal estimate (UE).  Defining $H(N,\delta)$ as the first $H$ satisfying (UE) does not prove that such an $H<N$ exists.  Therefore a complete proof of RH from this framework requires an independent proof that (UE) holds for every $\delta>0$ and all sufficiently large $N$.
+
+This distinction is essential.  The extinction lemma is unconditional once such an $H$ is available; the implication from (UE) to the Mertens square-root family of bounds is immediate and non-circular.  The unresolved mathematical content is precisely the uniform existence of a preterminal window satisfying (UE).
+
+\end{document}

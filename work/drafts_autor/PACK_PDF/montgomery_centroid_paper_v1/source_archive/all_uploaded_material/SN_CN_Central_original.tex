@@ -1,0 +1,2008 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\title{Exponential sums
+of Zeta function zeros}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+
+\section{The Riemann Zeta Function}
+\label{sec:zeta_function}
+
+This section contains standard material.
+The classical references are
+\cite{Titchmarsh1986},
+\cite{Edwards2001},
+and
+\cite{IwaniecKowalski2004}.
+
+\subsection{Definition}
+\label{subsec:zeta_definition}
+
+\begin{definition}
+\label{def:zeta_function}
+
+The Riemann zeta function is defined for
+$\Re(s)>1$
+by the absolutely convergent series
+
+\begin{equation}
+\zeta(s)
+=
+\sum_{n=1}^{\infty}
+\frac{1}{n^{s}}.
+\label{eq:zeta_dirichlet_series}
+\end{equation}
+
+\end{definition}
+
+Euler showed that the same function admits the product expansion
+
+\begin{equation}
+\zeta(s)
+=
+\prod_{p}
+\left(
+1-p^{-s}
+\right)^{-1},
+\qquad
+\Re(s)>1,
+\label{eq:euler_product}
+\end{equation}
+
+where the product extends over all prime numbers.
+Equation
+\eqref{eq:euler_product}
+establishes the fundamental connection between
+$\zeta(s)$
+and the distribution of primes.
+
+\subsection{Analytic Continuation}
+\label{subsec:analytic_continuation}
+
+A classical theorem of Riemann states that
+$\zeta(s)$
+admits a meromorphic continuation to the whole complex plane,
+with a unique simple pole at
+
+\begin{equation}
+s=1.
+\label{eq:zeta_pole}
+\end{equation}
+
+See
+\cite{Edwards2001}
+or
+\cite{Titchmarsh1986}.
+
+\subsection{Functional Equation}
+\label{subsec:functional_equation}
+
+Define
+
+\begin{equation}
+\xi(s)
+=
+\frac12
+s(s-1)
+\pi^{-s/2}
+\Gamma\!\left(\frac{s}{2}\right)
+\zeta(s).
+\label{eq:xi_definition}
+\end{equation}
+
+The completed zeta function satisfies
+
+\begin{equation}
+\xi(s)
+=
+\xi(1-s).
+\label{eq:functional_equation}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+\zeta(s)
+=
+2^{s}
+\pi^{\,s-1}
+\sin\!\left(\frac{\pi s}{2}\right)
+\Gamma(1-s)
+\zeta(1-s).
+\label{eq:functional_equation_zeta}
+\end{equation}
+
+The symmetry encoded by
+\eqref{eq:functional_equation}
+plays a central role in the study of the zeros of
+$\zeta(s)$.
+
+\subsection{Special Values and Basic Identities}
+\label{subsec:special_values}
+
+Among the classical identities are
+
+\begin{equation}
+\zeta(2)
+=
+\frac{\pi^{2}}{6},
+\label{eq:zeta2}
+\end{equation}
+
+and more generally
+
+\begin{equation}
+\zeta(2m)
+=
+(-1)^{m+1}
+\frac{B_{2m}(2\pi)^{2m}}
+{2(2m)!},
+\qquad
+m\ge 1,
+\label{eq:zeta_even_values}
+\end{equation}
+
+where
+$B_{2m}$
+denotes the Bernoulli numbers.
+
+These identities are standard and may be found in
+\cite{Titchmarsh1986}
+or
+\cite{Edwards2001}.
+
+\subsection{The Zeros of the Zeta Function}
+\label{subsec:zeta_zeros}
+
+The zeros of
+$\zeta(s)$
+are traditionally divided into two classes.
+
+\begin{definition}
+\label{def:trivial_zeros}
+
+The trivial zeros are located at
+
+\begin{equation}
+s=-2,-4,-6,\ldots.
+\label{eq:trivial_zeros}
+\end{equation}
+
+\end{definition}
+
+All remaining zeros are called nontrivial zeros.
+
+\begin{definition}
+\label{def:nontrivial_zero}
+
+A nontrivial zero is a complex number
+
+\begin{equation}
+\rho
+=
+\beta+i\gamma
+\label{eq:rho_definition}
+\end{equation}
+
+such that
+
+\begin{equation}
+\zeta(\rho)=0,
+\label{eq:rho_zero_condition}
+\end{equation}
+
+with
+
+\begin{equation}
+0<\beta<1.
+\label{eq:critical_strip}
+\end{equation}
+
+\end{definition}
+
+The region
+\eqref{eq:critical_strip}
+is known as the critical strip.
+
+The functional equation implies that the nontrivial zeros occur in
+symmetric sets
+
+\begin{equation}
+\rho,
+\quad
+\overline{\rho},
+\quad
+1-\rho,
+\quad
+1-\overline{\rho}.
+\label{eq:zero_symmetry}
+\end{equation}
+
+\begin{definition}
+\label{def:zeta_zero_counting_function}
+
+For \(T>0\), let
+
+\begin{equation}
+N_\zeta(T)
+=
+\#\{\rho=\beta+i\gamma:\zeta(\rho)=0,\ 0<\beta<1,\ 0<\gamma\leq T\},
+\label{eq:zeta_zero_counting_function}
+\end{equation}
+
+where zeros are counted with multiplicity.
+
+\end{definition}
+
+The Riemann--von Mangoldt formula gives the asymptotic estimate
+
+\begin{equation}
+N_\zeta(T)
+=
+\frac{T}{2\pi}
+\log\!\left(
+\frac{T}{2\pi}
+\right)
+-
+\frac{T}{2\pi}
++
+O(\log T).
+\label{eq:riemann_von_mangoldt}
+\end{equation}
+
+See
+\cite{Titchmarsh1986}
+or
+\cite{Edwards2001}.
+
+\section{The Riemann Hypothesis}
+\label{sec:riemann_hypothesis}
+
+This section contains standard material.
+
+\begin{conjecture}[Riemann Hypothesis]
+\label{conj:RH}
+
+Every nontrivial zero of the Riemann zeta function satisfies
+
+\begin{equation}
+\Re(\rho)
+=
+\frac12.
+\label{eq:RH}
+\end{equation}
+
+\end{conjecture}
+
+Assuming
+\eqref{eq:RH},
+all nontrivial zeros can be written as
+
+\begin{equation}
+\rho_n
+=
+\frac12
++
+i\gamma_n.
+\label{eq:RH_zeros}
+\end{equation}
+
+The sequence of positive ordinates is written as
+
+\begin{equation}
+0<\gamma_1
+\leq
+\gamma_2
+\leq
+\gamma_3
+\leq
+\cdots,
+\label{eq:gamma_ordering}
+\end{equation}
+
+with multiplicities counted. This sequence is the principal object
+studied throughout this work.
+
+The Riemann Hypothesis is one of the most important open problems in
+mathematics and has deep implications for the distribution of prime
+numbers.
+Comprehensive discussions may be found in
+\cite{Titchmarsh1986},
+\cite{Edwards2001},
+and
+\cite{IwaniecKowalski2004}.
+
+\section{Uniform Distribution of Zeta Ordinates}
+\label{sec:uniform_distribution_zeta_ordinates}
+
+The study of exponential sums over the ordinates of the nontrivial
+zeros is closely related to the theory of uniform distribution modulo
+one.
+
+The fundamental tool is Weyl's criterion.
+
+\begin{theorem}[Weyl Criterion]
+\label{thm:weyl_criterion}
+
+Let $(x_n)$ be a sequence of real numbers.
+
+Then $(x_n)$ is uniformly distributed modulo one if and only if
+
+\begin{equation}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{2\pi i m x_n}
+=
+0
+\qquad
+(m\neq 0).
+\label{eq:weyl_criterion}
+\end{equation}
+
+\end{theorem}
+
+A natural question is therefore whether the sequence
+
+\begin{equation}
+\alpha \gamma_n
+\label{eq:alpha_gamma_sequence}
+\end{equation}
+
+is uniformly distributed modulo one.
+
+The first systematic investigation of this problem appears in the work
+of Rademacher \cite{Rademacher1956}.
+
+Rademacher studied the exponential sums
+
+\begin{equation}
+A_\alpha(T)
+=
+\sum_{0<\gamma\le T}
+e^{2\pi i \alpha \gamma},
+\label{eq:rademacher_sum}
+\end{equation}
+
+and asked whether cancellation occurs for general values of
+$\alpha$.
+
+Subsequent work by Hlawka established a remarkably strong
+equidistribution result.
+
+\begin{theorem}[Hlawka, 1975]
+\label{thm:hlawka}
+
+For every nonzero real number $\alpha$,
+the sequence
+
+\begin{equation}
+\alpha \gamma_n
+\label{eq:hlawka_sequence}
+\end{equation}
+
+is uniformly distributed modulo one.
+
+Equivalently,
+
+\begin{equation}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{2\pi i m \alpha \gamma_n}
+=
+0
+\qquad
+(m\neq 0).
+\label{eq:hlawka_weyl}
+\end{equation}
+
+\end{theorem}
+
+A particularly important choice for the present work is
+
+\begin{equation}
+\alpha
+=
+\frac{1}{2\pi}.
+\label{eq:alpha_two_pi_inverse}
+\end{equation}
+
+In that case,
+
+\begin{equation}
+x_n
+=
+\frac{\gamma_n}{2\pi}
+\label{eq:gamma_over_two_pi}
+\end{equation}
+
+is uniformly distributed modulo one.
+
+Applying Weyl's criterion with harmonic \(m=1\) gives
+
+\begin{align}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{2\pi i x_n}
+&=
+0
+\label{eq:weyl_application_first_harmonic}
+\\
+&=
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{i\gamma_n}.
+\label{eq:weyl_application_SN}
+\end{align}
+
+Therefore
+
+\begin{equation}
+\lim_{N\to\infty}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{i\gamma_n}
+=
+0.
+\label{eq:SN_normalized_cancellation}
+\end{equation}
+
+In terms of the exponential sum
+
+\begin{equation}
+S_N
+=
+\sum_{n=1}^{N}
+e^{i\gamma_n},
+\label{eq:SN_definition_hlawka}
+\end{equation}
+
+this becomes
+
+\begin{equation}
+\frac{S_N}{N}
+\longrightarrow
+0.
+\label{eq:SN_over_N_limit}
+\end{equation}
+
+Thus the classical theory predicts normalized cancellation of the
+sequence \(S_N\).
+
+It is important to emphasize that
+\eqref{eq:SN_over_N_limit}
+does not imply
+
+\begin{equation}
+S_N
+\longrightarrow
+0.
+\label{eq:SN_not_implied}
+\end{equation}
+
+The asymptotic statement concerns only the average value of
+\(S_N\) relative to \(N\).
+
+The possibility that the trajectory \(S_N\) may exhibit additional
+geometric structure is one of the motivations for the investigations
+carried out in this paper.
+
+The exceptional frequencies that survive averaging are described by the
+Landau--Gonek theory discussed in Subsection~\ref{sec:prime_power_frequencies}.
+
+\subsection{The Landau--Gonek Formula}
+\label{sec:prime_power_frequencies}
+
+Unlike the metric theory of Hlawka,
+the Landau--Gonek formula studies special frequencies associated with
+prime powers.
+
+For a fixed integer \(x>1\), define the pure phase sum
+
+\begin{equation}
+S_x(T)
+=
+\sum_{0<\gamma\le T}
+x^{\,i\gamma}.
+\label{eq:SxT_definition}
+\end{equation}
+
+The behaviour of \eqref{eq:SxT_definition} depends strongly on the
+arithmetic nature of \(x\).
+
+\begin{definition}[von Mangoldt Function]
+\label{def:von_mangoldt_function}
+
+The von Mangoldt function is defined by
+
+\begin{equation}
+\Lambda(n)
+=
+\begin{cases}
+\log p,
+&
+n=p^{m},
+\quad p \text{ prime},
+\quad m\ge 1,
+\\[1ex]
+0,
+&
+\text{otherwise}.
+\end{cases}
+\label{eq:von_mangoldt}
+\end{equation}
+
+\end{definition}
+
+The function \(\Lambda(n)\) therefore detects prime powers and assigns
+to each prime power \(p^m\) the weight \(\log p\).
+
+It plays a central role in the explicit formulae relating prime numbers
+and nontrivial zeros of the Riemann zeta function
+\cite{Landau1911,Titchmarsh1986,IwaniecKowalski2004}.
+
+The classical Landau formula is naturally stated for the zero sum
+
+\begin{equation}
+L_x(T)
+=
+\sum_{0<\gamma\le T}
+x^\rho.
+\label{eq:landau_zero_sum}
+\end{equation}
+
+For a fixed integer \(x>1\), Landau's formula gives
+
+\begin{equation}
+L_x(T)
+=
+-
+\frac{T}{2\pi}
+\Lambda(x)
++
+O(\log T).
+\label{eq:landau_zero_sum_asymptotic}
+\end{equation}
+
+In particular, when \(x\) is a prime power,
+
+\begin{equation}
+x=p^m,
+\label{eq:prime_power_condition}
+\end{equation}
+
+the von Mangoldt term in \eqref{eq:landau_zero_sum_asymptotic} is
+nonzero.
+
+Assuming the Riemann Hypothesis, each nontrivial zero has the form
+
+\begin{equation}
+\rho
+=
+\frac{1}{2}
++
+i\gamma.
+\label{eq:RH_zero_decomposition}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+x^\rho
+=
+\sqrt{x}\,x^{i\gamma}.
+\label{eq:xrho_phase_decomposition}
+\end{equation}
+
+Combining \eqref{eq:landau_zero_sum_asymptotic} and
+\eqref{eq:xrho_phase_decomposition}, for a fixed integer \(x>1\),
+the pure phase sum satisfies, under the Riemann Hypothesis,
+
+\begin{equation}
+S_x(T)
+=
+-
+\frac{T}{2\pi}
+\frac{\Lambda(x)}{\sqrt{x}}
++
+O(\log T).
+\label{eq:landau_phase_sum_asymptotic}
+\end{equation}
+
+
+The modern quantitative form of this phenomenon is due to Gonek
+\cite{Gonek1984},
+who refined Landau's original argument using the explicit formula.
+
+\begin{theorem}[Landau--Gonek, phase form under RH]
+\label{thm:landau_gonek_formula}
+
+For frequencies associated with prime powers,
+the pure phase sum \eqref{eq:SxT_definition} admits, under the Riemann
+Hypothesis, a main term proportional to the von Mangoldt function
+divided by \(\sqrt{x}\).
+
+In the fixed-\(x\) form,
+
+\begin{equation}
+\sum_{0<\gamma\le T}
+x^{\,i\gamma}
+=
+-
+\frac{T}{2\pi}
+\frac{\Lambda(x)}{\sqrt{x}}
++
+O(\log T).
+\label{eq:landau_gonek_asymptotic}
+\end{equation}
+
+\end{theorem}
+
+Consequently,
+prime powers define distinguished resonant frequencies for exponential
+sums over the ordinates of the nontrivial zeros.
+
+This phenomenon stands in sharp contrast with the metric
+equidistribution results discussed in the previous section.
+
+\begin{remark}
+\label{rem:prime_power_resonances}
+
+Equation
+\eqref{eq:landau_phase_sum_asymptotic}
+\cite{Landau1911,Gonek1984}
+shows that exponential sums over the ordinates of the zeta zeros possess
+distinguished resonant frequencies indexed by prime powers.
+
+The factor \(x^{-1/2}\) appears because
+\eqref{eq:SxT_definition} is a pure phase sum in \(x^{i\gamma}\),
+whereas Landau's original formula is naturally stated for the zero sum
+in \(x^\rho\).
+
+From the viewpoint of Weyl equidistribution,
+these frequencies are exceptional:
+they generate a nonzero main term at the Landau--Gonek scale,
+while remaining compatible with normalized equidistribution.
+
+The contrast between the generic behaviour described by
+Theorem~\ref{thm:hlawka}
+and the resonant behaviour described by
+Theorem~\ref{thm:landau_gonek_formula}
+is one of the central themes underlying the study of exponential sums
+over zeta ordinates.
+
+\end{remark}
+
+
+\subsection{Equidistribution Modulo One}
+\label{sec:equidistribution_modulo_one}
+
+The ordinates \(\gamma_n\) of the nontrivial zeros do not form a
+periodic or arithmetic sequence.
+
+Given a fixed nonzero real parameter \(\alpha\), the equidistribution
+problem concerns the sequence of fractional parts
+
+\begin{equation}
+\{\alpha\gamma_n\}.
+\label{eq:scaled_ordinate_fractional_parts}
+\end{equation}
+
+Equidistribution modulo one means that, for every interval
+\(I\subset[0,1]\),
+
+\begin{equation}
+\frac{1}{N}
+\#\{1\le n\le N:\{\alpha\gamma_n\}\in I\}
+\longrightarrow
+|I|
+\qquad
+(N\to\infty).
+\label{eq:equidistribution_interval_definition}
+\end{equation}
+
+The distribution modulo one of sequences associated with the ordinates
+of the nontrivial zeros was studied by Rademacher and Hlawka
+\cite{Rademacher1956,Hlawka1975}.
+Later, Fujii obtained quantitative results on the uniformity of this
+distribution
+\cite{Fujii1978}.
+
+Equivalently, after projection to the unit circle, the phases
+
+\begin{equation}
+e^{2\pi i\alpha\gamma_n}
+\label{eq:scaled_ordinate_phase}
+\end{equation}
+
+have no asymptotically preferred arc.
+
+The particular case
+
+\begin{equation}
+\alpha
+=
+\frac{1}{2\pi}
+\label{eq:two_pi_inverse_scaling}
+\end{equation}
+
+corresponds to reduction of the ordinates modulo \(2\pi\), since
+
+\begin{equation}
+e^{2\pi i\alpha\gamma_n}
+=
+e^{i\gamma_n}.
+\label{eq:two_pi_scaling_phase_identity}
+\end{equation}
+
+Thus, equidistribution of
+
+\begin{equation}
+\frac{\gamma_n}{2\pi}
+\label{eq:ordinate_mod_two_pi_sequence}
+\end{equation}
+
+modulo one is equivalent to equidistribution of the phases
+\(e^{i\gamma_n}\) on the unit circle.
+
+Equidistribution is therefore a global angular distribution statement.
+It does not yet address the local spacing, pair correlations, or
+spectral interpretations of the zero ordinates.
+
+
+\section{The Exponential Sum $S_N$}
+\label{sec:SN_definition}
+
+This section introduces the main objects investigated in this paper.
+
+\subsection{Data Source}
+\label{subsec:data_source}
+
+The numerical computations reported in this work use the first
+
+\begin{equation}
+N
+=
+2\,001\,052
+\label{eq:number_of_zeros}
+\end{equation}
+
+nontrivial zeros of the Riemann zeta function.
+
+The ordinates were obtained from the publicly available tables of
+Andrew Odlyzko:
+
+\begin{equation}
+\texttt{https://www-users.cse.umn.edu/\~{}odlyzko/zeta\_tables/zeros6}.
+\label{eq:odlyzko_source}
+\end{equation}
+
+The dataset provides high-precision values of the ordinates
+
+\begin{equation}
+\gamma_n,
+\qquad
+n=1,\ldots,N.
+\label{eq:gamma_dataset}
+\end{equation}
+
+\subsection{Definition of the Phase Walk}
+\label{subsec:phase_walk}
+
+For each ordinate
+\(\gamma_n\)
+we associate the unit complex phase
+
+\begin{equation}
+z_n
+=
+e^{i\gamma_n}.
+\label{eq:phase_definition}
+\end{equation}
+
+\begin{definition}
+\label{def:SN}
+
+The cumulative exponential sum is defined by
+
+\begin{equation}
+S_N
+=
+\sum_{k=1}^{N}
+e^{i\gamma_k}.
+\label{eq:SN_definition}
+\end{equation}
+
+\end{definition}
+
+Equivalently,
+
+\begin{equation}
+S_N
+=
+\sum_{k=1}^{N}
+\cos(\gamma_k)
++
+i
+\sum_{k=1}^{N}
+\sin(\gamma_k).
+\label{eq:SN_real_imag}
+\end{equation}
+
+The sequence
+
+\begin{equation}
+S_1,S_2,\ldots,S_N
+\label{eq:SN_trajectory}
+\end{equation}
+
+defines a trajectory in the complex plane obtained by successively
+adding the unit vectors
+\(e^{i\gamma_k}\).
+
+\begin{definition}
+\label{def:CN}
+
+The centroid of the phase-walk trajectory is defined by
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{n=1}^{N}
+S_n.
+\label{eq:CN_definition}
+\end{equation}
+
+\end{definition}
+
+Using the definition of \(S_n\), the centroid can also be written as
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{n=1}^{N}
+\sum_{k=1}^{n}
+e^{i\gamma_k}.
+\label{eq:CN_double_sum}
+\end{equation}
+
+Interchanging the order of summation gives the weighted form
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}.
+\label{eq:CN_weighted}
+\end{equation}
+
+Thus \(C_N\) is not the simple average of the phases.
+It is the average of the partial sums \(S_n\), or equivalently a
+triangularly weighted average of the increments \(e^{i\gamma_k}\).
+
+The geometric and distributional properties of the trajectory
+\((S_n)\), together with the behaviour of its centroid \(C_N\),
+constitute the central subject of the present paper.
+
+\begin{remark}
+\label{rem:equidistribution_not_centroid}
+
+Classical results of Weyl, Hlawka and subsequent authors imply that the
+normalized exponential sums satisfy
+
+\begin{equation}
+\frac{1}{N}
+\sum_{n=1}^{N}
+e^{i\gamma_n}
+\longrightarrow
+0.
+\label{eq:normalized_phase_cancellation}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+S_N=o(N).
+\label{eq:SN_sublinear_growth}
+\end{equation}
+
+Thus, from the point of view of first-order averaging,
+the phases \(e^{i\gamma_n}\) exhibit asymptotic cancellation.
+
+However, this fact alone does not imply that
+
+\begin{equation}
+S_N
+\longrightarrow
+0,
+\label{eq:SN_zero_limit}
+\end{equation}
+
+nor does it imply that the centroid \(C_N\) is located at the origin.
+
+Indeed, by \eqref{eq:CN_definition},
+the centroid is an average of the partial sums \(S_n\), not a simple
+average of the phases themselves.
+
+Equivalently, by \eqref{eq:CN_weighted},
+the centroid is a triangularly weighted average of the increments
+\(e^{i\gamma_k}\).
+
+Consequently, the existence of asymptotic phase cancellation is fully
+compatible with the presence of nontrivial geometric structure in the
+trajectory \((S_n)\), including the possibility of a nonzero limiting
+centroid.
+
+The purpose of the present investigation is to characterize the
+geometry of the trajectory \((S_n)\), including its centroid,
+phase distribution, and large-scale structure, and to explore how
+these features relate to the classical theory of exponential sums over
+the ordinates of the nontrivial zeros.
+
+\end{remark}
+
+\begin{remark}
+\label{rem:original_object}
+
+The definition of the phase walk
+\eqref{eq:SN_definition}
+is the starting point for the original numerical investigations
+presented in this work.
+
+\end{remark}
+
+\section{Equivalent Product Forms for \(S_N\) and \(C_N\)}
+\label{sec:product_forms_SN_CN}
+
+This section gives exact algebraic reformulations of the cumulative
+sum \(S_N\) and of the centroid \(C_N\) in terms of finite products
+associated with the phases \(e^{i\gamma_k}\).
+
+\subsection{A Finite Product Identity}
+\label{subsec:finite_product_identity}
+
+We first record the elementary identity on which the product
+formulation is based.
+
+\begin{lemma}[Logarithmic coefficients of a finite product]
+\label{lem:finite_product_logarithmic_coefficients}
+
+Let \(a_1,\ldots,a_N\) be complex numbers, and define
+
+\begin{equation}
+P(z)
+=
+\prod_{k=1}^{N}
+(1-a_k z).
+\label{eq:finite_product_definition}
+\end{equation}
+
+For \(|z|\) sufficiently small,
+
+\begin{equation}
+\log P(z)
+=
+-
+\sum_{m\ge 1}
+\frac{z^m}{m}
+\sum_{k=1}^{N}
+a_k^m.
+\label{eq:finite_product_logarithmic_expansion}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+-
+\left.
+\frac{d}{dz}
+\log P(z)
+\right|_{z=0}
+=
+\sum_{k=1}^{N}
+a_k.
+\label{eq:first_logarithmic_coefficient}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Since \(P(z)\) is a finite product,
+
+\begin{equation}
+\log P(z)
+=
+\sum_{k=1}^{N}
+\log(1-a_k z).
+\label{eq:finite_product_logarithm_sum}
+\end{equation}
+
+Using
+
+\begin{equation}
+\log(1-w)
+=
+-
+\sum_{m\ge 1}
+\frac{w^m}{m}
+\label{eq:log_one_minus_w_expansion}
+\end{equation}
+
+for \(|w|\) sufficiently small, we obtain
+
+\begin{align}
+\log P(z)
+&=
+-
+\sum_{k=1}^{N}
+\sum_{m\ge 1}
+\frac{(a_k z)^m}{m}
+\label{eq:finite_product_expansion_first}
+\\
+&=
+-
+\sum_{m\ge 1}
+\frac{z^m}{m}
+\sum_{k=1}^{N}
+a_k^m.
+\label{eq:finite_product_expansion_second}
+\end{align}
+
+Differentiating at \(z=0\) gives
+\eqref{eq:first_logarithmic_coefficient}.
+
+\end{proof}
+\subsection{The Phase Product and the Sum \(S_N\)}
+\label{subsec:phase_product_SN}
+
+We now apply Lemma~\ref{lem:finite_product_logarithmic_coefficients}
+to the phases
+
+\begin{equation}
+a_k
+=
+e^{i\gamma_k}.
+\label{eq:phase_product_ak}
+\end{equation}
+
+\begin{definition}[Phase product]
+\label{def:phase_product}
+
+The phase product associated with the first \(N\) ordinates is
+
+\begin{equation}
+P_N(z)
+=
+\prod_{k=1}^{N}
+\left(1-z e^{i\gamma_k}\right).
+\label{eq:phase_product_definition}
+\end{equation}
+
+\end{definition}
+
+The zeros of \(P_N\) are
+
+\begin{equation}
+z
+=
+e^{-i\gamma_k},
+\qquad
+k=1,\ldots,N.
+\label{eq:phase_product_zeros}
+\end{equation}
+
+Thus all zeros of \(P_N\) lie on the unit circle.
+
+For each integer \(m\ge 1\), define the \(m\)-th phase sum by
+
+\begin{equation}
+S_N^{(m)}
+=
+\sum_{k=1}^{N}
+e^{im\gamma_k}.
+\label{eq:higher_phase_sum_definition}
+\end{equation}
+
+Then Lemma~\ref{lem:finite_product_logarithmic_coefficients} gives
+
+\begin{equation}
+\log P_N(z)
+=
+-
+\sum_{m\ge 1}
+\frac{S_N^{(m)}}{m}
+z^m.
+\label{eq:phase_product_logarithmic_expansion}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+S_N
+=
+S_N^{(1)}.
+\label{eq:SN_first_phase_mode}
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+S_N
+=
+-
+\left.
+\frac{d}{dz}
+\log P_N(z)
+\right|_{z=0}.
+\label{eq:SN_logarithmic_derivative}
+\end{equation}
+
+Thus \(S_N\) is the first logarithmic coefficient of the phase product
+\(P_N\).
+
+\subsection{Polynomial Form and Elementary Symmetric Coefficients}
+\label{subsec:elementary_symmetric_coefficients}
+
+It is also useful to consider the monic polynomial
+
+\begin{equation}
+Q_N(z)
+=
+\prod_{k=1}^{N}
+\left(z-e^{i\gamma_k}\right).
+\label{eq:monic_phase_polynomial}
+\end{equation}
+
+Expanding \(Q_N\), one obtains
+
+\begin{equation}
+Q_N(z)
+=
+z^N
+-
+e_1^{(N)}z^{N-1}
++
+e_2^{(N)}z^{N-2}
+-
+\cdots
++
+(-1)^N e_N^{(N)}.
+\label{eq:monic_phase_polynomial_expansion}
+\end{equation}
+
+Here
+
+\begin{equation}
+e_r^{(N)}
+=
+\sum_{1\le k_1<\cdots<k_r\le N}
+e^{i(\gamma_{k_1}+\cdots+\gamma_{k_r})}.
+\label{eq:elementary_symmetric_phase_coefficients}
+\end{equation}
+
+In particular,
+
+\begin{equation}
+e_1^{(N)}
+=
+\sum_{k=1}^{N}
+e^{i\gamma_k}
+=
+S_N.
+\label{eq:first_elementary_coefficient_SN}
+\end{equation}
+
+Hence
+
+\begin{equation}
+Q_N(z)
+=
+z^N
+-
+S_N z^{N-1}
++
+e_2^{(N)}z^{N-2}
+-
+\cdots
++
+(-1)^N e_N^{(N)}.
+\label{eq:monic_phase_polynomial_SN_coefficient}
+\end{equation}
+
+This identifies \(S_N\) as the first elementary symmetric coefficient
+of the phases \(e^{i\gamma_k}\).
+
+\subsection{Product Form of the Centroid}
+\label{subsec:product_form_centroid}
+
+The centroid was defined by
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{n=1}^{N}
+S_n.
+\label{eq:CN_definition_product_section}
+\end{equation}
+
+For each \(n\le N\), define the partial phase product
+
+\begin{equation}
+P_n(z)
+=
+\prod_{k=1}^{n}
+\left(1-z e^{i\gamma_k}\right).
+\label{eq:partial_phase_product_definition}
+\end{equation}
+
+By \eqref{eq:SN_logarithmic_derivative}, applied with \(N\) replaced by
+\(n\), one has
+
+\begin{equation}
+S_n
+=
+-
+\left.
+\frac{d}{dz}
+\log P_n(z)
+\right|_{z=0}.
+\label{eq:Sn_partial_product_logarithmic_derivative}
+\end{equation}
+
+Substitution into \eqref{eq:CN_definition_product_section} gives
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\sum_{n=1}^{N}
+\left.
+\frac{d}{dz}
+\log P_n(z)
+\right|_{z=0}.
+\label{eq:CN_sum_logarithmic_derivatives}
+\end{equation}
+
+By linearity of differentiation,
+
+\begin{equation}
+C_N
+=
+-
+\left.
+\frac{d}{dz}
+\left(
+\frac{1}{N}
+\sum_{n=1}^{N}
+\log P_n(z)
+\right)
+\right|_{z=0}.
+\label{eq:CN_average_logarithmic_derivative}
+\end{equation}
+\begin{definition}[Accumulated phase product]
+\label{def:accumulated_phase_product}
+
+The accumulated phase product is defined by
+
+\begin{equation}
+\mathcal{P}_N(z)
+=
+\prod_{n=1}^{N}
+P_n(z).
+\label{eq:accumulated_phase_product_definition}
+\end{equation}
+
+\end{definition}
+
+Since
+
+\begin{equation}
+\log \mathcal{P}_N(z)
+=
+\sum_{n=1}^{N}
+\log P_n(z),
+\label{eq:accumulated_phase_product_logarithm}
+\end{equation}
+
+we obtain the exact product identity
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\left.
+\frac{d}{dz}
+\log \mathcal{P}_N(z)
+\right|_{z=0}.
+\label{eq:CN_accumulated_product_logarithmic_derivative}
+\end{equation}
+
+Thus \(C_N\) is the normalized first logarithmic coefficient of the
+accumulated phase product \(\mathcal{P}_N\).
+
+\subsection{The Triangular Product}
+\label{subsec:triangular_phase_product}
+
+Using the definition of \(P_n\),
+
+\begin{equation}
+\mathcal{P}_N(z)
+=
+\prod_{n=1}^{N}
+\prod_{k=1}^{n}
+\left(1-z e^{i\gamma_k}\right).
+\label{eq:accumulated_phase_product_double_product}
+\end{equation}
+
+Changing the order of multiplication gives
+
+\begin{equation}
+\mathcal{P}_N(z)
+=
+\prod_{k=1}^{N}
+\left(1-z e^{i\gamma_k}\right)^{N-k+1}.
+\label{eq:triangular_phase_product}
+\end{equation}
+
+Combining
+\eqref{eq:CN_accumulated_product_logarithmic_derivative}
+and
+\eqref{eq:triangular_phase_product},
+one obtains
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\left.
+\frac{d}{dz}
+\log
+\prod_{k=1}^{N}
+\left(1-z e^{i\gamma_k}\right)^{N-k+1}
+\right|_{z=0}.
+\label{eq:CN_triangular_product_logarithmic_derivative}
+\end{equation}
+
+Differentiating explicitly gives
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}.
+\label{eq:CN_triangular_weighted_sum}
+\end{equation}
+
+This is the triangular weighted form of the centroid.
+
+\subsection{Triangular Harmonic Interpretation}
+\label{subsec:triangular_harmonic_interpretation}
+
+The usual empirical measure of the phases is
+
+\begin{equation}
+\nu_N
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+\delta_{e^{i\gamma_k}}.
+\label{eq:uniform_empirical_phase_measure}
+\end{equation}
+
+Its first moment is
+
+\begin{equation}
+\int_{\mathbb T}
+z\,d\nu_N(z)
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+e^{i\gamma_k}
+=
+\frac{S_N}{N}.
+\label{eq:uniform_empirical_phase_first_moment}
+\end{equation}
+
+The centroid \(C_N\), by contrast, corresponds to the triangularly
+weighted finite measure
+
+\begin{equation}
+\mu_N^{\triangle}
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)
+\delta_{e^{i\gamma_k}}.
+\label{eq:triangular_phase_measure}
+\end{equation}
+
+Its first moment is
+
+\begin{equation}
+\int_{\mathbb T}
+z\,d\mu_N^{\triangle}(z)
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+(N-k+1)e^{i\gamma_k}
+=
+C_N.
+\label{eq:triangular_phase_measure_first_moment}
+\end{equation}
+
+Therefore \(C_N\) is the first harmonic of a triangularly weighted phase
+measure, whereas \(S_N/N\) is the first harmonic of the uniformly
+weighted empirical phase measure.
+
+\subsection{Local Analytic Interpretation at the Origin}
+\label{subsec:local_analytic_interpretation_origin}
+
+From \eqref{eq:phase_product_logarithmic_expansion},
+
+\begin{equation}
+\log P_N(z)
+=
+-
+S_N z
++
+O(z^2)
+\qquad
+(z\to 0).
+\label{eq:phase_product_local_expansion}
+\end{equation}
+
+Thus
+
+\begin{equation}
+S_N
+=
+-
+\left.
+\frac{d}{dz}
+\log P_N(z)
+\right|_{z=0}.
+\label{eq:SN_local_analytic_interpretation}
+\end{equation}
+
+Similarly, from
+\eqref{eq:CN_accumulated_product_logarithmic_derivative},
+
+\begin{equation}
+C_N
+=
+-
+\frac{1}{N}
+\left.
+\frac{d}{dz}
+\log \mathcal{P}_N(z)
+\right|_{z=0}.
+\label{eq:CN_local_analytic_interpretation}
+\end{equation}
+
+Consequently, \(S_N\) and \(C_N\) are local logarithmic derivatives at
+the origin of two finite products associated with the phases
+\(e^{i\gamma_k}\): the ordinary phase product \(P_N\) and the accumulated
+phase product \(\mathcal{P}_N\), respectively.
+
+\begin{remark}
+\label{rem:product_form_summary}
+
+The identities above are exact finite-\(N\) identities.
+
+They do not depend on the Riemann Hypothesis, on random matrix models,
+or on probabilistic assumptions about the zeros.
+
+They show that \(S_N\) is the first logarithmic coefficient of the
+ordinary phase product \(P_N\), while \(C_N\) is the normalized first
+logarithmic coefficient of the accumulated product
+\(\mathcal{P}_N\).
+
+\end{remark}
+
+
+\section{The Non-Resonant Triangular Landau--Gonek Structure of \(S_N\) and \(C_N\)}
+\label{sec:non_resonant_triangular_lg_structure}
+
+This section records rigorous structural identities for the ordinal sum
+\(S_N\), the height-truncated sums \(S_X(T)\), and the centroid \(C_N\).
+The Landau--Gonek input is literature-based; the terminology describing
+\(C_N\) as a triangular non-resonant transform is an original structural
+interpretation of the identities below.
+
+\subsection{Ordinal and height truncations}
+\label{subsec:ordinal_and_height_truncations}
+
+The sum \(S_N\) is an ordinal truncation: \(N\) is a positive integer
+and counts the first \(N\) ordinates in the ordered list
+\eqref{eq:gamma_ordering}. By contrast, height truncations are cut off by
+an analytic height \(T\) on the ordinate axis. The counting function
+\(N_\zeta(T)\), defined in \eqref{eq:zeta_zero_counting_function},
+translates the height \(T\) into the corresponding ordinal number of
+zeros. Thus \(N\) is not identified with \(T\).
+
+\begin{definition}
+\label{def:continuous_height_phase_sum}
+
+For \(X\in\mathbb{R}_{>0}\) and \(T>0\), define
+
+\begin{equation}
+S_X(T)
+=
+\sum_{0<\gamma\leq T}X^{i\gamma},
+\label{eq:continuous_height_phase_sum}
+\end{equation}
+
+where zeros are counted with multiplicity and
+
+\begin{equation}
+X^{i\gamma}:=\exp(i\gamma\log X)
+\label{eq:continuous_power_real_log}
+\end{equation}
+
+with the real logarithm of \(X\).
+
+\end{definition}
+
+\begin{theorem}[Height-to-ordinal bridge]
+\label{thm:height_to_ordinal_bridge}
+
+For every \(T>0\),
+
+\begin{equation}
+S_e(T)
+=
+\sum_{0<\gamma\leq T}e^{i\gamma}
+=
+\sum_{k=1}^{N_\zeta(T)}e^{i\gamma_k}
+=
+S_{N_\zeta(T)}.
+\label{eq:height_to_ordinal_bridge}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+The ordered sequence \eqref{eq:gamma_ordering} lists the positive
+ordinates of the nontrivial zeros with multiplicity. By definition,
+\(N_\zeta(T)\) is exactly the number of entries in this list whose
+ordinate is at most \(T\). Therefore the height-truncated multiset
+\(\{\gamma:0<\gamma\leq T\}\), counted with multiplicity, is the same
+multiset as \(\{\gamma_k:1\leq k\leq N_\zeta(T)\}\). Summing
+\(e^{i\gamma}\) over these two identical multisets gives the first two
+equalities in \eqref{eq:height_to_ordinal_bridge}. The last equality is
+precisely the ordinal definition \eqref{eq:SN_definition} with
+\(N=N_\zeta(T)\).
+\end{proof}
+
+\begin{corollary}[Ordinal recovery away from ambiguity]
+\label{cor:ordinal_recovery_from_height}
+
+For every height \(T>0\) such that \(N_\zeta(T)=N\),
+
+\begin{equation}
+S_N=S_e(T).
+\label{eq:ordinal_recovery_from_height}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Substitute the hypothesis \(N_\zeta(T)=N\) into
+\eqref{eq:height_to_ordinal_bridge}.
+\end{proof}
+
+\subsection{Continuous phase sums}
+\label{subsec:continuous_phase_sums}
+
+The parameter \(X\) in \eqref{eq:continuous_height_phase_sum} is a
+positive real continuous frequency. The definition
+\eqref{eq:continuous_power_real_log} avoids any multivalued complex
+logarithm.
+
+\begin{theorem}[The continuous frequency \(X=e\)]
+\label{thm:e_continuous_frequency_phase}
+
+At the continuous frequency \(X=e\), the height-truncated phase sum is
+
+\begin{equation}
+S_e(T)
+=
+\sum_{0<\gamma\leq T}e^{i\gamma}.
+\label{eq:e_continuous_frequency_phase_sum}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+Since \(\log e=1\), definition \eqref{eq:continuous_power_real_log}
+gives
+
+\begin{equation}
+e^{i\gamma}:=\exp(i\gamma\log e)=\exp(i\gamma).
+\label{eq:e_phase_identity}
+\end{equation}
+
+Inserting this identity into \eqref{eq:continuous_height_phase_sum} with
+\(X=e\) proves \eqref{eq:e_continuous_frequency_phase_sum}.
+\end{proof}
+
+\begin{remark}
+\label{rem:continuous_not_arithmetic_frequency}
+
+The frequency \(X=e\) belongs to \(\mathbb{R}_{>0}\). It is used here as
+a continuous phase frequency, not as an arithmetic argument of the von
+Mangoldt function.
+\end{remark}
+
+\subsection{Arithmetic Landau--Gonek resonances}
+\label{subsec:arithmetic_landau_gonek_resonances}
+
+Landau--Gonek resonances are arithmetic. In this subsection
+\(X\in\mathbb{R}_{>0}\) denotes a continuous frequency, while
+\(x\in\mathbb{N}\), \(x>1\), denotes an arithmetic frequency.
+
+\begin{definition}
+\label{def:prime_power_resonance_set}
+
+The arithmetic resonance set is
+
+\begin{equation}
+\mathcal R
+=
+\{p^m:\ p\ \text{prime},\ m\in\mathbb N\}.
+\label{eq:prime_power_resonance_set}
+\end{equation}
+
+\end{definition}
+
+For fixed \(x\in\mathbb N\), \(x>1\), the Landau--Gonek formula under RH
+has the phase form
+
+\begin{equation}
+\sum_{0<\gamma\leq T}x^{i\gamma}
+=
+-
+\frac{T}{2\pi}
+\frac{\Lambda(x)}{\sqrt{x}}
++
+O(\log T).
+\label{eq:landau_gonek_new_section_phase_form}
+\end{equation}
+
+The main term is supported on the prime-power set \(\mathcal R\).
+
+\begin{theorem}[Non-resonance of \(e\)]
+\label{thm:e_non_resonant}
+
+The continuous frequency \(X=e\) is not an arithmetic Landau--Gonek
+resonance:
+
+\begin{equation}
+e\notin\mathcal R.
+\label{eq:e_not_in_resonance_set}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+Every element of \(\mathcal R\) is a positive integer, so
+\(\mathcal R\subset\mathbb N\). The number \(e\) is irrational, hence
+\(e\notin\mathbb N\). Therefore \(e\notin\mathcal R\).
+\end{proof}
+
+\begin{remark}
+\label{rem:no_mangoldt_at_e}
+
+The statement is not that the von Mangoldt function is evaluated at
+\(e\). The correct formulation is that \(X=e\) is a positive real
+continuous frequency, but it is not an arithmetic frequency in the
+prime-power resonance set \(\mathcal R\).
+\end{remark}
+
+\subsection{The centroid as a triangular non-resonant transform}
+\label{subsec:centroid_triangular_non_resonant_transform}
+
+The centroid identity is purely ordinal and contains no height variable.
+It follows from the definitions in Section~\ref{sec:SN_definition}.
+
+\begin{theorem}[Triangular centroid identity]
+\label{thm:triangular_centroid_identity}
+
+For every positive integer \(N\),
+
+\begin{equation}
+C_N
+=
+\frac{1}{N}\sum_{n=1}^{N}S_n
+=
+\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^{n}e^{i\gamma_k}
+=
+\frac{1}{N}\sum_{k=1}^{N}(N-k+1)e^{i\gamma_k}.
+\label{eq:triangular_centroid_identity}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+The first equality is the definition \eqref{eq:CN_definition}. Replacing
+\(S_n\) by its defining sum gives the second equality, which is
+\eqref{eq:CN_double_sum}. In the double sum, the term
+\(e^{i\gamma_k}\) appears exactly for those indices \(n\) with
+\(k\leq n\leq N\). There are \(N-k+1\) such indices. Collecting equal
+terms gives the final expression, already recorded in
+\eqref{eq:CN_weighted}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:centroid_triangular_non_resonant_phase_sum}
+
+\(C_N\) is a triangularly weighted non-resonant phase sum associated with
+the continuous frequency \(X=e\).
+
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:triangular_centroid_identity}, \(C_N\) is a
+triangularly weighted sum of the phases \(e^{i\gamma_k}\). By
+Theorem~\ref{thm:e_continuous_frequency_phase}, these phases are the
+phases generated by the continuous frequency \(X=e\). By
+Theorem~\ref{thm:e_non_resonant}, this frequency is not in the
+arithmetic resonance set \(\mathcal R\). Hence the triangularly weighted
+ordinal sum defining \(C_N\) is non-resonant in the Landau--Gonek
+prime-power sense.
+\end{proof}
+
+\subsection{Equidistribution consequences}
+\label{subsec:equidistribution_consequences_non_resonant}
+
+Hlawka's theorem, applied with \(\alpha=1/(2\pi)\), implies the
+normalized cancellation already stated in \eqref{eq:SN_over_N_limit}.
+The next consequence records the same fact in the notation of this
+section.
+
+\begin{corollary}[Non-resonant normalized cancellation]
+\label{cor:non_resonant_normalized_cancellation}
+
+The ordinal phase sums at the continuous frequency \(X=e\) satisfy
+
+\begin{equation}
+\frac{S_N}{N}\longrightarrow 0
+\qquad
+(N\to\infty).
+\label{eq:non_resonant_normalized_cancellation}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+Equation \eqref{eq:SN_over_N_limit} is obtained from Hlawka's
+equidistribution theorem and Weyl's criterion with
+\(\alpha=1/(2\pi)\). Since \(e^{i\gamma_k}\) is the phase associated with
+\(X=e\) by Theorem~\ref{thm:e_continuous_frequency_phase}, the result is
+exactly \eqref{eq:non_resonant_normalized_cancellation}.
+\end{proof}
+
+\begin{remark}
+\label{rem:centroid_not_forced_by_equidistribution}
+
+The cancellation in \eqref{eq:non_resonant_normalized_cancellation}
+concerns the uniformly weighted average of the increments
+\(e^{i\gamma_k}\). It does not force the triangularly weighted centroid
+\(C_N\) to vanish, because the weights in
+\eqref{eq:triangular_centroid_identity} depend on the ordinal position
+\(k\).
+\end{remark}
+
+\subsection{Structural conclusion}
+\label{subsec:structural_conclusion_non_resonant}
+
+The preceding results separate three layers of structure. First,
+\(S_N\) is an ordinal sum, while \(S_X(T)\) is a height-truncated sum.
+Second, \(N_\zeta(T)\) is the bridge from analytic height to ordinal
+length. Third, the special phase \(e^{i\gamma}\) is generated by the
+continuous frequency \(X=e\), and this frequency is not a prime-power
+Landau--Gonek resonance.
+
+The paper identifies \(C_N\) as a triangular non-resonant Landau--Gonek
+type transform at the continuous frequency \(X=e\).
+
+\begin{thebibliography}{99}
+
+\bibitem{Riemann1859}
+B. Riemann,
+\emph{\"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse},
+Monatsberichte der Berliner Akademie,
+1859,
+671--680.
+
+Reprinted in:
+
+B. Riemann,
+\emph{Gesammelte Mathematische Werke},
+Dover Publications,
+1953.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+Second Edition,
+revised by D. R. Heath-Brown,
+Oxford University Press,
+1986.
+
+\bibitem{Edwards2001}
+H. M. Edwards,
+\emph{Riemann's Zeta Function},
+Dover Publications,
+2001.
+
+\bibitem{IwaniecKowalski2004}
+H. Iwaniec and E. Kowalski,
+\emph{Analytic Number Theory},
+American Mathematical Society,
+2004.
+
+\bibitem{Weyl1916}
+H. Weyl,
+\emph{\"Uber die Gleichverteilung von Zahlen mod. Eins},
+Mathematische Annalen
+\textbf{77} (1916),
+313--352.
+doi:10.1007/BF01475864.
+
+\bibitem{Rademacher1956}
+H. Rademacher,
+\emph{On the distribution of the values of the zeta function},
+Colloquium Mathematicum
+\textbf{4} (1956),
+79--81.
+
+\bibitem{Hlawka1975}
+E. Hlawka,
+\emph{\"Uber die Gleichverteilung gewisser Folgen,
+die mit den Nullstellen der Zetafunktion zusammenh\"angen},
+Sitzungsberichte der
+\"Osterreichischen Akademie der Wissenschaften,
+Mathematisch-Naturwissenschaftliche Klasse,
+Abteilung II
+\textbf{184} (1975),
+459--471.
+
+\bibitem{Landau1911}
+E. Landau,
+\emph{\"Uber die Nullstellen der Zetafunktion},
+Mathematische Annalen
+\textbf{71} (1911),
+548--564.
+doi:10.1007/BF01456881.
+
+\bibitem{Gonek1984}
+S. M. Gonek,
+\emph{A Formula of Landau and Its Applications to the Zeros of the Zeta Function},
+in:
+\emph{A Tribute to Emil Grosswald:
+Number Theory and Related Analysis},
+Contemporary Mathematics
+\textbf{143},
+American Mathematical Society,
+1993,
+395--413.
+
+\bibitem{Borwein2008}
+P. Borwein,
+S. Choi,
+B. Rooney,
+A. Weirathmueller,
+\emph{The Riemann Hypothesis:
+A Resource for the Afficionado and Virtuoso Alike},
+Springer,
+2008.
+
+\bibitem{Odlyzko1987}
+A. M. Odlyzko,
+\emph{On the Distribution of Spacings Between Zeros of the Zeta Function},
+Mathematics of Computation
+\textbf{48} (1987),
+273--308.
+doi:10.2307/2007886.
+
+\bibitem{OdlyzkoTables}
+A. M. Odlyzko,
+\emph{Tables of Zeros of the Riemann Zeta Function},
+available at
+\url{https://www-users.cse.umn.edu/~odlyzko/zeta_tables/}.
+
+\bibitem{FordZaharescu2005}
+K. Ford and A. Zaharescu,
+\emph{Unnormalized Differences Between Zeros of the Riemann Zeta Function},
+Acta Arithmetica
+\textbf{117} (2005),
+163--176.
+doi:10.4064/aa117-2-5.
+
+\bibitem{FordSoundararajanZaharescu2024}
+K. Ford,
+K. Soundararajan,
+A. Zaharescu,
+\emph{The Distribution of the Ordinates of the Zeros of the Riemann Zeta Function},
+arXiv:2407.14173,
+2024.
+
+\bibitem{Fujii1978}
+A. Fujii,
+\emph{On the uniformity of the distribution of the zeros of the
+Riemann zeta function},
+Journal f\"ur die reine und angewandte Mathematik
+\textbf{302} (1978),
+167--205.
+
+\end{thebibliography}
+
+\end{document}
+

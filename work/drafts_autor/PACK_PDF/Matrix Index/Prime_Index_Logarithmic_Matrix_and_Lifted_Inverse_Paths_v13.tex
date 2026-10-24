@@ -1,0 +1,1924 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\HS}{\mathcal S_2}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\ML}{\operatorname{ML}}
+\newcommand{\Ab}{\operatorname{Ab}}
+\newcommand{\Ord}{\operatorname{Ord}}
+\newcommand{\rad}{\operatorname{rad}}
+
+\title[Prime-Index Logarithmic Matrix]{A Prime-Index Logarithmic Matrix, Its Intrinsic Path Recovery,\\
+Diagonal Normalizations, and Operator Structure near the Critical Line}
+
+\author{V\'ictor Casa\~na-Giner}
+\address{Bio Logic Crop Science S.L., E-46120 Alboraya (Valencia), Spain}
+\email{vcasana@biologiccropscience.com}
+\thanks{ORCID: 0000-0002-8252-2608.}
+\date{}
+
+\begin{document}
+\begin{abstract}
+We study the upper-triangular prime-index logarithmic matrix whose diagonal is the ordered prime sequence and whose odd superdiagonals are labelled by logarithms of ordered primes.  The inverse has an exact finite path expansion: a path is an ordered composition into odd jumps, its sign is determined by its length, and its denominator is the product of the diagonal primes visited along the path.  We prove that individual path weights are recoverable intrinsically from finite principal compressions of the inverse by Schur-complement identities followed by finite inclusion--exclusion.  These compression maps are used only as finite nonlinear coordinates; no bounded linear ``minor operator'' is assumed.  Formal multivariable lifting and square-free projection recover the expected Liouville and M\"obius signs, but the pathwise denominator-removal map is unbounded relative to the natural operator topology and therefore does not close an analytic route to the Euler product.  The main operator result is instead obtained directly from the matrix.  For the deformation
+\[
+A(s)=D+U(s),\qquad U(s)_{i,i+2r-1}=(\log p_r)p_r^{-s},
+\]
+the left normalization $D^{-1}U(s)$ is Hilbert--Schmidt exactly for $\Re s>1/2$, while the right normalization $U(s)D^{-1}$ is Hilbert--Schmidt exactly for $\Re s>0$.  The latter is compact and quasinilpotent, so the original closed operator $A(s)$ is boundedly invertible and $A(s)^{-1}$ is Hilbert--Schmidt and holomorphic throughout $\Re s>0$.  Thus the asymmetric placement of the prime diagonal produces a genuine one-sided gain in operator regularity.  We retain the exact prime-zeta trace criterion, the self-adjoint closed-walk analysis, integral Hermite quantizations, and the numerical negative tests, while clearly separating them from the current matrix-internal route.  The principal open problem is now to determine whether information carried by the left normalization can be transferred through the better-behaved right normalization and the inverse, without inserting an unbounded diagonal conjugation or importing a classical prime correlation or a prior continuation of the prime zeta function.
+\end{abstract}
+\maketitle
+
+\enlargethispage{4pt}
+\tableofcontents
+\bigskip
+
+\section{Introduction and neighboring matrix constructions}
+\label{sec:introduction}
+
+Matrices connected with the Riemann zeta function occur in several mathematically distinct senses.  Incidence matrices encode divisibility and M\"obius inversion; Redheffer-type matrices place the Mertens function in a determinant; GCD and LCM matrices convert multiplicative arithmetic into quadratic forms and spectral asymptotics; multiplicative Toeplitz and Hankel matrices use Dirichlet-series symbols; and transfer operators recover dynamical or Selberg-type zeta functions through Fredholm determinants.  These constructions provide the principal context for the matrix studied here.
+
+The divisibility incidence matrix
+\begin{equation}
+Z_N(i,j)=\mathbf 1_{i\mid j}
+\label{eq:divisibility_incidence}
+\end{equation}
+has inverse
+\begin{equation}
+Z_N^{-1}(i,j)=\mathbf 1_{i\mid j}\mu(j/i),
+\label{eq:divisibility_inverse}
+\end{equation}
+a finite version of M\"obius inversion in an incidence algebra; see Rota's foundational treatment \cite{Rota1964}.  This representation is exact and multiplicative, but the arithmetic cancellation is already present in the inverse coefficients.
+
+Redheffer's matrix is obtained from the divisibility matrix by replacing its first column by ones.  Its determinant is the Mertens sum, and therefore a sharp determinant estimate is equivalent to the Riemann hypothesis.  Its spectral structure was studied by Barrett and Jarvis and by Vaughan \cite{BarrettJarvis1992,Vaughan1996}; Wilf extended the construction to finite partially ordered sets \cite{Wilf2004}.  The principal obstruction is that the difficult cancellation is concentrated in the determinant itself: the matrix reformulates the Mertens problem without supplying an independent coercive estimate for that determinant.
+
+Roesler constructed an integer matrix whose determinant contains a weighted M\"obius sum and studied its eigenvalues as a reformulation of the Riemann hypothesis \cite{Roesler1986,Roesler1987}.  Again, the determinant identity is exact, while the exceptional spectral contribution carrying the required cancellation remains uncontrolled.
+
+Smith-type GCD matrices and their generalizations admit determinant factorizations and sharp spectral estimates.  Lindqvist and Seip obtained zeta-dependent bounds for a family of GCD matrices \cite{LindqvistSeip1998}.  Hilberdink developed multiplicative Toeplitz matrices, their determinants, and singular values \cite{Hilberdink2006,Hilberdink2015,Hilberdink2017}.  Hilberdink and Pushnitski obtained spectral asymptotics for a family of LCM matrices and related them to multiplicative Toeplitz matrices with zeta symbols \cite{HilberdinkPushnitski2023}.  These theories exploit multiplicativity and often factor prime by prime.  Their strength is local Euler structure.  In the standard forms cited above, their defining entries do not use the particular additive coupling among distinct prime ranks introduced below; this is a comparison of the displayed constructions, not a general impossibility statement about all matrices in those classes.
+
+The multiplicative Hilbert matrix of Brevig, Perfekt, Seip, Siskakis, and Vukoti\'c has entries $(\sqrt{mn}\log(mn))^{-1}$ and arises from an integral operator containing $\zeta(s+w)-1$ \cite{BrevigEtAl2016}.  Its norm and continuous spectrum can be described, and its absolutely continuous spectral structure was further analyzed by Perfekt and Pushnitski \cite{PerfektPushnitski2018}.  This is a genuine spectral theory of a zeta-generated operator, but its spectrum is not the sequence of zeta-zero ordinates.
+
+The matrix introduced here differs from all of these families.  Its diagonal and its off-diagonal geometry use two different prime-index mechanisms:
+\begin{equation}
+A_N(i,i)=p_i,
+\qquad
+A_N(i,i+2r-1)=\log p_r.
+\label{eq:intro_matrix}
+\end{equation}
+Thus the diagonal samples the prime at the current location, while a displacement of length $2r-1$ is labelled by the independent prime $p_r$.  The matrix is Toeplitz away from the diagonal, but not multiplicative, not an incidence matrix, and not a primewise tensor product.  Its inverse couples ordered additive compositions of an index displacement with products of logarithmic prime labels and denominators sampled at the partial sums of the composition.
+
+The purpose of this paper is to develop only structures that are forced by the matrix itself.  We first derive the exact inverse and prove that its individual ordered paths can be recovered from finite principal compressions of $A^{-1}$.  Formal lifts are then used only as bookkeeping devices, not as a replacement topology for the matrix.  The analytic core is the asymmetric pair of diagonal normalizations $D^{-1}U(s)$ and $U(s)D^{-1}$.  The first has Hilbert--Schmidt threshold $\Re s=1/2$, whereas the second remains Hilbert--Schmidt in the larger half-plane $\Re s>0$.  This one-sided gain is a property of the triangular placement of the prime diagonal.  A route toward RH would require transferring useful information across this asymmetry by identities internal to $A$ and $A^{-1}$, without cancelling the path denominators by an unbounded renormalization and without importing a classical prime-correlation estimate.
+
+\section{Definition and elementary finite-dimensional structure}
+\label{sec:definition}
+
+Let $p_1=2,p_2=3,\ldots$ denote the ordered primes.
+
+\begin{definition}
+\label{def:prime_index_matrix}
+For $N\ge1$, define $A_N=(a_{ij})_{1\le i,j\le N}$ by
+\begin{equation}
+a_{ij}=
+\begin{cases}
+p_i,&j=i,\\
+\log p_r,&j-i=2r-1\text{ for some }r\ge1,\\
+0,&\text{otherwise}.
+\end{cases}
+\label{eq:A_definition}
+\end{equation}
+Write
+\begin{equation}
+A_N=D_N+U_N,
+\qquad
+D_N=\diag(p_1,\ldots,p_N),
+\label{eq:D_plus_U}
+\end{equation}
+where $U_N$ is strictly upper triangular.
+\end{definition}
+
+\begin{proposition}
+\label{prop:det_spectrum}
+The determinant and spectrum of $A_N$ are
+\begin{equation}
+\det A_N=\prod_{i=1}^N p_i,
+\qquad
+\spec(A_N)=\{p_1,\ldots,p_N\}.
+\label{eq:A_det_spectrum}
+\end{equation}
+For $B_N=A_N^{-1}$,
+\begin{equation}
+\det B_N=\prod_{i=1}^N p_i^{-1},
+\qquad
+\spec(B_N)=\{p_1^{-1},\ldots,p_N^{-1}\}.
+\label{eq:B_det_spectrum}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Both matrices are triangular, and their diagonal entries are respectively $p_i$ and $p_i^{-1}$.
+\end{proof}
+
+The eigenvalues of the original triangular matrices therefore carry no information beyond the diagonal.  This rules out a direct Hilbert--P'olya interpretation of the spectrum of $A_N$ itself, but not the use of derived nontriangular operators, singular values, inverse entries, path expansions, or Fredholm determinants.  All nontrivial structure considered below lies in those derived objects.
+
+\section{Exact inverse as an ordered path expansion}
+\label{sec:path_inverse}
+
+Since $D_N^{-1}U_N$ is nilpotent,
+\begin{equation}
+B_N=A_N^{-1}
+=\sum_{k=0}^{N-1}(-D_N^{-1}U_N)^kD_N^{-1}.
+\label{eq:finite_neumann}
+\end{equation}
+
+For a path $\mathbf r=(r_1,\ldots,r_k)$ define its odd jumps and partial displacements by
+\begin{equation}
+d(r_\ell)=2r_\ell-1,
+\qquad
+s_\ell(\mathbf r)=\sum_{a=1}^{\ell}d(r_a),
+\qquad s_0(\mathbf r)=0.
+\label{eq:path_displacements}
+\end{equation}
+
+\begin{theorem}
+\label{thm:exact_inverse}
+For $i\le j$ and $n=j-i$,
+\begin{equation}
+(B_N)_{i,i+n}
+=
+\sum_{\substack{k\ge0\\r_1,\ldots,r_k\ge1\\s_k(\mathbf r)=n}}
+(-1)^k
+\frac{\prod_{\ell=1}^k\log p_{r_\ell}}
+{\prod_{\ell=0}^k p_{i+s_\ell(\mathbf r)}},
+\label{eq:exact_inverse_paths}
+\end{equation}
+where the empty path contributes $p_i^{-1}$ when $n=0$.
+\end{theorem}
+
+\begin{proof}
+Expand \eqref{eq:finite_neumann}.  Each factor $D_N^{-1}U_N$ chooses one allowed odd jump and contributes the logarithmic label divided by the prime at the current row.  The final $D_N^{-1}$ contributes the prime at the endpoint.  A fixed ordered sequence of jumps determines a unique chain of intermediate indices, so it contributes exactly one matrix-product monomial.  Different ordered sequences may have the same terminal displacement or the same commutative prime label, but they remain distinct summands before those later projections.  Summing over all ordered paths with total displacement $n$ gives \eqref{eq:exact_inverse_paths}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:sign_rigidity}
+For every admissible $i,n$,
+\begin{equation}
+(-1)^n(B_N)_{i,i+n}>0.
+\label{eq:sign_rigidity}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+A sum of $k$ odd integers has parity $k$.  Hence $s_k(\mathbf r)=n$ implies $k\equiv n\pmod2$.  Every non-sign factor in \eqref{eq:exact_inverse_paths} is positive, and the all-ones path exists.
+\end{proof}
+
+For the finite inverse, define
+\begin{equation}
+c_{i,n}^{(N)}=(-1)^n(B_N)_{i,i+n}>0.
+\label{eq:c_definition}
+\end{equation}
+Then matrix multiplication gives the positive recurrence
+\begin{equation}
+c_{i,0}^{(N)}=p_i^{-1},
+\qquad
+c_{i,n}^{(N)}=\frac1{p_i}
+\sum_{r=1}^{\lfloor(n+1)/2\rfloor}
+(\log p_r)c_{i+2r-1,n-2r+1}^{(N)}.
+\label{eq:positive_recurrence}
+\end{equation}
+
+The first superdiagonals are
+\begin{align}
+(B_N)_{i,i+1}
+&=-\frac{\log2}{p_ip_{i+1}},
+\label{eq:first_superdiag}\\
+(B_N)_{i,i+2}
+&=\frac{(\log2)^2}{p_ip_{i+1}p_{i+2}},
+\label{eq:second_superdiag}\\
+(B_N)_{i,i+3}
+&=-\frac{\log3}{p_ip_{i+3}}
+-\frac{(\log2)^3}{p_ip_{i+1}p_{i+2}p_{i+3}}.
+\label{eq:third_superdiag}
+\end{align}
+Equation \eqref{eq:third_superdiag} is the first collision between distinct arithmetic labels: the direct jump is labelled by $3$, while three unit jumps are labelled by $2^3=8$.
+
+
+\section{Intrinsic finite recovery of individual paths from the inverse}
+\label{sec:intrinsic_path_recovery}
+
+The path expansion is not additional hidden data.  In every finite interval it can be reconstructed from the inverse by elementary matrix operations.  The reconstruction uses principal compressions and Schur complements; these are nonlinear coordinate maps and are not used below as bounded linear operators on an infinite matrix space.
+
+Fix $i<k$ and a set of interior vertices
+\begin{equation}
+T=\{t_1<\cdots<t_m\}\subset\{i+1,\ldots,k-1\},
+\qquad t_0=i,\quad t_{m+1}=k,
+\label{eq:path_recovery_T}
+\end{equation}
+and put $V_T=\{t_0,\ldots,t_{m+1}\}$.  Let
+\begin{equation}
+F_{ik}(T)=\left(A[V_T,V_T]^{-1}\right)_{i,k}.
+\label{eq:path_recovery_F}
+\end{equation}
+
+\begin{proposition}[Restricted-path sum]
+\label{prop:restricted_path_sum}
+One has
+\begin{equation}
+F_{ik}(T)=\sum_{R\subseteq T}W_{ik}(R),
+\label{eq:restricted_path_sum}
+\end{equation}
+where $W_{ik}(R)$ is the weight of the unique increasing path from $i$ to $k$ whose exact set of interior vertices is $R$, with $W_{ik}(R)=0$ when one of its jumps lies on a zero superdiagonal of $A$.
+\end{proposition}
+
+\begin{proof}
+The principal compression $A[V_T,V_T]$ is upper triangular.  Writing it as $D_T+U_T$, its inverse has the finite expansion
+\begin{equation}
+A[V_T,V_T]^{-1}
+=\sum_{\ell=0}^{m+1}(-D_T^{-1}U_T)^\ell D_T^{-1}.
+\label{eq:finite_compressed_neumann}
+\end{equation}
+The $(i,k)$ entry sums precisely the increasing chains whose interior vertices lie in $T$.  Since the ambient indices are totally ordered, a prescribed subset $R$ has only one possible increasing order, proving \eqref{eq:restricted_path_sum}.
+\end{proof}
+
+Finite inclusion--exclusion therefore recovers a single path:
+\begin{equation}
+\boxed{
+W_{ik}(T)=\sum_{R\subseteq T}(-1)^{|T|-|R|}F_{ik}(R).
+}
+\label{eq:path_recovery_inclusion_exclusion}
+\end{equation}
+For $T=\{t_1<\cdots<t_m\}$ this gives explicitly
+\begin{equation}
+\boxed{
+W_{ik}(T)=(-1)^{m+1}
+\frac{\prod_{\nu=0}^{m}A_{t_\nu,t_{\nu+1}}}
+{\prod_{\nu=0}^{m+1}p_{t_\nu}}.
+}
+\label{eq:path_recovery_explicit}
+\end{equation}
+
+The same coordinate is determined directly by $B=A^{-1}$.  Let $I=\{i,i+1,\ldots,k\}$, $V=V_T$, and $W=I\setminus V$.  Triangularity gives $B[I,I]=A[I,I]^{-1}$.  Partitioning $B[I,I]$ by $I=V\sqcup W$ and applying the block inverse identity yields
+\begin{equation}
+\boxed{
+A[V,V]^{-1}
+=B_{VV}-B_{VW}B_{WW}^{-1}B_{WV}.
+}
+\label{eq:path_recovery_schur}
+\end{equation}
+Hence $F_{ik}(T)$, and then $W_{ik}(T)$ by \eqref{eq:path_recovery_inclusion_exclusion}, are determined by finite submatrices of $B$.
+
+\begin{remark}[Role of the Schur-complement coordinates]
+\label{rem:schur_coordinate_scope}
+Equation \eqref{eq:path_recovery_schur} is a finite algebraic identity.  The map $B\mapsto B_{VV}-B_{VW}B_{WW}^{-1}B_{WV}$ is nonlinear, and no claim is made that the family of all such maps is bounded in the operator norm, a Schatten norm, or any previously defined infinite-dimensional matrix norm.  All analytic operator statements below are proved directly from $A(s)$, $D$, and $U(s)$.  The compression coordinates are used only when one needs to identify a particular finite path inside $A^{-1}$.
+\end{remark}
+
+\section{Infinite entries, fixed-superdiagonal summability, and generating functions}
+\label{sec:superdiagonal_limits}
+
+For fixed $i,n$, formula \eqref{eq:exact_inverse_paths} stabilizes once $N\ge i+n$.  It therefore defines an infinite triangular array $B=(b_{ij})$ entrywise.
+
+\begin{proposition}
+\label{prop:fixed_superdiag_sum}
+For each fixed $n\ge1$,
+\begin{equation}
+T_n:=\sum_{i=1}^{\infty}|b_{i,i+n}|<\infty.
+\label{eq:Tn_definition}
+\end{equation}
+The diagonal sum $\sum_i|b_{ii}|=\sum_i p_i^{-1}$ diverges.
+\end{proposition}
+
+\begin{proof}
+For fixed $n$ there are finitely many odd compositions.  Dropping intermediate prime factors only enlarges each path weight, so
+\begin{equation}
+|b_{i,i+n}|\le \frac{Q_n}{p_ip_{i+n}}
+\label{eq:path_Q_bound}
+\end{equation}
+for a finite $Q_n$ depending only on $n$.  Since $p_k\ge k+1$,
+\begin{equation}
+\sum_i\frac1{p_ip_{i+n}}
+\le
+\sum_i\frac1{(i+1)(i+n+1)}<\infty.
+\label{eq:superdiag_comparison}
+\end{equation}
+The diagonal assertion is Euler's divergence of the sum of reciprocal primes.
+\end{proof}
+
+Define signed superdiagonal sums
+\begin{equation}
+S_n=\sum_{i=1}^{\infty}b_{i,i+n}=(-1)^nT_n,
+\qquad n\ge1,
+\label{eq:Sn_definition}
+\end{equation}
+and the ordinary generating function
+\begin{equation}
+\mathcal S(z)=\sum_{n\ge1}S_nz^n.
+\label{eq:S_generating_function}
+\end{equation}
+
+\begin{remark}
+\label{rem:unit_circle_status}
+Fixed-superdiagonal convergence is rigorous.  A complete asymptotic for $T_n$ as $n\to\infty$, and therefore the exact radius and boundary singularity structure of \eqref{eq:S_generating_function}, remain open in this paper.  Earlier numerical root clustering near the unit circle is recorded in Section \ref{sec:numerical_negative}, but no zeta interpretation is assigned to it.
+\end{remark}
+
+\section{Arithmetic labels and the loss caused by superdiagonal collapse}
+\label{sec:arithmetic_labels}
+
+Associate to a path $\mathbf r=(r_1,\ldots,r_k)$ the integer
+\begin{equation}
+m(\mathbf r)=\prod_{\ell=1}^k p_{r_\ell}.
+\label{eq:path_integer_label}
+\end{equation}
+Then
+\begin{equation}
+(-1)^k=\lambda(m(\mathbf r)).
+\label{eq:path_liouville_sign}
+\end{equation}
+Define the completely additive height
+\begin{equation}
+h(m)=\sum_{r\ge1}(2r-1)\nu_{p_r}(m).
+\label{eq:h_definition}
+\end{equation}
+Every path labelled by $m$ ends on superdiagonal $h(m)$.
+
+\begin{proposition}
+\label{prop:collapsed_liouville}
+There exist positive weights $W_i(m)$ such that
+\begin{equation}
+b_{i,i+n}=\sum_{h(m)=n}\lambda(m)W_i(m).
+\label{eq:collapsed_liouville}
+\end{equation}
+More explicitly,
+\begin{equation}
+W_i(m)=
+\left(\prod_r(\log p_r)^{\nu_{p_r}(m)}\right)
+\sum_{\pi\in\Ord(m)}
+\frac1{p_i p_{i+s_1(\pi)}\cdots p_{i+s_{\Omega(m)}(\pi)}},
+\label{eq:Wi_definition}
+\end{equation}
+where $\Ord(m)$ denotes the distinct orderings of the prime-index multiset of $m$.
+\end{proposition}
+
+\begin{proof}
+For fixed $m$, the multiset of prime ranks and its cardinality $\Omega(m)$ are fixed, hence $\Ord(m)$ is finite.  Each ordering determines one and only one sequence of partial displacements.  Grouping the path expansion by the integer label $m$ therefore neither omits nor duplicates any ordered path; orderings that happen to visit the same endpoint remain separate terms inside the finite sum defining $W_i(m)$.
+\end{proof}
+
+The map $h$ is not injective.  The first collision is
+\begin{equation}
+h(3)=3=h(8).
+\label{eq:first_h_collision}
+\end{equation}
+Consequently, a scalar coefficient attached only to superdiagonal $n$ cannot recover both $3^{-s}$ and $8^{-s}$.  The ordinary inverse has already collapsed the path labels.
+
+\begin{proposition}
+\label{prop:no_scalar_decompression}
+There is no function $\Phi:\N\times\C\to\C$ such that
+\begin{equation}
+m^{-s}=\Phi(h(m),s)
+\label{eq:no_scalar_decompression}
+\end{equation}
+for every integer $m\ge2$ and every $s$ in any nonempty open subset of $\C$.
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:first_h_collision} would force $3^{-s}=8^{-s}$ throughout an open set, which is impossible.  Thus any recovery of the Dirichlet weight must retain information finer than the terminal superdiagonal.
+\end{proof}
+
+
+\section{Prime-rank iterated sums and a multiple-zeta-type comparison}
+\label{sec:prime_rank_mzv}
+
+The weights in \eqref{eq:Wi_definition} resemble nested zeta sums, but they are not classical multiple zeta values.  For a fixed integer $m$, the sum defining $W_i(m)$ is finite and runs over orderings of one fixed multiset of jumps.  Classical multiple zeta values instead sum over all strictly ordered integer indices.  The distinction is essential.
+
+A related infinite family arises naturally from the prime-index geometry.
+
+\begin{definition}
+\label{def:prime_rank_multiple_zeta}
+For $k\ge1$ and complex parameters $a_1,\ldots,a_k$ in a region of absolute convergence, define the prime-rank iterated sum
+\begin{equation}
+Z_p(a_1,\ldots,a_k)
+=
+\sum_{1\le n_1<\cdots<n_k}
+\frac{1}{p_{n_1}^{a_1}\cdots p_{n_k}^{a_k}}.
+\label{eq:prime_rank_multiple_zeta}
+\end{equation}
+In particular, absolute convergence holds when $\Re a_j>1$ for every $j$.
+\end{definition}
+
+These sums are obtained by replacing the integer denominator at rank $n$ by the prime $p_n$.  They are therefore prime-rank analogues of Euler--Zagier sums, rather than values of the classical multiple zeta function.  The standard multiple-zeta and quasi-shuffle background is described, for example, by Hoffman \cite{Hoffman1992}.
+
+\begin{proposition}
+\label{prop:prime_rank_stuffle}
+In every common region of absolute convergence, the depth-one product satisfies
+\begin{equation}
+Z_p(a)Z_p(b)
+=
+Z_p(a,b)+Z_p(b,a)+Z_p(a+b).
+\label{eq:prime_rank_stuffle_depth_two}
+\end{equation}
+More generally, the family $Z_p$ obeys the usual quasi-shuffle product obtained by ordering or identifying the rank indices.
+\end{proposition}
+
+\begin{proof}
+Split the double sum over $(m,n)$ into the three disjoint regions $m<n$, $n<m$, and $m=n$.  The same decomposition recursively gives the quasi-shuffle product at arbitrary depth.  It depends only on the total ordering of the index set and on multiplication of equal-index weights, not on the special choice $p_n$.
+\end{proof}
+
+\begin{remark}
+\label{rem:Wi_mzv_status}
+The path weights $W_i(m)$ are not equal to the values in \eqref{eq:prime_rank_multiple_zeta}.  Their denominators are evaluated at partial sums of an ordered jump composition,
+\begin{equation}
+p_i,p_{i+s_1},\ldots,p_{i+s_k},
+\label{eq:path_partial_prime_denominators}
+\end{equation}
+and the jump labels contribute logarithmic factors.  After summing over all labels and all paths, however, the resulting nested sums belong to the same broad combinatorial class of ordered prime-rank series.  Quasi-shuffle identities survive for the unrestricted prime-rank sums; a shuffle identity analogous to the iterated-integral shuffle for classical multiple zeta values is not established here.  Thus the multiple-zeta comparison is a concrete structural direction, not an identification of $W_i(m)$ with a known MZV.
+\end{remark}
+
+\section{Multivariable and noncommutative path lifting}
+\label{sec:path_lifting}
+
+\begin{definition}
+\label{def:commutative_lift}
+Let $\mathbf x=(x_1,x_2,\ldots)$ be commuting indeterminates and define
+\begin{equation}
+A_N(\mathbf x)=D_N+\sum_{r\ge1}x_r(\log p_r)S_N^{2r-1},
+\label{eq:commutative_lift}
+\end{equation}
+where $S_N$ is the upper shift and terms with $2r-1\ge N$ are omitted.
+\end{definition}
+
+For $m=\prod_rp_r^{\nu_r(m)}$, write
+\begin{equation}
+\mathbf x^{\nu(m)}=\prod_rx_r^{\nu_r(m)}.
+\label{eq:monomial_label}
+\end{equation}
+
+\begin{theorem}
+\label{thm:commutative_coefficient}
+For each $m$ and each $i$ satisfying $i+h(m)\le N$,
+\begin{equation}
+[\mathbf x^{\nu(m)}]
+\bigl(A_N(\mathbf x)^{-1}\bigr)_{i,i+h(m)}
+=
+\lambda(m)W_i(m).
+\label{eq:commutative_coefficient_identity}
+\end{equation}
+\end{theorem}
+
+The commutative lift separates different multisets but still sums the orderings of a fixed multiset.  To retain every path, use free noncommuting indeterminates $X_r$.
+
+\begin{definition}
+\label{def:noncommutative_lift}
+Define the formal noncommutative matrix
+\begin{equation}
+A_N(\mathbf X)=D_N+\sum_{r\ge1}(\log p_r)X_rS_N^{2r-1}.
+\label{eq:noncommutative_lift}
+\end{equation}
+For a word $w=(r_1,\ldots,r_k)$ write $X_w=X_{r_1}\cdots X_{r_k}$.
+\end{definition}
+
+\begin{theorem}
+\label{thm:word_coefficient}
+For each word $w=(r_1,\ldots,r_k)$,
+\begin{equation}
+[X_w]
+\bigl(A_N(\mathbf X)^{-1}\bigr)_{i,i+s_k(w)}
+=
+(-1)^k
+\frac{\prod_{\ell=1}^k\log p_{r_\ell}}
+{p_i p_{i+s_1(w)}\cdots p_{i+s_k(w)}}.
+\label{eq:word_coefficient_identity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+In the noncommutative Neumann expansion, the word records the ordered sequence of chosen jumps, so it occurs exactly once.
+\end{proof}
+
+\section{The multilinear sector and M\"obius signs}
+\label{sec:multilinear_mobius}
+
+Let $\ML$ denote the linear projection onto monomials in which every variable has exponent at most one.  For coefficient extraction, the same square-free sector is obtained by passing to the quotient algebra with relations $x_r^2=0$; the projection itself is not asserted to be an algebra homomorphism.
+
+\begin{proposition}
+\label{prop:multilinear_mobius}
+For square-free $m$,
+\begin{equation}
+[\mathbf x^{\nu(m)}]\ML
+\bigl(A_N(\mathbf x)^{-1}\bigr)_{i,i+h(m)}
+=
+\mu(m)W_i(m).
+\label{eq:multilinear_mobius_identity}
+\end{equation}
+Repeated prime labels are annihilated by $\ML$.
+\end{proposition}
+
+Thus the parity sign of a square-free path becomes the arithmetic M\"obius sign after applying the multilinear projection; the original, unprojected path geometry by itself produces the Liouville sign.  The positive weights $W_i(m)$ remain.
+
+Introduce the evaluation
+\begin{equation}
+x_r=p_r^{-s}.
+\label{eq:prime_s_evaluation}
+\end{equation}
+Then $\mathbf x^{\nu(m)}=m^{-s}$ and, with multilinear projection performed before evaluation,
+\begin{equation}
+\left.
+\Bigl(\ML\bigl(A_N(\mathbf x)^{-1}\bigr)\Bigr)_{i,i+n}
+\right|_{x_r=p_r^{-s}}
+=
+\sum_{\substack{h(m)=n\\m\text{ square-free}}}
+\mu(m)W_i(m)m^{-s}.
+\label{eq:weighted_mobius_dirichlet}
+\end{equation}
+
+\section{Pathwise renormalization and formal recovery of the Euler product}
+\label{sec:path_renormalization}
+
+A single fixed combination of rows cannot naturally neutralize $W_i(m)$.  Already for primes,
+\begin{equation}
+W_i(p_r)=\frac{\log p_r}{p_ip_{i+2r-1}},
+\label{eq:Wi_prime}
+\end{equation}
+and any coefficients satisfying $\sum_i|\alpha_i|/p_i<\infty$ give
+\begin{align}
+\left|\sum_i\alpha_iW_i(p_r)\right|
+&\le \frac{\log p_r}{p_{2r}}\sum_i\frac{|\alpha_i|}{p_i}
+\label{eq:row_combination_bound}\\
+&=O(r^{-1}),
+\label{eq:row_combination_decay}
+\end{align}
+where the last estimate follows from $p_{2r}\asymp r\log r$.  Hence such a row combination cannot equal the constant one on all primes.  The appropriate operation is pathwise and must be performed before collapse.
+
+\begin{definition}
+\label{def:path_renormalization}
+For a word $w=(r_1,\ldots,r_k)$ define
+\begin{align}
+\mathcal R_i\left(
+[X_w](A_N(\mathbf X)^{-1})_{i,i+s_k(w)}
+\right)
+:={}&
+\frac{p_i p_{i+s_1(w)}\cdots p_{i+s_k(w)}}
+{\prod_{\ell=1}^k\log p_{r_\ell}}
+\nonumber\\
+&\times [X_w](A_N(\mathbf X)^{-1})_{i,i+s_k(w)}.
+\label{eq:path_renormalization}
+\end{align}
+\end{definition}
+
+\begin{proposition}
+\label{prop:renormalized_word}
+For every word $w$,
+\begin{equation}
+\mathcal R_i\left([X_w](A_N(\mathbf X)^{-1})_{i,i+s_{|w|}(w)}\right)=(-1)^{|w|}.
+\label{eq:renormalized_word_sign}
+\end{equation}
+\end{proposition}
+
+Let $\Ab$ make the variables commuting.  For a square-free monomial of degree $k$, there are $k!$ orderings.  Define the degree-Borel operator
+\begin{equation}
+\mathcal B\left(\sum_{k\ge0}F_k\right)=\sum_{k\ge0}\frac{F_k}{k!},
+\label{eq:degree_borel}
+\end{equation}
+where $F_k$ is homogeneous of degree $k$.
+
+\begin{theorem}
+\label{thm:formal_euler_recovery}
+Fix a starting row $i$.  After summing the renormalized coefficients over all endpoints admissible in the $N\times N$ truncation, one obtains the height-truncated formal identity
+\begin{equation}
+\mathcal T_{i,N}(\mathbf x)
+=
+\sum_{\substack{R\subset\N\text{ finite}\\
+i+\sum_{r\in R}(2r-1)\le N}}
+(-1)^{|R|}\prod_{r\in R}x_r,
+\label{eq:finite_formal_euler}
+\end{equation}
+where $\mathcal T_{i,N}$ is a coefficientwise operation: pathwise renormalization, abelianization, multilinear projection, degree-Borel division, and endpoint summation.  At this stage it is not asserted to be a bounded operator on any completed space.  Equivalently, multilinearity may be imposed at the word level by retaining only words with pairwise distinct letters before abelianization.  For every fixed square-free monomial, its coefficient stabilizes as $N\to\infty$.  Hence the coefficientwise infinite limit is
+\begin{equation}
+\mathcal T_{i,\infty}(\mathbf x)
+=
+\prod_{r\ge1}(1-x_r).
+\label{eq:infinite_formal_euler_product}
+\end{equation}
+Consequently, after the evaluation $x_r=p_r^{-s}$,
+\begin{equation}
+\left.\mathcal T_{i,\infty}(\mathbf x)\right|_{x_r=p_r^{-s}}
+=
+\prod_p(1-p^{-s})
+=
+\frac1{\zeta(s)},
+\qquad \Re s>1.
+\label{eq:formal_inverse_zeta}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Renormalization gives sign $(-1)^k$ to every word.  Multilinear projection retains words with distinct letters.  Abelianization groups the $k!$ permutations of each $k$-element set, and \eqref{eq:degree_borel} removes this multiplicity.  In a finite matrix, a word is present only when its total height fits between the starting row and the last column; this yields the constraint in \eqref{eq:finite_formal_euler}.  Every fixed finite set $R$ eventually satisfies that constraint, giving the coefficientwise product \eqref{eq:infinite_formal_euler_product}.
+\end{proof}
+
+\begin{warning}
+\label{warn:renormalization_unbounded}
+The pathwise map $\mathcal R$ in \eqref{eq:path_renormalization} is an algebraic coefficient transform, not a bounded transform of the original inverse in the natural operator topology.  Already for a one-edge path its multiplier is
+\begin{equation}
+\frac{p_i p_{i+2r-1}}{\log p_r},
+\label{eq:one_edge_renormalization_multiplier}
+\end{equation}
+which is unbounded as either the starting row or the jump rank increases.  Moreover, after ordinary matrix multiplication has collapsed several paths into one entry, $\mathcal R$ is not a linear operation on the matrix entries themselves.  The intrinsic finite recovery of Section \ref{sec:intrinsic_path_recovery} shows that individual paths can be reconstructed from $A^{-1}$, but it does not make denominator removal uniformly bounded.  Consequently Theorem \ref{thm:formal_euler_recovery} remains a formal coefficient identity; it is not a completed-space realization and it supplies no analytic continuation of $1/\zeta(s)$.
+\end{warning}
+
+\section{Left and right diagonal normalizations of the complex deformation}
+\label{sec:complex_deformation}
+
+Define
+\begin{equation}
+U(s)_{i,i+2r-1}=(\log p_r)p_r^{-s},
+\qquad
+A(s)=D+U(s),
+\label{eq:As_definition}
+\end{equation}
+initially on finitely supported vectors.  The location of the unbounded diagonal matters.  We therefore keep both normalizations
+\begin{equation}
+K_L(s)=D^{-1}U(s),
+\qquad
+K_R(s)=U(s)D^{-1}.
+\label{eq:left_right_normalizations}
+\end{equation}
+Their entries are
+\begin{equation}
+(K_L(s))_{i,i+2r-1}
+=\frac{(\log p_r)p_r^{-s}}{p_i},
+\qquad
+(K_R(s))_{i,i+2r-1}
+=\frac{(\log p_r)p_r^{-s}}{p_{i+2r-1}}.
+\label{eq:left_right_entries}
+\end{equation}
+
+\begin{theorem}[Left Hilbert--Schmidt threshold]
+\label{thm:HS_boundary}
+The operator $K_L(s)$ is Hilbert--Schmidt if and only if
+\begin{equation}
+\Re s>\frac12,
+\label{eq:HS_half_plane}
+\end{equation}
+and
+\begin{equation}
+\|K_L(s)\|_{\HS}^2
+=\left(\sum_{i\ge1}\frac1{p_i^2}\right)
+\left(\sum_{r\ge1}\frac{(\log p_r)^2}{p_r^{2\Re s}}\right).
+\label{eq:HS_factorization}
+\end{equation}
+As $\sigma\downarrow1/2$,
+\begin{equation}
+\|K_L(\sigma+it)\|_{\HS}\asymp(\sigma-1/2)^{-1}.
+\label{eq:HS_blowup}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The norm factorization is immediate from \eqref{eq:left_right_entries}.  The prime number theorem gives the same convergence threshold as $\int_2^\infty (\log x)x^{-2\Re s}\,dx$.  At the boundary the squared norm is of order $(\sigma-1/2)^{-2}$.
+\end{proof}
+
+The right normalization has a strictly larger Hilbert--Schmidt domain.
+
+\begin{theorem}[Right Hilbert--Schmidt gain]
+\label{thm:right_HS_gain}
+The operator $K_R(s)=U(s)D^{-1}$ is Hilbert--Schmidt if and only if
+\begin{equation}
+\Re s>0.
+\label{eq:right_HS_half_plane}
+\end{equation}
+More precisely,
+\begin{equation}
+\|K_R(s)\|_{\HS}^2
+=\sum_{r\ge1}(\log p_r)^2p_r^{-2\Re s}
+\sum_{j\ge2r}\frac1{p_j^2}.
+\label{eq:right_HS_exact_norm}
+\end{equation}
+On every compact subset of $\{\Re s>0\}$ the map $s\mapsto K_R(s)$ is holomorphic with values in $\HS$.
+\end{theorem}
+
+\begin{proof}
+The change of variables $j=i+2r-1$ gives \eqref{eq:right_HS_exact_norm}.  By the prime number theorem,
+\begin{equation}
+\sum_{j\ge2r}\frac1{p_j^2}
+\asymp\frac1{r(\log r)^2},
+\label{eq:prime_square_tail}
+\end{equation}
+while $p_r\asymp r\log r$.  Hence the $r$-th summand in \eqref{eq:right_HS_exact_norm} is comparable, up to fixed powers of logarithms, to
+\begin{equation}
+\frac1{r^{1+2\sigma}(\log r)^{2\sigma}},
+\qquad \sigma=\Re s.
+\label{eq:right_HS_comparison}
+\end{equation}
+This converges for $\sigma>0$ and diverges for $\sigma\le0$.  Differentiation in $s$ inserts fixed powers of $\log p_r$; the same estimate with $\sigma$ bounded below by a positive constant gives local uniform convergence of all derivatives in Hilbert--Schmidt norm.
+\end{proof}
+
+\begin{proposition}[Operator realization of the original inverse in $\Re s>0$]
+\label{prop:right_inverse_realization}
+Let
+\begin{equation}
+\mathcal D(D)=\left\{x\in\ell^2:\sum_{i\ge1}p_i^2|x_i|^2<\infty\right\}.
+\label{eq:D_domain}
+\end{equation}
+For $\Re s>0$, $K_R(s)$ is compact, upper triangular, and has zero diagonal; hence it is quasinilpotent.  Therefore $I+K_R(s)$ is boundedly invertible.  Define
+\begin{equation}
+A(s)=(I+K_R(s))D,
+\qquad \mathcal D(A(s))=\mathcal D(D).
+\label{eq:right_A_operator_domain}
+\end{equation}
+Then $A(s)$ is closed and
+\begin{equation}
+\boxed{
+A(s)^{-1}=D^{-1}(I+K_R(s))^{-1}.
+}
+\label{eq:right_As_inverse}
+\end{equation}
+In particular $A(s)^{-1}\in\HS$ and depends holomorphically on $s$ throughout $\Re s>0$.  On finitely supported vectors this realization agrees entrywise with the matrix $D+U(s)$.
+\end{proposition}
+
+\begin{proof}
+Compact upper-triangular operators have spectrum equal to the closure of their diagonal spectrum together with zero; here the diagonal is identically zero, so $\spec K_R(s)=\{0\}$.  Thus $I+K_R(s)$ is invertible.  Since $D^{-1}\in\HS$ and $(I+K_R(s))^{-1}$ is bounded, \eqref{eq:right_As_inverse} is Hilbert--Schmidt.  Holomorphy follows from Theorem \ref{thm:right_HS_gain} and the analytic inverse theorem.
+\end{proof}
+
+\begin{remark}[Consistency on the overlap]
+\label{rem:left_right_consistency}
+For $\Re s>1/2$, both normalizations are available and the two factorizations
+\begin{equation}
+A(s)=D(I+K_L(s))=(I+K_R(s))D
+\label{eq:two_factorizations}
+\end{equation}
+agree on $\mathcal D(D)$.  Consequently
+\begin{equation}
+(I+K_L(s))^{-1}D^{-1}
+=D^{-1}(I+K_R(s))^{-1}.
+\label{eq:inverse_factorization_consistency}
+\end{equation}
+The formal relation $K_R=DK_LD^{-1}$ is not a bounded similarity because $D$ is unbounded.  The different Hilbert--Schmidt thresholds are therefore not contradictory.
+\end{remark}
+
+\begin{remark}[Matrix-internal meaning of the gain]
+\label{rem:right_gain_meaning}
+The gain from $\Re s>1/2$ to $\Re s>0$ comes from the arrival-prime denominator $p_{i+2r-1}^{-1}$ in $K_R$.  Large jumps therefore carry an additional decay that is absent from $K_L$.  No path renormalization, M\"obius extraction, prime-zeta continuation, or correlation estimate is used in Theorem \ref{thm:right_HS_gain}.  The open problem is whether an identity involving only $A$, $A^{-1}$, $D$, $K_L$, and $K_R$ transfers useful information from the right normalization to a left-normalized quantity without multiplying by the unbounded operator $D$.
+\end{remark}
+
+\begin{proposition}[The naive commutator transfer fails at the left boundary]
+\label{prop:naive_transfer_fails}
+Let $B(\sigma)=A(\sigma)^{-1}$ for real $\sigma>0$.  Then
+\begin{equation}
+D B(\sigma)=(I+K_R(\sigma))^{-1}
+\label{eq:DB_right_inverse}
+\end{equation}
+is bounded for every $\sigma>0$.  In contrast, the matrix $B(\sigma)D$, initially defined on finitely supported vectors, has no bounded extension to $\ell^2$ when $0<\sigma\le1/2$.  The same is true of the commutator $[D,B(\sigma)]$.
+\end{proposition}
+
+\begin{proof}
+The first identity follows from \eqref{eq:right_As_inverse}.  For $j=2r$, the displacement from row $1$ is $2r-1$.  Every path contributing to $B(\sigma)_{1,2r}$ therefore has odd length, because it is a composition of the odd number $2r-1$ into odd jumps.  At real $\sigma$ all path magnitudes are positive, so all such contributions have the same negative sign.  In particular the direct one-edge path gives
+\begin{equation}
+|B(\sigma)_{1,2r}|
+\ge
+\frac{(\log p_r)p_r^{-\sigma}}{p_1p_{2r}}.
+\label{eq:first_row_direct_lower_bound}
+\end{equation}
+Hence
+\begin{equation}
+|(B(\sigma)D)_{1,2r}|
+\ge
+\frac{(\log p_r)p_r^{-\sigma}}{p_1}.
+\label{eq:BD_first_row_lower_bound}
+\end{equation}
+A row of a bounded operator on $\ell^2$ must belong to $\ell^2$.  But
+\begin{equation}
+\sum_{r\ge1}(\log p_r)^2p_r^{-2\sigma}
+\label{eq:left_row_divergence}
+\end{equation}
+diverges exactly for $\sigma\le1/2$.  Therefore $B(\sigma)D$ cannot extend boundedly in that range.  Finally,
+\begin{equation}
+[D,B]_{1,2r}=(p_1-p_{2r})B_{1,2r}.
+\label{eq:commutator_entry}
+\end{equation}
+For all sufficiently large $r$, $(p_{2r}-p_1)/p_{2r}\ge1/2$, so \eqref{eq:first_row_direct_lower_bound} gives the same divergent $\ell^2$ lower bound for the first row of $[D,B]$.
+\end{proof}
+
+\begin{remark}[Consequence for the transfer problem]
+\label{rem:naive_transfer_consequence}
+The identity $B D=D B-[D,B]$ cannot transport the right-normalized boundedness across $\Re s=1/2$: the defect term is itself unbounded there.  Thus any successful left--right transfer must use a more structured operation than bounded control of the diagonal commutator.  This obstruction is derived from the sign-rigid path geometry of $A^{-1}$ and does not invoke a correlation among distinct primes.
+\end{remark}
+
+\begin{warning}
+\label{warn:half_plane_not_rh}
+Neither Hilbert--Schmidt threshold is a zero criterion by itself.  The line $\Re s=1/2$ is the square-summability boundary of the left normalization; the larger right-normalized domain shows that the inverse itself is analytically better behaved.  Any implication for RH requires an additional identity that preserves zeta-sensitive information and is proved from the matrix rather than from a prior continuation of $P(s)$ or $1/\zeta(s)$.
+\end{warning}
+
+\medskip
+For compatibility with the closed-walk and trace notation below, in the half-plane $\Re s>1/2$ we write $K(s)=K_L(s)$.
+
+\section{A prime-zeta trace criterion and the full-inverse regularization problem}
+\label{sec:prime_zeta_trace}
+
+The holomorphic two-variable quadratic form already contains an exact zero criterion.  The point of the present section is to separate that rigorous reformulation from the genuinely open question of whether the \emph{complete inverse} supplies an independent regularization.
+
+Put
+\begin{equation}
+C_{\mathbb P}=\sum_{i\ge1}p_i^{-2}.
+\label{eq:prime_square_constant}
+\end{equation}
+For $\Re s,\Re w>1/2$, define
+\begin{equation}
+Q(s,w)=K(w)^{\mathsf T}K(s),
+\label{eq:Q_prime_zeta_definition}
+\end{equation}
+where $^{\mathsf T}$ denotes the complex-linear transpose, not the Hilbert-space adjoint.  Since both factors are Hilbert--Schmidt, $Q(s,w)$ is trace class and holomorphic in the two variables.
+
+\begin{theorem}[Exact prime-zeta trace]
+\label{thm:prime_zeta_trace}
+For $\Re s,\Re w>1/2$,
+\begin{equation}
+\tr Q(s,w)
+=C_{\mathbb P}\sum_{r\ge1}(\log p_r)^2p_r^{-(s+w)}.
+\label{eq:Q_trace_prime_sum}
+\end{equation}
+Consequently, if
+\begin{equation}
+P(z)=\sum_p p^{-z},\qquad \Re z>1,
+\label{eq:prime_zeta_definition}
+\end{equation}
+then
+\begin{equation}
+\boxed{\ \tr Q(s,w)=C_{\mathbb P}P''(s+w).\ }
+\label{eq:Q_trace_P_second}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Using \eqref{eq:left_right_entries},
+\begin{align}
+\tr Q(s,w)
+&=\sum_{i,j\ge1}K(w)_{ij}K(s)_{ij}\notag\\
+&=\sum_{i\ge1}\sum_{r\ge1}
+\frac{(\log p_r)^2p_r^{-(s+w)}}{p_i^2},
+\label{eq:Q_trace_calculation}
+\end{align}
+which factors as claimed.  The last identity follows by differentiating the absolutely convergent prime-zeta series twice in $\Re(s+w)>1$; this condition holds on the stated bidomain.
+\end{proof}
+
+For $\Re z>1$, M\"obius inversion of the Euler product gives
+\begin{equation}
+P(z)=\sum_{m\ge1}\frac{\mu(m)}{m}\log\zeta(mz).
+\label{eq:prime_zeta_mobius_inversion}
+\end{equation}
+After two derivatives,
+\begin{equation}
+P''(z)=
+\sum_{m\ge1}\mu(m)m
+\left[
+\frac{\zeta''}{\zeta}(mz)
+-\left(\frac{\zeta'}{\zeta}(mz)\right)^2
+\right].
+\label{eq:prime_zeta_second_derivative}
+\end{equation}
+Equation \eqref{eq:prime_zeta_second_derivative} is used below only as a meromorphic-continuation identity on domains avoiding its singularities.  No branch of $\log\zeta$ is required after differentiation.
+
+\begin{theorem}[Exact matrix criterion equivalent to RH]
+\label{thm:matrix_RH_criterion}
+Define initially for $\Re z>1$
+\begin{equation}
+\mathfrak T(z)=
+\frac{1}{C_{\mathbb P}}
+\tr Q\left(\frac z2,\frac z2\right)=P''(z)
+\label{eq:T_prime_zeta}
+\end{equation}
+and
+\begin{equation}
+\mathfrak K_0(z)=\mathfrak T(z)-\frac{1}{(z-1)^2}.
+\label{eq:K0_one_variable}
+\end{equation}
+Then the Riemann hypothesis is equivalent to the existence of a holomorphic continuation of $\mathfrak K_0$ to
+\begin{equation}
+\Re z>\frac12.
+\label{eq:K0_target_half_plane}
+\end{equation}
+Equivalently, with
+\begin{equation}
+\mathcal K_0(s,w)=
+\frac{1}{C_{\mathbb P}}\tr Q(s,w)
+-\frac{1}{(s+w-1)^2},
+\label{eq:K0_two_variable}
+\end{equation}
+RH is equivalent to holomorphic continuation of this scalar function as a function of $s+w$ to the tube $\Re(s+w)>1/2$.
+\end{theorem}
+
+\begin{proof}
+In $\Re z>1/2$, every term with $m\ge2$ in \eqref{eq:prime_zeta_second_derivative} is holomorphic because $\Re(mz)>1$.  The term $m=1$ has a double pole with principal part $-m_\rho(z-\rho)^{-2}$ at a zero $\rho$ of $\zeta$ of multiplicity $m_\rho$, and a double pole with principal part $(z-1)^{-2}$ at the pole of $\zeta$.  Therefore subtracting $(z-1)^{-2}$ leaves a holomorphic function in $\Re z>1/2$ exactly when $\zeta$ has no zero there.  By the functional equation and the symmetry of nontrivial zeros, that zero-free half-plane is equivalent to RH.
+\end{proof}
+
+\begin{warning}
+\label{warn:prime_zeta_criterion_reformulation}
+Theorem \ref{thm:matrix_RH_criterion} is an exact matrix reformulation, not progress toward proving RH by itself.  Its proof imports the classical prime-zeta identity \eqref{eq:prime_zeta_mobius_inversion}.  A genuine advance would require obtaining the continuation of \eqref{eq:K0_two_variable} from an estimate intrinsic to the matrix or its inverse, rather than from prior information about $\zeta$.
+\end{warning}
+
+The complete normalized inverse gives a well-defined object in which to search for such an estimate.  Set
+\begin{equation}
+C(s)=(I+K(s))^{-1},
+\qquad
+L(s)=C(s)-I=-C(s)K(s).
+\label{eq:normalized_inverse_remainder}
+\end{equation}
+For $\Re s>1/2$, $L(s)$ is Hilbert--Schmidt and holomorphic.  Define
+\begin{equation}
+\mathcal R_{\mathrm{inv}}(s,w)=\tr\bigl(L(w)^{\mathsf T}L(s)\bigr),
+\qquad \Re s,\Re w>\frac12.
+\label{eq:full_inverse_correlation}
+\end{equation}
+This is trace class and holomorphic in both variables.  Since $K(s)$ is quasinilpotent,
+\begin{equation}
+L(s)=-K(s)+K(s)^2-K(s)^3+\cdots
+\label{eq:L_path_expansion}
+\end{equation}
+converges in operator norm, and the quadratic term of \eqref{eq:full_inverse_correlation} is exactly $\tr Q(s,w)$.  Thus
+\begin{equation}
+\mathcal R_{\mathrm{inv}}(s,w)=\tr Q(s,w)+\mathcal G_{\ge3}(s,w),
+\label{eq:R_quadratic_plus_higher}
+\end{equation}
+where $\mathcal G_{\ge3}$ is the sum of all terms of total path degree at least three and is holomorphic on the original bidomain.
+
+\begin{remark}
+\label{rem:why_normalized_R}
+The normalized definition \eqref{eq:full_inverse_correlation} is essential.  For example, the expression
+\begin{equation*}
+A(w)^{-\mathsf T}D^2A(s)^{-1}
+\end{equation*}
+inserts the unbounded operator $D^2$ between bounded inverses and has a non-trace-class zeroth-order term.  It is therefore not accepted here without an additional domain and renormalization argument.
+\end{remark}
+
+Define the renormalized full-inverse scalar on the original bidomain by
+\begin{equation}
+\mathcal R_0(s,w)=
+\frac{1}{C_{\mathbb P}}\mathcal R_{\mathrm{inv}}(s,w)
+-\frac{1}{(s+w-1)^2}.
+\label{eq:R0_definition}
+\end{equation}
+Combining \eqref{eq:K0_two_variable} and \eqref{eq:R_quadratic_plus_higher} gives the exact identity
+\begin{equation}
+\boxed{\ 
+\mathcal R_0(s,w)
+=\mathcal K_0(s,w)
++\frac{1}{C_{\mathbb P}}\mathcal G_{\ge3}(s,w).
+\ }
+\label{eq:R0_exact_decomposition}
+\end{equation}
+This identity is not yet a regularization theorem: all three quantities are presently controlled only where $\Re s,\Re w>1/2$, hence $\Re(s+w)>1$.
+
+\begin{question}[Full-inverse regularization problem]
+\label{question:full_inverse_regularization}
+Can one prove, using only the triangular inverse, its path expansion, and operator estimates internal to the matrix, that $\mathcal R_0$ and the higher-path correction $\mathcal G_{\ge3}$ admit controlled holomorphic continuations to $\Re(s+w)>1/2$?  More generally, is there an intrinsically defined scalar $\mathcal R_{\mathrm{int}}$ and holomorphic functions $F,G$ such that on the initial bidomain
+\begin{equation}
+\mathcal R_{\mathrm{int}}(s,w)
+=F(s,w)\mathcal K_0(s,w)+G(s,w),
+\label{eq:desired_full_inverse_factorization}
+\end{equation}
+with $F$ nonvanishing and with $\mathcal R_{\mathrm{int}}$, $F$, and $G$ controllable in the larger tube by matrix methods independent of RH?
+\end{question}
+
+A positive answer would constitute a genuine route: solving \eqref{eq:desired_full_inverse_factorization} for $\mathcal K_0$ would give the continuation in Theorem \ref{thm:matrix_RH_criterion}.  Merely defining $G$ by subtracting $F\mathcal K_0$, or proving its continuation by invoking known properties of $\zeta$, would be tautological and would not advance the problem.
+
+
+\section{Self-adjoint symmetrization, exact closed walks, and holomorphic two-variable determinants}
+\label{sec:selfadjoint_closure}
+
+The triangular determinant is spectrally trivial.  To create closed walks, define
+\begin{equation}
+H(s)=K(s)+K(s)^*,
+\qquad s=\sigma+it.
+\label{eq:H_definition}
+\end{equation}
+For $\sigma>1/2$, $H(s)$ is compact, Hilbert--Schmidt, and self-adjoint.  The map $s\mapsto H(s)$ is not holomorphic because the adjoint introduces $\overline s$.
+
+Put
+\begin{equation}
+a_r(s)=(\log p_r)p_r^{-s},
+\qquad d_r=2r-1.
+\label{eq:edge_amplitude}
+\end{equation}
+For $\varepsilon\in\{+1,-1\}$ define
+\begin{equation}
+\alpha_r(s;\varepsilon)=
+\begin{cases}
+a_r(s),&\varepsilon=+1,\\
+\overline{a_r(s)},&\varepsilon=-1.
+\end{cases}
+\label{eq:directional_amplitude}
+\end{equation}
+A closed walk of length $m$ is specified by a starting index $x_0\ge1$, labels $r_1,\ldots,r_m$, and directions $\varepsilon_\ell\in\{+1,-1\}$, with
+\begin{equation}
+x_\ell=x_0+\sum_{a=1}^{\ell}\varepsilon_a d_{r_a},
+\qquad x_\ell\ge1,
+\qquad x_m=x_0.
+\label{eq:closed_walk_positions}
+\end{equation}
+
+\begin{theorem}
+\label{thm:exact_closed_walk_trace}
+Let $P_N$ denote projection onto the first $N$ coordinates.  Put
+\begin{equation}
+H_N(s)=P_NH(s)P_N.
+\label{eq:H_finite_truncation}
+\end{equation}
+For every integer $m\ge2$,
+\begin{equation}
+\tr H_N(s)^m
+=
+\sum_{\substack{1\le x_0\le N,\boldsymbol\varepsilon,\mathbf r\\
+1\le x_\ell\le N,\ x_m=x_0}}
+\prod_{\ell=1}^{m}
+\frac{\alpha_{r_\ell}(s;\varepsilon_\ell)}
+{p_{\min(x_{\ell-1},x_\ell)}}.
+\label{eq:exact_closed_walk_trace}
+\end{equation}
+Moreover,
+\begin{equation}
+\tr H_N(s)^m\longrightarrow \tr H(s)^m
+\qquad (N\to\infty),
+\label{eq:trace_truncation_limit}
+\end{equation}
+and every trace-class odd moment vanishes:
+\begin{equation}
+\tr H(s)^{2m+1}=0,\qquad m\ge1.
+\label{eq:odd_moments_vanish}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The finite identity follows by expanding the matrix trace.  The matrix element along an edge joining $u$ and $v=u+d_r$ is $a_r(s)/p_u$ in the forward direction and its complex conjugate in the reverse direction.  Since $H_N(s)\to H(s)$ in Hilbert--Schmidt norm, standard Schatten ideal inequalities give $H_N(s)^m\to H(s)^m$ in trace norm for every $m\ge2$, proving \eqref{eq:trace_truncation_limit}.  Every jump length is odd, so each step reverses index parity.  An odd number of steps cannot return to the initial parity.
+\end{proof}
+
+\begin{proposition}
+\label{prop:second_moment}
+The second moment is
+\begin{equation}
+\tr H(s)^2
+=2\|K(s)\|_{\HS}^2
+=2\left(\sum_i p_i^{-2}\right)
+\left(\sum_r(\log p_r)^2p_r^{-2\sigma}\right).
+\label{eq:H_second_moment}
+\end{equation}
+It is independent of $t$.
+\end{proposition}
+
+\begin{proof}
+The traces of $K(s)^2$ and $K(s)^{*2}$ vanish by strict triangularity.  The two mixed products both have trace $\|K(s)\|_{\HS}^2$.
+\end{proof}
+
+The fourth moment contains two distinct directional types.  In the balanced type $2+2$, closure gives
+\begin{equation}
+r_1+r_2=q_1+q_2,
+\label{eq:additive_index_resonance}
+\end{equation}
+with phase
+\begin{equation}
+\exp\left(-it\log\frac{p_{r_1}p_{r_2}}{p_{q_1}p_{q_2}}\right).
+\label{eq:multiplicative_phase}
+\end{equation}
+In the unbalanced type $3+1$, closure gives
+\begin{equation}
+q=r_1+r_2+r_3-1,
+\label{eq:three_one_resonance}
+\end{equation}
+with phase
+\begin{equation}
+\exp\left(-it\log\frac{p_{r_1}p_{r_2}p_{r_3}}{p_q}\right).
+\label{eq:three_one_phase}
+\end{equation}
+The reverse orientations contribute the complex conjugates.
+
+\begin{proposition}
+\label{prop:fourth_structure}
+For every finite truncation $N$ there are finite nonnegative coefficients, obtained by summing denominator weights of admissible orderings and starting indices, such that
+\begin{equation}
+\tr H_N(\sigma+it)^4
+=D_{4,N}(\sigma)+R_{2,2,N}(\sigma,t)+R_{3,1,N}(\sigma,t),
+\label{eq:fourth_moment_decomposition}
+\end{equation}
+where
+\begin{align}
+R_{2,2,N}(\sigma,t)
+&=
+\sum_{\substack{r_1+r_2=q_1+q_2\\
+\{r_1,r_2\}\ne\{q_1,q_2\}}}
+C_{2,2,N}(\mathbf r,\mathbf q;\sigma)
+\cos\left(t\log\frac{p_{r_1}p_{r_2}}{p_{q_1}p_{q_2}}\right),
+\label{eq:R22_definition}\\
+R_{3,1,N}(\sigma,t)
+&=
+\sum_{r_1,r_2,r_3\ge1}
+C_{3,1,N}(r_1,r_2,r_3;\sigma)
+\cos\left(t\log\frac{p_{r_1}p_{r_2}p_{r_3}}
+{p_{r_1+r_2+r_3-1}}\right).
+\label{eq:R31_definition}
+\end{align}
+Only labels whose walks fit inside $\{1,\ldots,N\}$ contribute.  The term $D_{4,N}(\sigma)$ consists of the balanced multiplicative diagonal $\{r_1,r_2\}=\{q_1,q_2\}$ and is independent of $t$.  The total expression converges to $\tr H(\sigma+it)^4$ as $N\to\infty$.
+\end{proposition}
+
+\begin{proof}
+There are six direction words with two forward and two backward steps, and eight direction words of types three-forward--one-backward or the reverse.  Applying the closure condition in \eqref{eq:closed_walk_positions} gives \eqref{eq:additive_index_resonance} and \eqref{eq:three_one_resonance}.  Pairing every finite walk with its reversed conjugate yields the cosine sums.  Unique factorization shows that the balanced phase is constant precisely when the two prime-index multisets agree.  A product of three primes cannot equal a single prime, so every $3+1$ frequency is nonzero.  Convergence of the total fourth moment follows from \eqref{eq:trace_truncation_limit}.  Separate termwise convergence of the displayed resonance families is not asserted here and remains an analytic question.
+\end{proof}
+
+
+\begin{proposition}
+\label{prop:balanced_resonance_count}
+Let
+\begin{equation}
+\mathcal R_2(R)
+=
+\left\{(r_1,r_2,q_1,q_2)\in\{1,\ldots,R\}^4:
+ r_1+r_2=q_1+q_2\right\}.
+\label{eq:balanced_resonance_set}
+\end{equation}
+Then
+\begin{equation}
+\#\mathcal R_2(R)=\frac{2R^3+R}{3}.
+\label{eq:balanced_resonance_count}
+\end{equation}
+The multiplicatively diagonal solutions, characterized by
+$\{r_1,r_2\}=\{q_1,q_2\}$ as multisets, number $2R^2-R$.  Hence the number of off-diagonal balanced resonances is
+\begin{equation}
+\frac{2R^3}{3}-2R^2+\frac{4R}{3}
+\sim \frac{2}{3}R^3.
+\label{eq:offdiagonal_resonance_count}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For $2\le u\le2R$, let
+\begin{equation}
+\rho_R(u)=\#\{(a,b)\in\{1,\ldots,R\}^2:a+b=u\}.
+\label{eq:rho_R_definition}
+\end{equation}
+Then $\rho_R(u)$ increases from $1$ to $R$ and decreases symmetrically to $1$.  Therefore
+\begin{align}
+\#\mathcal R_2(R)
+&=\sum_{u=2}^{2R}\rho_R(u)^2
+\label{eq:resonance_count_square_sum}\\
+&=2\sum_{j=1}^{R-1}j^2+R^2
+=\frac{2R^3+R}{3}.
+\label{eq:resonance_count_evaluation}
+\end{align}
+For each ordered pair $(r_1,r_2)$ there are two diagonal orderings of $(q_1,q_2)$ unless $r_1=r_2$, when there is only one.  This gives $2R^2-R$ diagonal solutions and \eqref{eq:offdiagonal_resonance_count} follows.
+\end{proof}
+
+\begin{remark}
+\label{rem:resonance_abundance_not_weighted_size}
+Proposition \ref{prop:balanced_resonance_count} settles the unweighted existence question: additive collisions of prime ranks are abundant, not sparse.  It does not settle the asymptotic size of $R_{2,2,N}(\sigma,t)$.  The coefficients depend on admissible starting indices and products of reciprocal primes, while the phases are
+\begin{equation}
+\exp\left(-it\log\frac{p_{r_1}p_{r_2}}{p_{q_1}p_{q_2}}\right).
+\label{eq:weighted_resonance_phase_again}
+\end{equation}
+Consequently, the genuine question is whether these weighted logarithmic prime phases cancel, and at what rate, over a set of cardinality of order $R^3$.
+\end{remark}
+
+\subsection{An exact phase-only square decomposition and its stationary-phase model}
+\label{subsec:phase_only_stationary}
+
+The abundance count can be sharpened for the unweighted phase model.  For $2\le n\le 2R$, put
+\begin{equation}
+I_{n,R}=\{r\in\{1,\ldots,R\}:1\le n-r\le R\}
+\label{eq:InR_definition}
+\end{equation}
+and
+\begin{equation}
+f_{n,R}(t)=\sum_{r\in I_{n,R}}
+\exp\bigl(-it(\log p_r+\log p_{n-r})\bigr).
+\label{eq:fnR_definition}
+\end{equation}
+
+\begin{proposition}
+\label{prop:phase_only_square_decomposition}
+The complete unweighted balanced phase sum, including the multiplicative diagonal, satisfies
+\begin{align}
+U_R(t)
+&:=\sum_{\substack{1\le r_1,r_2,q_1,q_2\le R\\
+r_1+r_2=q_1+q_2}}
+\exp\left(-it\log\frac{p_{r_1}p_{r_2}}{p_{q_1}p_{q_2}}\right)
+\label{eq:UR_quadruple}\\
+&=\sum_{n=2}^{2R}|f_{n,R}(t)|^2\ge0.
+\label{eq:UR_square}
+\end{align}
+The multiplicatively diagonal part has exact mass $2R^2-R$.  Hence the unweighted off-diagonal balanced contribution is
+\begin{equation}
+U_R^{\mathrm{off}}(t)=\sum_{n=2}^{2R}|f_{n,R}(t)|^2-(2R^2-R).
+\label{eq:UR_offdiagonal}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Group the quadruple sum by the common value $n=r_1+r_2=q_1+q_2$.  The inner double sum is the product of $f_{n,R}(t)$ with its complex conjugate, giving \eqref{eq:UR_square}.  The multiplicative diagonal consists of $q_1=r_1,q_2=r_2$ and the swapped choice $q_1=r_2,q_2=r_1$; the two choices coincide exactly when $r_1=r_2$.  Its cardinality is therefore $2R^2-R$.
+\end{proof}
+
+\begin{remark}
+\label{rem:no_quadruple_cancellation}
+Equation \eqref{eq:UR_square} shows that cancellation cannot occur after summing all quadruples with a fixed rank-sum and then pairing the result with its conjugate.  The only phase cancellation in this unweighted model occurs inside each one-dimensional sum $f_{n,R}(t)$.  This positivity applies to the phase-only model.  The coefficients $C_{2,2,N}$ in the actual fourth moment do not presently have a proved reduction to a single flat square of the form \eqref{eq:UR_square}; their denominator weights and the six direction words must be retained.
+\end{remark}
+
+The following argument describes the expected size of $f_{n,R}(t)$ away from the triangular boundary.  It uses the classical one-dimensional stationary-phase principle \cite{Olver1974}.  It is a heuristic calculation, not an asymptotic theorem for the discrete prime sequence.
+
+\begin{heuristic}
+\label{heur:stationary_phase_prime_ranks}
+Assume $n$ and $R$ tend to infinity with $n$ in the interior range and approximate
+\begin{equation}
+p_x\sim x\log x,
+\qquad
+\log p_x=\log x+\log\log x+o(1)
+\label{eq:nth_prime_heuristic}
+\end{equation}
+by a smooth interpolation.  For
+\begin{equation}
+\phi_n(x)=\log p_x+\log p_{n-x},
+\label{eq:phi_n_definition}
+\end{equation}
+symmetry gives a stationary point at $x=n/2$.  The prime-number-theorem model yields
+\begin{equation}
+\phi_n''(n/2)
+=-\frac{8}{n^2}
+\left(1+O\left(\frac1{\log n}\right)\right).
+\label{eq:phi_second_derivative}
+\end{equation}
+In the double regime
+\begin{equation}
+1\ll t\ll n^2,
+\label{eq:stationary_phase_regime}
+\end{equation}
+where the stationary window contains many lattice points and remains away from the endpoints, the one-dimensional stationary-phase approximation gives
+\begin{equation}
+|f_{n,R}(t)|
+\sim
+\sqrt{\frac{2\pi}{t|\phi_n''(n/2)|}}
+\sim
+\frac n2\sqrt{\frac{\pi}{t}}.
+\label{eq:fn_stationary_asymptotic}
+\end{equation}
+If $|I_{n,R}|\sim n$, the normalized coherence is therefore
+\begin{equation}
+\frac{|f_{n,R}(t)|}{|I_{n,R}|}
+\sim
+\sqrt{\frac{\pi}{4t}}.
+\label{eq:normalized_stationary_coherence}
+\end{equation}
+For fixed $t$, the correct large-$n$ conclusion is instead a Riemann-sum limit with a $t$-dependent constant; the $t^{-1/2}$ law requires the additional large-$t$ limit.  Near $n=2$ or $n=2R$, endpoint stationary phase replaces the interior formula.
+\end{heuristic}
+
+The curvature in \eqref{eq:phi_second_derivative} shows that the coherent window has width of order
+\begin{equation}
+\frac{n}{\sqrt t},
+\label{eq:stationary_window_width}
+\end{equation}
+not $n/t$.  This width is consistent with the square-root decay in \eqref{eq:normalized_stationary_coherence}.
+
+Combining \eqref{eq:normalized_stationary_coherence} with
+\begin{equation}
+\sum_{n=2}^{2R}|I_{n,R}|^2=\frac{2R^3+R}{3}
+\label{eq:ways_square_identity}
+\end{equation}
+suggests, in the same double regime and before inserting the matrix weights,
+\begin{equation}
+U_R(t)
+\sim
+\frac{\pi}{4t}\frac{2R^3+R}{3}
+\sim
+\frac{\pi}{6t}R^3.
+\label{eq:UR_stationary_heuristic}
+\end{equation}
+Since the diagonal mass is only $O(R^2)$, \eqref{eq:UR_stationary_heuristic} predicts a leading off-diagonal phase-only contribution whenever $R/t\to\infty$.  It does not decide the fourth moment of $H(s)$, because the actual coefficients contain powers $p_r^{-\sigma}$ and sums of reciprocal primes along admissible closed walks.
+
+\subsection{Rigorous suppression of the large-rank tail at fixed \texorpdfstring{$\sigma>1/2$}{sigma > 1/2}}
+\label{subsec:weighted_tail_suppression}
+
+The flat model in Proposition \ref{prop:phase_only_square_decomposition} assigns unit magnitude to every resonant quadruple.  The operator $H(s)$ does not: the jump of rank $r$ has magnitude $(\log p_r)p_r^{-\sigma}$, and every edge also carries a reciprocal prime from its starting index.  The following result isolates a rigorous consequence of those weights.
+
+For $M\ge1$, define
+\begin{equation}
+K^{(\le M)}(s)
+=
+\sum_{r\le M}(\log p_r)p_r^{-s}D^{-1}S^{2r-1},
+\qquad
+H^{(\le M)}(s)=K^{(\le M)}(s)+K^{(\le M)}(s)^*.
+\label{eq:rank_truncated_operators}
+\end{equation}
+
+\begin{theorem}
+\label{thm:weighted_rank_tail}
+Fix $\sigma>1/2$.  Uniformly for $t\in\R$,
+\begin{equation}
+\left\|K(\sigma+it)-K^{(\le M)}(\sigma+it)\right\|_{\HS}
+\ll_{\sigma}
+M^{1/2-\sigma}(\log M)^{1-\sigma}.
+\label{eq:K_rank_tail_bound}
+\end{equation}
+Consequently,
+\begin{equation}
+\left|
+\tr H(\sigma+it)^4
+-
+\tr H^{(\le M)}(\sigma+it)^4
+\right|
+\ll_{\sigma}
+M^{1/2-\sigma}(\log M)^{1-\sigma},
+\label{eq:fourth_moment_rank_tail_bound}
+\end{equation}
+uniformly in $t$.
+\end{theorem}
+
+\begin{proof}
+For each rank $r$, the nonzero entries of the corresponding weighted shift are
+\begin{equation}
+\frac{(\log p_r)p_r^{-s}}{p_i},
+\qquad i\ge1.
+\label{eq:single_rank_entries}
+\end{equation}
+Hence
+\begin{equation}
+\left\|K(s)-K^{(\le M)}(s)\right\|_{\HS}^2
+=
+\left(\sum_{i\ge1}\frac1{p_i^2}\right)
+\sum_{r>M}\frac{(\log p_r)^2}{p_r^{2\sigma}}.
+\label{eq:K_tail_exact_factorization}
+\end{equation}
+The prime number theorem gives $p_r\asymp r\log r$ and $\log p_r\asymp\log r$, so an integral comparison yields
+\begin{equation}
+\sum_{r>M}\frac{(\log p_r)^2}{p_r^{2\sigma}}
+\ll_{\sigma}
+M^{1-2\sigma}(\log M)^{2-2\sigma}.
+\label{eq:prime_rank_tail_sum}
+\end{equation}
+Taking square roots proves \eqref{eq:K_rank_tail_bound}.  Since
+\begin{equation}
+\left\|H(s)-H^{(\le M)}(s)\right\|_{\HS}
+\le
+2\left\|K(s)-K^{(\le M)}(s)\right\|_{\HS},
+\label{eq:H_tail_from_K_tail}
+\end{equation}
+and the total Hilbert--Schmidt norms are bounded in terms of $\sigma$, the telescoping identity for fourth powers and H\"older inequalities for Schatten norms give
+\begin{equation}
+\left|\tr(A^4-B^4)\right|
+\le
+4\max(\|A\|_4,\|B\|_4)^3\|A-B\|_4.
+\label{eq:fourth_power_schatten_bound}
+\end{equation}
+Using $\|T\|_4\le\|T\|_2$ with $A=H(s)$ and $B=H^{(\le M)}(s)$ proves \eqref{eq:fourth_moment_rank_tail_bound}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:no_cubic_growth_fixed_sigma}
+For each fixed $\sigma>1/2$ and $t\in\R$, the fourth moments of the rank truncations converge as $M\to\infty$.  In particular, the genuine fourth moment cannot have the $R^3/t$ growth predicted for the unit-weight model in \eqref{eq:UR_stationary_heuristic} when $\sigma$ is fixed above $1/2$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:weighted_stationary_mechanism}
+Theorem \ref{thm:weighted_rank_tail} proves suppression of the entire large-rank tail; it does not require an explicit formula for every coefficient $C_{2,2,N}$.  A local stationary-phase estimate is consistent with the theorem: near $r=n/2$, the factor
+\begin{equation}
+(\log p_r)(\log p_{n-r})p_r^{-\sigma}p_{n-r}^{-\sigma}
+\label{eq:local_weight_near_stationary_point}
+\end{equation}
+has size comparable to $n^{-2\sigma}(\log n)^{2-2\sigma}$.  Multiplication by the phase-only stationary width $n/\sqrt t$ gives the heuristic local scale
+\begin{equation}
+\frac{n^{1-2\sigma}(\log n)^{2-2\sigma}}{\sqrt t},
+\label{eq:weighted_stationary_local_scale}
+\end{equation}
+which decreases with $n$ for every fixed $\sigma>1/2$.  Equation \eqref{eq:weighted_stationary_local_scale} is a heuristic local interpretation; the rigorous statement is the global tail estimate \eqref{eq:fourth_moment_rank_tail_bound}.
+\end{remark}
+
+\begin{experiment}
+\label{exp:weighted_random_phase_preliminary}
+A preliminary finite-dimensional comparison replaced the arithmetic phases $p_r^{-it}$ by independent random phases of the same magnitudes, while retaining the exact matrix weights.  Across six tested parameter configurations, with twenty random-phase replicates per configuration, the reported standardized differences lay between $-0.71$ and $0.08$.  Within this limited experiment, the arithmetic fourth moment was not distinguishable from the corresponding random-phase null.  The complete parameter tuples and a larger null ensemble are required before this observation can be treated as a reproducible asymptotic test.
+\end{experiment}
+
+\begin{remark}
+\label{rem:random_phase_scope}
+Experiment \ref{exp:weighted_random_phase_preliminary} does not prove equality with a random-phase model.  Theorem \ref{thm:weighted_rank_tail} shows only that both the arithmetic and random-phase constructions have uniformly small large-rank tails at fixed $\sigma>1/2$.  It remains possible for finitely or moderately ranked phases to produce a nonzero arithmetic excess.
+\end{remark}
+
+Define the fourth-moment arithmetic excess by
+\begin{equation}
+\mathcal E_\sigma(t)
+=
+\tr H(\sigma+it)^4
+-
+\mathbb E_{\boldsymbol\theta}\tr H_{\sigma,\boldsymbol\theta}^4,
+\label{eq:fourth_moment_arithmetic_excess}
+\end{equation}
+where $H_{\sigma,\boldsymbol\theta}$ uses coefficients $(\log p_r)p_r^{-\sigma}e^{i\theta_r}$ with independent uniform phases.  At finite rank, averaging over $\boldsymbol\theta$ removes precisely the monomials whose exponent vector is not balanced rank by rank.  After grouping identical logarithmic frequencies, the nonconstant part of \eqref{eq:fourth_moment_arithmetic_excess} is a trigonometric polynomial.  The tail estimate permits passage to the infinite-rank limit in the fourth moment.  In particular, its Bohr mean in $t$ is zero after subtraction of all zero-frequency terms.  This statement concerns the temporal mean; it does not imply that $\mathcal E_\sigma(t)$ vanishes identically or has zero mean square.
+
+\begin{question}
+\label{question:weighted_stationary_phase}
+For fixed $\sigma>1/2$, determine the grouped frequency coefficients of $\mathcal E_\sigma(t)$ and its mean-square energy.  In the critical double limit $\sigma\downarrow1/2$ and $M\to\infty$, can a normalization be found for which the suppressed large-rank contribution reappears as a nontrivial boundary observable?
+\end{question}
+
+For finite truncations of higher even moments, direction words need not contain equal numbers of forward and backward steps.  If there are $u$ forward and $v$ backward steps, closure is
+\begin{equation}
+2\sum_{a=1}^{u}r_a-u
+=
+2\sum_{b=1}^{v}q_b-v,
+\label{eq:higher_additive_resonance}
+\end{equation}
+and the phase is
+\begin{equation}
+\exp\left(-it\log\frac{\prod_{a=1}^{u}p_{r_a}}
+{\prod_{b=1}^{v}p_{q_b}}\right).
+\label{eq:higher_multiplicative_phase}
+\end{equation}
+This is the precise additive--multiplicative coupling generated by the matrix.
+
+Since $H(s)\in\HS$, the regularized determinant
+\begin{equation}
+\Delta_H(s;z)=\det{}_2(I-zH(s))
+\label{eq:regularized_determinant}
+\end{equation}
+is defined for $\Re s>1/2$.  For sufficiently small $|z|$,
+\begin{equation}
+\log\Delta_H(s;z)
+=-\sum_{m\ge2}\frac{z^m}{m}\tr H(s)^m.
+\label{eq:regularized_log_expansion}
+\end{equation}
+It extends as an entire function of $z$, but it is not holomorphic in $s$.
+
+To retain holomorphy, introduce two independent complex variables:
+\begin{equation}
+Q(s,w)=K(w)^{\mathsf T}K(s),
+\qquad \Re s,\Re w>\frac12.
+\label{eq:Q_two_variable}
+\end{equation}
+Here $^{\mathsf T}$ denotes matrix transpose with respect to the standard basis, not the Hilbert-space adjoint.  Transposition is a bounded complex-linear map on the Hilbert--Schmidt class.  The product is trace class and holomorphic jointly in $(s,w)$.  Define
+\begin{equation}
+\Delta_Q(s,w;z)=\det(I-zQ(s,w)).
+\label{eq:Q_determinant}
+\end{equation}
+This determinant is jointly holomorphic in $(s,w)$ and entire in $z$.
+On the positive section $w=\overline s$,
+\begin{equation}
+Q(s,\overline s)=K(\overline s)^{\mathsf T}K(s)=K(s)^*K(s)\ge0.
+\label{eq:Q_positive_section}
+\end{equation}
+Thus $\Delta_Q$ separates the holomorphic two-variable object from its positive, nonholomorphic restriction.  Any proposed comparison with $\xi$ must use $\Delta_Q$ or another holomorphic construction, not $\Delta_H$ directly.
+
+\begin{warning}
+\label{warn:two_variable_domain}
+The determinant $\Delta_Q$ is currently defined only for $\Re s>1/2$ and $\Re w>1/2$.  Consequently, no specialization available at this stage reaches or crosses the critical line.  Before a divisor involving $\xi(s)$ on a domain meeting $\Re s=1/2$ can be proposed, one must first construct an independent continuation or a boundary-value theory for $\Delta_Q$.
+\end{warning}
+
+
+\section{Noncrossing cumulants and the second M\"obius inversion}
+\label{sec:noncrossing_cumulants}
+
+The free indeterminates $X_r$ in Section \ref{sec:path_lifting} retain word order, but their noncommutativity alone does not make them free random variables.  Free probability requires a unital noncommutative probability space together with a specified linear functional, and freeness is an additional relation \cite{VoiculescuDykemaNica1992,NicaSpeicher2006}.  Nevertheless, every finite self-adjoint truncation $H_N(s)$ has a canonical normalized trace state
+\begin{equation}
+\tau_N(T)=\frac1N\tr T.
+\label{eq:normalized_trace_state}
+\end{equation}
+Its moments therefore admit a formal free-cumulant expansion.
+
+\begin{definition}
+\label{def:free_cumulants_HN}
+For fixed $N$ and $s$, define the scalar free cumulants
+$\kappa_n^{(N)}(s)$ by
+\begin{equation}
+\tau_N(H_N(s)^n)
+=
+\sum_{\pi\in NC(n)}
+\prod_{V\in\pi}\kappa_{|V|}^{(N)}(s),
+\label{eq:free_moment_cumulant_relation}
+\end{equation}
+where $NC(n)$ is the lattice of noncrossing partitions of $\{1,\ldots,n\}$.
+\end{definition}
+
+M\"obius inversion on $NC(n)$ gives
+\begin{equation}
+\kappa_n^{(N)}(s)
+=
+\sum_{\pi\in NC(n)}
+\mu_{NC}(\pi,1_n)
+\prod_{V\in\pi}
+\tau_N(H_N(s)^{|V|}),
+\label{eq:free_cumulant_mobius_inversion}
+\end{equation}
+where $\mu_{NC}$ is the M\"obius function of the noncrossing-partition lattice.  This is the standard combinatorial mechanism behind free cumulants \cite{KrawczykSpeicher2000,NicaSpeicher2006}.
+
+\begin{remark}
+\label{rem:two_mobius_functions}
+Two distinct M\"obius inversions now occur in the same path framework:
+\begin{enumerate}[label=(\roman*)]
+\item the arithmetic function $\mu(m)$ arises from multilinear projection onto paths with no repeated prime label;
+\item the combinatorial function $\mu_{NC}$ converts trace moments of $H_N(s)$ into free cumulants.
+\end{enumerate}
+No identity between these two functions is implied.  Any interaction would have to be proved by inserting the path expansion of the moments into \eqref{eq:free_cumulant_mobius_inversion} and identifying cancellations indexed simultaneously by square-free labels and noncrossing partitions.
+\end{remark}
+
+\begin{warning}
+\label{warn:no_freeness_yet}
+The compact operator $H(s)$ does not presently define a nontrivial large-$N$ free limit under the normalization \eqref{eq:normalized_trace_state}; for fixed compact $H(s)$, normalized trace moments of its finite compressions may tend to zero.  A nontrivial limiting distribution would require a justified rescaling or a different state.  Thus free cumulants are currently an exact finite-dimensional reorganization of closed-walk moments, not evidence of asymptotic freeness.
+\end{warning}
+
+\begin{question}
+\label{question:double_mobius_interaction}
+Is there a normalization of $H_N(s)$ and a limiting tracial state for which the free cumulants have a nonzero limit, and can the path expansion of those cumulants be expressed through the square-free arithmetic sector of Section \ref{sec:multilinear_mobius}?
+\end{question}
+
+\section{Toeplitz defect and prime gaps}
+\label{sec:toeplitz_defect}
+
+Although prime gaps are not the principal route pursued below, the matrix has an exact translation-defect identity.  Off the diagonal,
+\begin{equation}
+A_{i+1,j+1}=A_{ij},
+\qquad j>i,
+\label{eq:offdiag_toeplitz}
+\end{equation}
+while
+\begin{equation}
+A_{i+1,i+1}-A_{ii}=g_i,
+\qquad g_i=p_{i+1}-p_i.
+\label{eq:diagonal_gap_defect}
+\end{equation}
+Thus every failure of Toeplitz translation is concentrated in the diagonal gap sequence.
+
+Let $E=\diag((-1)^i)$ and $C=EBE$.  Then
+\begin{equation}
+C=(D-U)^{-1},
+\qquad C_{ij}=|B_{ij}|.
+\label{eq:positive_inverse}
+\end{equation}
+For a finite tail of common length beginning at index $i$, write $C_M^{(i)}$ for the inverse of the corresponding truncation of $D-U$.  Aligning the two tails in local coordinates, the finite-dimensional resolvent identity gives
+\begin{equation}
+C_M^{(i)}-C_M^{(i+1)}
+=C_M^{(i)}\diag(g_i,g_{i+1},\ldots,g_{i+M-1})C_M^{(i+1)}.
+\label{eq:gap_resolvent_identity}
+\end{equation}
+For any fixed entry, the identity stabilizes once $M$ is sufficiently large.  Thus, entrywise,
+\begin{equation}
+c_{i,n}-c_{i+1,n}
+=
+\sum_{k=0}^n g_{i+k}c_{i,k}c_{i+k+1,n-k}.
+\label{eq:gap_convolution_identity}
+\end{equation}
+This is a rigorous secondary structure: row translation of the positive inverse is a positive nonlinear smoothing of prime gaps.
+
+\section{Hermite normal forms and integral quantizations}
+\label{sec:hermite}
+
+Classical Hermite normal form is a canonical form for integer matrices under unimodular row or column operations; polynomial variants require a specified polynomial ring and corresponding hypotheses \cite{KannanBachem1979,LabahnNeigerZhou2017}.  The original matrix $A_N$ contains the real numbers $\log p_r$ and is therefore not an integer matrix.  Consequently, the phrase ``the Hermite normal form of $A_N$'' has no canonical meaning in the classical sense.
+
+There are two mathematically defined reductions.
+
+\subsection{Integral quantization of the full matrix}
+\label{subsec:integral_quantization}
+
+To approximate the full real matrix without changing the relative scale of its diagonal and off-diagonal entries, all entries must be multiplied by the same denominator.  For $Q\in\N$, define
+\begin{equation}
+\ell_r^{(Q)}=\left\lfloor Q\log p_r\right\rceil
+\label{eq:quantized_logs}
+\end{equation}
+and the integer matrix
+\begin{equation}
+\widetilde A_N^{(Q)}(i,j)=
+\begin{cases}
+Qp_i,&j=i,\\
+\ell_r^{(Q)},&j-i=2r-1,\\
+0,&\text{otherwise}.
+\end{cases}
+\label{eq:quantized_A}
+\end{equation}
+Then $Q^{-1}\widetilde A_N^{(Q)}$ converges entrywise to $A_N$ as $Q\to\infty$.  Its row and column Hermite normal forms are well defined and computable by polynomial-time algorithms \cite{KannanBachem1979}.  They are invariants of the chosen integral approximant and depend on $Q$, the rounding convention, and the row-versus-column convention.
+
+\begin{proposition}
+\label{prop:quantized_determinant}
+For every $Q$,
+\begin{equation}
+\det \widetilde A_N^{(Q)}=Q^N\prod_{i=1}^Np_i.
+\label{eq:quantized_determinant}
+\end{equation}
+Hence the product of the diagonal pivots of a standard positive-pivot row or column Hermite normal form of $\widetilde A_N^{(Q)}$ is $Q^N\prod_{i=1}^N p_i$.
+\end{proposition}
+
+\begin{proof}
+The quantized matrix remains triangular with diagonal $Qp_i$.  Unimodular transformations preserve the absolute determinant, and the standard Hermite convention has positive pivots.
+\end{proof}
+
+An alternative scheme that leaves the diagonal equal to $p_i$ while replacing only $\log p_r$ by $\lfloor Q\log p_r\rceil$ is a legitimate integer family, but it is not an approximation to either $A_N$ or $QA_N$ because it changes the relative diagonal/off-diagonal scale.  It should therefore be treated as a different deformation, not as the canonical quantization of $A_N$.
+
+The family $Q\mapsto\operatorname{HNF}(\widetilde A_N^{(Q)})$ may be studied as an arithmetic fingerprint of simultaneous rational approximations to the logarithms.  Any stabilization claim must specify $N$, the rounding convention, the HNF convention, and the mode in which $Q\to\infty$.
+
+\subsection{Symbolic polynomial lifting}
+\label{subsec:symbolic_hermite}
+
+Replace each $\log p_r$ by an indeterminate $y_r$ and define
+\begin{equation}
+\mathcal A_N(\mathbf y)=D_N+\sum_ry_rS_N^{2r-1}.
+\label{eq:symbolic_A}
+\end{equation}
+This lies over the multivariate ring $\Z[y_1,\ldots,y_R]$, which is not a principal ideal domain when $R>1$.  A classical univariate polynomial Hermite theory does not directly supply a unique multivariate HNF.  One may instead choose a monomial order and a module Gr\"obner basis, or specialize to a univariate curve $y_r=f_r(t)$ and compute a polynomial HNF.  These are chosen algebraic reductions, not intrinsic reductions of the original logarithmic matrix.
+
+\begin{remark}
+\label{rem:hermite_role}
+Hermite reductions can reveal lattice divisibility and modular structure of integral approximants.  They do not retain the analytic phases $p_r^{-it}$ needed in Sections \ref{sec:complex_deformation}--\ref{sec:selfadjoint_closure}.  Accordingly, they are recorded as a parallel arithmetic invariant rather than the main critical-line mechanism.
+\end{remark}
+
+\section{Numerical path investigated and negative evidence}
+\label{sec:numerical_negative}
+
+\begin{experiment}
+\label{exp:phase_radial}
+Finite matrices of sizes $50,100,200,400$ were inverted, superdiagonal channels were converted into polynomials, and their roots were matched across truncations.  A phase--radial statistic then optimized a phase scale and compared the resulting phases with training and held-out zeta ordinates.  The complete pipeline was tested against $199$ nested permutations of the log-prime pattern.
+\end{experiment}
+
+The best real-data channel was the odd channel, with selected scale $1.67$, but the global empirical value was
+\begin{equation}
+p_{\mathrm{emp}}=0.635.
+\label{eq:phase_radial_pvalue}
+\end{equation}
+Thus that selected phase--radial mechanism was not distinguishable from the declared permutation null.  The experiment also showed roots of finite superdiagonal polynomials clustering near the unit circle as $N$ increased.  Because the transformation, channel selection, and matching statistic were exploratory, and because the null did not reject, these roots are not used as evidence for a zeta correspondence.
+
+The negative experiment motivates the analytic order adopted here: retain path labels, derive the complex parameter from the prime labels, and compute fixed operator invariants before comparing with zero ordinates.
+
+\section{What is rigorous, formal, heuristic, and conjectural}
+\label{sec:status}
+
+The following statements are rigorous within the definitions given:
+\begin{enumerate}[label=(\roman*)]
+\item the finite determinant and spectrum in Proposition \ref{prop:det_spectrum};
+\item the exact path inverse in Theorem \ref{thm:exact_inverse}, including sign rigidity and fixed-superdiagonal convergence;
+\item the intrinsic finite recovery of an individual path from principal compressions of $A^{-1}$ in Section \ref{sec:intrinsic_path_recovery};
+\item the commutative and noncommutative coefficient identities and the multilinear M\"obius-sign identity;
+\item the coefficientwise Euler-product identity of Theorem \ref{thm:formal_euler_recovery}, only in its stated formal sense and with ordinary evaluation only for $\Re s>1$;
+\item the left Hilbert--Schmidt threshold $\Re s>1/2$ in Theorem \ref{thm:HS_boundary};
+\item the right Hilbert--Schmidt threshold $\Re s>0$, the quasinilpotence of $K_R(s)$, and the Hilbert--Schmidt holomorphic inverse $A(s)^{-1}$ in Proposition \ref{prop:right_inverse_realization};
+\item the failure of the naive commutator transfer $BD=DB-[D,B]$ at $0<\Re s\le1/2$ on the real axis, Proposition \ref{prop:naive_transfer_fails};
+\item the exact identity $\tr Q(s,w)=C_{\mathbb P}P''(s+w)$ and the equivalent RH continuation criterion in Theorem \ref{thm:matrix_RH_criterion};
+\item the finite closed-walk trace formula, vanishing of odd moments, the second-moment formula, and the finite $2+2$/$3+1$ classification of the fourth moment;
+\item the prime-gap resolvent identity and the determinant of the consistently scaled integral Hermite quantizations.
+\end{enumerate}
+
+Several constructions that are algebraically exact are not functional bridges.  In particular, the pathwise denominator-removal map of Section \ref{sec:path_renormalization} is unbounded relative to the original operator topology.  A factorial path norm can be defined so that the normalized coefficients belong to it, but this does not make the normalization a bounded transform of $A(s)^{-1}$ and does not provide a continuous scalar evaluation in the critical strip.  Accordingly, no completed path-space theorem is used here as a closure of the RH route.
+
+The Schur-complement and inclusion--exclusion formulas of Section \ref{sec:intrinsic_path_recovery} are finite nonlinear coordinates.  They prove that the path decomposition is intrinsic to $A^{-1}$, but no infinite-dimensional boundedness of the complete family of compression maps is asserted or needed for the operator results.  The analytic existence and holomorphy of $A(s)^{-1}$ are obtained directly from the right normalization $K_R(s)$.
+
+Theorem \ref{thm:matrix_RH_criterion} remains an exact reformulation obtained through the classical prime-zeta identity.  The closed-walk stationary-phase discussion is heuristic where explicitly labelled so; the weighted-tail estimates are rigorous only in their stated fixed-$\sigma$ regime.  The principal unresolved matrix-internal question is the transfer problem between $K_R$ and $K_L$ across their different Schatten domains.
+
+\section{Necessary next steps toward the Riemann hypothesis}
+\label{sec:next_steps}
+
+The current route is deliberately restricted to constructions determined by $A$, $A^{-1}$, their diagonal $D$, and finite principal compressions.  The earlier program based on a bounded pathwise denominator-removal map is not used.
+
+\subsection{Step I: exploit the left--right normalization asymmetry}
+\label{subsec:step1}
+
+The proven starting point is
+\begin{equation}
+K_L(s)=D^{-1}U(s)\in\HS\quad\Longleftrightarrow\quad \Re s>\frac12,
+\label{eq:step1_left}
+\end{equation}
+whereas
+\begin{equation}
+K_R(s)=U(s)D^{-1}\in\HS\quad\Longleftrightarrow\quad \Re s>0.
+\label{eq:step1_right}
+\end{equation}
+Moreover,
+\begin{equation}
+A(s)^{-1}=D^{-1}(I+K_R(s))^{-1}
+\label{eq:step1_inverse}
+\end{equation}
+is Hilbert--Schmidt and holomorphic in $\Re s>0$.
+
+The first unresolved theorem is to find an identity or estimate, formulated only with $A(s)$, $A(s)^{-1}$, $D$, $K_L(s)$, and $K_R(s)$, that transfers a zeta-sensitive left-normalized quantity through the right-normalized inverse without inserting the unbounded conjugation $D(\cdot)D^{-1}$.  A successful identity must be meaningful in a domain larger than the a priori left Hilbert--Schmidt half-plane and must not reduce to a classical correlation of distinct primes.  Proposition \ref{prop:naive_transfer_fails} rules out the most immediate attempt: neither $BD$ nor $[D,B]$ remains bounded across the left boundary.  The transfer must therefore exploit additional structure of $A$ rather than a first-order diagonal commutator.
+
+\subsection{Step II: preserve the quadratic prime channel without importing prime-zeta continuation}
+\label{subsec:step2}
+
+On $\Re s,\Re w>1/2$,
+\begin{equation}
+\tr\bigl(K_L(w)^{\mathsf T}K_L(s)\bigr)
+=C_{\mathbb P}P''(s+w).
+\label{eq:step2_quadratic}
+\end{equation}
+This identity fixes the zeta-sensitive channel but does not continue it.  Any proposed transfer from Step I must preserve enough of this channel to recover \eqref{eq:step2_quadratic} on the overlap, while obtaining the larger-domain estimate from $K_R$ or $A^{-1}$ alone.  Using a pre-existing continuation of $P$, a shifted prime correlation, or a M\"obius cancellation estimate is disallowed as circular for this route.
+
+\subsection{Step III: use path recovery only as a finite diagnostic}
+\label{subsec:step3}
+
+If an operator identity from Steps I--II requires inspection of individual path contributions, the coordinates of Section \ref{sec:intrinsic_path_recovery} may be used.  They are exact and intrinsic, but only finite algebraic operations are invoked.  No proof may assume that the full family of Schur-complement coordinates forms a bounded linear map on an infinite matrix space unless that is separately established.
+
+\subsection{Step IV: establish a non-tautological continuation criterion}
+\label{subsec:step4}
+
+A successful matrix estimate must yield continuation or zero-free information for the scalar channel in Theorem \ref{thm:matrix_RH_criterion} without using that theorem backwards.  In particular, defining an error term by subtracting $P''$, choosing a normalization to place a desired boundary at $1/2$, or invoking a continuation of the prime zeta function does not count as a proof.
+
+\subsection{Step V: boundary and spectral consequences}
+\label{subsec:step5}
+
+Only after Steps I--IV are established should the self-adjoint or determinant constructions be used to obtain positivity, boundary control, or a spectral reality statement.  These later constructions remain secondary until the left--right transfer problem has a proved solution.
+
+\section{Conjectures and open problems}
+\label{sec:open_problems}
+
+\begin{question}[Left--right transfer]
+\label{question:left_right_transfer}
+Is there an identity intrinsic to $A(s)$ and $A(s)^{-1}$ that transfers a nontrivial left-normalized quantity from $K_L(s)=D^{-1}U(s)$ through the better-behaved right normalization $K_R(s)=U(s)D^{-1}$, without using the unbounded similarity $K_R=DK_LD^{-1}$?
+\end{question}
+
+\begin{question}[Critical transfer with the prime channel preserved]
+\label{question:critical_transfer}
+Can such an identity recover, on $\Re s,\Re w>1/2$, the quadratic channel $\tr(K_L(w)^{\mathsf T}K_L(s))$ while the controlling side of the identity extends by matrix estimates to a larger domain?  Any proof must avoid prior continuation of the prime zeta function and avoid estimates equivalent to RH.
+\end{question}
+
+\begin{question}[Uniform control of intrinsic path coordinates]
+\label{question:path_coordinate_control}
+Do the finite Schur-complement coordinates of Section \ref{sec:intrinsic_path_recovery} admit a useful uniform estimate on the one-parameter family $A(s)^{-1}$ itself, without asserting boundedness on an arbitrary ambient matrix space?  Such an estimate would be relevant only if it enters a matrix identity from the left--right transfer problem.
+\end{question}
+
+\begin{question}[Boundary closed walks]
+\label{question:weighted_phase_cancellation}
+Does a nontrivial denominator-weighted arithmetic excess survive in a coupled limit approaching $\Re s=1/2$ in the closed-walk model, after the fixed-$\sigma$ tail suppression proved above?  This question is secondary to the transfer problem.
+\end{question}
+
+\begin{question}[Hermite stability]
+\label{question:hermite_stability}
+For fixed $N$, what arithmetic information is contained in the sequence of integral Hermite forms $\operatorname{HNF}(\widetilde A_N^{(Q)})$ as $Q\to\infty$, and does any normalized statistic stabilize independently of the rounding convention?
+\end{question}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The matrix $A_N$ combines two prime-index structures that remain distinct throughout the analysis: the diagonal entry at position $i$ is $p_i$, while the odd displacement $2r-1$ is labelled by $\log p_r$.  Its inverse is an exact ordered path sum whose denominators are the diagonal primes visited along the path.  Individual path weights are not external data: in every finite interval they are recovered from $A^{-1}$ by principal-compression Schur complements and finite inclusion--exclusion.  These recovery formulas are nonlinear finite coordinates and are not used as bounded operators on the infinite matrix space.
+
+The formal multivariable and square-free constructions correctly identify Liouville and M\"obius signs, but removing all path denominators is an unbounded operation relative to the original operator topology.  Consequently the formal Euler-product reconstruction is retained only as a coefficient identity and no completed path-space claim is used as an analytic bridge.
+
+The strongest matrix-internal analytic result is the asymmetry between the two diagonal normalizations.  The left normalization $D^{-1}U(s)$ is Hilbert--Schmidt exactly for $\Re s>1/2$, whereas the right normalization $U(s)D^{-1}$ is Hilbert--Schmidt exactly for $\Re s>0$.  Since the right-normalized operator is compact and quasinilpotent, the original closed operator satisfies
+\begin{equation}
+A(s)^{-1}=D^{-1}(I+U(s)D^{-1})^{-1}\in\mathcal S_2
+\qquad (\Re s>0),
+\end{equation}
+and depends holomorphically on $s$ there.  The extra decay comes from the prime at the arrival vertex of a large jump and is therefore a genuine consequence of the triangular placement of the diagonal.
+
+The exact quadratic trace built from the left normalization remains $C_{\mathbb P}P''(s+w)$ and gives a rigorous criterion equivalent to RH, but only through the classical prime-zeta identity.  The central unresolved problem is now sharply separated from that reformulation: determine whether the better right-normalized inverse can control a left-normalized, zeta-sensitive quantity by an identity intrinsic to $A$ and $A^{-1}$, without inserting the unbounded diagonal conjugation, without converting the problem into a classical correlation among distinct primes, and without assuming a continuation of the prime zeta function.  The elementary commutator route is already excluded: on the real interval $0<\sigma\le1/2$, the first row of $B(\sigma)D$ and of $[D,B(\sigma)]$ fails to lie in $\ell^2$.  The self-adjoint closed-walk, determinant, and Hermite constructions remain valid auxiliary structures, but they become relevant to RH only after such a transfer mechanism is proved.
+
+\begingroup
+\raggedright
+\begin{thebibliography}{99}
+
+\bibitem{BarrettJarvis1992}
+W. W. Barrett and T. J. Jarvis,
+\emph{Spectral properties of a matrix of Redheffer},
+Linear Algebra Appl. \textbf{162--164} (1992), 673--683,
+doi:10.1016/0024-3795(92)90401-U.
+
+\bibitem{BrevigEtAl2016}
+O. F. Brevig, K.-M. Perfekt, K. Seip, A. G. Siskakis, and D. Vukoti\'c,
+\emph{The multiplicative Hilbert matrix},
+Adv. Math. \textbf{302} (2016), 410--432,
+doi:10.1016/j.aim.2016.07.019,
+arXiv:1411.7294.
+
+\bibitem{Hoffman1992}
+M. E. Hoffman,
+\emph{Multiple harmonic series},
+Pacific J. Math. \textbf{152} (1992), 275--290,
+doi:10.2140/pjm.1992.152.275.
+
+\bibitem{Hilberdink2006}
+T. Hilberdink,
+\emph{Determinants of multiplicative Toeplitz matrices},
+Acta Arith. \textbf{125} (2006), 265--284,
+doi:10.4064/aa125-3-4.
+
+\bibitem{Hilberdink2015}
+T. Hilberdink,
+\emph{Multiplicative Toeplitz matrices and the Riemann zeta function},
+in \emph{Four Faces of Number Theory}, EMS, Z\"urich, 2015, pp. 77--122,
+doi:10.4171/142.
+
+\bibitem{Hilberdink2017}
+T. Hilberdink,
+\emph{Singular values of multiplicative Toeplitz matrices},
+Linear Multilinear Algebra \textbf{65} (2017), 813--829,
+doi:10.1080/03081087.2016.1204978.
+
+\bibitem{HilberdinkPushnitski2023}
+T. Hilberdink and A. Pushnitski,
+\emph{Spectral asymptotics for a family of LCM matrices},
+St. Petersburg Math. J. \textbf{34} (2023), 463--481,
+doi:10.1090/spmj/1764,
+arXiv:2110.14323.
+
+\bibitem{KannanBachem1979}
+R. Kannan and A. Bachem,
+\emph{Polynomial algorithms for computing the Smith and Hermite normal forms of an integer matrix},
+SIAM J. Comput. \textbf{8} (1979), 499--507,
+doi:10.1137/0208040.
+
+\bibitem{LabahnNeigerZhou2017}
+G. Labahn, V. Neiger, and W. Zhou,
+\emph{Fast, deterministic computation of the Hermite normal form and determinant of a polynomial matrix},
+J. Symbolic Comput. \textbf{85} (2018), 44--72,
+doi:10.1016/j.jsc.2017.03.003,
+arXiv:1607.04176.
+
+\bibitem{LindqvistSeip1998}
+P. Lindqvist and K. Seip,
+\emph{Note on some greatest common divisor matrices},
+Acta Arith. \textbf{84} (1998), 149--154,
+doi:10.4064/aa-84-2-149-154.
+
+\bibitem{KrawczykSpeicher2000}
+B. Krawczyk and R. Speicher,
+\emph{Combinatorics of free cumulants},
+J. Combin. Theory Ser. A \textbf{90} (2000), 267--292,
+doi:10.1006/jcta.1999.3032.
+
+\bibitem{NicaSpeicher2006}
+A. Nica and R. Speicher,
+\emph{Lectures on the Combinatorics of Free Probability},
+London Math. Soc. Lecture Note Ser. 335, Cambridge University Press, Cambridge, 2006,
+doi:10.1017/CBO9780511735127.
+
+
+\bibitem{Olver1974}
+F. W. J. Olver,
+\emph{Asymptotics and Special Functions},
+Academic Press, New York, 1974; reprinted by A K Peters, 1997.
+
+\bibitem{PerfektPushnitski2018}
+K.-M. Perfekt and A. Pushnitski,
+\emph{On the spectrum of the multiplicative Hilbert matrix},
+Ark. Mat. \textbf{56} (2018), 163--183,
+doi:10.4310/ARKIV.2018.v56.n1.a10,
+arXiv:1705.01959.
+
+\bibitem{Roesler1986}
+F. Roesler,
+\emph{Riemann's hypothesis as an eigenvalue problem},
+Linear Algebra Appl. \textbf{81} (1986), 153--198,
+doi:10.1016/0024-3795(86)90255-7.
+
+\bibitem{Roesler1987}
+F. Roesler,
+\emph{Riemann's hypothesis as an eigenvalue problem. II},
+Linear Algebra Appl. \textbf{92} (1987), 45--73,
+doi:10.1016/0024-3795(87)90250-3.
+
+\bibitem{Rota1964}
+G.-C. Rota,
+\emph{On the foundations of combinatorial theory I. Theory of M\"obius functions},
+Z. Wahrscheinlichkeitstheorie verw. Gebiete \textbf{2} (1964), 340--368,
+doi:10.1007/BF00531932.
+
+\bibitem{VoiculescuDykemaNica1992}
+D. V. Voiculescu, K. J. Dykema, and A. Nica,
+\emph{Free Random Variables},
+CRM Monograph Series 1, American Mathematical Society, Providence, RI, 1992,
+ISBN 978-0-8218-1140-5.
+
+\bibitem{Vaughan1996}
+R. C. Vaughan,
+\emph{On the eigenvalues of Redheffer's matrix, II},
+J. Austral. Math. Soc. Ser. A \textbf{60} (1996), 260--273,
+doi:10.1017/S1446788700037654.
+
+\bibitem{Wilf2004}
+H. S. Wilf,
+\emph{The Redheffer matrix of a partially ordered set},
+Electron. J. Combin. \textbf{11} (2004), Research Paper R10,
+doi:10.37236/1867,
+arXiv:math/0408263.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}

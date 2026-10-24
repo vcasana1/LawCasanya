@@ -1,0 +1,31 @@
+Twisted prime-polynomial finite-sum validation
+P_Y(t)=-(1/pi) sum_{n<=Y} Lambda(n)/(sqrt(n)log(n))*sin(t log n)
+integrals are evaluated algebraically from exponential antiderivatives
+
+alpha=0.50, theta=0.375, epsilon=0.100
+theta-alpha/2 = 0.125; min(alpha,1)-theta = 0.125
+      T       Y     prime powers       |I(T)|/T       bound-shape/T      ratio
+     300       8           6        2.36036e-04      4.99644e-01      0.0005
+     800      12           8        7.77263e-04      4.09776e-01      0.0019
+    2000      17          11        1.13466e-04      3.45417e-01      0.0003
+    5000      24          13        6.30831e-05      2.94083e-01      0.0002
+   12000      33          18        1.96800e-05      2.53862e-01      0.0001
+
+alpha=1.00, theta=0.750, epsilon=0.100
+theta-alpha/2 = 0.250; min(alpha,1)-theta = 0.250
+      T       Y     prime powers       |I(T)|/T       bound-shape/T      ratio
+     300      72          29        3.56840e-03      6.29301e-01      0.0057
+     800     150          48        2.79568e-03      5.04863e-01      0.0055
+    2000     299          79        4.59995e-04      4.15411e-01      0.0011
+    5000     594         129        2.59604e-04      3.45000e-01      0.0008
+   12000    1146         215        6.00727e-04      2.91117e-01      0.0021
+
+alpha=1.50, theta=0.875, epsilon=0.050
+theta-alpha/2 = 0.125; min(alpha,1)-theta = 0.125
+      T       Y     prime powers       |I(T)|/T       bound-shape/T      ratio
+     300     147          47        2.42370e-03      9.89980e-01      0.0024
+     800     346          86        1.46832e-03      8.77654e-01      0.0017
+    2000     773         160        1.14023e-03      7.89049e-01      0.0014
+    5000    1724         298        6.48359e-04      7.12562e-01      0.0009
+   12000    3709         556        4.52507e-04      6.48590e-01      0.0007
+figure = figures/prime_model_validation.png

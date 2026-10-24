@@ -1,0 +1,30 @@
+SUPPLEMENTARY ORTHOGONAL-CUBIC POINTWISE CURVATURE SCAN
+======================================================
+
+Development-log result supplied for Version 2.
+The quantity tested was
+  C(alpha,beta) = d_alpha d_beta log |K(alpha,beta)|
+for the orthogonal-cubic quotient, using the genuine zeta evaluator.
+
+Lobe 8: refined 21-point beta grid; endpoint rows/columns omitted
+        in the reported interior summary, hence 19 x 19 = 361 pairs.
+        min C = 0.00164
+        max C = 0.00249
+        negative pairs = 0 / 361
+
+Lobe 2: 11-point beta grid; endpoint rows/columns omitted,
+        hence 9 x 9 = 81 pairs.
+        min C = 0.00009
+        max C = 0.00011
+        negative pairs = 0 / 81
+
+Lobe 25: 11-point beta grid; endpoint rows/columns omitted,
+         hence 9 x 9 = 81 pairs.
+         min C = 0.00088
+         max C = 0.00150
+         negative pairs = 0 / 81
+
+These are finite numerical observations, not a proof of pointwise positivity.
+The accompanying MATLAB script VIOLET_TRANSVERSE_REFLECTION_POLYA_AUDIT.m
+contains a direct reconstruction of the pointwise curvature calculation and
+adds reflection/coherence, adjacent-Chebyshev, and Polya-root diagnostics.

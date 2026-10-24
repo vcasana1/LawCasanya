@@ -1,0 +1,1538 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\e}{\mathrm e}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\Li}{\operatorname{Li}}
+\newcommand{\ZP}{\mathfrak Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+
+\title[Marked $z$-Primes and a Spectral Lattice]{
+Marked $z$-Primes Attached to the Nontrivial Zeros of the Riemann Zeta Function:\
+Exact Quantization, Prime-Power Resonances, Asymptotic Bounds, and a Theoretical Localization Lattice
+}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+Let $p_k$ be the $k$-th ordinary prime and let $\gamma_k>0$ be the
+$k$-th positive ordinate of a nontrivial zero of the Riemann zeta
+function, counted with multiplicity.  We define the marked $z$-prime
+attached to $\gamma_k$ by
+\begin{equation}
+ n_k=\left\lceil\frac{\gamma_k\log p_k}{\pi}\right\rceil,
+ \qquad
+ z_k=\exp\left(\frac{\pi n_k}{\gamma_k}\right),
+ \qquad
+ \mathfrak z_k=(n_k,z_k).
+ \label{eq:abstract_definition}
+\end{equation}
+The integer mark is essential: the pair $(n_k,z_k)$ recovers the ordinate
+exactly through $\gamma_k=\pi n_k/\log z_k$, whereas $z_k$ alone retains
+only a phase class.  The construction is local, canonical, and need not be
+monotone in the second coordinate.  We prove exact quantization identities,
+a bijection between the positive zero ordinates and the marked system,
+sharp one-cell bounds, the asymptotics $n_k\sim2k$, $z_k\sim p_k$, and
+\begin{equation}
+ z_k-p_k
+ =\left(\frac{\varepsilon_k}{2}+o(1)\right)(\log k)^2,
+ \qquad 0\leq\varepsilon_k<1.
+ \label{eq:abstract_displacement}
+\end{equation}
+Consequently the upper envelope satisfies
+$\limsup (z_k-p_k)/(\log k)^2\leq1/2$, and the marked counting function has
+the same first-order density as the ordinary primes.
+
+The logarithmic coordinate $\log z_k$ is the first node above $\log p_k$
+in the variable lattice $(\pi/\gamma_k)\mathbb Z$.  This produces exact
+formulae for the detuning of the Mangoldt frequencies $r\log p_k$ from
+signed resonant nodes.  In particular,
+\begin{equation}
+ \e^{\ii\gamma_k\log p_k^r}
+ =(-1)^{rn_k}\e^{-\ii\pi r\varepsilon_k},
+ \label{eq:abstract_prime_power_phase}
+\end{equation}
+and the distance to the nearest signed resonance is
+$\pi\|r\varepsilon_k\|_{\R/\mathbb Z}$.  Dirichlet approximation therefore
+produces arbitrarily accurate resonant prime powers, while the factor
+$p_k^{-r/2}\log p_k$ from the explicit formula suppresses high powers.
+Finally, we formulate a bivariate marked Dirichlet transform and an inverse
+lattice program in which the pairs $(n,z)$ serve as exact coordinates for
+zero ordinates.  All inverse-selection statements beyond the exact transform
+identities are isolated as open analytic problems.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+\label{sec:introduction}
+
+The nontrivial zeros of the Riemann zeta function are written
+\begin{equation}
+ \rho_k=\beta_k+\ii\gamma_k,
+ \qquad
+ 0<\gamma_1\leq\gamma_2\leq\cdots,
+ \label{eq:ordered_zeros}
+\end{equation}
+where ordinates are counted with multiplicity.  The classical
+Riemann--von Mangoldt formula controls their counting function, while the
+prime number theorem controls the ordered primes $p_k$; standard references
+are \cite{Titchmarsh1986,Ingham1932}.  The present construction combines the
+$k$-th ordinate with the $k$-th prime through an exact logarithmic phase
+quantization.
+
+The central object is not an unmarked real number.  It is the pair
+\begin{equation}
+ \mathfrak z_k=(n_k,z_k),
+ \label{eq:introduction_marked_pair}
+\end{equation}
+where $n_k$ records the lifted phase and $z_k$ records the associated
+positive scale.  This distinction is structural.  The identity
+\begin{equation}
+ \gamma_k\log z_k=\pi n_k
+ \label{eq:introduction_quantization}
+\end{equation}
+can be inverted only after $n_k$ is retained.
+
+The construction has three purposes.  First, it produces a canonical marked
+encoding of every positive zero ordinate.  Second, it places the logarithm of
+an ordinary prime inside a single explicitly controlled phase cell.  Third,
+it defines a theoretical lattice in which a candidate pair $(n,z)$ determines
+a candidate ordinate $\pi n/\log z$ exactly.
+
+\begin{remark}
+\label{rem:status_convention}
+All statements concerning the definition, exact inversion, asymptotic bounds,
+counting density, and prime-power detuning are proved rigorously below.
+Statements concerning an independent analytic rule that would select the
+correct marked points without first inserting the ordinates are explicitly
+labelled as questions, heuristics, or conjectures.
+\end{remark}
+
+\section{Classical input}
+\label{sec:classical_input}
+
+\subsection{Zero and prime clocks}
+\label{subsec:zero_prime_clocks}
+
+Let
+\begin{equation}
+ N(T)=\#\{k:0<\gamma_k\leq T\}
+ \label{eq:zero_counting_function}
+\end{equation}
+with the usual midpoint convention at an ordinate when needed.  The
+Riemann--von Mangoldt formula gives
+\begin{equation}
+ N(T)
+ =\frac{T}{2\pi}\log\left(\frac{T}{2\pi}\right)
+ -\frac{T}{2\pi}
+ +O(\log T),
+ \qquad T\to\infty,
+ \label{eq:riemann_von_mangoldt}
+\end{equation}
+see \cite[Chapter~9]{Titchmarsh1986}.  Inverting the leading term yields
+\begin{equation}
+ \gamma_k\sim\frac{2\pi k}{\log k}.
+ \label{eq:gamma_asymptotic}
+\end{equation}
+
+The prime number theorem and its inverse form give
+\begin{align}
+ \pi(x)&\sim\frac{x}{\log x},
+ \label{eq:pnt_pi}
+ \\
+ p_k&\sim k\log k.
+ \label{eq:nth_prime_asymptotic}
+\end{align}
+The inverse asymptotic and its refinements are classical; see
+\cite{Ingham1932,AriasToulisse2013}.
+
+\begin{lemma}
+\label{lem:prime_zero_ratio}
+As $k\to\infty$,
+\begin{align}
+ \frac{p_k}{\gamma_k}
+ &\sim\frac{(\log k)^2}{2\pi},
+ \label{eq:prime_zero_ratio}
+ \\
+ \frac{\pi p_k}{\gamma_k}
+ &\sim\frac12(\log k)^2.
+ \label{eq:scaled_prime_zero_ratio}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Divide \eqref{eq:nth_prime_asymptotic} by
+\eqref{eq:gamma_asymptotic}.  Multiplication by $\pi$ gives
+\eqref{eq:scaled_prime_zero_ratio}.
+\end{proof}
+
+\subsection{Mangoldt frequencies}
+\label{subsec:mangoldt_frequencies}
+
+The von Mangoldt function is supported on prime powers:
+\begin{equation}
+ \Lambda(q)=
+ \begin{cases}
+ \log p,&q=p^r,\quad r\geq1,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+ \label{eq:mangoldt_definition}
+\end{equation}
+For $\Re s>1$,
+\begin{equation}
+ -\frac{\zeta'}{\zeta}(s)
+ =\sum_{q=2}^{\infty}\frac{\Lambda(q)}{q^s}.
+ \label{eq:log_derivative_dirichlet_series}
+\end{equation}
+In the Guinand--Weil explicit formula, the arithmetic frequencies occur at
+$\pm\log q$ with $q=p^r$ and coefficient scale
+$\Lambda(q)/\sqrt q$ for the critical-line normalization; see
+\cite{Guinand1948,Weil1952}.
+
+\section{Canonical marked $z$-primes}
+\label{sec:canonical_definition}
+
+\begin{definition}[Local marked $z$-prime]
+\label{def:local_marked_zprime}
+For each $k\geq1$, define
+\begin{align}
+ a_k
+ &:=\frac{\gamma_k\log p_k}{\pi},
+ \label{eq:ak_definition}
+ \\
+ n_k
+ &:=\lceil a_k\rceil,
+ \label{eq:nk_definition}
+ \\
+ \varepsilon_k
+ &:=n_k-a_k,
+ \qquad 0\leq\varepsilon_k<1,
+ \label{eq:epsilon_definition}
+ \\
+ z_k
+ &:=\exp\left(\frac{\pi n_k}{\gamma_k}\right),
+ \label{eq:zk_definition}
+ \\
+ \mathfrak z_k
+ &:=(n_k,z_k).
+ \label{eq:marked_zprime_definition}
+\end{align}
+The marked system is
+\begin{equation}
+ \ZP:=\{\mathfrak z_k:k\geq1\}.
+ \label{eq:marked_system_definition}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+\label{rem:ceiling_choice}
+The ceiling convention chooses the first resonant lattice node at or above
+$p_k$.  A nearest-node convention would reduce the maximal logarithmic error
+by a factor of two but would permit $z_k<p_k$.  The one-sided convention is
+retained because it gives a canonical upper cell and an exact one-sided
+comparison with $p_k$.
+\end{remark}
+
+\begin{proposition}[Exact quantization]
+\label{prop:exact_quantization}
+For every $k\geq1$,
+\begin{align}
+ \gamma_k\log z_k
+ &=\pi n_k,
+ \label{eq:exact_quantization}
+ \\
+ \e^{\ii\gamma_k\log z_k}
+ &=(-1)^{n_k},
+ \label{eq:exact_signed_phase}
+ \\
+ z_k
+ &=p_k\exp\left(\frac{\pi\varepsilon_k}{\gamma_k}\right).
+ \label{eq:exact_zprime_factorization}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:exact_quantization} follows directly from
+\eqref{eq:zk_definition}.  Exponentiation gives
+\eqref{eq:exact_signed_phase}.  Finally,
+\eqref{eq:epsilon_definition} and \eqref{eq:ak_definition} give
+\begin{equation}
+ \frac{\pi n_k}{\gamma_k}
+ =\log p_k+\frac{\pi\varepsilon_k}{\gamma_k},
+ \label{eq:proof_log_factorization}
+\end{equation}
+which exponentiates to \eqref{eq:exact_zprime_factorization}.
+\end{proof}
+
+\begin{theorem}[Exact recovery and marked bijection]
+\label{thm:exact_recovery_bijection}
+The map
+\begin{equation}
+ \Phi:\{\gamma_k:k\geq1\}\longrightarrow\ZP,
+ \qquad
+ \Phi(\gamma_k)=(n_k,z_k),
+ \label{eq:Phi_definition}
+\end{equation}
+is a bijection when the zero ordinates are counted with their indexing
+multiplicity.  Its inverse is
+\begin{equation}
+ \Phi^{-1}(n,z)=\frac{\pi n}{\log z}.
+ \label{eq:Phi_inverse}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Surjectivity holds by the definition of $\ZP$.  If
+$(n_j,z_j)=(n_k,z_k)$, then \eqref{eq:exact_quantization} gives
+\begin{equation}
+ \gamma_j
+ =\frac{\pi n_j}{\log z_j}
+ =\frac{\pi n_k}{\log z_k}
+ =\gamma_k.
+ \label{eq:bijection_injectivity_identity}
+\end{equation}
+Thus the marked data determine the ordinate exactly.  With multiplicities
+retained at the index level, each indexed zero corresponds to one indexed
+marked pair.
+\end{proof}
+
+\begin{warning}
+\label{warn:unmarked_projection}
+The projection $(n_k,z_k)\mapsto z_k$ can lose information.  Distinct
+ordinates could in principle produce the same positive coordinate with
+different integer marks.  The exact object is therefore the marked pair, not
+the unmarked real number.
+\end{warning}
+
+\section{The variable logarithmic lattice}
+\label{sec:variable_lattice}
+
+\begin{definition}[Lattice attached to an ordinate]
+\label{def:lattice_attached_ordinate}
+For $\gamma>0$, define the signed logarithmic resonance lattice
+\begin{equation}
+ \mathcal L(\gamma)
+ :=\left\{\frac{\pi n}{\gamma}:n\in\mathbb Z\right\}
+ \subset\mathbb R,
+ \label{eq:log_lattice_definition}
+\end{equation}
+and its positive exponential image
+\begin{equation}
+ \mathcal E(\gamma)
+ :=\left\{\exp\left(\frac{\pi n}{\gamma}\right):n\in\mathbb Z\right\}.
+ \label{eq:exponential_lattice_definition}
+\end{equation}
+\end{definition}
+
+The mesh in logarithmic coordinate is
+\begin{equation}
+ h(\gamma)=\frac{\pi}{\gamma}.
+ \label{eq:lattice_mesh}
+\end{equation}
+For the $k$-th zero, $\log z_k$ is the first node of
+$\mathcal L(\gamma_k)$ at or above $\log p_k$.
+
+\begin{proposition}[One-cell characterization]
+\label{prop:one_cell_characterization}
+The marked $z$-prime is uniquely characterized by
+\begin{align}
+ \log z_k&\in\mathcal L(\gamma_k),
+ \label{eq:one_cell_membership}
+ \\
+ \log p_k&\leq\log z_k<\log p_k+\frac{\pi}{\gamma_k}.
+ \label{eq:one_cell_interval}
+\end{align}
+Equivalently,
+\begin{equation}
+ \frac{\pi(n_k-1)}{\gamma_k}
+ <\log p_k
+ \leq\frac{\pi n_k}{\gamma_k}.
+ \label{eq:cell_index_inequality}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The ceiling relation
+$n_k-1<a_k\leq n_k$ is equivalent to
+\eqref{eq:cell_index_inequality}.  The right endpoint is $\log z_k$ by
+\eqref{eq:zk_definition}, and subtracting $\log p_k$ gives
+\eqref{eq:one_cell_interval}.  There is exactly one first lattice node in
+that half-open cell.
+\end{proof}
+
+\begin{remark}
+\label{rem:not_single_fixed_lattice}
+The construction is a family of lattices rather than a single fixed lattice:
+the mesh $\pi/\gamma_k$ varies with $k$.  The marked sequence selects one
+node from each member of this family.  In the $(n,\log z)$ plane, every
+selected point determines the ordinate through the level curve
+$\gamma=\pi n/\log z$.
+\end{remark}
+
+\section{Exact and asymptotic bounds}
+\label{sec:bounds}
+
+\subsection{Sharp one-cell inequalities}
+\label{subsec:sharp_one_cell_inequalities}
+
+\begin{theorem}[Exact local bounds]
+\label{thm:exact_local_bounds}
+For every $k\geq1$,
+\begin{align}
+ 0
+ &\leq\log\frac{z_k}{p_k}
+ <\frac{\pi}{\gamma_k},
+ \label{eq:exact_log_bound}
+ \\
+ p_k
+ &\leq z_k
+ <p_k\e^{\pi/\gamma_k},
+ \label{eq:exact_multiplicative_bound}
+ \\
+ 0
+ &\leq z_k-p_k
+ <p_k\left(\e^{\pi/\gamma_k}-1\right).
+ \label{eq:exact_additive_bound}
+\end{align}
+Moreover,
+\begin{align}
+ \frac{\pi(n_k-1)}{\log p_k}
+ &<\gamma_k
+ \leq\frac{\pi n_k}{\log p_k},
+ \label{eq:gamma_bounds_from_n_p}
+ \\
+ \gamma_k
+ &=\frac{\pi n_k}{\log z_k}.
+ \label{eq:gamma_exact_from_mark}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Equation \eqref{eq:exact_log_bound} is
+\eqref{eq:one_cell_interval}.  Exponentiation yields
+\eqref{eq:exact_multiplicative_bound}; subtracting $p_k$ gives
+\eqref{eq:exact_additive_bound}.  Rearranging
+\eqref{eq:cell_index_inequality} yields
+\eqref{eq:gamma_bounds_from_n_p}.  Equation
+\eqref{eq:gamma_exact_from_mark} is the exact inversion formula.
+\end{proof}
+
+\begin{corollary}[Bounds using only $n_k$ and $p_k$]
+\label{cor:n_p_bounds_z}
+For $n_k>1$,
+\begin{equation}
+ p_k\leq z_k<p_k^{n_k/(n_k-1)}.
+ \label{eq:z_bound_n_p}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The upper bound in \eqref{eq:gamma_bounds_from_n_p} gives
+$\log z_k\geq\log p_k$.  The lower bound gives
+\begin{equation}
+ \log z_k
+ =\frac{\pi n_k}{\gamma_k}
+ <\frac{n_k}{n_k-1}\log p_k,
+ \label{eq:proof_n_p_upper}
+\end{equation}
+which proves \eqref{eq:z_bound_n_p}.
+\end{proof}
+
+\subsection{Asymptotic characterization}
+\label{subsec:asymptotic_characterization}
+
+\begin{theorem}[Asymptotic mark, scale, and displacement]
+\label{thm:asymptotic_characterization}
+As $k\to\infty$,
+\begin{align}
+ \frac{n_k}{k}&\longrightarrow2,
+ \label{eq:nk_over_k_limit}
+ \\
+ \frac{z_k}{p_k}&\longrightarrow1,
+ \label{eq:zk_over_pk_limit}
+ \\
+ \frac{z_k}{k\log k}&\longrightarrow1,
+ \label{eq:zk_scale_limit}
+ \\
+ z_k-p_k
+ &=\left(\frac{\varepsilon_k}{2}+o(1)\right)(\log k)^2.
+ \label{eq:precise_displacement_asymptotic}
+\end{align}
+The $o(1)$ in \eqref{eq:precise_displacement_asymptotic} is uniform for
+$0\leq\varepsilon_k<1$.
+\end{theorem}
+
+\begin{proof}
+From \eqref{eq:nk_definition} and \eqref{eq:epsilon_definition},
+\begin{equation}
+ n_k
+ =\frac{\gamma_k\log p_k}{\pi}+\varepsilon_k.
+ \label{eq:nk_exact_epsilon}
+\end{equation}
+Using \eqref{eq:gamma_asymptotic},
+$\log p_k\sim\log k$, and $0\leq\varepsilon_k<1$ gives
+\eqref{eq:nk_over_k_limit}.
+
+By \eqref{eq:exact_zprime_factorization},
+\begin{equation}
+ \log\frac{z_k}{p_k}
+ =\frac{\pi\varepsilon_k}{\gamma_k}
+ =O\left(\frac{\log k}{k}\right),
+ \label{eq:log_ratio_rate}
+\end{equation}
+which proves \eqref{eq:zk_over_pk_limit}.  Combining with
+$p_k\sim k\log k$ gives \eqref{eq:zk_scale_limit}.
+
+Finally, uniformly for $0\leq\varepsilon_k<1$,
+\begin{equation}
+ \e^{\pi\varepsilon_k/\gamma_k}-1
+ =\frac{\pi\varepsilon_k}{\gamma_k}
+ +O\left(\frac{1}{\gamma_k^2}\right).
+ \label{eq:uniform_exponential_expansion}
+\end{equation}
+Multiply by $p_k$ and apply Lemma~\ref{lem:prime_zero_ratio}.  Since
+$p_k/\gamma_k^2=o((\log k)^2)$, equation
+\eqref{eq:precise_displacement_asymptotic} follows.
+\end{proof}
+
+\begin{corollary}[Maximal asymptotic envelope]
+\label{cor:maximal_asymptotic_envelope}
+The displacement satisfies
+\begin{align}
+ z_k-p_k&=O((\log k)^2),
+ \label{eq:displacement_big_o}
+ \\
+ 0&\leq\limsup_{k\to\infty}
+ \frac{z_k-p_k}{(\log k)^2}
+ \leq\frac12.
+ \label{eq:displacement_limsup_bound}
+\end{align}
+More precisely,
+\begin{equation}
+ \frac{z_k-p_k}{(\log k)^2}
+ -\frac{\varepsilon_k}{2}
+ \longrightarrow0.
+ \label{eq:displacement_epsilon_limit}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply \eqref{eq:precise_displacement_asymptotic} and
+$0\leq\varepsilon_k<1$.
+\end{proof}
+
+\begin{remark}
+\label{rem:upper_envelope_not_attained}
+The constant $1/2$ is the universal asymptotic upper envelope obtained from
+the one-cell construction.  Equality of the limsup with $1/2$ would require
+values of $\varepsilon_k$ approaching $1$ along a subsequence.  No such
+distribution statement is assumed here.
+\end{remark}
+
+\begin{corollary}[Scaled logarithmic displacement]
+\label{cor:scaled_log_displacement}
+One has
+\begin{equation}
+ \frac{k}{\log k}\log\frac{z_k}{p_k}
+ =\frac{\varepsilon_k}{2}+o(1).
+ \label{eq:scaled_log_displacement_limit}
+\end{equation}
+Consequently,
+\begin{equation}
+ 0\leq\limsup_{k\to\infty}
+ \frac{k}{\log k}\log\frac{z_k}{p_k}
+ \leq\frac12.
+ \label{eq:scaled_log_limsup}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Use \eqref{eq:exact_log_bound}, the exact identity
+$\log(z_k/p_k)=\pi\varepsilon_k/\gamma_k$, and
+\eqref{eq:gamma_asymptotic}.
+\end{proof}
+
+\section{Counting density and generalized-prime interpretation}
+\label{sec:counting_density}
+
+\begin{definition}[Marked and projected counting functions]
+\label{def:counting_functions}
+Define
+\begin{align}
+ \Pi_{\ZP}(x)
+ &:=\#\{k:z_k\leq x\},
+ \label{eq:projected_counting_function}
+ \\
+ \Pi_{\ZP}(x;A)
+ &:=\#\{k:z_k\leq x,\ n_k\in A\},
+ \qquad A\subseteq\N.
+ \label{eq:marked_counting_function}
+\end{align}
+The first count includes multiplicity in the projected coordinate.
+\end{definition}
+
+\begin{theorem}[Prime-density preservation]
+\label{thm:prime_density_preservation}
+The projected counting function satisfies
+\begin{equation}
+ \Pi_{\ZP}(x)\sim\pi(x)\sim\frac{x}{\log x}.
+ \label{eq:zprime_counting_asymptotic}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Since $z_k\geq p_k$, one has
+\begin{equation}
+ \Pi_{\ZP}(x)\leq\pi(x).
+ \label{eq:counting_upper}
+\end{equation}
+Fix $\delta>0$.  By \eqref{eq:zk_over_pk_limit}, for all sufficiently
+large $k$,
+\begin{equation}
+ z_k\leq(1+\delta)p_k.
+ \label{eq:eventual_multiplicative_delta}
+\end{equation}
+Therefore, apart from finitely many indices,
+$p_k\leq x/(1+\delta)$ implies $z_k\leq x$, and hence
+\begin{equation}
+ \pi\left(\frac{x}{1+\delta}\right)-O_\delta(1)
+ \leq\Pi_{\ZP}(x)
+ \leq\pi(x).
+ \label{eq:counting_squeeze}
+\end{equation}
+Divide by $x/\log x$, use the prime number theorem, and let
+$\delta\downarrow0$.
+\end{proof}
+
+\begin{remark}
+\label{rem:ordering_not_required}
+The proof does not require the sequence $(z_k)$ to be increasing.  Counting
+is performed on the indexed multiset.  If one wishes to place the projected
+coordinates into the standard formalism of Beurling generalized primes, they
+may be rearranged nondecreasingly and counted with multiplicity; the Euler
+product in its half-plane of absolute convergence is independent of that
+rearrangement.  The general framework of generalized primes originates in
+\cite{Beurling1937}; see also \cite{Diamond1969}.
+\end{remark}
+
+\begin{definition}[Projected Beurling-type zeta function]
+\label{def:projected_zeta_function}
+For $\Re s>1$, define
+\begin{equation}
+ \zeta_{\ZP}^{\mathrm{proj}}(s)
+ :=\prod_{k=1}^{\infty}(1-z_k^{-s})^{-1}.
+ \label{eq:projected_euler_product}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Absolute convergence]
+\label{prop:projected_absolute_convergence}
+The product \eqref{eq:projected_euler_product} converges absolutely and
+locally uniformly for $\Re s>1$.
+\end{proposition}
+
+\begin{proof}
+Since $z_k\geq p_k$,
+\begin{equation}
+ \sum_{k=1}^{\infty}z_k^{-\sigma}
+ \leq\sum_{k=1}^{\infty}p_k^{-\sigma}<\infty,
+ \qquad \sigma>1.
+ \label{eq:absolute_convergence_comparison}
+\end{equation}
+The standard Euler-product convergence criterion applies.
+\end{proof}
+
+\begin{warning}
+\label{warn:projected_product_forgets_marks}
+The projected product \eqref{eq:projected_euler_product} forgets $n_k$ and
+therefore does not retain the exact inverse map \eqref{eq:Phi_inverse}.  The
+marked transform introduced in Section~\ref{sec:marked_transforms} is the
+appropriate object for zero recovery.
+\end{warning}
+
+\section{Mangoldt-frequency resonances}
+\label{sec:mangoldt_resonances}
+
+\subsection{The matched prime}
+\label{subsec:matched_prime}
+
+The ordinary prime $p_k$ lies below the exact resonant node $z_k$ in the same
+logarithmic cell.  Its phase is therefore determined by the cell remainder.
+
+\begin{theorem}[Exact matched-prime phase]
+\label{thm:exact_matched_prime_phase}
+For every $k\geq1$,
+\begin{align}
+ \gamma_k\log p_k
+ &=\pi(n_k-\varepsilon_k),
+ \label{eq:matched_prime_phase_lift}
+ \\
+ \e^{\ii\gamma_k\log p_k}
+ &=(-1)^{n_k}\e^{-\ii\pi\varepsilon_k}.
+ \label{eq:matched_prime_phase}
+\end{align}
+The angular distance of $\gamma_k\log p_k$ from the signed lattice
+$\pi\mathbb Z$ is
+\begin{equation}
+ \dist(\gamma_k\log p_k,\pi\mathbb Z)
+ =\pi\min\{\varepsilon_k,1-\varepsilon_k\}.
+ \label{eq:matched_prime_signed_distance}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Equation \eqref{eq:matched_prime_phase_lift} is the definition of
+$\varepsilon_k$.  Exponentiation yields
+\eqref{eq:matched_prime_phase}.  The distance formula follows because
+$n_k$ is an integer and $0\leq\varepsilon_k<1$.
+\end{proof}
+
+\begin{remark}
+\label{rem:metric_closeness_phase_detuning}
+The metric closeness $z_k/p_k\to1$ does not force
+$\e^{\ii\gamma_k\log p_k}$ to approach $\pm1$.  Multiplication by
+$\gamma_k$ expands the logarithmic displacement back to the full cell
+coordinate $\pi\varepsilon_k$.  Thus $z_k$ is close to $p_k$ in scale, while
+the residual phase within the cell can range across an interval of length
+$\pi$.
+\end{remark}
+
+\subsection{Prime powers}
+\label{subsec:prime_powers}
+
+\begin{theorem}[Exact prime-power detuning]
+\label{thm:exact_prime_power_detuning}
+For every $r\geq1$,
+\begin{align}
+ \gamma_k\log p_k^r
+ &=\pi r(n_k-\varepsilon_k),
+ \label{eq:prime_power_lift}
+ \\
+ \e^{\ii\gamma_k\log p_k^r}
+ &=(-1)^{rn_k}\e^{-\ii\pi r\varepsilon_k},
+ \label{eq:prime_power_phase}
+ \\
+ \dist(\gamma_k\log p_k^r,\pi\mathbb Z)
+ &=\pi\|r\varepsilon_k\|_{\R/\mathbb Z},
+ \label{eq:prime_power_signed_detuning}
+\end{align}
+where
+\begin{equation}
+ \|x\|_{\R/\mathbb Z}:=\min_{m\in\mathbb Z}|x-m|.
+ \label{eq:circle_distance_definition}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Multiply \eqref{eq:matched_prime_phase_lift} by $r$.  The phase identity
+follows by exponentiation, and the distance identity follows after removing
+the integer $rn_k$.
+\end{proof}
+
+\begin{corollary}[Finite resonant-power approximation]
+\label{cor:finite_resonant_power_approximation}
+For every real $\varepsilon_k$ and every integer $R\geq1$, there exists an
+integer $1\leq r\leq R$ such that
+\begin{equation}
+ \dist(\gamma_k\log p_k^r,\pi\mathbb Z)
+ \leq\frac{\pi}{R+1}.
+ \label{eq:dirichlet_resonant_power_bound}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply the pigeonhole form of Dirichlet approximation to the $R+1$ points
+$0,\varepsilon_k,2\varepsilon_k,\ldots,R\varepsilon_k$ modulo one.  Two lie
+within distance $1/(R+1)$, so for some $1\leq r\leq R$,
+$\|r\varepsilon_k\|_{\R/\mathbb Z}\leq1/(R+1)$.  Apply
+\eqref{eq:prime_power_signed_detuning}.
+\end{proof}
+
+\begin{proposition}[Exact resonance criterion]
+\label{prop:exact_resonance_criterion}
+For a fixed $k$ and $r\geq1$, the prime power $p_k^r$ is exactly signed
+resonant with $\gamma_k$ if and only if
+\begin{equation}
+ r\varepsilon_k\in\mathbb Z.
+ \label{eq:exact_signed_resonance_criterion}
+\end{equation}
+It is exactly positive resonant if and only if
+\begin{equation}
+ r(n_k-\varepsilon_k)\in2\mathbb Z.
+ \label{eq:exact_positive_resonance_criterion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first statement follows from
+\eqref{eq:prime_power_signed_detuning}.  The second follows from
+\eqref{eq:prime_power_lift} and the condition that the lifted phase be an
+even multiple of $\pi$.
+\end{proof}
+
+\subsection{Interaction with explicit-formula weights}
+\label{subsec:explicit_formula_weights}
+
+At the prime power $q=p_k^r$, the critical-line arithmetic weight is
+\begin{equation}
+ W_{k,r}
+ :=\frac{\Lambda(p_k^r)}{\sqrt{p_k^r}}
+ =\frac{\log p_k}{p_k^{r/2}}.
+ \label{eq:mangoldt_prime_power_weight}
+\end{equation}
+
+\begin{proposition}[Resonance--amplitude tradeoff]
+\label{prop:resonance_amplitude_tradeoff}
+For every $R\geq1$, there exists $1\leq r\leq R$ satisfying
+\eqref{eq:dirichlet_resonant_power_bound}, but its weight obeys
+\begin{equation}
+ W_{k,r}\leq\frac{\log p_k}{\sqrt{p_k}},
+ \label{eq:weight_upper_all_r}
+\end{equation}
+and for $r\geq2$,
+\begin{equation}
+ W_{k,r}\leq\frac{\log p_k}{p_k}.
+ \label{eq:weight_upper_proper_power}
+\end{equation}
+Thus arbitrarily fine phase approximation obtained by increasing $r$ is
+accompanied by exponential decay in $r$ at fixed $p_k$.
+\end{proposition}
+
+\begin{proof}
+The existence of $r$ is Corollary~\ref{cor:finite_resonant_power_approximation}.
+The bounds follow directly from \eqref{eq:mangoldt_prime_power_weight}.
+\end{proof}
+
+\begin{definition}[Weighted resonance score]
+\label{def:weighted_resonance_score}
+For $R\geq1$, define
+\begin{equation}
+ \mathcal R_k(R)
+ :=\max_{1\leq r\leq R}
+ \frac{\log p_k}{p_k^{r/2}}
+ \left|\cos\bigl(\pi r\varepsilon_k\bigr)\right|.
+ \label{eq:weighted_resonance_score}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+\label{rem:score_interpretation}
+The score \eqref{eq:weighted_resonance_score} separates two mechanisms:
+phase recurrence of $r\varepsilon_k$ modulo one and Mangoldt-weight decay.
+The first is Diophantine; the second is arithmetic and strongly favors the
+smallest exponents.  This makes the matched prime and the first few powers the
+natural range for any analytic test based on the explicit formula.
+\end{remark}
+
+\subsection{General prime-power frequencies near a marked node}
+\label{subsec:general_frequencies_near_node}
+
+\begin{proposition}[Detuning from an arbitrary prime power]
+\label{prop:arbitrary_prime_power_detuning}
+Let $q=p^r$ be any prime power.  Define
+\begin{equation}
+ \Delta_k(q):=\gamma_k\log\left(\frac{q}{z_k}\right).
+ \label{eq:general_detuning_definition}
+\end{equation}
+Then
+\begin{equation}
+ \e^{\ii\gamma_k\log q}
+ =(-1)^{n_k}\e^{\ii\Delta_k(q)}.
+ \label{eq:general_detuning_phase}
+\end{equation}
+Moreover, if
+\begin{equation}
+ \left|\log\frac{q}{z_k}\right|\leq\frac{\eta}{\gamma_k},
+ \label{eq:general_resonance_window}
+\end{equation}
+then
+\begin{equation}
+ \left|\e^{\ii\gamma_k\log q}-(-1)^{n_k}\right|
+ \leq\eta.
+ \label{eq:general_phase_distance_bound}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Use $\gamma_k\log z_k=\pi n_k$ to obtain
+\eqref{eq:general_detuning_phase}.  Under
+\eqref{eq:general_resonance_window}, one has
+$|\Delta_k(q)|\leq\eta$, and
+$|\e^{\ii x}-1|\leq|x|$ gives
+\eqref{eq:general_phase_distance_bound}.
+\end{proof}
+
+\section{Marked analytic transforms}
+\label{sec:marked_transforms}
+
+\begin{definition}[Marked atomic measure]
+\label{def:marked_atomic_measure}
+Define the measure on $\N\times(1,\infty)$
+\begin{equation}
+ \dd\Pi_{\ZP}(n,x)
+ :=\sum_{k\geq1}\delta_{n_k}(n)\,\delta_{z_k}(x).
+ \label{eq:marked_atomic_measure}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Marked Dirichlet transform]
+\label{def:marked_dirichlet_transform}
+For $\Re s>1$ and $|u|\leq1$, define
+\begin{align}
+ D_{\ZP}(s,u)
+ &:=\sum_{k\geq1}u^{n_k}z_k^{-s},
+ \label{eq:marked_dirichlet_transform}
+ \\
+ &=\int_{\N\times(1,\infty)}u^n x^{-s}\,\dd\Pi_{\ZP}(n,x).
+ \label{eq:marked_dirichlet_transform_integral}
+\end{align}
+\end{definition}
+
+\begin{proposition}[Absolute convergence of the marked transform]
+\label{prop:marked_transform_convergence}
+The series \eqref{eq:marked_dirichlet_transform} converges absolutely and
+locally uniformly for $\Re s>1$ and $|u|\leq1$.
+\end{proposition}
+
+\begin{proof}
+Since $|u|^{n_k}\leq1$ and $z_k\geq p_k$,
+\begin{equation}
+ \sum_{k\geq1}|u|^{n_k}z_k^{-\sigma}
+ \leq\sum_{k\geq1}p_k^{-\sigma}<\infty,
+ \qquad \sigma>1.
+ \label{eq:marked_transform_majorant}
+\end{equation}
+\end{proof}
+
+\begin{definition}[Marked Euler transform]
+\label{def:marked_euler_transform}
+For $\Re s>1$ and $|u|<1$, define
+\begin{equation}
+ \zeta_{\ZP}(s,u)
+ :=\prod_{k\geq1}\left(1-u^{n_k}z_k^{-s}\right)^{-1}.
+ \label{eq:marked_euler_transform}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Logarithmic expansion]
+\label{prop:marked_logarithmic_expansion}
+For $\Re s>1$ and $|u|<1$,
+\begin{equation}
+ \log\zeta_{\ZP}(s,u)
+ =\sum_{m\geq1}\frac1m
+ \sum_{k\geq1}u^{mn_k}z_k^{-ms}.
+ \label{eq:marked_logarithmic_expansion}
+\end{equation}
+The double series converges absolutely and locally uniformly.
+\end{proposition}
+
+\begin{proof}
+Expand $-\log(1-w)=\sum_{m\geq1}w^m/m$ with
+$w=u^{n_k}z_k^{-s}$.  Absolute convergence follows from
+$|u|<1$, $z_k\geq2$, and Proposition~\ref{prop:marked_transform_convergence}.
+\end{proof}
+
+\begin{proposition}[Coefficient decomposition]
+\label{prop:coefficient_decomposition}
+For $|u|<1$,
+\begin{equation}
+ D_{\ZP}(s,u)=\sum_{n\geq1}A_n(s)u^n,
+ \label{eq:marked_power_series}
+\end{equation}
+where
+\begin{equation}
+ A_n(s)=\sum_{k:n_k=n}z_k^{-s}.
+ \label{eq:marked_coefficient_dirichlet_series}
+\end{equation}
+Thus the coefficient indexed by $n$ retains precisely the projected scales
+carrying that phase lift.
+\end{proposition}
+
+\begin{proof}
+Group the absolutely convergent series
+\eqref{eq:marked_dirichlet_transform} by equal values of $n_k$.
+\end{proof}
+
+\section{Theoretical localization of zero ordinates}
+\label{sec:theoretical_localization}
+
+\begin{definition}[Inverse lattice map]
+\label{def:inverse_lattice_map}
+For $n\in\N$ and $z>1$, define
+\begin{equation}
+ \Gamma(n,z):=\frac{\pi n}{\log z}.
+ \label{eq:inverse_lattice_map}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Exact localization on the marked support]
+\label{prop:exact_localization_support}
+For every atom $(n_k,z_k)$ of \eqref{eq:marked_atomic_measure},
+\begin{equation}
+ \Gamma(n_k,z_k)=\gamma_k.
+ \label{eq:exact_localization_identity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This is \eqref{eq:gamma_exact_from_mark}.
+\end{proof}
+
+\begin{proposition}[Stability of the inverse coordinate]
+\label{prop:inverse_coordinate_stability}
+Let $n\geq1$, $z>1$, and perturb the scale to $z\e^\delta$.  Then
+\begin{equation}
+ \Gamma(n,z\e^\delta)-\Gamma(n,z)
+ =-\frac{\pi n\delta}{\log z\,(\log z+\delta)}.
+ \label{eq:exact_inverse_perturbation}
+\end{equation}
+If $|\delta|\leq\tfrac12\log z$, then
+\begin{equation}
+ \left|\Gamma(n,z\e^\delta)-\Gamma(n,z)\right|
+ \leq\frac{2\pi n}{(\log z)^2}|\delta|.
+ \label{eq:inverse_stability_bound}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Subtract the two rational expressions
+$\pi n/(\log z+\delta)$ and $\pi n/\log z$.  The stated denominator bound
+gives \eqref{eq:inverse_stability_bound}.
+\end{proof}
+
+\begin{corollary}[Stability near the $k$-th marked point]
+\label{cor:stability_near_kth_point}
+At $(n_k,z_k)$, a logarithmic error $\delta$ produces, to first order,
+\begin{equation}
+ \Gamma(n_k,z_k\e^\delta)-\gamma_k
+ =-\frac{\gamma_k}{\log z_k}\delta+O\left(
+ \frac{\gamma_k}{(\log z_k)^2}\delta^2\right).
+ \label{eq:local_inverse_linearization}
+\end{equation}
+Since $\gamma_k/\log z_k\sim2\pi k/(\log k)^2$, localization of
+$\gamma_k$ to bounded absolute error requires logarithmic scale accuracy of
+order at most $(\log k)^2/k$.
+\end{corollary}
+
+\begin{proof}
+Expand \eqref{eq:exact_inverse_perturbation} at $\delta=0$ and use
+\eqref{eq:gamma_asymptotic} and \eqref{eq:zk_scale_limit}.
+\end{proof}
+
+\begin{heuristic}[Marked-transform localization]
+\label{heur:marked_transform_localization}
+Suppose an analytic continuation or a regularized inversion procedure recovers
+the atomic support of $\dd\Pi_{\ZP}$ from $D_{\ZP}(s,u)$ or
+$\zeta_{\ZP}(s,u)$.  Coefficient extraction in $u$ separates the integer
+marks, Mellin inversion in $s$ recovers the corresponding positive scales,
+and \eqref{eq:inverse_lattice_map} then returns the ordinates.  This is a
+heuristic program until an independent construction of the marked transform
+is available that does not insert the ordinates into
+\eqref{eq:nk_definition}--\eqref{eq:zk_definition}.
+\end{heuristic}
+
+\begin{question}
+\label{question:intrinsic_selector}
+Is there a functional equation, extremal principle, trace identity, or
+regularized Euler relation whose solutions select the same marked support
+$\{(n_k,z_k)\}$ from the ordinary prime data and the integer lattice alone?
+\end{question}
+
+\begin{question}
+\label{question:fixed_point_operator}
+Can one define an operator on approximate ordinate sequences by the cycle
+\begin{equation}
+ \{t_k\}
+ \longmapsto
+ \{(n_k(t),z_k(t))\}
+ \longmapsto
+ \text{zeros of a regularized marked transform}
+ \label{eq:fixed_point_cycle}
+\end{equation}
+for which the actual ordinates form a locally attracting fixed point?
+\end{question}
+
+\section{Comparison with ordinary prime frequencies}
+\label{sec:comparison_prime_frequencies}
+
+\begin{proposition}[Frequency-cell width]
+\label{prop:frequency_cell_width}
+The difference between the marked logarithmic frequency and the matched prime
+frequency is
+\begin{equation}
+ 0\leq\log z_k-\log p_k<\frac{\pi}{\gamma_k}
+ \sim\frac{\log k}{2k}.
+ \label{eq:frequency_cell_width_asymptotic}
+\end{equation}
+Thus each $\log p_k$ lies within one vanishing cell below an exact signed
+resonance for $\gamma_k$.
+\end{proposition}
+
+\begin{proof}
+The exact inequality is \eqref{eq:exact_log_bound}.  The asymptotic cell
+width follows from \eqref{eq:gamma_asymptotic}.
+\end{proof}
+
+\begin{proposition}[First-order replacement of prime Dirichlet atoms]
+\label{prop:first_order_dirichlet_replacement}
+Fix a compact set $K\subset\{s\in\C:\Re s>0\}$.  Uniformly for $s\in K$,
+\begin{equation}
+ z_k^{-s}-p_k^{-s}
+ =-s\frac{\pi\varepsilon_k}{\gamma_k}p_k^{-s}
+ +O_K\left(\frac{p_k^{-\Re s}}{\gamma_k^2}\right).
+ \label{eq:dirichlet_atom_expansion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Use \eqref{eq:exact_zprime_factorization} to write
+\begin{equation}
+ z_k^{-s}
+ =p_k^{-s}\exp\left(-s\frac{\pi\varepsilon_k}{\gamma_k}\right),
+ \label{eq:dirichlet_atom_factorization}
+\end{equation}
+and apply the Taylor expansion of the exponential uniformly on $K$.
+\end{proof}
+
+\begin{corollary}[Relative prime-series convergence]
+\label{cor:relative_prime_series_convergence}
+For every $\sigma>0$,
+\begin{equation}
+ \sum_{k\geq1}|z_k^{-s}-p_k^{-s}|
+ \label{eq:relative_prime_series}
+\end{equation}
+converges locally uniformly in $\Re s\geq\sigma$.
+\end{corollary}
+
+\begin{proof}
+By \eqref{eq:dirichlet_atom_expansion}, it is enough to sum
+$p_k^{-\sigma}/\gamma_k$.  The classical asymptotics give
+\begin{equation}
+ \frac{p_k^{-\sigma}}{\gamma_k}
+ \ll_\sigma
+ \frac{(\log k)^{1-\sigma}}{k^{1+\sigma}},
+ \label{eq:relative_series_majorant}
+\end{equation}
+which is summable for every $\sigma>0$.
+\end{proof}
+
+\begin{theorem}[Holomorphic relative Euler factor]
+\label{thm:holomorphic_relative_euler_factor}
+For $\Re s>1$, set
+\begin{equation}
+ H(s):=\frac{\zeta_{\ZP}^{\mathrm{proj}}(s)}{\zeta(s)}.
+ \label{eq:relative_euler_factor_definition}
+\end{equation}
+Then $H$ extends to a holomorphic, nonvanishing function on
+$\Re s>0$ through
+\begin{equation}
+ \log H(s)
+ =\sum_{m\geq1}\frac1m
+ \sum_{k\geq1}\left(z_k^{-ms}-p_k^{-ms}\right).
+ \label{eq:relative_logarithm_series}
+\end{equation}
+Consequently, wherever $\zeta$ is meromorphic in $\Re s>0$,
+\begin{equation}
+ \zeta_{\ZP}^{\mathrm{proj}}(s)=H(s)\zeta(s)
+ \label{eq:relative_factorization}
+\end{equation}
+provides the corresponding meromorphic continuation of the projected
+$z$-prime Euler product.
+\end{theorem}
+
+\begin{proof}
+For $m=1$, local uniform convergence on every half-plane
+$\Re s\geq\sigma>0$ follows from
+Corollary~\ref{cor:relative_prime_series_convergence}.  For $m\geq2$,
+\begin{equation}
+ |z_k^{-ms}-p_k^{-ms}|
+ \leq z_k^{-m\sigma}+p_k^{-m\sigma}
+ \leq2p_k^{-m\sigma}.
+ \label{eq:higher_m_majorant}
+\end{equation}
+For fixed $\sigma>0$, finitely many $m$ with $m\sigma\leq1$ are handled by
+the same difference estimate, and the remaining tail converges absolutely by
+comparison with a geometric series in $p_k^{-\sigma}$.  Thus
+\eqref{eq:relative_logarithm_series} is holomorphic on $\Re s>0$.
+Exponentiation gives a holomorphic nonvanishing $H$.  On $\Re s>1$, the
+Euler-product logarithms show that it equals the quotient
+\eqref{eq:relative_euler_factor_definition}; analytic continuation gives
+\eqref{eq:relative_factorization}.
+\end{proof}
+
+\begin{remark}
+\label{rem:relative_factorization_meaning}
+The factorization \eqref{eq:relative_factorization} is a rigorous analytic
+consequence of the small displacement.  It shows that the projected Euler
+system differs from the ordinary prime system by a regular nonvanishing
+factor in $\Re s>0$.  The marked transform contains additional information
+not present in this projection.
+\end{remark}
+
+\section{Index geometry and finite candidate windows}
+\label{sec:index_geometry}
+
+\begin{proposition}[Asymptotic diagonal]
+\label{prop:asymptotic_diagonal}
+The marked points lie asymptotically on the diagonal $n=2k$:
+\begin{equation}
+ n_k=2k+o(k).
+ \label{eq:asymptotic_diagonal}
+\end{equation}
+Moreover,
+\begin{equation}
+ \log z_k=\log k+\log\log k+o(1).
+ \label{eq:log_z_asymptotic}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:asymptotic_diagonal} is equivalent to
+\eqref{eq:nk_over_k_limit}.  Equation \eqref{eq:log_z_asymptotic} follows
+from $z_k\sim k\log k$.
+\end{proof}
+
+\begin{heuristic}[Finite search strip]
+\label{heur:finite_search_strip}
+For a large index $k$, the asymptotic relation $n_k=2k+o(k)$ restricts the
+integer mark to a narrow relative strip around $2k$, while
+$z_k=p_k+O((\log k)^2)$ restricts the scale to a polylogarithmic interval
+above $p_k$.  A theoretical search may therefore be organized over candidate
+pairs
+\begin{equation}
+ n\in[2k-E_k,2k+E_k]\cap\mathbb Z,
+ \qquad
+ z\in[p_k,p_k+C(\log k)^2],
+ \label{eq:finite_candidate_strip}
+\end{equation}
+with $E_k=o(k)$ and any fixed $C>1/2$ for sufficiently large $k$.  An
+independent selector is still required to choose the actual pair inside this
+strip.
+\end{heuristic}
+
+\section{Alternative conventions}
+\label{sec:alternative_conventions}
+
+\subsection{Nearest-node convention}
+\label{subsec:nearest_node}
+
+\begin{definition}[Nearest marked $z$-prime]
+\label{def:nearest_marked_zprime}
+Define
+\begin{equation}
+ n_k^{\mathrm{near}}
+ :=\left\lfloor\frac{\gamma_k\log p_k}{\pi}+\frac12\right\rfloor,
+ \qquad
+ z_k^{\mathrm{near}}
+ :=\exp\left(\frac{\pi n_k^{\mathrm{near}}}{\gamma_k}\right).
+ \label{eq:nearest_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Nearest-node error]
+\label{prop:nearest_node_error}
+The nearest-node convention satisfies
+\begin{equation}
+ \left|\log\frac{z_k^{\mathrm{near}}}{p_k}\right|
+ \leq\frac{\pi}{2\gamma_k}
+ \label{eq:nearest_log_bound}
+\end{equation}
+and therefore
+\begin{equation}
+ |z_k^{\mathrm{near}}-p_k|
+ \leq\left(\frac14+o(1)\right)(\log k)^2.
+ \label{eq:nearest_additive_envelope}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Nearest-integer rounding gives an error at most $1/2$ in the lifted cell
+coordinate.  The additive asymptotic follows as in
+Theorem~\ref{thm:asymptotic_characterization}.
+\end{proof}
+
+\begin{remark}
+\label{rem:choice_comparison}
+The nearest convention minimizes metric displacement, while the ceiling
+convention preserves $z_k\geq p_k$ and gives a canonical upper node.  Both
+retain exact recovery when the integer mark is stored.  The one-sided
+convention is preferable when comparing counting functions by monotone
+inequalities; the nearest convention is preferable when minimizing local
+perturbation.
+\end{remark}
+
+\subsection{Positive-phase convention}
+\label{subsec:positive_phase}
+
+\begin{definition}[Positive-phase lattice]
+\label{def:positive_phase_lattice}
+Define
+\begin{equation}
+ n_k^{+}
+ :=\left\lceil\frac{\gamma_k\log p_k}{2\pi}\right\rceil,
+ \qquad
+ z_k^{+}
+ :=\exp\left(\frac{2\pi n_k^{+}}{\gamma_k}\right).
+ \label{eq:positive_phase_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Positive-phase cost]
+\label{prop:positive_phase_cost}
+One has
+\begin{align}
+ \e^{\ii\gamma_k\log z_k^{+}}&=1,
+ \label{eq:positive_phase_identity}
+ \\
+ 0\leq\log\frac{z_k^{+}}{p_k}&<\frac{2\pi}{\gamma_k},
+ \label{eq:positive_phase_log_bound}
+ \\
+ z_k^{+}-p_k&\leq(1+o(1))(\log k)^2.
+ \label{eq:positive_phase_additive_envelope}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The proof repeats the ceiling argument with lattice mesh $2\pi/\gamma_k$.
+Lemma~\ref{lem:prime_zero_ratio} gives the final envelope.
+\end{proof}
+
+\begin{remark}
+\label{rem:signed_preferred}
+The signed lattice has half the mesh and therefore half the maximal one-sided
+displacement.  Retaining the parity of $n_k$ records whether the exact node
+has phase $+1$ or $-1$.
+\end{remark}
+
+\section{Open analytic problems}
+\label{sec:open_problems}
+
+\begin{question}
+\label{question:epsilon_distribution}
+What is the distribution of
+\begin{equation}
+ \varepsilon_k
+ =\left\lceil\frac{\gamma_k\log p_k}{\pi}\right\rceil
+ -\frac{\gamma_k\log p_k}{\pi}
+ \label{eq:epsilon_open_distribution}
+\end{equation}
+in $[0,1)$?  Any equidistribution or discrepancy theorem would immediately
+refine the displacement statistics and the prime-power resonance counts.
+\end{question}
+
+\begin{conjecture}[Cell equidistribution]
+\label{conj:cell_equidistribution}
+The sequence $(\varepsilon_k)$ is equidistributed in $[0,1)$.
+\end{conjecture}
+
+\begin{remark}
+\label{rem:conjecture_consequences}
+Conjecture~\ref{conj:cell_equidistribution} would imply, for every continuous
+$f$ on $[0,1]$,
+\begin{equation}
+ \frac1K\sum_{k\leq K}
+ f\left(\frac{2(z_k-p_k)}{(\log k)^2}\right)
+ \longrightarrow\int_0^1f(t)\dd t,
+ \label{eq:displacement_distribution_consequence}
+\end{equation}
+provided the uniform error in
+\eqref{eq:precise_displacement_asymptotic} is incorporated.  It would also
+give statistical information on the resonance factors
+$\cos(\pi r\varepsilon_k)$.
+\end{remark}
+
+\begin{question}
+\label{question:marked_trace_formula}
+Can the marked measure \eqref{eq:marked_atomic_measure} be realized as the
+spectral measure of an operator or as the divisor of a two-variable analytic
+function whose arithmetic side is expressed directly through ordinary primes
+and prime powers?
+\end{question}
+
+\begin{question}
+\label{question:regularized_recovery}
+Does there exist a regularization of $D_{\ZP}(s,u)$ at or beyond its natural
+half-plane that admits stable coefficient extraction in $u$ and Mellin
+inversion in $z$, with quantitative control compatible with
+\eqref{eq:inverse_stability_bound}?
+\end{question}
+
+\begin{question}
+\label{question:low_power_resonance}
+For fixed small $R$, can one prove nonrandom structure in
+\begin{equation}
+ \min_{1\leq r\leq R}\|r\varepsilon_k\|_{\R/\mathbb Z}
+ \label{eq:low_power_resonance_statistic}
+\end{equation}
+that correlates with the low prime-power modes in a regularized explicit
+formula?
+\end{question}
+
+\section{Summary of proved characterizations}
+\label{sec:summary}
+
+The complete marked construction is
+\begin{equation}
+ \boxed{
+ n_k=\left\lceil\frac{\gamma_k\log p_k}{\pi}\right\rceil,
+ \qquad
+ z_k=\exp\left(\frac{\pi n_k}{\gamma_k}\right),
+ \qquad
+ \mathfrak z_k=(n_k,z_k).
+ }
+ \label{eq:summary_construction}
+\end{equation}
+Its exact inverse is
+\begin{equation}
+ \boxed{
+ \gamma_k=\frac{\pi n_k}{\log z_k}.
+ }
+ \label{eq:summary_inverse}
+\end{equation}
+The one-cell bounds are
+\begin{equation}
+ \boxed{
+ 0\leq\log\frac{z_k}{p_k}<\frac{\pi}{\gamma_k},
+ \qquad
+ 0\leq z_k-p_k<p_k\left(\e^{\pi/\gamma_k}-1\right).
+ }
+ \label{eq:summary_exact_bounds}
+\end{equation}
+The principal asymptotics are
+\begin{equation}
+ \boxed{
+ n_k\sim2k,
+ \qquad
+ z_k\sim p_k\sim k\log k,
+ \qquad
+ z_k-p_k
+ =\left(\frac{\varepsilon_k}{2}+o(1)\right)(\log k)^2.
+ }
+ \label{eq:summary_asymptotics}
+\end{equation}
+The counting law is
+\begin{equation}
+ \boxed{
+ \Pi_{\ZP}(x)\sim\pi(x)\sim\frac{x}{\log x}.
+ }
+ \label{eq:summary_counting}
+\end{equation}
+The exact matched prime-power resonance is
+\begin{equation}
+ \boxed{
+ \e^{\ii\gamma_k\log p_k^r}
+ =(-1)^{rn_k}\e^{-\ii\pi r\varepsilon_k},
+ \qquad
+ \dist(\gamma_k\log p_k^r,\pi\mathbb Z)
+ =\pi\|r\varepsilon_k\|_{\R/\mathbb Z}.
+ }
+ \label{eq:summary_resonance}
+\end{equation}
+Finally, the theoretical localization coordinate is
+\begin{equation}
+ \boxed{
+ (n,z)\longmapsto\Gamma(n,z)=\frac{\pi n}{\log z}.
+ }
+ \label{eq:summary_lattice_map}
+\end{equation}
+The marked pair is therefore an exact coordinate for an ordinate, while the
+analytic problem is to characterize or recover the correct marked support by
+an independent global relation.
+
+\begin{thebibliography}{99}
+
+\bibitem{AriasToulisse2013}
+J.~Arias de Reyna and J.~Toulisse,
+\emph{The $n$-th prime asymptotically},
+J. Th\'eor. Nombres Bordeaux \textbf{25} (2013), no.~3, 521--555.
+DOI: \href{https://doi.org/10.5802/jtnb.847}{10.5802/jtnb.847}.
+
+\bibitem{Beurling1937}
+A.~Beurling,
+\emph{Analyse de la loi asymptotique de la distribution des nombres
+premiers g\'en\'eralis\'es. I},
+Acta Math. \textbf{68} (1937), 255--291.
+
+\bibitem{Diamond1969}
+H.~G. Diamond,
+\emph{The prime number theorem for Beurling's generalized numbers},
+J. Number Theory \textbf{1} (1969), 200--207.
+DOI: \href{https://doi.org/10.1016/0022-314X(69)90038-9}{10.1016/0022-314X(69)90038-9}.
+
+\bibitem{Guinand1948}
+A.~P. Guinand,
+\emph{A summation formula in the theory of prime numbers},
+Proc. London Math. Soc. (2) \textbf{50} (1948), 107--119.
+DOI: \href{https://doi.org/10.1112/plms/s2-50.2.107}{10.1112/plms/s2-50.2.107}.
+
+\bibitem{Ingham1932}
+A.~E. Ingham,
+\emph{The Distribution of Prime Numbers},
+Cambridge Tracts in Mathematics and Mathematical Physics, no.~30,
+Cambridge University Press, Cambridge, 1932.
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D.~R. Heath-Brown,
+Oxford University Press, Oxford, 1986.
+
+\bibitem{Weil1952}
+A.~Weil,
+\emph{Sur les ``formules explicites'' de la th\'eorie des nombres premiers},
+Comm. S\'em. Math. Univ. Lund, Tome Suppl\'ementaire (1952), 252--265.
+
+\end{thebibliography}
+
+\end{document}
