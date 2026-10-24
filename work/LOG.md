@@ -490,3 +490,9 @@
   - §4: falta solo los momentos de orden ≍ log T del defecto con c → ∞.
 - work/display/2026-10-25_via_M_y_cotas_demostradas.md: respuestas literales (vía M y resumen de cotas).
 - Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 — [chatgpt] — recuperación de cota ordinal y vía M; commit de nota
+- Añadido \`chatgpt/notes/2026-10-25_demostraciones_defecto_ordinal_y_M.md\`, por petición expresa del autor.
+- Prueba incondicional de \(B_T\le4\sum_{k\in\mathcal I_T}(k-\tfrac12-F(\gamma_k))^2\) y de \(B_T\le2\#\{|u_k|\ge1/2\}\), sin imponer RH ni emplear ceros en la construcción del reloj.
+- Reconstrucción de la vía M anterior: identidad elemental \(M_X^*(x)=M^*(x)\) para \(x\le X\), comparación Perron \( \varpi_X M_{C,X}=M_X^*+\mathcal R_X\) bajo condición vertical explícita de integrabilidad, y prueba de que estimaciones uniformes en \(X\) implicarían RH; esas estimaciones no se declaran demostradas.
+- Ningún manuscrito versionado, ni archivos de Claude, ni el repositorio LIBRARY TOTAL fueron modificados.
