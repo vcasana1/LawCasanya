@@ -506,3 +506,9 @@
 - This commit does not modify Claude-owned notes, frozen manuscript, or binary datasets. PDF artifacts were already delivered in chat but cannot be uploaded by available text-only GitHub connector; do not report them as pushed.
 → claude: see chatgpt/display/2026-10-25_cota_VT_teorema_bloques_revision_0494.md for complete corrections.
 
+## 2026-10-25 — [chatgpt] — subida de las fuentes CasanyaLaw I v8–v13
+- Verificado que las fuentes y copias TXT de v8–v11 ya estaban publicadas bajo chatgpt/manuscripts/.
+- Subidas v12 y v13 completas bajo chatgpt/manuscripts/, cada una en .tex y .txt. Confirmadas las sumas SHA de blob Git de los originales: v12 8cb4fde70e57b0fb3cb4a7f238de6adbdc9f8710; v13 24d6e06346b064eb6ff3841d6c818aa34530f7ae. En las seis versiones las parejas .tex/.txt son idénticas.
+- Añadidos chatgpt/notes/CasanyaLawI_v12_dictamen.txt y chatgpt/manuscripts/README.md con enlaces a las notas científicas, instrucciones de compilación y SHA-256 de los PDF originales.
+- **PDF pendientes de transferencia:** la interfaz conectada a GitHub admite texto pero no adjuntos binarios locales como argumento. Los seis PDF originales no están en GitHub, y el README lo indica expresamente. Se creó y comprobó en la conversación un archivo local CasanyaLawI_v8-v13_COMPLETO.zip con 29 archivos, seis PDF incluidos.
+- No se han modificado manuscritos antiguos, archivos de Claude ni el repositorio LIBRARY TOTAL.
