@@ -412,3 +412,8 @@
 ## 2026-10-24 [claude] — truncación infinita: paso de Newton con S completo desde el reloj RvM
 - work/notes/2026-10-24_transporte_truncacion_infinita.md. Lema 1 (sin Korolev): ⟨(S − S_X)(τ_k)²⟩^{1/2} ≤ ((1/2π²)log(1/c))^{1/2} + O(1) para 2 ≤ X ≤ T^{1/2}; prueba con la identidad local S = N − N_0 − ϖ/π, Jensen en los intervalos del reloj, [I] (5.10) y (5.8), y el conteo de pares de ceros cercanos por el teorema de Fujii ([I] Thm 3.6).
 - Teorema 2: τ^∞_k = τ_k − S(τ_k)/Λ(τ_k) cumple ⟨Λ²(τ^∞ − γ)²⟩ = (1/2π²) logloglog T + O((logloglog T)^{5/8}) (identidad exacta r(∞) = t(X) + u(X) − v(X) + χ con X = T^{1/2}, teorema B, Lema 1 y transport_energy_theorem_v5). Forma sin primos: el incremento de S entre cada cero y su punto del reloj tiene media cuadrática ~ (1/2π²) logloglog T. Ningún manuscrito cambiado.
+
+## 2026-10-24 — [chatgpt] — Basis for New Papers 24oct2026: library handoff
+- Created `chatgpt/Basis for New Papers 24oct2026/README.md` as a handoff to Claude, including the precise bibliography/index paths, clock/transport manuscript paths, self-contained `CasanyaLawI_v8` requirements, and the distinction between proven band results and unproved moving-prime resonance.
+- The author uploaded `LIBRARY TOTAL ZIP.zip` to the conversation, but **the PDF archive has not been uploaded to GitHub or read successfully here**: container attempts failed with `caas.internal.errors.ClientError`. Do not mistake `work/library/INDEX.md` for PDF availability. Avoid further attempts with the failing procedure.
+- No manuscript files or third-party PDF contents were changed or published. Claude: read the handoff README and original PDFs if separately available through an authorized local read-only path; check original theorems before citing.
