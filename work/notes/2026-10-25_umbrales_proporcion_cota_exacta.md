@@ -71,3 +71,9 @@ $\langle u_k(T^{1/2})^2\rangle=0.01093,\ 0.01153,\ 0.01198,\ 0.01219$ en $T=2^{1
 ## 6. Retirada
 
 Retiro mi borrador anterior de esta sesión, "cruces de nivel con umbral 1, transferencia con factor $1+o(1)$". Nunca se subió. Era falso: en los cruces $F=k$ el defecto puede ser idénticamente 0 mientras la media continua vale al menos $\tfrac1{12}$ (diente de sierra), así que la transferencia con factor $1+o(1)$ no vale.
+
+## 7. Correcciones aceptadas (25-oct, tras la revisión de ChatGPT, `chatgpt/display/2026-10-25_cota_VT_teorema_bloques_revision_0494.md`)
+
+1. **§1, paso 1.** "Un cero cuenta en $B_T$ si y solo si su ordenada se repite" es falso en el sentido "si": un cero simple en la recta puede compartir ordenada con una pareja fuera de ella. Lo correcto es que todo cero malo pertenece a un bloque de ordenadas repetidas, así que $B_T\le\sum(\text{tamaños de bloques})$. La prueba solo usa esa dirección, de modo que las cotas $B_T\le4\sum u_k^2$ y $B_T\le2\#\{|u_k|\ge\frac12\}$ no cambian.
+2. **§2.** El umbral exacto para superar el 41.73 % es $\langle u^2\rangle<0.145675$; el valor $0.14568$ era un redondeo por exceso.
+3. **§3 (cifra 0.494).** No es una barrera demostrada. Es el diagnóstico de una estimación concreta, la de Cauchy–Schwarz de v14, y depende de dos cosas: de $\|E_0\|^2\ge\frac1{12}$ en la medida $dt$, y de comparar pesos $dt$ y $dF$. La identidad de v14 da $\frac1{12}$ con el peso $dF_{Y_0}=(\Lambda+S'_{Y_0})dt$, y pasar a $dt$ exige controlar el término $\int E_0^2S'_{Y_0}\,dt$, que no está hecho. La conclusión correcta es más débil: esa estimación, tal como está escrita, no da $\langle u^2\rangle<\frac14$. No hay barrera para otras vías.

@@ -512,3 +512,15 @@
 - Añadidos chatgpt/notes/CasanyaLawI_v12_dictamen.txt y chatgpt/manuscripts/README.md con enlaces a las notas científicas, instrucciones de compilación y SHA-256 de los PDF originales.
 - **PDF pendientes de transferencia:** la interfaz conectada a GitHub admite texto pero no adjuntos binarios locales como argumento. Los seis PDF originales no están en GitHub, y el README lo indica expresamente. Se creó y comprobó en la conversación un archivo local CasanyaLawI_v8-v13_COMPLETO.zip con 29 archivos, seis PDF incluidos.
 - No se han modificado manuscritos antiguos, archivos de Claude ni el repositorio LIBRARY TOTAL.
+
+## 2026-10-25 [claude] — sube git: revisión de los commits de ChatGPT 4401613, 3f5bb06 y 488f7df; correcciones aceptadas
+- work/notes/2026-10-25_umbrales_proporcion_cota_exacta.md, nueva §7 de correcciones aceptadas de ChatGPT:
+  - B_T ≤ (no =) suma de tamaños de bloques repetidos; las cotas no cambian.
+  - Umbral exacto 0.145675.
+  - La cifra 0.494 es el diagnóstico de una estimación de Cauchy–Schwarz (pendiente además del peso dt frente a dF), no una barrera demostrada.
+- work/display/2026-10-25_revision_commits_chatgpt.md: respuesta literal. Verificados:
+  - criterio V_T ≪ (Δ_T+1)/u_T y familias de cortes oscilantes;
+  - casi ortogonalidad de potencias primas completa (Kusmin–Landau, van der Corput, conteo de pares ≪ T/log T, Schur + HS, Pitágoras con G^{−1}, cambio a la ventana por ordenadas);
+  - contraejemplo y reparación del perfil de v8 (0.2638 frente a 1/4; nueva cota 0.3909).
+  - Lagunas de v9 bien detectadas; las reparaciones de v10 no comprobadas sobre el texto.
+- Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
