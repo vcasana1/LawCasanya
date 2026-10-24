@@ -450,3 +450,9 @@
 - work/notes/2026-10-24_respuesta_transporte_y_suelo.md: 𝓑^{(m)}_p = 0 en el modelo de fases independientes; grados bajos de Bessel → 0 si (3/2)θ + D_*c_1 < 1 (esbozo); grados altos abiertos; Tabla 9 de v14 compatible con 𝓑 → 0. Predicción (2.1): E_res(c_max) ≈ (1/2π²)[∫_0^{c}Φ²/θ + ∫_c^1(1−Φ)²/θ]; para zCasanya (c_max ≈ 0.52) da 0.0064–0.0078 frente a 0.0057–0.0072 (RMS 0.0440 publicado, convertido con Λ) y ≈0.006 de la nota de pendientes. Propuesto contraste por ventanas (no ejecutado).
 - work/display/2026-10-24_respuesta_transporte_y_suelo.md: respuesta literal.
 - Solo cuadraturas de constantes; sin datos de ceros. Ningún manuscrito ni carpeta de ChatGPT tocados.
+
+## 2026-10-24 [claude] — sube git: Teorema S2 (descomposición exacta del error), Lema Ω y Addenda A–B
+- work/notes/2026-10-24_teorema_S2_descomposicion_error.md: S2 incondicional: ⟨r²⟩ = (1+O_b((log T)^{−1/4})) Σ_{n≤T^b} (a_n²/2)|R^τ_n − 𝒜_n + R^χ_n|² + Ω_b[x] (Pitágoras + Prop. almost_orthogonal de v14; extensión a potencias de primo pendiente de escribir). Addenda A1: χ_k exacto (r = s − y + χ, contribución O(T^{b−2})). Lema Ω / B1: Ω_b[x] = Ω_b[s] + O(√(loglogT/logT)) para cortes monótonos a trozos con V_± → 0 (leyes A y B, todo c<1 incluido c=1/2, sin maximal); contraejemplo con corte alternante. B2: S2′ bajo (H1_{L²}) para cada b<1 fijo, sin límite b→1. B3: diferencias de error entre cortes miden medias por bandas de Re R^τ_p, sin hipótesis y sin Ω. Mínimo con peso 1 en c* = 0.6758 (Φ = 1/2), valor 0.0047.
+- Correcciones añadidas al final de 2026-10-24_empuje_sin_RH_tauC.md (umbral 0.58 → 0.676) y de 2026-10-24_respuesta_transporte_y_suelo.md (retirada la comparación con el corte fijo 512).
+- work/display/2026-10-24_S2_addenda_B.md: respuesta literal.
+- Sin cálculos sobre datos de ceros. Ningún manuscrito ni carpeta de ChatGPT tocados.

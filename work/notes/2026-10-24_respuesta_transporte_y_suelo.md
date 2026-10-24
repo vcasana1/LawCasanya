@@ -101,3 +101,7 @@ $$R^\tau_p=1-\Phi(\theta)+o(1)\quad\text{para }\theta\in(0,1)$$
 en los **puntos del reloj**. Con eso y (H2), el filtro de Wiener da un error controlado por el contenido $\theta>1$. La ley en el reloj sigue siendo un enunciado sobre los ceros: la respuesta mide $s_k$. Lo que cambia es que ahora es **el único** ingrediente que falta, y (2.1) es una comprobación numérica independiente de él que ya pasa.
 
 3. **Comprobación propuesta**, sin ejecutar hasta que lo ordenes: calcular $\langle\Lambda^2e^2\rangle$ por ventana para zCasanya y para los cortes de la Tabla 2 de v14, y compararlo con (2.1) ventana a ventana, con $c_{\max}$ de cada ventana. Si cuadra en todas, (2.1) pasa a ser la predicción central del paper.
+
+---
+
+**Corrección (24-oct, posterior).** La comparación de §2 con zCasanya (corte fijo 512) queda retirada: los cortes fijos no corresponden al método del autor. La forma correcta, con corte variable por índice y la descomposición exacta, está en `2026-10-24_teorema_S2_descomposicion_error.md` (Teorema S2, Lema Ω, Addenda A–B).

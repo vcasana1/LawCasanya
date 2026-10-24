@@ -118,3 +118,5 @@ $$\text{error de }\tau^C\to0\ \Longrightarrow\ \mathcal A_p\to R^\tau_p\ \text{e
 ---
 
 **Corrección (24-oct, posterior).** El "suelo lineal $\approx0.039$" de §3 queda retirado: supone una constante de $\langle s_k^2\rangle$ no demostrada. Ver `2026-10-24_respuesta_transporte_y_suelo.md` §0 y la predicción correcta (2.1) allí.
+
+**Corrección 2.** El umbral "$\theta>0.58$" de §3 es erróneo: la solución de $\Phi(\theta)=\tfrac12$ es $\theta=0.6758$. Ver `2026-10-24_teorema_S2_descomposicion_error.md`.
