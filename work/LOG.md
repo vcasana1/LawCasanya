@@ -462,3 +462,21 @@
 - work/notes/2026-10-24_teorema_S2_descomposicion_error.md: Addenda C con la verificación y la tabla de estado de S2.
 - work/display/2026-10-24_verificacion_lema_Omega_autor.md: respuesta literal.
 - Ningún manuscrito ni carpeta de ChatGPT tocados.
+
+## 2026-10-25 [claude] — sube git (todo lo pendiente): consecuencias del transporte, Addenda D de S2, prueba completa de C1, umbrales de proporción
+- work/notes/2026-10-24_consecuencias_transporte_zeta_pi_M.md: §1 ζ_RvM → ζ por factorización a través de ζ_C. §2 ζ_C → γ (S2, Wiener, conteo). §3–4 π y M sin ceros: comparación por Perron en Re s > 1; la diferencia es la cola prima rugosa Σ_{n>X(|t|)} Λ(n)n^{−s} y la cola de Möbius rugosa, más (1−L_C). §5 tabla de lo que falta.
+- work/notes/2026-10-24_teorema_S2_descomposicion_error.md, Addenda D:
+  - D1: V_T → 0 basta para √Ω; para Ω hace falta V_T loglog T → 0.
+  - D2: Ω_b[s] ≪_b logloglog T, así que basta V_T logloglog T → 0.
+  - D3, actualizado: casi ortogonalidad de potencias de primo demostrada en CasanyaLawI_v12 §16 (Thm pp:thm:main, ‖G−I‖_op ≪_b (log T)^{−1/2}); estructura verificada. Fila de la tabla de estado: pendiente → (T).
+- work/display/2026-10-25_prueba_completa_C1.md: prueba completa del Teorema C1.
+  - Cocientes ≪ X log X/T; productos no resonantes ≪ X/(T log² X).
+  - Resonantes por Titchmarsh, Lemas 4.6–4.7, con tres casos (interior / borde / fuera); los pares de borde se acotan uniformemente por λ^{−1/2}, sin la gaussiana completa (responde a la refutación (6) de v12).
+  - Conteo de pares 2N log(c/(1−c))/L.
+  - Sin cotejar con el PDF: el exponente del error de tercera derivada (basta o(√T L) por par).
+- work/notes/2026-10-25_umbrales_proporcion_cota_exacta.md y work/display/2026-10-25_umbrales_proporcion_cota_exacta.md (respuesta literal):
+  - Teorema incondicional exacto: para toda F continua sin ceros, #(ceros fuera de la recta o múltiples en (T,2T]) ≤ 4 Σ u_k(F)², con u_k = k − 1/2 − F(γ_k); también ≤ 2 #{|u_k| ≥ 1/2}. Proporción en la recta y simples ≥ 1 − 4⟨u²⟩. Sustituye a d_T.
+  - Umbrales: ⟨u²⟩ < 1/4 ⇒ proporción positiva; ⟨u²⟩ < 0.14568 ⇒ supera 41.73 %.
+  - La prueba de v14 (Cauchy–Schwarz con el resto de Selberg en T^{1/160}) no baja de ≈0.494, aun con constantes explícitas óptimas. Falta solo limsup⟨u_k(T^{1/2})²⟩ < 1/4, que es la Pregunta 13.1 de v14 con umbral.
+  - Retirado un borrador no subido (cruces de nivel con transferencia 1+o(1), falso).
+- Sin cálculos numéricos (solo cuadraturas de constantes y lectura de la Tabla tab:direct de v14). Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.

@@ -241,3 +241,45 @@ $$\Bigl|\sqrt{\Omega_b[x]}-\sqrt{\Omega_b[s]}\Bigr|\ll\sqrt{V_T}+V_T+T^{-b/4}\lo
 | Error relativo $1+O((\log T)^{-1/4})$ de S2 | falta la casi ortogonalidad para potencias de primo |
 | S2′ | bajo (H1$_{L^2}$), Addenda B2 |
 | Multietapa no lineal | $\Omega[x]$ depende de la construcción |
+
+---
+
+## Addenda D (24-oct): $V_T\to0$ frente a $\Omega_b[x]-\Omega_b[s]\to0$, y una cota mejor para $\Omega_b[s]$
+
+**D1. Precisión aceptada (ChatGPT, relayada por el autor).** El teorema del autor da
+
+$$\Bigl|\sqrt{\Omega_b[x]}-\sqrt{\Omega_b[s]}\Bigr|\ll\sqrt{V_T}+o(1),$$
+
+y de ahí
+
+$$|\Omega_b[x]-\Omega_b[s]|\ll\sqrt{V_T\,\Omega_b[s]}+V_T .$$
+
+Con la cota trivial $\Omega_b[s]\le\langle s^2\rangle\ll\log\log T$, la conclusión $\Omega_b[x]-\Omega_b[s]\to0$ exige $V_T\log\log T\to0$, no solo $V_T\to0$. La fila "independencia de $\Omega$ … con $V_T\to0$" de la tabla de Addenda C vale para $\sqrt\Omega$. Para $\Omega$ hay que leer la condición de D2. Las leyes A, B y las del autor (Cor. 5.1–5.3) tienen $V_T\ll1/\log T$ y cumplen ambas.
+
+**D2. Mejora (T).** $\Omega_b[s]\ll_b\log\log\log T$. Por tanto basta
+
+$$V_T\,\log\log\log T\to0 .$$
+
+*Prueba.* $\Omega_b[s]=\min_{v\in V_b}\langle(s-v)^2\rangle$. Se toma $v_k=S_X(\tau_k)$ con $X=T^{c}$, $c=\min(b,\tfrac12)/2$; la lista lineal está en $V_b$ porque $X\le T^b$. Por la descomposición exacta de v14 (l. 1158),
+
+$$s_k-S_X(\tau_k)=u_k(X)+t_k(X)-\chi_k',$$
+
+con $u_k$ el defecto en las ordenadas y $t_k=S_X(\gamma_k)-S_X(\tau_k)$ el transporte. Entonces:
+- $\langle u^2\rangle\le\frac1{2\pi^2}\log\frac1c+C\bigl(1+\sqrt{\log(1/c)}\bigr)=O_b(1)$ (v14, Thm main);
+- $\langle t^2\rangle=B_c(T)=\frac1{2\pi^2}\log\log\log T+O_c\bigl((\log\log\log T)^{5/8}\bigr)$ (teorema de la energía del transporte, `transport_energy_theorem_v5`).
+
+Por Minkowski, $\Omega_b[s]\le2\langle u^2\rangle+2\langle t^2\rangle+O(T^{-2})\ll_b\log\log\log T$. $\square$
+
+*(Usar la multietapa daría $O(1)$, pero su corrección no es lineal y no está en $V_b$; por eso aquí se usa un solo paso.)*
+
+**D3. Casi ortogonalidad para potencias de primo.** El autor indica (vía ChatGPT) que en el chat de la v11 hay una prueba para $p^m\le T^b$, $b<1$. **No está en GitHub y no la he visto.** El estado "pendiente" de la nota se refiere a lo que hay en el repositorio. Cuando la prueba esté disponible, la verifico y actualizo la tabla.
+
+**D3 (actualización, 25-oct).** La prueba está en CasanyaLawI_v12, §16 (Thm `pp:thm:main`), adjunta por el autor en el chat; no está en GitHub. La he leído y su estructura es correcta. Para $0<b<1$ fijo,
+
+$$\|G-I\|_{\rm op}\ll_bT^{b-1}\log T+(\log T)^{-1/2},$$
+
+con $G-I=D-H$:
+- **parte cociente $D$:** Schur por filas con el Lema `pp:lem:quotient`, sumando sobre todos los enteros $m$;
+- **parte producto $H$:** Hilbert–Schmidt, con $|C_T|\ll1/T$ fuera de resonancia y $\ll T^{-1/2}$ en los $\ll T/\log T$ pares resonantes (Lema `pp:lem:pairs`).
+
+En la tabla de estado de Addenda C, la fila "casi ortogonalidad para potencias de primo" pasa de **pendiente** a **(T), v12 §16**. El factor de S2 queda $1+O_b((\log T)^{-1/2})$. Un detalle de redacción en el Corolario `pp:cor:zeros` de v12: el cambio a la ventana $\mathcal J_T^\gamma$ mantiene las fases en $\tau_k$; lo dice explícitamente, y es correcto.
