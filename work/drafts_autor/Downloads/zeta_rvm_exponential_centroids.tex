@@ -1,0 +1,1135 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,urlcolor=blue!55!black}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\allowdisplaybreaks
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\RH}{\mathrm{RH}}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\CN}{C_N}
+\newcommand{\SN}{S_N}
+\newcommand{\Log}{\operatorname{Log}}
+\newcommand{\Ree}{\operatorname{Re}}
+\newcommand{\Imm}{\operatorname{Im}}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cB}{\mathcal B}
+
+\title{\textbf{Triangular Centroids of Exponential Walks on Riemann Zeta Ordinates\\
+And the Riemann--von Mangoldt Clock}\\[0.4em]
+\large Unconditional linearization, an exact smooth-clock limit, and a one-sided explicit-formula value}
+\author{Víctor Casaña-Giner\\
+\small Bio Logic Crop Science S.L., E-46120 Alboraya (Valencia), Spain\\
+\small \texttt{vcasana@biologiccropscience.com}\\
+\small ORCID: 0000-0002-8252-2608}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $0<\gamma_1\leq\gamma_2\leq\cdots$ be the positive ordinates of the nontrivial zeros of the Riemann zeta function, counted with multiplicity, and put
+\[
+S_N^{\zeta}=\sum_{k\leq N}e^{i\gamma_k},\qquad
+C_N^{\zeta}=\frac1N\sum_{n\leq N}S_n^{\zeta}
+=\frac1N\sum_{k\leq N}(N-k+1)e^{i\gamma_k}.
+\]
+The paper gives a rigorous analytic decomposition of this triangular centroid and separates unconditional statements from the two distinct hypotheses needed to identify its limiting complex value by a holomorphic explicit formula.  The first main theorem is unconditional: with the exact Riemann--Siegel counting clock
+\[
+H(t)=1+\frac{\vartheta(t)}{\pi}
+\]
+and the midpoint argument $S_*(\gamma_k)=k-\tfrac12-H(\gamma_k)$, one has
+\[
+\frac1N\sum_{k\leq N}S_*(\gamma_k)e^{i\gamma_k}
+=O\!\left(\frac{\log\log T_N}{\log T_N}\right),\qquad T_N=\gamma_N,
+\]
+and hence $C_N^{\zeta}-Q_N^{(H)}\to0$ for an explicit linear statistic $Q_N^{(H)}$.  The proof combines the Stieltjes identity $\dd N=\dd H+\dd S$, Selberg's unconditional second moment of $S(t)$, and the fixed non-resonant exponential-sum estimate at $x=e$ arising from the work of Ford--Zaharescu and Ford--Soundararajan--Zaharescu.
+
+For the smooth Riemann--von Mangoldt model
+\[
+M(t)=\frac{t}{2\pi}\log\frac{t}{2\pi e}+\frac78,
+\qquad M(\tau_k)=k-\frac12,
+\]
+the inverse is given exactly by Lambert $W$.  We prove that its exponential centroid converges unconditionally and obtain an exact convergent Abel-series representation.  The argument also explains why the triangular weight is a moving Cesàro/Riesz taper rather than a fixed-prefix cutoff.
+
+For the true zeta centroid, the symmetric explicit formula at logarithmic frequency $u=1$ yields, under RH and a precise compatibility between the ordinal Cesàro limit and the regularized explicit-formula boundary value,
+\[
+\Re C_\infty=
+\frac{1}{2\sqrt e}\left(e-\frac1{e^2-1}\right)
+=0.77689426079325358\ldots.
+\]
+A one-sided boundary-interchange hypothesis gives the full conditional value
+\[
+C_*=0.77689426079325\ldots+0.76785566886455\ldots i.
+\]
+The non-RH discrepancy is identified exactly as a horizontally weighted off-critical-line defect with coefficient $2(\cosh(\beta-\tfrac12)-1)$.  Its leading dependence is quadratic in the horizontal displacement, connecting the centroid problem directly with Fujii's horizontal second moment and the spectral zeta function studied by Bondarenko--Ivić--Saksman--Seip.  A single frequency cannot be a criterion for RH because its complex defect can cancel; a family with an interior accumulation point can.
+\end{abstract}
+
+\noindent\textbf{Keywords.} Riemann zeta function; zero ordinates; exponential sums; triangular centroid; Cesàro summation; Riesz means; Riemann--von Mangoldt formula; Lambert $W$; Riemann--Siegel theta function; explicit formula; Selberg second moment; Landau--Gonek formula; Fujii horizontal moment; Riemann hypothesis.
+
+\medskip
+\noindent\textbf{MSC 2020.} 11M06; 11M26; 11M36; 11Y35.
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+The ordinates of the nontrivial zeros of the Riemann zeta function enter analytic number theory in several complementary ways.  At the coarsest scale, the Riemann--von Mangoldt formula describes their counting function.  At the local scale, Montgomery's pair-correlation theorem and the Montgomery--Odlyzko numerical picture compare unfolded spacings with random-matrix statistics.  At a different level, Landau's formula and its refinements describe exponential sums over zeros and expose the exceptional role of prime-power frequencies.  These viewpoints are classical but they do not exhaust the ordered information contained in the sequence of ordinates.
+
+The object studied here is elementary to define.  Write the positive ordinates, counted with multiplicity, as
+\[
+0<\gamma_1\leq\gamma_2\leq\cdots,
+\]
+and form the deterministic planar walk
+\[
+S_N^{\zeta}=\sum_{k=1}^N e^{i\gamma_k}.
+\]
+Its trajectory centroid is
+\[
+C_N^{\zeta}=\frac1N\sum_{n=1}^N S_n^{\zeta}.
+\]
+Changing the order of summation gives the exact finite identity
+\[
+C_N^{\zeta}
+=\sum_{k=1}^{N}\left(1-\frac{k-1}{N}\right)e^{i\gamma_k}.
+\]
+Thus the centroid is the first Cesàro mean of the endpoint sequence and, equivalently, a Riesz mean of order one relative to the ordinal frequency $\lambda_k=k-1$.  This distinction is essential: the triangular factor is not a fixed cutoff that protects a finite prefix.  For each fixed $k$,
+\[
+1-\frac{k-1}{N}\longrightarrow1,
+\]
+so every fixed zero eventually enters with full weight.  The taper merely suppresses the moving upper edge at each finite $N$.  Consequently, stabilization of $C_N$ is a cancellation statement involving the whole expanding spectrum, not a statement that the first few zeros dominate the limiting sum.
+
+The frequency itself is also special.  The phase $e^{i\gamma}$ is the continuous Landau frequency $x=e$, because $x^{i\gamma}=e^{i\gamma}$ when $x=e$.  Since $e$ is not an integral prime power, the leading prime-power resonance in Landau's fixed-$x$ formula vanishes.  Hlawka's equidistribution theorem already gives $N^{-1}S_N^{\zeta}\to0$, and Ford--Zaharescu and Ford--Soundararajan--Zaharescu obtain much more refined information on fractional parts of fixed multiples of zero ordinates and the associated non-resonant secondary terms \cite{Hlawka,FordZaharescu2005,FordSoundZaha2009}.  What those results do not directly evaluate is the order-one constant selected by the moving ordinal Cesàro kernel.
+
+The present work grew from large-scale computations of this centroid.  For $N=2{,}001{,}052$ stored ordinates, the previously computed value is
+\[
+C_N^{\zeta}
+=0.776907119554635+0.767844590760710\,i.
+\]
+The same computation applied to the Lambert inverse of the smooth Riemann--von Mangoldt clock gives
+\[
+C_N^{M}
+=0.041570219277352+1.757541749592316\,i
+\]
+for the stored smooth sequence.  These numbers motivated the question addressed here: which part of the observed location is analytically forced, which part is a smooth-clock effect, and exactly where does the Riemann hypothesis enter?
+
+There are three layers to the answer.
+
+First, the ordinal triangular centroid is superficially nonlinear in the zero-counting measure because the coefficient $N-k+1$ contains the rank $k$.  With the symmetric convention $N(\gamma_k)=k-\tfrac12$ one may write
+\[
+k-\frac12=H(\gamma_k)+S_*(\gamma_k),
+\]
+where
+\[
+H(t)=1+\frac{\vartheta(t)}{\pi}
+\]
+is the exact smooth Riemann--Siegel clock and $S_*$ is the midpoint value of the argument term.  This produces the exact decomposition
+\[
+C_N^{\zeta}
+=Q_N^{(H)}-\frac1N\sum_{k\leq N}S_*(\gamma_k)e^{i\gamma_k}.
+\]
+The second term is the only genuinely self-coupled piece.  We prove unconditionally that it tends to zero at the rate $O(\log\log T_N/\log T_N)$.  Thus the asymptotic centroid is reduced, without RH, to a linear statistic of the ordinates.  This is the ``Level 1'' reduction in the terminology of the computational development.
+
+Second, the synthetic smooth clock can be solved completely.  For the main Riemann--von Mangoldt approximation
+\[
+M(t)=\frac{t}{2\pi}\log\frac{t}{2\pi e}+\frac78,
+\]
+the inverse ordinates are explicit through Lambert $W$.  Their gaps are slowly decreasing and the associated phases admit a discrete Abel identity.  Combining the first-derivative exponential-sum estimate with a second summation by parts proves convergence of the RVM centroid and yields a rapidly converging series for its limit.  This is an unconditional theorem about the smooth model, independent of RH.
+
+Third, evaluating the true zeta centroid by a holomorphic explicit formula introduces a different issue.  An ordinary explicit formula naturally sees a zero $\rho=\beta+i\gamma$ through a holomorphic weight such as $e^{\rho-1/2}$, whereas the centroid uses the pure ordinate phase $e^{i\gamma}$.  These coincide on the critical line.  Off the line, functional-equation pairing produces the factor
+\[
+\cosh\!\left(\beta-\frac12\right).
+\]
+This is not an artefact of a particular contour; $e^{i\operatorname{Im}s}$ is not holomorphic.  In particular, there cannot be a universal holomorphic kernel on the critical strip whose imaginary part is $\sin t$ independently of the real coordinate, because $\sin t$ is not harmonic as a function of $(\sigma,t)$.
+
+This observation determines the precise role of RH.  RH is not required to define $C_N$, nor to prove the unconditional Level 1 reduction.  RH is required if one wants to replace the ordinate-only phase by the standard holomorphic complete-zero phase without retaining a horizontal defect.  Under RH, a symmetric explicit-formula calculation at $x=e$ gives the closed real coordinate
+\[
+\frac{1}{2\sqrt e}\left(e-\frac1{e^2-1}\right).
+\]
+The underlying regularized bilateral identity is classical; the new point is its interpretation as the real coordinate of this particular ordinal triangular centroid, subject to the exact summability compatibility stated below.
+
+The imaginary coordinate is one-sided.  Pairing $+\gamma$ and $-\gamma$ removes it identically, so it cannot be recovered from the symmetric explicit formula alone.  A one-sided transform of $S(t)$ produces instead a boundary value of $\Log\zeta$ with the two frequency branches $1+\log n$ and $1-\log n$.  This is closely related in spirit to generalized Littlewood formulae and to the logarithmic-integral criteria of Sekatskii--Beltraminelli--Merlini \cite{Sekatskii2008,Sekatskii2009,Sekatskii2010}, but the present observable is an ordinal Cesàro transform rather than a fixed analytic test function.  The exact bridge between those summation procedures is therefore stated as a separate boundary-interchange hypothesis rather than hidden inside the proof.
+
+Finally, the horizontal defect connects the problem to a well-developed line of work.  Fujii related antiderivatives of $S(t)$ to the positive quantity
+\[
+A_2(T)=\sum_{\substack{\beta>1/2\\0<\gamma\leq T}}
+\left(\beta-\frac12\right)^2,
+\]
+and Bondarenko--Ivić--Saksman--Seip showed that this same horizontal mass governs the analytic continuation of the spectral zeta function
+\[
+G(s)=\sum_{\gamma>0}\gamma^{-s}
+\]
+beyond its unconditional half-plane \cite{Fujii2002,BondarenkoIvicSaksmanSeip2019}.  The centroid defect begins with exactly this quadratic mass, but with an oscillatory factor $e^{i\gamma}$.  Thus zero-density estimates control its absolute mass but not its value at a single Fourier frequency.  This explains why one complex centroid value is not itself an RH criterion, even though a suitable analytic family of such defects is.
+
+The organization is as follows.  Sections~\ref{sec:prelim}--\ref{sec:riesz} set the counting and summability conventions.  Section~\ref{sec:level1} proves the unconditional linearization.  Section~\ref{sec:clockequiv} compares the exact Riemann--Siegel clock with its Lambert approximation.  Section~\ref{sec:rvm} gives the unconditional RVM centroid theorem.  Sections~\ref{sec:explicit}--\ref{sec:imaginary} derive the symmetric and one-sided explicit-formula values under precisely stated hypotheses.  Section~\ref{sec:defect} isolates the off-critical-line defect, and Section~\ref{sec:fujii} relates it to Fujii's horizontal moment and the spectral zeta function.  The final numerical section records previously computed finite values and independent reproducibility checks for the analytic constants and the Lambert model.
+
+\section{Preliminaries and conventions}\label{sec:prelim}
+
+\subsection{Zeros, counting function, and midpoint convention}
+Let $\rho=\beta+i\gamma$ denote a nontrivial zero of $\zeta(s)$, with multiplicity.  The zeros are symmetric with respect to the real axis and the critical line.  We enumerate positive ordinates by
+\[
+0<\gamma_1\leq\gamma_2\leq\cdots.
+\]
+At a zero ordinate we use the symmetric counting convention
+\[
+N(\gamma_k)=k-\frac12
+\]
+when the zero is simple; for multiplicity $m$, the value is the midpoint of the jump of size $m$.  This is the convention naturally compatible with Stieltjes integration.
+
+Define the Riemann--Siegel theta function
+\[
+\vartheta(t)=\operatorname{Im}\Log\Gamma\!\left(\frac14+\frac{it}{2}\right)-\frac t2\log\pi,
+\]
+with its standard continuous determination for $t>0$, and set
+\[
+H(t)=1+\frac{\vartheta(t)}{\pi}.
+\]
+The Riemann--von Mangoldt formula may then be written in midpoint form as
+\[
+N(t)=H(t)+S(t),
+\]
+where $S(t)=\pi^{-1}\arg\zeta(1/2+it)$ is taken with the usual continuous convention away from zeros and midpoint value $S_*$ at jumps.  In particular,
+\begin{equation}\label{eq:midpoint}
+S_*(\gamma_k)=k-\frac12-H(\gamma_k).
+\end{equation}
+
+\subsection{The main smooth clock and Lambert inversion}
+We shall also use
+\begin{equation}\label{eq:Mclock}
+M(t)=\frac{t}{2\pi}\log\frac{t}{2\pi e}+\frac78.
+\end{equation}
+The classical asymptotic expansion of $\vartheta$ gives
+\begin{equation}\label{eq:HminusM}
+H(t)=M(t)+\frac{1}{48\pi t}+O(t^{-3}).
+\end{equation}
+More terms and rigorous remainder estimates follow from the Stirling expansion for $\log\Gamma$; see, for example, Brent and Paris \cite{Brent2018,Paris2020}.
+
+If $M(\tau_k)=k-\tfrac12$, then solving explicitly gives
+\begin{equation}\label{eq:Lambertinverse}
+\boxed{
+\tau_k=\frac{2\pi(k-11/8)}{W_0((k-11/8)/e)}.
+}
+\end{equation}
+We call $\{\tau_k\}$ the Lambert RVM clock.  The exact smooth clock $\{\widehat\tau_k\}$ is defined instead by
+\[
+H(\widehat\tau_k)=k-\frac12.
+\]
+The two clocks are asymptotically close, but they are conceptually distinct.
+
+\section{The exponential walk and its triangular Riesz mean}\label{sec:riesz}
+
+\begin{definition}[Zeta exponential walk and centroid]
+For $N\ge1$ define
+\[
+S_N^{\zeta}=\sum_{k=1}^N e^{i\gamma_k},\qquad
+C_N^{\zeta}=\frac1N\sum_{n=1}^N S_n^{\zeta}.
+\]
+\end{definition}
+
+\begin{proposition}[Exact triangular identity]\label{prop:triangle}
+For every $N$,
+\begin{equation}\label{eq:triangle}
+\boxed{
+C_N^{\zeta}
+=\frac1N\sum_{k=1}^N(N-k+1)e^{i\gamma_k}
+=\sum_{k=1}^N\left(1-\frac{k-1}{N}\right)e^{i\gamma_k}.
+}
+\end{equation}
+\end{proposition}
+\begin{proof}
+In the double sum $N^{-1}\sum_{n\le N}\sum_{k\le n}e^{i\gamma_k}$, the $k$th phase occurs for $n=k,k+1,\ldots,N$, hence exactly $N-k+1$ times.
+\end{proof}
+
+\subsection{What the triangular weight does and does not do}
+Equation~\eqref{eq:triangle} is the Cesàro $(C,1)$ mean of the partial sums.  It is also a Riesz mean of order one relative to the ordinal frequency $\lambda_k=k-1$.  For each fixed $k$,
+\[
+w_{k,N}:=1-\frac{k-1}{N}\longrightarrow1.
+\]
+Thus no fixed zero is suppressed in the limiting process.  At a fixed $N$, zeros near the moving endpoint are attenuated; as $N$ grows, that attenuated region moves outward.  This observation prevents a common misinterpretation of numerical stabilization: convergence can be fast while contributions continue to arrive from the entire spectrum, because convergence is produced by oscillatory cancellation rather than by permanent truncation of a tail.
+
+The distinction also matters when comparing Riesz and Abel regularizations.  The centroid uses the ordinal scale $k$, whereas an Abel factor $e^{-\varepsilon\gamma_k}$ regularizes in the height variable.  Since
+\[
+k\sim \frac{\gamma_k}{2\pi}\log\gamma_k,
+\]
+the two kernels are not identical at the order-one scale.  Any passage between them requires a Tauberian or boundary-interchange argument; it is not automatic.
+
+\section{Unconditional elimination of the counting self-correlation}\label{sec:level1}
+
+Define the linear exact-clock statistic
+\begin{equation}\label{eq:QH}
+Q_N^{(H)}
+:=\frac1N\sum_{k=1}^N
+\left(N+\frac12-H(\gamma_k)\right)e^{i\gamma_k}.
+\end{equation}
+By \eqref{eq:midpoint} and \eqref{eq:triangle},
+\begin{equation}\label{eq:exactCQ}
+\boxed{
+C_N^{\zeta}=Q_N^{(H)}-\frac1N\sum_{k=1}^N S_*(\gamma_k)e^{i\gamma_k}.
+}
+\end{equation}
+The following theorem is the unconditional Level 1 statement.
+
+\begin{theorem}[Unconditional Level 1]\label{thm:level1}
+Let $T$ tend to infinity through values that are not zero ordinates, and define
+\[
+A(T)=\sum_{0<\gamma\le T}S_*(\gamma)e^{i\gamma},
+\]
+counting multiplicity.  Then
+\begin{equation}\label{eq:ATbound}
+A(T)=O(T\log\log T).
+\end{equation}
+Consequently, if $T_N=\gamma_N$,
+\begin{equation}\label{eq:level1rate}
+\boxed{
+\frac1N\sum_{k=1}^N S_*(\gamma_k)e^{i\gamma_k}
+=O\!\left(\frac{\log\log T_N}{\log T_N}\right)\longrightarrow0,
+}
+\end{equation}
+and therefore
+\begin{equation}\label{eq:CQlimit}
+\boxed{C_N^{\zeta}-Q_N^{(H)}\longrightarrow0}
+\end{equation}
+unconditionally.
+\end{theorem}
+
+\begin{proof}
+As Stieltjes measures,
+\[
+\dd N=\dd H+\dd S.
+\]
+Hence
+\begin{align}
+A(T)
+&=\int_0^T e^{it}S_*(t)\,\dd N(t)\notag\\
+&=\int_0^T e^{it}S_*(t)\,\dd S(t)
+ +\int_0^T e^{it}H'(t)S(t)\,\dd t+O(1).
+\label{eq:Adecomp}
+\end{align}
+The midpoint convention gives the exact jump rule
+\[
+S_*\,\dd S=\frac12\,\dd(S^2),
+\]
+including a jump of arbitrary integer multiplicity.  Therefore
+\begin{equation}\label{eq:Aibp}
+A(T)=
+\frac12e^{iT}S(T)^2
+-\frac{i}{2}\int_0^T e^{it}S(t)^2\,\dd t
++\int_0^T e^{it}H'(t)S(t)\,\dd t
++O(1).
+\end{equation}
+
+Selberg's unconditional second-moment theorem gives
+\begin{equation}\label{eq:Selberg2}
+\int_0^T S(t)^2\,\dd t\ll T\log\log T,
+\end{equation}
+so
+\[
+\int_0^T e^{it}S(t)^2\,\dd t=O(T\log\log T).
+\]
+The standard unconditional pointwise estimate $S(T)=O(\log T)$ also gives $e^{iT}S(T)^2=O(\log^2T)$.
+
+It remains to estimate the linear term.  Put
+\[
+B(T)=\sum_{0<\gamma\le T}e^{i\gamma},\qquad
+F(T)=\int_0^T e^{it}S(t)\,\dd t.
+\]
+Since $\dd S=\dd N-H'(t)\dd t$, Stieltjes integration by parts gives
+\begin{equation}\label{eq:Fidentity}
+iF(T)
+=e^{iT}S(T)-B(T)+\int_0^T e^{it}H'(t)\,\dd t+O(1).
+\end{equation}
+At the fixed frequency $x=e$, which is not an integral prime power, the unconditional estimates underlying Ford--Zaharescu's refinement of Hlawka give
+\begin{equation}\label{eq:BT}
+B(T)=O\!\left(\frac{T}{\log T}\right).
+\end{equation}
+Moreover $H'(t)=O(\log t)$ and $H''(t)=O(1/t)$, so one integration by parts yields
+\[
+\int_0^T e^{it}H'(t)\,\dd t=O(\log T).
+\]
+Thus \eqref{eq:Fidentity} gives
+\begin{equation}\label{eq:Fbound}
+F(T)=O\!\left(\frac{T}{\log T}\right).
+\end{equation}
+Finally,
+\begin{align}
+\int_0^T e^{it}H'(t)S(t)\,\dd t
+&=H'(T)F(T)-\int_0^T H''(t)F(t)\,\dd t+O(1)\\
+&=O(T).
+\end{align}
+Substitution in \eqref{eq:Aibp} proves \eqref{eq:ATbound}.  Since the Riemann--von Mangoldt formula gives $N(T)\asymp T\log T$, division by $N(T)$ proves \eqref{eq:level1rate}, and \eqref{eq:CQlimit} follows from \eqref{eq:exactCQ}.
+\end{proof}
+
+\begin{remark}
+The theorem proves equality of the limiting behavior of $C_N^{\zeta}$ and $Q_N^{(H)}$; it does not, by itself, assert that either sequence converges.  Convergence and evaluation of the limiting linear statistic require an additional argument.
+\end{remark}
+
+\section{Exact Riemann--Siegel clock versus Lambert clock}\label{sec:clockequiv}
+
+Define
+\[
+S_M(\gamma_k)=k-\frac12-M(\gamma_k).
+\]
+By \eqref{eq:HminusM},
+\[
+S_M(\gamma_k)=S_*(\gamma_k)+O(\gamma_k^{-1}).
+\]
+The zero-counting estimate $N(t)\ll t\log t$ gives
+\[
+\sum_{\gamma_k\le T}\frac1{\gamma_k}\ll\log^2T.
+\]
+Therefore
+\begin{equation}\label{eq:HMphase}
+\sum_{\gamma_k\le T}
+\bigl(S_M(\gamma_k)-S_*(\gamma_k)\bigr)e^{i\gamma_k}
+=O(\log^2T)=o(N(T)).
+\end{equation}
+
+\begin{corollary}[Clock equivalence for Level 1]\label{cor:clocklevel1}
+Replacing $H(\gamma_k)$ by $M(\gamma_k)$ in the linearization of Theorem~\ref{thm:level1} changes the normalized remainder by $o(1)$.  Thus the exact Riemann--Siegel clock and the Lambert main clock are asymptotically equivalent for the Level 1 statement.
+\end{corollary}
+
+For the previously computed dataset of $N=2{,}001{,}052$ ordinates, the exact-clock linear statistic was
+\[
+Q_N^{(H)}
+=0.776905882507509+0.767853218705326\,i,
+\]
+and the reported difference between the exact-$H$ and Lambert-$M$ versions was
+\[
+|Q_N^{(H)}-Q_N^{(M)}|=2.812\times10^{-10}.
+\]
+These finite values are numerical evidence only; Corollary~\ref{cor:clocklevel1} is the analytic asymptotic statement.
+
+\section{The RVM exponential centroid: an unconditional limit}\label{sec:rvm}
+
+We now study a different object: the exponential walk generated by the synthetic Lambert ordinates $\tau_k$ themselves.
+
+\begin{definition}
+Let $\tau_k$ be given by \eqref{eq:Lambertinverse}.  Define
+\[
+S_N^{M}=\sum_{k=1}^N e^{i\tau_k},\qquad
+C_N^{M}=\frac1N\sum_{n=1}^N S_n^M.
+\]
+Put
+\[
+\delta_k=\tau_{k+1}-\tau_k,
+\qquad
+z_k=e^{i\tau_k},
+\qquad
+ a_k=\frac1{e^{i\delta_k}-1}.
+\]
+\end{definition}
+
+The identity
+\[
+z_k=a_k(z_{k+1}-z_k)
+\]
+is exact.  Summing it gives the discrete Abel decomposition
+\begin{equation}\label{eq:AbelSN}
+S_N^{M}
+=a_Nz_{N+1}-a_1z_1-
+\sum_{k=1}^{N-1}(a_{k+1}-a_k)z_{k+1}.
+\end{equation}
+
+\begin{lemma}[Smooth-clock asymptotics]\label{lem:clockasym}
+As $k\to\infty$,
+\[
+\tau_k\sim\frac{2\pi k}{\log k},\qquad
+\delta_k\sim\frac{2\pi}{\log k},
+\]
+and
+\[
+a_k=-\frac{i}{\delta_k}-\frac12+O(\delta_k)=O(\log k),
+\qquad
+a_{k+1}-a_k=O(k^{-1}),
+\]
+with a second difference $\Delta^2a_k=O(k^{-2})$.
+\end{lemma}
+\begin{proof}
+The first two estimates follow from inversion of $M$ and the inverse-function identity
+\[
+\tau'(x)=\frac1{M'(\tau(x))},\qquad
+M'(t)=\frac1{2\pi}\log\frac{t}{2\pi}.
+\]
+The expansion
+\[
+\frac1{e^{ix}-1}=-\frac{i}{x}-\frac12+O(x)
+\]
+then yields the estimate for $a_k$.  Differentiating the continuous interpolation $a(x)$ once and twice, using $\tau'(x)\asymp1/\log x$ and $\tau''(x)=O((x\log x)^{-1})$, gives the difference estimates by the mean-value theorem.
+\end{proof}
+
+\begin{lemma}[Smooth-clock exponential-sum bound]\label{lem:KL}
+There is a constant $C$ such that
+\[
+\left|\sum_{k\le N}e^{i\tau_k}\right|\le C\log N.
+\]
+More generally, interval sums beginning at a sufficiently large index satisfy the corresponding first-derivative bound.
+\end{lemma}
+\begin{proof}
+The continuous inverse $\tau(x)$ has positive monotone derivative
+\[
+\tau'(x)=\frac{2\pi}{\log(\tau(x)/(2\pi))}\asymp\frac1{\log x}.
+\]
+For large $x$, $0<\tau'(x)<2\pi$ and its distance from $2\pi\mathbb Z$ is bounded below by a constant multiple of $1/\log N$ on $[1,N]$.  The Kusmin--Landau first-derivative estimate for exponential sums therefore gives $O(\log N)$.  The finite initial segment is absorbed into the constant.
+\end{proof}
+
+\begin{theorem}[Existence and Abel series for the Lambert RVM centroid]\label{thm:RVMlimit}
+The centroid $C_N^M$ converges.  Its limit is
+\begin{equation}\label{eq:RVMlimit}
+\boxed{
+C_M=-a_1e^{i\tau_1}
+-\sum_{k=1}^{\infty}(a_{k+1}-a_k)e^{i\tau_{k+1}}.
+}
+\end{equation}
+The series converges conditionally, and its tail satisfies
+\begin{equation}\label{eq:RVMtail}
+\sum_{k\ge J}(a_{k+1}-a_k)e^{i\tau_{k+1}}
+=O\!\left(\frac{\log J}{J}\right).
+\end{equation}
+Moreover
+\[
+C_N^M-C_M=O\!\left(\frac{(\log N)^2}{N}\right).
+\]
+\end{theorem}
+\begin{proof}
+Let $b_k=a_{k+1}-a_k$.  Lemma~\ref{lem:clockasym} gives $b_k=O(k^{-1})$ and $\Delta b_k=O(k^{-2})$, while Lemma~\ref{lem:KL} gives partial phase sums of order $O(\log k)$.  Abel summation therefore yields
+\[
+\sum_{k\ge J}b_kz_{k+1}
+=O\!\left(\frac{\log J}{J}\right),
+\]
+which proves convergence and \eqref{eq:RVMtail}.
+
+Average \eqref{eq:AbelSN} over $1\le n\le N$.  One obtains the exact identity
+\begin{equation}\label{eq:RVMcentroidAbel}
+C_N^M
+=-a_1z_1
++\frac1N\sum_{n=1}^N a_nz_{n+1}
+-\sum_{k=1}^{N-1}\left(1-\frac{k}{N}\right)b_kz_{k+1}.
+\end{equation}
+A further Abel summation, now with $a_n=O(\log n)$ and the phase-sum bound, gives
+\[
+\frac1N\sum_{n\le N}a_nz_{n+1}=O\!\left(\frac{(\log N)^2}{N}\right).
+\]
+The difference between the weighted finite series in \eqref{eq:RVMcentroidAbel} and the infinite series in \eqref{eq:RVMlimit} is the sum of the tail \eqref{eq:RVMtail} and
+\[
+\frac1N\sum_{k<N}k b_kz_{k+1},
+\]
+which is $O(\log N/N)$ by Abel summation after the smooth asymptotic expansion.  Together with the preceding boundary-average estimate this gives the stated $O((\log N)^2/N)$ rate and proves the theorem.
+\end{proof}
+
+\begin{remark}
+The same strategy applies to the exact smooth clock $H(\widehat\tau_k)=k-\tfrac12$: its inverse derivative is again monotone with the same asymptotic scale, so an analogous Abel representation and convergence theorem follow.  The closed Lambert formula \eqref{eq:Lambertinverse}, however, makes the $M$-clock version particularly transparent and directly reproducible.
+\end{remark}
+
+\section{The zeta centroid and the explicit formula}\label{sec:explicit}
+
+The unconditional theorem \ref{thm:level1} reduces $C_N^{\zeta}$ to the linear statistic $Q_N^{(H)}$.  Evaluation by a holomorphic explicit formula is a separate step.
+
+\subsection{The symmetric real coordinate}
+Let
+\[
+\Psi(u)=\psi(e^u),
+\]
+where $\psi$ is Chebyshev's function.  The classical explicit formula may be written, with the usual symmetric regularization,
+\begin{equation}\label{eq:explicitPsi}
+\Psi(u)=e^u-
+\sum_{\rho}^{\mathrm{reg}}\frac{e^{\rho u}}{\rho}
+-\log(2\pi)-\frac12\log(1-e^{-2u}).
+\end{equation}
+Differentiating distributionally gives
+\begin{equation}\label{eq:explicitDerivative}
+\Psi'(u)=e^u-
+\sum_{\rho}^{\mathrm{reg}}e^{\rho u}
+-\frac{e^{-2u}}{1-e^{-2u}}.
+\end{equation}
+At $u=1$, the point $e^u=e$ is not an integer and hence is not a prime power; there is no Chebyshev atom at this point.  Therefore
+\begin{equation}\label{eq:regsumrho}
+\boxed{
+\sum_{\rho}^{\mathrm{reg}}e^{\rho}
+=e-\frac1{e^2-1}.
+}
+\end{equation}
+This identity is a classical consequence of the explicit formula.  The centroid interpretation needs an additional summability identification.
+
+\begin{hypothesis}[Symmetric Riesz compatibility at $u=1$]\label{hyp:SR}
+The symmetric regularization in \eqref{eq:regsumrho}, after pairing $\rho$ and $\bar\rho$, agrees with the limit of the ordinal triangular Cesàro real statistic obtained from $Q_N^{(H)}$.
+\end{hypothesis}
+
+\begin{theorem}[Closed real coordinate]\label{thm:realconstant}
+Assume RH and Hypothesis~\ref{hyp:SR}.  Then the zeta centroid converges in real part and
+\begin{equation}\label{eq:realclosed}
+\boxed{
+\lim_{N\to\infty}\Re C_N^{\zeta}
+=\frac{1}{2\sqrt e}\left(e-\frac1{e^2-1}\right)
+=0.77689426079325358\ldots.
+}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Under RH, every positive zero is $\rho=\tfrac12+i\gamma$, and its conjugate is $\bar\rho=\tfrac12-i\gamma$.  Thus
+\[
+e^{\rho}+e^{\bar\rho}=2\sqrt e\cos\gamma.
+\]
+Pairing the zeros in \eqref{eq:regsumrho}, dividing by $2\sqrt e$, and applying Hypothesis~\ref{hyp:SR} yields the limit of the real triangular statistic.  The unconditional Level 1 theorem transfers the same limit to $C_N^{\zeta}$.
+\end{proof}
+
+\begin{remark}[What is classical and what is specific]
+Equation~\eqref{eq:regsumrho} is not presented as a new explicit formula.  The specific assertion is the identification of its value with the real coordinate selected by the ordinal triangular centroid.  That identification is exactly the content isolated in Hypothesis~\ref{hyp:SR}; it should not be conflated with the classical bilateral regularization itself.
+\end{remark}
+
+\section{One-sided transform and the full complex value}\label{sec:imaginary}
+
+The imaginary coordinate cannot be recovered by pairing $+\gamma$ and $-\gamma$, because
+\[
+e^{i\gamma}+e^{-i\gamma}=2\cos\gamma.
+\]
+It requires a one-sided projection onto positive ordinates.
+
+Fix $T_0\in(0,\gamma_1)$.  For $\sigma>1$, define
+\[
+s_\sigma(t)=\frac1\pi\Im\Log\zeta(\sigma+it).
+\]
+By the Euler product,
+\begin{equation}\label{eq:ssigma}
+s_\sigma(t)
+=-\frac1\pi\sum_{n\ge2}
+\frac{\Lambda(n)}{n^\sigma\log n}\sin(t\log n).
+\end{equation}
+The one-sided triangular transform gives
+\begin{equation}\label{eq:PsigmaPrime}
+\cP_{\infty,\sigma}(T_0)
+=
+\frac{i e^{iT_0}}{2\pi}
+\sum_{n\ge2}
+\frac{\Lambda(n)}{n^\sigma\log n}
+\left[
+\frac{n^{iT_0}}{1+\log n}
+-
+\frac{n^{-iT_0}}{1-\log n}
+\right].
+\end{equation}
+For $\sigma>1$ this is an absolutely justified rearrangement.  Separating the slowly decaying $n=2$ term in the second branch yields the equivalent horizontal-$\Log\zeta$ formula
+\begin{align}
+\cP_{\infty,\sigma}(T_0)
+=\frac{i e^{iT_0}}{2\pi}\Bigg\{&
+\int_0^\infty e^{-u}\Log\zeta(\sigma+u-iT_0)\,\dd u\notag\\
+&+\int_0^\infty e^u\left[
+\Log\zeta(\sigma+u+iT_0)-2^{-(\sigma+u+iT_0)}
+\right]\dd u\notag\\
+&-\frac{2^{-\sigma-iT_0}}{1-\log2}
+\Bigg\}.
+\label{eq:PsigmaLogzeta}
+\end{align}
+The two denominators $1\pm\log n$ are the analytic record of the one-sided frequency split.  Although $e$ itself is not a prime power, the one-sided projection contains nonlocal prime contributions; therefore the full complex centroid is not purely archimedean merely because the symmetric atom at $x=e$ vanishes.
+
+The smooth contribution is
+\begin{equation}\label{eq:Bsmooth}
+\cB(T_0)
+=e^{iT_0}\bigl(H(T_0)+iH'(T_0)\bigr)
++i\int_{T_0}^{\infty}e^{it}H''(t)\,\dd t.
+\end{equation}
+
+\begin{hypothesis}[One-sided boundary interchange]\label{hyp:BI}
+Assume that the finite ordinal triangular transform of the argument term may be passed to the critical-line boundary in the order
+\[
+N\to\infty,
+\qquad \sigma\downarrow\frac12,
+\]
+so that the limiting one-sided arithmetic term equals
+\[
+\lim_{\sigma\downarrow1/2}\cP_{\infty,\sigma}(T_0),
+\]
+with the branch of $\Log\zeta$ obtained by continuation from $\Re s>1$.  Equivalently, the relevant finite $S(t)$ transform and the regularized horizontal-$\Log\zeta$ transform have the same boundary value.
+\end{hypothesis}
+
+This hypothesis is the precise unresolved summability/contour interchange.  It is deliberately separated from RH: RH controls the horizontal position of zeros, while Hypothesis~\ref{hyp:BI} controls the equality of two summation procedures.
+
+\begin{theorem}[Conditional full complex centroid]\label{thm:fullconstant}
+Assume RH and Hypothesis~\ref{hyp:BI}.  Then $C_N^{\zeta}$ converges and, for every admissible $T_0\in(0,\gamma_1)$,
+\begin{equation}\label{eq:Cfullformula}
+\boxed{
+C_\infty^{\zeta}
+=\cB(T_0)+\lim_{\sigma\downarrow1/2}\cP_{\infty,\sigma}(T_0).
+}
+\end{equation}
+For $T_0=1$, numerical evaluation of the zero-free right-hand side gives
+\begin{equation}\label{eq:CstarNumeric}
+\boxed{
+C_*=
+0.77689426079325\ldots
++0.76785566886455\ldots\,i.
+}
+\end{equation}
+Its real part agrees with the closed form \eqref{eq:realclosed}.
+\end{theorem}
+\begin{proof}
+The exact Stieltjes decomposition behind Theorem~\ref{thm:level1} reduces the centroid to a smooth term and a linear transform of $S(t)$, while the quadratic term contributes $o(1)$ by Selberg's second moment.  The smooth term tends to \eqref{eq:Bsmooth}.  For $\sigma>1$, inserting \eqref{eq:ssigma} into the linear transform and integrating each sine mode gives \eqref{eq:PsigmaPrime}, equivalently \eqref{eq:PsigmaLogzeta}.  Hypothesis~\ref{hyp:BI} authorizes passage to the critical-line boundary, and RH identifies the holomorphic complete-zero phase with the pure ordinate phase.  The unconditional Level 1 theorem then transfers the result to the original centroid.  The numerical value follows from direct quadrature of \eqref{eq:Bsmooth} and \eqref{eq:PsigmaLogzeta}; the accompanying Python script reproduces it without a table of zeta zeros.
+\end{proof}
+
+For reference, the reproducibility calculation at $T_0=1$ gives approximately
+\[
+\cB(1)=0.38178201832363+0.14616310152859\,i,
+\]
+\[
+\cP(1)=0.395112242469534+0.621692567335957\,i,
+\]
+whose sum is \eqref{eq:CstarNumeric}.
+
+\subsection{The holomorphic obstruction}
+The role of RH can be stated without reference to any particular explicit formula.
+
+\begin{proposition}[No universal holomorphic ordinate-phase kernel]\label{prop:nohol}
+There is no holomorphic function $K$ on an open set containing a two-dimensional portion of the critical strip such that
+\[
+\Im K(\sigma+it)=\sin t
+\]
+independently of $\sigma$ throughout that open set.
+\end{proposition}
+\begin{proof}
+The imaginary part of a holomorphic function is harmonic.  But
+\[
+\Delta\sin t
+=\frac{\partial^2}{\partial\sigma^2}\sin t
++\frac{\partial^2}{\partial t^2}\sin t
+=-\sin t,
+\]
+which is not identically zero on any open set.
+\end{proof}
+
+Under RH, however,
+\[
+K(s)=e^{s-1/2}
+\]
+satisfies $K(\tfrac12+i\gamma)=e^{i\gamma}$.  Thus RH is precisely what allows the standard holomorphic complete-zero weight to specialize to the pure ordinate phase at every nontrivial zero.
+
+\section{The off-critical-line defect}\label{sec:defect}
+
+Suppose $\rho=\tfrac12+\delta+i\gamma$ is paired by the functional equation with $\tfrac12-\delta+i\gamma$.  The pure ordinate statistic assigns the pair the weight
+\[
+2e^{i\gamma},
+\]
+whereas the holomorphic complete-zero statistic gives
+\[
+e^{\delta+i\gamma}+e^{-\delta+i\gamma}
+=2\cosh\delta\,e^{i\gamma}.
+\]
+The exact pair defect is therefore
+\begin{equation}\label{eq:pairdefect}
+2(\cosh\delta-1)e^{i\gamma}.
+\end{equation}
+
+For the triangular centroid define
+\begin{equation}\label{eq:DN}
+\boxed{
+\cD_N
+=2\sum_{\substack{\beta>1/2\\0<\gamma\le\gamma_N}}
+ w_{k(\gamma),N}
+\left[\cosh\!\left(\beta-\frac12\right)-1\right]e^{i\gamma},
+}
+\end{equation}
+where $w_{k,N}=1-(k-1)/N$ and multiplicities are included.
+
+Two features are fundamental.
+
+First, for every fixed zero, $w_{k,N}\to1$.  Thus Riesz tapering does not erase a hypothetical off-line zero at a fixed large height.  The reason a zero extremely close to the critical line is hard to detect is instead the quadratic sensitivity
+\begin{equation}\label{eq:quadraticdefect}
+2(\cosh\delta-1)=\delta^2+O(\delta^4).
+\end{equation}
+For example, $\delta=10^{-6}$ produces a pair amplitude of approximately $10^{-12}$, with limiting ordinal weight one.
+
+Second, the coefficients in \eqref{eq:DN} are positive but the phases are not.  Therefore
+\[
+\cD(1)=0
+\]
+at one frequency does not force every coefficient to vanish.  A positive discrete measure may have zero Fourier transform at an isolated frequency.
+
+\begin{proposition}[A family criterion]\label{prop:familycriterion}
+For $\varepsilon>0$ and real $u$, define
+\[
+\cD_\varepsilon(u)
+=2\sum_{\beta>1/2,\,\gamma>0}
+ e^{-\varepsilon\gamma}
+\left[\cosh\!\left(u(\beta-\tfrac12)\right)-1\right]e^{iu\gamma}.
+\]
+For each $\varepsilon>0$ this is analytic in $u$ in a neighborhood of the real axis.  If there is an off-critical-line zero, then
+\[
+\cD_\varepsilon''(0)
+=2\sum_{\beta>1/2,\gamma>0}
+(\beta-\tfrac12)^2e^{-\varepsilon\gamma}>0.
+\]
+Consequently, vanishing of $\cD_\varepsilon(u)$ on any real interval forces RH.  Vanishing at one isolated frequency need not.
+\end{proposition}
+
+\section{Fujii's horizontal moment and the spectral zeta function}\label{sec:fujii}
+
+Define the horizontal second-moment counting function
+\begin{equation}\label{eq:A2}
+A_2(T)=
+\sum_{\substack{\beta>1/2\\0<\gamma\le T}}
+\left(\beta-\frac12\right)^2.
+\end{equation}
+Fujii proved an identity of the form
+\begin{equation}\label{eq:Fujii}
+\widetilde S_2(T)=A_2(T)+O(\log T),
+\end{equation}
+where $\widetilde S_2$ is an explicitly normalized second antiderivative quantity built from $S(t)$ \cite{Fujii2002}.  Bondarenko--Ivić--Saksman--Seip use this relation in their study of
+\[
+G(s)=\sum_{\gamma>0}\gamma^{-s},
+\]
+showing unconditional meromorphic continuation to $\Re s>-1$ and relating further continuation to the horizontal distribution of zeros \cite{BondarenkoIvicSaksmanSeip2019}.
+
+Our defect has the expansion
+\[
+2(\cosh\delta-1)
+=\delta^2+\frac{\delta^4}{12}+\frac{\delta^6}{360}+\cdots.
+\]
+Since $0\le\delta<1/2$ for nontrivial zeros,
+\[
+1\le
+\frac{2(\cosh\delta-1)}{\delta^2}
+\le 8\left(\cosh\frac12-1\right)
+=1.02100772\ldots.
+\]
+Thus Fujii's $A_2$ is the leading positive mass underlying the exact horizontal defect.  What the centroid needs, however, is not merely $A_2(T)$ but its oscillatory transform at frequency one:
+\[
+\int e^{it}\,\dd A_2(t).
+\]
+A zero-density or positive-mass estimate does not imply that this transform vanishes.
+
+For $\Re s>1$ define
+\[
+H_2(s)=\sum_{\beta>1/2,\gamma>0}
+\frac{(\beta-1/2)^2}{\gamma^s}.
+\]
+For $\Re z>0$, the Laplace transform of the horizontal mass has the Mellin representation
+\begin{equation}\label{eq:MellinFujii}
+F_2(z)
+:=\sum_{\beta>1/2,\gamma>0}(\beta-\tfrac12)^2e^{-z\gamma}
+=\frac1{2\pi i}\int_{(c)}\Gamma(s)z^{-s}H_2(s)\,\dd s,
+\qquad c>1.
+\end{equation}
+The desired pure Fourier value is a boundary limit $z=\varepsilon-i$, $\varepsilon\downarrow0$.  At that boundary the exponential decay of $\Gamma(c+it)$ is cancelled on one half of the contour by the factor $(-i)^{-s}$, which explains why the boundary is analytically more delicate than the damped Laplace regime.  The Riesz kernel of the centroid does not remove this issue: it is a moving ordinal taper, not an exponential height damping.
+
+This establishes the conceptual end point of the Fujii route.  It identifies the exact positive horizontal mass responsible for the failure of the holomorphic ordinate projection, but it does not force its Fourier transform to vanish at a single frequency.  Therefore the value of one centroid cannot, by itself, be promoted to a proof of RH.
+
+\section{Numerical values and reproducibility}\label{sec:numerics}
+
+The analytic arguments above are independent of the numerical observations.  This section records the finite values that motivated the analysis and the independent checks supplied with the manuscript.
+
+\subsection{Previously computed zeta and stored-RVM centroids}
+For the archived dataset with
+\[
+N=2{,}001{,}052,
+\qquad
+\gamma_N\approx1{,}132{,}490.6587144111,
+\]
+the previously computed centroids are
+\begin{align*}
+C_N^{\zeta}
+&=0.776907119554635+0.767844590760710\,i,\\
+C_N^{\mathrm{RVM,stored}}
+&=0.041570219277352+1.757541749592316\,i.
+\end{align*}
+The direct trajectory average and the triangular weighted formula agree to approximately $1.7\times10^{-13}$ for zeta and $4.9\times10^{-14}$ for the stored RVM clock.
+
+The candidate conditional limiting value from Theorem~\ref{thm:fullconstant} is
+\[
+C_*=0.77689426079325\ldots+0.76785566886455\ldots i.
+\]
+At the available $N$, the real-coordinate discrepancy from the closed form is approximately
+\[
+1.29\times10^{-5}.
+\]
+No finite-$N$ observation is used as a premise in Theorem~\ref{thm:level1}, Theorem~\ref{thm:RVMlimit}, or the conditional explicit-formula derivations.
+
+\subsection{Lambert-clock reproduction from the closed inverse}
+The accompanying script \texttt{verify\_rvm\_centroid.py} reconstructs \eqref{eq:Lambertinverse} directly rather than reading the stored \texttt{zLamb.bin}.  At $N=2{,}001{,}052$ it obtains
+\[
+C_N^M
+=0.041570227040394+1.757541761467938\,i,
+\]
+with the Abel decomposition
+\begin{align*}
+-a_1e^{i\tau_1}
+&=6.031991313792247+2.977851908778479\,i,\\
+\frac1N\sum_{n\le N}a_ne^{i\tau_{n+1}}
+&=-1.7006454064\times10^{-6}+1.3853445067\times10^{-7}i,\\
+-\sum_{k<N}\left(1-\frac{k}{N}\right)\Delta a_ke^{i\tau_{k+1}}
+&=-5.990419386106493-1.220310285845148\,i.
+\end{align*}
+The direct and Abel reconstructions differ by approximately $1.6\times10^{-13}$.  The small difference from the stored RVM centroid reflects the finite numerical generation of the archived smooth sequence rather than a change in definition.
+
+\subsection{Zero-free evaluation of the conditional zeta constant}
+The script \texttt{verify\_zeta\_conditional\_constant.py} evaluates \eqref{eq:Bsmooth} and \eqref{eq:PsigmaLogzeta} at $T_0=1$ without reading a zeta-zero table.  It gives
+\begin{align*}
+\cB(1)&=0.38178201832363+0.14616310152859\,i,\\
+\cP(1)&=0.395112242469534+0.621692567335957\,i,\\
+\cB(1)+\cP(1)&=0.77689426079317+0.76785566886455\,i.
+\end{align*}
+The independently evaluated real part differs from the closed expression \eqref{eq:realclosed} by about $9\times10^{-14}$ at the chosen numerical precision and tail truncation.
+
+\section{Status of the main statements}
+
+\begin{center}
+\begin{tabular}{p{0.43\textwidth}p{0.19\textwidth}p{0.29\textwidth}}
+\toprule
+Statement & Status & Required hypothesis \\
+\midrule
+Exact triangular centroid identity & Exact finite theorem & None \\
+Unconditional Level 1, $C_N^{\zeta}-Q_N^{(H)}\to0$ & Proved & None \\
+$H$ versus $M$ equivalence in Level 1 & Proved & None \\
+Lambert RVM centroid convergence and Abel series & Proved & None \\
+Regularized bilateral identity at $u=1$ & Classical explicit formula & None for the regularized complete-zero identity \\
+Closed real coordinate of the ordinal zeta centroid & Conditional theorem & RH + symmetric Riesz compatibility \\
+Full complex constant $C_*$ & Conditional theorem & RH + one-sided boundary interchange \\
+Off-line horizontal defect formula & Exact comparison & Functional-equation pairing \\
+One-frequency centroid as an RH criterion & False in general & Complex cancellation may occur \\
+Analytic family of damped defects as an RH criterion & Proved implication & Vanishing on a set with interior accumulation \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Conclusions}
+
+The triangular exponential centroid admits a sharper analytic decomposition than is visible from its geometric definition.  The rank-dependent coefficient can be separated into the exact Riemann--Siegel clock and the argument fluctuation $S_*(\gamma_k)$.  The latter self-correlation is negligible after normalization, unconditionally and with an explicit logarithmic rate.  This converts the original centroid into a linear statistic without assuming RH.
+
+The smooth RVM control is analytically complete: the Lambert inverse gives an exact model sequence, its exponential endpoint obeys a first-derivative cancellation estimate, and a discrete Abel transform yields a convergent series for the centroid limit.  The triangular kernel is thereby seen correctly as a moving ordinal Riesz taper.  It attenuates the finite upper edge but does not permanently suppress any fixed part of the spectrum.
+
+For the zeta centroid, the classical explicit formula at the non-prime-power frequency $x=e$ fixes a symmetric regularized complete-zero value.  Under RH and the stated compatibility of that regularization with the ordinal triangular summation, this yields the closed real coordinate
+\[
+\frac{1}{2\sqrt e}\left(e-\frac1{e^2-1}\right).
+\]
+The full complex value requires a one-sided boundary transform.  Its arithmetic part is naturally expressed through horizontal integrals of $\Log\zeta$ and contains the two branches $1\pm\log n$.  The remaining mathematical issue is therefore not hidden: it is the boundary-interchange theorem that identifies this analytic one-sided regularization with the ordinal Cesàro limit.
+
+Off the critical line, the discrepancy is controlled exactly by $2(\cosh(\beta-\tfrac12)-1)e^{i\gamma}$.  The leading horizontal sensitivity is quadratic, matching the positive mass isolated by Fujii and later used in the spectral-zeta analysis of Bondarenko--Ivić--Saksman--Seip.  Riesz tapering does not remove a fixed off-line zero; a single frequency can nevertheless hide off-line mass by phase cancellation.  This is why the centroid value can be a sensitive spectral invariant without being, by itself, a logically complete criterion for RH.
+
+\appendix
+\section{Reproducibility files}
+The computational supplement distributed with this manuscript contains:
+\begin{itemize}[leftmargin=2em]
+\item \texttt{verify\_rvm\_centroid.py}: reconstructs the Lambert RVM clock from the exact $W_0$ formula, computes the direct triangular centroid, and verifies the discrete Abel identity;
+\item \texttt{rvm\_centroid\_output.txt}: console output of the preceding script;
+\item \texttt{verify\_zeta\_conditional\_constant.py}: evaluates the zero-free smooth and one-sided arithmetic terms in Theorem~\ref{thm:fullconstant};
+\item \texttt{zeta\_conditional\_constant\_output.txt}: console output of that evaluation.
+\end{itemize}
+The finite zeta centroid quoted in Section~\ref{sec:numerics} is taken from the existing computational archive rather than recomputed in these scripts.
+
+\section{Useful differential identities for the exact smooth clock}
+For numerical evaluation of \eqref{eq:Bsmooth}, write
+\[
+z(t)=\frac14+\frac{it}{2}.
+\]
+Then
+\[
+H'(t)=\frac1\pi\left[
+\frac12\Re\psi(z(t))-\frac12\log\pi
+\right],
+\]
+and
+\[
+H''(t)=-\frac1{4\pi}\Im\psi_1(z(t)),
+\]
+where $\psi$ and $\psi_1$ are the di- and trigamma functions.  The standard theta expansion begins
+\[
+\vartheta(t)=\frac t2\log\frac{t}{2\pi}-\frac t2-\frac\pi8
++\frac1{48t}+\frac7{5760t^3}+\frac{31}{80640t^5}+\cdots,
+\]
+which supplies an efficient and controllable oscillatory tail for the integral of $e^{it}H''(t)$.
+
+\begin{thebibliography}{99}
+
+\bibitem{Riemann1859}
+B.~Riemann,
+\emph{Ueber die Anzahl der Primzahlen unter einer gegebenen Grösse},
+Monatsberichte der Berliner Akademie (1859), 671--680.
+
+\bibitem{Titchmarsh1986}
+E.~C.~Titchmarsh, revised by D.~R.~Heath-Brown,
+\emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+Oxford University Press, 1986.
+
+\bibitem{Edwards1974}
+H.~M.~Edwards,
+\emph{Riemann's Zeta Function},
+Academic Press, 1974; Dover reprint, 2001.
+
+\bibitem{IwaniecKowalski2004}
+H.~Iwaniec and E.~Kowalski,
+\emph{Analytic Number Theory},
+American Mathematical Society Colloquium Publications 53, 2004.
+
+\bibitem{Ivic1985}
+A.~Ivić,
+\emph{The Riemann Zeta-Function: Theory and Applications},
+Wiley, 1985; Dover reprint, 2003.
+
+\bibitem{DLMF}
+NIST Digital Library of Mathematical Functions,
+\emph{Chapter 25: Zeta and Related Functions}, especially \S25.10,
+\url{https://dlmf.nist.gov/25.10}.
+
+\bibitem{Weyl1916}
+H.~Weyl,
+\emph{Über die Gleichverteilung von Zahlen mod. Eins},
+Math. Ann. \textbf{77} (1916), 313--352.
+
+\bibitem{Hlawka}
+E.~Hlawka,
+\emph{Über die Gleichverteilung gewisser Folgen, welche mit den Nullstellen der Zetafunktion zusammenhängen},
+Sitzungsber. Österreich. Akad. Wiss. Math.-Naturwiss. Kl. Abt. II \textbf{184} (1975), 459--471.
+
+\bibitem{Landau1911}
+E.~Landau,
+classical explicit formula for sums $\sum x^\rho$ over zeta zeros;
+see Titchmarsh \cite{Titchmarsh1986} and the modern refinements cited below.
+
+\bibitem{Gonek}
+S.~M.~Gonek,
+refinements of Landau's formula for exponential sums over zeta zeros;
+see the references in Ford--Soundararajan--Zaharescu \cite{FordSoundZaha2009}.
+
+\bibitem{FordZaharescu2005}
+K.~Ford and A.~Zaharescu,
+\emph{On the distribution of imaginary parts of zeros of the Riemann zeta function},
+J. Reine Angew. Math. \textbf{579} (2005), 145--158;
+arXiv:math/0405459.
+
+\bibitem{FordSoundZaha2009}
+K.~Ford, K.~Soundararajan and A.~Zaharescu,
+\emph{On the distribution of imaginary parts of zeros of the Riemann zeta function, II},
+Math. Ann. \textbf{343} (2009), 487--505;
+arXiv:0805.2745.
+
+\bibitem{FordMengZaharescu}
+K.~Ford, X.~Meng and A.~Zaharescu,
+\emph{Simultaneous distribution of the fractional parts of Riemann zeta zeros},
+arXiv:1511.06814.
+
+\bibitem{Montgomery1973}
+H.~L.~Montgomery,
+\emph{The pair correlation of zeros of the zeta function},
+Proc. Sympos. Pure Math. \textbf{24}, AMS, 1973, 181--193.
+
+\bibitem{Odlyzko1987}
+A.~M.~Odlyzko,
+\emph{On the distribution of spacings between zeros of the zeta function},
+Math. Comp. \textbf{48} (1987), 273--308.
+
+\bibitem{HughesRudnick2002}
+C.~P.~Hughes and Z.~Rudnick,
+\emph{Linear statistics for zeros of Riemann's zeta function},
+C. R. Math. Acad. Sci. Paris \textbf{335} (2002), 667--670.
+
+\bibitem{Selberg}
+A.~Selberg,
+classical unconditional second-moment results for $S(t)$ and $S_1(t)$;
+see the historical account in Chirre--Quesada-Herrera \cite{ChirreQuesada2020}.
+
+\bibitem{ChirreQuesada2020}
+A.~Chirre and E.~Quesada-Herrera,
+\emph{The second moment of $S_n(t)$ on the Riemann hypothesis},
+arXiv:2006.08503.
+
+\bibitem{Fujii2002}
+A.~Fujii,
+\emph{On the zeros of the Riemann zeta function},
+Comment. Math. Univ. St. Pauli \textbf{51} (2002), no.~1, 1--17,
+DOI: 10.14992/00008719.
+
+\bibitem{Ivic2004}
+A.~Ivić,
+\emph{On certain sums over ordinates of zeta-zeros},
+arXiv:math/0312303.
+
+\bibitem{BondarenkoIvicSaksmanSeip2019}
+A.~Bondarenko, A.~Ivić, E.~Saksman and K.~Seip,
+\emph{On certain sums over ordinates of zeta-zeros II},
+Hardy-Ramanujan J. \textbf{41} (2018/2019), 85--97;
+arXiv:1808.01763.
+
+\bibitem{Guinand}
+A.~P.~Guinand,
+classical explicit-formula work relating primes and zeros;
+see Weil and modern treatments of the Guinand--Weil formula.
+
+\bibitem{Weil1952}
+A.~Weil,
+\emph{Sur les ``formules explicites'' de la théorie des nombres premiers},
+Comm. Sém. Math. Univ. Lund (1952), 252--265.
+
+\bibitem{Barner}
+K.~Barner,
+\emph{On A. Weil's explicit formula},
+J. Reine Angew. Math. \textbf{323} (1981), 139--152,
+DOI: 10.1515/crll.1981.323.139.
+
+\bibitem{Buthe2014}
+J.~Büthe,
+\emph{A method for proving the completeness of a list of zeros of certain $L$-functions},
+Math. Comp. \textbf{84} (2015), 2413--2431; arXiv:1308.6704.
+
+\bibitem{Sekatskii2008}
+S.~K.~Sekatskii, S.~Beltraminelli and D.~Merlini,
+\emph{A few equalities involving integrals of the logarithm of the Riemann zeta-function and equivalent to the Riemann hypothesis},
+arXiv:0806.1596.
+
+\bibitem{Sekatskii2009}
+S.~K.~Sekatskii, S.~Beltraminelli and D.~Merlini,
+\emph{A few equalities involving integrals of the logarithm of the Riemann zeta-function and equivalent to the Riemann hypothesis II},
+arXiv:0904.1277.
+
+\bibitem{Sekatskii2010}
+S.~K.~Sekatskii, S.~Beltraminelli and D.~Merlini,
+\emph{A few equalities involving integrals of the logarithm of the Riemann zeta-function and equivalent to the Riemann hypothesis III: exponential weight functions},
+arXiv:1006.0323.
+
+\bibitem{Brent2018}
+R.~P.~Brent,
+\emph{On asymptotic approximations to the log-Gamma and Riemann--Siegel theta functions},
+J. Aust. Math. Soc. \textbf{107} (2019), 319--337;
+arXiv:1609.03682.
+
+\bibitem{Paris2020}
+R.~B.~Paris,
+\emph{Refined asymptotics of the Riemann--Siegel theta function},
+arXiv:2004.00926.
+
+\bibitem{Arias2014}
+J.~Arias de Reyna,
+\emph{On the distribution (mod 1) of the normalized zeros of the Riemann zeta-function},
+J. Number Theory \textbf{153} (2015), 37--53; arXiv:1403.7126.
+
+\bibitem{BrentPlattTrudgian2021}
+R.~P.~Brent, D.~J.~Platt and T.~S.~Trudgian,
+\emph{Accurate estimation of sums over zeros of the Riemann zeta-function},
+Math. Comp. \textbf{90} (2021), 2923--2935, DOI: 10.1090/mcom/3652; arXiv:2009.13791.
+
+\bibitem{Trudgian2014}
+T.~S.~Trudgian,
+\emph{An improved upper bound for the argument of the Riemann zeta-function on the critical line II},
+J. Number Theory \textbf{134} (2014), 280--292; arXiv:1208.5846.
+
+\end{thebibliography}
+
+\end{document}

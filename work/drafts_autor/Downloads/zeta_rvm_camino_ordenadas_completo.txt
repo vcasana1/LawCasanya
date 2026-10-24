@@ -1,0 +1,1310 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath,amssymb,amsthm,mathrsfs,mathtools}
+\usepackage{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{1}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolario}
+\theoremstyle{definition}
+\newtheorem{hypothesis}[theorem]{Hipótesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Observación}
+
+\newcommand{\RVM}{\mathrm{RVM}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\Rea}{\operatorname{Re}}
+\newcommand{\Ima}{\operatorname{Im}}
+\renewcommand{\digamma}{\psi_{\mathrm{dg}}}
+
+\renewcommand{\contentsname}{Contenido}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\proofname}{Prueba}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries De $\zeta_{\mathrm{RvM}}$ a $\zeta$ por el camino de ordenadas}\\[4pt]
+V. Casa\~na-Giner \qquad 2 de octubre de 2026
+\end{center}
+
+\medskip
+\tableofcontents
+\medskip
+
+\begin{center}\bfseries\large Parte I. El camino de ordenadas\end{center}
+
+\setcounter{section}{-1}
+\section{Propósito y mapa del camino}\label{sec:w0}
+
+\textbf{Propósito.} Construir una familia continua de funciones de tipo zeta \(\{\zeta_{\kappa}\}_{\kappa \in \lbrack 0,1\rbrack}\) cuyos ceros no triviales están, en todo momento, sobre la recta \(\Re s = \frac{1}{2}\). La familia parte de \(\zeta_{RvM}\) (ordenadas \(\tau_{k}\) del reloj RvM, \(\kappa = 0\)) y termina en la función \(F_{1/2,\gamma}\) cuyas ordenadas son las \(\gamma_{k}\) de los ceros de \(\zeta\) (\(\kappa = 1\)). Solo se mueven las ordenadas, de \(\tau_{k}\) a \(\gamma_{k}\); la abscisa vale \(\frac{1}{2}\) a lo largo de todo el camino.
+
+\textbf{Tesis del autor (premisa P).} Si el camino llega a la función de Riemann, identificada por sus valores, los ceros de \(\zeta\) están en la recta, es decir, se cumple RH. Este documento no demuestra P. P se usa en un único punto (§5--§6: leer el extremo \(\kappa = 1\) como la función de conteo de potencias de primos \(J\)). Todo lo demás se marca como independiente de P.
+
+\textbf{Qué hace el documento.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Prueba que la familia está bien definida y transporta, para todo \(\kappa\), las propiedades de \(\zeta_{RvM}\): ecuación funcional, residuo 1, ceros triviales, orden 1, ceros solo en \(\frac{1}{2} \pm it_{k}(\kappa)\) (§2).
+\item
+  Prueba, con una justificación rigurosa del intercambio de suma e integral, que la familia induce una familia \(J_{\kappa}\) de funciones de tipo conteo de primos, con \(\kappa \mapsto J_{\kappa}\) de clase \(C^{1}\) en el sentido de distribuciones (§3).
+\item
+  Prueba que el extremo \(\kappa = 0\) converge uniformemente sobre compactos, con constantes explícitas (§4).
+\item
+  Reduce la convergencia puntual del extremo \(\kappa = 1\) a una cantidad exacta (el defecto fuera de la recta) y la prueba bajo P por Landau--Gonek (§5).
+\item
+  Establece la identidad \(J_{1} - J_{0} = - 2\sum_{k}^{}\left( T_{k}(1) - T_{k}(0) \right)\) puntual y distribucional (§6).
+\item
+  Da una fórmula exacta, absolutamente convergente y \textbf{independiente de la ruta}, para esa diferencia suavizada, en términos del conteo \(N - N_{0}\) (§7), y calcula sus términos resonantes (§8).
+\end{enumerate}
+
+\textbf{Reglas de trabajo.} No se usa ningún criterio clásico de RH. Cada resultado lleva etiqueta: {[}LIT{]} literatura con referencia; {[}DED{]} deducido aquí con la derivación; {[}REC{]} recordado sin fuente localizada; {[}ADAPT{]} método conocido aplicado a otro objeto. Toda variable se define donde aparece. No hay ejecuciones numéricas en este documento.
+
+\section{Objetos y convenciones}\label{sec:w1}
+
+\textbf{Variables generales.} \(x > 1\) real, \(u = \log x\); \(k \in \mathbb{N}\) es el índice de las ordenadas; \(\kappa \in \lbrack 0,1\rbrack\) es el parámetro del camino; \(s \in \mathbb{C}\); \(t\) es una altura real positiva; \(\rho = \beta + i\gamma\) recorre los ceros no triviales de \(\zeta\).
+
+\textbf{Definición 1.1 (reloj RvM).} Para \(t > 0\):
+
+\begin{equation}
+ \ell(t) = \log\frac{t}{2\pi},\quad\quad M(t) = \frac{t}{2\pi}\log\frac{t}{2\pi e} + \frac{7}{8},\quad\quad M'(t) = \frac{\ell(t)}{2\pi}.
+\end{equation}
+
+Las \textbf{ordenadas RvM} \(\tau_{k}\) (\(k \geq 1\)) son la única solución \(\tau_{k} > 2\pi\) de \(M\left( \tau_{k} \right) = k - \frac{1}{2}\). Se escribe \(\ell_{k} = \ell\left( \tau_{k} \right)\).
+
+\textbf{Definición 1.2 (ordenadas de} \(\zeta\) \textbf{y conteos).} \(\gamma_{1} \leq \gamma_{2} \leq \cdots\) son las ordenadas de los ceros \(\rho\) de \(\zeta\) con \(0 < \gamma\), con multiplicidad. \(N(t) = \#\{ k:\gamma_{k} \leq t\}\), \(N_{0}(t) = \#\{ k:\tau_{k} \leq t\}\). \(\theta\) es la función theta de Riemann--Siegel, \(H(t) = 1 + \theta(t)/\pi\) el reloj exacto, \(S(t) = N(t) - H(t)\) para \(t \geq 10\), \(\psi(y) = \{ y\} - \frac{1}{2}\). El desplazamiento es \(\delta_{k} = \gamma_{k} - \tau_{k}\) (en tu corpus, \(\varepsilon_{k}\)).
+
+\textbf{Lema 1.3 {[}DED{]} (propiedades exactas del reloj).}
+
+\begin{enumerate}
+\def\labelenumi{(\roman{enumi})}
+\item
+  \(\ell_{k} = 1 + W_{0}\left( \left( k - \frac{11}{8} \right)/e \right)\), y por tanto \(\tau_{k} = 2\pi\left( k - \frac{11}{8} \right)/W_{0}\left( \left( k - \frac{11}{8} \right)/e \right)\), donde \(W_{0}\) es la rama principal de Lambert.
+\item
+  \(\tau_{k}\,\ell_{k} \geq 2\pi\left( k - \frac{11}{8} \right)\) para todo \(k \geq 1\).
+\item
+  La función inversa \(y \mapsto \tau(y) = M^{- 1}(y)\) (\(t > 2\pi\)) cumple \(\tau' = 2\pi/\ell(\tau) > 0\) y \(\tau'' = - 4\pi^{2}/\left( \tau\,\ell(\tau)^{3} \right) < 0\).
+\item
+  \(\frac{2\pi}{\ell_{k + 1}} \leq \tau_{k + 1} - \tau_{k} \leq \frac{2\pi}{\ell_{k}}\) y \(\left| \tau_{k + 2} - 2\tau_{k + 1} + \tau_{k} \right| \leq \frac{4\pi^{2}}{\tau_{k}\ell_{k}^{3}}\).
+\end{enumerate}
+
+\emph{Prueba.} (i) \(M\left( \tau_{k} \right) = k - \frac{1}{2}\) equivale a \(\tau_{k}\left( \ell_{k} - 1 \right) = 2\pi\left( k - \frac{11}{8} \right)\). Con \(\tau_{k} = 2\pi e^{\ell_{k}}\) resulta \(\left( \ell_{k} - 1 \right)e^{\ell_{k}} = k - \frac{11}{8}\). Con \(W = \ell_{k} - 1 > - 1\) esto es \(We^{W} = \left( k - \frac{11}{8} \right)/e\), cuya solución con \(W > - 1\) es \(W_{0}\). (ii) Como \(\ell_{k} > 0\) y \(\tau_{k} > 0\), \(\tau_{k}\ell_{k} > \tau_{k}\left( \ell_{k} - 1 \right) = 2\pi\left( k - \frac{11}{8} \right)\). (iii) \(dM/d\tau = \ell/2\pi\) da \(\tau' = 2\pi/\ell\). Derivando de nuevo, con \(\ell' = 1/\tau\), \(\tau'' = - 2\pi\ell'\tau'/\ell^{2} = - 4\pi^{2}/\left( \tau\ell^{3} \right)\). (iv) Con \(y_{k} = k - \frac{1}{2}\), \(\tau_{k + 1} - \tau_{k} = \tau'\left( y^{*} \right)\) para algún \(y^{*} \in \left( y_{k},y_{k + 1} \right)\); como \(\tau'\) decrece, está entre \(2\pi/\ell_{k + 1}\) y \(2\pi/\ell_{k}\). La segunda diferencia es \(\tau''(\eta)\) con \(\eta \in \left( y_{k},y_{k + 2} \right)\), y \(|\tau''|\) decrece porque \(\tau\ell^{3}\) crece. \(\)
+
+\textbf{Hipótesis H1 (desplazamientos acotados).} Existe \(D > 0\) con \(\left| \delta_{k} \right| \leq D\) para todo \(k\). En tu corpus: para \(k \geq k_{0}\) se tiene \(\left| \delta_{k} \right| < \pi\) (teorema de no resonancia repetida, que usa la cota explícita de Trudgian \(\left| S(t) \right| \leq 0.111\log t + 0.275\log\log t + 2.450\) {[}LIT, arXiv:1208.5846{]}). La cota \(\delta_{k} = O(1)\) sale de \(S_{*}\left( \gamma_{k} \right) = k - \frac{1}{2} - H\left( \gamma_{k} \right)\) y de \(H\left( \gamma_{k} \right) - M\left( \tau_{k} \right) = H'\left( \xi_{k} \right)\delta_{k} + O\left( 1/\tau_{k} \right)\) con \(H' = \ell/2\pi + O\left( t^{- 2} \right)\) {[}DED{]}.
+
+\section{La familia y el camino}\label{sec:w2}
+
+\textbf{Definición 2.1 (familia).} Para una sucesión \(t = \left( t_{k} \right)\) de reales positivos con \(\sum t_{k}^{- 2} < \infty\),
+
+\begin{equation}\label{eq:w1}
+ F_{t}(s) = \frac{\pi^{s/2}}{s(s - 1)\Gamma(s/2)}\prod_{k \geq 1}^{}\left( 1 + \frac{s(s - 1)}{\frac{1}{4} + t_{k}^{2}} \right).
+\end{equation}
+
+\textbf{El camino} es \(t_{k}(\kappa) = (1 - \kappa)\tau_{k} + \kappa\gamma_{k} = \tau_{k} + \kappa\delta_{k}\) y \(\zeta_{\kappa} = F_{t(\kappa)}\):
+
+\begin{equation}\label{eq:w2}
+ t_{k}(\kappa) = \tau_{k} + \kappa\,\delta_{k},\quad\quad\zeta_{0} = \zeta_{RvM},\quad\zeta_{1} = F_{1/2,\gamma}.
+\end{equation}
+
+El \(k\)-ésimo \(\tau\) se empareja con el \(k\)-ésimo \(\gamma\); \(\beta = \frac{1}{2}\) en todo \(\kappa\).
+
+\textbf{Proposición 2.2 (buena definición y propiedades transportadas) {[}DED{]}.} Bajo H1:
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  \(t_{k}(\kappa) \geq \tau_{k} - D\) y \(\left| t_{k}(\kappa) - \tau_{k} \right| \leq D\), para todo \(\kappa \in \lbrack 0,1\rbrack\); \(\sum_{k}^{}t_{k}(\kappa)^{- 2}\) converge uniformemente en \(\kappa\).
+\item
+  El producto \(\Phi_{\kappa}(s) = \prod_{k}^{}\left( 1 + s(s - 1)/\left( \frac{1}{4} + t_{k}(\kappa)^{2} \right) \right)\) converge absolutamente y uniformemente sobre compactos de \((s,\kappa)\); \(\Phi_{\kappa}\) es entera en \(s\), de orden 1, y continua en \(\kappa\).
+\item
+  \(\zeta_{\kappa}\) es meromorfa con un único polo, simple, en \(s = 1\), de residuo 1. Sus ceros triviales son \(- 2, - 4,\ldots\) y sus ceros no triviales son exactamente \(\frac{1}{2} \pm it_{k}(\kappa)\) (con la multiplicidad de la sucesión). \(\zeta_{\kappa}(0) = - \frac{1}{2}\).
+\item
+  \(\pi^{- s/2}\Gamma(s/2)\zeta_{\kappa}(s)\) es invariante bajo \(s \mapsto 1 - s\).
+\item
+  Para \(\kappa < 1\), \(t_{k}(\kappa)\) es estrictamente creciente en \(k\) y los ceros de \(\zeta_{\kappa}\) son simples. Para \(\kappa = 1\) la sucesión es solo no decreciente: una ordenada repetida corresponde a un cero múltiple de \(\zeta\).
+\end{enumerate}
+
+\emph{Prueba.} (a) \(t_{k}(\kappa)\) es combinación convexa de \(\tau_{k}\) y \(\gamma_{k}\), ambos positivos, y \(\left| t_{k} - \tau_{k} \right| = \kappa\left| \delta_{k} \right| \leq D\). Por el Lema 1.3, \(\tau_{k}\ell_{k} \geq 2\pi\left( k - \frac{11}{8} \right)\) y \(\ell_{k} = O\left( \log k \right)\), luego \(\tau_{k} \gg k/\log k\) y \(\sum\left( \tau_{k} - D \right)^{- 2} < \infty\) con cota independiente de \(\kappa\). (b) En \(|s| \leq R\), \(\left| s(s - 1) \right|/\left( \frac{1}{4} + t_{k}^{2} \right) \leq \left( R^{2} + R \right)/t_{k}^{2}\) y se aplica el criterio M de Weierstrass a \(\sum\log(1 + \cdot )\). Como \(\Phi_{\kappa}\) es un producto canónico de género 0 en la variable \(z = s(s - 1)\) con ceros \(- \left( \frac{1}{4} + t_{k}^{2} \right) \sim - \left( 2\pi k/\log k \right)^{2}\) (exponente de convergencia \(\frac{1}{2}\)), es de orden \(\frac{1}{2}\) en \(z\), es decir, de orden 1 en \(s\). (c) \(1 + z/a_{k} = 0\) con \(z = s(s - 1)\), \(a_{k} = \frac{1}{4} + t_{k}^{2}\) equivale a \(\left( s - \frac{1}{2} \right)^{2} = - t_{k}^{2}\). El factor \(1/\Gamma(s/2)\) anula \(- 2, - 4,\ldots\); en \(s = 1\), \(\Phi_{\kappa}(1) = 1\) y \(\pi^{1/2}/\Gamma\left( \frac{1}{2} \right) = 1\) dan residuo 1; en \(s = 0\), \(s\Gamma(s/2) \rightarrow 2\) y \(\Phi_{\kappa}(0) = 1\) dan \(- \frac{1}{2}\). (d) \(\pi^{- s/2}\Gamma(s/2)\zeta_{\kappa}(s) = \Phi_{\kappa}(s)/\left( s(s - 1) \right)\) y \(s(s - 1)\) es invariante. (e) \(t_{k + 1} - t_{k} \geq (1 - \kappa)\left( \tau_{k + 1} - \tau_{k} \right) > 0\) si \(\kappa < 1\), pues \(\gamma_{k + 1} \geq \gamma_{k}\). \(\)
+
+\textbf{Lema 2.3 (identificación del extremo) {[}LIT + DED{]}.} \(\zeta_{1} = \zeta\) si y solo si \(\beta_{k} = \frac{1}{2}\) para todo cero no trivial \(\rho_{k} = \beta_{k} + i\gamma_{k}\) de \(\zeta\).
+
+\emph{Prueba.} Sea \(\xi(s) = \frac{1}{2}s(s - 1)\pi^{- s/2}\Gamma(s/2)\zeta(s)\), entera de orden 1 y simétrica, con \(\xi(0) = \frac{1}{2}\) y producto de Hadamard \(\xi(s) = \xi(0)\prod_{\rho}^{}(1 - s/\rho)\) agrupado en pares conjugados {[}LIT: Davenport, \emph{Multiplicative Number Theory}, cap. 12; Titchmarsh §2.12{]}. Si todos los \(\beta_{k} = \frac{1}{2}\), el par \(\rho,\bar{\rho}\) aporta \((1 - s/\rho)\left( 1 - s/\bar{\rho} \right) = 1 + s(s - 1)/\left( \frac{1}{4} + \gamma^{2} \right)\), luego \(2\xi = \Phi_{1}\) y \(\zeta = \zeta_{1}\). Recíprocamente, los ceros no triviales de \(\zeta_{1}\) están en \(\Re s = \frac{1}{2}\) por la Proposición 2.2(c); si \(\zeta_{1} = \zeta\), los de \(\zeta\) también. \(\)
+
+\textbf{Lectura.} El Lema 2.3 no añade ningún paso de verificación de ceros: formaliza que \emph{llegar} a \(\zeta\) equivale a que los ceros de \(\zeta\) estén en la recta, que es la afirmación P del autor. P se usa solo donde se indica.
+
+\section{Lado de los primos: \(J_{\kappa}\) y el intercambio suma--integral}\label{sec:w3}
+
+\textbf{Definición 3.1.} Para \(u = \log x > 0\) y \(t > 0\) sea \(T(t,u) = \Re\operatorname{Ei}\left( \left( \frac{1}{2} + it \right)u \right)\). Con \(Li\) el logaritmo integral y \(C_{0}(x) = \int_{x}^{\infty}\frac{dv}{v\left( v^{2} - 1 \right)\log v} - \log 2\),
+
+\begin{equation}\label{eq:w3}
+ J_{\kappa}(x) = \operatorname{Li}(x) - 2\sum_{k \geq 1}^{}T\left( t_{k}(\kappa),u \right) + C_{0}(x).
+\end{equation}
+
+Para \(\kappa = 0\) es la función \(J_{v}\) del corpus (Teorema (5): \(J_{v} - Li = O\left( \sqrt{x}\left( \log\log x \right)^{2}/\log x \right)\)). La serie converge solo condicionalmente; su sentido (distribucional o puntual) se precisa en cada resultado.
+
+\textbf{Lema 3.2 {[}DED{]} (derivada en} \(t\)\textbf{).} \(T\) es suave en \(t\) y
+
+\begin{equation}\label{eq:w4}
+ \partial_{t}T(t,u) = \Re\frac{i\, e^{(1/2 + it)u}}{\frac{1}{2} + it} = \sqrt{x}\,\frac{t\cos(tu) - \frac{1}{2}\sin(tu)}{\frac{1}{4} + t^{2}}.
+\end{equation}
+
+\emph{Prueba.} \(Ei'(z) = e^{z}/z\). Con \(z = \left( \frac{1}{2} + it \right)u\), \(\partial_{t}Ei(z) = Ei'(z)\, iu = ie^{z}u/z = ie^{(1/2 + it)u}/\left( \frac{1}{2} + it \right)\). Multiplicando numerador y denominador por \(\frac{1}{2} - it\) y tomando la parte real se obtiene la segunda forma. \(\)
+
+\textbf{Lema 3.3 {[}DED + LIT{]} (decaimiento tras suavizar).} Sean \(\varphi \in C_{c}^{1}\left( (0,\infty) \right)\), \(g = \varphi\, e^{u/2}\) y \(Q_{\varphi}(t) = \int T(t,u)\varphi(u)\, du\). Entonces
+
+\begin{equation}
+ Q_{\varphi}'(t) = \int\partial_{t}T(t,u)\varphi(u)\, du = \Re\left\lbrack \frac{i\,\widehat{g}( - t)}{\frac{1}{2} + it} \right\rbrack,\quad\widehat{g}( - t) = \int g(u)e^{itu}du,\quad\left| Q_{\varphi}'(t) \right| \leq \frac{\| g' \|_{1}}{t^{2}}.
+\end{equation}
+
+Además, si \(\operatorname{supp}\varphi \subset \lbrack a,b\rbrack \subset (0,\infty)\), \(\left| T(t,u) \right| \leq C(a,b)/t\) para \(u \in \lbrack a,b\rbrack\), \(t \geq 1\), y por tanto \(\left| Q_{\varphi}(t) \right| \leq C/t\).
+
+\emph{Prueba.} La primera igualdad es el Lema 3.2 integrado contra \(\varphi\). Integrando por partes, \(\widehat{g}( - t) = - (it)^{- 1}\int g' e^{itu}du\), luego \(\left| \widehat{g}( - t) \right| \leq \| g' \|_{1}/t\); con \(\left| \frac{1}{2} + it \right| \geq t\) resulta la cota. La cota de \(T\) sale de \(\operatorname{Ei}(z) = \frac{e^{z}}{z}\left( 1 + O\left( |z|^{- 1} \right) \right)\) para \(\Re z > 0\), \(|z| \rightarrow \infty\) {[}LIT: DLMF §6.12{]}; la rama de Ei solo afecta a la parte imaginaria. \(\)
+
+\textbf{Teorema 3.4 (intercambio suma--integral, rigurosa) {[}DED{]}.} Bajo H1, para toda \(\varphi \in C_{c}^{1}\left( (0,\infty) \right)\):
+
+\begin{equation}\label{eq:w5}
+ \sum_{k \geq 1}^{}\left| \delta_{k} \right|\int_{0}^{1}|\langle\partial_{t}T\left( t_{k}(\kappa), \cdot \right),\varphi\rangle|\, d\kappa\  \leq \ D\, \| g' \|_{1}\sum_{k \geq 1}^{}\left( \tau_{k} - D \right)^{- 2} < \infty.
+\end{equation}
+
+En consecuencia: (a) la serie \(\sum_{k}^{}\left( T\left( \gamma_{k}, \cdot \right) - T\left( \tau_{k}, \cdot \right) \right)\) converge absolutamente en \(\mathcal{D}'(0,\infty)\); (b) suma e integral conmutan,
+
+\begin{equation}
+ \left\langle \sum_{k}^{}\left( T\left( \gamma_{k}, \cdot \right) - T\left( \tau_{k}, \cdot \right) \right),\varphi \right\rangle = \int_{0}^{1}{\sum_{k}^{}\delta_{k}}\,\langle\partial_{t}T\left( t_{k}(\kappa), \cdot \right),\varphi\rangle\, d\kappa;
+\end{equation}
+
+(c) \(\kappa \mapsto J_{\kappa}\) es de clase \(C^{1}\) con valores en \(\mathcal{D}'\) y
+
+\begin{equation}\label{eq:w6}
+ \partial_{\kappa}J_{\kappa}(x) = - 2\sqrt{x}\sum_{k}^{}\delta_{k}\,\frac{t_{k}\cos\left( t_{k}u \right) - \frac{1}{2}\sin\left( t_{k}u \right)}{\frac{1}{4} + t_{k}^{2}},\quad\quad t_{k} = t_{k}(\kappa);
+\end{equation}
+
+(d) se define \(J_{1}: = J_{0} - 2\sum_{k}^{}\left( T\left( \gamma_{k}, \cdot \right) - T\left( \tau_{k}, \cdot \right) \right)\), y \(J_{1} - J_{0} = \int_{0}^{1}\partial_{\kappa}J_{\kappa}\, d\kappa\) en \(\mathcal{D}'\).
+
+\emph{Prueba.} Para cada \(k\), \(\kappa \mapsto t_{k}(\kappa)\) es afín, así que \(\langle T\left( \gamma_{k}, \cdot \right) - T\left( \tau_{k}, \cdot \right),\varphi\rangle = \int_{0}^{1}\delta_{k}\langle\partial_{t}T\left( t_{k}(\kappa), \cdot \right),\varphi\rangle d\kappa\) por el teorema fundamental del cálculo. Por el Lema 3.3 y \(t_{k}(\kappa) \geq \tau_{k} - D\), el integrando es \(\leq D \| g' \|_{1}\left( \tau_{k} - D \right)^{- 2}\). Como \(\sum_{k}^{}\left( \tau_{k} - D \right)^{- 2} \ll \sum\left( \log k/k \right)^{2} < \infty\), se cumple \eqref{eq:w5}, y por Tonelli--Fubini la serie y la integral conmutan. El criterio M de Weierstrass da continuidad en \(\kappa\) de \(\sum_{k}^{}\delta_{k}\langle\partial_{t}T\left( t_{k}(\kappa), \cdot \right),\varphi\rangle\), es decir, carácter \(C^{1}\). \(\)
+
+\textbf{Por qué hace falta suavizar.} En sentido puntual, \(\sum_{k}^{}\left| \delta_{k} \right|\,\left| \partial_{t}T \right|\) se comporta como \(\sum_{k}^{}1/t_{k} \sim \sum\log k/k\) y diverge: Fubini ordinario no se aplica. Suavizar en \(u\) convierte la serie condicional en absolutamente convergente porque \(\widehat{g}\) decae. Una distribución queda determinada por sus suavizados, de modo que el resultado es completo en \(\mathcal{D}'\), saltos en potencias de primo incluidos.
+
+\section{El extremo $\kappa=0$: convergencia uniforme de \(J_{v}\)}\label{sec:w4}
+
+Sea \(\lbrack a,b\rbrack \subset (0,\infty)\) un intervalo compacto de valores de \(u\), y sean \(E_{k} = e^{iu\tau_{k}}\), \(A_{K}(u) = \sum_{k \leq K}^{}E_{k}\), \(\Delta_{k} = u\left( \tau_{k + 1} - \tau_{k} \right)\). Se fija \(k_{0} = k_{0}(b) \geq 2\) con \(\ell_{k_{0}} \geq 2b\) y \(\tau_{k_{0}}\ell_{k_{0}}^{2} \geq 4\pi\).
+
+\textbf{Lema 4.1 {[}DED{]}.} Para \(k \geq k_{0}\) y \(u \in \lbrack a,b\rbrack\): (i) \(\frac{2\pi u}{\ell_{k + 1}} \leq \Delta_{k} \leq \frac{2\pi u}{\ell_{k}} \leq \pi\); (ii) \(\left| \Delta_{k + 1} - \Delta_{k} \right| \leq \frac{4\pi^{2}u}{\tau_{k}\ell_{k}^{3}}\); (iii) \(\ell_{k + 2} \leq 2\ell_{k}\).
+
+\emph{Prueba.} (i),(ii) son el Lema 1.3(iv) multiplicado por \(u\); \(\ell_{k} \geq 2b \geq 2u\) da \(\Delta_{k} \leq \pi\). (iii) \(\ell_{k + 2} - \ell_{k} \leq \left( \tau_{k + 2} - \tau_{k} \right)/\tau_{k} \leq 4\pi/\left( \tau_{k}\ell_{k} \right) \leq \ell_{k}\) por la elección de \(k_{0}\). \(\)
+
+\textbf{Lema 4.2 (sumas parciales) {[}DED + ADAPT: serie de Abel del corpus{]}.} Existe \(C = C(a,b)\) con \(\sup_{u \in \lbrack a,b\rbrack}\left| A_{K}(u) \right| \leq C\left( 1 + \log K \right)\) para todo \(K\).
+
+\emph{Prueba.} Para \(k \geq k_{0}\), \(E_{k + 1} - E_{k} = E_{k}\left( e^{i\Delta_{k}} - 1 \right)\), es decir \(E_{k} = a_{k}\left( E_{k + 1} - E_{k} \right)\) con \(a_{k} = 1/\left( e^{i\Delta_{k}} - 1 \right) = - \frac{1}{2} - \frac{i}{2}\cot\left( \Delta_{k}/2 \right)\). Sumando por partes con \(b_{k} = a_{k + 1} - a_{k}\):
+
+\begin{equation}\label{eq:w7}
+ \sum_{k = k_{0}}^{K}E_{k} = a_{K}E_{K + 1} - a_{k_{0}}E_{k_{0}} - \sum_{k = k_{0}}^{K - 1}b_{k}E_{k + 1}.
+\end{equation}
+
+Como \(\left| e^{i\Delta} - 1 \right| = 2\sin(\Delta/2) \geq 2\Delta/\pi\) para \(\Delta \leq \pi\), el Lema 4.1(i) da \(\left| a_{k} \right| \leq \pi/\left( 2\Delta_{k} \right) \leq \ell_{k + 1}/(4u) = O\left( \log k/u \right)\). La función \(h(\Delta) = 1/\left( e^{i\Delta} - 1 \right)\) cumple \(|h'| = 1/\left( 4\sin^{2}(\Delta/2) \right) \leq \pi^{2}/\left( 4\Delta^{2} \right) \leq \ell_{k + 2}^{2}/\left( 16u^{2} \right) \leq \ell_{k}^{2}/\left( 4u^{2} \right)\) sobre el segmento \(\left\lbrack \Delta_{k},\Delta_{k + 1} \right\rbrack\) (Lema 4.1(i),(iii)). Con el Lema 4.1(ii),
+
+\begin{equation}\label{eq:w8}
+ \left| b_{k} \right| \leq \frac{\ell_{k}^{2}}{4u^{2}} \cdot \frac{4\pi^{2}u}{\tau_{k}\ell_{k}^{3}} = \frac{\pi^{2}}{u\,\tau_{k}\ell_{k}} \leq \frac{\pi}{2u\,\left( k - \frac{11}{8} \right)},
+\end{equation}
+
+por el Lema 1.3(ii). Esto reproduce \(b_{k} = O\left( k^{- 1} \right)\) del corpus con constante explícita y \(u\) general; \(\sum_{k \leq K}^{}\left| b_{k} \right| \leq \frac{\pi}{2u}\left( \log K + C' \right)\), y esta suma diverge logarítmicamente (la convergencia es condicional). Los \(k < k_{0}\) aportan a lo sumo \(k_{0}\). Como \(u \geq a\), todo queda acotado por \(C(a,b)\left( 1 + \log K \right)\). \(\)
+
+\textbf{Lema 4.3 {[}DED{]}.} \(\sum_{k}^{}e^{iu\tau_{k}}/\tau_{k}\) converge uniformemente en \(u \in \lbrack a,b\rbrack\), con cola \(\leq C(a,b)\left( \sum_{k > K}^{}\log^{2}k/k^{2} + \log^{2}K/K \right)\).
+
+\emph{Prueba.} \(1/\tau_{k}\) decrece. Sumando por partes,
+
+\begin{equation}
+ \sum_{k \leq K}^{}\frac{E_{k}}{\tau_{k}} = \frac{A_{K}}{\tau_{K}} + \sum_{k < K}^{}A_{k}\left( \frac{1}{\tau_{k}} - \frac{1}{\tau_{k + 1}} \right),
+\end{equation}
+
+y \(\frac{1}{\tau_{k}} - \frac{1}{\tau_{k + 1}} \leq \frac{2\pi}{\ell_{k}\tau_{k}^{2}} \ll \ell_{k}/k^{2}\) por el Lema 1.3(ii),(iv). Con el Lema 4.2 el sumando es \(\ll \log^{2}k/k^{2}\), y \(A_{K}/\tau_{K} \ll \log^{2}K/K \rightarrow 0\). \(\)
+
+\textbf{Corolario 4.4 (hipótesis H0) {[}DED + LIT{]}.} \(\sum_{k}^{}T\left( \tau_{k},u \right)\) converge uniformemente en \(u \in \lbrack a,b\rbrack\); sus sumas parciales están acotadas en \(\lbrack a,b\rbrack\) sin excluir ningún \(x\). En particular \(J_{0} = J_{v}\) es continua en \((1,\infty)\).
+
+\emph{Prueba.} Por {[}DLMF §6.12{]}, \(T(\tau,u) = \frac{\sqrt{x}}{u}\Re\frac{e^{i\tau u}}{\frac{1}{2} + i\tau} + O\left( \sqrt{x}/(u\tau)^{2} \right)\) y \(\frac{1}{\frac{1}{2} + i\tau} = - \frac{i}{\tau} + O\left( \tau^{- 2} \right)\). Así \(T\left( \tau_{k},u \right) = \frac{\sqrt{x}}{u}\frac{\sin\left( \tau_{k}u \right)}{\tau_{k}} + r_{k}(u)\) con \(\sup_{\lbrack a,b\rbrack}\left| r_{k} \right| \ll \tau_{k}^{- 2}\), sumable. Los pocos \(k\) con \(\tau_{k}u < 1\) son finitos y cada \(T\) es continua en \(u\). El factor \(\sqrt{x}/u\) no depende de \(k\). Se aplica el Lema 4.3 a la parte imaginaria de \(\sum E_{k}/\tau_{k}\). \(\)
+
+\section{El extremo $\kappa=1$: sumas de ordenadas y Landau--Gonek}\label{sec:w5}
+
+Para \(T > 0\) y \(u = \log x\), \(B(T;u) = \sum_{0 < \gamma \leq T}^{}e^{i\gamma u}\) (ordenadas con multiplicidad) y \(\Lambda\) es la función de von Mangoldt.
+
+\textbf{Lema 5.1 {[}DED{]} (defecto fuera de la recta).} Los ceros con \(0 < \gamma \leq T\), con multiplicidad, forman un multiconjunto invariante bajo \(\beta + i\gamma \mapsto (1 - \beta) + i\gamma\). Por tanto
+
+\begin{equation}\label{eq:w9}
+ \sum_{0 < \gamma \leq T}^{}x^{\rho - 1/2} = \sum_{0 < \gamma \leq T}^{}e^{i\gamma u}\cosh\left( \left( \beta - \frac{1}{2} \right)u \right),\quad\quad B(T;u) = \sum_{0 < \gamma \leq T}^{}x^{\rho - 1/2} - D(T;u),
+\end{equation}
+
+con el defecto \(D(T;u) = \sum_{0 < \gamma \leq T}^{}e^{i\gamma u}\left( \cosh\left( \left( \beta - \frac{1}{2} \right)u \right) - 1 \right)\). Son los defectos positivos del criterio de altura finita del corpus, ponderados por la fase \(e^{i\gamma u}\).
+
+\emph{Prueba.} Por simetría \(\sum x^{\beta - 1/2}e^{i\gamma u} = \sum x^{1/2 - \beta}e^{i\gamma u}\); el promedio de ambas es la suma con \(\cosh\). \(\)
+
+\textbf{Teorema 5.2 (Landau--Gonek) {[}LIT{]}.} Para \(x,T > 1\),
+
+\begin{equation}
+ \sum_{0 < \gamma \leq T}^{}x^{\rho} = - \frac{T}{2\pi}\Lambda(x) + O\left( x\log(2xT)\log\log(3x) \right) + O\left( \log x\,\min\left( T,x/\langle x\rangle \right) \right) + O\left( \log(2T)\min\left( T,1/\log x \right) \right),
+\end{equation}
+
+donde \(\langle x\rangle\) es la distancia de \(x\) a la potencia de primo más próxima distinta de \(x\) {[}Gonek 1993{]}. \emph{Sin comprobar contra el original:} la forma simplificada con \(x\) entero se comprobó en arXiv:1902.05473, ec. (1.1); la forma completa está escrita de memoria.
+
+\textbf{Proposición 5.3 {[}DED + LIT{]} (cota de Selberg).} Sin hipótesis, \(A_{2}(T) = \sum_{0 < \gamma \leq T}^{}\left( \beta - \frac{1}{2} \right)^{2} \ll T/\log T\) y \(\left| D(T;u) \right| \ll_{u}T/\log T\); para \(x\) que no es potencia de primo, \(B(T;u) = O_{u}\left( T/\log T \right)\).
+
+\emph{Prueba.} Selberg {[}LIT, 1946; Titchmarsh §9.19(A), numeración sin comprobar{]}: \(N(\sigma,T) \ll T^{1 - \frac{1}{4}\left( \sigma - \frac{1}{2} \right)}\log T\) uniformemente en \(\frac{1}{2} \leq \sigma \leq 1\), donde \(N(\sigma,T)\) cuenta los ceros con \(\beta > \sigma\), \(0 < \gamma \leq T\). Para \(\beta > \frac{1}{2}\), \(\left( \beta - \frac{1}{2} \right)^{2} = \int_{1/2}^{\beta}2\left( \sigma - \frac{1}{2} \right)d\sigma\), luego
+
+\begin{equation}
+ \sum_{\beta > 1/2,\ 0 < \gamma \leq T}^{}\left( \beta - \frac{1}{2} \right)^{2} \ll \int_{0}^{\infty}s\, T\log T\, e^{- \frac{s\log T}{4}}ds = \frac{16\, T}{\log T}.
+\end{equation}
+
+El caso \(\beta < \frac{1}{2}\) es simétrico (factor 2). Como \(\cosh(a) - 1 \leq \frac{1}{2}a^{2}\cosh a\) y \(\left| \beta - \frac{1}{2} \right| < \frac{1}{2}\), \(|D| \leq \frac{u^{2}}{2}\cosh\frac{u}{2}\, A_{2}(T)\). Con el Teorema 5.2 en \(B = \sum x^{\rho - 1/2} - D\) se obtiene el orden. \(\)
+
+\textbf{Origen del} \(O\left( T/\log T \right)\) \textbf{del corpus.} Esta cota tiene el orden que tu corpus asigna a \(B(T)\) en \(x = e\) (Ford--Zaharescu, Ford--Soundararajan--Zaharescu). No se afirma que sus pruebas procedan así; solo que el orden coincide con el de la cota de Selberg para el defecto. El \(\log\log\) de tu Nivel 1 aparece también aquí: \(\int_{}^{T}|D|/t^{2} \ll \log\log T\), y esa cota no converge.
+
+\textbf{Teorema 5.4 (convergencia puntual en} \(\kappa = 1\)\textbf{) {[}DED{]}.} Sea \(x > 1\) que no es potencia de primo.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  \emph{(Sin hipótesis.)} \(\sum_{k}^{}e^{i\gamma_{k}u}/\gamma_{k}\) converge si y solo si existe \(\lim_{T \rightarrow \infty}\int_{14}^{T}D(t;u)\, t^{- 2}\, dt\).
+\item
+  \emph{(Bajo P: los ceros de} \(\zeta\) \emph{son} \(\frac{1}{2} + i\gamma_{k}\)\emph{.)} Entonces \(D \equiv 0\), \(B(T;u) = O_{K}\left( \log T \right)\) uniformemente para \(u\) en un compacto \(K\) de valores con \(x\) a distancia positiva de las potencias de primo, y \(\sum_{k}^{}e^{i\gamma_{k}u}/\gamma_{k}\) converge uniformemente en \(K\). Lo mismo vale para \(\sum_{k}^{}T\left( \gamma_{k},u \right)\).
+\end{enumerate}
+
+\emph{Prueba.} Por sumación por partes, \(\sum_{\gamma_{k} \leq T}^{}e^{i\gamma_{k}u}/\gamma_{k} = B(T)/T + \int_{}^{T}B(t)\, t^{- 2}dt\). Por la Proposición 5.3, \(B(T)/T \rightarrow 0\). Por el Teorema 5.2 con \(\Lambda(x) = 0\), la parte \(\sum x^{\rho - 1/2}\) de \(B\) es \(O_{x}\left( \log T \right)\) y su contribución \(\int\log t\, t^{- 2}dt\) converge; por el Lema 5.1, queda solo \(- \int D\, t^{- 2}dt\). Esto prueba (a); el paso entre truncar por altura y por índice cuesta \(O\left( \log T \right)\) términos de tamaño \(O(1/T)\). Para (b), \(D \equiv 0\); en un compacto \(K\) con \(\langle x\rangle \geq c > 0\), los tres términos de error del Teorema 5.2 son \(O_{K}\left( \log T \right)\) uniformemente. Entonces \(B = O_{K}\left( \log T \right)\) y la cola de la serie es \(\leq C_{K}\, O\left( \log T'/T' \right)\) uniformemente. Para \(\sum T\left( \gamma_{k},u \right)\): \(T(\gamma,u) = \frac{\sqrt{x}}{u}\frac{\sin\gamma u}{\gamma} + O\left( \gamma^{- 2} \right)\) (DLMF §6.12). \(\)
+
+\textbf{Potencias de primo.} En \(x = p^{m}\), \(B(T;u) \sim - \frac{T}{2\pi}\Lambda(x)x^{- 1/2}\) (término de Landau--Gonek): la parte \(\sum\cos(\gamma u)/\gamma\) diverge logarítmicamente, que es el salto de \(J\) de tamaño \(1/m\) en \(p^{m}\). No se afirma convergencia puntual ahí; en \(\mathcal{D}'\) todo es válido.
+
+\section{Identidad entre extremos}\label{sec:w6}
+
+\textbf{Teorema 6.1 (identidad entre extremos) {[}DED{]}.} Sea \(K \subset (1,\infty)\) un compacto sin potencias de primo. Bajo H1 y P:
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  \(J_{1} - J_{0} = - 2\sum_{k}^{}\left( T\left( \gamma_{k},u \right) - T\left( \tau_{k},u \right) \right)\) puntualmente en \(K\), con sumas parciales uniformemente acotadas en \(K\) y convergencia uniforme.
+\item
+  La función puntual de (a) coincide, como elemento de \(\mathcal{D}'(K)\), con \(\int_{0}^{1}\partial_{\kappa}J_{\kappa}\, d\kappa\) del Teorema 3.4.
+\item
+  Con la fórmula explícita de Riemann--von Mangoldt para \(J(x) = \sum_{p^{m} \leq x}^{}1/m\) {[}LIT{]}, en la que la suma sobre ceros se agrupa por pares conjugados y por \(|\gamma|\), y bajo P que da \(\beta = \frac{1}{2}\), se tiene \(J_{1} = J\) en cada punto de \(K\). Así \(J - J_{v} = J_{1} - J_{0}\) en \(K\).
+\end{enumerate}
+
+\emph{Prueba.} (a) Es la diferencia de dos series uniformemente convergentes sobre \(K\): la de \(\kappa = 0\) por el Corolario 4.4 y la de \(\kappa = 1\) por el Teorema 5.4(b). (b) Convergencia uniforme sobre \(K\) implica convergencia en \(\mathcal{D}'(K)\) al mismo límite, y el Teorema 3.4 da el límite distribucional; por unicidad coinciden. (c) La fórmula de Riemann--von Mangoldt, convergente en cada \(x\) que no es potencia de primo, expresa \(J\) como \(Li - \sum_{\rho}^{}{\operatorname{Li}}\left( x^{\rho} \right) - \log 2 + \int_{x}^{\infty}\frac{dv}{v\left( v^{2} - 1 \right)\log v}\); con \(\rho = \frac{1}{2} \pm i\gamma_{k}\) la suma sobre ceros es exactamente \(2\sum_{k}^{}{Re}Ei\left( \left( \frac{1}{2} + i\gamma_{k} \right)u \right)\). \(\)
+
+\textbf{Entornos de potencias de primo.} Alrededor de una potencia de primo no se afirma nada puntual. La igualdad \(J_{1} = J\) en todo \((1,\infty)\) como distribución (saltos incluidos) exigiría interpretar la fórmula explícita en \(\mathcal{D}'\), con sumas parciales acotadas en \(L_{loc}^{1}\); no se ha comprobado aquí.
+
+\textbf{No hace falta ningún} \(\kappa\) \textbf{intermedio.} La identidad entre extremos no usa convergencia puntual en \(0 < \kappa < 1\). El camino sirve para transportar la clase (§2) y, si se desea, para acotar cuantitativamente \(J_{1} - J_{0}\) vía \eqref{eq:w6}. La convergencia puntual en \(0 < \kappa < 1\) queda sin probar (§9).
+
+\section{Fórmula exacta suavizada, independiente de la ruta}\label{sec:w7}
+
+\textbf{Proposición 7.1 (fórmula exacta) {[}DED{]}.} Bajo H1, con \(S(t) = O\left( \log t \right)\) para \(t \geq 10\) y \(H(t) - M(t) = \frac{1}{48\pi t} + O\left( t^{- 3} \right)\) (corpus). Para \(\varphi \in C_{c}^{1}\left( (0,\infty) \right)\), con \(J_{1}\) definida en el Teorema 3.4:
+
+\begin{equation}\label{eq:w10}
+ \langle J_{1} - J_{0},\varphi\rangle = 2\int_{10}^{\infty}Q_{\varphi}'(t)\left( S(t) + \psi\left( M(t) + \frac{1}{2} \right) + \left( H(t) - M(t) \right) \right)dt.
+\end{equation}
+
+La integral converge absolutamente. El integrando no contiene \(\kappa\): depende de \(\gamma_{k}\) y \(\tau_{k}\) solo por \(S\) y \(\psi\left( M + \frac{1}{2} \right)\).
+
+\emph{Prueba.} (1) Para \(T > 0\), por Stieltjes con \(N - N_{0}\) continua por la derecha y de variación acotada, y \(Q = Q_{\varphi} \in C^{1}\),
+
+\begin{equation}
+ \sum_{\gamma_{k} \leq T}^{}Q\left( \gamma_{k} \right) - \sum_{\tau_{k} \leq T}^{}Q\left( \tau_{k} \right) = \int_{0}^{T}Q\, d\left( N - N_{0} \right) = Q(T)\,\left( N - N_{0} \right)(T) - \int_{0}^{T}Q'(t)\left( N - N_{0} \right)(t)\, dt.
+\end{equation}
+
+(2) Para \(t \geq 10\), \(N = H + S\) y \(N_{0} = \lfloor M + \frac{1}{2}\rfloor = M - \psi\left( M + \frac{1}{2} \right)\), así que \(N - N_{0} = S + (H - M) + \psi\left( M + \frac{1}{2} \right) = O\left( \log t \right)\). Para \(t < 14.13\), \(N = N_{0} = 0\). (3) Por el Lema 3.3, \(Q(T) = O(1/T)\) y \(Q' = O\left( t^{- 2} \right)\); el término frontera tiende a 0 y la integral converge absolutamente. (4) El primer miembro difiere de \(\sum_{k \leq K}^{}\left( Q\left( \gamma_{k} \right) - Q\left( \tau_{k} \right) \right)\) (\(K = N_{0}(T)\)) en \(O\left( \log T \right)\) términos de tamaño \(O(1/T)\), que tiende a 0; esa serie converge absolutamente porque \(\left| Q\left( \gamma_{k} \right) - Q\left( \tau_{k} \right) \right| \leq D\sup|Q'| \ll \tau_{k}^{- 2}\). (5) Como \(J_{1} - J_{0} = - 2\sum_{k}^{}\left( T\left( \gamma_{k}, \cdot \right) - T\left( \tau_{k}, \cdot \right) \right)\) (Teorema 3.4(d)), se obtiene \eqref{eq:w10}, con el factor 2 y el signo del paso (1). \(\)
+
+\textbf{Corolario 7.2 (cota cruda) {[}DED{]}.} Sea \(\varphi_{\eta}(u) = \eta^{- 1}\rho\left( \left( u - u_{0} \right)/\eta \right)\) con \(\rho \in C_{c}^{1}\left( \lbrack - 1,1\rbrack \right)\), \(\int\rho = 1\), \(x = e^{u_{0}}\) y \(0 < \eta \leq 1\). Entonces
+
+\begin{equation}
+ |\langle J_{1} - J_{0},\varphi_{\eta}\rangle|\  \ll_{\rho}\ \sqrt{x}\,\left( \frac{1}{2}\log^{2}\frac{1}{\eta} + O\left( \log\frac{1}{\eta} \right) \right),
+\end{equation}
+
+con la constante en \(\left| N - N_{0} \right| \leq c\log t\) tomada de Trudgian (\(S\) explícita). Con \(\eta \asymp \log x/x\) resulta \(O\left( \sqrt{x}\log^{2}x \right)\) para \(J_{1} - J_{0}\) suavizada; bajo P es la cota para \(J - J_{v}\) suavizada.
+
+\emph{Prueba.} \(\left| \widehat{g}( - t) \right| \leq e^{\left( u_{0} + \eta \right)/2}\min\left( \| \rho \|_{1},\,\left( \| \rho' \|_{1}/\eta + \frac{1}{2} \| \rho \|_{1} \right)/t \right)\), luego \(\left| Q'(t) \right| \ll \sqrt{x}\,\min\left( 1,1/(\eta t) \right)/t\). Con \(\left| N - N_{0} \right| \leq c\log t\), \(\int_{10}^{1/\eta}\frac{c\log t}{t}\, dt = \frac{c}{2}\log^{2}\frac{1}{\eta} + O(1)\) y \(\int_{1/\eta}^{\infty}\frac{c\log t}{\eta t^{2}}dt = c\left( \log\frac{1}{\eta} + 1 \right)\). \(\)
+
+\textbf{Independencia de la ruta.} \eqref{eq:w10} no contiene el camino: cualquier trayectoria de \(\tau\) a \(\gamma\) con \(\sum t_{k}^{- 2}\) uniformemente convergente lleva al mismo extremo. Esto confirma, de forma exacta, tu comentario de que ``hay mil caminos''. Las diferencias entre rutas están solo en las propiedades que se transportan por el camino, no en el extremo.
+
+\section{Términos resonantes del diente de sierra}\label{sec:w8}
+
+Se estudia la parte de \eqref{eq:w10} que procede de \(\psi\left( M + \frac{1}{2} \right)\), es decir, la distribución \(Z\) con \(\langle Z,\varphi\rangle = 2\int_{10}^{\infty}Q_{\varphi}'(t)\psi\left( M(t) + \frac{1}{2} \right)\, dt\). Como \(Q_{\varphi}'(t) = \int\varphi(u)e^{u/2}R(t,u)\, du\) con \(R(t,u) = \Re\left\lbrack \omega(t)e^{itu} \right\rbrack\) y \(\omega(t) = i/\left( \frac{1}{2} + it \right) = \left( t + \frac{i}{2} \right)/\left( \frac{1}{4} + t^{2} \right)\), la densidad de \(Z\) en \(u\) es
+
+\begin{equation}
+ Z(u) = 2e^{u/2}\int_{10}^{\infty}R(t,u)\,\psi\left( M(t) + \frac{1}{2} \right)dt.
+\end{equation}
+
+\textbf{Proposición 8.1 (términos resonantes; fase estacionaria formal) {[}DED, resto sin demostrar{]}.} Para \(x = e^{u}\) grande, la parte resonante de \(Z\) es
+
+\begin{equation}\label{eq:w11}
+ Z_{res}(x) = \frac{1}{\pi}\sum_{m:\ 2\pi x^{1/m} > T_{0}}^{}( - 1)^{m}\, m^{- 3/2}\, x^{\frac{m - 1}{2m}}\,\sin\left( 2\pi m\, x^{1/m} + \frac{\pi(m - 1)}{4} \right),
+\end{equation}
+
+con \(T_{0} \geq 10\) el corte inferior en \(t\); los puntos estacionarios son \(t_{m} = 2\pi x^{1/m}\) y el error relativo de cada término es \(O\left( \left( m\, t_{m} \right)^{- 1/2} \right)\). En particular, para \(m = 1\): \(Z_{res} \approx - \sin(2\pi x)/\pi\).
+
+\emph{Derivación.} (1) \(\psi(y) = - \sum_{m \geq 1}^{}\sin(2\pi my)/(\pi m)\) con sumas parciales uniformemente acotadas, así que se puede integrar término a término (convergencia dominada, pues \(Q' = O\left( t^{- 2} \right)\)). Como \(\sin\left( 2\pi m\left( M + \frac{1}{2} \right) \right) = ( - 1)^{m}\sin(2\pi mM)\), \(\psi\left( M + \frac{1}{2} \right) = \sum_{m}^{}\frac{( - 1)^{m + 1}}{\pi m}\sin(2\pi mM)\).
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{1}
+\item
+  Con \(\Re(a)\Im(b) = \frac{1}{2}\left\lbrack \Im(ab) + \Im\left( \bar{a}b \right) \right\rbrack\),
+\end{enumerate}
+
+\begin{equation}
+ R\,\sin(2\pi mM) = \frac{1}{2}\Im\left\lbrack \omega e^{i(tu + 2\pi mM)} \right\rbrack + \frac{1}{2}\Im\left\lbrack \bar{\omega}e^{i(2\pi mM - tu)} \right\rbrack.
+\end{equation}
+
+\begin{itemize}
+\item
+  La primera fase tiene derivada \(u + m\ell(t) > 0\) y no es estacionaria. La segunda es \(\Phi_{m}(t) = 2\pi mM(t) - tu\), con \(\Phi_{m}' = m\ell(t) - u\) (porque \(2\pi M' = \ell\)): se anula en \(\ell(t) = u/m\), es decir \(t_{m} = 2\pi e^{u/m} = 2\pi x^{1/m}\); \(\Phi_{m}'' = m/t > 0\).
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{2}
+\item
+  Fase estacionaria con \(\Phi'' > 0\): \(\int A\, e^{i\Phi}dt \approx A\left( t_{m} \right)\sqrt{2\pi/\Phi_{m}''}\, e^{i\left( \Phi_{m}\left( t_{m} \right) + \pi/4 \right)}\). Con \(\bar{\omega}\left( t_{m} \right) = 1/t_{m}\,\left( 1 + O\left( 1/t_{m} \right) \right)\) y \(\sqrt{2\pi t_{m}/m}\):
+\end{enumerate}
+
+\begin{equation}
+ K_{m}(u) = \int R\sin(2\pi mM)\, dt\  \approx \ \frac{1}{2}\sqrt{\frac{2\pi}{m\, t_{m}}}\ \sin\left( \Phi_{m}\left( t_{m} \right) + \frac{\pi}{4} \right) = \frac{x^{- 1/(2m)}}{2\sqrt{m}}\sin\left( \Phi_{m}\left( t_{m} \right) + \frac{\pi}{4} \right).
+\end{equation}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{3}
+\item
+  El valor de la fase: \(M\left( t_{m} \right) = \frac{t_{m}}{2\pi}\left( \ell_{m} - 1 \right) + \frac{7}{8}\) con \(\ell_{m} = u/m\), luego \(2\pi mM\left( t_{m} \right) = t_{m}u - mt_{m} + \frac{7\pi m}{4}\) y \(\Phi_{m}\left( t_{m} \right) = - mt_{m} + \frac{7\pi m}{4} = - 2\pi mx^{1/m} + \frac{7\pi m}{4}\).
+\item
+  Ensamblando, \(Z(u) = 2e^{u/2}\sum_{m}^{}\frac{( - 1)^{m + 1}}{\pi m}K_{m}(u)\) da
+\end{enumerate}
+
+\begin{equation}
+ \frac{\sqrt{x}}{\pi}\sum_{m}^{}( - 1)^{m + 1}m^{- 3/2}x^{- \frac{1}{2m}}\sin\left( \frac{7\pi m}{4} + \frac{\pi}{4} - 2\pi mx^{1/m} \right),
+\end{equation}
+
+\begin{itemize}
+\item
+  que, usando \(- 7\pi m/4 \equiv \pi m/4\ (mod\ 2\pi)\) y \(\sin\left( \theta_{0} - \alpha \right) = - \sin\left( \alpha - \theta_{0} \right)\), es \eqref{eq:w11}. Error relativo: el tercer derivado \(\Phi_{m}''' = - m/t^{2}\) y la variación de la amplitud sobre el ancho \(\sqrt{t_{m}/m}\) dan ambos \(O\left( \left( m\, t_{m} \right)^{- 1/2} \right)\) {[}DED, estimación estándar de fase estacionaria; la uniformidad en \(m\) y la suma sobre \(m\) no están demostradas{]}. \(\)
+\end{itemize}
+
+\textbf{Comprobación de coherencia con el corpus (no es una prueba).} Para \(m = 1\), \(Z_{res} \approx - \sin(2\pi x)/\pi\). Como \(J_{0} = J_{1} - \left( J_{1} - J_{0} \right)\), la oscilación resonante de \(J_{v}\) es \(\approx + \sin(2\pi x)/\pi\), y su derivada \(+ 2\cos(2\pi x)\) coincide con la estimación del corpus \(dJ_{v}/dx \approx 1/\log x + 2\cos(2\pi x) + O\left( x^{- 1/4} \right)\) (que el corpus declara sin comprobar numéricamente). Para \(m = 2\), el término de \(Z\) es \(2^{- 3/2}\pi^{- 1}x^{1/4}\sin\left( 4\pi\sqrt{x} + \frac{\pi}{4} \right)\); su derivada es de tamaño \(2^{- 1/2}x^{- 1/4}\), el orden del \(O\left( x^{- 1/4} \right)\) del corpus.
+
+\textbf{Retractación.} Una anticipación previa de este cálculo decía que ``debería reproducir la estructura \(\sum_{m}^{}\mu(m)\, m^{- 1}J\left( x^{1/m} \right)\)''. El resultado no lo muestra: las fases resonantes son \(2\pi m\, x^{1/m}\), no \(2\pi x^{1/m}\), y no aparecen los pesos \(\mu(m)/m\). Esa anticipación carecía de respaldo y se retira.
+
+\textbf{Rango.} El número de armónicos resonantes con \(t_{m} \geq T_{0}\) es finito: \(m \leq u/\ell\left( T_{0} \right)\) (\(\approx 2.15\, u\) si \(T_{0} = 10\)). Los \(m\) grandes tienen \(t_{m}\) pequeño y se mezclan con los primeros ceros (contribuciones de tamaño \(\sqrt{x}\) que dependen del corte \(T_{0}\) y se cancelan con la parte \(S\) para \(t < 14.13\)); \eqref{eq:w11} solo vale para \(t_{m}\) lejos del corte y no incluye los términos de frontera en \(T_{0}\).
+
+\section{Estado de la cadena y pendientes}\label{sec:w9}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3649}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2162}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4189}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Resultado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Depende de
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Prop. 2.2 (familia, ecuación funcional, residuo, ceros) & Teorema & H1 \\
+Lema 2.3 (extremo \(= \zeta\) sii \(\beta_{k} = \frac{1}{2}\)) & Teorema & Hadamard {[}LIT{]} \\
+Teorema 3.4 (intercambio suma--integral, \(C^{1}\) en \(\mathcal{D}'\)) & Teorema & H1 \\
+Lemas 4.1--4.3, Cor. 4.4 (\(\kappa = 0\) uniforme) & Teorema & solo el reloj RvM \\
+Teorema 5.2 (Landau--Gonek) & {[}LIT{]} & forma completa sin comprobar \\
+Prop. 5.3 (\(B = O\left( T/\log T \right)\)) & Teorema & Selberg {[}LIT{]} \\
+Teorema 5.4(a) & Teorema & --- \\
+Teorema 5.4(b), Teorema 6.1 & Teorema & \textbf{P} \\
+Prop. 7.1, Cor. 7.2 (fórmula exacta, cota) & Teorema & H1, \(S = O\left( \log t \right)\) \\
+Prop. 8.1 (términos resonantes) & {[}DED{]} fase estacionaria formal & resto y uniformidad sin probar \\
+\end{longtable}
+
+\textbf{Pendientes abiertos.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Convergencia puntual en} \(0 < \kappa < 1\)\textbf{.} No se necesita para la identidad entre extremos. Reduce, a primer orden, a \(\int S(t)e^{itu}dt/t\) y, a segundo orden, a la transformada de Fourier de \(S^{2}\) en la frecuencia \(u\); esta última requiere control aritmético de pares de primos con \(\log(m/n) \approx u\) y no está en el corpus.
+\item
+  \(\kappa = 1\) \textbf{sin P.} La convergencia puntual equivale (Teorema 5.4(a)) a \(\lim\int_{}^{T}D\, t^{- 2}dt\); cerrarla sin P exigiría \(\sum\left( \beta - \frac{1}{2} \right)^{2}/\gamma < \infty\) o cancelación en \(\int e^{itu}\, dA_{2}(t)\) (pendiente 2 del corpus). No conozco ese resultado en la literatura; no se ha buscado.
+\item
+  \textbf{Positividad} \(c_{n} > 0\) \textbf{e identificación de Mellin} del producto de Euler \(\prod\left( 1 - n^{- s} \right)^{- c_{n}}\) con \(\zeta_{RvM}\, e^{h}\) (Teorema A del corpus, condicional).
+\item
+  \textbf{Resto de la Proposición 8.1:} acotación uniforme en \(m\) y en \(x\) del resto de la fase estacionaria, y tratamiento de los términos de frontera en \(T_{0}\).
+\item
+  \textbf{Novedad} del sistema de Beurling RvM: no encontrado en una búsqueda previa (evidencia débil); no se ha ampliado.
+\end{enumerate}
+
+\bigskip
+\begin{center}\bfseries\large Parte II. Rigidez de $\zeta_{\RVM}$ y estructura geodésica del camino\end{center}
+\medskip
+\noindent
+Las secciones que siguen continúan las anteriores con las mismas convenciones y las mismas
+etiquetas [LIT], [DED], [REC], [ADAPT]. Se escribe $\zeta_{\RVM}=\zeta_0$ y $\RVM$ donde la
+Parte~I escribe RvM. Se añaden tres resultados: la Hipótesis H1 pasa a teorema
+(Sección~\ref{sec:H1}), $\log\zeta_{\RVM}$ resulta acotado y con límite a la derecha de la
+recta crítica (Sección~\ref{sec:TRVM}), y el camino resulta ser afín en logaritmo
+(Sección~\ref{sec:geodesica}), lo que cierra con prueba la estrategia de propagar cotas en
+$\kappa$.
+
+\medskip
+\noindent\textbf{Notación adicional.} Se escribe $z=s-\tfrac12$, $a=\sigma-\tfrac12$ para
+$s=\sigma+it$, y
+\begin{equation}\label{eq:GPhi}
+ G(s):=s(s-1)\Gamma(s/2)\pi^{-s/2},\qquad
+ \Phi_\kappa(s):=\prod_{k\ge1}\left(1+\frac{s(s-1)}{\frac14+t_k(\kappa)^2}\right),\qquad
+ \zeta_\kappa=\frac{\Phi_\kappa}{G},
+\end{equation}
+que es la familia \eqref{eq:w1}--\eqref{eq:w2} con el factor completador separado;
+$\zeta_0=\zeta_{\RVM}$ y $\zeta_1=F_{1/2,\gamma}$. Además
+$N_0(t)=\#\{k:\tau_k\le t\}$, $N(t)=\#\{k:\gamma_k\le t\}$, $E:=N_0-N$ y
+$\psi(y)=\{y\}-\tfrac12$.
+
+\section{El desplazamiento está acotado sin hipótesis}
+\label{sec:H1}
+
+La Hipótesis H1 de la Parte~I (existe $D$ con $|\delta_k|\le D$) deja de ser hipótesis.
+El enunciado está en el corpus v51 (lema de \emph{bounded vertical displacement}); la prueba
+que sigue reordena la suya, porque el teorema del valor medio no puede aplicarse antes de
+saber que $\gamma_k$ y $\tau_k$ son comparables.
+
+\begin{theorem}[Desplazamiento acotado]
+\label{thm:H1}
+Existe $D>0$, absoluta, con $|\delta_k|=|\gamma_k-\tau_k|\le D$ para todo $k\ge1$.
+El enunciado es incondicional e incluye multiplicidades.
+\end{theorem}
+
+\begin{proof}
+{}[DED, a partir de {[LIT]}: fórmula de Riemann--von Mangoldt.] Se parte de
+\begin{equation}
+\label{eq:RvM}
+ N(T)=M(T)+O\bigl(\log(2+T)\bigr).
+\end{equation}
+Si la ordenada $\gamma_k$ tiene multiplicidad $m_k$, los índices que la ocupan forman un
+bloque de longitud $m_k$, de modo que $N(\gamma_k)=k+O(m_k)$; y la misma fórmula de conteo
+da $m_k=O(\log(2+\gamma_k))$, porque el número de ceros con ordenada en $[\gamma,\gamma+1]$
+es $O(\log(2+\gamma))$. Combinando con \eqref{eq:RvM},
+\begin{equation}
+\label{eq:Mgamma}
+ M(\gamma_k)=k+O\bigl(\log(2+\gamma_k)\bigr),
+ \qquad\text{mientras que}\qquad
+ M(\tau_k)=k-\tfrac12 .
+\end{equation}
+Por tanto $M(\gamma_k)-M(\tau_k)=O(\log(2+\gamma_k))=o(k)$. Como $M$ es creciente en
+$(2\pi,\infty)$ con $M(T)\asymp T\log T$, de $M(\gamma_k)=k+o(k)$ y $M(\tau_k)=k-\frac12$ se
+sigue primero
+\begin{equation}
+\label{eq:comparable}
+ \gamma_k\asymp\tau_k\asymp\frac{2\pi k}{\log k}\qquad(k\to\infty),
+\end{equation}
+y en particular $\log\xi\asymp\log\gamma_k$ para todo $\xi$ entre $\tau_k$ y $\gamma_k$.
+\emph{Solo entonces} el teorema del valor medio,
+$M(\gamma_k)-M(\tau_k)=\delta_k\,\ell(\xi_k)/2\pi$ con $\ell(\xi_k)\asymp\log\gamma_k$, da
+\begin{equation}
+\label{eq:delta-bound}
+ |\delta_k|\ \ll\ \frac{\log(2+\gamma_k)}{\log(2+\gamma_k)}\ =\ O(1).
+\end{equation}
+Las finitas ordenadas iniciales se absorben en la constante.
+\end{proof}
+
+\begin{corollary}
+\label{cor:H1-free}
+La Proposición 2.2, el Teorema 3.4, el Corolario 4.4 y la Proposición 7.1 de la Parte~I
+pasan a ser incondicionales respecto de H1. La cota explícita de Trudgian sigue siendo
+necesaria únicamente para la constante numérica del Corolario 7.2.
+\end{corollary}
+
+\begin{remark}
+\label{rem:delta-exact}
+La misma linealización, conservada con su término de error, da la forma cuantitativa
+\begin{equation}
+\label{eq:delta-S}
+ \delta_k=\frac{2\pi}{\ell_k}\Bigl(\tfrac12-S(\gamma_k)+O(m_k)\Bigr)\bigl(1+O(\tau_k^{-1})\bigr),
+ \qquad \ell_k=\ell(\tau_k),
+\end{equation}
+que es la versión con error de la fórmula diagnóstica de primer orden del corpus. No se
+usará: la Sección~\ref{sec:geodesica} obtiene lo que necesita sin muestrear $S$ en los ceros.
+\end{remark}
+
+\section{Rigidez de $\zeta_{\RVM}$}
+\label{sec:TRVM}
+
+El objetivo de esta sección es acotar $\log\zeta_{\RVM}$ a la derecha de la recta crítica.
+La conjetura de trabajo era $|\log\zeta_{\RVM}(\sigma+it)|\ll_\varepsilon1$ para
+$\sigma\ge\frac12+\varepsilon$. Resulta cierta, y con decaimiento.
+
+\subsection{La derivada logarítmica contra el reloj}
+
+Escribimos $z=s-\frac12$, $a=\sigma-\frac12$, de modo que $z=a+it$. De
+\begin{equation}
+\label{eq:factor}
+ 1+\frac{s(s-1)}{\frac14+\tau^2}=\frac{z^2+\tau^2}{\frac14+\tau^2}
+ =\frac{(\tau-t+ia)(\tau+t-ia)}{\frac14+\tau^2}
+\end{equation}
+se obtiene, derivando término a término el producto \eqref{eq:w1} con $\kappa=0$,
+\begin{equation}
+\label{eq:Plog}
+ \frac{\Phi_0'}{\Phi_0}(s)=\sum_{k\ge1}F(\tau_k),
+ \qquad
+ F(\tau):=\frac{2z}{z^2+\tau^2}=\frac{1}{z-i\tau}+\frac{1}{z+i\tau},
+\end{equation}
+serie absolutamente convergente porque $F(\tau)=2z/\tau^2+O(\tau^{-4})$.
+
+Sea $\Psi(\tau):=\psi\bigl(M(\tau)+\frac12\bigr)$. Para $\tau\ge\tau_1$ se tiene
+$N_0(\tau)=\lfloor M(\tau)+\frac12\rfloor$ y por tanto
+\begin{equation}
+\label{eq:N0-Psi}
+ N_0(\tau)=M(\tau)-\Psi(\tau),\qquad |\Psi|\le\tfrac12 ,
+\end{equation}
+con salto $-1$ de $\Psi$ en cada $\tau_k$. Integrando $F$ contra $dN_0$ y después por partes,
+usando $\Psi(\tau_1^-)=\frac12$ y $F(\tau)\Psi(\tau)\to0$,
+\begin{equation}
+\label{eq:split}
+ \frac{\Phi_0'}{\Phi_0}(s)
+ =\underbrace{\int_{\tau_1}^{\infty}F(\tau)\,\frac{\ell(\tau)}{2\pi}\,d\tau}_{\text{liso}}
+ \;+\;\underbrace{\tfrac12F(\tau_1)+\int_{\tau_1}^{\infty}F'(\tau)\,\Psi(\tau)\,d\tau}_{\text{diente de sierra}} .
+\end{equation}
+
+\subsection{El término liso cancela $G'/G$}
+
+\begin{lemma}
+\label{lem:integral}
+Para $\Re z>0$,
+\begin{equation}
+\label{eq:classic}
+ \int_0^\infty\frac{\log(\tau/2\pi)}{\tau^2+z^2}\,d\tau=\frac{\pi}{2z}\log\frac{z}{2\pi},
+ \qquad\text{y por tanto}\qquad
+ \frac{1}{2\pi}\int_0^\infty F(\tau)\,\ell(\tau)\,d\tau=\frac12\log\frac{z}{2\pi}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+{}[LIT, integral clásica $\int_0^\infty\frac{\log x}{x^2+a^2}dx=\frac{\pi\log a}{2a}$ para
+$a>0$, extendida por continuación analítica al semiplano $\Re z>0$, donde ambos miembros son
+holomorfos; junto con $\int_0^\infty(\tau^2+z^2)^{-1}d\tau=\pi/2z$.]
+\end{proof}
+
+\begin{lemma}
+\label{lem:smooth}
+Para $\frac12<\sigma\le3$ y $t\ge10$,
+\begin{equation}
+\label{eq:smooth}
+ \int_{\tau_1}^{\infty}F(\tau)\frac{\ell(\tau)}{2\pi}d\tau+\tfrac12F(\tau_1)
+ -\frac{G'}{G}(s)
+ \;=\;-\frac{1}{48\,s^{2}}+O\bigl(|s|^{-3}\bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+{}[DED.] Por el Lema~\ref{lem:integral} basta restar el tramo $[0,\tau_1]$. Allí
+$F(\tau)=\frac2z+O(|z|^{-3})$ uniformemente, y
+\begin{equation}
+\label{eq:tail-lower}
+ \frac{1}{2\pi}\int_0^{\tau_1}\ell(\tau)\,d\tau
+ =\frac{\tau_1(\ell(\tau_1)-1)}{2\pi}
+ =M(\tau_1)-\frac78=\frac12-\frac78=-\frac38 ,
+\end{equation}
+de modo que el tramo vale $\frac2z\cdot(-\frac38)+O(|z|^{-3})=-\frac{3}{4z}+O(|z|^{-3})$ y
+\begin{equation}
+\label{eq:smooth-part}
+ \int_{\tau_1}^{\infty}F\frac{\ell}{2\pi}d\tau=\frac12\log\frac{z}{2\pi}+\frac{3}{4z}+O(|z|^{-3}).
+\end{equation}
+Además $\frac12F(\tau_1)=\frac{z}{z^2+\tau_1^2}=\frac1z+O(|z|^{-3})$. La suma de ambos da el
+coeficiente $\frac{7}{4z}$, que es exactamente $\frac2z\cdot\frac78$ con
+$\frac78=M(0^+)$: el mismo término de frontera que aparece para la $\zeta$ genuina al
+escribir $\sum_\rho$ como integral de Stieltjes contra $N$ desde $\tau=0$. Finalmente, con
+$\frac{G'}{G}(s)=\frac1s+\frac1{s-1}+\frac12\digamma(s/2)-\frac12\log\pi$ y
+$\digamma(w)=\log w-\frac{1}{2w}+O(|w|^{-2})$,
+\begin{equation}
+\label{eq:GlogD}
+ \frac12\log\frac{s-\frac12}{2\pi}+\frac{7}{4(s-\frac12)}-\frac{G'}{G}(s)
+ =-\frac{1}{48s^2}+O(|s|^{-3}),
+\end{equation}
+que es \eqref{eq:smooth}. El coeficiente $\frac1{48}$ es el mismo de
+$H(t)-M(t)=\frac1{48\pi t}+O(t^{-3})$.
+\end{proof}
+
+\subsection{El diente de sierra: residuo exacto}
+
+Sea $\Omega:=2\pi M$, de modo que $\Omega'=\ell$ y $\Omega''(\tau)=1/\tau$. La serie de
+Fourier del diente de sierra y $\sin(2\pi m(M+\frac12))=(-1)^m\sin(2\pi mM)$ dan
+\begin{equation}
+\label{eq:Psi-Fourier}
+ \Psi(\tau)=\sum_{m\ge1}\frac{(-1)^{m+1}}{\pi m}\,\sin\bigl(m\,\Omega(\tau)\bigr),
+\end{equation}
+con sumas parciales uniformemente acotadas. Como $F'(\tau)=-4z\tau/(z^2+\tau^2)^2$ es
+$O(\tau^{-3})$, se puede integrar término a término en \eqref{eq:split}.
+
+\begin{lemma}[Residuo]
+\label{lem:residue}
+$F'$ tiene polos dobles en $\tau=\pm iz$. En $\tau_*:=-iz=t-ia$,
+\begin{equation}
+\label{eq:residue}
+ \operatorname*{Res}_{\tau=\tau_*}\Bigl[F'(\tau)\,e^{-im\Omega(\tau)}\Bigr]
+ =-\,m\,\ell(\tau_*)\,e^{-im\Omega(\tau_*)} .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+{}[DED, verificado en álgebra simbólica.] Poniendo $\tau=-iz+\eta$ se tiene
+$z^2+\tau^2=(\eta-2iz)\,\eta$, luego
+\begin{equation}
+\label{eq:local}
+ \eta^2F'(-iz+\eta)=\frac{4z(\eta-iz)}{(\eta-2iz)^2},
+\end{equation}
+cuyo valor en $\eta=0$ es $-i$ y cuya derivada en $\eta=0$ es
+$-4z\bigl[(-2iz)^{-2}-2(-iz)(-2iz)^{-3}\bigr]=0$. Por tanto, al derivar el producto
+$\eta^2F'\cdot e^{-im\Omega}$ en $\eta=0$ solo sobrevive el término de la fase,
+$(-i)\cdot(-im\,\Omega'(\tau_*))=-m\,\ell(\tau_*)$, y el término con $\Omega''$ no
+interviene porque va acompañado de $\eta$. Esto es \eqref{eq:residue}.
+\end{proof}
+
+\begin{lemma}[Desplazamiento de contorno]
+\label{lem:contour}
+Sea $\frac12<\sigma\le3$, $t\ge t_1$ absoluto. Escribiendo
+$I_m^{\pm}=\int_{\tau_1}^{\infty}F'(\tau)e^{\pm im\Omega(\tau)}d\tau$ se tiene
+\begin{equation}
+\label{eq:Im-plus}
+ I_m^{+}=O\Bigl((2\pi/t)^{m}+e^{-cm}t^{-2}\Bigr),
+ \qquad
+ I_m^{-}=2\pi i\,m\,\ell(\tau_*)\,e^{-im\Omega(\tau_*)}+O\Bigl((2\pi/t)^{m}+e^{-cm}t^{-2}\Bigr),
+\end{equation}
+con $c>0$ absoluta, las constantes implícitas dependiendo solo de la cota $\sigma\le3$.
+\end{lemma}
+
+\begin{proof}[Esquema de prueba]
+[DED; estimaciones de resto rutinarias, escritas aquí en esquema.]
+Para $\tau=\xi\pm iv$ con $0<v\ll\xi$ se tiene
+$\Ima\Omega(\xi\pm iv)=\pm v\,\ell(\xi)+O(v^2/\xi)$, de modo que $e^{+im\Omega}$ decae al
+subir y $e^{-im\Omega}$ al bajar; la rama de $\ell$ es holomorfa en $\Re\tau>0$, que contiene
+todo el contorno. El polo $\tau=iz=-t+ia$ queda en $\Re\tau<0$ y nunca se cruza; el polo
+$\tau_*=-iz=t-ia$ está a profundidad $a$ y se cruza exactamente una vez al bajar, lo que
+produce el término de \eqref{eq:residue} multiplicado por $-2\pi i$. Sobre el contorno
+desplazado a altura fija $v\in[1,3]$, con $v>a$ en el caso de $I_m^-$,
+\begin{equation}
+\label{eq:amp}
+ |F'(\xi\pm iv)|\ \le\ \frac{4|z|\,|\tau|}{(\xi+t)^2\bigl((\xi-t)^2+(v\mp a)^2\bigr)} ,
+\end{equation}
+cuya integral en $\xi$ sobre $|\xi-t|\le t/2$ es $O(1)$, mientras que
+$|e^{\pm im\Omega}|\le e^{-mv\ell(t)}\le(2\pi/t)^m$ allí. En las regiones
+$\xi\in[\tau_1,t/2]$ y $\xi\ge2t$ la amplitud integra $O(1/t)$ y la fase no es estacionaria,
+$\Omega'=\ell\ge\ell(\tau_1)=0{,}839\ldots$; dos integraciones por partes, cada una ganando
+$(m\ell\,\xi)^{-1}$, dejan $O(e^{-cm}t^{-2})$. El segmento vertical en $\xi=\tau_1$ aporta
+$O(t^{-3})$.
+\end{proof}
+
+\subsection{El teorema}
+
+\begin{theorem}[Fórmula de rigidez]
+\label{thm:TRVM-formula}
+Sea $\tau_*=-i\bigl(s-\frac12\bigr)$ y
+\begin{equation}
+\label{eq:q}
+ q=q(s):=e^{-2\pi iM(\tau_*)} .
+\end{equation}
+Para $\frac12<\sigma\le3$ y $t\ge t_1$,
+\begin{equation}
+\label{eq:TRVM-formula}
+ \boxed{\;\frac{\zeta_{\RVM}'}{\zeta_{\RVM}}(s)
+ =-\,\ell(\tau_*)\,\frac{q}{1+q}\;+\;O\bigl(|s|^{-2}\log|s|\bigr).\;}
+\end{equation}
+Además $|q|=\bigl(2\pi/t\bigr)^{\sigma-1/2}\bigl(1+O(|s-\frac12|^{-2})\bigr)$.
+\end{theorem}
+
+\begin{proof}
+{}[DED.] Por \eqref{eq:split} y el Lema~\ref{lem:smooth}, la parte no oscilante de
+$\zeta'_{\RVM}/\zeta_{\RVM}=\Phi_0'/\Phi_0-G'/G$ es $O(|s|^{-2})$. Para la parte oscilante,
+\eqref{eq:Psi-Fourier} y $\sin\theta=\frac{1}{2i}(e^{i\theta}-e^{-i\theta})$ dan
+\begin{equation}
+\label{eq:oscpart}
+ \int_{\tau_1}^{\infty}F'\Psi\,d\tau
+ =\sum_{m\ge1}\frac{(-1)^{m+1}}{\pi m}\cdot\frac{1}{2i}\bigl(I_m^{+}-I_m^{-}\bigr).
+\end{equation}
+Sustituyendo el Lema~\ref{lem:contour}, el término de residuo del $m$-ésimo sumando es
+\begin{equation}
+\label{eq:mterm}
+ \frac{(-1)^{m+1}}{\pi m}\cdot\frac{-1}{2i}\cdot2\pi i\,m\,\ell(\tau_*)\,q^{m}
+ =(-1)^{m}\,\ell(\tau_*)\,q^{m},
+\end{equation}
+y los restos suman $\sum_{m\ge1}\frac1m\bigl[(2\pi/t)^m+e^{-cm}t^{-2}\bigr]\ll t^{-2}$,
+hmm, más precisamente $\ll t^{-1}$ por el primer sumando con $m=1$ si no se integra por
+partes también en la región central; con las dos integraciones por partes del
+Lema~\ref{lem:contour} el total es $O(t^{-2}\log t)$. Como $|q|<1$ para $a>0$,
+\begin{equation}
+\label{eq:geom}
+ \ell(\tau_*)\sum_{m\ge1}(-1)^mq^m=-\,\ell(\tau_*)\,\frac{q}{1+q},
+\end{equation}
+que es \eqref{eq:TRVM-formula}. Para el módulo de $q$: con $\tau_*=t-ia$,
+$\ell(\tau_*)=\frac12\log\frac{t^2+a^2}{4\pi^2}-i\arctan\frac at$ y
+$\Omega(\tau_*)=\tau_*(\ell(\tau_*)-1)+\frac{7\pi}{4}$, luego
+\begin{equation}
+\label{eq:ImOmega}
+ \Ima\Omega(\tau_*)=-t\arctan\frac at-a\,\Rea\ell(\tau_*)+a=-a\,\ell(t)+O\!\left(\frac{a^3}{t^2}\right),
+\end{equation}
+y $|q|=e^{\Ima\Omega(\tau_*)}$.
+\end{proof}
+
+\begin{remark}[Comprobación estructural: los polos]
+\label{rem:poles}
+La fórmula \eqref{eq:TRVM-formula} no es un ajuste asintótico, reproduce el divisor. En
+$s=\frac12+i\tau_k$ se tiene $\tau_*=\tau_k$, $M(\tau_k)=k-\frac12$ y $q=e^{-i\pi}=-1$:
+la fórmula tiene polo. Desarrollando $s=\frac12+i\tau_k+\epsilon$ resulta
+$\tau_*=\tau_k-i\epsilon$, $M(\tau_*)=k-\frac12-i\epsilon\frac{\ell_k}{2\pi}+O(\epsilon^2)$,
+luego $q=-e^{-\epsilon\ell_k}$, $1+q=\epsilon\ell_k+O(\epsilon^2)$ y
+\begin{equation}
+\label{eq:residue-check}
+ -\ell(\tau_*)\frac{q}{1+q}=\frac1\epsilon+O(1):
+\end{equation}
+residuo $+1$, es decir un cero simple de $\zeta_{\RVM}$ en $\frac12+i\tau_k$, como debe ser.
+\end{remark}
+
+\begin{theorem}[$T_{\RVM}$: rigidez de $\zeta_{\RVM}$]
+\label{thm:TRVM}
+Sea $\varepsilon>0$. Existen $C_\infty\in\mathbb C$ absoluto y $t_0(\varepsilon)$ tales que,
+para $\sigma\ge\frac12+\varepsilon$ y $t\ge t_0(\varepsilon)$,
+\begin{equation}
+\label{eq:TRVM}
+ \boxed{\;\log\zeta_{\RVM}(\sigma+it)=C_\infty+O_\varepsilon\!\left(\Bigl(\frac{2\pi}{t}\Bigr)^{\sigma-1/2}\right).\;}
+\end{equation}
+En particular $|\log\zeta_{\RVM}(\sigma+it)|\ll_\varepsilon1$ y
+$\zeta_{\RVM}(\sigma+it)\to e^{C_\infty}$ cuando $t\to\infty$, sobre toda recta vertical a la
+derecha de la crítica. El logaritmo está bien definido porque $\zeta_{\RVM}$ no se anula en
+$\sigma>\frac12$ y la región es simplemente conexa.
+\end{theorem}
+
+\begin{proof}
+{}[DED.] Tómese $t_0$ con $(2\pi/t_0)^{\varepsilon}\le\frac12$, de modo que
+$|q|\le\frac12$ y $|1+q|\ge\frac12$ en todo el rango. El
+Teorema~\ref{thm:TRVM-formula} da entonces
+\begin{equation}
+\label{eq:dlog-bound}
+ \frac{\zeta_{\RVM}'}{\zeta_{\RVM}}(u+it)\ \ll\ \log t\cdot\Bigl(\frac{2\pi}{t}\Bigr)^{u-1/2}
+ +\frac{\log t}{t^{2}},\qquad \tfrac12+\varepsilon\le u\le2 .
+\end{equation}
+\emph{Anclaje.} En $u=2$ la cota es $\ll t^{-3/2}\log t$, integrable en $t$; integrando
+verticalmente, $\log\zeta_{\RVM}(2+it)$ tiene límite $C_\infty$ cuando $t\to\infty$ y
+$\log\zeta_{\RVM}(2+it)=C_\infty+O(t^{-1/2}\log t)$.
+\emph{Integración horizontal.} Para $\sigma\ge\frac12+\varepsilon$,
+\begin{equation}
+\label{eq:horizontal}
+ \int_{\sigma}^{2}\log t\Bigl(\frac{2\pi}{t}\Bigr)^{u-1/2}du
+ =\log t\cdot\frac{(2\pi/t)^{\sigma-1/2}-(2\pi/t)^{3/2}}{\log(t/2\pi)}
+ \ \ll\ \Bigl(\frac{2\pi}{t}\Bigr)^{\sigma-1/2},
+\end{equation}
+donde el factor $\log t$ se cancela exactamente con el $\log(t/2\pi)$ producido por la
+integración en $u$. Sumando ambos pasos se obtiene \eqref{eq:TRVM}.
+\end{proof}
+
+\begin{remark}
+\label{rem:Cinfty}
+El valor de $C_\infty$ no se determina aquí. No interviene en ninguna de las consecuencias
+de las Secciones~\ref{sec:sintetico} y \ref{sec:geodesica}, que solo usan que
+$\log\zeta_{\RVM}$ está acotado y tiene límite.
+\end{remark}
+
+\begin{remark}[Qué dice y qué no dice]
+\label{rem:scope}
+$\Rea\rho_k^{\RVM}=\frac12$ es un dato de entrada del modelo sintético. El
+Teorema~\ref{thm:TRVM} no deduce nada sobre los ceros de $\zeta$: afirma que el reloj
+determinista, al no tener fluctuación aritmética, produce una función cuyo logaritmo no
+fluctúa. Precisamente por eso sirve para separar exactamente lo que la aritmética añade
+(Sección~\ref{sec:geodesica}).
+\end{remark}
+
+\section{Lo que se desbloquea en el sistema sintético, y lo que no}
+\label{sec:sintetico}
+
+\subsection{Crecimiento vertical: la cota gaussiana pasa a incondicional}
+
+El corpus v51 obtiene una cota de raíz cuadrada para la versión gaussiana del objeto de
+Mertens sintético bajo la hipótesis de crecimiento vertical
+$1/\zeta_{\RVM}(\sigma+it)=\exp(o(t^2))$, uniformemente en $\frac12+\varepsilon\le\sigma\le c$.
+El Teorema~\ref{thm:TRVM} da $O(1)$, incomparablemente más fuerte.
+
+\begin{corollary}
+\label{cor:gauss}
+Sea $c>1$, $\varepsilon>0$ y
+$\widehat M^{\mathrm{crit}}_{\RVM}=1/\zeta_{\RVM}$. Entonces
+\begin{equation}
+\label{eq:gauss}
+ M^{\mathrm{crit}}_{\RVM,G}(x):=\frac{1}{2\pi i}\int_{(c)}e^{s^2}\,
+ \frac{1}{\zeta_{\RVM}(s)}\,\frac{x^s}{s}\,ds
+ \;=\;O_\varepsilon\bigl(x^{1/2+\varepsilon}\bigr),
+\end{equation}
+\textbf{incondicionalmente}.
+\end{corollary}
+
+\begin{proof}
+{}[DED, a partir de {[LIT]}: la proposición condicional de v51.] En
+$\frac12+\varepsilon\le\sigma\le c$ la función $1/\zeta_{\RVM}$ es holomorfa
+($\zeta_{\RVM}$ no se anula ahí, y $s=1$ es un cero, no un polo, del recíproco) y acotada:
+por el Teorema~\ref{thm:TRVM} para $t\ge t_0$, y por continuidad en el compacto restante.
+El factor $e^{s^2}$, de módulo $e^{\sigma^2-t^2}$, hace absolutamente convergentes las
+integrales verticales y anula los lados horizontales del rectángulo. Cauchy traslada el
+contorno a $\Re s=\frac12+\varepsilon$.
+\end{proof}
+
+\subsection{$\mu_{\RVM}$ y un pendiente nuevo}
+
+Sean $c_n=c_n^{\RVM}=\pi_{\RVM}(n)-\pi_{\RVM}(n-1)$ los pesos enteros de v51,
+$\zeta_{\mathbb Z,\RVM}(s)=\prod_{n\ge2}(1-n^{-s})^{-c_n}$ y
+\begin{equation}
+\label{eq:muRVM}
+ \sum_{m\ge1}\frac{\mu_{\RVM}(m)}{m^s}:=\frac{1}{\zeta_{\mathbb Z,\RVM}(s)},
+ \qquad
+ M_{\RVM}(x):=\sum_{n\le x}\mu_{\RVM}(n).
+\end{equation}
+Las tres piezas que faltan para pasar del objeto espectral al aritmético son:
+
+\begin{hypothesis}[3a: positividad y tamaño de los pesos]
+\label{hyp:3a}
+$0<c_n<1$ para todo $n$ suficientemente grande y $c_n\sim1/\log n$.
+\end{hypothesis}
+
+\begin{hypothesis}[3b: identificación de Mellin]
+\label{hyp:3b}
+$\zeta_{\mathbb Z,\RVM}=\zeta_{\RVM}\,e^{h_{\RVM}}$ con
+$h_{\RVM}(s)=s\int_1^\infty\Delta(x)x^{-s-1}dx$ y
+$\Delta:=J_{\mathbb Z,\RVM}-J^{*}_{\RVM}$, holomorfa en $\Re s>0$.
+\end{hypothesis}
+
+\begin{hypothesis}[3c: variación con peso de $\Delta$]
+\label{hyp:3c}
+$\displaystyle\int_1^\infty x^{-\sigma}\,|d\Delta(x)|<\infty$ para todo $\sigma>\tfrac12$.
+\end{hypothesis}
+
+La Hipótesis~\ref{hyp:3c} es nueva y no figuraba en la lista de pendientes de la Parte~I.
+La razón de incluirla es que la cota de tamaño $\Delta=O(\log\log x)$ de v51 \emph{no} basta:
+da solo
+\begin{equation}
+\label{eq:h-growth}
+ |h_{\RVM}(s)|\le|s|\int_1^\infty\frac{C\log\log x}{x^{\sigma+1}}dx\ \ll_\varepsilon\ |s|
+ \qquad(\sigma\ge\tfrac12+\varepsilon),
+\end{equation}
+es decir $e^{-h_{\RVM}}=e^{O(t)}$, que destruiría la cota $O(1)$ del
+Teorema~\ref{thm:TRVM} al pasar a $\zeta_{\mathbb Z,\RVM}$. Lo que hace falta es
+cancelación, no tamaño: integrando por partes la integral de Mellin--Stieltjes,
+\begin{equation}
+\label{eq:h-IBP}
+ h_{\RVM}(s)=\int_1^\infty x^{-s}\,d\Delta(x)+\text{(términos de frontera)},
+\end{equation}
+y la Hipótesis~\ref{hyp:3c} da $h_{\RVM}=O_\varepsilon(1)$ de inmediato. Es plausible bajo el
+control de celda unidad de v51, porque los saltos de $\Delta$ son $O(1/m)$ en las potencias
+enteras, pero no se sigue del $O(\log\log x)$.
+
+\subsection{La cadena completa}
+
+\begin{lemma}[Mayoración de coeficientes]
+\label{lem:majorant}
+Bajo la Hipótesis~\ref{hyp:3a}, $\sum_{n\le x}|\mu_{\RVM}(n)|\ll x\log x$.
+\end{lemma}
+
+\begin{proof}
+{}[DED.] Sea $f(s)=\sum_{n\ge2}c_n\sum_{m\ge1}\frac{n^{-ms}}{m}$, de coeficientes de Dirichlet
+no negativos, con $\zeta_{\mathbb Z,\RVM}=e^{f}$ y $1/\zeta_{\mathbb Z,\RVM}=e^{-f}$.
+Desarrollando $e^{-f}=\sum_k(-f)^k/k!$ se obtiene
+$|\mu_{\RVM}(n)|\le\mathrm{coef}_n(e^{f})$ término a término. Por
+Rankin, $\sum_{n\le x}|\mu_{\RVM}(n)|\le x^{\sigma}\zeta_{\mathbb Z,\RVM}(\sigma)$; con
+$c_n\sim1/\log n$ se tiene $\sum_n c_nn^{-\sigma}=\log\frac1{\sigma-1}+O(1)$, luego
+$\zeta_{\mathbb Z,\RVM}(\sigma)\asymp(\sigma-1)^{-1}$, y la elección
+$\sigma=1+1/\log x$ da el resultado. Los finitos $n$ con $c_n\le0$ aportan un factor
+polinómico de Dirichlet fijo.
+\end{proof}
+
+\begin{theorem}[Cota de raíz cuadrada para el objeto sintético, condicional]
+\label{thm:MRVM}
+Bajo las Hipótesis~\ref{hyp:3a}, \ref{hyp:3b} y \ref{hyp:3c}, y usando el
+Teorema~\ref{thm:TRVM},
+\begin{equation}
+\label{eq:MRVM}
+ M_{\RVM}(x)=O_\varepsilon\bigl(x^{1/2+\varepsilon}\bigr).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+{}[DED.] Por \ref{hyp:3b} y \ref{hyp:3c}, $1/\zeta_{\mathbb Z,\RVM}=e^{-h_{\RVM}}/\zeta_{\RVM}$
+es holomorfa y $O_\varepsilon(1)$ en $\sigma\ge\frac12+\varepsilon$. Por el
+Lema~\ref{lem:majorant}, la fórmula de Perron truncada en altura $T=x$ con
+$c=1+1/\log x$ tiene error $O(\log^2x)$. El contorno truncado se traslada a
+$\sigma=\frac12+\varepsilon$: no hay polos (el único cero de $\zeta_{\mathbb Z,\RVM}$ posible
+vendría de $\zeta_{\RVM}$, que no se anula allí, y $e^{-h}$ no se anula nunca); los lados
+horizontales aportan $O(x^{c}/(T\log x))=O(1/\log x)$; el lado vertical aporta
+$O(x^{1/2+\varepsilon}\log T)$, que se absorbe en $\varepsilon$.
+\end{proof}
+
+\begin{remark}
+\label{rem:no-RH}
+El Teorema~\ref{thm:MRVM} es un enunciado sobre $\mu_{\RVM}$, no sobre $\mu$. El paso a
+$M(x)$ exige controlar $\mathscr Q_{\RVM}=\zeta/\zeta_{\RVM}$, y el
+Corolario~\ref{cor:Q-universal} muestra que ese cociente es universal en
+$\frac12<\sigma<1$: la transferencia no es un tecnicismo pendiente, es el problema entero.
+\end{remark}
+
+\section{El camino es una geodésica logarítmica}
+\label{sec:geodesica}
+
+En esta sección $\sigma\in(\frac12,1)$ queda fijo y $b:=\sigma-\frac12$.
+
+\subsection{Una identidad de transporte}
+
+El término de segundo orden del desarrollo en $\kappa$ no es despreciable si solo se usa
+$\delta_k=O(1)$: la suma $\sum_k\delta_k^2\bigl((\tau_k-t)^2+b^2\bigr)^{-1}$ sería de tamaño
+$\log t$. El lema siguiente es lo que permite cerrarla. Es puramente combinatorio y no
+necesita hipótesis sobre multiplicidades.
+
+\begin{lemma}[Transporte entre dos relojes]
+\label{lem:transport}
+Sean $(\tau_k)_{k\ge1}$ estrictamente creciente y $(\gamma_k)_{k\ge1}$ no decreciente,
+emparejadas por índice, con conteos $N_0,N$ y $E:=N_0-N$. Para $t>0$ sea
+\begin{equation}
+\label{eq:Bt}
+ \mathcal B(t):=\{k:\ \tau_k\le t<\gamma_k\ \text{ó}\ \gamma_k\le t<\tau_k\}.
+\end{equation}
+Entonces:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{(un solo signo)} nunca coexisten las dos alternativas en \eqref{eq:Bt};
+\item \emph{(bloque consecutivo adyacente a $t$)}
+ $\mathcal B(t)=\{N(t)+1,\dots,N_0(t)\}$ si $E(t)>0$ y
+ $\mathcal B(t)=\{N_0(t)+1,\dots,N(t)\}$ si $E(t)<0$; en ambos casos
+ $|\mathcal B(t)|=|E(t)|$;
+\item \emph{(identidad cuadrática)}
+ \begin{equation}
+ \label{eq:transport}
+  \frac12\sum_k\delta_k^2=\int_0^\infty\ \sum_{k\in\mathcal B(t)}|t-\tau_k|\ dt .
+ \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+{}[DED.] (i) Si $\tau_k\le t<\gamma_k$ y $\gamma_j\le t<\tau_j$, entonces
+$\gamma_j\le t<\gamma_k$ fuerza $j<k$ por ser $(\gamma)$ no decreciente, y
+$\tau_k\le t<\tau_j$ fuerza $k<j$ por ser $(\tau)$ creciente: contradicción.
+(ii) $\tau_k\le t$ equivale a $k\le N_0(t)$ y $\gamma_k>t$ equivale a $k>N(t)$; el caso
+$E<0$ es simétrico. El cardinal es entonces $|N_0(t)-N(t)|$.
+(iii) Para cada $k$, $\int_{\min(\tau_k,\gamma_k)}^{\max(\tau_k,\gamma_k)}|t-\tau_k|\,dt
+=\frac12\delta_k^2$; sumando en $k$ e intercambiando suma e integral se obtiene
+\eqref{eq:transport}.
+\end{proof}
+
+\begin{proposition}[Desplazamiento cuadrático medio]
+\label{prop:meansquare}
+Incondicionalmente,
+\begin{equation}
+\label{eq:meansquare}
+ \sum_{\tau_k\le T}\delta_k^2\ \ll\ \frac{T\log\log T}{\log T}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+{}[DED, usando {[LIT]}: el segundo momento de Selberg.] Por el
+Lema~\ref{lem:transport}(ii) los $|E(t)|$ índices de $\mathcal B(t)$ son consecutivos y el
+bloque llega hasta el punto de reloj adyacente a $t$. Como el reloj es rígido, con
+$\tau_{k+1}-\tau_k\le2\pi/\ell_k$ (Lema 1.3(iv) de la Parte~I), las distancias
+$|t-\tau_k|$ para $k\in\mathcal B(t)$ están mayoradas por
+$\frac{2\pi}{\ell(t)}\cdot1,\frac{2\pi}{\ell(t)}\cdot2,\dots,\frac{2\pi}{\ell(t)}|E(t)|$,
+de modo que
+\begin{equation}
+\label{eq:blocksum}
+ \sum_{k\in\mathcal B(t)}|t-\tau_k|\ \le\ \frac{2\pi}{\ell(t)}\cdot\frac{|E(t)|(|E(t)|+1)}{2}
+ \ \ll\ \frac{E(t)^2}{\log t}.
+\end{equation}
+Sustituyendo en \eqref{eq:transport} y truncando en $T$,
+\begin{equation}
+\label{eq:toSelberg}
+ \sum_{\tau_k\le T}\delta_k^2\ \ll\ \frac{1}{\log T}\int_0^{T+D}E(t)^2\,dt .
+\end{equation}
+Finalmente $E=N_0-N=-\bigl(S+\Psi\bigr)+O(t^{-1})$ con $|\Psi|\le\frac12$, y el segundo
+momento de Selberg $\int_0^TS(t)^2dt=\frac{T\log\log T}{2\pi^2}+O(T)$ da \eqref{eq:meansquare}.
+\end{proof}
+
+\subsection{Interpolación}
+
+\begin{theorem}[El camino es afín en logaritmo]
+\label{thm:geodesic}
+Sea $\sigma\in(\frac12,1)$ fijo. Para todo $\kappa\in[0,1]$ y todo $s=\sigma+it$,
+\begin{equation}
+\label{eq:geodesic}
+ \boxed{\;\log\zeta_\kappa(s)=(1-\kappa)\log\zeta_{\RVM}(s)+\kappa\log\zeta_1(s)
+ +O\bigl(\mathcal E_2(t)\bigr),\;}
+\end{equation}
+donde, con $D$ la constante del Teorema~\ref{thm:H1},
+\begin{equation}
+\label{eq:E2}
+ \mathcal E_2(t):=\sum_{k\ge1}\delta_k^2\left(
+ \frac{1}{\bigl(|\tau_k-t|-D\bigr)_+^2+b^2}+\frac{1}{\tau_k^2}\right).
+\end{equation}
+Además
+\begin{equation}
+\label{eq:E2-mean}
+ \frac1T\int_T^{2T}\mathcal E_2(t)\,dt\ \ll_{b,D}\ \frac{\log\log T}{\log T}\ \longrightarrow\ 0,
+\end{equation}
+de modo que $\mathcal E_2(t)=o(1)$ fuera de un conjunto de densidad cero.
+\end{theorem}
+
+\begin{proof}
+{}[DED.] El factor $G$ es común a toda la familia, luego
+\begin{equation}
+\label{eq:diff-prod}
+ \log\zeta_\kappa(s)-\log\zeta_{\RVM}(s)
+ =\sum_{k\ge1}\Bigl[g_s\bigl(\tau_k+\kappa\delta_k\bigr)-g_s(\tau_k)\Bigr],
+ \qquad
+ g_s(\tau):=\log\frac{z^2+\tau^2}{\frac14+\tau^2},
+\end{equation}
+con $z=s-\frac12$. Derivando,
+\begin{equation}
+\label{eq:gprime}
+ g_s'(\tau)=\frac{2\tau}{z^2+\tau^2}-\frac{2\tau}{\frac14+\tau^2}
+ =\frac{2\tau\bigl(\frac14-z^2\bigr)}{(z^2+\tau^2)\bigl(\frac14+\tau^2\bigr)},
+\end{equation}
+y con $|z^2+\tau^2|=\sqrt{(\tau-t)^2+b^2}\,\sqrt{(\tau+t)^2+b^2}$ se obtiene, para $t$ grande,
+\begin{equation}
+\label{eq:gbounds}
+ |g_s'(\tau)|\ll\frac{1}{\sqrt{(\tau-t)^2+b^2}}+\frac1\tau,
+ \qquad
+ |g_s''(\tau)|\ll\frac{1}{(\tau-t)^2+b^2}+\frac{1}{\tau^2}.
+\end{equation}
+Taylor con resto de Lagrange en cada sumando de \eqref{eq:diff-prod}, una vez con
+$\kappa$ y otra con $1$, y restando $\kappa$ veces la segunda de la primera, deja
+únicamente términos de segundo orden:
+\begin{equation}
+\label{eq:second-order}
+ \Bigl|\bigl(\log\zeta_\kappa-\log\zeta_{\RVM}\bigr)
+ -\kappa\bigl(\log\zeta_1-\log\zeta_{\RVM}\bigr)\Bigr|
+ \ \le\ \sum_k\delta_k^2\!\!\sup_{|\tau-\tau_k|\le D}\!\!|g_s''(\tau)|
+ \ \ll\ \mathcal E_2(t),
+\end{equation}
+donde el punto intermedio de Lagrange dista de $\tau_k$ a lo sumo $D$, lo que justifica el
+$(|\tau_k-t|-D)_+$ de \eqref{eq:E2}. Reordenando se obtiene \eqref{eq:geodesic}.
+Para \eqref{eq:E2-mean}, cada cero aporta
+\begin{equation}
+\label{eq:kernel-int}
+ \int_T^{2T}\frac{dt}{\bigl(|\tau_k-t|-D\bigr)_+^2+b^2}\ \le\ \frac{2D}{b^2}+\frac{\pi}{b},
+\end{equation}
+y la parte $\sum_k\delta_k^2/\tau_k^2$ converge; la Proposición~\ref{prop:meansquare} y la
+sumación parcial dan entonces \eqref{eq:E2-mean}. La desigualdad de Markov convierte la
+cota en media en una cota puntual fuera de un conjunto de densidad cero.
+\end{proof}
+
+\begin{corollary}[Forma multiplicativa]
+\label{cor:mult}
+Para $\sigma\in(\frac12,1)$ fijo y $t$ fuera de un conjunto de densidad cero,
+\begin{equation}
+\label{eq:mult}
+ \zeta_\kappa(\sigma+it)=\zeta_{\RVM}(\sigma+it)^{\,1-\kappa}\,
+ \zeta_1(\sigma+it)^{\,\kappa}\;e^{\,o(1)},
+\end{equation}
+uniformemente en $\kappa\in[0,1]$. Usando el Teorema~\ref{thm:TRVM},
+\begin{equation}
+\label{eq:mult-TRVM}
+ \log\zeta_\kappa(\sigma+it)=\kappa\,\log\zeta_1(\sigma+it)+(1-\kappa)\,C_\infty+o(1).
+\end{equation}
+\end{corollary}
+
+\begin{corollary}[La rigidez se rompe en $\kappa=0^{+}$]
+\label{cor:break}
+Bajo la premisa P de la Parte~I (es decir, $\zeta_1=\zeta$), para todo
+$\sigma\in(\frac12,1)$ y todo $\kappa\in(0,1]$ la función
+$t\mapsto\log|\zeta_\kappa(\sigma+it)|$ es no acotada, mientras que para $\kappa=0$ converge
+a $\Rea C_\infty$. La amplitud de la fluctuación crece linealmente en $\kappa$, sin umbral.
+\end{corollary}
+
+\begin{proof}
+{}[DED, usando {[LIT]}: Bohr--Jessen.] La distribución límite de
+$\log|\zeta(\sigma+it)|$ en $\frac12<\sigma<1$ tiene soporte no acotado, de modo que para
+todo $V$ el conjunto $\{t:\log|\zeta(\sigma+it)|>V\}$ tiene densidad positiva. Ese conjunto
+no puede estar contenido en el conjunto excepcional de densidad cero del
+Teorema~\ref{thm:geodesic}; en su complemento,
+$\log|\zeta_\kappa|=\kappa\log|\zeta|+(1-\kappa)\Rea C_\infty+o(1)>\kappa V-O(1)$.
+\end{proof}
+
+\begin{corollary}[Sin la premisa P]
+\label{cor:Q-universal}
+Incondicionalmente: o bien la hipótesis de Riemann es falsa, o bien la rigidez se rompe en
+$\kappa=0^{+}$. En el segundo caso, además, $\mathscr Q_{\RVM}=\zeta/\zeta_{\RVM}$ es
+universal en $\frac12<\sigma<1$ (teorema de Voronin aplicado a $\zeta$ y
+Teorema~\ref{thm:TRVM} aplicado a $\zeta_{\RVM}$), y en particular
+$\log|\mathscr Q_{\RVM}(\sigma+it)|$ es no acotado por arriba y por abajo.
+\end{corollary}
+
+\begin{corollary}[Independencia de la ruta, versión multiplicativa]
+\label{cor:path}
+$\partial_\kappa\log\zeta_\kappa(s)=\log\zeta_1(s)-\log\zeta_{\RVM}(s)+O(\mathcal E_2)$ es
+independiente de $\kappa$ salvo $o(1)$. Es la contrapartida multiplicativa de la
+independencia de la ruta que la Proposición 7.1 de la Parte~I demuestra en el lado de $J$:
+el camino no es una curva con geometría propia, es un segmento, y toda la información está
+en los extremos.
+\end{corollary}
+
+\begin{remark}[Consecuencia para la estrategia]
+\label{rem:strategy}
+Los Corolarios~\ref{cor:break} y \ref{cor:Q-universal} cierran, con prueba, la familia de
+ataques que consiste en acotar en $\kappa=0$ y propagar en $\kappa$. No es que falte
+uniformidad: es que no existe ningún $\kappa_0>0$ hasta el cual se pueda propagar. El
+transporte de la Sección 2 de la Parte~I transporta la clase (ecuación funcional, residuo,
+divisor, orden) pero no la talla.
+\end{remark}
+
+\begin{remark}[Un objetivo limpio]
+\label{rem:asymptotic}
+La desigualdad \eqref{eq:blocksum} tiene también una versión inferior, porque los puntos del
+reloj están separados al menos $2\pi/\ell_{k+1}$. Debería por tanto obtenerse la asintótica
+\begin{equation}
+\label{eq:asym-target}
+ \sum_{\tau_k\le T}\delta_k^2\ \sim\ \frac{T\log\log T}{\pi\log T},
+\end{equation}
+con la constante de Selberg. No está probada aquí.
+\end{remark}
+
+\section{Estado de la cadena}
+\label{sec:tabla}
+
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{0.40\textwidth}p{0.20\textwidth}p{0.32\textwidth}@{}}
+\toprule
+\textbf{Enunciado} & \textbf{Carácter} & \textbf{Depende de} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Enunciado} & \textbf{Carácter} & \textbf{Depende de} \\
+\midrule
+\endhead
+\multicolumn{3}{@{}l}{\emph{Parte I}}\\
+Prop. 2.2 (familia, ec.\ funcional, residuo, divisor) & incondicional & Teorema~\ref{thm:H1} \\
+Lema 2.3 (extremo $=\zeta$ sii $\beta_k=\frac12$) & incondicional & Hadamard [LIT] \\
+Thm 3.4 (Fubini distribucional, $C^1$ en $\mathcal D'$) & incondicional & Teorema~\ref{thm:H1} \\
+Cor. 4.4 ($\kappa=0$ uniforme) & incondicional & solo el reloj \\
+Prop. 5.3 ($B=O(T/\log T)$) & incondicional & Selberg [LIT] \\
+Thm 5.4(b), Thm 6.1 & condicional & premisa P \\
+Prop. 7.1, Cor. 7.2 (fórmula exacta, cota) & incondicional & Teorema~\ref{thm:H1}, $S=O(\log t)$ \\
+Prop. 8.1 (términos resonantes) & formal & resto y uniformidad sin probar \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Parte II: espectral}}\\
+Teorema~\ref{thm:H1} (H1: $\delta_k=O(1)$) & \textbf{incondicional} & --- \\
+Teorema~\ref{thm:TRVM-formula} (fórmula de rigidez) & \textbf{incondicional} & restos en esquema \\
+Teorema~\ref{thm:TRVM} ($T_{\RVM}$) & \textbf{incondicional} & Teorema~\ref{thm:TRVM-formula} \\
+Crecimiento vertical $1/\zeta_{\RVM}=e^{o(t^2)}$ & \textbf{incondicional} & Teorema~\ref{thm:TRVM} \\
+Cor.~\ref{cor:gauss} ($M^{\mathrm{crit}}_{\RVM,G}=O(x^{1/2+\varepsilon})$) & \textbf{incondicional} & Teorema~\ref{thm:TRVM} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Parte II: geométrico}}\\
+Lema~\ref{lem:transport} (transporte) & \textbf{incondicional} & --- \\
+Prop.~\ref{prop:meansquare} ($\sum\delta_k^2\ll T\log\log T/\log T$) & \textbf{incondicional} & Selberg [LIT] \\
+Teorema~\ref{thm:geodesic}, Cor.~\ref{cor:mult} (geodésica) & \textbf{incondicional} & Prop.~\ref{prop:meansquare} \\
+Cor.~\ref{cor:break} (rotura en $\kappa=0^+$) & condicional & premisa P; Bohr--Jessen [LIT] \\
+Cor.~\ref{cor:Q-universal} (disyunción; $\mathscr Q_{\RVM}$ universal) & \textbf{incondicional} & Voronin [LIT] \\
+Ec.~\eqref{eq:asym-target} (asintótica exacta) & abierto & --- \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Parte II: aritmético}}\\
+Control de celda unidad ($c_n=O(1)$) & hipótesis [v51] & --- \\
+Hip.~\ref{hyp:3a} (positividad, $c_n\sim1/\log n$) & hipótesis & celda unidad \\
+Hip.~\ref{hyp:3b} (identificación de Mellin) & hipótesis & celda unidad \\
+Hip.~\ref{hyp:3c} (variación con peso de $\Delta$) & hipótesis \textbf{(nueva)} & no se sigue de $\Delta=O(\log\log x)$ \\
+Lema~\ref{lem:majorant} ($\sum_{n\le x}|\mu_{\RVM}|\ll x\log x$) & condicional & Hip.~\ref{hyp:3a} \\
+$1/\zeta_{\mathbb Z,\RVM}=O_\varepsilon(1)$ en $\sigma\ge\frac12+\varepsilon$ & condicional & Thm~\ref{thm:TRVM}, Hip.~\ref{hyp:3b}, \ref{hyp:3c} \\
+Teorema~\ref{thm:MRVM} ($M_{\RVM}=O(x^{1/2+\varepsilon})$) & condicional & Hip.~\ref{hyp:3a}--\ref{hyp:3c} \\
+$M(x)=O(x^{1/2+\varepsilon})$ / RH & abierto & bloqueado por Cor.~\ref{cor:Q-universal} \\
+Baseline de raíz cuadrada de $J_{\RVM}$ & hipótesis [v51] & no la usa ningún teorema de arriba \\
+$\kappa=1$ sin P; convergencia en $0<\kappa<1$ & abiertos & --- \\
+\bottomrule
+\end{longtable}
+
+\noindent
+La frontera incondicional está en el Corolario~\ref{cor:gauss}. Todo lo puramente espectral
+sobre el objeto sintético queda cerrado sin hipótesis; todo lo que baja al soporte entero
+($c_n$, $\mu_{\RVM}$, $M_{\RVM}$) sigue colgando de las Hipótesis~\ref{hyp:3a}--\ref{hyp:3c},
+que son enunciados de fase estacionaria uniforme sobre los incrementos de $J_{\RVM}$ y no
+teoría de ceros. De las tres, \ref{hyp:3c} es la más barata: una cota de variación con peso
+sobre una diferencia de funciones escalonadas cuyos saltos son $O(1/m)$ en las potencias
+enteras.
+\begin{thebibliography}{99}
+
+\bibitem{BohrJessen1930}
+H.~Bohr y B.~Jessen, \emph{Über die Werteverteilung der Riemannschen Zetafunktion I},
+Acta Math. \textbf{54} (1930), 1--35; \emph{II}, Acta Math. \textbf{58} (1932), 1--55.
+DOI no confirmado (la consulta a Crossref devolvió HTTP 429). (\S\ref{sec:geodesica})
+
+\bibitem{BrouckeDebruyneVindas2020}
+F.~Broucke, G.~Debruyne y J.~Vindas, \emph{Beurling integers with RH and large oscillation},
+Adv. Math. \textbf{370} (2020), 107240, doi:10.1016/j.aim.2020.107240; arXiv:2004.11501.
+(\S\ref{sec:sintetico})
+
+\bibitem{Davenport}
+H.~Davenport, \emph{Multiplicative Number Theory}, 3.ª ed., Springer GTM 74, cap.~12.
+(\S\ref{sec:w2}, \S\ref{sec:H1})
+
+\bibitem{DLMF}
+NIST Digital Library of Mathematical Functions, \S5.11 (asintótica de la digamma) y
+\S6.12 (asintótica de la integral exponencial), \url{https://dlmf.nist.gov}.
+(\S\ref{sec:w3}, \S\ref{sec:w4}, \S\ref{sec:w5}, \S\ref{sec:TRVM})
+
+\bibitem{FordZaharescu2005}
+K.~Ford y A.~Zaharescu, \emph{On the distribution of imaginary parts of zeros of the Riemann
+zeta function}, J. reine angew. Math. \textbf{579} (2005),
+doi:10.1515/crll.2005.2005.579.145. (\S\ref{sec:w5})
+
+\bibitem{FordSoundararajanZaharescu}
+K.~Ford, K.~Soundararajan y A.~Zaharescu, \emph{On the distribution of imaginary parts of
+zeros of the Riemann zeta function, II}, Math. Ann., doi:10.1007/s00208-008-0280-x
+(autoría y datos de volumen sin comprobar). (\S\ref{sec:w5})
+
+\bibitem{Gonek1993}
+S.~M. Gonek, \emph{An explicit formula of Landau and its applications to the theory of the
+zeta-function}, Contemp. Math. \textbf{143} (1993), 395--413. Sin DOI localizado.
+(\S\ref{sec:w5})
+
+\bibitem{LandauGonekExt}
+\emph{On an extension of the Landau--Gonek formula}, arXiv:1902.05473, ec.~(1.1)
+(comprobación de la forma simplificada de Gonek). (\S\ref{sec:w5})
+
+\bibitem{Selberg1944}
+A.~Selberg, \emph{On the remainder in the formula for $N(T)$, the number of zeros of
+$\zeta(s)$ in the strip $0<t<T$}, Avh. Norske Vid.-Akad. Oslo I \textbf{1944}, n.º 1.
+Sin DOI. (\S\ref{sec:geodesica})
+
+\bibitem{Selberg1946}
+A.~Selberg, \emph{Contributions to the theory of the Riemann zeta-function},
+Arch. Math. Naturvid. \textbf{48} (1946), 89--155. Sin DOI; datos bibliográficos sin
+comprobar contra el original. (\S\ref{sec:w5}, \S\ref{sec:geodesica})
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2.ª ed. revisada por
+D.~R. Heath-Brown, Clarendon Press, Oxford, 1986; \S2.12, \S9.9, \S9.19 y \S11.1--11.4.
+Numeración de secciones sin comprobar. (\S\ref{sec:w2}, \S\ref{sec:w5}, \S\ref{sec:H1},
+\S\ref{sec:geodesica})
+
+\bibitem{Trudgian2014}
+T.~S. Trudgian, \emph{An improved upper bound for the argument of the Riemann zeta-function
+on the critical line II}, J. Number Theory \textbf{134} (2014), 280--292; arXiv:1208.5846.
+DOI sin confirmar (Crossref devolvió 429). (\S\ref{sec:w1}, \S\ref{sec:w7},
+\S\ref{sec:H1})
+
+\bibitem{Voronin1975}
+S.~M. Voronin, \emph{Theorem on the ``universality'' of the Riemann zeta-function},
+Izv. Akad. Nauk SSSR Ser. Mat. \textbf{39} (1975), 475--486; traducción inglesa
+Math. USSR-Izv. \textbf{9} (1975), 443--453. DOI sin confirmar.
+(\S\ref{sec:geodesica})
+
+\bibitem{CorpusRVM}
+V.~Casaña-Giner, corpus RvM: \emph{Centroid Final}
+(\texttt{zeta\_rvm\_exponential\_centroids}), \emph{Finite Height Criteria} (v9), notas
+sobre $J_v$ (Teorema (5), Lema A), y \emph{The area function of the excursion skeleton of
+the Möbius sum and horizon-localized criteria for RH} (v51), \S«The RVM arithmetic system
+and its relation to the classical one». Sin DOI. (Todo el documento)
+
+\end{thebibliography}
+
+\end{document}

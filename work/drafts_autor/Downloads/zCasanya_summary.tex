@@ -1,0 +1,282 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem,booktabs,graphicx,longtable}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+\numberwithin{equation}{section}
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}\newtheorem{definition}[proposition]{Definition}
+\newtheorem{experiment}[proposition]{Experiment}
+\theoremstyle{remark}\newtheorem{remark}[proposition]{Remark}
+\title[Arithmetic Newton iteration and prime corrections]{Arithmetic Newton iteration using the Riemann--von Mangoldt clock and primes: the zCasanya numerical experiment}
+\author{}
+\date{18 October 2026}
+\begin{document}
+\begin{abstract}
+We construct and compare explicit prime-based ordinate approximations on all
+2,001,052 supplied indices. The selected arithmetic iteration has RMS height
+error 0.0439885472, against 0.1880662998 for the original Lambert/RvM array,
+a measured reduction of 76.610\%. Selection uses a separate validation region;
+an untouched final region is evaluated only after the configuration is frozen.
+The construction reads only the supplied clock and primes.
+\end{abstract}
+\maketitle
+\tableofcontents
+
+\section{Input data and the exact construction}\label{sec:construction}
+\begin{experiment}\label{exp:inputs}
+The input directory is the user's original MATLAB data directory, although
+every program in this experiment is Python. Both ordinate arrays consist of
+2,001,052 little-endian binary64 values (16,008,416 bytes each).
+The original prime file actually contains 455,052,511 little-endian
+64-bit integers, not merely 148,933 records. Its complete order was checked
+in bounded-memory blocks; its prefix through 1,999,993 was compared exactly
+with an independently computed sieve. The next prime is 2,000,003.
+The portable package includes this prefix and the next-prime sentinel,
+rather than duplicating the 3,640,420,088-byte original prime file.
+SHA-256 hashes, endpoint values and binary layouts are recorded in the JSON audits.
+Unsigned interpretation is also documented in the existing local script
+\texttt{MOBIUS\_F\_EXACT\_LAST\_PRIMES\_R2024b.m}.
+\end{experiment}
+
+\begin{definition}\label{def:clock}
+With $\tau_k$ the stored Lambert/RvM ordinate, the requested smooth clock is
+\begin{equation}
+N_0(t)=\frac{t}{2\pi}\left(\log\frac{t}{2\pi}-1\right)+\frac78,
+\qquad \mathcal L(t)=\frac{\log(t/2\pi)}{2\pi}.
+\label{eq:clock}
+\end{equation}
+The principal phase is the actual definition of the supplied v10 manuscript
+\cite[Section 2.4, equation (2.10)]{Aynasac2026}:
+\begin{equation}
+S_X^{\rm Euler}(t)=-\frac1\pi\sum_{p\le X}\sum_{m\ge1}
+\frac{\sin(mt\log p)}{m p^{m/2}}.
+\label{eq:euler}
+\end{equation}
+There is no smoothing weight in this definition. Smooth auxiliary windows
+used in proofs in the manuscript are not inserted into this phase.
+The independently implemented sharp prime-power variant requested in the
+task is
+\begin{equation}
+S_X^{\rm power}(t)=-\frac1\pi\sum_{p^m\le X}
+\frac{\sin(mt\log p)}{m p^{m/2}}.
+\label{eq:power}
+\end{equation}
+These phases are kept separate in every parameter record and CSV.
+\end{definition}
+
+\begin{proposition}[Elementary local-factor evaluation]\label{prop:factor}
+For $a=p^{-1/2}<1$ and $u=t\log p$,
+\begin{equation}
+\sum_{m\ge1}\frac{a^m\sin(mu)}m
+=\operatorname{atan2}(a\sin u,1-a\cos u).
+\label{eq:factor}
+\end{equation}
+\end{proposition}
+\begin{proof}
+The absolutely convergent power series $-\log(1-z)=\sum_{m\ge1}z^m/m$
+at $z=ae^{iu}$ has imaginary part equal to the left side.
+Since $1-a\cos u>0$, the imaginary part of $-\log(1-ae^{iu})$
+equals the displayed elementary angle, with no branch unwrapping.
+\end{proof}
+Thus all prime powers in \eqref{eq:euler} are included by an elementary
+formula, with no truncation of the $m$-sum. No zeta function, zeta argument,
+true ordinate or RH-dependent zero equation is evaluated by the constructor.
+
+\begin{definition}[Requested arithmetic iteration]\label{def:iteration}
+For either choice of phase the update is exactly the requested one:
+\begin{equation}
+t_k^{(0)}=\tau_k,\qquad
+t_k^{(j+1)}=t_k^{(j)}-
+\frac{N_0(t_k^{(j)})+S_{X_{j+1}}(t_k^{(j)})-(k-\tfrac12)}
+{\mathcal L(t_k^{(j)})}.
+\label{eq:iteration}
+\end{equation}
+The denominator is the derivative of the smooth clock, as specified in
+the task; it is not replaced by $\mathcal L+S_X'$.
+No damping, sorting, clipping, index reassignment or learned correction is used.
+\end{definition}
+
+\section{Stable clock differences and numerical checks}\label{sec:numerics}
+\begin{proposition}[Stable difference, derived here]\label{prop:difference}
+Put $d=t-\tau$ and $u=d/\tau$. Then
+\begin{equation}
+N_0(t)-N_0(\tau)=\mathcal L(\tau)d+
+\frac{\tau}{2\pi}\bigl((1+u)\log(1+u)-u\bigr).
+\label{eq:difference}
+\end{equation}
+For $|u|<1$ the bracket is
+\begin{equation}
+\sum_{n=2}^{\infty}\frac{(-1)^n u^n}{n(n-1)}
+=\frac{u^2}{2}-\frac{u^3}{6}+\frac{u^4}{12}-\cdots.
+\label{eq:series}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Substitute $t=\tau(1+u)$ into \eqref{eq:clock}, cancel constants,
+and separate $d\log(\tau/2\pi)/(2\pi)$. Integrating the Taylor series
+of $\log(1+u)$ gives \eqref{eq:series}.
+\end{proof}
+The expression proposed in the pasted task has quadratic term
+$-\tau u^2/(4\pi)$ instead of $+\tau u^2/(4\pi)$, so it was not used.
+For $|u|<0.01$ the implementation evaluates \eqref{eq:series} through degree 14;
+otherwise it uses \texttt{log1p} in \eqref{eq:difference}.
+The small stored-clock residual $N_0(\tau_k)-(k-1/2)$ is retained.
+
+\begin{experiment}\label{exp:precision}
+Elementary calculations at 70 decimal digits tested sampled heights between
+$14.5213470$ and $1132490.7225876$, including the first 20 indices,
+with displacements $-1,-0.01,0,0.01,1$.
+The maximum stable-difference error was 3.78e-16, and the sampled direct-clock
+roundoff was 3.63e-10. Sampled phase errors at cutoffs 8, 128 and 8192
+were at most 2.82e-10. The elementary local factor agreed with a
+500-power high-precision sum to 1.14e-66.
+The audit hook was tested and rejected attempts by the construction process
+to open a true-zero filename. These are sampled numerical checks, not
+uniform floating-point error bounds for every possible input.
+\end{experiment}
+
+\section{Search and independent evaluation}\label{sec:protocol}
+\begin{experiment}\label{exp:search}
+The search generated 836 prime-only pilot arrays: both phases,
+constant and dyadic policies, and all nondecreasing cutoff sequences of
+length one through four on the grid
+$\{8,\allowbreak32,\allowbreak128,\allowbreak512,\allowbreak2048,\allowbreak8192\}$.
+The tuning sample consists of 12,000 approximately equally spaced indices
+after the first 512 within the first 40\%; the first 512 consecutive
+indices are extra arithmetic stability probes and are excluded from the
+sample RMS used for tuning.
+All shortlisted models, their prefixes and matched same-cutoff iteration
+comparisons were then generated on every index, giving 58 full arrays.
+Earlier full pilot finalists are retained in the final comparison.
+For the dyadic policy,
+\begin{equation}
+T_k=2^{\lfloor\log_2\tau_k\rfloor},\qquad
+X_j(k)=\min\{X_{j,\max},\max(8,\lfloor\sqrt{T_k}\rfloor)\}.
+\label{eq:dyadic}
+\end{equation}
+This is an explicitly defined finite-height search policy. The asymptotic
+iterated-log prescription was not imposed: at the maximum supplied height
+its iterated logarithms cease to define positive iteration scales after
+only a few applications.
+\end{experiment}
+
+The fixed index regions are tuning [1, 800420]; selection validation
+[800421, 1400736]; untouched test [1400737, 2001052]. True-zero values were used only
+by the separate validator: first for tuning the parameter shortlist,
+then for validation ranking. The selected ID and SHA-256 were frozen in
+\texttt{selected.json} before the final test region was evaluated.
+The construction module has a process-level file-access hook blocking
+the true-zero filename and accepts only the two arithmetic binary inputs
+and parameter metadata. No zero values enter the update in \eqref{eq:iteration}.
+
+Eligibility requires all iterates finite and above $2\pi$, with every step
+less than eight smooth local spacings. This uses no true ordinates.
+Steps exceeding two local spacings, maximum displacements and nonpositive
+consecutive gaps are reported separately. Crossings are not repaired.
+The selected eligible model minimizes selection-validation RMS among the
+shortlisted models; the untouched test is not used for reselection.
+Exact validation-RMS ties are resolved by fewer crossings in the full
+arithmetic array, then by configuration ID.
+
+\section{Measured results}\label{sec:results}
+\begin{experiment}\label{exp:results}
+The selected configuration is \texttt{c667}, phase \texttt{power\_sharp},
+policy \texttt{dyadic}, cutoffs $[8, 8, 512]$.
+Its overall mean absolute error is 0.0342403669, median absolute error 0.0280068316,
+maximum absolute error 1.3575509741, and 86.762\% of individual indices improve
+over Lambert/RvM. It has 962 nonpositive consecutive gaps.
+\end{experiment}
+
+\begin{table}[htbp]\centering\small
+\caption{All-index metrics. Each iteration count uses its lowest-RMS eligible
+configuration on selection validation, not on the full data or final test.}
+\label{tab:overall}
+\begin{tabular}{lrrr}\toprule
+Method & RMS & Maximum error & Improved (\%)\\\midrule
+Lambert/RvM & 0.1880662998 & 0.9937109 & --- \\
+Casanya, 1 step & 0.0670811117 & 1.3634587 & 82.390 \\
+Casanya, 2 steps & 0.0457646234 & 3.4686755 & 86.520 \\
+Casanya, 3 steps & 0.0439885472 & 1.3575510 & 86.762 \\
+Casanya, 4 steps & 0.0442803254 & 1.5665334 & 86.794 \\
+Selected configuration & 0.0439885472 & 1.3575510 & 86.762 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Region-specific RMS for the frozen winner. Only the final test region
+was unused both for pilot tuning and for selecting the winner.}
+\label{tab:regions}
+\begin{tabular}{lrrrr}\toprule
+Region & Count & Lambert RMS & Casanya RMS & Reduction (\%)\\\midrule
+Tuning & 800,420 & 0.1997985626 & 0.0482535802 & 75.849 \\
+Selection validation & 600,316 & 0.1822284421 & 0.0412403603 & 77.369 \\
+Untouched test & 600,316 & 0.1773789575 & 0.0405544549 & 77.137 \\
+All indices & 2,001,052 & 0.1880662998 & 0.0439885472 & 76.610 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Iteration-count winners selected before opening the final test.
+Crossings are counted on the complete arrays.}
+\label{tab:test}
+\begin{tabular}{rlrrr}\toprule
+Steps & ID & Validation RMS & Final test RMS & Crossings\\\midrule
+1 & c037 & 0.0655968563 & 0.0646325142 & 7549 \\
+2 & c656 & 0.0426020726 & 0.0416363379 & 1284 \\
+3 & c667 & 0.0412403603 & 0.0405544549 & 962 \\
+4 & c713 & 0.0414462471 & 0.0407178860 & 1004 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{remark}[Second-step comparison]\label{rem:second}
+For the matched path $[8, 512]$, the first step (\texttt{c084})
+has all-index RMS 0.1256691643 and the second step
+(\texttt{c656}) has RMS 0.0457646234.
+The measured answer to whether this second step improves its first step
+is \textbf{yes}. Extra iterations are evaluated rather than assumed
+to improve. Both phase definitions remain separately tabulated in the CSV;
+their best validation IDs are \texttt{c124} and \texttt{c486}.
+\end{remark}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{error_and_height.png}
+\caption{Full-sample signed errors and RMS by dyadic height windows. The
+last height window is incomplete. These plots are descriptive after selection.}
+\label{fig:errors}
+\end{figure}
+
+\section{Output, reproducibility and scope}\label{sec:delivery}
+\texttt{zCasanya.bin} has exactly 2,001,052 little-endian binary64 values,
+16,008,416 bytes, in the original index order. Its first and last values are
+14.4803068948212612 and 1132490.6732535508926958. Its SHA-256 is
+\begin{center}\ttfamily\footnotesize 64d1de134e920c1eb89f61ba5d93c7f9\\49b343bfa0d9ebf5da6fb647c2d790d9\end{center}
+The delivered copy in the original data directory and the packaged copy
+are byte-identical. The package contains all scripts, portable input arrays,
+all pilot and full candidate outputs, CSV metrics, error histograms,
+height-window results, logs, parameter manifests, numerical checks,
+this source and its compiled PDF. Original input files are not changed.
+
+\begin{remark}[Mathematical status]\label{rem:status}
+The local-factor evaluation and stable difference are elementary identities;
+the iteration is the finite construction specified by the user, with the
+phase definition checked against the supplied manuscript. The measured
+RMS reductions apply to the supplied finite sample. No uniform moment
+bound or multiplicity control at the iterated corrected sampling points
+is established here; no conclusion about an asymptotically growing number
+of arithmetic Newton steps is inferred. The script contains no appeal to RH.
+\end{remark}
+
+\begin{thebibliography}{9}
+\bibitem{Aynasac2026}
+R.~Ayn\"asac, \emph{The Riemann--von Mangoldt clock and the zeros of the
+Riemann zeta function: an exact defect identity, prime cutoffs and a
+computable corrected clock}, supplied manuscript, version 10, 2026.
+The exact source is archived as \texttt{source/ordinal\_prime\_cutoff\_v10.tex};
+no DOI is supplied in that source for the manuscript itself.
+\end{thebibliography}
+\end{document}

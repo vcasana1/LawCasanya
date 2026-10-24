@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ζ y ζ_RvM en 3D</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#161a21; --ink:#e8eaf0; --mut:#98a2b3; --line:#2a303b; --grid:#3a4352;
+  --zeta:#4ea1ff; --rvm:#ff9f43; --mix:#b388ff; --diff:#5ee6a8; --acc:#4ea1ff;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f4f5f8; --panel:#ffffff; --ink:#14171c; --mut:#5b6472; --line:#d9dde4; --grid:#b9c0cc;
+         --zeta:#1664d9; --rvm:#d9640a; --mix:#7a3fe0; --diff:#0f9a6a; --acc:#1664d9; }
+}
+:root[data-theme="light"]{ --bg:#f4f5f8; --panel:#ffffff; --ink:#14171c; --mut:#5b6472; --line:#d9dde4; --grid:#b9c0cc;
+  --zeta:#1664d9; --rvm:#d9640a; --mix:#7a3fe0; --diff:#0f9a6a; --acc:#1664d9; }
+:root[data-theme="dark"]{ --bg:#0f1115; --panel:#161a21; --ink:#e8eaf0; --mut:#98a2b3; --line:#2a303b; --grid:#3a4352;
+  --zeta:#4ea1ff; --rvm:#ff9f43; --mix:#b388ff; --diff:#5ee6a8; --acc:#4ea1ff; }
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+#app{display:grid;grid-template-columns:340px 1fr;height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--line);overflow:auto;padding:14px 16px 24px}
+h1{font-size:16px;margin:0 0 2px}
+.sub{color:var(--mut);font-size:12px;margin-bottom:12px}
+fieldset{border:1px solid var(--line);border-radius:8px;margin:0 0 12px;padding:8px 10px 10px}
+legend{padding:0 6px;color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em}
+label{display:flex;align-items:center;gap:8px;margin:5px 0}
+label span.n{min-width:64px;color:var(--mut)}
+select,input[type=number]{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font:inherit;width:100%}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.row{display:flex;gap:8px;align-items:center}
+.row>*{flex:1}
+button{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font:inherit;cursor:pointer}
+button:hover{border-color:var(--acc)}
+button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.sw{display:inline-block;width:11px;height:11px;border-radius:50%}
+.val{font-variant-numeric:tabular-nums;color:var(--mut);min-width:48px;text-align:right}
+main{position:relative;min-width:0}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+canvas:active{cursor:grabbing}
+#hud{position:absolute;left:12px;bottom:10px;right:12px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;pointer-events:none;
+     font-variant-numeric:tabular-nums}
+#hud div{background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+#status{position:absolute;top:10px;right:12px;color:var(--mut);font-size:12px;background:color-mix(in srgb,var(--panel) 88%,transparent);
+        border:1px solid var(--line);border-radius:8px;padding:4px 10px}
+table{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums}
+td,th{padding:2px 4px;text-align:right;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:500}
+.hint{color:var(--mut);font-size:12px;margin-top:6px}
+@media (max-width:820px){
+  #app{grid-template-columns:1fr;grid-template-rows:auto 70vh}
+  aside{border-right:0;border-bottom:1px solid var(--line);max-height:46vh}
+}
+</style>
+</head>
+<body>
+<div id="app">
+<aside>
+  <h1>ζ y ζ<sub>RvM</sub> en 3D</h1>
+  <div class="sub">ζ por Euler–Maclaurin; ζ<sub>RvM</sub>(s)=π<sup>s/2</sup>/(s(s−1)Γ(s/2))·∏<sub>k</sub>(1+s(s−1)/(¼+τ<sub>k</sub>²)) con τ<sub>k</sub> de Lambert (k≤<span id="Kn"></span>, cola corregida).</div>
+
+  <fieldset><legend>Modo</legend>
+    <div class="row">
+      <button id="mCurve" class="on">Curva (σ fijo)</button>
+      <button id="mSurf">Superficie (σ×t)</button>
+    </div>
+    <label id="lSigma"><span class="n">σ</span><input id="sigma" type="range" min="-1" max="2" step="0.01" value="0.5"><span class="val" id="vSigma">0.50</span></label>
+    <div id="surfOpts" style="display:none">
+      <div class="row"><label><span class="n">σ mín</span><input id="s0" type="number" step="0.1" value="0"></label>
+      <label><span class="n">σ máx</span><input id="s1" type="number" step="0.1" value="1"></label></div>
+      <label><span class="n">filas σ</span><input id="nS" type="number" min="3" max="81" value="31"></label>
+      <button id="bSurf" style="width:100%">Calcular superficie</button>
+    </div>
+    <div class="row"><label><span class="n">t mín</span><input id="t0" type="number" step="1" value="0.1"></label>
+    <label><span class="n">t máx</span><input id="t1" type="number" step="1" value="60"></label></div>
+    <label><span class="n">puntos t</span><input id="nT" type="number" min="50" max="6000" step="50" value="1500"></label>
+    <button id="bCalc" style="width:100%">Recalcular</button>
+  </fieldset>
+
+  <fieldset><legend>Ejes (elige qué va en cada uno)</legend>
+    <label><span class="n">Horizontal</span><select id="ax" ></select></label>
+    <label><span class="n">Profundidad</span><select id="ay"></select></label>
+    <label><span class="n">Vertical</span><select id="az"></select></label>
+    <div class="row"><button id="pHelix">Hélice (Re, Im, t)</button><button id="pSurf">Relieve (σ, t, log|f|)</button></div>
+    <div class="row" style="margin-top:6px"><button id="pZ">Z (t, σ, Z)</button><button id="pPhase">Fase (Re, Im, arg)</button></div>
+    <div class="hint">f es cada función dibujada. Z = Re(e<sup>iθ(t)</sup>f): es la Z de Hardy para ζ en σ=½ y su análogo para ζ<sub>RvM</sub>.</div>
+  </fieldset>
+
+  <fieldset><legend>Objetos</legend>
+    <label><input type="checkbox" id="cZ" checked><span class="sw" style="background:var(--zeta)"></span>ζ</label>
+    <label><input type="checkbox" id="cR" checked><span class="sw" style="background:var(--rvm)"></span>ζ<sub>RvM</sub></label>
+    <label><input type="checkbox" id="cM"><span class="sw" style="background:var(--mix)"></span>mezcla (1−λ)ζ<sub>RvM</sub>+λζ</label>
+    <label><input type="checkbox" id="cD"><span class="sw" style="background:var(--diff)"></span>diferencia ζ−ζ<sub>RvM</sub></label>
+    <label><span class="n">λ</span><input id="lam" type="range" min="0" max="1" step="0.005" value="0.5"><span class="val" id="vLam">0.50</span></label>
+    <label><input type="checkbox" id="cZeros" checked>marcar ceros reales (σ=½, cambios de signo de Z)</label>
+  </fieldset>
+
+  <fieldset><legend>Movimiento</legend>
+    <div class="row"><button id="bT">▶ recorrer t</button><button id="bL">▶ animar λ</button><button id="bRot" class="on">⟳ girar</button></div>
+    <label><span class="n">t actual</span><input id="tcur" type="range" min="0" max="1" step="0.0005" value="0.3"><span class="val" id="vT"></span></label>
+    <div class="row"><button id="bReset">Reiniciar vista</button><button id="bCSV">Exportar CSV</button><button id="bTheme">Tema</button></div>
+    <div class="hint">Arrastra para girar, rueda para zoom, doble clic para reiniciar.</div>
+  </fieldset>
+
+  <fieldset><legend>γ<sub>k</sub> (ceros de ζ) frente a τ<sub>k</sub> (reloj RvM)</legend>
+    <table id="tab"></table>
+  </fieldset>
+</aside>
+<main>
+  <canvas id="cv"></canvas>
+  <div id="status"></div>
+  <div id="hud"></div>
+</main>
+</div>
+
+<script>
+(()=>{
+'use strict';
+/* ====================== NÚCLEO NUMÉRICO ====================== */
+const LN_PI=Math.log(Math.PI), TWO_PI=2*Math.PI;
+const K=1200;                                   // ordenadas RvM usadas
+const LC=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,
+          -176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+function clog(re,im){return [Math.log(Math.hypot(re,im)),Math.atan2(im,re)];}
+function lnGamma(re,im){                         // log Γ complejo (Lanczos + reflexión); la rama no importa al exponenciar
+  if(re<0.5){
+    const a=Math.PI*re,b=Math.PI*im;
+    const sr=Math.sin(a)*Math.cosh(b), si=Math.cos(a)*Math.sinh(b);
+    const ls=clog(sr,si), g=lnGamma(1-re,-im);
+    return [LN_PI-ls[0]-g[0], -ls[1]-g[1]];
+  }
+  re-=1;
+  let xr=LC[0], xi=0;
+  for(let i=1;i<9;i++){const dr=re+i,d=dr*dr+im*im;xr+=LC[i]*dr/d;xi-=LC[i]*im/d;}
+  const tr=re+7.5, lt=clog(tr,im), lx=clog(xr,xi);
+  const pr=(re+0.5)*lt[0]-im*lt[1], pi=(re+0.5)*lt[1]+im*lt[0];
+  return [0.5*Math.log(TWO_PI)+pr-tr+lx[0], pi-im+lx[1]];
+}
+function theta(t){ return lnGamma(0.25,0.5*t)[1]-0.5*t*LN_PI; }   // fase de Riemann–Siegel
+
+const LN=new Float64Array(400); for(let n=1;n<400;n++) LN[n]=Math.log(n);
+const BN=[1/6,-1/30,1/42,-1/30,5/66,-691/2730,7/6,-3617/510,43867/798,-174611/330];
+const BC=[]; {let f=1; for(let k=1;k<=BN.length;k++){f*=(2*k-1)*(2*k); BC.push(BN[k-1]/f);}}   // B_2k/(2k)!
+function zeta(sr,si){                              // Euler–Maclaurin
+  const N=Math.max(12,Math.ceil(0.5*Math.hypot(sr,si))+10);
+  let ur=0,ui=0;
+  for(let n=1;n<N;n++){const m=Math.exp(-sr*LN[n]),a=-si*LN[n];ur+=m*Math.cos(a);ui+=m*Math.sin(a);}
+  const lN=Math.log(N), mN=Math.exp(-sr*lN), aN=-si*lN, nr=mN*Math.cos(aN), ni=mN*Math.sin(aN);
+  const dr=sr-1,di=si,dd=dr*dr+di*di;
+  ur+=N*(nr*dr+ni*di)/dd+0.5*nr; ui+=N*(ni*dr-nr*di)/dd+0.5*ni;
+  let pr=sr,pi=si, qr=nr/N,qi=ni/N;               // poly=s ; power=N^{-s-1}
+  for(let k=0;k<BC.length;k++){
+    if(k>0){
+      let a=sr+2*k-1,b=si; let tr=pr*a-pi*b, ti=pr*b+pi*a; pr=tr;pi=ti;
+      a=sr+2*k; tr=pr*a-pi*b; ti=pr*b+pi*a; pr=tr;pi=ti;
+      qr/=N*N; qi/=N*N;
+    }
+    ur+=BC[k]*(pr*qr-pi*qi); ui+=BC[k]*(pr*qi+pi*qr);
+  }
+  return [ur,ui];
+}
+/* ---- reloj RvM ---- */
+function lambertW0(x){
+  let w=Math.log(1+x); if(x<0) w=x/(1+x);
+  for(let i=0;i<30;i++){
+    const e=Math.exp(w), f=w*e-x, d=e*(w+1)-(w+2)*f/(2*w+2);
+    const nw=w-f/d; if(Math.abs(nw-w)<1e-15){w=nw;break;} w=nw;
+  }
+  return w;
+}
+const TAU=new Float64Array(K+1), AK=new Float64Array(K);
+for(let k=1;k<=K;k++){const x=(k-11/8);TAU[k]=TWO_PI*x/lambertW0(x/Math.E);AK[k-1]=1/(0.25+TAU[k]*TAU[k]);}
+const Lf=t=>Math.log(t/TWO_PI);
+const Tm=TAU[K]+Math.PI/Lf(TAU[K]);
+const TA1=(Lf(Tm)+1)/(TWO_PI*Tm);                       // Σ_{k>K} a_k
+const TA2=(Lf(Tm)/(3*Tm**3)+1/(9*Tm**3))/TWO_PI;        // Σ_{k>K} a_k^2
+function zetaRvM(sr,si){
+  const zr=sr*sr-si*si-sr, zi=2*sr*si-si;
+  let pr=1,pi=0,S=0;
+  for(let k=0;k<K;k++){
+    const ar=1+zr*AK[k], ai=zi*AK[k];
+    const nr=pr*ar-pi*ai, ni=pr*ai+pi*ar; pr=nr;pi=ni;
+    if((k&15)===15){const m=Math.hypot(pr,pi); if(m<1e-280) return [0,0]; pr/=m;pi/=m;S+=Math.log(m);}
+  }
+  const m=Math.hypot(pr,pi); if(m<1e-280) return [0,0];
+  let lr=S+Math.log(m), li=Math.atan2(pi,pr);
+  const z2r=zr*zr-zi*zi, z2i=2*zr*zi;
+  lr+=zr*TA1-0.5*z2r*TA2; li+=zi*TA1-0.5*z2i*TA2;       // cola k>K
+  lr+=0.5*sr*LN_PI; li+=0.5*si*LN_PI;
+  lr-=Math.log(Math.hypot(zr,zi)); li-=Math.atan2(zi,zr);
+  const g=lnGamma(sr/2,si/2); lr-=g[0]; li-=g[1];
+  const e=Math.exp(lr); return [e*Math.cos(li), e*Math.sin(li)];
+}
+const GAMMA=[14.134725142,21.022039639,25.010857580,30.424876126,32.935061588,37.586178159,40.918719012,43.327073281,48.005150881,49.773832478];
+window.__core={zeta,zetaRvM,theta,TAU,lnGamma};
+
+/* ====================== ESTADO Y DATOS ====================== */
+const $=id=>document.getElementById(id);
+const QS=[['re','Re f'],['im','Im f'],['abs','|f|'],['logabs','log₁₀|f|'],['arg','arg f'],['Z','Z = Re(e^{iθ}f)'],['t','t = Im s'],['sigma','σ = Re s']];
+for(const id of ['ax','ay','az']) for(const [v,l] of QS){const o=document.createElement('option');o.value=v;o.textContent=l;$(id).appendChild(o);}
+const NAME=Object.fromEntries(QS);
+let G=null;          // rejilla calculada
+let mode='curve', lam=0.5, yaw=0.6, pitch=0.35, zoom=1, dirty=true, series=null, zeroPts=[];
+let playT=false, playL=false, rot=true, tfrac=0.3, lamDir=1;
+$('Kn').textContent=K;
+
+function setAxes(a,b,c){$('ax').value=a;$('ay').value=b;$('az').value=c;dirty=true;}
+setAxes('re','im','t');
+
+function status(s){$('status').textContent=s;}
+function compute(sig0,sig1,nS,t0,t1,nT,done){
+  const sig=new Float64Array(nS), t=new Float64Array(nT), th=new Float64Array(nT);
+  for(let i=0;i<nS;i++) sig[i]= nS===1?sig0:sig0+(sig1-sig0)*i/(nS-1);
+  for(let j=0;j<nT;j++){t[j]=t0+(t1-t0)*j/(nT-1); th[j]=theta(t[j]);}
+  const N=nS*nT, zr=new Float64Array(N),zi=new Float64Array(N),rr=new Float64Array(N),ri=new Float64Array(N);
+  let i=0; const t0c=performance.now();
+  function chunk(){
+    const tEnd=performance.now()+25;
+    while(i<nS && performance.now()<tEnd){
+      for(let j=0;j<nT;j++){
+        const s=sig[i], tt=t[j], idx=i*nT+j;
+        const a=zeta(s,tt), b=zetaRvM(s,tt);
+        zr[idx]=a[0];zi[idx]=a[1];rr[idx]=b[0];ri[idx]=b[1];
+      }
+      i++;
+    }
+    if(i<nS){status('calculando… '+Math.round(100*i/nS)+'%');setTimeout(chunk,0);}
+    else{ G={nS,nT,sig,t,th,zr,zi,rr,ri}; status(nS+'×'+nT+' puntos · '+Math.round(performance.now()-t0c)+' ms'); dirty=true; done&&done(); }
+  }
+  chunk();
+}
+function recalc(){
+  const t0=Math.max(0.02,+$('t0').value||0.1), t1=Math.max(t0+1,+$('t1').value||60), nT=Math.min(6000,Math.max(50,+$('nT').value|0));
+  if(mode==='curve'){ compute(+$('sigma').value,+$('sigma').value,1,t0,t1,nT); }
+  else{ compute(+$('s0').value,+$('s1').value,Math.min(81,Math.max(3,+$('nS').value|0)),t0,t1,Math.min(nT,800)); }
+}
+
+/* ====================== SERIES PARA DIBUJAR ====================== */
+function quantity(q,re,im,sig,t,th){
+  switch(q){
+    case 're':return re; case 'im':return im; case 'abs':return Math.hypot(re,im);
+    case 'logabs':return Math.log10(Math.max(Math.hypot(re,im),1e-12));
+    case 'arg':return Math.atan2(im,re);
+    case 'Z':return re*Math.cos(th)-im*Math.sin(th);
+    case 't':return t; case 'sigma':return sig;
+  }
+  return 0;
+}
+function fAt(id,i){
+  const g=G;
+  switch(id){
+    case 'zeta':return [g.zr[i],g.zi[i]];
+    case 'rvm':return [g.rr[i],g.ri[i]];
+    case 'mix':return [(1-lam)*g.rr[i]+lam*g.zr[i],(1-lam)*g.ri[i]+lam*g.zi[i]];
+    default:return [g.zr[i]-g.rr[i],g.zi[i]-g.ri[i]];
+  }
+}
+const COL={zeta:'--zeta',rvm:'--rvm',mix:'--mix',diff:'--diff'};
+function build(){
+  if(!G) return;
+  const ids=[]; if($('cZ').checked)ids.push('zeta'); if($('cR').checked)ids.push('rvm'); if($('cM').checked)ids.push('mix'); if($('cD').checked)ids.push('diff');
+  const axes=[$('ax').value,$('ay').value,$('az').value], N=G.nS*G.nT;
+  const raw={};
+  for(const id of ids){
+    const R=[new Float64Array(N),new Float64Array(N),new Float64Array(N)];
+    for(let r=0;r<G.nS;r++)for(let c=0;c<G.nT;c++){
+      const i=r*G.nT+c, f=fAt(id,i);
+      for(let a=0;a<3;a++) R[a][i]=quantity(axes[a],f[0],f[1],G.sig[r],G.t[c],G.th[c]);
+    }
+    raw[id]=R;
+  }
+  const lo=[0,0,0],hi=[0,0,0];
+  for(let a=0;a<3;a++){
+    if(axes[a]==='t'||axes[a]==='sigma'){
+      lo[a]=axes[a]==='t'?G.t[0]:G.sig[0]; hi[a]=axes[a]==='t'?G.t[G.nT-1]:G.sig[G.nS-1];
+      if(hi[a]===lo[a]){lo[a]-=0.5;hi[a]+=0.5;}
+      continue;
+    }
+    const smp=[]; for(const id of ids){const v=raw[id][a]; const st=Math.max(1,Math.floor(N/3000)); for(let i=0;i<N;i+=st)smp.push(v[i]);}
+    smp.sort((x,y)=>x-y);
+    if(!smp.length){lo[a]=-1;hi[a]=1;continue;}
+    lo[a]=smp[Math.floor(0.01*(smp.length-1))]; hi[a]=smp[Math.ceil(0.99*(smp.length-1))];
+    if(!(hi[a]>lo[a])){lo[a]-=1;hi[a]+=1;}
+    if(axes[a]==='arg'){lo[a]=-Math.PI;hi[a]=Math.PI;}
+  }
+  const out={};
+  for(const id of ids){
+    const P=[new Float32Array(N),new Float32Array(N),new Float32Array(N)];
+    for(let a=0;a<3;a++){const v=raw[id][a],l=lo[a],h=hi[a];
+      for(let i=0;i<N;i++){let x=(v[i]-l)/(h-l)*2-1; P[a][i]=Math.max(-1.15,Math.min(1.15,x));}}
+    out[id]=P;
+  }
+  series={ids,out,axes,lo,hi};
+  // ceros reales (σ=½): cambios de signo de Z
+  zeroPts=[];
+  if($('cZeros').checked){
+    let row=-1,best=1e9; for(let r=0;r<G.nS;r++){const d=Math.abs(G.sig[r]-0.5); if(d<best){best=d;row=r;}}
+    const step=G.nS>1?Math.abs(G.sig[1]-G.sig[0]):0;
+    if(row>=0 && best<=Math.max(1e-9,step/2)+1e-9){
+      for(const id of ids){
+        let prev=null,prevT=0;
+        for(let c=0;c<G.nT;c++){
+          const i=row*G.nT+c, f=fAt(id,i), z=f[0]*Math.cos(G.th[c])-f[1]*Math.sin(G.th[c]);
+          if(prev!==null && prev*z<0){
+            const u=prev/(prev-z), c0=c-1+u, i0=row*G.nT+c-1;
+            const P=series.out[id]; zeroPts.push({id,x:P[0][i0]*(1-u)+P[0][i]*u,y:P[1][i0]*(1-u)+P[1][i]*u,z:P[2][i0]*(1-u)+P[2][i]*u,t:G.t[c-1]*(1-u)+G.t[c]*u});
+          }
+          prev=z;
+        }
+      }
+    }
+  }
+  dirty=false;
+}
+
+/* ====================== RENDER 3D ====================== */
+const cv=$('cv'), ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1;
+function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
+window.addEventListener('resize',()=>{resize();});
+resize();
+function proj(x,y,z){            // x:horizontal, y:profundidad, z:vertical
+  const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  let X=x,Y=z,Z=y;                 // mundo: Y arriba
+  let x1=cy*X+sy*Z, z1=-sy*X+cy*Z;
+  let y1=cp*Y-sp*z1, z2=sp*Y+cp*z1;
+  const f=4.2, k=f/(f+z2), sc=Math.min(W,H)*0.30*zoom;
+  return [W/2+x1*k*sc, H/2-y1*k*sc, z2];
+}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function line3(P,i0,i1,stride){
+  ctx.beginPath(); let first=true;
+  for(let i=i0;i<i1;i+=stride){const p=proj(P[0][i],P[1][i],P[2][i]); if(first){ctx.moveTo(p[0],p[1]);first=false;}else ctx.lineTo(p[0],p[1]);}
+  ctx.stroke();
+}
+function fmt(v){return Math.abs(v)>=1e4||(Math.abs(v)<1e-2&&v!==0)?v.toExponential(1):(+v.toPrecision(3)).toString();}
+function drawFrame(){
+  const grid=css('--grid'), mut=css('--mut'), ink=css('--ink');
+  ctx.lineWidth=1; ctx.strokeStyle=grid; ctx.globalAlpha=0.55;
+  const C=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+  const E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+  for(const [a,b] of E){const p=proj(...C[a]),q=proj(...C[b]);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();}
+  ctx.globalAlpha=1; ctx.font='12px system-ui,sans-serif';
+  // cero de cada eje (plano 0) tenue
+  ctx.globalAlpha=0.25; ctx.setLineDash([4,4]);
+  for(const L of [[[-1,0,-1],[1,0,-1]],[[0,-1,-1],[0,1,-1]],[[-1,-1,0],[-1,1,0]]]){const p=proj(...L[0]),q=proj(...L[1]);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();}
+  ctx.setLineDash([]); ctx.globalAlpha=1;
+  if(!series) return;
+  const names=series.axes.map(a=>NAME[a]);
+  const tag=(pt,text,al)=>{const p=proj(...pt);ctx.fillStyle=ink;ctx.textAlign=al||'center';ctx.fillText(text,p[0],p[1]);};
+  ctx.fillStyle=ink;
+  tag([0,-1.22,-1.12],names[0]);      tag([-1.16,-1,-1],fmt(series.lo[0]),'right');   tag([1.16,-1,-1],fmt(series.hi[0]),'left');
+  tag([-1.22,0,-1.12],names[1],'right');tag([-1,-1.02,-1.14],fmt(series.lo[1]),'right'); tag([-1,1.02,-1.14],fmt(series.hi[1]),'right');
+  tag([-1.22,-1,0],names[2],'right');  tag([-1.1,-1,-1.02],fmt(series.lo[2]),'right'); tag([-1.1,-1,1.02],fmt(series.hi[2]),'right');
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  drawFrame();
+  if(!G||!series) return;
+  const nT=G.nT,nS=G.nS;
+  const colStep=Math.max(1,Math.ceil(nT/36));
+  // marcador
+  const col=Math.round(tfrac*(nT-1));
+  let mrow=0; if(nS>1){let b=1e9;for(let r=0;r<nS;r++){const d=Math.abs(G.sig[r]-0.5);if(d<b){b=d;mrow=r;}}}
+  for(const id of series.ids){
+    const P=series.out[id]; ctx.strokeStyle=css(COL[id]);
+    if(nS===1){ ctx.lineWidth=1.7; ctx.globalAlpha=0.95; line3(P,0,nT,1);
+      // tramo reciente (estela)
+      ctx.lineWidth=3.6; ctx.globalAlpha=1; const a=Math.max(0,col-90); line3(P,a,col+1,1);
+    }else{
+      ctx.lineWidth=1; ctx.globalAlpha=0.5;
+      for(let r=0;r<nS;r++) line3(P,r*nT,(r+1)*nT,1);
+      ctx.globalAlpha=0.3;
+      for(let c=0;c<nT;c+=colStep){ctx.beginPath();for(let r=0;r<nS;r++){const i=r*nT+c,p=proj(P[0][i],P[1][i],P[2][i]);r?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);}ctx.stroke();}
+      ctx.lineWidth=2.6; ctx.globalAlpha=1; line3(P,mrow*nT+Math.max(0,col-90),mrow*nT+col+1,1);
+    }
+    ctx.globalAlpha=1; ctx.fillStyle=css(COL[id]);
+    const i=mrow*nT+col, p=proj(P[0][i],P[1][i],P[2][i]); ctx.beginPath(); ctx.arc(p[0],p[1],5,0,TWO_PI); ctx.fill();
+    ctx.strokeStyle=css('--bg'); ctx.lineWidth=1.5; ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  for(const z of zeroPts){
+    const p=proj(z.x,z.y,z.z); ctx.fillStyle=css(COL[z.id]); ctx.strokeStyle=css('--ink'); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(p[0],p[1]-5);ctx.lineTo(p[0]+4,p[1]);ctx.lineTo(p[0],p[1]+5);ctx.lineTo(p[0]-4,p[1]);ctx.closePath();ctx.fill();ctx.stroke();
+  }
+  // HUD
+  const tt=G.t[col], s=G.sig[mrow], parts=[];
+  parts.push('<div><b>s</b> = '+s.toFixed(3)+(tt>=0?' + ':' − ')+Math.abs(tt).toFixed(4)+' i</div>');
+  const f1=[G.zr[mrow*nT+col],G.zi[mrow*nT+col]], f2=[G.rr[mrow*nT+col],G.ri[mrow*nT+col]], th=G.th[col];
+  const zrot=f=>f[0]*Math.cos(th)-f[1]*Math.sin(th);
+  parts.push('<div style="color:'+css('--zeta')+'">ζ = '+f1[0].toFixed(4)+' '+(f1[1]<0?'−':'+')+' '+Math.abs(f1[1]).toFixed(4)+' i<br>Z = '+zrot(f1).toFixed(4)+'</div>');
+  parts.push('<div style="color:'+css('--rvm')+'">ζ<sub>RvM</sub> = '+f2[0].toFixed(4)+' '+(f2[1]<0?'−':'+')+' '+Math.abs(f2[1]).toFixed(4)+' i<br>Z<sub>RvM</sub> = '+zrot(f2).toFixed(4)+'</div>');
+  if(zeroPts.length){const nz=zeroPts.filter(z=>z.id==='zeta').length,nr=zeroPts.filter(z=>z.id==='rvm').length;
+    parts.push('<div>ceros reales en [t₀,t₁]: ζ '+nz+' · ζ<sub>RvM</sub> '+nr+'</div>');}
+  $('hud').innerHTML=parts.join('');
+  $('vT').textContent=tt.toFixed(2);
+}
+
+/* ====================== INTERACCIÓN Y ANIMACIÓN ====================== */
+let last=performance.now();
+function loop(now){
+  const dt=Math.min(0.05,(now-last)/1000); last=now;
+  if(rot){yaw+=dt*0.25;}
+  if(playT){tfrac+=dt/14; if(tfrac>1)tfrac=0; $('tcur').value=tfrac;}
+  if(playL){lam+=lamDir*dt/5; if(lam>=1){lam=1;lamDir=-1;} if(lam<=0){lam=0;lamDir=1;} $('lam').value=lam; $('vLam').textContent=lam.toFixed(2); if($('cM').checked||$('cD').checked) dirty=true;}
+  if(dirty) build();
+  draw();
+  requestAnimationFrame(loop);
+}
+let drag=null;
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,yaw,pitch};cv.setPointerCapture(e.pointerId);rot=false;$('bRot').classList.remove('on');});
+cv.addEventListener('pointermove',e=>{if(!drag)return;yaw=drag.yaw+(e.clientX-drag.x)*0.008;pitch=Math.max(-1.5,Math.min(1.5,drag.pitch+(e.clientY-drag.y)*0.008));});
+cv.addEventListener('pointerup',()=>{drag=null;});
+cv.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(0.3,Math.min(5,zoom*Math.exp(-e.deltaY*0.001)));},{passive:false});
+cv.addEventListener('dblclick',()=>{yaw=0.6;pitch=0.35;zoom=1;});
+const tog=(id,fn)=>$(id).addEventListener('click',()=>{const on=fn();$(id).classList.toggle('on',on);});
+tog('bT',()=>playT=!playT); tog('bL',()=>playL=!playL); tog('bRot',()=>rot=!rot);
+$('bReset').onclick=()=>{yaw=0.6;pitch=0.35;zoom=1;};
+$('bTheme').onclick=()=>{const r=document.documentElement,cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');r.setAttribute('data-theme',cur==='dark'?'light':'dark');};
+for(const id of ['ax','ay','az','cZ','cR','cM','cD','cZeros']) $(id).addEventListener('change',()=>{dirty=true;});
+$('lam').addEventListener('input',e=>{lam=+e.target.value;$('vLam').textContent=lam.toFixed(2);dirty=true;});
+$('tcur').addEventListener('input',e=>{tfrac=+e.target.value;playT=false;$('bT').classList.remove('on');});
+$('sigma').addEventListener('input',e=>{$('vSigma').textContent=(+e.target.value).toFixed(2);if(mode==='curve')recalc();});
+$('bCalc').onclick=recalc; $('bSurf').onclick=recalc;
+function setMode(m){mode=m;$('mCurve').classList.toggle('on',m==='curve');$('mSurf').classList.toggle('on',m==='surf');
+  $('lSigma').style.display=m==='curve'?'':'none';$('surfOpts').style.display=m==='surf'?'':'none';
+  if(m==='curve')setAxes('re','im','t'); else setAxes('sigma','t','logabs'); recalc();}
+$('mCurve').onclick=()=>setMode('curve'); $('mSurf').onclick=()=>setMode('surf');
+$('pHelix').onclick=()=>setAxes('re','im','t'); $('pSurf').onclick=()=>setAxes('sigma','t','logabs');
+$('pZ').onclick=()=>setAxes('t','sigma','Z'); $('pPhase').onclick=()=>setAxes('re','im','arg');
+$('bCSV').onclick=()=>{
+  if(!G)return; const L=['row,sigma,t,zeta_re,zeta_im,zetaRvM_re,zetaRvM_im,Z_zeta,Z_RvM'];
+  for(let r=0;r<G.nS;r++)for(let c=0;c<G.nT;c++){const i=r*G.nT+c,th=G.th[c];
+    L.push([r+1,G.sig[r],G.t[c],G.zr[i],G.zi[i],G.rr[i],G.ri[i],G.zr[i]*Math.cos(th)-G.zi[i]*Math.sin(th),G.rr[i]*Math.cos(th)-G.ri[i]*Math.sin(th)].join(','));}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\n')],{type:'text/csv'}));a.download='zeta_vs_zeta_rvm.csv';a.click();
+};
+/* tabla γ_k vs τ_k */
+{let h='<tr><th>k</th><th>γ<sub>k</sub></th><th>τ<sub>k</sub></th><th>δ<sub>k</sub>=γ−τ</th></tr>';
+ for(let k=1;k<=GAMMA.length;k++) h+='<tr><td>'+k+'</td><td>'+GAMMA[k-1].toFixed(4)+'</td><td>'+TAU[k].toFixed(4)+'</td><td>'+(GAMMA[k-1]-TAU[k]).toFixed(4)+'</td></tr>';
+ $('tab').innerHTML=h;}
+window.__app={recalc,setMode,get G(){return G;}};
+recalc();
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
