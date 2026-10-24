@@ -211,3 +211,33 @@ Recíprocamente, sin H1, esa diferencia es exactamente
 $$\frac1{2\pi^2}\sum_{T^c<p\le T^{c'}}\frac{1-2\,\Re R^\tau_p}p+o(1)$$
 
 (S2 con Lema Ω). **Las diferencias de error entre cortes miden las medias armónicas por bandas de $\Re R^\tau_p$**, sin hipótesis y sin $\Omega$. Es un contraste de la ley que solo usa tus construcciones de corte variable, con dos o más valores de $c$, y en el que $\Omega$ se cancela.
+
+---
+
+## Addenda C (24-oct): el lema Ω del autor supera a B1
+
+El autor ha demostrado la estabilidad de $\Omega$ para cortes **arbitrarios índice a índice**, sin monotonía, en *The Orthogonal Remainder for Genuinely Index-Dependent Prime Cutoffs on the Riemann–von Mangoldt Clock* (PDF `lema_Omega_corte_variable_k.pdf`, 24-oct-2026; manuscrito del autor, no subido aquí). Su Teorema 1.1 dice: para $2\le X_-\le X_k\le X_+\le T^{c_0}$, $c_0<b<1$, elegidos arbitrariamente en cada $k$,
+
+$$\Bigl|\sqrt{\Omega_b[x]}-\sqrt{\Omega_b[s]}\Bigr|\ll\sqrt{V_T}+V_T+T^{-b/4}\log\log(3T)+T^{-1},\qquad V_T=\sum_{X_-<p\le X_+}\frac1p .$$
+
+**Verificación de Claude, completa:**
+- *Lema 2.1, maximal en el reloj.* La ventana $W_T=C\,\mathrm{sinc}^2(\eta(t-3T/2)/T)$ vale $\ge1$ en $I$, tiene $\int W_T^2\ll T$ y transformada en $|\xi|\le4\eta/T$. Los paquetes en $\log p$ son disjuntos porque $\log(q/p)\ge1/W\gg T^{-c_0}$. Cada suma parcial es una truncación de Fourier en semirrecta con el corte entre paquetes, y Carleson–Hunt en $L^2(\mathbb R)$ se aplica directamente. Los términos cruzados se anulan porque $\widehat{W_T^2}(\log(p/q))=0$. La derivada se trata igual y el muestreo por Sobolev da $\langle\mathcal Q(\tau_k)^2\rangle\ll V$. **Retiro mi objeción** (Addenda B1) sobre la transferencia a frecuencias no armónicas: la ventana la hace innecesaria.
+- *Lema 3.1*: potencias $p^m>T^b$ con $p\le X_-$, por Montgomery–Vaughan con separación $m/(2X_-)$ y Minkowski en $m$. Correcto.
+- *(4.2)*: armónicos $m\ge2$ de la banda acotados punto a punto por $CV_T$. Correcto.
+- *(4.4)*: $L(\tau_k)\delta_k=s_k+\chi_k$ con $\sup|\chi_k|\ll1/T$. Correcto.
+- *Corolarios 5.1–5.3* (exponente oscilante $c^*+a\sin\log\log$, oscilación $e^{h_k}$ acotada incluida $(-1)^k$, ley B por Brun–Titchmarsh): los tres dan $V_T\ll1/\log T$. Correctos.
+
+**Detalles menores para el autor:**
+1. En el Cor. 5.1 basta Mertens: $V_T=\log\frac{\log X_+}{\log X_-}+O(1/\log X_-)$.
+2. La cita de Selberg para $\langle s_k^2\rangle\ll\log\log T$ *en las ordenadas* encaja mejor con Korolev (biblioteca 196–199) o con v14.
+3. El contraejemplo de B1, alternancia entre $T^{c_1}$ y $T^{c_2}$ con $V_T\to\log(c_2/c_1)$, complementa la Obs. 5.4: muestra que **$V_T\to0$, no la monotonía**, es la hipótesis correcta y necesaria. El valor límite $\frac1{4\pi^2}\log(c_2/c_1)$ sigue esbozado.
+
+**Estado actualizado de S2:**
+
+| Resultado | Estado |
+|---|---|
+| Identidad de proyección S2 (con $\chi$) | demostrada, incondicional |
+| Independencia de $\Omega$ para cortes arbitrarios índice a índice con $V_T\to0$ | **demostrada** (autor, Thm 1.1) |
+| Error relativo $1+O((\log T)^{-1/4})$ de S2 | falta la casi ortogonalidad para potencias de primo |
+| S2′ | bajo (H1$_{L^2}$), Addenda B2 |
+| Multietapa no lineal | $\Omega[x]$ depende de la construcción |

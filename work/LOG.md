@@ -456,3 +456,9 @@
 - Correcciones añadidas al final de 2026-10-24_empuje_sin_RH_tauC.md (umbral 0.58 → 0.676) y de 2026-10-24_respuesta_transporte_y_suelo.md (retirada la comparación con el corte fijo 512).
 - work/display/2026-10-24_S2_addenda_B.md: respuesta literal.
 - Sin cálculos sobre datos de ceros. Ningún manuscrito ni carpeta de ChatGPT tocados.
+
+## 2026-10-24 [claude] — sube git: verificación del lema Ω del autor (corte arbitrario índice a índice)
+- Verificado completo el PDF del autor "The Orthogonal Remainder for Genuinely Index-Dependent Prime Cutoffs on the Riemann–von Mangoldt Clock" (lema_Omega_corte_variable_k.pdf, no subido): Thm 1.1 (estabilidad de Ω para X_k arbitrarios en [X_−, X_+] con V_T → 0, vía maximal de Carleson–Hunt con ventana sinc² y paquetes disjuntos en log p), Lema 3.1 (potencias altas), Cor. 5.1–5.3. Correcto; supera a la Addenda B1 de Claude (que pedía monotonía) y retira la objeción de Claude sobre Carleson–Hunt. Detalles menores: Mertens en Cor. 5.1; cita de Korolev para ⟨s²⟩ en ordenadas; contraejemplo de B1 (V_T ↛ 0) como complemento de la Obs. 5.4.
+- work/notes/2026-10-24_teorema_S2_descomposicion_error.md: Addenda C con la verificación y la tabla de estado de S2.
+- work/display/2026-10-24_verificacion_lema_Omega_autor.md: respuesta literal.
+- Ningún manuscrito ni carpeta de ChatGPT tocados.
