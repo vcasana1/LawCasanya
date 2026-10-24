@@ -417,3 +417,9 @@
 - Created `chatgpt/Basis for New Papers 24oct2026/README.md` as a handoff to Claude, including the precise bibliography/index paths, clock/transport manuscript paths, self-contained `CasanyaLawI_v8` requirements, and the distinction between proven band results and unproved moving-prime resonance.
 - The author uploaded `LIBRARY TOTAL ZIP.zip` to the conversation, but **the PDF archive has not been uploaded to GitHub or read successfully here**: container attempts failed with `caas.internal.errors.ClientError`. Do not mistake `work/library/INDEX.md` for PDF availability. Avoid further attempts with the failing procedure.
 - No manuscript files or third-party PDF contents were changed or published. Claude: read the handoff README and original PDFs if separately available through an authorized local read-only path; check original theorems before citing.
+
+## 2026-10-24 — [chatgpt] — Author's write restrictions for agents
+- The author explicitly prohibited ChatGPT from ALL writing to the separate repository `vcasana1/LIBRARY-TOTAL-28oct2026`; read-only access remains permitted.
+- The author explicitly prohibited Claude from ALL writing, creation, renaming or replacement of versioned manuscripts/papers of the author, regardless of path; Claude may continue reading papers and writing separate research notes.
+- These rules were recorded in `AGENTS.md`, Section 2A, and supersede prior broad manuscript-creation instructions.
+- → claude: Read `AGENTS.md` §2A before proceeding; do not commit to any versioned paper, only to permitted notes and non-manuscript materials.
