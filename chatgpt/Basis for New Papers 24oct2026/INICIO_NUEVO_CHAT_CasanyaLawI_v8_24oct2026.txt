@@ -5,7 +5,7 @@ Rama: main
 Este texto es una instrucción de trabajo y un estado de investigación, NO contenido destinado a publicarse dentro del artículo.
 
 INSTRUCCIÓN INICIAL PARA EL NUEVO CHAT
-Lee este documento de principio a fin. Accede a GitHub mediante el conector, consulta AGENTS.md y work/LOG.md antes de efectuar cambios, localiza los manuscritos originales que se enumeran abajo y utiliza el material matemático ya escrito. No busques en la web: el usuario prefiere fuentes locales, manuscritos del repositorio y, cuando estén disponibles, los artículos originales de su biblioteca. No uses OCR para artículos que tengan texto extraíble. No deduzcas de una frase o de un índice bibliográfico que se ha verificado la prueba de un resultado externo. No alteres los originales del usuario ni publiques una nueva versión distinta de la expresamente solicitada. No afirmes haber hecho una auditoría que no hayas realizado. El objetivo investigador principal es una demostración de la hipótesis de Riemann por nuevas vías basadas en ordenadas, correcciones primas, funciones sintéticas y transporte.
+Lee este documento de principio a fin. Accede a GitHub mediante el conector, consulta AGENTS.md y work/LOG.md antes de efectuar cambios, localiza los manuscritos originales que se enumeran abajo y utiliza el material matemático ya escrito. No hagas búsquedas web externas: el usuario prefiere los manuscritos de GitHub y los artículos originales de su repositorio de biblioteca ya verificado. No uses OCR para artículos que tengan texto extraíble. No deduzcas de una frase o de un índice bibliográfico que se ha verificado la prueba de un resultado externo. No alteres los originales del usuario ni publiques una nueva versión distinta de la expresamente solicitada. No afirmes haber hecho una auditoría que no hayas realizado. El objetivo investigador principal es una demostración de la hipótesis de Riemann por nuevas vías basadas en ordenadas, correcciones primas, funciones sintéticas y transporte.
 
 1. ESTATUS MATEMÁTICO DE transport_energy_theorem_v7
 
@@ -73,7 +73,7 @@ ESTRUCTURA: introducción científica muy próxima en planteamiento a la anterio
 
 EXCLUSIONES FORMALES EN EL PAPER: secciones tituladas «Questions», «What's new», o textos promocionales, administrativos o no estrictamente matemáticos; ninguna historia de versiones, ninguna mención de que un teorema estaba en otra versión del autor; ningún texto de descargo legal sobre RH. No invadir las conclusiones con advertencias editoriales. La discusión matemática de supuestos y conclusiones debe ser exacta y estar situada en teoremas, pruebas y conclusiones matemáticas.
 
-LECTURA DE FUENTES: revisar las notas y comentarios de Claude en GitHub. Cuando llegue a GitHub la biblioteca de originales, verificar Fujii, Selberg, Korolev, Montgomery–Vaughan, Landau/Gonek y toda cita externa necesaria leyendo sus PDF directamente y SIN OCR, si existe texto seleccionable. El permiso de solo lectura a la biblioteca ya fue concedido en esta conversación; para el nuevo chat, comprobar acceso efectivo en GitHub. Si no está disponible un original, pedir autorización o el documento concreto sin inventar su comprobación.
+LECTURA DE FUENTES: revisar las notas y comentarios de Claude en GitHub. La biblioteca original ya está disponible y ha sido comprobada en el repositorio independiente https://github.com/vcasana1/LIBRARY-TOTAL-28oct2026, rama main, con 312 PDF y tres índices. Para la auditoría de v8, leer ÚNICAMENTE los artículos publicados relevantes de Fujii, Selberg, Korolev, Montgomery–Vaughan, Landau/Gonek y otras referencias realmente usadas; lectura directa sin OCR cuando tengan capa de texto, cotejando hipótesis y dominios. El permiso del usuario para leer estas fuentes está otorgado.
 
 No escribir una nueva versión adicional (v9, etc.) ni corregir originales que no hayan sido autorizados.
 
@@ -152,21 +152,34 @@ IDENTIFICACIÓN BÁSICA DE CADA FAMILIA:
 
 INSTRUCCIÓN PARA EL NUEVO CHAT: si se quiere profundizar en v26, leer primero el abstract del fichero rvm_zeta_pi_mertens_v26.txt, su tabla de símbolos y secciones 2–19; después «Conclusions and open problems» y los apéndices pertinentes. El contexto central de v26 NO debe desaparecer al trabajar con el transporte.
 
-5. DIRECTORIO DE LIBRARY TOTAL EN GITHUB Y SU ESTADO
+5. REPOSITORIO LIBRARY TOTAL: RUTA DEFINITIVA COMPROBADA EN GITHUB
 
-Repositorio: https://github.com/vcasana1/LawCasanya
-Directorio de ÍNDICES bibliográficos actualmente comprobado:
- work/library/
-URL:
+REPOSITORIO INDEPENDIENTE, SEPARADO DEL PRINCIPAL:
+ https://github.com/vcasana1/LIBRARY-TOTAL-28oct2026
+RAMA: main.
+LOS PDF ESTÁN EN LA RAÍZ DE ESE REPOSITORIO, SUELTOS Y DESCOMPRIMIDOS, NO EN work/library/ DE LawCasanya.
+
+VERIFICACIÓN EN GITHUB (efectuada el 24-10-2026):
+ - 315 ficheros de tipo blob en la rama main, sin truncamiento del árbol consultado.
+ - 312 PDF numerados 001_ ... 312_, accesibles como ficheros individuales.
+ - Tres ficheros adicionales: INDEX.md, ERRATA_Ivic.md, RENUMERACION_2026-10-23.md.
+ - Suma de tamaños de los PDF: 449899437 bytes, aproximadamente 429 MiB.
+ - Los nombres son identificativos; por ejemplo, hay artículos de Arguin–Bourgade–Radziwiłł y el fichero 312_vonMangoldt_1895_Zu_Riemanns_Abhandlung_Anzahl_Primzahlen.pdf.
+ - El recuento anterior procede del árbol remoto de GitHub, no de asumir que terminó el push.
+ - La biblioteca completa ha sido subida por Claude. NO hay que volverla a copiar al repositorio LawCasanya ni a la carpeta de manuscritos base.
+
+ÍNDICES Y METADATOS EN EL REPOSITORIO DE LA BIBLIOTECA:
+ https://github.com/vcasana1/LIBRARY-TOTAL-28oct2026/blob/main/INDEX.md
+ https://github.com/vcasana1/LIBRARY-TOTAL-28oct2026/blob/main/ERRATA_Ivic.md
+ https://github.com/vcasana1/LIBRARY-TOTAL-28oct2026/blob/main/RENUMERACION_2026-10-23.md
+
+ÍNDICE HISTÓRICO AUXILIAR EN EL REPOSITORIO PRINCIPAL:
  https://github.com/vcasana1/LawCasanya/tree/main/work/library
-Índice de unos 312 artículos:
- work/library/INDEX.md
-Tabla de renumeración del 23-10:
- work/library/_renumeracion_2026-10-23.tsv
+Contiene work/library/INDEX.md y tablas anteriores de renumeración, pero NO es el directorio de los 312 PDF.
 
-ESTADO AL PREPARAR ESTE DOCUMENTO: en la rama main el directorio work/library/ contiene el índice, los archivos de renumeración y ERRATA_Ivic.md; NO aparecían aún archivos PDF en esa ruta en la consulta de GitHub. Claude estaba realizando una carga de la biblioteca total, que puede llegar después y/o a otra subcarpeta. POR ESO EL NUEVO CHAT DEBE VOLVER A CONSULTAR EL ÁRBOL RECURSIVO DE MAIN ANTES DE AFIRMAR LA RUTA FINAL DE LOS PDF. No confundir índice con acceso a artículos originales. La biblioteca comprimida original subida al chat se mantiene FUERA de «Basis for New Papers 24oct2026» por instrucción expresa del autor.
+REGLA PARA LA NUEVA SESIÓN: no es necesario leer toda la biblioteca ni preparar una síntesis de los 312 PDF. Al auditar v8, localizar solamente los originales publicados NECESARIOS (Fujii, Selberg, Korolev, Montgomery–Vaughan, Landau/Gonek, etc.), leer sus PDFs sin OCR cuando tengan capa textual y comprobar enunciado, página, dominio, cuantificadores, intervalos, errores, dependencia de parámetros y tratamiento de los extremos. El autor no pide en esta fase la revisión de toda la biblioteca.
 
-El usuario ha indicado ahora expresamente: EN ESTE RELEVO NO HAY QUE LEER LIBRARY TOTAL; basta señalar su localización conocida y actualizarla cuando Claude termine. No reintentar el procedimiento local que provocó caas.internal.errors.ClientError.
+La copia gigante «LIBRARY TOTAL ZIP.zip», adjuntada anteriormente en el chat, NO forma parte de «Basis for New Papers 24oct2026». No descargarla, descomprimirla ni subirla de nuevo. No repetir el procedimiento local que producía caas.internal.errors.ClientError.
 
 6. VÍAS HACIA RH: gamma - tau_C, pi_RvM / pi_C Y M_RvM / M_C
 
@@ -223,11 +236,13 @@ OBSTÁCULOS QUE DEBEN SEÑALARSE CON PRECISIÓN: c>1/2 para teoremas de momentos
 
 7. MODO DE REANUDACIÓN
 
-a) Abrir primero el árbol actualizado de main: AGENTS.md, work/LOG.md, chatgpt/Basis for New Papers 24oct2026/, work/library/ y las notas de Claude fechadas 2026-10-23/24. Confirmar dónde están realmente los PDF de LIBRARY TOTAL si Claude ha completado la carga; no usar OCR.
+a) Abrir el repositorio principal LawCasanya/main: AGENTS.md, work/LOG.md, chatgpt/Basis for New Papers 24oct2026/ y las notas de Claude de 2026-10-23/24. Para fuentes publicadas, acudir al repositorio SEPARADO LIBRARY-TOTAL-28oct2026/main (312 PDF verificados en raíz); no OCR.
 b) Leer los abstracts, el índice, los enunciados numerados y las pruebas completas indispensables de v26, v15.1, v14, v7, lemmas B y el escrito de la espiral Casaña. No confundir versiones de títulos parecidos.
 c) Ejecutar una auditoría matemática teorema por teorema de la v7: dependencias, cuantificadores y pruebas importadas; rehacer en el manuscrito independiente cualquier lema sin demostración autosuficiente.
 d) Integrar la addenda R1–R6 de Claude únicamente después de verificar cada paso. Añadir, según pueda demostrarse, los resultados no lineales y las correlaciones firmadas como teoremas matemáticos; no promover modelos heurísticos o diagonales del modelo independiente a afirmaciones deterministas.
 e) El encargo de redactar CasanyaLawI_v8 sigue definido. Atender primero a cualquier instrucción de pausa del autor, y cuando ordene retomar, crear exactamente CasanyaLawI_v8.tex/.txt con rigor de revista, un único artículo autónomo en inglés.
 f) Informar resultados propios de la revisión con referencias a páginas, ecuaciones y lemas exactos; no producir versiones nuevas distintas de v8 sin orden explícita.
+
+NOTA OPERATIVA ESENCIAL PARA EL NUEVO CHAT: La orden actual es preparar únicamente este TXT de transferencia; CasanyaLawI_v8 es un encargo previamente formulado cuya redacción se retomará por instrucción del autor. No usar este archivo como contenido del artículo ni introducir en el texto científico historia de versiones, mensajes de gestión o frases de descargo. No borrar ninguna rama investigadora simplemente por hallar una dificultad conocida: clasificarla con precisión, indicando si el obstáculo es de prueba, de uniformidad, de inversión global, de rigidez o de equivalencia al objetivo.
 
 FIN DEL DOCUMENTO DE CONTINUIDAD.
