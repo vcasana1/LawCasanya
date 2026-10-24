@@ -480,3 +480,13 @@
   - La prueba de v14 (Cauchy–Schwarz con el resto de Selberg en T^{1/160}) no baja de ≈0.494, aun con constantes explícitas óptimas. Falta solo limsup⟨u_k(T^{1/2})²⟩ < 1/4, que es la Pregunta 13.1 de v14 con umbral.
   - Retirado un borrador no subido (cruces de nivel con transferencia 1+o(1), falso).
 - Sin cálculos numéricos (solo cuadraturas de constantes y lectura de la Tabla tab:direct de v14). Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 [claude] — sube git: vía M (bloqueo de M_τC, Teorema L y L′) y resumen de cotas
+- work/notes/2026-10-25_via_M_localizacion_uniforme.md:
+  - §0 (T): con corte fijo X ≥ x, M_X^*(x) = M(x) exactamente. Por tanto la uniformidad en X de ϖ_X M_{C,X} = M_X^* + O_X(x^{1/2+ε}) y de M_{C,X} = O_X(x^{1/2+ε}) equivale literalmente a M(x) ≪ x^{1/2+ε}: la vía M_τC sola no aporta información.
+  - §1 Teorema L (T): si |u_k(F)| < 1/2 para todos los k de una ventana (F continua sin ceros), sus ceros son simples y están en la recta; para todo T da RH y M ≪ x^{1/2+ε}.
+  - §2 Teorema L′ (T): forma integral exacta vía identity_general de v14 con exponente 2j: (2j+1)(∫(N−F)^{2j}F' − 𝓑_j) < n_int 4^{−j} + 1 − 4^{−j} ⇒ ningún índice malo.
+  - §3 (modelo): L exige varianza del defecto ≤ 1/(8 log M_T), es decir, corte c(k) → ∞, más allá de la resonancia.
+  - §4: falta solo los momentos de orden ≍ log T del defecto con c → ∞.
+- work/display/2026-10-25_via_M_y_cotas_demostradas.md: respuestas literales (vía M y resumen de cotas).
+- Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
