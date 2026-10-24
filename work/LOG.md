@@ -427,3 +427,9 @@
 ## 2026-10-24 [claude] — traspaso para un nuevo chat de Claude
 - work/notes/2026-10-24_traspaso_nuevo_chat_claude.txt: reparto de papeles (Claude solo LIBRARY TOTAL; ChatGPT solo versiones de papers), estado de GitHub/Mac, resumen matemático, punto 6 especificado (6.1–6.6; M_τc/M_C en 6.3), errores a evitar y arranque.
 - Ningún manuscrito cambiado.
+
+## 2026-10-24 [claude] — sube git: Mertens sintético del reloj Casaña (corte fijo y corte c(k))
+- work/notes/2026-10-24_mertens_sintetico_reloj_casanya.md: corte fijo X. Reloj N_X = N_0 + S_X con producto de Euler completo en p ≤ X; monótono si X ≪ (log t)^2. Teorema A: ζ_{C,X} = ϖ_X E_X(s)(1+w_X)(1+O(t^{-δ}log t)), con w_X = χ(s)E_X(1−s)/E_X(s) (en la recta, el modelo de Gonek 2012 con producto sin pesos). Teorema B: M_{C,X}(x) = M_X^*(x)/ϖ_X + O_{X,ε}(x^{1/2+ε}), M_X^* = Mertens X-friable; identidad M^*(x) = ϖ_X M_{C,X}(x) − ϖ_X R_X(x) para x ≤ X. Obstáculo: uniformidad en X (umbral log τ' ≫ √X).
+- work/notes/2026-10-24_mertens_sintetico_corte_variable.md: corte dependiente del índice (ley A: c fijo, X_k = (τ_k/2π)^c; ley B: c = (loglog τ)^{-1/2}). Teorema A′: log ζ_C(s) − cte − log E^♮_{X(t)}(s) → 0 en media en cada recta Re s > 1/2 (cancelación exacta Λ·Λ^{-1}; aliasing sin fase estacionaria si c_0 < 1; paso 3b sin comprobar línea a línea). Corolario con Titchmarsh §11.9 (pp. 303–304): ζ y ζ_C coinciden en log en medida en Re s > 1/2 (incondicional). Teorema B′: con corte creciente en altura, Perron no produce Σ_{n≤x} μ(n) (el primo P^+(n) falta en |t| < t_n); hace falta c > 1 en alturas bajas (resonancia p ≈ t/2π), abierto.
+- work/display/2026-10-24_mertens_corte_variable_A_B.md: última respuesta, literal.
+- Sin cálculos numéricos; ningún γ_k usado; ningún manuscrito ni carpeta de ChatGPT tocados.
