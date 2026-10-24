@@ -1,0 +1,233 @@
+DOCUMENTO DE CONTINUIDAD PARA UN NUEVO CHAT
+CASANYALAWI_v8 — 24 DE OCTUBRE DE 2026
+Repositorio principal: https://github.com/vcasana1/LawCasanya
+Rama: main
+Este texto es una instrucción de trabajo y un estado de investigación, NO contenido destinado a publicarse dentro del artículo.
+
+INSTRUCCIÓN INICIAL PARA EL NUEVO CHAT
+Lee este documento de principio a fin. Accede a GitHub mediante el conector, consulta AGENTS.md y work/LOG.md antes de efectuar cambios, localiza los manuscritos originales que se enumeran abajo y utiliza el material matemático ya escrito. No busques en la web: el usuario prefiere fuentes locales, manuscritos del repositorio y, cuando estén disponibles, los artículos originales de su biblioteca. No uses OCR para artículos que tengan texto extraíble. No deduzcas de una frase o de un índice bibliográfico que se ha verificado la prueba de un resultado externo. No alteres los originales del usuario ni publiques una nueva versión distinta de la expresamente solicitada. No afirmes haber hecho una auditoría que no hayas realizado. El objetivo investigador principal es una demostración de la hipótesis de Riemann por nuevas vías basadas en ordenadas, correcciones primas, funciones sintéticas y transporte.
+
+1. ESTATUS MATEMÁTICO DE transport_energy_theorem_v7
+
+Original aportado: chatgpt/Basis for New Papers 24oct2026/transport_energy_theorem_v7(1).tex
+Copias exactas de consulta: chatgpt/Basis for New Papers 24oct2026/transport_energy_theorem_v7.tex y .txt
+Fuentes de desarrollo y auditoría:
+work/paper1/transport_theorem/transport_energy_theorem_v5.tex
+work/notes/2026-10-24_distancia_tau_gamma_consecuencias_transporte.md
+work/notes/2026-10-24_transporte_truncacion_infinita.md
+work/notes/2026-10-23_teorema_energia_transporte_prueba.md
+work/display/2026-10-24_respuesta_verificacion_v5.md
+work/display/2026-10-23_aportes_externos_transporte/
+
+El manuscrito v7 titulado «The transport energy of the one-step prime-corrected clock» recoge el teorema de transporte y seis resultados derivados, designados R1–R6. Sus afirmaciones son el material de partida para la nueva v8, NO pruebas ya auditadas exhaustivamente para publicación. La v7 usa expresamente como entradas teoremas de otro manuscrito del autor; precisamente por ello es inadecuada como artículo independiente en su estado actual. El usuario exige reconstruir todas las demostraciones, revisar dominios y uniformidades y no trasladar resultados por mera cita a un borrador anterior.
+
+Notación: N_0(t)=t/(2pi)log(t/(2pi e))+7/8; N_0(tau_k)=k-1/2; rho_k=beta_k+i gamma_k representa un cero VERDADERO, contado con multiplicidad y sin imponer beta_k=1/2. La fase de primos S_X(t) es la fase del producto de Euler finito con potencias de primos. L(t)=N_0'(t)=log(t/2pi)/(2pi). El reloj de un paso es tau_k^X=tau_k-S_X(tau_k)/L(tau_k), construido sin evaluar ceros verdaderos. La unidad normalizada de error es r_k(X)=L(tau_k)(tau_k^X-gamma_k). Los promedios <...> se toman sobre la ventana de ordenadas T<gamma_k<=2T y deben respetar sus extremos. Escribir H_0=loglog T; H_1=log H_0=logloglog T; H_2=log H_1=loglogloglog T; X_1=T^(H_0^(-1/2)), X_2=T^(H_1^(-1/2)).
+
+Resultados enunciados en v7, a demostrar minuciosamente y verificar en la nueva versión:
+
+R1 — Energía del transporte, para c fijo en (0,1/2]:
+ B_c(T)=<[S_(T^c)(gamma_k)-S_(T^c)(tau_k)]^2>
+        =H_1/(2pi^2)+O_c(sqrt(H_1 H_2)),
+y la misma ley principal/error para <r_k(T^c)^2>. Este refinamiento de la cota del manuscrito de transporte anterior es el nuevo hallazgo que el usuario considera fundamental. Hay que verificar la dependencia de c, las sucesiones de límites, el efecto de valores excepcionales y los términos de frontera.
+
+R2 — Para c=c(T) con 0<c<=1/2 y log(1/c)=o(H_1):
+ B_c(T)~<r_k(T^c)^2>~H_1/(2pi^2).
+No extrapolar a c que no satisfaga esa condición.
+
+R3 — Para c fijo en (0,1/2]:
+ <(tau_k^(T^c)-gamma_k)^2>
+   =[2H_1+O_c(sqrt(H_1 H_2))]/log^2 T.
+Contraste: con el corte variable X=T^(H_0^(-1/2)), el numerador es H_1+O(sqrt(H_1)) en el trabajo de corte primo. El reloj desnudo tiene media cuadrática en altura ~2H_0/log^2 T. El corte fijo de un solo paso es, en este sentido, peor que el corte adaptativo; no convertir el progreso técnico en una afirmación falsa de mejor aproximación puntual.
+
+R4 — Para theta_T<=c<=1/2, con theta_T definido en el propio artículo:
+ <r_k(T^c)^2> >= (1/(2pi^2))log(c/theta_T)-O(sqrt(H_1H_2)).
+En c=H_0^(-alpha), 0<=alpha<1/2, el término inferior principal es ((1/2-alpha)/(2pi^2))H_1. La igualdad con una constante intermedia más fuerte NO está demostrada.
+
+R5 — Respuesta armónica del reloj RvM a los primos móviles:
+ para theta_T<=theta'<c fijo<=1/2 y mu'=sum_(T^theta'<p<=T^c)1/p,
+ |sum_(T^theta'<p<=T^c) R_p^tau/p|<<1+sqrt(mu'(1+H_2)).
+Para theta'=theta_T la media normalizada es O(sqrt(H_2/H_1))->0. IMPORTANTE: media sobre banda NO significa R_p^tau->0 para cada primo móvil. El usuario desea una ley de resonancia directa y no lineal a theta fijo: sigue abierta.
+
+R6 — Respuesta calculable del segundo reloj:
+ para cualquier conjunto de primos J contenido en (X_1,T^(1/2)],
+ sum_(p in J) B_p^(2)/p
+  =sum_(p in J,p<=X_2) [Phi_T(p)-1]/p
+      +o(1+sqrt(mu(J))),   mu(J)=sum_(p in J)1/p,
+ Phi_T(p)=exp(-theta_p^2[H_0-H_1/2+O(1)]+O(theta_p^4))
+          (1+O(theta_p^2 H_0/log T)),
+ theta_p=log p/log T.
+La respuesta aritmética total A_p^(2) sigue Phi_T en media armónica sobre bandas entre X_1 y X_2, y es despreciable en las bandas superiores según los cuantificadores exactos del texto. Un punto muy importante de la prueba es que el polinomio de bandas debe poder ser cualquier subconjunto J, NO únicamente un intervalo; comprobar las estimaciones uniformes antes de deducir consecuencias de variación total o valor absoluto.
+
+STATUS: R1–R6 se presentan como demostrados en v7 y en la nota de Claude, pero el usuario ha observado deficiencias de exposición y justificación en la v7. La nueva versión debe recomponer y auditar esas pruebas línea por línea, especialmente la aplicación de resultados externos, multiplicidad de puntos corregidos, muestreo en los extremos, errores aditivos, términos de potencias primas, normado de medias, intercambios de sumas e integrales y uniformidad al variar parámetros.
+
+2. ENCARGO EXPRESO: ARTÍCULO AUTÓNOMO «CasanyaLawI_v8»
+
+Nombre EXACTO del manuscrito nuevo cuando se redacte: CasanyaLawI_v8.
+Entregables: CasanyaLawI_v8.tex y CasanyaLawI_v8.txt idénticos en contenido; PDF compilado cuando sea posible. Artículo académico en INGLÉS y autónomo. No cambiar el nombre.
+
+REQUISITO NO NEGOCIABLE: no introducir NI UNA referencia a «Paper I» o a otros manuscritos previos del autor EN EL TEXTO PUBLICABLE. El artículo debe contener las definiciones necesarias, los lemas previos indispensables, los teoremas empleados y sus PRUEBAS completas; las dependencias se deben reconstruir dentro del propio paper. Sí debe incluir bibliografía académica externa pertinente, con enunciados, hipótesis y rango de validez cotejados directamente con los originales y con referencia bibliográfica correcta. No reutilizar un teorema externo como caja negra fuera de su dominio. No reproducir trabajos ajenos completos: incorporar el contenido matemático imprescindible con demostración propia o una cita válida del teorema externo, claramente identificado y verificado.
+
+La exigencia concreta del usuario es que la v8 solvente los defectos de la v7: dominios incompletos o mal emparejados, posibles efectos de borde en las ventanas T–2T y correcciones de contaje, intercambio no justificado de sumas/productos/límites/integrales, condiciones de convergencia no verificadas, cortes móviles, casos límite c=1/2, cercanía de X_1,X_2,Y, errores uniformes en momentos de orden creciente y pruebas que parezcan bosquejos. Se pide rigor de publicación, no una versión cosmética de la v7.
+
+ESTRUCTURA: introducción científica muy próxima en planteamiento a la anterior de Casaña, resumen y abstract, índice de contenidos/TOC, tabla completa de símbolos (variables, letras, parámetros, constantes, dependencias), teoremas con hipótesis explícitas, pruebas desarrolladas, aplicaciones matemáticas y conclusiones inequívocas. Ecuaciones NUMERADAS A LA DERECHA (reqno); enlaces internos e hipervínculos, referencias emergentes hover cuando sean fiables. Presentación de artículo de investigación, no de notas de laboratorio.
+
+EXCLUSIONES FORMALES EN EL PAPER: secciones tituladas «Questions», «What's new», o textos promocionales, administrativos o no estrictamente matemáticos; ninguna historia de versiones, ninguna mención de que un teorema estaba en otra versión del autor; ningún texto de descargo legal sobre RH. No invadir las conclusiones con advertencias editoriales. La discusión matemática de supuestos y conclusiones debe ser exacta y estar situada en teoremas, pruebas y conclusiones matemáticas.
+
+LECTURA DE FUENTES: revisar las notas y comentarios de Claude en GitHub. Cuando llegue a GitHub la biblioteca de originales, verificar Fujii, Selberg, Korolev, Montgomery–Vaughan, Landau/Gonek y toda cita externa necesaria leyendo sus PDF directamente y SIN OCR, si existe texto seleccionable. El permiso de solo lectura a la biblioteca ya fue concedido en esta conversación; para el nuevo chat, comprobar acceso efectivo en GitHub. Si no está disponible un original, pedir autorización o el documento concreto sin inventar su comprobación.
+
+No escribir una nueva versión adicional (v9, etc.) ni corregir originales que no hayan sido autorizados.
+
+3. ADDENDA DE CLAUDE PARA LA v8
+
+FUENTE PRINCIPAL de los seis resultados, con demostraciones desarrolladas:
+ work/notes/2026-10-24_distancia_tau_gamma_consecuencias_transporte.md
+FUENTE DEL TEOREMA Y SUS CORRECCIONES:
+ work/paper1/transport_theorem/transport_energy_theorem_v5.tex
+FUENTE SOBRE CORTE INFINITO:
+ work/notes/2026-10-24_transporte_truncacion_infinita.md
+FUENTES SOBRE RESONANCIAS Y POSIBILIDAD c>1/2:
+ work/notes/2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md
+ work/notes/2026-10-23_teorema_energia_transporte_prueba.md
+AUDITORÍAS, ACLARACIONES Y DESARROLLOS:
+ work/display/2026-10-24_respuesta_verificacion_v5.md
+ work/display/2026-10-23_aportes_externos_transporte/
+ work/LOG.md
+
+R1–R6 se describen íntegramente en el apartado 1 de este handoff. Puntos adicionales:
+
+(a) Banda arbitraria J: el lema agregado de la v7 evalúa <Q(rho)W_J(tau)> por la diagonal y una función característica del modelo independiente, con error o(1+sqrt(mu(J))). Revisar uniformidad real, incluso para bandas de masa acotada y subconjuntos elegidos según signos de las respuestas. Si vale para todo subconjunto con un mismo error, se pueden considerar consecuencias L1 armónicas, pero no declararlas antes de verificar los cuantificadores.
+
+(b) Constante gaussiana: no sustituir alegremente la característica prima completa por un simple factor e^(-theta^2 H_0) en el régimen theta fijo. El MODELO de fases independientes tiene una constante multiplicativa convergente asociada al producto sobre primos, además del factor c^(-theta^2)(log T)^(-theta^2). El puente del modelo a la suma determinista del reloj requiere controlar todos los términos NO diagonales. La fórmula determinista de resonancia a p=T^theta NO está obtenida solamente con R6.
+
+(c) Truncación infinita / Newton con S completo: la nota de Claude prueba, como enunciado propio a revisar, una estimación L2 de (S-S_X)(tau) y que incluso tau_k^infty=tau_k-S(tau_k)/L(tau_k), calculado con la fase completa, tiene error normalizado cuadrático ~H_1/(2pi^2) con un solo paso. Esta construcción completa usa S y no es una construcción únicamente con primos finitos; su interés es delimitar la limitación estructural del paso único y motivar transporte compuesto/multiescala.
+
+(d) En el nuevo paper se deben cotejar literalmente los teoremas externos de Fujii y Selberg usados en las diferencias de S, los de Montgomery–Vaughan para longitudes de polinomios de Dirichlet, los de Landau/Gonek para frecuencias fijas/móviles, y los de Korolev sobre desviaciones del reloj y ordinadas. Preservar cuantificadores, ventanas, discontinuidades y términos de borde.
+
+(e) No confundir la identidad exacta para s_k y el defecto con una ley individual de los primos móviles; no convertir condiciones certificadas solo por muestreo finito en afirmaciones con verificación intervalar exhaustiva.
+
+4. DIRECTORIO GITHUB CON TODOS LOS PAPERS BÁSICOS
+
+Repositorio: https://github.com/vcasana1/LawCasanya
+Directorio EXACTO:
+ chatgpt/Basis for New Papers 24oct2026/
+URL:
+ https://github.com/vcasana1/LawCasanya/tree/main/chatgpt/Basis%20for%20New%20Papers%2024oct2026
+
+Se verificó que están almacenados directamente en esta carpeta, NO como simples enlaces, los 16 archivos originales entregados el 24-10-2026:
+ transport_energy_theorem_v7(1).tex
+ casanya_prime_spiral_short_v4(2).tex
+ prime_corrected_clock_v14(1).tex
+ prime_corrected_clock_v14.zip
+ ordinal_prime_cutoff_v15_1(1).tex
+ ordinal_prime_cutoff_v15_1.zip
+ rvm_midpoint_zeta_v26_repository_part3_archives.zip
+ rvm_midpoint_zeta_v26_repository_part2b_previous_manuscripts.zip
+ rvm_midpoint_zeta_v26_repository_part2_previous_versions.zip
+ rvm_v26_figures_v1.zip
+ rvm_midpoint_zeta_v26_repository_part1_v2.zip
+ rvm_zeta_pi_mertens_v26.txt
+ rvm_zeta_pi_mertens_v26(3).tex
+ rvm_zeta_pi_mertens_v26.pdf
+ rvm_v26_referee_check.md
+ lemas_B_v4.zip
+También existen README.md y las dos copias transport_energy_theorem_v7.tex/.txt.
+
+IDENTIFICACIÓN BÁSICA DE CADA FAMILIA:
+
+— v26 RvM/zeta/primos/Mertens: trabajo global sobre el reloj de punto medio N_RvM, la zeta sintética zeta_RvM, sumas exponenciales de ordenadas, función de Cramér, primos sintéticos pi_RvM, Mertens crítico M_RvM^crit, transición a zeta_Z1, atomización y criterio de rigidez, ruta B y experimentos. Es un tratado largo, no un simple artículo de transporte. El resumen/abstract completo está en su .tex y .txt.
+
+— prime_corrected_clock_v14: formulación inicial sistemática del defecto exacto, corte primo, información mínima, pasos aritméticos, aproximación cuadrática y regularización.
+
+— ordinal_prime_cutoff_v15_1: ampliación del núcleo anterior: continuación certificable, frecuencias resonantes, pares producto/cociente cerca de e, respuestas de primos móviles, certificados de separación de ordenadas y ensayos con zCasanya.
+
+— transport_energy_theorem_v7: teorema de energía de transporte a corte fijo y R1–R6.
+
+— casanya_prime_spiral_short_v4: combinación de relojes y productos sintéticos con fases aritméticas exactas, certificados Rouché locales, cómputo del índice por Turing, aislamiento de ceros, condiciones para garantizar la realidad de pares. Atender especialmente al requisito de comprobar el índice DENTRO DEL MISMO DISCO certificado, no de uno ampliado.
+
+— lemas_B_v4.zip: trabajo de la ruta B, compactitud y masa prima prescrita, criterio Kadec–Avdonin con bloques de longitud variable y problemas de convergencia de etapas.
+
+— ZIP grandes de v26: paquetes de repositorio, versiones, archivos anteriores, ilustraciones y programas. Consultar los contenidos reales antes de reutilizarlos.
+
+— rvm_v26_referee_check.md: revisión realizada por un subagente Claude, incorporada al manuscrito en su contexto. Es documentación de auditoría para identificar verificaciones y correcciones concretas.
+
+INSTRUCCIÓN PARA EL NUEVO CHAT: si se quiere profundizar en v26, leer primero el abstract del fichero rvm_zeta_pi_mertens_v26.txt, su tabla de símbolos y secciones 2–19; después «Conclusions and open problems» y los apéndices pertinentes. El contexto central de v26 NO debe desaparecer al trabajar con el transporte.
+
+5. DIRECTORIO DE LIBRARY TOTAL EN GITHUB Y SU ESTADO
+
+Repositorio: https://github.com/vcasana1/LawCasanya
+Directorio de ÍNDICES bibliográficos actualmente comprobado:
+ work/library/
+URL:
+ https://github.com/vcasana1/LawCasanya/tree/main/work/library
+Índice de unos 312 artículos:
+ work/library/INDEX.md
+Tabla de renumeración del 23-10:
+ work/library/_renumeracion_2026-10-23.tsv
+
+ESTADO AL PREPARAR ESTE DOCUMENTO: en la rama main el directorio work/library/ contiene el índice, los archivos de renumeración y ERRATA_Ivic.md; NO aparecían aún archivos PDF en esa ruta en la consulta de GitHub. Claude estaba realizando una carga de la biblioteca total, que puede llegar después y/o a otra subcarpeta. POR ESO EL NUEVO CHAT DEBE VOLVER A CONSULTAR EL ÁRBOL RECURSIVO DE MAIN ANTES DE AFIRMAR LA RUTA FINAL DE LOS PDF. No confundir índice con acceso a artículos originales. La biblioteca comprimida original subida al chat se mantiene FUERA de «Basis for New Papers 24oct2026» por instrucción expresa del autor.
+
+El usuario ha indicado ahora expresamente: EN ESTE RELEVO NO HAY QUE LEER LIBRARY TOTAL; basta señalar su localización conocida y actualizarla cuando Claude termine. No reintentar el procedimiento local que provocó caas.internal.errors.ClientError.
+
+6. VÍAS HACIA RH: gamma - tau_C, pi_RvM / pi_C Y M_RvM / M_C
+
+6.1. De las ordenadas Casaña a las ordenadas verdaderas.
+Sea tau^C_k una ordenada construida a partir de tau_k y potencias primas, sin usar gamma_k como entrada. El objetivo fuerte no es imponer por definición que 1/2+i tau^C_k esté en la recta crítica: eso solo define otro sistema sintético. El objetivo es una ley ARITMÉTICA que enlace los índices y las ordenadas verdaderas con garantías uniformes suficientemente finas para evitar colisiones y fijar la realidad de los ceros.
+
+Para cualquier par consecutivo, la condición suficiente
+ |tau^C_k-gamma_k|+|tau^C_(k+1)-gamma_(k+1)|
+ < tau^C_(k+1)-tau^C_k
+fuerza gamma_k<gamma_(k+1). Una alternativa puntual válida exige medir cada error contra el mínimo de sus dos huecos sintéticos adyacentes. El control unilateral solo respecto del hueco derecho, tomado por separado en cada índice, NO permite deducir esa desigualdad: hay un contraejemplo elemental cuando los huecos son desiguales. Si la distinción de ordenadas se demostrara PARA TODOS los índices, forzaría realidad y simplicidad por la simetría del conjunto de ceros; lo esencial es demostrar la desigualdad uniformemente SIN introducir como hipótesis lo que se intenta concluir.
+
+Aportación R1/R3 de la v7: control asintótico preciso de la energía del TRANSPORTE en corte fijo. Distingue la información prima insuficiente de la distorsión de fases al desplazar tau_k; confirma que un solo paso con c fijo genera energía ~H_1/(2pi^2) en unidades de espaciados, no una energía uniformemente acotada. Por tanto el camino vivo es MULTIESCALA/COMPUESTO: más de un paso, cancelación del residual final, control de fases primas y rigidez índice a índice, no iterar c fijo ingenuamente. La prueba actual m^*=log* T+O(1) produce O(1) de media cuadrática, insuficiente por sí sola para todas las ordenadas. No existe teorema de imposibilidad general para métodos aritméticos de muchos pasos.
+
+La ley de resonancia no lineal directa del reloj Casaña a p=T^theta está abierta. Hay una fórmula diagonal exacta para el MODELO DE FASES INDEPENDIENTES, con carácter gaussiano y constante de Euler adicional, y una reducción de la suma determinista a los términos no diagonales. Falta la cota relativa uniforme de esos términos; el control firmado de fases con frecuencia fija no basta al crecer log p como log T. Esta es una vía matemática específica y potencialmente productiva, sin cierre conocido por los resultados actuales.
+
+6.2. Primos sintéticos RvM/Casaña hacia pi o li.
+La v26 define pi_RvM(x) desde una fórmula explícita espectral y obtiene la cota propia
+ pi_RvM(x)-li(x)=O(sqrt(x)(loglog x)^2/log x),
+que está dentro de O_epsilon(x^(1/2+epsilon)). No debe confundirse pi_RvM con la cuenta de primos enteros. La pregunta viva es construir pi_C desde una zeta sintética basada en ordenadas Casaña, demostrar su fórmula explícita y estimar de modo uniforme el TRANSPORTE respecto de pi o de pi_RvM. No basta con que gamma_k-tau^C_k sea pequeño en media para algunos millones de índices: al sumar sobre todo el espectro hacen falta cancelaciones firmadas con la frecuencia u=log x y estimaciones de cola y de truncación uniformes en x.
+
+Si se obtiene una cota pi_C(x)-li(x)=O_epsilon(x^(1/2+epsilon)), independientemente de los ceros verdaderos, y además pi(x)-pi_C(x)=O_epsilon(x^(1/2+epsilon)) para todo x suficientemente grande, se obtiene la cota de error de los primos asociada a RH. Esta conclusión NO sale de una mera aproximación promedio de gamma y tau^C. Como camino hacia RH, la tarea crucial es el segundo puente, no reconstruir dos funciones sintéticas parecidas entre sí.
+
+Aprovechar R5–R6: las respuestas armónicas de bandas y la diagonal gaussiana pueden permitir controlar términos de resonancia que aparecen en la diferencia de las fórmulas explícitas. Pero pasar de bandas armónicas a un estimado global exige uniformidad en la posición de la banda, su masa y el tamaño de la frecuencia, no solo una asintótica tras promediar en p.
+
+6.3. Mertens sintético RvM/Casaña hacia M.
+La v26 define M_RvM^crit(x) como transformada espectral/Perron del recíproco de zeta_RvM y demuestra internamente
+ M_RvM^crit(x)=L+O_epsilon(x^(1/2+epsilon)),
+L=1/varpi_RvM.
+No es la función M(x)=sum_(n<=x)mu(n), ni una función entera de saltos obtenida automáticamente de una serie de Dirichlet. Conviene comparar siempre objetos de LA MISMA NATURALEZA: transformada sintética continua, producto ponderado con coeficientes, Mertens atomizado y Mertens verdadero no son intercambiables.
+
+Definir una M_C legítima para la zeta de los ceros Casaña y demostrar primero su crecimiento de orden x^(1/2+epsilon), con condiciones de normalización y transformadas bien especificadas. Después estudiar la DIFERENCIA firmada M(x)-M_C(x) mediante multiplicadores de zeta, Perron/Mellin y transporte espectral. Obtener M(x)-M_C(x)=O_epsilon(x^(1/2+epsilon)) para todo x, junto a una cota del mismo orden para M_C, implica M(x)=O_epsilon(x^(1/2+epsilon)), es decir el objetivo RH. La dificultad real es controlar la diferencia y los términos de frontera, los polos y la convergencia al desplazar contornos; no es suficiente comparar cifras en un intervalo finito.
+
+R1 puede aportar un parámetro cuadrático de error del reloj corregido; R5–R6, cancelación agregada sobre bandas. El siguiente objeto analítico es una energía o correlación firmada en la frecuencia del contador, no simplemente sumas de cuadrados de desplazamientos.
+
+6.4. Ruta de transporte analítico, sumas firmadas, y escalas críticas.
+La identidad básica por cada cero, para u=log x y ordenadas reales a,b, es
+ Ei((1/2+ib)u)-Ei((1/2+ia)u)
+ =i integral_a^b exp((1/2+it)u)/(1/2+it) dt.
+Al sumar una banda diádica T<gamma_k<=2T y pasar a pi o M, verificar el orden legítimo de los límites K->infinito, T->infinito y x->infinito. Control cuadrático de gamma_k-tau_k^C da cotas no necesariamente decrecientes por banda; la SUMA FIRMADA es la ganancia aún ausente:
+ V_(T,C)(u)=sum_(T<gamma_k<=2T)(tau_k^C-gamma_k)exp(iu gamma_k).
+Necesitamos estimaciones uniformes adecuadas para u que crece y para sumar en T, además de controlar las fases no lineales cuando u|tau^C-gamma| no es pequeño.
+
+Ruta viva: (i) diagonal no lineal exacta para fases de primos; (ii) cota no diagonal uniforme para el reloj determinista; (iii) corrección multietapa con error menor y control firmado; (iv) transporte a funciones explícitas pi_C/M_C y análisis global de la cola; (v) cierre exacto con el objeto aritmético verdadero. Identificar específicamente cuándo un paso es solo una reducción equivalente a RH; no convertirlo en una afirmación de resolución.
+
+6.5. Priorización de vías abiertas y prometedoras a la luz de la v7.
+I. PRIORIDAD ALTA: resonancia determinista no lineal de la suma directa de tau^C a p=T^theta, incluido producto primo completo y la corrección de constante, mediante control de frecuencias no diagonales. Problema preciso y no descartado por una barrera teórica demostrada en estas fuentes.
+II. PRIORIDAD ALTA: iteración/multiescala Casaña para bajar la energía del residual y demostrar cancelación firmada en ventanas críticas; aprovechar R1 para cuantificar exactamente lo que falla en el único paso con corte fijo.
+III. PRIORIDAD MEDIA-ALTA: fórmula explícita sintética global pi_C y estimación firmada pi_C-pi o pi_C-pi_RvM, con control uniforme de x y las colas espectrales.
+IV. PRIORIDAD MEDIA-ALTA: inversa Mellin de la zeta corregida para M_C, comparación con M y estimados O_epsilon(x^(1/2+epsilon)) de la diferencia bajo condiciones comprobadas, sin confundir M_RvM^crit con M.
+V. PRIORIDAD COMPLEMENTARIA: certificados locales Rouché/Turing y separación adyacente con control índice a índice; útiles para identificar la geometría local, pero el reto es la cobertura universal.
+VI. PRIORIDAD COMPLEMENTARIA: ruta de rigidez y atomización de la v26, con condiciones (D), espectros sintéticos y sistemas de peldaños; explorar exclusivamente nuevas identidades que puedan imponerse desde primos y reloj sin conocer beta_k.
+
+OBSTÁCULOS QUE DEBEN SEÑALARSE CON PRECISIÓN: c>1/2 para teoremas de momentos actuales; estimación no diagonal de la resonancia móvil; transferencia de bandas armónicas a cada primo o a sumas globales; falta de control uniforme cero a cero; colisiones posibles en conjuntos excepcionales; intercambio de sumas e inversión integral sin garantías; dificultad de que una reconstrucción sintética se identifique con zeta verdadera. Distinguir una «barrera de una técnica», una «afirmación equivalente al objetivo» y una «imposibilidad matemática demostrada»; no son lo mismo.
+
+7. MODO DE REANUDACIÓN
+
+a) Abrir primero el árbol actualizado de main: AGENTS.md, work/LOG.md, chatgpt/Basis for New Papers 24oct2026/, work/library/ y las notas de Claude fechadas 2026-10-23/24. Confirmar dónde están realmente los PDF de LIBRARY TOTAL si Claude ha completado la carga; no usar OCR.
+b) Leer los abstracts, el índice, los enunciados numerados y las pruebas completas indispensables de v26, v15.1, v14, v7, lemmas B y el escrito de la espiral Casaña. No confundir versiones de títulos parecidos.
+c) Ejecutar una auditoría matemática teorema por teorema de la v7: dependencias, cuantificadores y pruebas importadas; rehacer en el manuscrito independiente cualquier lema sin demostración autosuficiente.
+d) Integrar la addenda R1–R6 de Claude únicamente después de verificar cada paso. Añadir, según pueda demostrarse, los resultados no lineales y las correlaciones firmadas como teoremas matemáticos; no promover modelos heurísticos o diagonales del modelo independiente a afirmaciones deterministas.
+e) El encargo de redactar CasanyaLawI_v8 sigue definido. Atender primero a cualquier instrucción de pausa del autor, y cuando ordene retomar, crear exactamente CasanyaLawI_v8.tex/.txt con rigor de revista, un único artículo autónomo en inglés.
+f) Informar resultados propios de la revisión con referencias a páginas, ecuaciones y lemas exactos; no producir versiones nuevas distintas de v8 sin orden explícita.
+
+FIN DEL DOCUMENTO DE CONTINUIDAD.
