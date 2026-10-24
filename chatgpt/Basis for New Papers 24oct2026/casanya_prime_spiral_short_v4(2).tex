@@ -1,0 +1,854 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs,mathtools,amsthm}
+\usepackage{geometry,enumitem,booktabs,longtable,array,microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[pagebackref=true]{hyperref}
+\usepackage{bookmark,pdfcomment}
+\usepackage{listings}
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setlength{\emergencystretch}{2em}
+\hypersetup{colorlinks=false,pdfborder={0 0 1},linkbordercolor={1 0 0},citebordercolor={0 0.3 1},urlbordercolor={0 0.6 0.6},linktoc=all,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=1,pdftitle={Prime-Corrected Clocks and Synthetic Zeta Functions: Local Rouche Certificates and Rigorous Indexing},pdfauthor={Rotkiv Aynasac}}
+\makeatletter
+\let\CG@origref\ref
+\let\CG@origeqref\eqref
+\newcommand{\CG@gettip}[1]{\@ifundefined{CGTip@#1}{Reference: #1}{\csname CGTip@#1\endcsname}}
+\DeclareRobustCommand{\CGref}[1]{\pdftooltip{\CG@origref{#1}}{\CG@gettip{#1}}}
+\DeclareRobustCommand{\CGeqref}[1]{\pdftooltip{\CG@origeqref{#1}}{\CG@gettip{#1}}}
+\expandafter\gdef\csname CGTip@thm:adjacent\endcsname{If every adjacent pair has combined center error below the synthetic gap, ordinates are all distinct and RH plus simplicity follows.}
+\expandafter\gdef\csname CGTip@thm:cell\endcsname{The directional Voronoi inequality at every index implies RH plus simplicity.}
+\expandafter\gdef\csname CGTip@prop:symmetry\endcsname{Synthetic zeta has exact functional equation and a pole residue fixed by the entire synthetic product.}
+\expandafter\gdef\csname CGTip@prop:loewner\endcsname{The synthetic Stieltjes transform has a strictly positive Loewner divided-difference kernel.}
+\expandafter\gdef\csname CGTip@thm:flow\endcsname{The prime-only analytic scalar flow preserves strict order for 0 < a <= 2.}
+\expandafter\gdef\csname CGTip@thm:rational\endcsname{Exact rational frequencies with Moebius coefficients b_X(n/d)=mu(d)c_X(d)/sqrt(nd).}
+\expandafter\gdef\csname CGTip@thm:two\endcsname{Two small Rouché discs and one large disk certify exactly two real simple roots under two complex remainder bounds.}
+\expandafter\gdef\csname CGTip@thm:classification\endcsname{A local critical point is classified as a real pair, conjugate nonreal pair, or an exact double zero under a validated complex remainder bound.}
+\expandafter\gdef\csname CGTip@thm:one\endcsname{A validated Taylor inequality with a linear comparator proves one real simple zero in a disk.}
+\expandafter\gdef\csname CGTip@prop:index\endcsname{The Arb or Turing-indexed ball must lie inside the same disk certified by Rouche, especially after Newton recentering.}
+\expandafter\gdef\csname CGTip@thm:hankel\endcsname{Hermite-Hankel positivity on a conjugation symmetric contour characterizes reality, and definite positivity characterizes simple real roots.}
+\expandafter\gdef\csname CGTip@thm:isolated\endcsname{Fourth-order Taylor roots are accurate relative to gap under a strong analytic factor isolation hypothesis.}
+\expandafter\gdef\csname CGTip@prop:portmanteau\endcsname{Weak spacing limits control density but cannot exclude infinitely many exceptional coincident ordinates.}
+\expandafter\gdef\csname CGTip@eq:I\endcsname{First strict Rouché inequality on the two small discs.}
+\expandafter\gdef\csname CGTip@eq:II\endcsname{Second strict Rouché inequality on the enclosing large disc.}
+\expandafter\gdef\csname CGTip@eq:oneineq\endcsname{One-root Rouche inequality involving Taylor coefficients and a whole-disc remainder bound.}
+\expandafter\gdef\csname CGTip@eq:samedisc\endcsname{Same-disc ball inclusion required for rigorous matching to the indexed zeta zero.}
+\expandafter\gdef\csname CGTip@eq:adjacent\endcsname{Each adjacent pair total absolute ordinate error is below the synthetic gap.}
+\expandafter\gdef\csname CGTip@eq:fourier\endcsname{The rational-frequency expansion of the prime Euler phase.}
+\makeatother
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\XiC}{\Xi_c}
+\newcommand{\Var}{\operatorname{Var}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,breakatwhitespace=true,columns=fullflexible,frame=single}
+\begin{document}
+\title[Prime-corrected clocks and local certificates]{Prime-Corrected Clocks, Synthetic Zeta Functions, and Certified Local Zero Localization: Arithmetic Identities, Rouch\'e Tests, and Rigorous Indexing}
+\author{Rotkiv Ayn\"asac}
+\date{23 October 2026}
+\begin{abstract}
+We develop a prime-only construction of increasing reference ordinates, a corresponding synthetic zeta function, and exact arithmetic identities for its finite-Euler phase. We distinguish this synthetic construction from rigorous local verification of the completed Riemann zeta function. A one-zero Rouch\'e theorem is proved with a validated Taylor remainder and a separate ordinal-index condition based on an independently certified Turing count. In particular, if a Taylor disc is recentered by a Newton step, the Turing-indexed zero must be contained in that \emph{same} disc; containment in an inflated disc about the old center alone is insufficient. We retain a two-zero classification certificate for real and nonreal conjugate pairs, a direct per-index ordinate separation theorem, and the exact rational-frequency M\"obius decomposition of the finite Euler phase. Two previously reported local pair examples near heights 1283 and 1290 are checked independently in ordinary high precision, but their third-derivative bounds have not been independently recertified by Arb/FLINT. All statements about the reality of zeros are local or conditional; neither universal coverage nor the Riemann hypothesis is established.
+\end{abstract}
+\maketitle
+\tableofcontents
+
+\section{Analytic and arithmetic setup}\label{sec:setup}
+Write the nontrivial zeros of the Riemann zeta function as
+\begin{equation}\label{eq:zeros}
+ \rho_k=\beta_k+i\gamma_k,\qquad 0<\beta_k<1,\qquad
+ 0<\gamma_1\le\gamma_2\le\cdots,
+\end{equation}
+with \emph{all} positive ordinates included and zeros counted with multiplicity. In particular, no restriction $\beta_k=\tfrac12$ is implicit in this notation. On the real line let
+\begin{equation}\label{eq:theta}
+ \vartheta(t)=\Im\log\Gamma\left(\frac14+\frac{it}{2}\right)-\frac t2\log\pi,
+ \qquad N_0(t)=1+\frac{\vartheta(t)}\pi.
+\end{equation}
+Here and below logarithmic branches are chosen continuously in the regions at issue. When $N_0$ is strictly increasing, its half-integer levels define the smooth clock
+\begin{equation}\label{eq:tau}
+ \tau_k=N_0^{-1}\left(k-\frac12\right).
+\end{equation}
+A useful elementary asymptotic surrogate is
+\begin{equation}\label{eq:surrogate}
+ \mathcal N(t)=\frac{t}{2\pi}\left(\log\frac{t}{2\pi}-1\right)+\frac78,
+ \qquad L(t)=\mathcal N'(t)=\frac{\log(t/2\pi)}{2\pi}.
+\end{equation}
+The two clocks are not identical. The finite Euler phase is
+\begin{equation}\label{eq:phase}
+ P_X(s)=\prod_{p\le X}(1-p^{-s})^{-1},\quad
+ S_X(t)=-\frac1\pi\sum_{p\le X}\arg(1-p^{-1/2-it}),\quad
+ F_X(t)=N_0(t)+S_X(t).
+\end{equation}
+For each fixed $X$ these functions are computable from the prime list and the index, without the genuine ordinates $\gamma_k$. The half-integer equation $F_X(t)=k-1/2$ need not have a unique solution at an arbitrary large cutoff: a branch-selection rule or a certified continuation is necessary.
+
+A \emph{synthetic system} is a strictly increasing positive sequence $c_1<c_2<\cdots$ tending to infinity with $\sum_kc_k^{-2}<\infty$. We allow any prime-only construction satisfying this definition, including the Abel prime flow of Section~\CGref{sec:flow}. The file \texttt{zCasanya.bin} denotes the separate finite-cutoff data construction with cutoffs $(8,8,512)$, \emph{not} the Abel flow and not a theorem of exact ordinate recovery.
+
+\section{A per-index separation theorem}\label{sec:separation}
+Put $e_k=c_k-\gamma_k$ and $d_k=c_{k+1}-c_k>0$. The next theorem exploits the functional-equation symmetry of $\zeta$ without assuming RH.
+\begin{theorem}[Adjacent error and spacing criterion]\label{thm:adjacent}
+If for every $k\ge1$,
+\begin{equation}\label{eq:adjacent}
+ \left|c_k-\gamma_k\right|+\left|c_{k+1}-\gamma_{k+1}\right|<c_{k+1}-c_k,
+\end{equation}
+then every nontrivial zero of $\zeta$ is on the critical line, and every such zero is simple.
+\end{theorem}
+\begin{proof}
+Writing $\Delta_k=\gamma_k-c_k$, we have the exact relation
+\begin{equation}\label{eq:gapidentity}
+ \gamma_{k+1}-\gamma_k=d_k+\Delta_{k+1}-\Delta_k
+ \ge d_k-|\Delta_k|-|\Delta_{k+1}|>0.
+\end{equation}
+Thus no two zeros in the full multiplicity-counting list have the same positive ordinate. If a zero $\beta+i\gamma$ had $\beta\ne1/2$, the symmetry $\rho\mapsto1-\overline\rho$ would give another zero $1-\beta+i\gamma$ with the same ordinate. A multiple critical-line zero would likewise contribute a repeated ordinate. Both contradict \CGeqref{eq:gapidentity}.
+\end{proof}
+\begin{theorem}[Directional cell criterion]\label{thm:cell}
+For $k\ge2$ put $\ell_k=c_k-c_{k-1}$ and $r_k=c_{k+1}-c_k$. The ordinate $\gamma_k$ belongs to the open Voronoi cell of $c_k$ exactly when
+\begin{equation}\label{eq:directional}
+ -\frac{r_k}{2}<e_k<\frac{\ell_k}{2}.
+\end{equation}
+If this is true for all indices, with the first cell treated separately at the lower endpoint, then RH and simplicity follow.
+\end{theorem}
+\begin{proof}
+The cell is $((c_{k-1}+c_k)/2,(c_k+c_{k+1})/2)$. Rearrangement gives the displayed inequalities. The open cells are disjoint; hence the ordinates are distinct and Theorem~\CGref{thm:adjacent}'s final symmetry argument applies.
+\end{proof}
+\begin{remark}[Non-equivalence of sufficient conditions]\label{rem:criteria}
+Theorems~\CGref{thm:adjacent} and~\CGref{thm:cell} give distinct sufficient conditions. A failure of the own-cell condition at one center need not contradict the adjacent-error condition. Neither is established for every index by known mean-square estimates. One repeated-ordinate pair contributes only $d_k^2/(2N)$ to an $N$-point mean-square error if placed at the midpoint between its synthetic neighbors, so an averaged bound cannot exclude such an exceptional pair.
+\end{remark}
+
+\section{Synthetic zeta, functional equation, and positive kernels}\label{sec:synthetic}
+For a synthetic system define the even entire canonical product and the completed-to-zeta conversion factor
+\begin{equation}\label{eq:synthetic}
+ \Xi_c(z)=\prod_{k\ge1}\left(1-\frac{z^2}{c_k^2}\right),\quad
+ D(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2),\quad
+ \zeta_c(s)=\frac{\Xi_c(-i(s-1/2))}{D(s)}.
+\end{equation}
+The product converges normally on compact subsets and has simple real zeros at $\pm c_k$.
+\begin{proposition}[Exact synthetic symmetry]\label{prop:symmetry}
+The meromorphic function $\zeta_c$ satisfies
+\begin{equation}\label{eq:func}
+ \zeta_c(s)=\chi(s)\zeta_c(1-s),\qquad
+ \chi(s)=\pi^{s-1/2}\frac{\Gamma((1-s)/2)}{\Gamma(s/2)}.
+\end{equation}
+Its residue at $s=1$ is $2\Xi_c(i/2)$, so the residue-one normalization is
+\begin{equation}\label{eq:norm}
+ \zeta_c^{\mathrm{nat}}(s)=\frac{\zeta_c(s)}{2\Xi_c(i/2)}.
+\end{equation}
+The synthetic functional equation does not imply $\zeta_c=\zeta$.
+\end{proposition}
+\begin{proof}
+Evenness of $\Xi_c$ yields $\Xi_c(-i(s-1/2))=\Xi_c(-i((1-s)-1/2))$. Direct cancellation of Gamma factors gives $D(1-s)/D(s)=\chi(s)$. Since $D(s)/(s-1)\to1/2$ at $s=1$, the residue is $2\Xi_c(-i/2)=2\Xi_c(i/2)$.
+\end{proof}
+\begin{proposition}[Loewner--Pick kernel of the synthetic product]\label{prop:loewner}
+For $w>0$ put $D_c(w)=\prod_k(1+w/c_k^2)$ and
+\begin{equation}\label{eq:Stieltjes}
+ G_c(w)=-\frac{D_c'(w)}{D_c(w)}=-\sum_k\frac1{w+c_k^2}.
+\end{equation}
+For distinct positive $x_1,\ldots,x_n$, the Loewner matrix with diagonal values given by derivatives obeys
+\begin{equation}\label{eq:Loewner}
+ \sum_{i,j=1}^n v_iv_j\frac{G_c(x_i)-G_c(x_j)}{x_i-x_j}
+ =\sum_{k\ge1}\left(\sum_{i=1}^n\frac{v_i}{x_i+c_k^2}\right)^2>0
+\end{equation}
+for any nonzero real vector $v$, with the divided difference at $i=j$ interpreted as $G_c'(x_i)$.
+\end{proposition}
+\begin{proof}
+Subtract two simple fractions in \CGeqref{eq:Stieltjes}. If the sum on the right vanished, the rational function $\sum_i v_i/(w+x_i)$ would vanish at infinitely many distinct $w=c_k^2$ and hence identically; its simple-pole residues $v_i$ must all vanish.
+\end{proof}
+The kernel holds for arbitrary synthetic increasing sequences and does not compare their zeros with the true $\zeta$ zeros. A further, as yet unproved, transfer inequality would be needed to obtain information about RH.
+
+\section{Analytic prime correction and ordered flow}\label{sec:flow}
+For fixed $0<a\le2$ define the Abel-smoothed prime correction
+\begin{equation}\label{eq:abel}
+ Q_a(t)=\left(\frac t{2\pi}\right)^a,\qquad
+ \mathcal S_a(t)=-\frac1\pi\sum_p\sum_{r\ge1}
+ \frac{e^{-p^r/Q_a(t)}}{r p^{r/2}}\sin(rt\log p).
+\end{equation}
+All primes and prime powers occur, but the series and its real derivatives converge locally normally for $t>0$.
+\begin{proposition}[Analyticity and correction size]\label{prop:abel}
+For fixed $a>0$, $\mathcal S_a$ is real analytic for $t>0$ and
+\begin{equation}\label{eq:abelbound}
+ |\mathcal S_a(t)|\ll_a\frac{t^{a/2}}{\log t},\qquad
+ \left|\tau_k-\frac{\mathcal S_a(\tau_k)}{L(\tau_k)}-\tau_k\right|
+ \ll_a\frac{\tau_k^{a/2}}{(\log\tau_k)^2}.
+\end{equation}
+These are bounds relative to the RvM clock, not to the true ordinates.
+\end{proposition}
+\begin{proof}
+The exponential factor gives local normal convergence even after differentiating. Bounding the $r=1$ prime sum absolutely and using $\pi(u)\ll u/\log u$ gives $\sum_p e^{-p/Q}/\sqrt p\ll\sqrt Q/\log Q$ as $Q\to\infty$. Prime powers $r\ge2$ contribute $O(1+\log\log Q)$, which is smaller. Divide by $L(t)\asymp\log t$ for the second inequality.
+\end{proof}
+The raw Newton correction need not preserve order. Instead let
+\begin{equation}\label{eq:flow}
+ V_a(t)=-\frac{(1-2\pi/t)^2}{L(t)}\mathcal S_a(t),\quad
+ \partial_\lambda Y_a(\lambda,\nu)=V_a(Y_a(\lambda,\nu)),\quad
+ Y_a(0,\nu)=\tau(\nu),
+\end{equation}
+where $\tau$ is chosen as an increasing high-half-line clock and its initial values exceed $2\pi$.
+\begin{theorem}[Global ordered prime flow]\label{thm:flow}
+For every $0<a\le2$, equation \CGeqref{eq:flow} has a unique positive-half-line solution for every finite real $\lambda$, and
+\begin{equation}\label{eq:flowderivative}
+ \partial_\nu Y_a(1,\nu)=\tau'(\nu)
+ \exp\left(\int_0^1 V_a'(Y_a(v,\nu))\,\dd v\right)>0.
+\end{equation}
+Thus the centers $c_{a,k}=Y_a(1,k)$ are strictly ordered and form a synthetic system.
+\end{theorem}
+\begin{proof}
+The double zero of $(1-2\pi/t)^2$ cancels the simple zero of $L(t)$ at $2\pi$ and leaves a locally Lipschitz vector field with equilibrium at $2\pi$. A solution starting above $2\pi$ cannot cross this equilibrium by uniqueness. At infinity, $|V_a(t)|\ll_a t^{a/2}/\log^2t=O(t)$, ruling out escape in finite flow time. Distinct scalar solution curves do not intersect. The displayed derivative is the standard variational formula. Since $a/2<1$ for $a<2$ and the $a=2$ estimate is $O(t/\log^2t)$, the displacement is $o(t)$ at infinity. As $\tau_k\asymp k/\log k$, the resulting centers satisfy $c_k\asymp k/\log k$ and $\sum c_k^{-2}<\infty$.
+\end{proof}
+\begin{remark}[Exponent not optimized]\label{rem:alpha}
+One convenient analytic parameter is $a=1/\sqrt2$, but minimizing the auxiliary expression $\log(1/a)+a^2$ has no demonstrated implication for minimizing $|c_{a,k}-\gamma_k|$. This paper does not claim an optimal exponent.
+\end{remark}
+
+\section{Exact arithmetic phase and rational resonances}\label{sec:rational}
+Assume for this section that a fixed-cutoff clock $F_X$ is strictly increasing on a specified interval $(T,2T)$, and write $\kappa_k=F_X^{-1}(k-1/2)$ for its levels in that interval. The Poisson identity is an identity of distributions:
+\begin{equation}\label{eq:poisson}
+ \sum_{\kappa_k\in(T,2T)}\delta_{\kappa_k}(t)
+ =F_X'(t)\left[1+2\sum_{m\ge1}(-1)^m\cos(2\pi mF_X(t))\right].
+\end{equation}
+The equality is tested against compactly supported smooth functions, for which the Fourier series on the right converges after integration. For $w\in C_c^\infty((T,2T))$ with even extension $w_e(t)=w(|t|)$,
+\begin{equation}\label{eq:trace}
+ \sum_k w(\kappa_k)=\int_T^{2T}w(t)N_0'(t)\dd t
+ -\frac1{2\pi}\sum_{p\le X}\sum_{r\ge1}
+ \frac{\log p}{p^{r/2}}\widehat w_e(r\log p)+\mathcal R_X[w],
+\end{equation}
+where
+\begin{equation}\label{eq:remainder}
+ \mathcal R_X[w]=2\sum_{m\ge1}(-1)^m\int_T^{2T}w(t)F_X'(t)\cos(2\pi m F_X(t))\dd t.
+\end{equation}
+The Fourier coefficients of $w\circ F_X^{-1}$ decay faster than any power of $m$, proving convergence of \CGeqref{eq:remainder}. None of these formulas asserts that $\kappa_k$ equals a genuine zero ordinate.
+
+Define $P(X)=\prod_{p\le X}p$, $d\mid P(X)$ squarefree, $n$ supported on primes $\le X$, $(n,d)=1$, and
+\begin{equation}\label{eq:weights}
+ c_X(d)=\prod_{\substack{p\le X\\p\nmid d}}\left(1-\frac1p\right),\qquad
+ b_X(n/d)=\frac{\mu(d)c_X(d)}{\sqrt{nd}}.
+\end{equation}
+\begin{theorem}[M\"obius-weighted rational Fourier expansion]\label{thm:rational}
+For fixed finite $X$, with absolute convergence,
+\begin{equation}\label{eq:fourier}
+ e^{-2\pi i S_X(t)}=\sum_{\substack{q=n/d>0\\d\mid P(X),\ (n,d)=1}}b_X(q)q^{it},
+ \qquad
+ \sum_q|b_X(q)|=\prod_{p\le X}(1+2p^{-1/2}).
+\end{equation}
+The denominator-frequency coefficient is $b_X(1/d)=\mu(d)c_X(d)/\sqrt d$; only after a stationary-phase factor $\sqrt q$ does it become $b_X(1/d)\sqrt{1/d}=\mu(d)c_X(d)/d$.
+\end{theorem}
+\begin{proof}
+For $u=p^{-1/2}$ and $w=p^{it}$,
+\begin{equation}\label{eq:localfactor}
+ \frac{1-uw^{-1}}{1-uw}=-uw^{-1}+(1-u^2)\sum_{r\ge0}u^rw^r.
+\end{equation}
+The Euler phase is the product of these ratios over $p\le X$. Multiplying and reducing $n/d$ leaves $\mu(d)c_X(d)/\sqrt{nd}$, and each local absolute coefficient sum is $1+2u$. The explicit stationary-phase weight is obtained by multiplication by $\sqrt q$; confusing the two would change the theorem.
+\end{proof}
+The arithmetic sum \CGeqref{eq:fourier} presents a possible target for a nontrivial cancellation theorem uniform in the growing prime cutoff. Its absolute coefficient mass is insufficient to conclude such cancellation.
+
+\section{The completed zeta and a two-zero classification}\label{sec:pair}
+Define the real entire function
+\begin{equation}\label{eq:completed}
+ f(z)=\xi\left(\frac12+iz\right),\qquad
+ \xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s).
+\end{equation}
+It is even and satisfies $f(\overline z)=\overline{f(z)}$. A zero $\rho=\beta+i\gamma$ becomes a zero
+\begin{equation}\label{eq:coordinates}
+ z=\gamma+i\left(\frac12-\beta\right).
+\end{equation}
+Thus off-critical zeros yield nonreal conjugate zeros of $f$ with the same real coordinate $\gamma$. The use of $\xi$ in certification is explicit: the synthetic centers may be constructed without it, but a finite validation test examines the true function.
+
+\begin{theorem}[Two-disc Rouch\'e certificate]\label{thm:two}
+Let $f$ be holomorphic on a neighborhood of $\overline D(b,3h/2)$ and real on the real axis, with $b\in\R$, $h>0$, $f''(b)\ne0$. Put
+\begin{equation}\label{eq:quad}
+ Q(z)=\frac{f''(b)}2\left((z-b)^2-h^2\right),\qquad
+ M_3=\sup_{|z-b|\le3h/2}|f'''(z)|.
+\end{equation}
+If the two strict inequalities
+\begin{align}
+ \left|f(b)+\tfrac12f''(b)h^2\right|+\tfrac54h|f'(b)|
+ +\tfrac{125}{384}M_3h^3&<\tfrac7{32}|f''(b)|h^2,\label{eq:I}\\
+ \left|f(b)+\tfrac12f''(b)h^2\right|+\tfrac32h|f'(b)|
+ +\tfrac9{16}M_3h^3&<\tfrac58|f''(b)|h^2\label{eq:II}
+\end{align}
+are satisfied, then $f$ has one real simple zero in each of $D(b-h,h/4)$ and $D(b+h,h/4)$, and exactly two zeros, counted with multiplicity, in $D(b,3h/2)$.
+\end{theorem}
+\begin{proof}
+Taylor's theorem on a complex disk gives
+\begin{equation}\label{eq:quadrest}
+ |f(z)-Q(z)|\le\left|f(b)+\tfrac12f''(b)h^2\right|+|f'(b)|\,|z-b|
+ +\tfrac{M_3}{6}|z-b|^3.
+\end{equation}
+On $|z-(b\pm h)|=h/4$ one has $|Q(z)|\ge 7|f''(b)|h^2/32$ and $|z-b|\le5h/4$; \CGeqref{eq:I} establishes the strict Rouch\'e bound. On $|z-b|=3h/2$, the corresponding estimates are $|Q(z)|\ge5|f''(b)|h^2/8$ and \CGeqref{eq:II}. Each small circle contains one zero and the large circle exactly two. Both small circles are conjugation invariant, so uniqueness forces their roots to be real; multiplicity one follows from their zero count.
+\end{proof}
+\begin{theorem}[Classification at a nondegenerate critical point]\label{thm:classification}
+Let $f'(b)=0$, $f''(b)\ne0$ and $f(b)\ne0$; set
+\begin{equation}\label{eq:hcrit}
+ h=\sqrt{\frac{2|f(b)|}{|f''(b)|}},\qquad
+ \sigma=\sgn(f(b)f''(b)).
+\end{equation}
+If
+\begin{equation}\label{eq:84}
+ \frac{hM_3}{|f''(b)|}<\frac{84}{125},\qquad
+ M_3=\sup_{|z-b|\le3h/2}|f'''(z)|,
+\end{equation}
+then $D(b,3h/2)$ contains precisely two simple zeros: real, located one each in $D(b\pm h,h/4)$ if $\sigma=-1$, or nonreal conjugates located one each in $D(b\pm ih,h/4)$ if $\sigma=+1$. If $f(b)=f'(b)=0\ne f''(b)$ and $r\sup_{|z-b|\le r}|f'''(z)|<3|f''(b)|$, then $b$ is the only zero in $D(b,r)$ and has multiplicity exactly two.
+\end{theorem}
+\begin{proof}
+The quadratic Taylor polynomial is $f''(b)((z-b)^2+\sigma h^2)/2$. The small-circle comparison gives the numerical threshold $84/125$, and the large-circle comparison needs only $10/9$. Hence Rouch\'e proves the two counts. For $\sigma=-1$ the invariant small disks contain real roots; for $\sigma=+1$ they are off-axis disjoint disks exchanged by conjugation, so the roots are a nonreal pair. In the double case, comparison with $f''(b)(z-b)^2/2$ establishes a total multiplicity two at the already-known double zero.
+\end{proof}
+The sign test is \emph{not} valid in isolation: the strict complex-analytic remainder bound is essential. These local results do not exclude additional nonreal zeros outside the certified disks.
+
+\section{Rouch\'e's one-zero certificate and Turing indexing}\label{sec:one}
+In large-scale local verification it can be cheaper to certify one zero at a time. For numerical stability one may work with the holomorphic continuation of Hardy's $Z$ function
+\begin{equation}\label{eq:hardy}
+ Z(z)=e^{i\vartheta(z)}\zeta\left(\tfrac12+iz\right),
+\end{equation}
+where the branch of $\vartheta(z)$ is analytically continued from the real line on a disk avoiding the poles and branch singularities of the Gamma terms. Such a continuation is real on the real axis and has the same local zero set, with multiplicity, as $f$ in \CGeqref{eq:completed}. The next theorem applies to either $f$, $Z$, or a nonvanishing analytic rescaling.
+\begin{theorem}[Validated Taylor disk containing one real simple zero]\label{thm:one}
+Let $g$ be holomorphic on a neighborhood of $\overline D(b,r)$ with $b\in\R$, and real on the real axis. Fix an integer $K\ge2$ and let $a_j=g^{(j)}(b)/j!$. Define
+\begin{equation}\label{eq:onebound}
+ M_K=\frac1{K!}\sup_{|z-b|\le r}|g^{(K)}(z)|,
+ \quad S_K(r)=\sum_{j=2}^{K-1}|a_j|r^j+M_Kr^K.
+\end{equation}
+If $a_1\ne0$ and
+\begin{equation}\label{eq:oneineq}
+ \boxed{|a_0|+S_K(r)<|a_1|r},
+\end{equation}
+then $g$ has exactly one zero in $D(b,r)$, counted with multiplicity, and it is real and simple.
+\end{theorem}
+\begin{proof}
+Taylor's formula along a complex line segment gives $|g(z)-(a_0+a_1(z-b))|\le S_K(r)$ on $|z-b|=r$. By the reverse triangle inequality, $|a_1(z-b)|-|a_0|\ge |a_1|r-|a_0|>S_K(r)$. Hence Rouch\'e compares $g$ with $a_1(z-b)$, which has exactly one simple zero in $D(b,r)$. Reality follows because a nonreal zero would entail a distinct conjugate zero in the same disk.
+\end{proof}
+\begin{proposition}[Correct ordinal-index transfer]\label{prop:index}
+Suppose Theorem~\CGref{thm:one} validates the disk $D(b,r)$ and an independent, rigorously indexed Turing/Arb routine returns a complex ball $\mathcal B_k$ containing the $k$th zeta zero $1/2+i\gamma_k$ and certifies that $\gamma_k$ is its true ordinal index (with the relevant multiplicity convention). If
+\begin{equation}\label{eq:samedisc}
+ \boxed{\mathcal B_k\subset\{s:\ |s-(1/2+ib)|<r\}},
+\end{equation}
+then the single root certified by Rouch\'e is exactly the root carrying index $k$. If the disc was recentered at a real Newton point $b_1$, the containment test \emph{must use $D(b_1,r_1)$}, not the larger disk $D(x,r_1+|b_1-x|)$ around an old synthetic center $x$.
+\end{proposition}
+\begin{proof}
+The Rouch\'e disk contains exactly one zero. The rigorously indexed zero also lies there by the ball-containment assumption, so the two coincide. The triangle bound $|\gamma_k-x|\le r_1+|b_1-x|$ is only an error estimate and does not assert the indexed zero belongs to the smaller certified disk. Thus the enlarged-disk membership check does not justify the index identification.
+\end{proof}
+\begin{remark}[Validated arithmetic, not midpoint floats]\label{rem:interval}
+All inequalities in \CGeqref{eq:oneineq} and \CGeqref{eq:samedisc} must be decided by strict outward-rounded ball bounds. Converting certified midpoints and radii to Python floating-point values for a \emph{decision} can discard the very margin being certified. Midpoints may be used to propose new exact rational or dyadic centers, but the final tests must be rerun using rigorous balls.
+\end{remark}
+\begin{corollary}[Certified real zeros in a finite set of discs]\label{cor:finite}
+If $n$ distinct indices possess validated one-zero Rouch\'e discs and rigorously indexed Arb enclosures satisfy \CGeqref{eq:samedisc} for each index, then each of those $n$ indexed zeros is real and simple. This remains a finite validation statement; neither a uniform-in-height theorem nor RH follows.
+\end{corollary}
+
+\section{Hankel moments, block reality, and isolated close pairs}\label{sec:clusters}
+A close pair can be certified without being separated by a synthetic clock, but a global proof must also cover every exceptional block. The two mechanisms below are independent of the arithmetic flow and involve the true completed function.
+\begin{theorem}[Moment criterion for zeros enclosed by a contour]\label{thm:hankel}
+Let $g$ be a real entire function, and let $\Omega$ be a bounded conjugation-invariant domain with zero-free boundary enclosing $n\ge1$ zeros, counted with multiplicity. For $b\in\R$ put
+\begin{equation}\label{eq:moments}
+ m_j=\frac1{2\pi i}\oint_{\partial\Omega}(z-b)^j\frac{g'(z)}{g(z)}\dd z,
+ \qquad H_n=(m_{r+s})_{0\le r,s<n}.
+\end{equation}
+Then the real symmetric matrix $H_n$ satisfies
+\begin{equation}\label{eq:hankelcriteria}
+ H_n\succeq0\iff\text{every enclosed zero is real},\qquad
+ H_n\succ0\iff\text{all enclosed zeros are real and simple}.
+\end{equation}
+When $n=2$, the enclosed zeros are
+\begin{equation}\label{eq:tworoot}
+ z_\pm=b+\frac{m_1\pm\sqrt{2m_2-m_1^2}}2.
+\end{equation}
+\end{theorem}
+\begin{proof}
+The residue theorem gives $m_j=\sum_{\nu=1}^{n}(z_\nu-b)^j$, including multiplicities. Since the domain is conjugation invariant, $m_j$ is real. For real coefficients $v=(v_0,\ldots,v_{n-1})$ write $P(w)=\sum_{j=0}^{n-1}v_jw^j$. Then
+\begin{equation}\label{eq:hankelQF}
+ v^{\mathsf T}H_nv=\sum_{\nu=1}^{n}P(z_\nu-b)^2.
+\end{equation}
+If the roots are real, the sum is nonnegative and is positive for every nonzero $P$ precisely when there are $n$ distinct real roots. If a conjugate nonreal pair is present, interpolate a polynomial with real coefficients which takes the values $i,-i$ on that pair and zero on all other distinct roots. This is possible with degree smaller than the number of distinct roots, at most $n$, using conjugate-symmetric Lagrange interpolation. The sum is then negative, proving failure of semidefiniteness. For two roots, the quadratic formula and the power sums give \CGeqref{eq:tworoot}.
+\end{proof}
+\begin{remark}\label{rem:hankel}
+This is a contour version of the classical Hermite criterion. If $\Omega$ does not respect conjugation, positive definiteness need not imply reality. For RH, a family of positive-semidefinite matrices is sufficient only if it covers \emph{every} zero of $f(z)=\xi(1/2+iz)$; establishing such global positivity is an unproved RH-level condition, not a consequence of synthetic positivity in Proposition~\CGref{prop:loewner}.
+\end{remark}
+
+\begin{theorem}[Fourth-order localization under analytic isolation]\label{thm:isolated}
+Let $t_*\in\R$, $0<h<R$, and suppose $g$ is real holomorphic on a neighborhood of $|z-t_*|\le R$ with
+\begin{equation}\label{eq:factorH}
+ g(z)=((z-t_*)^2-h^2)H(z),\qquad
+ 0<m_*\le|H(z)|\le M_*,\quad B=M_*/m_*,
+\end{equation}
+where $H$ is holomorphic and nonvanishing on the closed disk. If
+\begin{equation}\label{eq:isolcond}
+ \frac hR\le\frac1{1000B},
+\end{equation}
+then $g'$ has precisely one real zero $t_b$ in $[t_*-h/4,t_*+h/4]$, and
+\begin{equation}\label{eq:tb}
+ |t_b-t_*|\le1.01 B\frac{h^2}R,\qquad g(t_b)g''(t_b)<0.
+\end{equation}
+With $h_b=(-2g(t_b)/g''(t_b))^{1/2}$,
+\begin{equation}\label{eq:hb}
+ |h_b-h|\le10B^2\frac{h^3}{R^2},\qquad
+ \frac{h_b^3}{|g''(t_b)|}\sup_{|z-t_b|\le2h_b}|g^{(5)}(z)|
+ \le520B\left(\frac hR\right)^3.
+\end{equation}
+The fourth-order Taylor polynomial $T_4$ of $g$ around $t_b$ possesses two distinct real simple roots $y_\pm$ satisfying
+\begin{equation}\label{eq:q4}
+ |y_\pm-(t_*\pm h)|\le40B\frac{h^4}{R^3},\qquad
+ \frac{|y_\pm-(t_*\pm h)|}{2h}\le20B\left(\frac hR\right)^3.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Write $x=z-t_*$. Cauchy's estimates in the half-radius disk show
+\begin{equation}\label{eq:cauchyH}
+ |H^{(j)}(z)|\le j!M_*\left(\frac2R\right)^j
+ \qquad(|z-t_*|\le R/2).
+\end{equation}
+Differentiating the factorization gives
+\begin{equation}\label{eq:f2H}
+ g'=2xH+(x^2-h^2)H',\quad
+ g''=2H+4xH'+(x^2-h^2)H''.
+\end{equation}
+For real $|x|\le h/4$, write $g''=2H(1+\eps)$; then
+$|\eps|\le Bh/R+4.25B h^2/R^2<1.01\cdot10^{-3}$. Hence $g''$ has a fixed sign there and $|g''|\ge1.99m_*$. Since $|g'(t_*)|\le2M_*h^2/R$ and the change of $g'$ across each half-interval exceeds $0.49m_*h$, there is one and only one root $t_b$. The mean-value theorem gives the first bound in \CGeqref{eq:tb}. With $\delta=t_b-t_*$, $g(t_b)=(\delta^2-h^2)H(t_b)$ and the fixed sign of $g''$ proves the sign claim. The identity
+\begin{equation}\label{eq:hbsq}
+ h_b^2=\frac{h^2-\delta^2}{1+\eps(t_b)}
+\end{equation}
+then yields $|h_b-h|\le10B^2h^3/R^2$.
+
+By Leibniz' rule,
+\begin{equation}\label{eq:f5}
+ g^{(5)}=20H^{(3)}+10(z-t_*)H^{(4)}+((z-t_*)^2-h^2)H^{(5)}.
+\end{equation}
+The disk $|z-t_b|\le2h_b$ is contained in $|z-t_*|\le3h\le R/2$. Applying \CGeqref{eq:cauchyH} to the three terms gives $\sup|g^{(5)}|\le1000M_*/R^3$. Since $h_b\le1.01h$ and $|g''(t_b)|\ge1.99m_*$, the second inequality in \CGeqref{eq:hb} follows.
+
+Finally choose $r=40Bh^4/R^3\ll h$ and the two disjoint disks $D_\pm=\{|z-(t_*\pm h)|\le r\}$. On their boundaries, the fourth-order Taylor remainder satisfies
+\begin{equation}\label{eq:R5}
+ |g-T_4|\le\frac{1000M_*}{R^3}\frac{(1.002h)^5}{120}\le8.5M_*\frac{h^5}{R^3},
+\end{equation}
+whereas the exact factorization gives
+\begin{equation}\label{eq:comp4}
+ |g(z)|\ge m_*r(2h-r)\ge79.6M_*\frac{h^5}{R^3}.
+\end{equation}
+Rouch\'e's theorem applied in the direction $|g-T_4|<|g|$ shows that $T_4$ has exactly one root in each $D_\pm$, as $g$ does. Since the polynomial has real coefficients and each disk is conjugation invariant, the roots are real and simple. The chosen radius gives \CGeqref{eq:q4}.
+\end{proof}
+\begin{remark}[What the isolation hypothesis does not say]\label{rem:isolated}
+The theorem is conditional on the nonvanishing and two-sided bounds on $H$ \emph{throughout the specified complex disk}. A small real separation $2h$ alone does not imply $h/R\ll1$. Even arbitrarily accurate location of infinitely many real pairs would not exclude additional off-axis zeros elsewhere.
+\end{remark}
+
+\begin{proposition}[A limiting spacing law does not eliminate exceptional coincidences]\label{prop:portmanteau}
+Let $s_k\ge0$ be normalized nonnegative consecutive ordinate gaps. If $N^{-1}\sum_{k\le N}\delta_{s_k}\Rightarrow\mu$ and $\mu(\{0\})=0$, then the set of indices with $s_k=0$ has density zero. Conversely, changing $s_k$ on a zero-density set, even inserting infinitely many exact zeros, does not alter the weak limit.
+\end{proposition}
+\begin{proof}
+For every $\eps>0$, by the portmanteau theorem applied to the closed set $[0,\eps]$,
+\begin{equation}\label{eq:portmanteau}
+ \limsup_N\frac{\#\{k\le N:s_k=0\}}N\le\mu([0,\eps]).
+\end{equation}
+Let $\eps\downarrow0$. For the converse, bounded continuous test functions differ in their two empirical averages by at most $2\|\varphi\|_\infty$ times the exceptional density, which tends to zero.
+\end{proof}
+\begin{remark}[Exact local counterexample]\label{rem:quartic}
+For $h>0$, $g_h(z)=(z^2-h^2)(z^2+4h^2)$ has two real roots $\pm h$ and two nonreal roots $\pm2ih$, although $g_h^{(5)}\equiv0$. Thus perfect fourth-order Taylor approximation at the real pair cannot by itself exclude a nonreal pair. The factor $H(z)=z^2+4h^2$ vanishes at $\pm2ih$, preventing the isolation hypothesis \CGeqref{eq:factorH} from holding on a disk enclosing all four zeros.
+\end{remark}
+
+\section{Reported experiments and independent arithmetic checks}\label{sec:checks}
+The author's repository contains the original \texttt{rouche\_one\_zero.py}
+validator (using \texttt{python-flint}; full path below) and, as of the
+23 October 2026 commit \texttt{011fb1984}, the completed CSV, JSON, and log files
+for two blocks of 300 consecutive indices each. The reported figures are
+reproduced from those archived outputs, not from a new Arb execution. In
+particular, the original program uses \texttt{acb.zeta\_zero(k)} as a
+Turing-indexed comparator and does not read \texttt{zeross.bin} while
+constructing the test centers.
+\begin{center}\small
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Indices & Tested & Local Rouch\'e pass & Test failed & Index mismatches\\\midrule
+$1\,000\,055$--$1\,000\,354$ & 300 & 292 & 8 & 0\\
+$1\,400\,737$--$1\,401\,036$ & 300 & 292 & 8 & 0\\\midrule
+Total & 600 & 584 & 16 & 0\\\bottomrule
+\end{tabular}
+\end{center}
+Of the 584 reported successful local tests, 346 used the original center
+and 238 used Newton recentering. Reported mean radii about the original
+prime-corrected centers were $0.0384809$ and $0.0429626$, with maxima
+$0.1366163$ and $0.1694444$, for the first and second block respectively;
+the second block recorded two overlapping consecutive \emph{reported}
+error discs, and the first recorded none. The initial ten-index pilot
+reported $10/10$ with mean radius $0.0509514$.
+
+\textbf{Status of the certification.} The strict Taylor--Rouch\'e
+inequality is evaluated in Arb balls and, where it succeeds, gives a
+\emph{local existence-and-simplicity result} provided the holomorphic jet
+and disc remainder enclosure are correct. Nevertheless, the original
+index check has a material flaw after Newton recentering: it compares
+the output of \texttt{acb.zeta\_zero(k)} with the original center $x$ and
+the \emph{enlarged} error radius $r_1+|b_1-x|$, not with the actual
+certified Rouch\'e disc $D(b_1,r_1)$. Membership in the larger disc does
+not imply membership in the smaller. Furthermore, its ordinal-membership
+and reality comparisons are performed through \texttt{float} midpoints
+and radii, not strict ball containment. Consequently, the CSV status
+\texttt{ok} in those 238 recentered cases is \emph{not yet a rigorous
+certification of the advertised ordinal index}, even though the local
+Rouch\'e inequality may succeed. The original-center tests likewise
+require interval rather than \texttt{float} comparisons for a formal
+end-to-end indexed certificate. The independent amended validator is
+specified in Appendix~\CGref{app:onecodesource}, but has not been
+executed here. No other inference about the untested indices follows.
+
+The source records are at
+\url{https://github.com/vcasana1/LawCasanya/tree/main/work/paper1/rouche_cert}
+and their publication commit is
+\url{https://github.com/vcasana1/LawCasanya/commit/011fb1984}.
+
+\subsection{Two archived two-root examples}\label{subsec:two-checks}
+The independent high-precision ordinary-arithmetic re-evaluation of the \emph{central values} of $f(b)$, $f'(b)$ and $f''(b)$ reproduces the published margins at the following heights. The tabulated $M_3$ bounds are \emph{inputs transcribed from the earlier interval program, not independently recertified by Arb/FLINT}.
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}\toprule
+Quantity, after stated positive rescaling of $f$ & Height $1283$ & Height $1290$\\\midrule
+$b$ & $1283.159048033$ & $1290.255802206$\\
+$h$ & $0.164715498$ & $0.154422788$\\
+Scaling multiplier & $10^{433}$ & $10^{435}$\\
+$|f''(b)|$ (ordinary precision) & $52.034634808$ & $18.990581971$\\
+Reported $M_3$ upper bound & $180.855125215$ & $63.282575959$\\
+Small-circle left side (conditional) & $0.26309525$ & $0.07585725$\\
+Small-circle right side & $0.30882290$ & $0.09906246$\\
+Large-circle left side (conditional) & $0.45462859$ & $0.13108133$\\
+Large-circle right side & $0.88235115$ & $0.28303560$\\
+$hM_3/|f''(b)|$ (conditional) & $0.57249642$ & $0.51458517$\\\bottomrule
+\end{tabular}
+\end{center}
+Both central checks satisfy the numerical inequalities if the previously reported $M_3$ bounds are correct. The corresponding exact complex-disk $M_3$ audit remains open because an independent Arb/FLINT execution was not available in the present environment. These numbers therefore are \emph{high-precision cross-checks}, not newly completed Arb certificates.
+
+\subsection{Required reproducible audit protocol}\label{subsec:audit}
+An independent audit of the two examples must compute \emph{all} of the following using outward-rounded balls: (i) validated $f(b)$, $f'(b)$ and $f''(b)$, (ii) a certified upper bound for $M_3$ on the \emph{whole complex disk} $|z-b|\le3h/2$, for instance from interval third-derivative jets covering the boundary and the maximum-modulus principle, and (iii) strict interval versions of \CGeqref{eq:I} and \CGeqref{eq:II}. It must retain a machine-readable log, commit the script with the exact output, and record the Arb and FLINT versions. A high-precision sample of finitely many boundary points is not sufficient to establish $M_3$.
+
+For the one-zero experiment, the audit must additionally verify the precise \texttt{acb.zeta\_zero(k)} ordinal guarantee, use ball inclusion in the \emph{same certified disk}, check analytic branches, and distinguish radii about the final Rouch\'e center from error radii about the original prime-only center. The source of centers must be documented and must not use \texttt{zeross.bin}.
+
+\section{Global research barriers}\label{sec:status}
+The local two-zero and one-zero theorems are classical applications of Rouch\'e made effective with arithmetically proposed centers. In particular, neither certification of arbitrarily many real zeros nor a success fraction approaching one implies that all zeros are on the critical line. A hypothetical off-line pair would produce two zeros sharing the same ordinate and could constitute an exceptional set invisible to averaged displacement or limiting spacing laws.
+
+To complete the direct ordinate route, one must derive \CGeqref{eq:adjacent} or \CGeqref{eq:directional} \emph{for every index}, from new arithmetic estimates not assuming the distinctness of the true ordinates. To complete the Rouch\'e route, one must obtain a theorem of universal reality plus exhaustive coverage of all potential zeros, not merely the real roots detected by a locally successful test. Reducing coverage to the full classical Turing zero count without an independent global inequality is a known RH-level obstruction. The positive Loewner kernel \CGeqref{eq:Loewner} is an unconditional statement about the synthetic product and has no established positive transfer to $\xi$.
+
+The spectral-pair isolation program remains a separate legitimate problem: relative isolation $h/R\ll1$ and a controlled nonzero auxiliary factor are more informative than merely the smallness of an absolute gap $h$. No universal such isolation bound is derived here, and statistical GUE repulsion does not exclude exceptional multiple or off-critical zeros. The stationary rational-frequency expansion \CGeqref{eq:fourier} is exact and prime-only, but uniform cancellation across growing cutoffs remains unproved. We do not interpolate synthetic $\zeta_c$ to true $\zeta$ as a purported RH proof; the endpoint transfer problem is still uncontrolled.
+
+\begin{thebibliography}{99}
+
+\bibitem{DelvesLyness1967} L.~M. Delves and J.~N. Lyness, \emph{A numerical method for locating the zeros of an analytic function}, Math. Comp. \textbf{21} (1967), 543--560. \href{https://doi.org/10.1090/S0025-5718-1967-0228165-4}{doi:10.1090/S0025-5718-1967-0228165-4}.
+
+\bibitem{Edwards1974} H.~M. Edwards, \emph{Riemann's Zeta Function}, Academic Press, 1974.
+
+\bibitem{Gonek2012} S.~M. Gonek, \emph{Finite Euler products and the Riemann hypothesis}, Trans. Amer. Math. Soc. \textbf{364} (2012), 2157--2191. \href{https://doi.org/10.1090/S0002-9947-2011-05546-7}{doi:10.1090/S0002-9947-2011-05546-7}.
+
+\bibitem{KravanjaVanBarel2000} P.~Kravanja and M.~Van Barel, \emph{Computing the Zeros of Analytic Functions}, Springer, 2000. \href{https://doi.org/10.1007/BFb0103927}{doi:10.1007/BFb0103927}.
+
+\bibitem{KreinNaimark1981} M.~G. Krein and M.~A. Naimark, \emph{The method of symmetric and Hermitian forms in the theory of the separation of the roots of algebraic equations}, Linear and Multilinear Algebra \textbf{10} (1981), 265--308. \href{https://doi.org/10.1080/03081088108817420}{doi:10.1080/03081088108817420}.
+
+\bibitem{Mangoldt1905} H.~von Mangoldt, \emph{Zur Verteilung der Nullstellen der Riemannschen Funktion $\xi(t)$}, Math. Ann. \textbf{60} (1905), 1--19. \href{https://doi.org/10.1007/BF01447494}{doi:10.1007/BF01447494}.
+
+\bibitem{MontgomeryVaughan2006} H.~L. Montgomery and R.~C. Vaughan, \emph{Multiplicative Number Theory I: Classical Theory}, Cambridge University Press, 2006. \href{https://doi.org/10.1017/CBO9780511618314}{doi:10.1017/CBO9780511618314}.
+
+\bibitem{Titchmarsh1986} E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., revised by D.~R. Heath-Brown, Clarendon Press, 1986.
+
+\bibitem{Turing1953} A.~M. Turing, \emph{Some calculations of the Riemann zeta-function}, Proc. London Math. Soc. (3) \textbf{3} (1953), 99--117. \href{https://doi.org/10.1112/plms/s3-3.1.99}{doi:10.1112/plms/s3-3.1.99}.
+
+\end{thebibliography}
+
+\appendix
+\section{A minimal independent numerical cross-check}\label{app:precheck}
+The following executable Python program reproduces the table's central derivative checks. It uses \texttt{mpmath} high precision; by design it does \emph{not} claim rigorous outward-rounded bounds for $M_3$.
+\begin{lstlisting}[language=Python]
+import mpmath as mp
+mp.mp.dps = 65
+cases = [
+ ('1283.159048033','0.164715498','1e433','180.855125215'),
+ ('1290.255802206','0.154422788','1e435','63.282575959')]
+def F(z):
+    s = mp.mpf('0.5') + 1j*z
+    return s*(s-1)/2 * mp.pi**(-s/2) * mp.gamma(s/2)*mp.zeta(s)
+for bs,hs,scale,M3s in cases:
+    b,h,t,M3=map(mp.mpf,(bs,hs,scale,M3s))
+    a=t*F(b); a1=t*mp.diff(F,b,1); a2=t*mp.diff(F,b,2)
+    err=abs(a+a2*h*h/2)
+    sl=err+5*h*abs(a1)/4+mp.mpf(125)/384*M3*h**3
+    sr=7*abs(a2)*h*h/32
+    bl=err+3*h*abs(a1)/2+mp.mpf(9)/16*M3*h**3
+    br=5*abs(a2)*h*h/8
+    print(bs, 'small',sl,sr,'outer',bl,br)
+\end{lstlisting}
+
+\section{Algorithmic validation requirements for Arb/FLINT}\label{app:arb}
+For future rigorous validation the one-zero calculation should follow this logic. The following is a \emph{procedure specification}, not an assertion that a complete independent Arb audit has been executed:
+\begin{enumerate}[leftmargin=*]
+\item Read the synthetic center $x_k$ as the exact dyadic rational represented by its binary64 input; compute Taylor coefficient balls of locally holomorphic $Z$ on that center.
+\item Choose an exactly represented center $b$ (either $x_k$ or a Newton candidate) and exactly represented radius $r$; enclose each $a_j$ and $M_K$ using Arb balls, and certify the strict inequality \CGeqref{eq:oneineq}.
+\item Obtain the library's certified $k$th ordinate enclosure $\mathcal B_k$ and verify its documented ordinal meaning; test \CGeqref{eq:samedisc} using directed ball endpoints, \emph{not} float midpoints.
+\item If the radius is reported relative to $x_k$, return both the actual Rouch\'e disk $(b,r)$ and the derived bound $r+|b-x_k|$. Never use the latter radius to assert membership in the former disk.
+\item Record the precision, package version, failure reason, exact inputs, resulting ball endpoints, and proof margins in the output. Unverified, overlapping, and failed disks must be retained as such.
+\end{enumerate}
+For a two-zero certificate, enclose $f'''$ uniformly on the boundary circle $|z-b|=3h/2$ using finite interval \emph{arcs}, not sample nodes; maximum modulus then bounds the whole disk. The two inequalities \CGeqref{eq:I} and \CGeqref{eq:II} must be strict in ball arithmetic. An implementation template, recorded separately with this manuscript, is intended to support this reproducibility step.
+
+\section{Independent Arb/FLINT pair-audit source (not executed here)}\label{app:arbsource}
+The following program is provided for reproduction. Its local syntax was checked, but
+its numerical Arb execution has not been performed in this environment. A valid
+certificate requires a successful run with retained interval output.
+\begin{lstlisting}[language=Python]
+"""Independent Arb/FLINT audit template for the two Casanya pair discs.
+
+Python >=3.10, python-flint with acb_series.gamma() and acb_series.zeta().
+No genuine ordinates, zeross.bin or reference zero list are used.
+
+The certificate is valid only if this program completes with a strict PASS for
+both cases and its interval enclosures are retained. NOT EXECUTED in the
+ChatGPT container on 2026-10-23: python-flint was unavailable there.
+
+Run: python audit_pairs_arb.py --case 1283 --arcs 4096
+     python audit_pairs_arb.py --case 1290 --arcs 4096
+
+Algorithm: finite interval arcs cover the *entire boundary circle* of the
+radius 3*h/2. Each interval third derivative is enclosed via the coefficient
+of w**3 in a Taylor series of F(z+w); maximum modulus covers the disk.
+The Taylor coefficients of the real entire function Xi(1/2+i*z) are enclosed
+by ball evaluation at exact decimal input b and a positive scaling constant.
+No assumed global bounding constant or FFT tail estimate is used.
+"""
+import argparse
+import json
+import platform
+import time
+from flint import acb, arb, acb_series, ctx
+
+CASES = {
+    1283: {"b": "1283.159048033", "h": "0.164715498", "scale": "1e433"},
+    1290: {"b": "1290.255802206", "h": "0.154422788", "scale": "1e435"},
+}
+
+def scaled_xi_jet(zball, scale):
+    """Taylor coefficients through 3, each a complex ball.
+
+    Parameter zball may be an acb box; if so the coefficient j encloses
+    F^(j)(z)/j! for every z in that box.
+    """
+    x = acb_series([zball, acb(1)], prec=4)
+    s = acb("0.5") + acb(0, 1) * x
+    gamma_factor = (s / 2).gamma()
+    completed = (s * (s - 1) / 2) * ((-s / 2) * arb.pi().log()).exp()
+    z = acb(scale) * completed * gamma_factor * s.zeta()
+    coeff = z.coeffs()
+    if len(coeff) < 4:
+        coeff.extend([acb(0)] * (4 - len(coeff)))
+    return coeff[:4]
+
+def interval_arc(j, n):
+    """Outward-rounded angle interval covering [2*pi*j/n,2*pi*(j+1)/n]."""
+    pi = arb.pi()
+    mid = pi * arb(2 * j + 1) / n
+    half_width = (pi / n).upper()
+    radius = half_width + mid.rad()
+    return arb(mid.mid(), radius)
+
+def audit(case, arcs, bits):
+    ctx.prec = bits
+    ctx.cap = 16
+    cfg = CASES[case]
+    b, h, scale = arb(cfg["b"]), arb(cfg["h"]), arb(cfg["scale"])
+    radius = arb("1.5") * h
+    start = time.time()
+    central = scaled_xi_jet(acb(b), scale)
+    f0, f1, f2 = central[0], central[1], 2 * central[2]
+    # Strict realness of Xi along R is known analytically. The absolute
+    # complex ball bounds are safe even if a tiny imaginary radius survives.
+    f2abs = abs(f2)
+    f2low = f2abs.lower()
+    if not (f2low > 0):
+        raise ArithmeticError("f'' lower bound does not exclude zero")
+    bound = arb(0)
+    for j in range(arcs):
+        theta = interval_arc(j, arcs)
+        zarc = acb(b + radius * theta.cos(), radius * theta.sin())
+        j3 = scaled_xi_jet(zarc, scale)[3]
+        upper = abs(6 * j3).upper()
+        if upper > bound:
+            bound = upper
+        if j % max(1, arcs // 16) == 0:
+            print("case", case, "arc", j, "/", arcs, "M3upper", bound, flush=True)
+    # Holomorphy of xi implies |f'''(z)| <= max_boundary |f'''|.
+    M3 = bound
+    residual = abs(f0 + f2 * h * h / 2)
+    H = h.upper()
+    # Bounds computed monotonically with directed interval endpoints.
+    small_left = residual.upper() + (arb(5) * H / 4) * abs(f1).upper() + arb(125) * M3 * H**3 / 384
+    small_right = arb(7) * f2low * h.lower()**2 / 32
+    outer_left = residual.upper() + (arb(3) * H / 2) * abs(f1).upper() + arb(9) * M3 * H**3 / 16
+    outer_right = arb(5) * f2low * h.lower()**2 / 8
+    eta = H * M3 / f2low
+    small_ok = bool(small_left.upper() < small_right.lower())
+    outer_ok = bool(outer_left.upper() < outer_right.lower())
+    status = "PASS" if small_ok and outer_ok else "INCONCLUSIVE"
+    obj = dict(
+        status=status, case=case, input=cfg, arcs=arcs, bits=bits,
+        M3_upper=str(M3), f2_abs_lower=str(f2low),
+        small_left_upper=str(small_left.upper()), small_right_lower=str(small_right.lower()),
+        outer_left_upper=str(outer_left.upper()), outer_right_lower=str(outer_right.lower()),
+        eta_upper=str(eta.upper()),
+        central_coefficients=[str(x) for x in central],
+        elapsed_s=round(time.time() - start, 2),
+        python=platform.python_version(),
+    )
+    print(json.dumps(obj, indent=2), flush=True)
+    with open(f"pair_{case}_arb_audit.json", "w") as o:
+        json.dump(obj, o, indent=2)
+    if status != "PASS":
+        raise RuntimeError("No certificate: increase precision/arcs or improve the interval bounds")
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--case", type=int, choices=[1283, 1290], required=True)
+    ap.add_argument("--arcs", type=int, default=4096)
+    ap.add_argument("--bits", type=int, default=256)
+    args = ap.parse_args()
+    audit(args.case, args.arcs, args.bits)
+\end{lstlisting}
+
+\section{Index-corrected one-zero Arb validator (not executed here)}\label{app:onecodesource}
+The following implementation amends the same-disc ordinal matching test of
+Proposition~\CGref{prop:index}. The file is also supplied separately. The
+code is syntax checked, not executed here: the required FLINT library was
+unavailable in this environment.
+\begin{lstlisting}[language=Python]
+"""Rouche + indexed Turing/Arb one-zero verifier (corrected validation logic).
+
+Requires python-flint, numpy; no zeross.bin or true zeros in construction.
+Usage: python rouche_one_zero_v4.py CENTERS.bin K0 COUNT OUT_PREFIX
+
+This program has been syntax checked but *not* run in the ChatGPT environment
+because python-flint is unavailable. All comparisons use Arb ball bounds.
+It uses acb.zeta_zero(k) only after a purely local Rouche disk is validated.
+"""
+import sys
+import json
+import time
+import numpy as np
+from flint import acb, arb, acb_series, ctx
+
+ctx.prec = 160
+ctx.cap = 16
+PI = arb.pi()
+K = 7
+RMAX = arb("0.2")
+TRIES = ("1.5", "2", "3", "5")
+
+def jet(b):
+    """Hardy Z Taylor coefficients of degrees 0 through K at a ball b."""
+    x = acb_series([acb(b), acb(1)], prec=K + 2)
+    s = acb_series([acb("0.5") + acb(0, 1) * acb(b), acb(0, 1)], prec=K+2)
+    u = acb_series([acb("0.25") + acb(0, 1) * acb(b) / 2, acb(0, 1) / 2], prec=K+2)
+    uc = acb_series([acb("0.25") - acb(0, 1) * acb(b) / 2, acb(0, -1) / 2], prec=K+2)
+    theta = (u.lgamma() - uc.lgamma()) / acb(0, 2) - x * (PI.log() / 2)
+    values = ((theta * acb(0, 1)).exp() * s.zeta()).coeffs()
+    if len(values) < K + 1:
+        values.extend([acb(0)] * (K + 1 - len(values)))
+    return values
+
+def local_disc(center):
+    """Return a disk certified by Rouche, or None.
+
+    CENTER is an exact dyadic/input Arb real ball; outward interval bounds
+    are used for all decisive comparisons.
+    """
+    z = jet(center)
+    a, c = abs(z[0]), abs(z[1])
+    if not (c.lower() > 0):
+        return None
+    r0 = a / c
+    for m in TRIES:
+        radius = (arb(m) * r0).upper() + arb("1e-12")
+        if not (radius.upper() < RMAX.lower()):
+            continue
+        # This complex rectangle contains the whole circle |z-center|<=radius.
+        box = acb(arb(center, radius), arb(0, radius))
+        zK = abs(jet(box)[K]).upper()
+        high_r = radius.upper()
+        remainder = sum((abs(z[j]).upper() * high_r**j for j in range(2, K)), arb(0))
+        remainder += zK * high_r**K
+        lhs = a.upper() + remainder.upper()
+        rhs = c.lower() * radius.lower()
+        if bool(lhs < rhs):
+            return dict(center=center, radius=radius, lhs=lhs, rhs=rhs,
+                        multiplier=m, f0_abs=a, f1_abs=c, rem=remainder)
+    return None
+
+def certify_index(k, certified):
+    """Verify inclusion of the Arb Turing indexed zero in THE certified disk."""
+    gamma_ball = acb.zeta_zero(k)
+    center = certified["center"]
+    radius = certified["radius"]
+    zeta_s_center = acb(arb("0.5"), center)
+    upper_distance = abs(gamma_ball - zeta_s_center).upper()
+    return bool(upper_distance < radius.lower()), gamma_ball, upper_distance
+
+def run(path, k0, count, prefix):
+    xs = np.fromfile(path, dtype="<f8")
+    records = []
+    start = time.time()
+    for k in range(k0, k0 + count):
+        x = float(xs[k-1])
+        xb = arb(x)  # the binary64 input is only a proposed, prime-only center
+        trial = local_disc(xb)
+        method = "original"
+        if trial is None:
+            v = jet(xb)
+            if not (abs(v[1]).lower() > 0):
+                records.append({"k":k,"status":"fail_derivative"})
+                continue
+            # Proposal only: round the Newton correction, then fully recertify.
+            correction = (v[0]/v[1]).real.mid()
+            bnew = arb(float(x - float(correction)))
+            trial = local_disc(bnew)
+            method = "newton"
+        if trial is None:
+            records.append({"k":k,"status":"fail_rouche"})
+            continue
+        ok, ball, distance = certify_index(k, trial)
+        effective_bound = trial["radius"].upper() + abs(trial["center"]-xb).upper()
+        records.append(dict(
+            k=k, input_center=repr(x), certified_center=str(trial["center"]),
+            actual_radius=str(trial["radius"]), bound_about_input=str(effective_bound),
+            rouche_margin=str(trial["rhs"].lower() - trial["lhs"].upper()),
+            ball_k=str(ball), ball_to_cert_center_upper=str(distance),
+            status="indexed_certified" if ok else "index_not_proved", method=method))
+        if (k-k0+1) % 10 == 0:
+            print("processed", k-k0+1, "of", count, flush=True)
+    summary = dict(input=path,k0=k0,count=count,
+        indexed_certified=sum(r["status"] == "indexed_certified" for r in records),
+        fail_rouche=sum(r["status"] == "fail_rouche" for r in records),
+        index_not_proved=sum(r["status"] == "index_not_proved" for r in records),
+        time_s=round(time.time()-start,2))
+    with open(prefix+".json", "w") as out:
+        json.dump(dict(summary=summary, records=records), out, indent=2)
+    print(json.dumps(summary,indent=2))
+
+if __name__ == "__main__":
+    if len(sys.argv)!=5:
+        raise SystemExit("Usage: rouche_one_zero_v4.py CENTERS.bin K0 COUNT OUT_PREFIX")
+    run(sys.argv[1],int(sys.argv[2]),int(sys.argv[3]),sys.argv[4])
+\end{lstlisting}
+
+\section{Explicit limitations and open questions}\label{app:limitations}
+\begingroup\small
+\begin{enumerate}[leftmargin=*,nosep]
+\item The original local experiments at heights $1283$ and $1290$ used an earlier interval engine; independently certified Arb third-derivative bounds are pending.
+\item The published Arb run contains complete CSV/JSON/log summaries of two 300-index blocks: 292/300 local tests marked successful in each (584/600 overall); 16 attempts failed the chosen Rouch\'e test. This is a finite experiment, not a universal theorem.
+\item The original Python prototype has an index-matching error after Newton recentering and uses floating-point membership comparisons; 238 of its 584 successful flags involve Newton recentering. The local Rouch\'e test and ordinal identification must be distinguished. Strict Arb containment checks in the \emph{actual} Rouch\'e discs remain to be rerun before the 584 flags may be reported as rigorously indexed certificates.
+\item A rigorously indexed zeta zero returned by Arb already uses evaluation of the genuine zeta function and Turing's method. This is allowed in \emph{validation}, but does not make the prime-only construction itself an identification theorem.
+\item A local two-zero certificate classifies roots in its certified disk. It cannot exclude nonreal roots in other parts of the strip.
+\item The order-preserving prime flow may fail to locate a particular ordinate within its own cell. It controls synthetic order, not RH.
+\item The choice $a=1/\sqrt2$ is not known to minimize individual errors or their worst-case normalized gap ratios.
+\item The observed smallness of $|\gamma_k-c_k|$ for many indices does not imply its global bound at all indices; an isolated violation remains possible.
+\item Statistical spacing limits, even if proved in full, do not exclude zero-density sets of repeated ordinates.
+\item Exact synthetic functional equations and rational-frequency formulas do not identify the synthetic spectrum with the true one.
+\item No unconditional positivity estimate transferring the Loewner kernel from $\Xi_c$ to $\xi$ is available.
+\item Neither the local certificate nor the arithmetic flow constitutes a proof of RH or of universal simplicity.
+\end{enumerate}
+\endgroup
+
+
+\end{document}
