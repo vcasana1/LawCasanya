@@ -1,0 +1,1210 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{booktabs,array,longtable,graphicx}\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\setlength{\emergencystretch}{4em}\raggedbottom\numberwithin{equation}{section}
+\theoremstyle{plain}\newtheorem{theorem}{Theorem}[section]\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{hypothesis}[theorem]{Hypothesis}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}\newtheorem{experiment}[theorem]{Experiment}\newtheorem{question}[theorem]{Question}\newtheorem{heuristic}[theorem]{Heuristic}\newtheorem{conjecture}[theorem]{Conjecture}
+\newcommand{\NO}{N_0}\newcommand{\lL}{\mathcal L}\newcommand{\IT}{\mathcal I_T}\newcommand{\R}{\mathbb R}\newcommand{\N}{\mathbb N}\newcommand{\eps}{\varepsilon}\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\vpi}{\varpi}\newcommand{\mathscr}[1]{\mathcal{#1}}\newcommand{\Z}{\mathbb Z}\newcommand{\C}{\mathbb C}\DeclareMathOperator{\Li}{Li}
+\title[Ordinal defects and prime cutoffs]{Ordinal defects, variable prime cutoffs, and response identities for Riemann zeta zero ordinates}
+\author{V\'ictor Casa\~na-Giner}\address{Valencia, Spain}\email{Email to be inserted}\subjclass[2020]{11M26, 11M06, 11Y35}\keywords{Riemann zeta-function, zero ordinates, Selberg approximation, Euler phases, pair correlation}\date{17 October 2026}
+\begin{document}
+\begin{abstract}
+Let $\gamma_k\in\R_{>0}$ be the positive ordinates of the nontrivial zeros of $\zeta(s)$, repeated according to multiplicity.  We study defects obtained by comparing the ordinal $k-1/2$ with the smooth Riemann--von Mangoldt count and finite Euler phases.  The paper establishes a quadrature identity at the jumps of a counting function; moment formulae for the midpoint-clock displacement; a uniform mean-square estimate for a cutoff $2\le X\le T^{1/2}$; localization under a strict derivative condition; fixed-frequency projection and finite-window least-squares identities; a decomposition of the one-step clock; a conditional moving-prime response; a distributional Fourier representation of its scalar target; and an evaluation in a finite determinantal model.  Every theorem states the domains of its variables, and unconditional, conditional, and model statements are separated.  Finite computations are reported only for observables defined in the text.
+\end{abstract}\maketitle
+
+\section{Conventions and logical status}\label{sec:conventions}
+The symbol $k$ always denotes a positive integer.  The variables $t,T,X,x_0$ are real unless explicitly declared otherwise; asymptotic statements use $T\to\infty$ through real values.  A prime variable $p$ ranges over rational primes, and an integer frequency $n$ lies in $\mathbb Z_{\ge2}$.  Complex zeros are denoted $\rho=\beta+i\gamma\in\mathbb C$, while $\gamma\in\mathbb R$ denotes an ordinate.  Sums over zeros count multiplicity.  All integrals are Lebesgue integrals; on the piecewise continuous functions occurring below they equal the corresponding improper Riemann integrals.  Big-$O$ and $\ll$ constants are absolute unless their dependence is displayed by a subscript.
+
+Sections~\ref{sec:identities}--\ref{sec:one_step_clock} contain unconditional statements except where a named hypothesis is invoked.  Section~\ref{sec:moving_response} is conditional.  Section~\ref{sec:Fourier_reduction} is an unconditional distributional reduction.  Section~\ref{sec:sine_response} concerns a specified finite determinantal model and is not asserted for zeta zeros.
+\section{Notation and the clock}
+\label{sec:notation}
+
+\subsection{Counting functions}
+\label{subsec:counting}
+Let $\vartheta(t)=\Im\log\Gamma(\frac14+\frac{it}2)-\frac t2\log\pi$ be the Riemann--Siegel theta function. For $t>0$ not an ordinate \cite[Thms.~9.3--9.4]{Titchmarsh1986},
+\begin{equation}
+N(t)=\frac1\pi\vartheta(t)+1+S(t),\qquad S(t)=\frac1\pi\arg\zeta\bigl(\tfrac12+it\bigr)=O(\log t),
+\label{eq:RvM}
+\end{equation}
+with $\arg\zeta$ defined by continuous variation from $2$ along the segment to $2+it$ and then horizontally to $\frac12+it$. We set
+\begin{equation}
+\Theta_0(t)=\frac t2\log\frac t{2\pi e}-\frac\pi8,\qquad \NO(t)=\frac1\pi\Theta_0(t)+1,\qquad \omega(t)=\vartheta(t)-\Theta_0(t),
+\label{eq:N0_def}
+\end{equation}
+so that $\omega(t)=\frac1{48t}+O(t^{-3})$ by Stirling's formula and
+\begin{equation}
+N(t)=\NO(t)+S(t)+\frac{\omega(t)}\pi .
+\label{eq:N_decomposition}
+\end{equation}
+The derivative of the smooth count is
+\begin{equation}
+\lL(t)=\NO'(t)=\frac1{2\pi}\log\frac t{2\pi}.
+\label{eq:L_def}
+\end{equation}
+For $T\ge 1$ let $\IT=\{k\ge1:T<\gamma_k\le2T\}$. Since $N(2T)-N(T)=\NO(2T)-\NO(T)+O(\log T)$ by \eqref{eq:RvM},
+\begin{equation}
+\#\IT=T\lL(T)+O(T).
+\label{eq:IT_size}
+\end{equation}
+
+\subsection{The clock and the displacements}
+\label{subsec:clock}
+
+\begin{equation}\label{eq:clock}
+\tau_k=\frac{2\pi(k-11/8)}{W_0((k-11/8)/e)},\qquad k\in\mathbb Z_{\ge2},
+\end{equation}
+\begin{lemma}\label{lem:clock}
+The sequence \eqref{eq:clock} is the unique solution of $\NO(\tau_k)=k-\frac12$ with $\tau_k>2\pi$, $k\ge2$. As a function of a real variable $k$, $\tau_k$ is smooth and increasing with
+\begin{equation}
+\frac{d\tau_k}{dk}=\frac1{\lL(\tau_k)}=\frac{2\pi}{\log(\tau_k/2\pi)}.
+\label{eq:clock_derivative}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+With $x=t/2\pi$ the equation $\NO(t)=k-\frac12$ reads $x\log(x/e)=k-\frac{11}8$. Putting $x=ey$ gives $y\log y=(k-\frac{11}8)/e$, so $\log y=W((k-\frac{11}8)/e)$ with the principal branch \cite{Corless1996} and $x=(k-\frac{11}8)/W((k-\frac{11}8)/e)$. The map $x\mapsto x\log(x/e)$ is increasing for $x>1$, which gives uniqueness, and \eqref{eq:clock_derivative} follows by differentiating $\NO(\tau_k)=k-\frac12$.
+\end{proof}
+
+\begin{definition}\label{def:displacements}
+The ordinal displacement and the displacement of the clock are
+\begin{equation}
+s_k=k-\frac12-\NO(\gamma_k),\qquad \delta_k=\tau_k-\gamma_k .
+\label{eq:displacements}
+\end{equation}
+\end{definition}
+
+By Lemma~\ref{lem:clock}, $s_k=\NO(\tau_k)-\NO(\gamma_k)$, and the mean value theorem gives
+\begin{equation}
+s_k=\lL(\xi_k)\,\delta_k\qquad\text{for some }\xi_k\text{ between }\gamma_k\text{ and }\tau_k .
+\label{eq:s_delta}
+\end{equation}
+
+\begin{remark}\label{rem:gram_points}
+Since $\Theta_0(\tau_k)=\pi(k-\frac32)$ and $\vartheta=\Theta_0+\omega$, the clock point $\tau_k$ is the point at which $\vartheta$ takes the value $\pi(k-\frac32)$, up to a shift $O(\tau_k^{-1}(\log\tau_k)^{-1})$. Thus $\tau_k$ lies, in phase, half way between the Gram points $g_{k-2}$ and $g_{k-1}$, defined by $\vartheta(g_n)=n\pi$. The integer displacement of $\gamma_k$ with respect to the Gram intervals is the object of Gram's law; see Remark~\ref{rem:korolev}.
+\end{remark}
+
+\begin{lemma}\label{lem:s_bounds}
+For every $k$ with $\gamma_k>2$,
+\begin{equation}
+N(\gamma_k^-)-\NO(\gamma_k)+\frac12\le s_k\le N(\gamma_k^+)-\NO(\gamma_k)-\frac12,
+\label{eq:s_bounds}
+\end{equation}
+where $N(\gamma^\pm)$ are the one-sided limits. In particular $|s_k|\le|S(\gamma_k^-)|+|S(\gamma_k^+)|+1$.
+\end{lemma}
+
+\begin{proof}
+The indices $j$ with $\gamma_j=\gamma_k$ are $N(\gamma_k^-)+1,\dots,N(\gamma_k^+)$, hence $N(\gamma_k^-)+1\le k\le N(\gamma_k^+)$; subtract $\frac12+\NO(\gamma_k)$ and use \eqref{eq:N_decomposition} with $|\omega|/\pi<\frac12$.
+\end{proof}
+
+\subsection{Euler phases and the truncated equation}
+\label{subsec:euler_phase}
+For $n\ge2$ put
+\begin{equation}
+a_n=-\frac{\Lambda(n)}{\pi\sqrt n\,\log n},
+\label{eq:an_def}
+\end{equation}
+where $\Lambda$ is the von Mangoldt function. For a set $A$ of prime powers with $\sum_{n\in A}|a_n|<\infty$ let
+\begin{equation}
+S_A(t)=\sum_{n\in A}a_n\sin(t\log n),\qquad v_A=\frac12\sum_{n\in A}a_n^2 .
+\label{eq:SA_def}
+\end{equation}
+For $X\ge2$ let $A_X=\{p^m:p\le X,\ m\ge1\}$ and $S_X=S_{A_X}$. Since $\arg(1-z)=-\Im\sum_{m\ge1}z^m/m$ for $|z|<1$,
+\begin{equation}
+S_X(t)=-\frac1\pi\sum_{p\le X}\arg\bigl(1-p^{-1/2-it}\bigr)=-\frac1\pi\sum_{p\le X}\sum_{m\ge1}\frac{\sin(mt\log p)}{m\,p^{m/2}},
+\label{eq:SX_def}
+\end{equation}
+For each fixed real $X\ge2$, the outer prime sum is finite and the inner series is absolutely and uniformly convergent for $t\in\mathbb R$, because $\sum_{m\ge1}(m p^{m/2})^{-1}<\infty$.  The differentiated series is also uniformly convergent, since $\sum_{m\ge1}(\log p)p^{-m/2}<\infty$.  Consequently $S_X:\mathbb R\to\mathbb R$ is $C^1$, and integration and differentiation term by term are justified without an interchange involving an infinite prime sum.
+with the principal argument of each individual factor. The sum is a continuous lift of the argument of the product; it need not be its principal argument. For a finite set of primes $P$ we write $S_P$ for the same sum over $p\in P$, and
+\begin{equation}
+c_P=\frac1{2\pi^2}\sum_{p\in P}\mathrm{Li}_2\Bigl(\frac1p\Bigr)=\lim_{M\to\infty}v_{\{p^m:\,p\in P,\ m\le M\}},
+\label{eq:cP_def}
+\end{equation}
+where $\mathrm{Li}_2(x)=\sum_{m\ge1}x^m/m^2$. We also use the bounds
+\begin{equation}
+|S_X(t)|\le\sigma_X:=\frac1\pi\sum_{p\le X}\sum_{m\ge1}\frac1{m\,p^{m/2}},\qquad |S_X'(t)|\le M_X:=\frac1\pi\sum_{p\le X}\frac{\log p}{\sqrt p-1},
+\label{eq:sigma_M_def}
+\end{equation}
+and note that $\sigma_X\ll\sqrt X/\log X$ and $M_X\ll\sqrt X$ by the prime number theorem.
+
+\begin{definition}\label{def:LeClair_model}
+For $X\ge2$ the truncated counting model and the defect of the $k$-th zero are
+\begin{equation}
+F_X(t)=\NO(t)+S_X(t),\qquad u_k(X)=k-\frac12-F_X(\gamma_k)=s_k-S_X(\gamma_k).
+\label{eq:defect_def}
+\end{equation}
+The one-step corrected clock is
+\begin{equation}
+\tau_k^X=\tau_k-\frac{S_X(\tau_k)}{\lL(\tau_k)}=\tau_k-\frac{d\tau_k}{dk}\,S_X(\tau_k),
+\label{eq:one_step_clock}
+\end{equation}
+and, for a saturation level $B>0$, $\tau_k^{X,B}=\tau_k-\mathrm{sat}_B(S_X(\tau_k)/\lL(\tau_k))$ with $\mathrm{sat}_B(y)=\sgn(y)\min(|y|,B)$. We write $\delta_k^X=\tau_k^X-\gamma_k$ and $\delta_k^{X,B}=\tau_k^{X,B}-\gamma_k$.
+\end{definition}
+
+\begin{lemma}\label{lem:LeClair_equation}
+The exact counting relation is $N(t)=\NO(t)+S(t)+\omega(t)/\pi$, with $\omega(t)=O(1/t)$, as specified in \eqref{eq:N_decomposition}. At a simple ordinate its midpoint value is
+\begin{equation}
+ \NO(\gamma_k)+S^*(\gamma_k)+\frac{\omega(\gamma_k)}\pi
+                  =k-\frac12.
+ \label{eq:exact_midpoint_ordinate}
+\end{equation}
+For a repeated ordinate the right side is $\bar k_\gamma-\frac12$. Replacing $S$ by $S_X$ and omitting the smooth remainder defines the model equation $F_X(t)=k-\frac12$. The point $\tau_k^X$ is the first step of the iteration $t\mapsto t-(F_X(t)-k+\frac12)/\lL(t)$ started at $t=\tau_k$.
+\end{lemma}
+\begin{proof}
+The midpoint of the counting jump is $N(\gamma^-)+\nu(\gamma)/2=\bar k_\gamma-1/2$, so the exact count decomposition gives \eqref{eq:exact_midpoint_ordinate} and its repeated-ordinate form. The continuous argument of the finite Euler product, obtained by summing the principal arguments of its individual local factors, is $-\sum_{p\le X}\arg(1-p^{-1/2-it})=\pi S_X(t)$. Finally $F_X(\tau_k)-k+\frac12=S_X(\tau_k)$, which gives the first iterate. The arithmetic defect studied below uses the stated model; its exact identities never discard the smooth remainder in the genuine count.
+\end{proof}
+
+\section{Known results used}
+\label{sec:known_results}
+
+This section collects standard material; nothing in it is new.
+
+\begin{theorem}[Riemann--von Mangoldt; Littlewood; {\cite[Thms.~9.4, 9.9 and \S9.4]{Titchmarsh1986}}, \cite{Littlewood1924}]\label{thm:known_basic}
+$S(t)=O(\log t)$; the gaps $\gamma_{k+1}-\gamma_k$ are bounded; and $S_1(t)=\int_0^tS(u)\,du=O(\log t)$.
+\end{theorem}
+
+\begin{theorem}[Bellotti--Wong {\cite{BellottiWong2025}}]\label{thm:known_BW}
+For $T\ge e$,
+\begin{equation}
+\Bigl|N(T)-\frac T{2\pi}\log\frac T{2\pi e}\Bigr|\le0.10076\log T+0.24460\log\log T+8.08344 .
+\label{eq:BW_bound}
+\end{equation}
+\end{theorem}
+Earlier explicit forms are due to Trudgian \cite{Trudgian2014} and Hasanalizade, Shen and Wong \cite{HasanalizadeShenWong2022}.
+
+\begin{theorem}[Selberg {\cite{Selberg1946a}}; see {\cite[p.~225]{Fujii1974}} and {\cite[\S9.25]{Titchmarsh1986}}]\label{thm:known_selberg_moments}
+For every $j\in\mathbb Z_{\ge1}$, with $c_j=\frac{(2j)!}{j!\,(2\pi)^{2j}}$,
+\begin{equation}
+\int_T^{2T}S(t)^{2j}\,dt=c_j\,T(\log\log T)^j+O_j\bigl(T(\log\log T)^{j-1/2}\bigr).
+\label{eq:selberg_moments}
+\end{equation}
+\end{theorem}
+In \cite[p.~225]{Fujii1974} the formula is quoted for $\int_T^{T+H}$ with $T^{1/2+a}\le H\le T$; we use $H=T$.
+
+\begin{theorem}[Selberg's approximation, in the form of {\cite[\S3, pp.~232--233]{Fujii1974}}; \cite{Selberg1946b}]\label{thm:known_selberg_approx}
+Let $x_0=T^{1/160}$ and $S^{\rm pr}_{x_0}(t)=-\frac1\pi\sum_{p<x_0}p^{-1/2}\sin(t\log p)$. Then
+\begin{equation}
+\int_T^{2T}\bigl(S(t)-S^{\rm pr}_{x_0}(t)\bigr)^4dt\ll T .
+\label{eq:selberg_approx}
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Reference to the proof]
+In \cite[\S3]{Fujii1974}, for a primitive character $\chi$ modulo $q$ and $x\ge2$, Selberg's expression $S(t,\chi)-\frac1\pi\Im\sum_{p<x^3}\chi(p)p^{-1/2-it}=\sum_{i=1}^5O(B_i(t))$ is written with explicit functions $B_1,\dots,B_5$, and it is shown on p.~233 that $\|B_i\|\ll k^2H^{1/2k}$ for $x=T^{a_2/60k}$, where $\|f\|=(\int_T^{T+H}|f|^{2k})^{1/2k}$ and the hypotheses are those of the Main Theorem of \cite{Fujii1974}: $0<a_1,a_2\le\frac14$, $q\le T^{1/4-a_1}$ and $T^{1/2+a_2}\le H\le T$. Take $\chi$ principal ($q=1$, $\zeta=L(s,\chi_0)$), $k=2$, $a_2=\frac14$ and $H=T$. Then $x^3=T^{1/160}$, and $\frac1\pi\Im p^{-1/2-it}=-\frac1\pi p^{-1/2}\sin(t\log p)$.
+\end{proof}
+
+\begin{theorem}[Montgomery--Vaughan {\cite[Cor.~3]{MontgomeryVaughan1974}}]\label{thm:known_MV}
+For complex $b_n$, $\int_T^{2T}\bigl|\sum_{n\le Y}b_nn^{-it}\bigr|^2dt=\sum_{n\le Y}|b_n|^2\bigl(T+O(n)\bigr)$ with an absolute implied constant.
+\end{theorem}
+The version on $[T,2T]$ follows from the one on $[0,T]$ by replacing $b_n$ by $b_nn^{-iT}$.
+
+\begin{theorem}[Mertens {\cite{Mertens1874}}]\label{thm:known_mertens}
+For $y\ge2$, $\sum_{p\le y}\frac{\log p}p=\log y+O(1)$ and $\sum_{p\le y}\frac1p=\log\log y+B_1+O(\frac1{\log y})$ with a constant $B_1$.
+\end{theorem}
+
+\begin{theorem}[Kusmin--Landau; {\cite[Thm.~2.1]{GrahamKolesnik1991}}]\label{thm:known_KL}
+Let $f$ be real with a continuous monotone derivative on $[a,b]$, and suppose that $\|f'(x)\|\ge\lambda>0$ there, where $\|\cdot\|$ is the distance to the nearest integer. Then $\sum_{a<n\le b}e^{2\pi if(n)}\ll\lambda^{-1}$.
+\end{theorem}
+
+\begin{theorem}[Landau {\cite{Landau1912}}; uniform version by Gonek {\cite{Gonek1993}}]\label{thm:known_landau}
+For fixed $x>1$, $\sum_{0<\gamma\le T}x^{\rho}=-\frac T{2\pi}\Lambda(x)+O(\log T)$, where $\Lambda(x)=0$ unless $x$ is a prime power, and the zeros are counted with multiplicity.
+\end{theorem}
+
+\begin{theorem}[Littlewood; {\cite[Thm.~14.13]{Titchmarsh1986}}]\label{thm:known_RH_S}
+On the Riemann hypothesis, $S(t)=O(\log t/\log\log t)$.
+\end{theorem}
+
+\section{Identities at the zero ordinates}
+\label{sec:identities}
+
+The identities below are exact and involve no hypothesis on the zeros, not even their simplicity. Their specific application to ordinal defects is the starting point of the paper; the broader quadrature and moment methods are classical.
+
+\begin{theorem}\label{thm:identity_general}
+Let $m,n\in\mathbb Z_{\ge1}$ with $m<n$. Let $F:[\gamma_m,\gamma_n]\to\mathbb R$ be of class $C^1$ on $[\gamma_m,\gamma_n]$ and put $u_k=k-\frac12-F(\gamma_k)$ for $m\le k\le n$. For every integer $j\ge1$,
+\begin{equation}
+\int_{\gamma_m}^{\gamma_n}\bigl(N(t)-F(t)\bigr)^{2j}F'(t)\,dt=\sum_{k=m+1}^{n-1}P_j(u_k)+\frac{(\frac12+u_m)^{2j+1}+(\frac12-u_n)^{2j+1}}{2j+1},
+\label{eq:identity_general}
+\end{equation}
+where
+\begin{equation}
+P_j(u)=\frac{(\frac12+u)^{2j+1}+(\frac12-u)^{2j+1}}{2j+1}=\sum_{i=0}^{j}\binom{2j+1}{2i}\frac{2^{2i-2j}}{2j+1}\,u^{2i}=u^{2j}+\sum_{i<j}b_{j,i}u^{2i}.
+\label{eq:Pj_def}
+\end{equation}
+In particular, for $j=1$,
+\begin{equation}
+\sum_{k=m+1}^{n-1}u_k^2=\int_{\gamma_m}^{\gamma_n}\bigl(N(t)-F(t)\bigr)^2F'(t)\,dt-\frac{n-m-1}{12}-\frac{(\frac12+u_m)^3+(\frac12-u_n)^3}3 .
+\label{eq:identity_quadratic}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Fix $k$ with $m\le k<n$. If $\gamma_k<\gamma_{k+1}$ then exactly $k$ ordinates, counted with multiplicity, are $\le t$ for $t\in(\gamma_k,\gamma_{k+1})$, so $N(t)=k$ there. Define $H_k(y)=-(k-y)^{2j+1}/(2j+1)$.  Since $F\in C^1$, the chain rule and the fundamental theorem of calculus give
+\begin{equation}
+\int_{\gamma_k}^{\gamma_{k+1}}\bigl(k-F(t)\bigr)^{2j}F'(t)\,dt=\frac{(\frac12-u_{k+1})^{2j+1}+(\frac12+u_k)^{2j+1}}{2j+1},
+\label{eq:identity_one_gap}
+\end{equation}
+because $F(\gamma_k)-k=-\frac12-u_k$ and $F(\gamma_{k+1})-k=\frac12-u_{k+1}$. If $\gamma_k=\gamma_{k+1}$ the left side of \eqref{eq:identity_one_gap} is $0$; since then $u_{k+1}=u_k+1$, also the right side is $(-\frac12-u_k)^{2j+1}+(\frac12+u_k)^{2j+1}=0$. The values of $N$ at the finitely many ordinates do not affect the integrals. Summing \eqref{eq:identity_one_gap} over $m\le k<n$, the term $(\frac12+u_k)^{2j+1}$ with $m<k<n$ meets the term $(\frac12-u_k)^{2j+1}$ coming from the gap $(\gamma_{k-1},\gamma_k)$, which gives \eqref{eq:identity_general}. The expansion \eqref{eq:Pj_def} keeps the even powers of the binomial expansion, and the coefficient of $u^{2j}$ is $\binom{2j+1}{2j}/(2j+1)=1$. For $j=1$, $P_1(u)=u^2+\frac1{12}$.
+\end{proof}
+
+\begin{remark}\label{rem:twelfth}
+The constant $\frac1{12}$ is the mean square of a centred sawtooth of unit step: between two consecutive zeros $N-F$ decreases through one unit in the variable $y=F(t)$. Identity \eqref{eq:identity_quadratic} therefore says that the mean square of the defect at the zeros is the $dF$-mean square of $N-F$ minus the contribution of the sawtooth. Nothing is assumed about the sign of $F'$; when $F'$ changes sign the identity remains exact, with the integral counted with sign.
+\end{remark}
+
+\begin{corollary}\label{cor:identity_clock}
+With $F=\NO$, so that $u_k=s_k$ and $N-\NO=S+\omega/\pi$ almost everywhere,
+\begin{equation}
+\sum_{k=m+1}^{n-1}s_k^2=\int_{\gamma_m}^{\gamma_n}\Bigl(S(t)+\frac{\omega(t)}\pi\Bigr)^2\lL(t)\,dt-\frac{n-m-1}{12}-\frac{(\frac12+s_m)^3+(\frac12-s_n)^3}3 .
+\label{eq:identity_clock}
+\end{equation}
+With $F=F_X$, so that $u_k=u_k(X)$ and $N-F_X=S-S_X+\omega/\pi$ almost everywhere,
+\begin{align}
+\sum_{k=m+1}^{n-1}u_k(X)^2
+&=\int_{\gamma_m}^{\gamma_n}\Bigl(S(t)-S_X(t)+\frac{\omega(t)}\pi\Bigr)^2
+  \bigl(\lL(t)+S_X'(t)\bigr)\,dt \\
+&\quad-\frac{n-m-1}{12}
+-\frac{(\frac12+u_m)^3+(\frac12-u_n)^3}{3}.
+\label{eq:identity_LeClair}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:identity_general} with $j=1$ and \eqref{eq:N_decomposition}, \eqref{eq:defect_def}.
+\end{proof}
+
+\begin{lemma}\label{lem:first_moment_identity}
+Let $2<a<b$ be points which are not ordinates, let $f\in C^1[a,b]$ and $G=N-\NO$. Then
+\begin{equation}
+\sum_{a<\gamma_k\le b}s_kf(\gamma_k)=\int_a^bG(t)f(t)\lL(t)\,dt+\frac12\Bigl[f\,G^2\Bigr]_a^b-\frac12\int_a^bG(t)^2f'(t)\,dt .
+\label{eq:first_moment_identity}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $\gamma$ be an ordinate of multiplicity $\nu$ and $G^*(\gamma)=\frac12(G(\gamma^-)+G(\gamma^+))$. The indices with $\gamma_k=\gamma$ are $N(\gamma^-)+1,\dots,N(\gamma^-)+\nu$, so $\sum_{\gamma_k=\gamma}(k-\frac12)=\nu N(\gamma^-)+\frac{\nu^2}2=\nu\,\frac{N(\gamma^-)+N(\gamma^+)}2$ and $\sum_{\gamma_k=\gamma}s_k=\nu\,G^*(\gamma)$. Hence the left side of \eqref{eq:first_moment_identity} is the Stieltjes integral $\int_{(a,b]}G^*f\,dN$. As measures $dN=dG+\lL\,dt$. The function $G$ is $C^1$ between ordinates and jumps by $\nu$ at an ordinate of multiplicity $\nu$; at a jump $\Delta(G^2)=2G^*\Delta G$, and between jumps $(G^2)'=2GG'$. Hence $G^*\,dG=\frac12d(G^2)$, and integration by parts gives $\int_{(a,b]}f\,d(G^2)=[fG^2]_a^b-\int_a^bG^2f'\,dt$.
+\end{proof}
+
+\begin{corollary}\label{cor:cumulative}
+$\sum_{\gamma_k\le t}s_k=O(\log^2t)$. In particular the mean of $s_k$ over $k\le K$ is $O(K^{-1}\log^2K)$.
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:first_moment_identity} with $f\equiv1$, $a=14$ (below $\gamma_1$) and $b=t$. Then $G^2=O(\log^2t)$ by Theorem~\ref{thm:known_basic}, and $\int_{14}^tG\lL\,du=\int_{14}^tS\lL\,du+O(\log^2t)=\lL(t)S_1(t)-\int_{14}^tS_1(u)\frac{du}{2\pi u}+O(\log t)=O(\log^2t)$ by $S_1=O(\log t)$.
+\end{proof}
+
+\section{Moments and extremes of the clock displacement}
+\label{sec:clock_moments}
+
+\begin{theorem}\label{thm:clock_moments}
+For every fixed integer $j\ge1$, as $T\to\infty$,
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}s_k^{2j}=c_j(\log\log T)^j+O_j\bigl((\log\log T)^{j-1/2}\bigr),\qquad c_j=\frac{(2j)!}{j!\,(2\pi)^{2j}} .
+\label{eq:clock_moments}
+\end{equation}
+In particular the mean square of $s_k$ over $\IT$ is $\frac1{2\pi^2}\log\log T+O(\sqrt{\log\log T})$ and
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}\delta_k^2=\frac{2\log\log T}{\log^2T}\bigl(1+O((\log\log T)^{-1/2})\bigr).
+\label{eq:delta_mean_square}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $m$ and $n$ be the smallest and largest indices in $\IT$. Theorem~\ref{thm:identity_general} with $F=\NO$ gives
+\begin{equation}
+\sum_{k=m+1}^{n-1}P_j(s_k)=\int_{\gamma_m}^{\gamma_n}\Bigl(S+\frac\omega\pi\Bigr)^{2j}\lL\,dt+O(\log^{2j+1}T),
+\label{eq:moments_step1}
+\end{equation}
+since $|s_k|\ll\log T$ by Lemma~\ref{lem:s_bounds}. The intervals $[T,\gamma_m]$ and $[\gamma_n,2T]$ have bounded length (Theorem~\ref{thm:known_basic}) and the integrand is $O(\log^{2j+1}T)$ there; moreover $|(S+\omega/\pi)^{2j}-S^{2j}|\ll T^{-1}\log^{2j}T$. Since $\lL(t)=\lL(T)+O(1)$ on $[T,2T]$, Theorem~\ref{thm:known_selberg_moments} yields
+\begin{equation}
+\int_T^{2T}S^{2j}\lL\,dt=\lL(T)\,c_jT(\log\log T)^j+O\bigl(\lL(T)\,T(\log\log T)^{j-1/2}\bigr).
+\label{eq:moments_step2}
+\end{equation}
+Adding the terms $k=m,n$, which are $O(\log^{2j}T)$, and dividing by \eqref{eq:IT_size},
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}P_j(s_k)=c_j(\log\log T)^j+O\bigl((\log\log T)^{j-1/2}\bigr).
+\label{eq:moments_step3}
+\end{equation}
+For $j=1$ this is \eqref{eq:clock_moments}, because $P_1(s)=s^2+\frac1{12}$. If \eqref{eq:clock_moments} holds for all $i<j$, then $\sum_{i<j}b_{j,i}\frac1{\#\IT}\sum s_k^{2i}=O((\log\log T)^{j-1})$ and \eqref{eq:clock_moments} follows for $j$. For \eqref{eq:delta_mean_square} use \eqref{eq:s_delta}: $\lL(\xi_k)=\lL(T)(1+O(1/\log T))$ because $|\delta_k|\ll1$, and $\lL(T)^2=(2\pi)^{-2}\log^2T\,(1+O(1/\log T))$.
+\end{proof}
+
+\begin{corollary}\label{cor:clock_distribution}
+Let $\sigma_T^2=\frac1{2\pi^2}\log\log T$ and let $Z$ be a standard normal variable. For every fixed $\eta\ge0$,
+\begin{equation}
+\frac1{\#\IT}\#\{k\in\IT:|s_k|\le\eta\,\sigma_T\}\longrightarrow\mathbb P(|Z|\le\eta).
+\label{eq:clock_distribution}
+\end{equation}
+In particular, for every fixed $A>0$, $\#\{k\in\IT:|s_k|\le A\}=o(\#\IT)$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:clock_moments} the empirical distributions of $s_k^2/\sigma_T^2$, $k\in\IT$, have $j$-th moments tending to $c_j(2\pi^2)^j=\frac{(2j)!}{j!\,2^j}=\mathbb E[Z^{2j}]$. The law of $Z^2$ is determined by its moments, its moment generating function being finite near $0$, so the method of moments \cite[\S30]{Billingsley1995} gives convergence in distribution of $s_k^2/\sigma_T^2$ to $Z^2$; the limit law is continuous.
+\end{proof}
+
+\begin{remark}\label{rem:korolev}
+Selberg stated, and Korolev proved \cite{Korolev2012}, moment formulae for the integer displacement of $\gamma_n$ with respect to the Gram intervals, and Korolev deduced that $\gamma_n$ lies in its own Gram interval only for a set of indices of density zero. By Remark~\ref{rem:gram_points}, Theorem~\ref{thm:clock_moments} and Corollary~\ref{cor:clock_distribution} are the analogous statements for the real displacement $s_k$ with respect to the half-integer Gram points $\tau_k$. The proof given here is a direct consequence of Theorem~\ref{thm:identity_general} and Selberg's moments.
+\end{remark}
+
+\begin{proposition}\label{prop:extremes}
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+\item $\limsup_{k\to\infty}s_k=+\infty$ and $\liminf_{k\to\infty}s_k=-\infty$.
+\item $\limsup_{k\to\infty}|\delta_k|\le2\pi\cdot0.10076=0.633093\ldots$.
+\item On the Riemann hypothesis, $\delta_k\to0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) Let $\gamma_k<\gamma_{k+1}$ and $t\in(\gamma_k,\gamma_{k+1})$. Then $N(t)=k$ and, by monotonicity of $\NO$,
+\begin{equation}
+s_{k+1}-\frac12\le N(t)-\NO(t)\le s_k+\frac12 .
+\label{eq:sawtooth_sandwich}
+\end{equation}
+Suppose $s_k\le A$ for all large $k$. Then $S(t)\le A+1$ for all large $t$ by \eqref{eq:N_decomposition}. By Theorem~\ref{thm:known_basic}, $\int_T^{2T}S\,dt=O(\log T)$, so $\int_T^{2T}S^-dt=\int_T^{2T}S^+dt-\int_T^{2T}S\,dt\le(A+1)T+O(\log T)$ and $\int_T^{2T}|S|\,dt\ll T$. Hölder's inequality with exponents $\frac32$ and $3$ and Theorem~\ref{thm:known_selberg_moments} with $j=2$ give
+\begin{equation}
+\int_T^{2T}S^2dt\le\Bigl(\int_T^{2T}|S|\,dt\Bigr)^{2/3}\Bigl(\int_T^{2T}S^4dt\Bigr)^{1/3}\ll T(\log\log T)^{2/3},
+\label{eq:holder_contradiction}
+\end{equation}
+which contradicts \eqref{eq:selberg_moments} with $j=1$. The statement for $\liminf$ follows in the same way from the left inequality in \eqref{eq:sawtooth_sandwich}.
+
+(b) By Lemma~\ref{lem:s_bounds}, $|s_k|\le\max_\pm|N(\gamma_k^\pm)-\NO(\gamma_k)|+\frac12$, and $\NO(T)=\frac T{2\pi}\log\frac T{2\pi e}+\frac78$. Theorem~\ref{thm:known_BW} gives $|s_k|\le0.10076\log\gamma_k+O(\log\log\gamma_k)$. By \eqref{eq:s_delta}, $|\delta_k|=|s_k|/\lL(\xi_k)$ with $\lL(\xi_k)=\frac1{2\pi}\log\gamma_k\,(1+o(1))$.
+
+(c) Theorem~\ref{thm:known_RH_S} and Lemma~\ref{lem:s_bounds} give $s_k=O(\log\gamma_k/\log\log\gamma_k)$, hence $\delta_k=O(1/\log\log\gamma_k)$.
+\end{proof}
+
+\begin{proposition}[Effective finite-height consequence of Bellotti--Wong]\label{prop:BW_pointwise}
+Let $E(t)=0.10076\log t+0.24460\log\log t+8.08344$. For every $k$,
+\begin{equation}
+ -\frac{E(\gamma_k)+3/8}{\lL(\tau_k)}
+ \le\delta_k\le\frac{E(\gamma_k)-11/8}{\lL(\gamma_k)}.
+ \label{eq:BW_pointwise}
+\end{equation}
+These inequalities are analytic and unconditional, and count repeated ordinates individually.
+\end{proposition}
+\begin{proof}
+Apply \eqref{eq:BW_bound} to the one-sided counts at $\gamma_k$ and use Lemma~\ref{lem:s_bounds}. The smooth count exceeds the central counting term in that theorem by $7/8$, so one gets
+\begin{equation}
+ -E(\gamma_k)-3/8\le s_k\le E(\gamma_k)-11/8.
+ \label{eq:BW_ordinal_sandwich}
+\end{equation}
+When $\delta_k\ge0$, monotonicity of $\lL$ and $s_k=\int_{\gamma_k}^{\tau_k}\lL(t)\,dt$ give the upper bound in \eqref{eq:BW_pointwise}. When $\delta_k\le0$, $-s_k=\int_{\tau_k}^{\gamma_k}\lL(t)\,dt\ge-\delta_k\lL(\tau_k)$ gives the lower bound. The other inequality in each case is automatic, as $E(\gamma_k)>11/8$ and $\tau_k,\gamma_k>2\pi$.
+\end{proof}
+The bound of Bellotti--Wong for the counting error grows with $t$. Dividing after inversion by the local density of zeros gives the finite ordinate limit superior $2\pi\cdot0.10076=0.6330937515\ldots$. This consequence is deduced from their theorem; it is not a stronger independent estimate for their counting function. A limit superior is also distinct from $\sup_{k\ge1}|\delta_k|$: the measured value $|\delta_{34}|=0.993711$ already exceeds $0.6331$. Proposition~\ref{prop:BW_pointwise} is a finite-height envelope, not an assertion that $0.6331$ bounds every ordinate displacement.
+
+\begin{proposition}\label{prop:fixed_sup}
+Let $X\ge2$ be fixed and $B\in(0,\infty]$. Then $\limsup_k|\delta_k^{X,B}|=\limsup_k|\delta_k|$, while $\limsup_k|u_k(X)|=\infty$.
+\end{proposition}
+
+\begin{proof}
+$|\delta_k^{X,B}-\delta_k|\le|S_X(\tau_k)|/\lL(\tau_k)\le\sigma_X/\lL(\tau_k)\to0$ by \eqref{eq:sigma_M_def}, and $|u_k(X)-s_k|\le\sigma_X$; apply Proposition~\ref{prop:extremes}(a).
+\end{proof}
+
+\section{The main theorem: a variable cutoff in the truncated equation}
+\label{sec:main_theorem}
+
+\subsection{Statement}
+\label{subsec:main_statement}
+
+\begin{theorem}\label{thm:main}
+There exist real absolute constants $T_0>2\pi$ and $C>0$ such that, for every real $T\ge T_0$ and every real $X\in[2,T^{1/2}]$, writing $c=\log X/\log T$,
+\begin{equation}
+\Bigl|\frac1{\#\IT}\sum_{k\in\IT}u_k(X)^2-\frac1{2\pi^2}\log\frac1c\Bigr|\le C\Bigl(1+\sqrt{\log(1/c)}\Bigr).
+\label{eq:main_theorem}
+\end{equation}
+\end{theorem}
+
+The proof is given in Subsection~\ref{subsec:main_proof}. For fixed $c>0$, both the displayed main term and its error are bounded quantities: the estimate does not identify a limiting constant or an asymptotic equivalence in that regime. It controls the defect at the true ordinate, and does not select a root of $F_X(t)=k-\frac12$ when $F_X$ is not monotone. Note that $\log(1/c)=\log\log T-\log\log X$.
+
+\begin{corollary}[fixed cutoff]\label{cor:fixed_cutoff}
+Let $X\ge2$ be fixed. Then
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}u_k(X)^2=\frac1{2\pi^2}\log\log T+O_X\bigl(\sqrt{\log\log T}\bigr),
+\label{eq:fixed_cutoff}
+\end{equation}
+and for every fixed $A>0$, $\#\{k\in\IT:|u_k(X)|\le A\}=o(\#\IT)$.
+\end{corollary}
+
+\begin{proof}
+The first statement is \eqref{eq:main_theorem}. For the second, $|u_k(X)-s_k|\le\sigma_X$, so $|u_k(X)|\le A$ implies $|s_k|\le A+\sigma_X$; apply Corollary~\ref{cor:clock_distribution}.
+\end{proof}
+
+\begin{corollary}[power cutoff]\label{cor:power_cutoff}
+Let $0<c\le\frac12$ be fixed and $X=T^c$. Then
+\begin{equation}
+\limsup_{T\to\infty}\frac1{\#\IT}\sum_{k\in\IT}u_k(T^c)^2\le\frac1{2\pi^2}\log\frac1c+C\Bigl(1+\sqrt{\log(1/c)}\Bigr),
+\label{eq:power_cutoff}
+\end{equation}
+and for every function $\eta(T)\to\infty$, $\#\{k\in\IT:|u_k(T^c)|>\eta(T)\}=o(\#\IT)$. The same holds for $X=K^c$ with $K=N(T)$ and fixed $0<c<\frac12$, because then $X=T^{c_T}$ with $c_T=c+O(\log\log T/\log T)$, so that $c_T<\frac12$ for large $T$ and $\log(1/c_T)=\log(1/c)+o(1)$.
+\end{corollary}
+
+\begin{proof}
+The bound is \eqref{eq:main_theorem}; the second statement follows by Chebyshev's inequality.
+\end{proof}
+
+\begin{corollary}[dichotomy]\label{cor:dichotomy}
+Let $X=X(T)$ with $2\le X\le T^{1/2}$. The mean square of $u_k(X)$ over $k\in\IT$ is bounded as $T\to\infty$ if and only if $\liminf_{T\to\infty}\log X/\log T>0$. In particular, for any fixed $X_0\ge2$ and fixed $c\in(0,\frac12]$,
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}\Bigl(u_k(X_0)^2-u_k(T^c)^2\Bigr)=\frac1{2\pi^2}\log\log T+O\bigl(\sqrt{\log\log T}\bigr)\longrightarrow\infty .
+\label{eq:dichotomy}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Both directions follow from \eqref{eq:main_theorem}, since $x\mapsto\frac{x}{2\pi^2}-C(1+\sqrt x)$ tends to infinity. For \eqref{eq:dichotomy} subtract \eqref{eq:power_cutoff} from \eqref{eq:fixed_cutoff}.
+\end{proof}
+
+\begin{remark}\label{rem:comparison_LeClair}
+Corollary~\ref{cor:dichotomy} is the precise sense in which an ordinal-dependent number of primes improves the truncated zero-counting equation. With $N=\#\{p\le X\}$ primes, $\log N=\log X+O(\log\log X)$, so the condition is that $\log N$ grows proportionally to $\log T$. A fixed $N$, as in the computations of \cite[Sect.~VI]{LeClair2021}, leaves a defect whose mean square grows like $(2\pi^2)^{-1}\log\log T$, and almost all zeros then violate the truncated equation by more than any fixed amount. LeClair's requirement $N(t)\to\infty$ \cite[Sect.~III]{LeClair2021} is necessary but not sufficient: if $\log N=o(\log T)$, the mean-square defect still tends to infinity. The range $c>\frac12$, which contains LeClair's upper limit $N<[t^2]$, is not covered by Theorem~\ref{thm:main}.
+\end{remark}
+
+\begin{remark}\label{rem:block_rule}
+Theorem~\ref{thm:main} concerns a cutoff that is constant on each window $\IT$. Taking $T=2^r$ and $X=2^{rc}$ on $\mathcal I_{2^r}$ gives a cutoff depending on the ordinal through the window; the rule $X_k=(\tau_k/2\pi)^\theta$ used in Section~\ref{sec:selected_computations} differs from such a block rule by a factor at most $2^\theta$ inside each window. The extension of \eqref{eq:main_theorem} to cutoffs that vary from zero to zero is not proved here.
+\end{remark}
+
+\subsection{Lemmas on prime polynomials}
+\label{subsec:main_lemmas}
+
+Fix $T$ large and $2\le X\le T^{1/2}$, let $x_0=T^{1/160}$ and decompose $S_X=S_X^{(1)}+S_X^{(2)}+S_X^{(\ge3)}$ according to $m=1$, $m=2$ and $m\ge3$ in \eqref{eq:SX_def}. Let $\mathcal P$ be the set of primes in $(X,x_0)$ if $X<x_0$, and in $[x_0,X]$ if $X\ge x_0$, let $\epsilon=+1$ in the first case and $\epsilon=-1$ in the second, and put
+\begin{equation}
+D_1(t)=-\frac1\pi\sum_{p\in\mathcal P}\frac{\sin(t\log p)}{\sqrt p},\qquad V=\sum_{p\in\mathcal P}\frac1p,\qquad D=S^{\rm pr}_{x_0}-S_X=\epsilon D_1-S_X^{(2)}-S_X^{(\ge3)} .
+\label{eq:D_def}
+\end{equation}
+
+\begin{lemma}\label{lem:V_size}
+$V=\log(1/c)+O(1)$ uniformly for $0<c\le\frac12$ with $X=T^c\ge2$.
+\end{lemma}
+
+\begin{proof}
+By Theorem~\ref{thm:known_mertens}, $V=|\log\log x_0-\log\log X|+O(1)=|\log\frac{1}{160c}|+O(1)$. If $c\le\frac1{160}$ this is $\log\frac1c-\log160+O(1)$; if $\frac1{160}<c\le\frac12$ both $V$ and $\log\frac1c$ are $O(1)$.
+\end{proof}
+
+\begin{lemma}\label{lem:trig_MV}
+For real $b_n$, $2\le n\le Y$,
+\begin{equation}
+\int_T^{2T}\Bigl(\sum_{n\le Y}b_n\sin(t\log n)\Bigr)^2dt=\frac T2\sum_{n\le Y}b_n^2+O\Bigl(\sum_{n\le Y}nb_n^2+\Bigl(\sum_{n\le Y}|b_n|\Bigr)^2\Bigr),
+\label{eq:trig_MV}
+\end{equation}
+and the same holds with $\cos$ in place of $\sin$.
+\end{lemma}
+
+\begin{proof}
+With $Q(t)=\sum b_nn^{-it}$ we have $\sum b_n\sin(t\log n)=-\Im Q$ and $(\Im Q)^2=\frac12(|Q|^2-\Re Q^2)$. Theorem~\ref{thm:known_MV} evaluates $\int|Q|^2$, and $|\int_T^{2T}(mn)^{-it}dt|\le2/\log(mn)\le2/\log4$ bounds $\int Q^2$ by $O((\sum|b_n|)^2)$. For $\cos$ use $\Re Q$.
+\end{proof}
+
+\begin{lemma}\label{lem:D_moments}
+With absolute implied constants,
+\begin{align}
+\int_T^{2T}D^2\,dt&=\frac T{2\pi^2}V+O\bigl(T(1+\sqrt V)\bigr),
+\label{eq:D_second}\\
+\int_T^{2T}D^4\,dt&\ll T(1+V)^2,
+\label{eq:D_fourth}\\
+\int_T^{2T}S_X'(t)^2\,dt&\ll T(1+\log X)^2 .
+\label{eq:SX_derivative}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+All primes involved are $\le\max(X,x_0)\le T^{1/2}$. By Lemma~\ref{lem:trig_MV} with $b_p=\frac1{\pi\sqrt p}$, $\int D_1^2=\frac T{2\pi^2}V+O(T^{1/2}+(\sum_{p\le T^{1/2}}p^{-1/2})^2)=\frac T{2\pi^2}V+O(T^{1/2})$. For $S_X^{(2)}(t)=-\frac1{2\pi}\sum_{p\le X}p^{-1}\sin(t\log p^2)$, Lemma~\ref{lem:trig_MV} gives $\int(S_X^{(2)})^2\ll T\sum p^{-2}+\#\{p\le X\}+(\sum_{p\le X}p^{-1})^2\ll T$. Finally $|S_X^{(\ge3)}|\le\frac1\pi\sum_p\sum_{m\ge3}\frac1{mp^{m/2}}<\infty$. Expanding $D^2$ and using the Cauchy--Schwarz inequality for the cross terms gives \eqref{eq:D_second}.
+
+For \eqref{eq:D_fourth}, $(a+b+c)^4\le27(a^4+b^4+c^4)$ reduces it to the three parts. Let $Q(t)=\sum_{p\in\mathcal P}p^{-1/2}p^{-it}$, so $|D_1|\le|Q|/\pi$ and $Q^2=\sum_\nu c_\nu \nu^{-it}$ with $c_{p^2}=p^{-1}$, $c_{pq}=2(pq)^{-1/2}$ for $p<q$, and $\nu\le T$. Theorem~\ref{thm:known_MV} gives $\int|Q|^4=\sum|c_\nu|^2(T+O(\nu))\ll T\sum|c_\nu|^2\le T(1+2V^2)$. For $S_X^{(2)}$ the same argument applies to $Q_2(t)=\sum_{p\le X}p^{-1}(p^2)^{-it}$, since $|S_X^{(2)}|\le|Q_2|/2\pi$: $Q_2^2=\sum d_\nu\nu^{-it}$ with $\nu=(pq)^2$, $|d_\nu|\le2(pq)^{-1}$, so $\sum|d_\nu|^2\ll1$ and $\sum\nu|d_\nu|^2\le4\#\{p\le X\}^2\le4X^2\le4T$. The part $S_X^{(\ge3)}$ is bounded.
+
+For \eqref{eq:SX_derivative}, $S_X'(t)=\sum_{n\in A_X}a_n\log n\cos(t\log n)$. The terms $m=1$ have coefficients $\frac{\log p}{\pi\sqrt p}$, and Lemma~\ref{lem:trig_MV} with Theorem~\ref{thm:known_mertens} gives $\ll T\log X\sum_{p\le X}\frac{\log p}p+\sum_{p\le X}\log^2p+(\sum_{p\le X}\frac{\log p}{\sqrt p})^2\ll T(1+\log X)^2+X\log^2X$, and $X\le T^{1/2}$. The terms $m=2$ have coefficients $\frac{\log p}{\pi p}$ and contribute $\ll T+X\log X+\log^2X$. The terms $m\ge3$ are bounded by $\frac1\pi\sum_p\sum_{m\ge3}p^{-m/2}\log p<\infty$.
+\end{proof}
+
+\subsection{Proof of the main theorem}
+\label{subsec:main_proof}
+
+Let $E_0=S-S^{\rm pr}_{x_0}$ and $R=S-S_X=E_0+D$. By Theorem~\ref{thm:known_selberg_approx} and Hölder's inequality,
+\begin{equation}
+\int_T^{2T}E_0^4\,dt\ll T,\qquad\int_T^{2T}E_0^2\,dt\le T^{1/2}\Bigl(\int_T^{2T}E_0^4\,dt\Bigr)^{1/2}\ll T .
+\label{eq:E0_bounds}
+\end{equation}
+Write $J=\int_T^{2T}R^2\,dt$. From \eqref{eq:D_second}, \eqref{eq:E0_bounds} and the Cauchy--Schwarz inequality,
+\begin{equation}
+J=\frac T{2\pi^2}V+O\bigl(T(1+\sqrt V)\bigr),
+\label{eq:J_asymptotic}
+\end{equation}
+and from \eqref{eq:D_fourth}, \eqref{eq:E0_bounds} and $(a+b)^4\le8(a^4+b^4)$,
+\begin{equation}
+\int_T^{2T}R^4\,dt\ll T(1+V)^2 .
+\label{eq:R_fourth}
+\end{equation}
+
+Let $m$ and $n$ be the smallest and largest indices in $\IT$ and apply \eqref{eq:identity_LeClair}. By Lemma~\ref{lem:s_bounds} and \eqref{eq:sigma_M_def}, $|u_k(X)|\ll\log T+\sqrt X\ll T^{1/4}$, so the boundary terms and $u_m^2,u_n^2$ are $O(T^{3/4})$. The intervals $[T,\gamma_m]$ and $[\gamma_n,2T]$ have bounded length and on them $|R|^2(\lL+|S_X'|)\ll T^{3/4}$. Since $|\omega|\ll1/T$, replacing $(R+\omega/\pi)^2$ by $R^2$ costs $\ll T^{-1}\int_T^{2T}(|R|+1)(\lL+|S_X'|)\,dt\ll(1+V)^{1/2}\log T$ by the Cauchy--Schwarz inequality, \eqref{eq:J_asymptotic} and \eqref{eq:SX_derivative}. Hence
+\begin{equation}
+\sum_{k\in\IT}u_k(X)^2=\int_T^{2T}R^2\lL\,dt+\int_T^{2T}R^2S_X'\,dt-\frac{\#\IT}{12}+O(T^{3/4}).
+\label{eq:main_step1}
+\end{equation}
+Since $0\le\lL(t)-\lL(T)\le\frac{\log2}{2\pi}$ on $[T,2T]$, the first integral is $\lL(T)J+O(J)$. By the Cauchy--Schwarz inequality, \eqref{eq:R_fourth} and \eqref{eq:SX_derivative},
+\begin{equation}
+\Bigl|\int_T^{2T}R^2S_X'\,dt\Bigr|\ll T(1+V)(1+\log X).
+\label{eq:main_step2}
+\end{equation}
+After division by $\#\IT\asymp T\log T$, this contributes
+\[
+ O\!\left(\frac{1+V}{\log T}+c(1+V)\right).
+\]
+Here $0<c\le1/2$, $V=\log(1/c)+O(1)$, and $c(1+\log(1/c))$ is bounded on $(0,1/2]$.  Moreover, $X\ge2$ implies $c\ge(\log2)/(\log T)$ and hence $V\ll1+\log\log T$, so $(1+V)/\log T=o(1)$.  Thus no unproved improvement of \eqref{eq:main_step2} is required.  Dividing by $\#\IT=T\lL(T)+O(T)$ and using \eqref{eq:J_asymptotic},
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}u_k(X)^2=\frac V{2\pi^2}+O\Bigl(1+\sqrt V+\frac{1+V}{\log T}+(1+V)\,c\Bigr),
+\label{eq:main_step3}
+\end{equation}
+because $\log X=c\log T$. By Lemma~\ref{lem:V_size}, $(1+V)c\ll c(1+\log\frac1c)\ll1$ for $0<c\le\frac12$, and $V\ll\log\log T$ because $c\ge\log2/\log T$, so $(1+V)/\log T=o(1)$. A second application of Lemma~\ref{lem:V_size} replaces $\frac V{2\pi^2}$ by $\frac1{2\pi^2}\log\frac1c$ and $\sqrt V$ by $\sqrt{\log(1/c)}+O(1)$. This proves \eqref{eq:main_theorem}.\qed
+
+\begin{remark}\label{rem:alternative_route}
+An alternative route to an upper bound of the form $\sum_{k\in\IT}u_k(T^c)^2\ll_c\#\IT$ averages a pointwise inequality for $|u_k|$ over windows $[\gamma_k,\gamma_k+h]$ with $h=1/\log T$, and controls the overlap of the windows through the multiplicity $M_h(t)=\#\{k:\gamma_k\le t\le\gamma_k+h\}\le1+N(t)-N(t-h)$, whose moments are bounded by the corollary to the Main Theorem of \cite{Fujii1974}. Such an argument needs fourth moments of $S-S_X$ and of $S_X'$ and gives only an upper bound. The identity of Theorem~\ref{thm:identity_general} makes the window multiplicities unnecessary, needs only the second moment of $S_X'$, and gives the uniform main-term estimate \eqref{eq:main_theorem}. In the parametrization $X=K^c$ with $K\asymp T\log T$ the condition $X^2\le T$ of the Montgomery--Vaughan step requires $c<\frac12$; in the parametrization $X=T^c$ the endpoint $c=\frac12$ is included.
+\end{remark}
+
+\subsection{Localization of the zeros for small cutoffs}
+\label{subsec:localization}
+
+\begin{proposition}\label{prop:localization}
+Let $X\ge2$ with $M_X\le\frac12\lL(T)$. Then $F_X$ is strictly increasing on $[T,2T]$, for every $k\in\IT$ with $F_X(T)\le k-\frac12\le F_X(2T)$ the truncated equation $F_X(t)=k-\frac12$ has exactly one solution $t_k^X\in[T,2T]$, and
+\begin{equation}
+|\gamma_k-t_k^X|\le\frac{2\,|u_k(X)|}{\lL(T)} .
+\label{eq:localization}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:sigma_M_def}, $F_X'\ge\lL(T)-M_X\ge\frac12\lL(T)$ on $[T,2T]$, and $u_k(X)=F_X(t_k^X)-F_X(\gamma_k)$; apply the mean value theorem.
+\end{proof}
+
+\begin{remark}\label{rem:localization_scope}
+Since $M_X\asymp\sqrt X$, Proposition~\ref{prop:localization} applies only for $X\ll\log^2T$, where $\log(1/c)\sim\log\log T$; it then turns \eqref{eq:main_theorem} into a mean-square localization of $\gamma_k$ around the solutions of the truncated counting equation, but with a growing constant. For $X=T^c$ the bound $M_X\le\frac12\lL(T)$ fails, $F_X$ need not be monotone and the truncated equation may have several solutions near $\gamma_k$; the defect $u_k(X)$ measures the quality of the equation without selecting a solution.
+\end{remark}
+
+\section{Results conditional on a Landau-type hypothesis}
+\label{sec:conditional}
+
+\begin{hypothesis}[L]\label{hyp:L}
+For every fixed integer $n\ge2$, as $t\to\infty$,
+\begin{equation}
+\sum_{0<\gamma\le t}n^{i\gamma}=-\frac t{2\pi}\frac{\Lambda(n)}{\sqrt n}+o(t),
+\label{eq:hyp_L}
+\end{equation}
+the zeros being counted with multiplicity.
+\end{hypothesis}
+
+\begin{proposition}\label{prop:RH_implies_L}
+The Riemann hypothesis implies Hypothesis~\ref{hyp:L}, with error $O(\log t)$.
+\end{proposition}
+
+\begin{proof}
+On the Riemann hypothesis $n^\rho=\sqrt n\,n^{i\gamma}$; apply Theorem~\ref{thm:known_landau}.
+\end{proof}
+
+\begin{remark}\label{rem:L_unconditional}
+Unconditionally, Theorem~\ref{thm:known_landau} holds for $\sum n^\rho$, and $|n^{\rho}-\sqrt n\,n^{i\gamma}|\le n\log n\,|\beta-\frac12|$. Hypothesis~\ref{hyp:L} therefore follows from $\sum_{0<\gamma\le t}|\beta-\frac12|=o(t)$, whereas the density estimates of Selberg give $O(t)$ \cite[\S9.24]{Titchmarsh1986}. Theorems~\ref{thm:identity_general}--\ref{thm:main} do not use Hypothesis~\ref{hyp:L}.
+\end{remark}
+
+\begin{lemma}\label{lem:clock_equidistribution}
+For fixed $\beta\ne0$, $\sum_{k\in\IT}e^{i\beta\tau_k}\ll_\beta\log T$. Consequently, for fixed integers $m,n\ge2$,
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}\sin(\tau_k\log m)\sin(\tau_k\log n)\longrightarrow\frac12\,\mathbf 1_{m=n}.
+\label{eq:clock_equidistribution}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We may take $\beta>0$. Let $f(k)=\beta\tau_k/2\pi$ for real $k$. By \eqref{eq:clock_derivative}, $f'(k)=\beta/\log(\tau_k/2\pi)$ is positive and decreasing, and lies in $[\beta/\log(T/\pi),\frac12]$ for $k\in\IT$ and $T$ large; hence $\|f'\|\ge\beta/\log(T/\pi)$ and Theorem~\ref{thm:known_KL} gives the bound. For \eqref{eq:clock_equidistribution} write $2\sin a\sin b=\cos(a-b)-\cos(a+b)$ and use the bound with $\beta=\log(m/n)$ and $\beta=\log(mn)$, together with $\#\IT\asymp T\log T$.
+\end{proof}
+
+\begin{theorem}\label{thm:projection}
+Assume Hypothesis~\ref{hyp:L}. For every fixed integer $n\ge2$,
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}s_k\sin(\gamma_k\log n)\longrightarrow\frac{a_n}2=-\frac{\Lambda(n)}{2\pi\sqrt n\log n},
+\label{eq:projection}
+\end{equation}
+and the same holds with $\tau_k$ in place of $\gamma_k$.
+\end{theorem}
+
+\begin{proof}
+Let $\alpha=\log n$ and $\Phi(t)=\int_{14}^tS(u)n^{iu}du$. With $g(u)=n^{iu}/(i\alpha)$ and $S=N-\NO-\omega/\pi$, integration by parts gives
+\begin{equation}
+\Phi(t)=\bigl[Sg\bigr]_{14}^t-\frac1{i\alpha}\sum_{14<\gamma\le t}n^{i\gamma}+\int_{14}^tg\Bigl(\lL+\frac{\omega'}\pi\Bigr)du=\frac i\alpha\sum_{0<\gamma\le t}n^{i\gamma}+O(\log t),
+\label{eq:projection_Phi}
+\end{equation}
+because $\int_{14}^tg\lL\,du=O(\log t)$ by a second integration by parts and $\omega'=O(u^{-2})$. Hypothesis~\ref{hyp:L} gives $\Phi(t)=-i\,\frac{\Lambda(n)}{2\pi\sqrt n\,\alpha}\,t+o(t)$. By partial summation, using $\frac{d}{dt}(t\lL(t))=\lL(t)+\frac1{2\pi}$,
+\begin{equation}
+\int_T^{2T}S(t)n^{it}\lL(t)\,dt=\bigl[\Phi\lL\bigr]_T^{2T}-\int_T^{2T}\frac{\Phi(t)}{2\pi t}\,dt=-i\,\frac{\Lambda(n)}{2\pi\sqrt n\,\alpha}\int_T^{2T}\lL\,dt+o(T\log T).
+\label{eq:projection_partial}
+\end{equation}
+Taking imaginary parts, $\int_T^{2T}S(t)\sin(\alpha t)\lL(t)\,dt=\frac{a_n}2\int_T^{2T}\lL\,dt+o(T\log T)$. Now apply Lemma~\ref{lem:first_moment_identity} with $f(t)=\sin(\alpha t)$, $a=T$, $b=2T$ (we may assume that $T$ and $2T$ are not ordinates). The term with $\omega$ is $O(\log T)$, the boundary term is $O(\log^2T)$ and $\frac12\int_T^{2T}G^2|f'|\,dt\ll\int_T^{2T}S^2dt+O(1)\ll T\log\log T=o(T\log T)$ by Theorem~\ref{thm:known_selberg_moments}. Dividing by $\#\IT=\int_T^{2T}\lL\,dt+O(\log T)$ gives \eqref{eq:projection}. Finally $|\sin(\alpha\tau_k)-\sin(\alpha\gamma_k)|\le\alpha|\delta_k|$ and, by \eqref{eq:s_delta} and Theorem~\ref{thm:clock_moments}, $\sum_{k\in\IT}|s_k\delta_k|\ll(\log T)^{-1}\sum_{k\in\IT}s_k^2\ll\#\IT\,\log\log T/\log T$.
+\end{proof}
+
+\begin{corollary}\label{cor:gain}
+Assume Hypothesis~\ref{hyp:L}. Let $A$ be a finite set of prime powers and $\lambda\in\R$. Then
+\begin{equation}
+\frac1{\#\IT}\sum_{k\in\IT}\Bigl(s_k^2-\bigl(s_k-\lambda S_A(\tau_k)\bigr)^2\Bigr)\longrightarrow(2\lambda-\lambda^2)\,v_A ,
+\label{eq:gain}
+\end{equation}
+with $v_A$ as in \eqref{eq:SA_def}. The limit is maximal for $\lambda=1$, where it equals $v_A$.
+\end{corollary}
+
+\begin{proof}
+The left side is $2\lambda\langle s_kS_A(\tau_k)\rangle-\lambda^2\langle S_A(\tau_k)^2\rangle$, where $\langle\cdot\rangle$ is the mean over $\IT$. By Theorem~\ref{thm:projection}, $\langle s_kS_A(\tau_k)\rangle\to\sum_{n\in A}a_n^2/2=v_A$, and by Lemma~\ref{lem:clock_equidistribution}, $\langle S_A(\tau_k)^2\rangle\to v_A$.
+\end{proof}
+
+\begin{remark}\label{rem:gain_full_factors}
+For a finite set of primes $P$ and $A_{P,M}=\{p^m:p\in P,m\le M\}$ one has $v_{A_{P,M}}\uparrow c_P$ as $M\to\infty$ by \eqref{eq:cP_def}. The experiments of Section~\ref{sec:selected_computations} use the full local factors ($M=\infty$); the passage $M\to\infty$ inside the limit \eqref{eq:gain} is not covered by the proof, because the convergence in Theorem~\ref{thm:projection} is not shown to be uniform in $n$. Under the Riemann hypothesis the uniform version of Landau's formula \cite{Gonek1993} is the natural tool for that step; we do not carry it out here.
+\end{remark}
+
+\begin{remark}\label{rem:gain_meaning}
+Corollary~\ref{cor:gain} shows that, among the multiples $\lambda S_A$ of the Euler phase, the Euler phase itself ($\lambda=1$) is optimal for the clock, and that its gain is the diagonal variance $v_A=\frac12\sum_{n\in A}a_n^2$. This is the full least-squares gain for those fixed components under the hypotheses used; the factor $1/2$ comes from the mean of $\sin^2$, not from an additional loss of half the predictable variance. Since $v_{A_X}\to\infty$ as $X\to\infty$ while $v_A$ is finite for every fixed $A$, a fixed set of primes recovers only a bounded part of the mean square $\frac1{2\pi^2}\log\log T$ of $s_k$, in agreement with Corollary~\ref{cor:fixed_cutoff}.
+\end{remark}
+
+\section{The one-step corrected clock}
+\label{sec:one_step_clock}
+
+The experiments evaluate the Euler phase at the clock point $\tau_k$, which is known, rather than at the unknown $\gamma_k$. The following identity relates the two.
+
+\begin{proposition}\label{prop:one_step_decomposition}
+Let $r_k(X)=\lL(\tau_k)\,\delta_k^X$ be the residual of the one-step clock in ordinal units. Then
+\begin{equation}
+r_k(X)=u_k(X)+\bigl(S_X(\gamma_k)-S_X(\tau_k)\bigr)+\eps_k,\qquad|\eps_k|\le\frac{\delta_k^2}{2\pi\min(\gamma_k,\tau_k)},
+\label{eq:one_step_decomposition}
+\end{equation}
+and $|S_X(\gamma_k)-S_X(\tau_k)|\le M_X|\delta_k|$.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:one_step_clock}, $r_k(X)=\lL(\tau_k)\delta_k-S_X(\tau_k)$, and by \eqref{eq:s_delta}, $\lL(\tau_k)\delta_k=s_k+(\lL(\tau_k)-\lL(\xi_k))\delta_k$ with $|\lL(\tau_k)-\lL(\xi_k)|\le|\delta_k|/(2\pi\min(\gamma_k,\tau_k))$. Insert $s_k=u_k(X)+S_X(\gamma_k)$.
+\end{proof}
+
+\subsection{Two response functions and an exact transport identity}
+\label{subsec:two_responses}
+For a finite nonempty set of indices $I$, write $\langle h\rangle_I=|I|^{-1}\sum_{k\in I}h_k$. Unless a window is specified otherwise, $I=\IT$. For a prime power $n$, so that $a_n\ne0$, define
+\begin{equation}
+ \rho_n^\gamma(I)=\frac{2}{a_n}\langle s_k\sin(\gamma_k\log n)\rangle_I,
+ \qquad
+ \rho_n^\tau(I)=\frac{2}{a_n}\langle s_k\sin(\tau_k\log n)\rangle_I.
+ \label{eq:two_responses}
+\end{equation}
+For a prime $p$, both normalizations are $-2\pi\sqrt p$ times the corresponding projection. These are finite-window statistics, defined without RH. A universal function of $\theta=\log p/\log(T/2\pi)$ would describe a limit of these statistics with $p$ varying with $T$; its existence is an additional assertion. Theorem~\ref{thm:projection} concerns fixed $n$, for which $\theta\to0$.
+
+The distinction between the two evaluation points has the exact expression
+\begin{equation}
+ \begin{split}
+ \rho_n^\gamma(I)-\rho_n^\tau(I)
+ =-\frac{2\log n}{a_n}\int_0^1
+ \left\langle s_k\delta_k
+ \cos\bigl((\tau_k-v\delta_k)\log n\bigr)\right\rangle_I\,dv .
+ \end{split}
+ \label{eq:response_transport}
+\end{equation}
+This follows by differentiating the sine along the segment from $\tau_k$ to $\gamma_k=\tau_k-\delta_k$. The bounded-displacement interpolation used in the general RvM construction therefore also transports these observables, but its existence does not evaluate their transport integral. For fixed $n$, its absolute value tends to zero by Theorem~\ref{thm:clock_moments}, as in the proof of Theorem~\ref{thm:projection}. For $\log p\asymp\log T$, neither that argument nor a small mean square of $\delta_k$ makes the phase change $\delta_k\log p$ small. A law for $\rho^\gamma$ cannot consequently be substituted for a law for $\rho^\tau$.
+
+\subsection{Exact accounting of the mean-square gain}
+\label{subsec:exact_accounting}
+Let $A$ be a finite set of prime powers and put
+\begin{equation}
+ C_A(I)=\langle S_A(\tau_k)^2\rangle_I-\frac12\sum_{n\in A}a_n^2.
+ \label{eq:CA_def}
+\end{equation}
+It includes both the finite-window diagonal discrepancies and all cross terms. It need not have either sign.
+
+\begin{proposition}[Finite-window gain]\label{prop:exact_gain}
+For every such $I,A$ and every real $\lambda$,
+\begin{equation}
+ \begin{split}
+ \left\langle s_k^2-(s_k-\lambda S_A(\tau_k))^2\right\rangle_I
+ =\sum_{n\in A}a_n^2\left(\lambda\rho_n^\tau(I)-\frac{\lambda^2}{2}\right)
+ -\lambda^2C_A(I).
+ \end{split}
+ \label{eq:exact_gain}
+\end{equation}
+The identity also holds for the full local factors $A=A_X$, with absolutely convergent sums; write $C_X=C_{A_X}$ in this case.
+\end{proposition}
+\begin{proof}
+Expand the square and use $\langle s_kS_A(\tau_k)\rangle_I=\frac12\sum_{n\in A}a_n^2\rho_n^\tau(I)$. For fixed $X$, $\sum_{n\in A_X}|a_n|<\infty$, and $s_k$ is bounded on the finite set $I$, so the same argument passes to the full factors by absolute convergence.
+\end{proof}
+In particular the unit-coefficient gain is
+\begin{equation}
+ \begin{split}
+ \langle s_k^2-(s_k-S_X(\tau_k))^2\rangle_I
+ ={}&\sum_{p\le X}a_p^2\left(\rho_p^\tau-\tfrac12\right)-C_X\\
+ &+\sum_{\substack{p\le X\\m\ge2}}a_{p^m}^2
+       \left(\rho_{p^m}^\tau-\tfrac12\right).
+ \end{split}
+ \label{eq:full_factor_gain}
+\end{equation}
+For the prime-only phase the last sum is absent and $C_X$ must be computed for that phase. The two conventions must not be mixed. Formula~\eqref{eq:full_factor_gain} supplies an exact criterion for the sign of the gain without independence assumptions. A threshold $\rho_p^\tau=1/2$ describes a single diagonal prime contribution; it does not determine the optimum of a full Euler phase when $C_X$ and prime powers matter.
+
+\subsection{The matrix projection and reconstruction of an ordinate}
+\label{subsec:matrix_projection}
+For a finite set $A$ of frequencies $n\ge2$, not necessarily prime powers, let
+\begin{equation}
+ \phi_n(k)=\sin(\tau_k\log n),\qquad
+ G_{mn}=\langle\phi_m\phi_n\rangle_I,\qquad
+ b_n=\langle s_k\phi_n(k)\rangle_I.
+ \label{eq:Gram_projection}
+\end{equation}
+\begin{proposition}[Finite-window optimal coefficients]\label{prop:matrix_projection}
+For $P_{\mathbf c}(k)=\sum_{n\in A}c_n\phi_n(k)$,
+\begin{equation}
+ \langle(s_k-P_{\mathbf c}(k))^2\rangle_I
+ =\langle s_k^2\rangle_I-2\mathbf c^{\mathsf T}\mathbf b
+       +\mathbf c^{\mathsf T}G\mathbf c.
+ \label{eq:projection_quadratic}
+\end{equation}
+If $G$ is invertible, the unique minimizer is $\mathbf c=G^{-1}\mathbf b$ and the gain is $\mathbf b^{\mathsf T}G^{-1}\mathbf b$. In general the minimizers solve $G\mathbf c=\mathbf b$, with minimal-norm solution $G^\dagger\mathbf b$ and gain $\mathbf b^{\mathsf T}G^\dagger\mathbf b$.
+\end{proposition}
+\begin{proof}
+Expansion gives \eqref{eq:projection_quadratic}. The matrix $G$ is positive semidefinite. If $G\mathbf v=0$, then $\langle P_{\mathbf v}^2\rangle_I=0$, so $P_{\mathbf v}=0$ on $I$ and $\mathbf v^{\mathsf T}\mathbf b=0$. Thus $\mathbf b$ belongs to the range of $G$. Completing the square on this range proves all assertions.
+\end{proof}
+For prime powers, $b_n=a_n\rho_n^\tau/2$. The approximation $G\approx\frac12I$ would give $c_n\approx a_n\rho_n^\tau$, but Lemma~\ref{lem:clock_equidistribution} establishes the limit only for fixed finite sets, not for sets growing with $T$.
+
+Put $q_k=\lL(\tau_k)\delta_k=s_k+\eps_k$, with the error of Proposition~\ref{prop:one_step_decomposition}. Any chosen coefficient vector defines
+\begin{equation}
+ \widehat\gamma_k=\tau_k-\frac{P_{\mathbf c}(k)}{\lL(\tau_k)},\qquad
+ \widehat\gamma_k-\gamma_k
+   =\frac{s_k-P_{\mathbf c}(k)+\eps_k}{\lL(\tau_k)}.
+ \label{eq:matrix_reconstruction}
+\end{equation}
+If diagonal prime coefficients $c_p=a_p\rho_p^\tau$ are used, the first formula reads
+\begin{equation}
+ \widehat\gamma_k=\tau_k+
+ \frac{2}{\log(\tau_k/2\pi)}\sum_{p\le X}
+ \rho_p^\tau\,\frac{\sin(\tau_k\log p)}{\sqrt p}.
+ \label{eq:rho_tau_predictor}
+\end{equation}
+The response coefficients in this formula must be supplied by a proved law or by independent training data. Computing them from the same unknown ordinates produces a fitted reconstruction, not an independent prediction.
+
+For exact least squares in ordinate units, the relevant matrix and vector instead are
+\begin{equation}
+ G^{(t)}_{mn}=\left\langle\frac{\phi_m\phi_n}{\lL(\tau_k)^2}\right\rangle_I,
+ \qquad
+ b^{(t)}_n=\left\langle\frac{\delta_k\phi_n}{\lL(\tau_k)}\right\rangle_I,
+ \label{eq:weighted_Gram}
+\end{equation}
+and $G^{(t)}\mathbf c=\mathbf b^{(t)}$. This distinguishes the objective $\langle(\widehat\gamma-\gamma)^2\rangle_I$ from the ordinal objective in \eqref{eq:projection_quadratic}. Neither least-squares identity gives a pointwise bound uniform in $k$. Such a bound requires control of the individual residual in \eqref{eq:matrix_reconstruction}.
+
+\subsection{Composite-frequency diagnostic}
+\label{subsec:composite_diagnostic}
+For every integer $n\ge2$ define the raw diagnostic normalization
+\begin{equation}
+\rho_n=-2\pi\sqrt n\langle s_k\sin(\tau_k\log n)\rangle.
+\label{eq:raw_response}
+\end{equation} It equals $\rho_p^\tau$ at primes, but for a prime power $n=p^m$ it equals $\rho_{p^m}^\tau/m$. The raw normalization is used in the composite-frequency formula and its numerical table; it is distinct from the unit-limit prime-power normalization in \eqref{eq:two_responses}.
+
+
+\begin{heuristic}\label{heur:second_order}
+This is a heuristic argument. In Theorem~\ref{thm:projection} the term $-\frac12\int G^2f'$ of \eqref{eq:first_moment_identity} and the replacement of $\gamma_k$ by $\tau_k$ are of relative size $1/\log T$. Modelling $S$ by $\sum a_m\sin(t\log m)$, the coefficient of $\cos(t\log n)$ in $S^2$ for $n=p^aq^b$ with distinct primes $p,q$ is $-a_{p^a}a_{q^b}$, and the two corrections combine to the prediction
+\begin{equation}
+\rho_n:=-2\pi\sqrt n\,\Bigl\langle s_k\sin(\tau_k\log n)\Bigr\rangle\approx\frac{\Lambda(n)}{\log n}+\frac{\log n}{ab\,\log(T/2\pi)}\,\mathbf 1_{n=p^aq^b},
+\label{eq:second_order}
+\end{equation}
+the first term being the limit given by Theorem~\ref{thm:projection}.
+\end{heuristic}
+
+\section{A moving-prime response law and its exact arithmetic target}
+\label{sec:moving_response}
+The function singled out by the prime-resonant calculation is
+\begin{equation}
+ \Phi(\theta)=(1+\theta)\log(1+\theta)+(1-\theta)\log(1-\theta),
+ \qquad R(\theta)=1-\Phi(\theta),\quad 0<\theta<1.
+ \label{eq:universal_candidate}
+\end{equation}
+The calculation in Section~\ref{sec:sine_response} proves its appearance in a specified determinantal response model. Its identification with the responses of the zeta ordinates is the arithmetic problem formulated below. No theorem for the zeta ordinates is inferred merely from a GUE interpretation.
+
+\subsection{An exact formula for the response at a genuine ordinate}
+\label{subsec:gamma_response_identity}
+Let $T,2T$ be points which are not zero ordinates, put $M_T=\#\IT$, $L=\log(T/2\pi)$, $G=N-\NO=S+\omega/\pi$, and, for a prime $p$, put $w=\log p$ and $\theta=w/L$. Define
+\begin{equation}
+ A_{T,p}=-\frac{2\pi\sqrt p}{M_T}\int_T^{2T}G(t)\sin(wt)\lL(t)\,dt,
+ \qquad C_{T,p}=\frac1T\int_T^{2T}S(t)^2p^{it}\,dt.
+ \label{eq:ATp_CTp}
+\end{equation}
+\begin{proposition}[Separation of one- and two-point terms]\label{prop:gamma_response_exact}
+For every such $T,p$,
+\begin{equation}
+ \begin{split}
+ \rho_p^\gamma(\IT)={}& A_{T,p}
+ +\frac{\pi\sqrt p\,wT}{M_T}\Re C_{T,p}
+ -\frac{\pi\sqrt p}{M_T}[G(t)^2\sin(wt)]_T^{2T}\\
+ &+\frac{\pi\sqrt p\,w}{M_T}
+       \int_T^{2T}(G(t)^2-S(t)^2)\cos(wt)\,dt.
+ \end{split}
+ \label{eq:gamma_response_exact}
+\end{equation}
+In particular, if $p=(T/2\pi)^{\theta+o(1)}$ and $\theta$ stays in a compact subset of $(0,1)$, then
+\begin{equation}
+ \rho_p^\gamma=A_{T,p}
+ +2\pi^2\theta\sqrt p\,\bigl(1+O(1/L)\bigr)\Re C_{T,p}+o(1).
+ \label{eq:gamma_response_scaled}
+\end{equation}
+The factor $1+O(1/L)$ is retained until the size of $\sqrt p\,C_{T,p}$ is controlled.
+\end{proposition}
+\begin{proof}
+Apply Lemma~\ref{lem:first_moment_identity} with $f(t)=\sin(wt)$, and multiply by $-2\pi\sqrt p/M_T$. This gives \eqref{eq:gamma_response_exact}, including its boundary sign. Since $\omega(t)=O(1/T)$ and $S(t)=O(\log T)$ on the window, $\int_T^{2T}|G^2-S^2|\,dt\ll\log T$. The boundary contribution is $O(\sqrt p\log T/T)$; the last integral contributes $O(\sqrt p\,w/T)$. Both tend to zero in the stated range. Finally $M_T=TL/(2\pi)+O(T)$, which gives \eqref{eq:gamma_response_scaled}.
+\end{proof}
+
+\begin{hypothesis}[Uniform one-particle input]\label{hyp:uniform_prime}
+For every fixed $0<\theta_0<\theta_1<1$, uniformly over primes satisfying $\theta_0\le\log p/L\le\theta_1$, one has $A_{T,p}=1+o(1)$ as $T\to\infty$.
+\end{hypothesis}
+This is a moving-prime input, distinct from Hypothesis~\ref{hyp:L}. One sufficient, stronger explicit-formula input is
+\begin{equation}
+ \sup_{T\le t\le2T}
+ \left|\sum_{T<\gamma_k\le t}p^{i\gamma_k}
+       +\frac{(t-T)\log p}{2\pi\sqrt p}\right|
+   =o\left(\frac{T\log p}{\sqrt p}\right)
+ \label{eq:uniform_Landau_sufficient}
+\end{equation}
+uniformly in that range. Indeed, integrate $G(t)e^{iwt}\lL(t)$ by parts with the primitive $e^{iwt}\lL(t)/(iw)$; the extra term containing $\lL'(t)$ is $O(\log T/w)$ and the endpoint terms are $O(\log^2T/w)$. A second partial summation applied to \eqref{eq:uniform_Landau_sufficient} gives the main term $-i(2\pi\sqrt p)^{-1}\int_T^{2T}\lL(t)\,dt$ and an error $o(M_T/\sqrt p)$. This proves the sufficient implication. The fixed-base formula of Theorem~\ref{thm:known_landau} cannot be used to assert this uniform estimate. Unconditionally it concerns $p^\rho$, not $\sqrt p\,p^{i\gamma}$; that replacement requires RH or a separate quantitative estimate for the real parts of the zeros.
+
+\subsection{The scalar arithmetic assertion}
+\label{subsec:scalar_response_target}
+The prime-response target is
+\begin{equation}
+ C_{T,p}=-\frac{1}{2\pi^2\sqrt p}\frac{\Phi(\theta)}{\theta}
+                    +o(p^{-1/2}).
+ \label{eq:CTp_target}
+\end{equation}
+It is a complex assertion: it specifies the real main term and requires $\Im C_{T,p}=o(p^{-1/2})$. For the real statistic $\rho_p^\gamma$, the corresponding real-part assertion suffices.
+
+\begin{proposition}[Conditional moving-prime law]\label{prop:conditional_universal}
+Assume Hypothesis~\ref{hyp:uniform_prime} and the real part of \eqref{eq:CTp_target}, uniformly for $\theta$ in a compact subset of $(0,1)$. Then
+\begin{equation}
+ \rho_p^\gamma(\IT)=1-\Phi(\theta)+o(1).
+ \label{eq:conditional_universal}
+\end{equation}
+Conversely, under the same one-particle input, \eqref{eq:conditional_universal} is equivalent to that real-part assertion. Neither implication asserts a formula for $\rho_p^\tau$.
+\end{proposition}
+\begin{proof}
+Use \eqref{eq:gamma_response_scaled}; the real-part assertion bounds $\sqrt p\,\Re C_{T,p}$, so the relative $O(1/L)$ factor contributes $o(1)$. Conversely solve that exact coefficient relation for $\Re C_{T,p}$.
+\end{proof}
+For $|\theta|<1$,
+\begin{equation}
+ \Phi(\theta)=\theta^2+\frac{\theta^4}{6}+\frac{\theta^6}{15}
+                    +\frac{\theta^8}{28}+\cdots
+ =2\sum_{j\ge1}\frac{\theta^{2j}}{(2j-1)(2j)}.
+ \label{eq:Phi_series}
+\end{equation}
+Thus $1-\theta^2$ is only the quadratic truncation of the candidate law. All higher terms require arithmetic information at the same scale as \eqref{eq:CTp_target}.
+
+\section{A Fourier reduction of the prime target}
+\label{sec:Fourier_reduction}
+\subsection{The distributional measure and the shifted correlation}
+\label{subsec:distributional_measure}
+Put $H(t)=\NO(t)+\omega(t)/\pi$ and use the convention $\widehat f(\xi)=\int_\R f(t)e^{i\xi t}\,dt$. Define
+\begin{equation}
+ f_T=S\mathbf1_{[T,2T]},\qquad \mu_T=Df_T,
+ \qquad Z_T(\xi)=\int_\R e^{i\xi t}\,d\mu_T(t).
+ \label{eq:measure_def}
+\end{equation}
+\begin{theorem}[Shifted two-point representation]\label{thm:Fourier_exact}
+Without RH or a simplicity assumption,
+\begin{equation}
+ \begin{split}
+ d\mu_T={}&\mathbf1_{(T,2T)}(dN-H'(t)\,dt)
+          +S(T)\delta_T-S(2T)\delta_{2T},\\
+ Z_T(\xi)={}&\sum_{T<\gamma<2T}\nu(\gamma)e^{i\xi\gamma}
+       -\int_T^{2T}H'(t)e^{i\xi t}\,dt
+       +S(T)e^{i\xi T}-S(2T)e^{2i\xi T},
+ \end{split}
+ \label{eq:measure_expansion}
+\end{equation}
+where $\nu(\gamma)$ is the number of zeros with that ordinate, counted with their analytic multiplicities. Moreover,
+\begin{equation}
+ Z_T(0)=0,\qquad Z_T(\xi)=-i\xi\widehat f_T(\xi),
+ \qquad \frac{Z_T(\xi)}{\xi}=-i\widehat f_T(\xi),
+ \label{eq:ZT_removable}
+\end{equation}
+the last quotient being continued at zero. For every real $w$,
+\begin{equation}
+ \int_T^{2T}S(t)^2e^{iwt}\,dt
+  =-\frac1{2\pi}\int_\R
+       \frac{Z_T(\xi)Z_T(w-\xi)}{\xi(w-\xi)}\,d\xi .
+ \label{eq:Fourier_convolution}
+\end{equation}
+The integral, with the continued quotients, is absolutely convergent.
+\end{theorem}
+\begin{proof}
+Between ordinates $DS=dN-H'\,dt$. Differentiating the cutoff supplies exactly the two endpoint atoms of \eqref{eq:measure_expansion}. Integration by parts gives $\widehat{Df_T}=-i\xi\widehat f_T$, including $Z_T(0)=0$. The function $f_T$ is compactly supported and belongs to $L^1\cap L^2$. The product-convolution identity therefore yields \eqref{eq:Fourier_convolution}. Absolute convergence follows from Cauchy--Schwarz and Plancherel, since
+\begin{equation}
+ \int_\R|\widehat f_T(\xi)\widehat f_T(w-\xi)|\,d\xi
+                   \le\|\widehat f_T\|_2^2<\infty.
+ \label{eq:Fourier_absolute}
+\end{equation}
+All identities use the full measure $dN$, so repeated ordinates cause no difficulty.
+\end{proof}
+With $w=\theta L=\log p$ and $\xi=\alpha L$, define
+\begin{equation}
+ \mathcal B_T(\theta)=\int_\R
+ \frac{Z_T(\alpha L)Z_T((\theta-\alpha)L)}{\alpha(\theta-\alpha)}\,d\alpha.
+ \qquad C_{T,p}=-\frac{\mathcal B_T(\theta)}{2\pi TL}.
+ \label{eq:BT_scaled}
+\end{equation}
+Consequently the complex assertion \eqref{eq:CTp_target} is exactly equivalent to
+\begin{equation}
+ \mathcal B_T(\theta)=\frac{TL}{\pi\sqrt p}\frac{\Phi(\theta)}{\theta}
+                              +o(TL/\sqrt p).
+ \label{eq:BT_target}
+\end{equation}
+Taking only real parts gives an equivalence only for real parts. The additional assertion $\Im\mathcal B_T=o(TL/\sqrt p)$ is necessary for the complex target.
+
+Expanding the two zero sums produces factors
+\begin{equation}
+ e^{i\alpha L\gamma}e^{i(\theta-\alpha)L\gamma'}
+        =p^{i\gamma'}e^{i\alpha L(\gamma-\gamma')}.
+ \label{eq:shifted_pair_weight}
+\end{equation}
+The observable is therefore a two-point correlation shifted by a nonzero prime frequency. An ordinary stationary pair correlation, depending only on $\gamma-\gamma'$, does not determine it. At $\theta=0$ the product becomes $|Z_T(\alpha L)|^2$; that special case does not supply the information at $\theta>0$.
+
+\subsection{Smooth windows and the arithmetic scale}
+\label{subsec:smooth_windows}
+For real $w_0\in C_c^\infty((1,2))$, put $f_{T,w_0}(t)=w_0(t/T)S(t)$. The exact replacement for the first line of \eqref{eq:measure_expansion} is
+\begin{equation}
+ Df_{T,w_0}=w_0(t/T)(dN-H'(t)\,dt)
+             +T^{-1}w_0'(t/T)S(t)\,dt.
+ \label{eq:smooth_measure}
+\end{equation}
+The last term is part of the measure and cannot be omitted. Applying Theorem~\ref{thm:Fourier_exact} to this function represents $\int w_0(t/T)^2S(t)^2e^{iwt}\,dt$. If the diagonal normalization is to be unchanged, use $\int_\R w_0(u)^2\,du=1$. A sharp-window conjecture and a smooth-window conjecture require their own quantitative transfer; they are not silently identified here.
+
+There is an elementary reason that the prime polynomial alone does not settle \eqref{eq:CTp_target}. For the finite polynomial
+\begin{equation}
+ P_Y(t)=-\frac1\pi\sum_{p\le Y}\frac{\sin(t\log p)}{\sqrt p},
+ \label{eq:PY_audit}
+\end{equation}
+the square has no exact Fourier frequency $\log p$ for a prime $p$. If prime powers are included, the resonances $p^a,p^{a+1}$ first have size $p^{-3/2}$. In contrast, the $q=p$ term of $P_Y'$ contributes
+\begin{equation}
+ \frac1T\int_\R W(t/T)P_Y'(t)p^{it}\,dt
+       =-\frac{\log p}{2\pi\sqrt p}+\mathcal E_{T,p,Y},
+ \label{eq:derivative_diagonal}
+\end{equation}
+when $p\le Y$ and $\int W=1$. Here $\mathcal E_{T,p,Y}$ is the explicit sum of all nonzero-frequency Fourier transforms of $W$; its smallness for moving $p,Y$ needs a uniform separation estimate. Equations~\eqref{eq:PY_audit}--\eqref{eq:derivative_diagonal} identify exact resonances, not an unproved uniform estimate for the remaining terms. After division by $\pi L$, the displayed diagonal is $-\theta/(2\pi^2\sqrt p)$, the linear term of $-\Phi(\theta)/(2\pi^2\sqrt p\,\theta)$.
+
+Writing $S=P_Y+R_Y$ gives $S^2=P_Y^2+2P_YR_Y+R_Y^2$. Selberg's estimate for the appropriate short polynomial gives $T^{-1}\int|R_Y|^2\ll1$, and hence only
+\begin{equation}
+ \left|T^{-1}\int_T^{2T}R_Y(t)^2p^{it}\,dt\right|\ll1.
+ \label{eq:Selberg_scale_gap}
+\end{equation}
+The desired error is $o(p^{-1/2})=T^{-\theta/2+o(1)}$. The corresponding mixed term also needs oscillatory cancellation. Additional absolute moments by themselves do not bridge this difference in scale. Theorems~\ref{thm:identity_general} and~\ref{thm:main} remain unconditional throughout this reduction.
+
+\section{A determinantal model for the response function}
+\label{sec:sine_response}
+\subsection{A finite model and a real exponential perturbation}
+\label{subsec:tilt_definition}
+To define the perturbation without infinite-volume or complex-probability ambiguities, start on a circle of length $R_0$. Let $P_N$ be the orthogonal projection onto $N$ consecutive Fourier modes and use its determinantal point process, which has exactly $N$ points. For $q=j/R_0$, let $X_q$ be the centred linear statistic of $e^{2\pi iqx}$. In particular $X_0=0$ and $\overline{X_q}=X_{-q}$. Choose $N/R_0\to1$; the local projection kernel tends to the unit-density sine kernel $\sin(\pi(x-y))/(\pi(x-y))$.
+
+For $\theta>0$ on the frequency lattice define an actual probability measure by
+\begin{equation}
+ d\mathbb P_{u,v}=\frac{\exp\{-u\Re X_{-\theta}-v\Im X_{-\theta}\}}
+ {\mathbb E\exp\{-u\Re X_{-\theta}-v\Im X_{-\theta}\}}\,d\mathbb P_0,
+ \qquad u,v\in\R.
+ \label{eq:real_tilt}
+\end{equation}
+The statistics are bounded in this finite model, so differentiation at $(0,0)$ is justified. For the covariance without complex conjugation,
+\begin{equation}
+ (\partial_u+i\partial_v)
+ \operatorname{Cov}_{u,v}(X_\alpha,X_{\theta-\alpha})\big|_{(0,0)}
+   =-\kappa_3(X_\alpha,X_{\theta-\alpha},X_{-\theta}).
+ \label{eq:tilt_cumulant}
+\end{equation}
+This follows by differentiating the normalized expectation and subtracting the derivatives of its means. Thus a specified exponential perturbation produces the third connected cumulant. Matching one Fourier coefficient of a point process would not, by itself, determine this perturbation.
+
+\subsection{Evaluation of the connected kernel}
+\label{subsec:connected_kernel}
+Write $x_+=\max(x,0)$ and $h(q)=(1-|q|)_+$.
+\begin{theorem}[Connected response kernel]\label{thm:sine_kernel}
+Let the lattice frequencies tend to $\alpha,\theta-\alpha,-\theta$, with sum zero, where $0<\theta<1$. In the limit $R_0,N\to\infty$, $N/R_0\to1$,
+\begin{equation}
+ \frac1{R_0}\kappa_3(X_\alpha,X_{\theta-\alpha},X_{-\theta})
+ \longrightarrow k_\theta(\alpha)
+ =1-h(\alpha)-h(\theta-\alpha)-h(\theta)
+       +2(1-M)_+,
+ \label{eq:kernel_intersections}
+\end{equation}
+where $M=\max(|\alpha|,|\theta-\alpha|,\theta)$. Equivalently,
+\begin{equation}
+ k_\theta(\alpha)=
+ \begin{cases}
+ \theta,&\alpha\le-1,\\
+ \theta-1-\alpha,&-1\le\alpha\le\theta-1,\\
+ 0,&\theta-1\le\alpha\le1,\\
+ \alpha-1,&1\le\alpha\le1+\theta,\\
+ \theta,&\alpha\ge1+\theta.
+ \end{cases}
+ \label{eq:kernel_piecewise}
+\end{equation}
+\end{theorem}
+\begin{proof}
+For commuting multiplication operators $f,g,h$, expansion of the determinantal generating function $\det(I+P_N(e^{zf+ug+vh}-1)P_N)$ gives
+\begin{equation}
+ \begin{split}
+ \kappa_3(f,g,h)={}&\operatorname{Tr}(fghP_N)
+ -\operatorname{Tr}(fgP_NhP_N)-\operatorname{Tr}(fhP_NgP_N)\\
+ &-\operatorname{Tr}(ghP_NfP_N)
+ +\operatorname{Tr}(fP_NgP_NhP_N)
+ +\operatorname{Tr}(fP_NhP_NgP_N).
+ \end{split}
+ \label{eq:third_cumulant_trace}
+\end{equation}
+This is determinantal cumulant algebra, rather than a claim of a new general cumulant formula. Multiplication by $e^{2\pi ijx/R_0}$ shifts a Fourier mode by $j$. A trace of two projections therefore counts the overlap of two integer intervals of length $N$, and a trace of three counts their triple overlap. For three shifts with sum zero, the triple overlap has length $(N-\operatorname{range}(0,j_1,j_1+j_2))_+$. The two cyclic orders have the same range, whose rescaled limit is $M$. Divide \eqref{eq:third_cumulant_trace} by $R_0$ and use the interval-overlap limits. This gives \eqref{eq:kernel_intersections}; evaluating the positive parts on the five stated intervals gives \eqref{eq:kernel_piecewise}. If any frequency is zero, both the centred cumulant and the resulting kernel vanish, as required.
+\end{proof}
+
+\begin{proposition}[Integral and support]\label{prop:kernel_integral}
+For $0<\theta<1$,
+\begin{equation}
+ \int_\R\frac{k_\theta(\alpha)}{\alpha(\theta-\alpha)}\,d\alpha
+       =-\frac{2\Phi(\theta)}{\theta}.
+ \label{eq:kernel_integral}
+\end{equation}
+The integral is ordinary and absolutely convergent. Moreover,
+\begin{equation}
+ |\alpha|+|\theta-\alpha|+\theta<2
+       \quad\Longrightarrow\quad k_\theta(\alpha)=0.
+ \label{eq:kernel_support_barrier}
+\end{equation}
+\end{proposition}
+\begin{proof}
+The kernel vanishes on a neighborhood of $0$ and $\theta$ and is bounded on the tails. Its symmetry under $\alpha\mapsto\theta-\alpha$ reduces the integral to twice its part on $[1,\infty)$. The tail integral on $[1+\theta,\infty)$ equals $-\log(1+\theta)$. The integral on $[1,1+\theta]$ equals
+\begin{equation}
+ -\frac{\log(1+\theta)}{\theta}
+       +\frac{\theta-1}{\theta}\log(1-\theta).
+ \label{eq:kernel_ramp_integral}
+\end{equation}
+Adding and doubling proves \eqref{eq:kernel_integral}. The nonzero kernel lies in $\alpha<\theta-1$ or $\alpha>1$. In both intervals the sum of absolute frequencies is greater than $2$, which proves \eqref{eq:kernel_support_barrier}, including vanishing at the boundary by continuity.
+\end{proof}
+Thus a test confined to the displayed restricted-support region sees zero of this connected response. This statement is proved for the model with the frequency normalization used here. It does not identify all published restricted-support theorems with one another and does not apply one outside its stated range.
+
+\subsection{Normalization of the model and the missing arithmetic bridge}
+\label{subsec:model_bridge}
+The same projection calculation gives
+\begin{equation}
+ R_0^{-1}\kappa_2(X_\theta,X_{-\theta})\longrightarrow\theta,
+ \qquad 0<\theta<1.
+ \label{eq:sine_susceptibility}
+\end{equation}
+For a zeta window the unfolded length is $\mathscr L_T=TL/(2\pi)$. The one-particle prime amplitude in \eqref{eq:uniform_Landau_sufficient} is $-\mathscr L_T\theta/\sqrt p$. This matches the linear response of \eqref{eq:real_tilt} with intensity $p^{-1/2}$. It is a normalization of the model, not a characterization of the actual zeta measure. The corresponding proposed connected product is $-\mathscr L_Tk_\theta(\alpha)/\sqrt p$.
+
+If this last expression could be substituted into the full weighted integral \eqref{eq:BT_scaled} with an error $o(TL/\sqrt p)$, Proposition~\ref{prop:kernel_integral} would give exactly \eqref{eq:BT_target} and hence the complex target \eqref{eq:CTp_target}. Compactly supported distributional convergence alone would not justify this substitution: the two removable singularities and the tails of the weighted integral also need uniform control.
+
+\begin{hypothesis}[Weighted arithmetic bridge]\label{hyp:weighted_bridge}
+With the sharp-window measure of \eqref{eq:measure_def}, uniformly for primes with $\theta$ in any compact subset of $(0,1)$,
+\begin{equation}
+ \int_\R\frac{Z_T(\alpha L)Z_T((\theta-\alpha)L)
+             +\mathscr L_Tp^{-1/2}k_\theta(\alpha)}
+                 {\alpha(\theta-\alpha)}\,d\alpha
+                         =o(TL/\sqrt p).
+ \label{eq:weighted_arithmetic_bridge}
+\end{equation}
+All quotients from $Z_T$ use their continued values. The kernel term vanishes near the singularities.
+\end{hypothesis}
+This hypothesis is precisely the complex scalar target after the proved integral evaluation; it is not asserted as a consequence of GUE or of RH. Under Hypotheses~\ref{hyp:uniform_prime} and~\ref{hyp:weighted_bridge}, Proposition~\ref{prop:conditional_universal} gives the law $R(\theta)$ for $\rho_p^\gamma$. The response kernel and its integral are proved model results; the arithmetic bridge, and a separate same-clock law for $\rho_p^\tau$, remain open.
+
+
+\section{Selected computations}\label{sec:selected_computations}
+The computations in this section are finite statements about the defined observables.  They are not used to infer an asymptotic cutoff exponent.\subsection{Direct defects and moving-prime responses}
+\label{subsec:direct_extensions}
+\begin{experiment}[Direct measurement of the theorem's observable]\label{exp:direct_defects}
+For $T=2^r$, $r\in\{14,16,18,19\}$, and $c\in\{1/10,1/5,1/3,1/2\}$, we compute the full local-factor phase at the true ordinates, with one cutoff $X=T^c$ throughout each window, and form $u_k(X)=k-1/2-\NO(\gamma_k)-S_X(\gamma_k)$. The numbers of ordinates are respectively $21\,519$, $100\,536$, $459\,982$ and $977\,804$. The last window, entirely contained in the data, gives Table~\ref{tab:direct_top}; all sixteen measurements and the one-step comparison appear in Appendix~\ref{sec:selected_computations}. Exponents smaller than $1/10$ on the stated trial grid give $X<2$ at these heights and are excluded, consistently with the theorem's range. The finite means do not identify a limiting constant at fixed $c$.
+\end{experiment}
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{rrrrr}
+\toprule
+$c$ & $\#\{p\le X\}$ & $\langle u_k(X)^2\rangle$ & $\frac1{2\pi^2}\log(1/c)$ & $\langle r_k(X)^2\rangle$\\
+\midrule
+$1/10$ & 2 & 0.065599 & 0.116650 & 0.065517\\
+$1/5$ & 6 & 0.040530 & 0.081535 & 0.040623\\
+$1/3$ & 22 & 0.022911 & 0.055656 & 0.023446\\
+$1/2$ & 128 & 0.012187 & 0.035115 & 0.014567\\
+\bottomrule
+\end{tabular}
+\caption{Direct ordinal defects on $2^{19}<\gamma_k\le2^{20}$, with $977\,804$ ordinates and $X=(2^{19})^c$. The one-step residual has no saturation. These are different observables.}
+\label{tab:direct_top}
+\end{table}
+
+\begin{experiment}[Individual-prime and grouped responses]\label{exp:moving_responses}
+For every one of the $2262$ primes $p\le20000$ we compute both responses in \eqref{eq:two_responses} on the five ordinal windows after $k=1000$. We use the exact $s_k=k-1/2-\NO(\gamma_k)$, and assign to a prime the horizontal coordinate $\theta=\log p/\operatorname{median}_{k\in I}\log(\tau_k/2\pi)$. These are finite ordinal windows, rather than the dyadic height windows of the arithmetic hypotheses. Only primes with $0<\theta<1$ are compared with $R(\theta)$. The complete individual responses are retained in the companion CSV, and Table~\ref{tab:response_errors} distinguishes individual errors from averages in bins of width $0.05$, using only bins with at least five primes. The grouped comparison supports the shape of the candidate; it supplies neither a uniform individual-prime error of $0.03$ nor an asymptotic proof.
+\end{experiment}
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+ordinal window & primes with $\theta<1$ & max individual error & RMS error & max bin-mean error\\
+\midrule
+$(10^3,10^4]$ & 159 & 0.34557 & 0.09425 & 0.02637\\
+$(10^4,10^5]$ & 901 & 0.44085 & 0.08511 & 0.02371\\
+$(10^5,5\cdot10^5]$ & 2262 & 0.27857 & 0.06429 & 0.02972\\
+$(5\cdot10^5,10^6]$ & 2262 & 0.31682 & 0.06086 & 0.03531\\
+$(10^6,K]$ & 2262 & 0.16425 & 0.03309 & 0.01951\\
+\bottomrule
+\end{tabular}
+\caption{Errors of $\rho_p^\gamma-R(\theta)$ in Experiment~\ref{exp:moving_responses}. Bin errors are absolute means of the signed individual errors, not maxima over individual primes.}
+\label{tab:response_errors}
+\end{table}
+In the top window, the means of $\rho_p^\tau$ in the bins $[0.65,0.70)$, $[0.70,0.75)$ and $[0.75,0.80)$ are $0.66402$, $0.65240$ and $0.66417$. This finite-height plateau is different from $R(\theta)$ and does not establish a universal same-clock law. In particular, the prime near $p=17333$ has an individual $\rho_p^\gamma$ error about $0.16425$, despite the much smaller bin-mean discrepancies.
+
+
+\section{Conclusion}
+The identities, asymptotic estimates, conditional consequences and model calculations above have distinct hypotheses and are not merged into a single claim.  In particular, a bound for $u_k(X)$ is not a root-selection theorem unless the strict derivative hypothesis in Proposition~\ref{prop:localization} holds, and the determinantal calculation is not an arithmetic theorem about the zeta zeros.
+\section*{Statements and Declarations}
+\paragraph{Competing interests.} The author declares no competing interests.
+\paragraph{Funding.} No external funding is declared.
+\paragraph{Data and code availability.} The accompanying archive contains the Python programs, data-independent checks and output tables. The two large binary ordinate files are not redistributed.
+\begin{thebibliography}{99}
+
+\bibitem{BellottiWong2025}
+C.~Bellotti and P.-J. Wong, Improved estimates for the argument and zero-counting function of the Riemann zeta-function, \emph{Math. Comp.} (2025, published online), \href{https://doi.org/10.1090/mcom/4133}{doi:10.1090/mcom/4133}; arXiv:2412.15470.
+
+\bibitem{Billingsley1995}
+P.~Billingsley, \emph{Probability and Measure}, 3rd ed., Wiley, New York, 1995. (No DOI.)
+
+\bibitem{Corless1996}
+R.~M. Corless, G.~H. Gonnet, D.~E.~G. Hare, D.~J. Jeffrey and D.~E. Knuth, On the Lambert $W$ function, \emph{Adv. Comput. Math.} \textbf{5} (1996), 329--359, \href{https://doi.org/10.1007/BF02124750}{doi:10.1007/BF02124750}.
+
+\bibitem{FrancaLeClair2014}
+G.~Fran\c{c}a and A.~LeClair, Statistical and other properties of Riemann zeros based on an explicit equation for the $n$-th zero on the critical line, preprint, arXiv:1307.8395 (2013), \href{https://doi.org/10.48550/arXiv.1307.8395}{doi:10.48550/arXiv.1307.8395}.
+
+\bibitem{FrancaLeClair2015}
+G.~Fran\c{c}a and A.~LeClair, Transcendental equations satisfied by the individual zeros of Riemann $\zeta$, Dirichlet and modular $L$-functions, \emph{Commun. Number Theory Phys.} \textbf{9} (2015), no.~1, 1--50, \href{https://doi.org/10.4310/CNTP.2015.v9.n1.a1}{doi:10.4310/CNTP.2015.v9.n1.a1}; arXiv:1502.06003.
+
+\bibitem{Fujii1974}
+A.~Fujii, On the zeros of Dirichlet $L$-functions. I, \emph{Trans. Amer. Math. Soc.} \textbf{196} (1974), 225--235, \href{https://doi.org/10.1090/S0002-9947-1974-0349603-2}{doi:10.1090/S0002-9947-1974-0349603-2}.
+
+\bibitem{Gonek1993}
+S.~M. Gonek, An explicit formula of Landau and its applications to the theory of the zeta-function, in: \emph{A Tribute to Emil Grosswald: Number Theory and Related Analysis}, Contemp. Math. \textbf{143}, Amer. Math. Soc., Providence, RI, 1993, 395--413, \href{https://doi.org/10.1090/conm/143/1210528}{doi:10.1090/conm/143/1210528}.
+
+\bibitem{Gonek2012}
+S.~M. Gonek, Finite Euler products and the Riemann hypothesis, \emph{Trans. Amer. Math. Soc.} \textbf{364} (2012), 2157--2191, \href{https://doi.org/10.1090/S0002-9947-2011-05546-7}{doi:10.1090/S0002-9947-2011-05546-7}; arXiv:0704.3448.
+
+\bibitem{GrahamKolesnik1991}
+S.~W. Graham and G.~Kolesnik, \emph{Van der Corput's Method of Exponential Sums}, London Math. Soc. Lecture Note Ser. \textbf{126}, Cambridge University Press, Cambridge, 1991, \href{https://doi.org/10.1017/CBO9780511661976}{doi:10.1017/CBO9780511661976}.
+
+\bibitem{HasanalizadeShenWong2022}
+E.~Hasanalizade, Q.~Shen and P.-J. Wong, Counting zeros of the Riemann zeta function, \emph{J. Number Theory} \textbf{235} (2022), 219--241, \href{https://doi.org/10.1016/j.jnt.2021.06.032}{doi:10.1016/j.jnt.2021.06.032}; arXiv:2107.06506.
+
+\bibitem{Korolev2012}
+M.~A. Korolev, On Gram's law in the theory of the Riemann zeta function, \emph{Izv. Math.} \textbf{76} (2012), no.~2, 275--309, \href{https://doi.org/10.1070/IM2012v076n02ABEH002583}{doi:10.1070/IM2012v076n02ABEH002583}; Russian original \emph{Izv. Ross. Akad. Nauk Ser. Mat.} \textbf{76} (2012), no.~2, 67--102, \href{https://doi.org/10.4213/im5558}{doi:10.4213/im5558}; arXiv:1011.3997.
+
+\bibitem{Landau1912}
+E.~Landau, \"Uber die Nullstellen der Zetafunktion, \emph{Math. Ann.} \textbf{71} (1912), 548--564, \href{https://doi.org/10.1007/BF01456808}{doi:10.1007/BF01456808}.
+
+\bibitem{LeClair2021}
+A.~LeClair, Riemann hypothesis and random walks: the zeta case, \emph{Symmetry} \textbf{13} (2021), no.~11, 2014, \href{https://doi.org/10.3390/sym13112014}{doi:10.3390/sym13112014}; arXiv:1601.00914.
+
+\bibitem{Littlewood1924}
+J.~E. Littlewood, On the zeros of the Riemann zeta-function, \emph{Proc. Cambridge Philos. Soc.} \textbf{22} (1924), 295--318, \href{https://doi.org/10.1017/S0305004100014225}{doi:10.1017/S0305004100014225}.
+
+\bibitem{Mertens1874}
+F.~Mertens, Ein Beitrag zur analytischen Zahlentheorie, \emph{J. Reine Angew. Math.} \textbf{78} (1874), 46--62, \href{https://doi.org/10.1515/crll.1874.78.46}{doi:10.1515/crll.1874.78.46}.
+
+\bibitem{MontgomeryVaughan1974}
+H.~L. Montgomery and R.~C. Vaughan, Hilbert's inequality, \emph{J. London Math. Soc. (2)} \textbf{8} (1974), 73--82, \href{https://doi.org/10.1112/jlms/s2-8.1.73}{doi:10.1112/jlms/s2-8.1.73}.
+
+\bibitem{Selberg1946a}
+A.~Selberg, Contributions to the theory of the Riemann zeta-function, \emph{Arch. Math. Naturvid.} \textbf{48} (1946), no.~5, 89--155. (No DOI.)
+
+\bibitem{Selberg1946b}
+A.~Selberg, Contributions to the theory of Dirichlet's $L$-functions, \emph{Skr. Norske Vid.-Akad. Oslo I} \textbf{1946}, no.~3, 2--62. (No DOI.)
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., revised by D.~R. Heath-Brown, Clarendon Press, Oxford, 1986. (No DOI.)
+
+\bibitem{Trudgian2014}
+T.~S. Trudgian, An improved upper bound for the argument of the Riemann zeta-function on the critical line II, \emph{J. Number Theory} \textbf{134} (2014), 280--292, \href{https://doi.org/10.1016/j.jnt.2013.07.017}{doi:10.1016/j.jnt.2013.07.017}; arXiv:1208.5846.
+
+\end{thebibliography}
+\end{document}

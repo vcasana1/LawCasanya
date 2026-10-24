@@ -1,0 +1,1809 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{listings}
+\geometry{margin=1in}
+
+\lstdefinestyle{pythonappendix}{
+  language=Python,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{blue!55!black},
+  commentstyle=\color{green!35!black},
+  stringstyle=\color{red!45!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=7pt,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=false,
+  frame=single,
+  columns=fullflexible,
+  keepspaces=true,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1
+           {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1
+           {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1
+}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% Notation
+\newcommand{\Mob}{\mu}
+\newcommand{\Mert}{M}
+\newcommand{\Qsf}{Q}
+\newcommand{\Cat}{C}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Pp}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Fcat}{\mathcal{F}_{\mathrm{Cat}}}
+\newcommand{\Icat}{\mathcal{I}_{\mathrm{Cat}}}
+\newcommand{\eps}{\varepsilon}
+
+% Hyperref must be last
+\usepackage[hidelinks]{hyperref}
+
+\title[Catalan Mertens]{Catalan Mertens, version 4:\\exact structure, no-go theorems, and the selector boundary}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\begin{remark}
+\label{rem:exploratory_nature}
+This document is an exploratory mathematical notebook.  Its purpose is to isolate an exact Catalan structure inside the Mertens walk, to develop physical and probabilistic tools that act directly on that Catalan state space, and to identify a precise obstruction between ambient Catalan rarity and the deterministic arithmetic trajectory.  Rigorous statements are labelled as such; proposed mechanisms are labelled as heuristics, conjectures, or questions.
+\end{remark}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Let
+\begin{equation}
+\Mert(x)=\sum_{n\le x}\Mob(n)
+\label{eq:mertens_definition}
+\end{equation}
+be the Mertens function.  The classical square-root target is
+\begin{equation}
+\Mert(x)=O_{\eps}\!\left(x^{1/2+\eps}\right)
+\qquad (\eps>0),
+\label{eq:rh_mertens_target}
+\end{equation}
+which is equivalent to the Riemann hypothesis; see, for example, the standard analytic literature and the discussion in Bj\"orner's topological formulation \cite{Bjorner2011}.  The present notebook does not pursue an explicit-formula, zero-density, or Dirichlet-series proof strategy.  The target \eqref{eq:rh_mertens_target} is retained as the benchmark against which a different mechanism is measured.
+
+The starting observation is elementary but exact.  Remove the zero values of the M\"obius function.  If
+\begin{equation}
+1=q_1<q_2<q_3<\cdots
+\label{eq:squarefree_enumeration}
+\end{equation}
+are the squarefree positive integers and
+\begin{equation}
+X_m=\sum_{j\le m}\Mob(q_j),
+\label{eq:compressed_walk}
+\end{equation}
+then every increment of $X_m$ is exactly $+1$ or $-1$, and
+\begin{equation}
+X_m=\Mert(q_m).
+\label{eq:compressed_equals_mertens}
+\end{equation}
+Consequently, each interval between consecutive zeros of $X_m$ is a primitive lattice excursion.  If such an excursion has length $2n$, then, after fixing its sign, the number of possible excursion shapes is exactly the Catalan number
+\begin{equation}
+\Cat_{n-1}=\frac{1}{n}\binom{2n-2}{n-1}.
+\label{eq:primitive_catalan_count_intro}
+\end{equation}
+Thus the real Mertens excursion is one state inside a finite Catalan state space.
+
+The usefulness of this observation depends entirely on a second question.  Catalan combinatorics describes the ambient set of admissible excursion shapes, but the arithmetic trajectory is a deterministic selection from that set.  A rare Catalan shape remains possible unless the arithmetic selector itself satisfies an additional restriction.  The central problem of this notebook is therefore to identify a deterministic mechanism that controls the location of the Mertens trajectory inside Catalan state space.
+
+The physical methods considered here are useful because they quantify geometry inside that state space.  Brownian excursion theory identifies the diffusive $\sqrt{L}$ scale; transfer matrices convert height restrictions into spectral gaps; path-integral arguments assign an action of order $H^2/L$ to an excursion of height $H$ and duration $L$; area-weighted Dyck paths provide genuine partition functions and free energies; Fredkin spin chains realize uniform superpositions of Dyck paths as quantum ground states; and TASEP provides a route from excursion statistics to non-equilibrium hydrodynamics and the Burgers equation \cite{Kaigh1976,DurrettIglehartMiller1977,KhorunzhiyMarckert2009,Kousha2012,OwczarekPrellberg2014,DerridaEnaudLebowitz2004,DellAnnaEtAl2016}.
+
+The arithmetic side also has a nontrivial exact structure.  Bj\"orner associated to each cutoff $x$ a simplicial complex of squarefree integers and proved that the Mertens function is its reduced Euler characteristic \cite{Bjorner2011}.  In that representation, the compressed walk is the one-dimensional trace of a filtered, shifted simplicial complex.  This supplies a deterministic selector which is absent from a generic random walk.
+
+The project therefore separates into three layers:
+\begin{equation}
+\text{Mertens filtration}
+\longrightarrow
+\text{Catalan excursion state}
+\longrightarrow
+\text{physical/entropic cost of its geometry}.
+\label{eq:three_layer_program}
+\end{equation}
+The difficult arrow is the first-to-second selection law: why should the filtration select a non-exceptional region of the Catalan space?  The rest of the notebook develops several concrete formulations of this question.
+
+\section{The selection wall}
+\label{sec:selection_wall}
+
+This section states the main obstruction at the outset.
+
+\begin{definition}
+\label{def:catalan_excursion_space}
+Let $\D_n^{\mathrm{prim}}$ denote the set of positive primitive excursions of length $2n$: paths $D=(D_j)_{0\le j\le 2n}$ satisfying
+\begin{equation}
+D_0=D_{2n}=0,
+\qquad
+D_j>0 \quad (1\le j\le 2n-1),
+\qquad
+D_{j+1}-D_j\in\{-1,+1\}.
+\label{eq:primitive_dyck_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:primitive_catalan_cardinality}
+For every $n\ge1$,
+\begin{equation}
+\left|\D_n^{\mathrm{prim}}\right|=\Cat_{n-1}.
+\label{eq:primitive_catalan_cardinality}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Delete the initial up-step and the final down-step and shift the remaining path down by one unit.  This is a bijection with ordinary Dyck paths of length $2n-2$, counted by $\Cat_{n-1}$.
+\end{proof}
+
+If a Mertens excursion has length $2n$, Proposition~\ref{prop:primitive_catalan_cardinality} places its shape in a set of size $\Cat_{n-1}$.  Under the uniform Catalan measure, high excursions occupy a small fraction of this set; the maximum of a uniform Dyck path is naturally of order $\sqrt n$, and exponential moments and moderate/large deviations are well studied \cite{KhorunzhiyMarckert2009,Kousha2012}.
+
+\begin{warning}
+\label{warn:rarity_not_selection}
+Ambient rarity is not an arithmetic restriction.  A deterministic selector may choose a member of an exponentially small subset.  Therefore a statement of the form
+\begin{equation}
+\frac{\#\{D\in\D_n^{\mathrm{prim}}:\max D\ge H\}}
+{\Cat_{n-1}}
+\ll \exp\!\left(-cH^2/n\right)
+\label{eq:ambient_rarity_only}
+\end{equation}
+becomes relevant to $\Mert$ only after one proves a property of the arithmetic selection rule.
+\end{warning}
+
+This warning is the main logical checkpoint of the project.  The physical theory can compute or estimate the cost of a region of Catalan space.  The arithmetical task is to show that the real trajectory cannot systematically occupy regions whose cost is too large.
+
+\section{Exact Catalan decomposition of the compressed Mertens walk}
+\label{sec:exact_catalan_decomposition}
+
+\subsection{Compressed time}
+\label{subsec:compressed_time}
+
+Let
+\begin{equation}
+\Qsf(x)=\#\{n\le x:\Mob(n)\ne0\}
+\label{eq:squarefree_count}
+\end{equation}
+be the squarefree counting function.  The standard asymptotic is
+\begin{equation}
+\Qsf(x)=\frac{6}{\pi^2}x+O(\sqrt{x}),
+\label{eq:squarefree_density}
+\end{equation}
+so compressed time and ordinary integer time are linearly comparable.
+
+\begin{proposition}
+\label{prop:compression_identity}
+For every $m\ge1$,
+\begin{equation}
+X_m=\Mert(q_m),
+\label{eq:compression_identity}
+\end{equation}
+and for every real $x\ge1$,
+\begin{equation}
+\Mert(x)=X_{\Qsf(x)}.
+\label{eq:decompression_identity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The terms omitted from \eqref{eq:compressed_walk} are exactly those for which $\Mob(n)=0$.
+\end{proof}
+
+\subsection{Return skeleton and factorization}
+\label{subsec:return_skeleton}
+
+Let
+\begin{equation}
+0=z_0<z_1<z_2<\cdots
+\label{eq:return_times}
+\end{equation}
+be the successive return times of the compressed walk to zero, whenever they exist.  Put
+\begin{equation}
+L_r=z_r-z_{r-1}=2n_r.
+\label{eq:excursion_lengths}
+\end{equation}
+Parity forces each complete excursion length to be even.
+
+\begin{proposition}
+\label{prop:catalan_product}
+Fix a finite return skeleton $0=z_0<z_1<\cdots<z_R$ and fix the sign of each excursion.  The number of nearest-neighbour paths realizing exactly these complete excursions is
+\begin{equation}
+\mathcal{N}(z_1,\ldots,z_R)
+=
+\prod_{r=1}^{R}\Cat_{n_r-1}.
+\label{eq:catalan_product}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The excursion interiors are independent combinatorial choices once their durations and signs are specified.  Proposition~\ref{prop:primitive_catalan_cardinality} applies to each factor.
+\end{proof}
+
+Equation \eqref{eq:catalan_product} is an exact entropy associated with the zero-return skeleton:
+\begin{equation}
+S_{\mathrm{Cat}}(z_R)
+=
+\log \mathcal{N}(z_1,\ldots,z_R)
+=
+\sum_{r=1}^{R}\log \Cat_{n_r-1}.
+\label{eq:catalan_skeleton_entropy}
+\end{equation}
+Using Stirling's formula,
+\begin{equation}
+\log \Cat_n
+=
+n\log 4-\frac{3}{2}\log n+O(1).
+\label{eq:catalan_entropy_asymptotic}
+\end{equation}
+Thus each completed excursion carries an entropy deficit of order $\frac32\log n$ relative to unrestricted $\pm1$ words of comparable length.
+
+\section{Open Catalan sectors: meanders and pointwise control}
+\label{sec:meanders}
+
+Complete excursions alone do not control a point lying inside a very long unfinished excursion.  The natural pointwise object is therefore a Catalan prefix, or Bernoulli meander.  This is also the correct continuum bridge to Brownian meander \cite{DurrettIglehartMiller1977,CsakiMohanty1981}.
+
+\begin{definition}
+\label{def:positive_meander}
+For $t\ge1$ and $h>0$ with $t\equiv h\pmod 2$, let $\mathcal{M}_{t,h}$ be the set of paths $S_0=0$, $S_t=h$, with increments $\pm1$ and
+\begin{equation}
+S_j>0\qquad (1\le j\le t).
+\label{eq:strict_meander_condition}
+\end{equation}
+Let $\mathcal{M}_t=\bigcup_h\mathcal{M}_{t,h}$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:ballot_meander_count}
+The ballot theorem gives
+\begin{equation}
+\left|\mathcal{M}_{t,h}\right|
+=
+\frac{h}{t}
+\binom{t}{(t+h)/2},
+\label{eq:ballot_endpoint_count}
+\end{equation}
+and
+\begin{equation}
+\left|\mathcal{M}_t\right|
+=
+\binom{t-1}{\lfloor (t-1)/2\rfloor}.
+\label{eq:total_meander_count}
+\end{equation}
+\end{proposition}
+
+\begin{remark}
+\label{rem:meander_as_open_catalan}
+The meander is the open-boundary sector of the same Catalan geometry.  Closing a positive meander by a first return produces a primitive Dyck excursion, while cutting a primitive Dyck excursion before its terminal return produces a positive meander.  For pointwise estimates on $\Mert$, the meander formulation avoids any dependence on a future return time.
+\end{remark}
+
+For a compressed time $m$ let
+\begin{equation}
+a(m)=\max\{z_r:z_r\le m\},
+\qquad
+t(m)=m-a(m),
+\qquad
+h(m)=|X_m|.
+\label{eq:last_zero_coordinates}
+\end{equation}
+Whenever $h(m)>0$, the segment from $a(m)$ to $m$ is an element of $\mathcal{M}_{t(m),h(m)}$ after reflection if necessary.
+
+\begin{proposition}
+\label{prop:meander_gaussian_tail}
+There exist absolute constants $c,C>0$ such that, under the uniform measure on $\mathcal{M}_t$,
+\begin{equation}
+\Pp_t\{S_t\ge h\}
+\le
+C\left(1+\frac{h}{\sqrt t}\right)
+\exp\!\left(-c\frac{h^2}{t}\right)
+\label{eq:meander_endpoint_tail}
+\end{equation}
+for admissible $t,h$.
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:ballot_endpoint_count} reduces the endpoint law to binomial coefficients.  Standard Chernoff bounds for the symmetric binomial distribution give Gaussian decay in $h^2/t$, while \eqref{eq:total_meander_count} is of order $2^t/\sqrt t$.  Summing the endpoint masses from $h$ upward gives \eqref{eq:meander_endpoint_tail} after adjustment of absolute constants.
+\end{proof}
+
+This proposition supplies a rigorous ambient energy scale at the current time, not only at completed returns.
+
+\section{Catalan free energy and a sufficient selection principle}
+\label{sec:catalan_free_energy}
+
+\begin{definition}
+\label{def:meander_selection_energy}
+For the actual compressed Mertens path at a time $m$ with $h(m)>0$, define its open Catalan selection energy by
+\begin{equation}
+\Icat(m)
+=
+-\log
+\Pp_{t(m)}\{S_{t(m)}\ge h(m)\},
+\label{eq:selection_energy_definition}
+\end{equation}
+where $\Pp_t$ is the uniform measure on $\mathcal{M}_t$.
+\end{definition}
+
+This is a deterministic number attached to the actual path: probability is used only to measure the volume of the ambient Catalan/meander sector containing an endpoint at least as extreme as the observed one.
+
+\begin{proposition}
+\label{prop:selection_energy_lower_bound}
+There are constants $c_1,c_2,c_3>0$ such that
+\begin{equation}
+\Icat(m)
+\ge
+c_1\frac{h(m)^2}{t(m)}
+-c_2\log\!\left(2+\frac{h(m)}{\sqrt{t(m)}}\right)
+-c_3.
+\label{eq:selection_energy_lower_bound}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Take minus logarithms in Proposition~\ref{prop:meander_gaussian_tail}.
+\end{proof}
+
+\begin{theorem}
+\label{thm:selection_energy_implies_rh_scale}
+Assume that for some constant $A>0$ and all sufficiently large compressed times $m$,
+\begin{equation}
+\Icat(m)\le A\log m.
+\label{eq:selection_energy_hypothesis}
+\end{equation}
+Then
+\begin{equation}
+|X_m|=O\!\left(\sqrt{m\log m}\right),
+\label{eq:compressed_sqrtlog_bound}
+\end{equation}
+and consequently
+\begin{equation}
+\Mert(x)=O\!\left(\sqrt{x\log x}\right).
+\label{eq:mertens_sqrtlog_bound}
+\end{equation}
+In particular, \eqref{eq:rh_mertens_target} follows.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:selection_energy_lower_bound} and \eqref{eq:selection_energy_hypothesis}, the quantity $h(m)^2/t(m)$ is $O(\log m)$, up to a lower-order logarithmic correction.  Since $t(m)\le m$, this gives \eqref{eq:compressed_sqrtlog_bound}.  Equation \eqref{eq:decompression_identity} and the linear comparability \eqref{eq:squarefree_density} then give \eqref{eq:mertens_sqrtlog_bound}.
+\end{proof}
+
+\begin{warning}
+\label{warn:selection_energy_is_the_wall}
+The hypothesis \eqref{eq:selection_energy_hypothesis} is precisely the unresolved selector statement.  Theorem~\ref{thm:selection_energy_implies_rh_scale} is useful because it isolates the target in a finite combinatorial language: the arithmetic path must be prevented from entering meander sectors whose relative Catalan volume is smaller than a power of the current scale.
+\end{warning}
+
+\section{Brownian excursion and meander as continuum Catalan mechanics}
+\label{sec:brownian_mechanics}
+
+Kaigh proved an invariance principle for a recurrent random walk conditioned on a late first return to zero: after diffusive rescaling the path converges to Brownian excursion \cite{Kaigh1976}.  Durrett, Iglehart, and Miller established weak convergence results for Brownian meander and excursion in related conditional settings \cite{DurrettIglehartMiller1977}.  These results provide a continuum mechanics for the Catalan state space rather than an independent model imposed on the arithmetic data.
+
+For an excursion of discrete duration $L$, the diffusive scaling is
+\begin{equation}
+y_L(s)=L^{-1/2}D_{\lfloor Ls\rfloor},
+\qquad 0\le s\le1.
+\label{eq:diffusive_excursion_scaling}
+\end{equation}
+The limiting excursion has order-one height, so the natural discrete height scale is
+\begin{equation}
+H\asymp \sqrt L.
+\label{eq:brownian_height_scale}
+\end{equation}
+The exponential moments of the normalized Dyck maximum are uniformly controlled and converge to the corresponding Brownian-excursion quantity \cite{KhorunzhiyMarckert2009}.  Kousha further developed large and moderate deviation principles for the Dyck maximum \cite{Kousha2012}.
+
+\subsection{A variational action}
+\label{subsec:variational_action}
+
+\begin{heuristic}
+\label{heur:brownian_action}
+This is a physical large-deviation heuristic.  For a continuum path $y:[0,L]\to\R_+$ with $y(0)=y(L)=0$, assign the Euclidean action
+\begin{equation}
+\mathcal{A}[y]
+=
+\frac{\kappa}{2}
+\int_0^L \dot y(t)^2\,dt.
+\label{eq:euclidean_action}
+\end{equation}
+Among paths that reach height $H$, the piecewise-linear triangular profile minimizes \eqref{eq:euclidean_action}.  Its action is
+\begin{equation}
+\mathcal{A}_{\min}(H,L)
+=
+2\kappa\frac{H^2}{L}.
+\label{eq:triangular_action}
+\end{equation}
+Thus the physical rate variable is $H^2/L$, matching the Gaussian scale already present in the exact ballot estimate \eqref{eq:meander_endpoint_tail}.
+\end{heuristic}
+
+The importance of \eqref{eq:triangular_action} is conceptual: the physical energy scale is not being guessed from Mertens data.  It is the continuum expression of a rate already visible in Catalan/ballot combinatorics.
+
+\section{Transfer matrices and the quantum Catalan picture}
+\label{sec:transfer_quantum}
+
+\subsection{Height confinement as a spectral problem}
+\label{subsec:height_spectral}
+
+Let $A_h$ be the adjacency matrix of the path graph on heights $0,1,\ldots,h$.  The number of Dyck paths of length $2n$ confined to this height interval is
+\begin{equation}
+Z_n(h)=(A_h^{2n})_{00}.
+\label{eq:confined_partition_function}
+\end{equation}
+The eigenvalues are
+\begin{equation}
+\lambda_k(h)
+=
+2\cos\!\left(\frac{k\pi}{h+2}\right),
+\qquad
+1\le k\le h+1.
+\label{eq:path_graph_eigenvalues}
+\end{equation}
+Consequently,
+\begin{equation}
+Z_n(h)
+=
+\frac{2}{h+2}
+\sum_{k=1}^{h+1}
+\sin^2\!\left(\frac{k\pi}{h+2}\right)
+\lambda_k(h)^{2n}.
+\label{eq:confined_spectral_sum}
+\end{equation}
+This spectral representation is standard in the analysis of Dyck-path maxima and underlies related deviation results \cite{Kousha2012}.
+
+For large $h$,
+\begin{equation}
+\lambda_1(h)
+=
+2-\frac{\pi^2}{(h+2)^2}+O(h^{-4}),
+\label{eq:ground_eigenvalue_expansion}
+\end{equation}
+so confinement below an atypically low ceiling has a free-energy scale of order
+\begin{equation}
+\Delta F_{\mathrm{conf}}
+\asymp
+\frac{n}{h^2}.
+\label{eq:confinement_free_energy}
+\end{equation}
+This is complementary to the high-excursion action $H^2/n$ in \eqref{eq:triangular_action}.  The two scales are the spectral and variational faces of the same diffusive geometry.
+
+\subsection{Fredkin spin chains}
+\label{subsec:fredkin}
+
+The Fredkin spin chain provides a genuine quantum realization of the Catalan ensemble.  In the spin-$1/2$ model, the ground state can be written as an equal-weight superposition of Dyck paths; related models and their correlation structure are developed in \cite{DellAnnaEtAl2016,SalbergerKorepin2017}.  Abstractly, if $\D_n$ is the Dyck basis,
+\begin{equation}
+|\Psi_n\rangle
+=
+\frac{1}{\sqrt{\Cat_n}}
+\sum_{D\in\D_n}|D\rangle.
+\label{eq:fredkin_catalan_state}
+\end{equation}
+For any subset $\mathcal{A}\subseteq\D_n$ with projector $\Pi_{\mathcal A}$,
+\begin{equation}
+\langle\Psi_n|\Pi_{\mathcal A}|\Psi_n\rangle
+=
+\frac{|\mathcal A|}{\Cat_n}.
+\label{eq:sector_weight_quantum}
+\end{equation}
+Thus a Catalan free energy
+\begin{equation}
+\Fcat(\mathcal A)
+=
+-\log\frac{|\mathcal A|}{\Cat_n}
+\label{eq:catalan_free_energy_sector}
+\end{equation}
+has a literal interpretation as the negative logarithm of a quantum-sector weight in an equal-amplitude Catalan state.
+
+\begin{question}
+\label{question:arithmetic_hamiltonian}
+Can the arithmetic selector be represented by a local or quasi-local deformation of a Catalan transfer matrix or Fredkin-type Hamiltonian whose ground-state or low-energy sector contains the Mertens excursion?  A positive answer would turn the selector problem into a spectral-energy estimate rather than a statement of random sampling.
+\end{question}
+
+\section{Statistical mechanics of Dyck paths: pressure, area, and $q$-Catalan weights}
+\label{sec:dyck_statistical_mechanics}
+
+Dyck paths are established physical configuration spaces for directed polymers and vesicles.  Owczarek and Prellberg study area-weighted Dyck paths as a two-dimensional vesicle model and define pressure through finite-size free-energy differences \cite{OwczarekPrellberg2014}.  Let $A(D)$ be the area under a Dyck path and define
+\begin{equation}
+Z_n(q)
+=
+\sum_{D\in\D_n} q^{A(D)}.
+\label{eq:q_catalan_partition}
+\end{equation}
+At $q=1$,
+\begin{equation}
+Z_n(1)=\Cat_n,
+\label{eq:q_catalan_at_one}
+\end{equation}
+while $q\ne1$ biases the ensemble by area.  The asymptotics of area-weighted Dyck paths exhibit Airy-type scaling and have been analyzed in detail \cite{HaugPrellberg2015}.
+
+For a Mertens excursion $D_r$, define its absolute area
+\begin{equation}
+A_r
+=
+\sum_{j=z_{r-1}}^{z_r}|X_j|.
+\label{eq:mertens_excursion_area}
+\end{equation}
+The pair $(H_r,A_r)$ separates a sharp spike from a sustained displacement.  A physical route based on $q$-Catalan weights would seek an arithmetic inequality on the partition weight of the sector containing $(H_r,A_r)$.
+
+\begin{heuristic}
+\label{heur:entropic_pressure}
+In a Catalan polymer interpretation, excluding a region of path space produces an entropic pressure equal to a free-energy difference.  An arithmetic excursion that remains at large height for a long interval can therefore be assigned a pressure or free-energy cost determined entirely by the number of Catalan paths compatible with that geometric constraint.  The open problem is to connect this cost to the deterministic arithmetic selector.
+\end{heuristic}
+
+\section{Non-equilibrium transport and the Burgers route}
+\label{sec:tasep_burgers}
+
+The asymmetric exclusion process provides a distinct physical use of Brownian excursions.  Derrida, Enaud, and Lebowitz showed that in the maximal-current phase of open TASEP, the non-Gaussian part of density fluctuations can be described in terms of Brownian excursion statistics \cite{DerridaEnaudLebowitz2004}.  At hydrodynamic scale, TASEP is governed by a conservation law of Burgers type,
+\begin{equation}
+\partial_t\rho
++
+\partial_x\bigl(\rho(1-\rho)\bigr)
+=0.
+\label{eq:tasep_burgers}
+\end{equation}
+This creates a rigorous physical chain linking constrained lattice paths, excursion fluctuations, current transport, and non-linear hydrodynamics.
+
+The present project does not identify the Mertens walk with TASEP.  The possible use is structural: construct a dynamics on Catalan states whose conserved current or entropy production encodes the arithmetic selector.  If the selector can be expressed as a constrained transport process, tools from hydrodynamic limits, entropy solutions, shocks, and large-deviation functionals become available.
+
+\begin{question}
+\label{question:selector_as_current}
+Is there a local state variable on the filtered squarefree complex for which the parity imbalance $X_m$ is a conserved or approximately conserved current, and for which the admissible Catalan updates induce a non-equilibrium transport law?
+\end{question}
+
+A positive answer could replace a direct estimate on $\Mob(n)$ by an entropy-production inequality on the Catalan dynamics.  This is speculative, but the TASEP/Brownian-excursion/Burgers chain shows that such a passage from discrete constrained paths to hydrodynamic free energies is a real mechanism in statistical physics, not merely a metaphor.
+
+\section{The deterministic arithmetic selector}
+\label{sec:arithmetic_selector}
+
+\subsection{Björner's filtered complex}
+\label{subsec:bjorner_complex}
+
+For each squarefree integer $k$, let $P(k)$ be the set of its prime divisors and define
+\begin{equation}
+\Delta_x
+=
+\{P(k): k\le x,\ k\text{ squarefree}\}.
+\label{eq:bjorner_complex}
+\end{equation}
+This is an abstract simplicial complex because divisors of a squarefree integer correspond to subsets of its prime set.  Bj\"orner observed and exploited the exact identity
+\begin{equation}
+\Mert(x)
+=
+-\widetilde\chi(\Delta_x),
+\label{eq:mertens_euler_characteristic}
+\end{equation}
+where $\widetilde\chi$ is the reduced Euler characteristic \cite{Bjorner2011}.  He further showed that these complexes are shifted and studied their Betti numbers, wedge-of-spheres homotopy type, and combinatorial shadow inequalities.  Bj\"orner explicitly noted that these results did not by themselves yield new control of the growth of $\Mert(x)$ \cite{Bjorner2011}.
+
+The filtration
+\begin{equation}
+\Delta_1\subseteq\Delta_2\subseteq\Delta_3\subseteq\cdots
+\label{eq:simplicial_filtration}
+\end{equation}
+adds a simplex precisely when the cutoff crosses a squarefree integer.  The change in Euler characteristic is therefore the sign of the corresponding M\"obius value.  The compressed Mertens walk is exactly the Euler-characteristic trace of this filtration.
+
+\subsection{Subset-sum energy representation}
+\label{subsec:subset_sum_energy}
+
+A squarefree integer corresponds to a finite prime subset $S$, and its logarithm is additive:
+\begin{equation}
+E(S)
+=
+\log\prod_{p\in S}p
+=
+\sum_{p\in S}\log p.
+\label{eq:subset_sum_energy}
+\end{equation}
+The sign is the parity
+\begin{equation}
+\Mob\!\left(\prod_{p\in S}p\right)
+=
+(-1)^{|S|}.
+\label{eq:subset_parity_sign}
+\end{equation}
+Thus the selector can be stated exactly as follows: order all finite prime subsets by the additive energy \eqref{eq:subset_sum_energy}, then record the parity \eqref{eq:subset_parity_sign}.  Mertens is the cumulative parity imbalance.
+
+For finitely many primes $p_1,\ldots,p_d$, let
+\begin{equation}
+w=(w_1,\ldots,w_d),
+\qquad
+w_j=\log p_j,
+\label{eq:prime_weight_vector}
+\end{equation}
+and
+\begin{equation}
+E_w(S)=\sum_{j\in S}w_j.
+\label{eq:weighted_subset_energy}
+\end{equation}
+The relative order of two subsets changes on a hyperplane
+\begin{equation}
+H_{S,T}
+=
+\left\{w:\langle \mathbf{1}_S-\mathbf{1}_T,w\rangle=0\right\}.
+\label{eq:subset_order_hyperplane}
+\end{equation}
+Unique factorization implies that the prime-log vector does not lie on any hyperplane $H_{S,T}$ with $S\ne T$.
+
+\begin{proposition}
+\label{prop:subset_gap}
+If $a$ and $b$ are distinct positive integers with $a,b\le X$, then
+\begin{equation}
+|\log a-\log b|
+\ge
+\log\!\left(1+\frac{1}{X}\right).
+\label{eq:log_integer_gap}
+\end{equation}
+Consequently, the ordering of any fixed finite family of squarefree products $\le X$ is separated from its subset-sum collision hyperplanes by a positive deterministic margin.
+\end{proposition}
+
+\begin{proof}
+Assume $a>b$.  Then $a\ge b+1$ and $b\le X$, so
+\begin{equation}
+\log(a/b)
+\ge
+\log(1+1/b)
+\ge
+\log(1+1/X).
+\label{eq:log_gap_proof}
+\end{equation}
+\end{proof}
+
+This hyperplane-arrangement formulation gives a concrete geometric meaning to ``selection'': a finite parity word, and hence a finite Catalan excursion, is stable on a chamber of weight space.  The arithmetic vector $(\log p_j)$ lies in one such chamber.
+
+\begin{definition}
+\label{def:selector_chamber}
+For a finite family $\mathcal S$ of prime subsets, define the selector chamber of the prime-log vector to be the connected component containing $w=(\log p_j)$ of
+\begin{equation}
+\R_{>0}^{d}
+\setminus
+\bigcup_{S\ne T\in\mathcal S}H_{S,T}.
+\label{eq:selector_chamber_definition}
+\end{equation}
+\end{definition}
+
+The chamber solid angle or normalized volume is a possible deterministic analogue of statistical weight.  A useful theorem would compare the chamber volume of a Catalan-extreme sign word with that of ordinary sign words and then prove a lower bound for the chamber containing the actual prime-log vector.
+
+\section{Three possible selector mechanisms}
+\label{sec:selector_mechanisms}
+
+\subsection{Hyperplane-chamber entropy}
+\label{subsec:chamber_entropy}
+
+The first route uses Definition~\ref{def:selector_chamber}.  For a finite excursion involving a finite collection of subset energies, let $\Omega_r$ be the region of positive weight space that preserves the relevant ordering and hence the same parity word.  Define a geometric selector energy
+\begin{equation}
+\mathcal{G}_r
+=
+-\log \nu(\Omega_r),
+\label{eq:geometric_selector_energy}
+\end{equation}
+where $\nu$ is a normalized reference measure on an appropriate projective section of positive weight space.
+
+\begin{question}
+\label{question:chamber_vs_catalan_height}
+Does a high Catalan excursion necessarily correspond to a small union of ordering chambers, with a bound of the form
+\begin{equation}
+\nu\{w:\text{induced excursion has height}\ge H\}
+\le
+\exp\!\left(-\Psi(H,L)\right),
+\label{eq:chamber_height_rate}
+\end{equation}
+where $\Psi(H,L)$ is at least comparable to $H^2/L$ in the relevant regime?
+\end{question}
+
+If so, the remaining arithmetic problem becomes a Diophantine non-concentration statement for the prime-log vector relative to those chambers.  Proposition~\ref{prop:subset_gap} gives a first, very weak, deterministic separation from the collision walls.
+
+\subsection{Shadow inequalities and parity restoration}
+\label{subsec:shadow_restoration}
+
+Bj\"orner obtains number-theoretic inequalities from combinatorial shadow functions associated with the shifted complex \cite{Bjorner2011}.  A family of many high-dimensional faces forces a sufficiently large lower-dimensional shadow.  Since adjacent dimensions contribute opposite signs to Euler characteristic, this is a plausible source of parity compensation.
+
+\begin{warning}
+\label{warn:shadow_temporal_gap}
+A shadow inequality is primarily static: it says that certain lower-dimensional faces exist when a higher-dimensional face exists.  The Mertens problem is temporal along the filtration.  Many shadow faces may have entered much earlier.  The useful statement must therefore be a filtered shadow inequality controlling how much opposite parity is forced to enter within a bounded future energy interval.
+\end{warning}
+
+The corresponding research target is a dynamic inequality of the schematic form
+\begin{equation}
+\text{current parity imbalance }H
+\quad\Longrightarrow\quad
+\text{future opposite-parity influx}\ge \Phi(H,L),
+\label{eq:dynamic_shadow_target}
+\end{equation}
+with a scale strong enough to feed into the Catalan energy $H^2/L$.
+
+\subsection{Persistent topology}
+\label{subsec:persistent_topology}
+
+Equation \eqref{eq:mertens_euler_characteristic} can be refined by the Euler--Poincar\'e formula.  Writing $\beta_k(\Delta_x)$ for reduced Betti numbers,
+\begin{equation}
+\Mert(x)
+=
+\sum_{k\ge0}(-1)^{k-1}\beta_k(\Delta_x).
+\label{eq:mertens_betti_alternation}
+\end{equation}
+Björner studied the asymptotic behaviour of these Betti numbers and proved that $\Delta_x$ has the homotopy type of a wedge of spheres \cite{Bjorner2011}.  A large Mertens excursion is therefore a sustained imbalance between even- and odd-dimensional homological contributions.
+
+The filtration suggests studying not only $\beta_k(\Delta_x)$ at a fixed $x$ but the birth and death structure across $x$.  Persistent-homology constraints could in principle control the duration for which one parity dominates.  This route preserves information discarded by the scalar Euler characteristic.
+
+\begin{question}
+\label{question:persistent_parity}
+Can one prove an interlacing, pairing, or energy inequality between persistent homology classes of adjacent parity whose projection onto Euler characteristic yields a bound on Catalan excursion height?
+\end{question}
+
+\section{Structural viability of the physical routes}
+\label{sec:not_vacuous}
+
+The physical structures above do not by themselves prove a new estimate for $\Mert$.  They are nevertheless mathematically relevant for four specific reasons.
+
+First, the Catalan state space is exact, not fitted.  Proposition~\ref{prop:primitive_catalan_cardinality} follows from the deterministic zero-return geometry of the compressed Mertens walk.
+
+Second, the physical rate $H^2/L$ is already visible in exact combinatorics.  Proposition~\ref{prop:meander_gaussian_tail} supplies a finite discrete Gaussian tail, while Brownian action and large-deviation theory explain the same scale in the continuum.
+
+Third, the arithmetic selector has additional exact structure.  Equations \eqref{eq:mertens_euler_characteristic} and \eqref{eq:subset_sum_energy} show that the path is generated by a shifted simplicial filtration and an additive prime-log ordering.  Therefore the selector problem is not an arbitrary deterministic choice from Catalan space.
+
+Fourth, Theorem~\ref{thm:selection_energy_implies_rh_scale} converts a concrete selector-energy inequality into square-root control.  This isolates a finite combinatorial target that can be attacked by geometry, topology, spectral theory, or statistical mechanics.
+
+\section{Potential obstructions}
+\label{sec:potential_obstructions}
+
+\subsection{The selector may remain unconstrained at the needed scale}
+\label{subsec:obstruction_selector}
+
+The strongest obstruction is that the known simplicial and subset-sum structure may fail to prevent the prime-log ordering from entering Catalan sectors with very large selection energy.  Establishing such a prevention is the substantive new theorem required by the program.
+
+\subsection{Static topology may not control filtered dynamics}
+\label{subsec:obstruction_static_dynamic}
+
+Euler characteristic and Betti-number identities can exhibit large cancellation only after many filtration steps.  RH-scale control requires cancellation at every sufficiently large scale.  Any topological approach must therefore retain filtration time and cannot rely solely on the terminal homotopy type.
+
+\subsection{Parity barrier}
+\label{subsec:obstruction_parity}
+
+The selector records the parity $(-1)^{|S|}$ of prime subsets.  Many coarse counting and sieve mechanisms are weak precisely when asked to distinguish even from odd numbers of prime factors.  In the present language, a successful selector theorem must see parity at the level of the ordered subset-sum geometry rather than only the density of faces.
+
+\subsection{Canonical collapse to a classical Dirichlet object}
+\label{subsec:obstruction_canonical_collapse}
+
+A canonical partition function built directly from the signed energies \eqref{eq:subset_sum_energy} gives
+\begin{equation}
+\sum_{S}(-1)^{|S|}e^{-sE(S)}
+=
+\prod_p(1-p^{-s})
+=
+\frac{1}{\zeta(s)}
+\label{eq:canonical_collapse_zeta}
+\end{equation}
+for $\Re s>1$.  Equation \eqref{eq:canonical_collapse_zeta} is exact, but it collapses the excursion geometry into the familiar Euler product.  The new information sought here lies in pathwise objects---return times, Catalan shapes, heights, areas, chamber geometry, and filtered topology---before such a transform removes the temporal structure.
+
+\begin{remark}
+\label{rem:zeta_role}
+Equation \eqref{eq:canonical_collapse_zeta} is used as a diagnostic boundary: a proposed physical construction that immediately reduces to this canonical partition function has returned to the classical analytic representation and has not exploited the Catalan excursion structure.
+\end{remark}
+
+\section{A hierarchy of possible sufficient principles}
+\label{sec:sufficient_principles}
+
+The following principles are ordered from closest to the desired estimate to more structural formulations.
+
+\begin{conjecture}[Open Catalan selection principle]
+\label{conj:open_catalan_selection}
+For the compressed Mertens walk,
+\begin{equation}
+\Icat(m)=O(\log m).
+\label{eq:open_catalan_selection_conjecture}
+\end{equation}
+\end{conjecture}
+
+By Theorem~\ref{thm:selection_energy_implies_rh_scale}, Conjecture~\ref{conj:open_catalan_selection} implies \eqref{eq:mertens_sqrtlog_bound}.
+
+\begin{conjecture}[Chamber non-concentration principle]
+\label{conj:chamber_nonconcentration}
+For a natural finite-dimensional normalization of the prime-log selector, the chamber containing the arithmetic weight vector has geometric energy at most logarithmic in the cutoff, and Catalan-extreme endpoint sectors have chamber energy bounded below by a positive multiple of $H^2/L$.
+\end{conjecture}
+
+\begin{conjecture}[Filtered parity-restoration principle]
+\label{conj:filtered_parity_restoration}
+There is a deterministic filtered shadow or persistence functional $\mathcal R$ such that a parity imbalance $H$ sustained for $L$ compressed steps forces
+\begin{equation}
+\mathcal R
+\ge
+c\frac{H^2}{L}-O(\log L),
+\label{eq:parity_restoration_energy}
+\end{equation}
+and the arithmetic filtration satisfies $\mathcal R=O(\log m)$ up to compressed time $m$.
+\end{conjecture}
+
+These conjectures are not independent claims of truth.  They are candidate formulations of the same missing selector mechanism at different levels: direct Catalan volume, prime-log chamber geometry, and filtered topology.
+
+\section{The prime-delay selector and its exact interference algebra}
+\label{sec:prime_delay_selector}
+
+This section makes the selector more explicit than the chamber description.
+The identities are exact; the passage from them to local Catalan moment bounds
+is not known and will be isolated separately.
+
+\subsection{Simultaneous prime-shell identities}
+
+For a prime $p$, define
+\begin{equation}
+A_p(x)=\sum_{\substack{n\leq x\\p\nmid n}}\Mob(n).
+\end{equation}
+Terms divisible by $p$ can be written uniquely as $pm$ with $p\nmid m$;
+for these terms $\Mob(pm)=-\Mob(m)$.  Therefore
+\begin{equation}
+\Mert(x)=A_p(x)-A_p(x/p)
+=\sum_{\substack{x/p<n\leq x\\p\nmid n}}\Mob(n)
+\qquad (p\ \text{prime}).
+\label{eq:prime_shell_identity}
+\end{equation}
+Thus a value $\Mert(x)$ must be reproduced simultaneously as a filtered
+parity imbalance in every prime shell $(x/p,x]$.  For $p=2$ this is the shell
+underlying Bj\"orner's odd-squarefree Betti-number formula
+\cite{Bjorner2011}.  Identity~\eqref{eq:prime_shell_identity} is elementary,
+but it is not a generic property of a Catalan path.
+
+\subsection{Threshold kernel and transfer recursion}
+
+Fix $y\geq2$, let $P_y=\{p:p\leq y\}$, and put
+\begin{equation}
+K_y(t)=
+\sum_{\substack{S\subseteq P_y\\
+                  \sum_{p\in S}\log p\leq t}}
+(-1)^{|S|}.
+\label{eq:prime_threshold_kernel}
+\end{equation}
+Unique factorization gives, for $0\leq t\leq\log y$,
+\begin{equation}
+K_y(t)=\Mert(e^t).
+\label{eq:kernel_equals_mertens}
+\end{equation}
+Here and below $\Mert(u)$ for real $u$ means $\sum_{n\leq u}\Mob(n)$.
+The restriction $t\leq\log y$ is essential: outside it the finite prime set
+$P_y$ no longer contains every prime that may occur below the threshold.
+
+Enumerate the primes as $p_1<p_2<\cdots$ and define $K_j$ by using only
+$p_1,\ldots,p_j$.  Splitting subsets according to whether they contain $p_j$
+gives the exact recursion
+\begin{equation}
+K_j(t)=K_{j-1}(t)-K_{j-1}(t-\log p_j).
+\label{eq:prime_delay_recursion}
+\end{equation}
+With $(T_af)(t)=f(t-a)$ and $\mathcal T_a=I-T_a$,
+\begin{equation}
+K_j=\mathcal T_{\log p_j}K_{j-1}.
+\label{eq:prime_transfer_operator}
+\end{equation}
+This is a deterministic delayed anti-copy operation: every new prime inserts
+a translated copy with the opposite sign.
+
+Let $dK_j$ denote the atomic jump measure.  Distributionally,
+\begin{equation}
+dK_j=mathop{\ast}_{\ell\leq j}
+  (\delta_0-\delta_{\log p_\ell}),
+\qquad
+\widehat{dK_j}(\tau)=
+\prod_{\ell\leq j}(1-e^{-i\tau\log p_\ell}),
+\label{eq:prime_interference_product}
+\end{equation}
+and hence
+\begin{equation}
+|\widehat{dK_j}(\tau)|
+=2^j\prod_{\ell\leq j}
+\left|\sin\frac{\tau\log p_\ell}{2}\right|.
+\label{eq:prime_sine_product}
+\end{equation}
+Equations~\eqref{eq:prime_delay_recursion}--\eqref{eq:prime_sine_product}
+are exact finite identities \textnormal{[DED]}.
+
+For an integer $q\geq1$, define the normalized frequency moment
+\begin{equation}
+\mathcal D_{j,q}(T)=\frac1{2T}\int_{-T}^{T}
+\left(2^{-j}|\widehat{dK_j}(\tau)|\right)^{2q}\,d\tau
+\end{equation}
+and let $P_j=\prod_{\ell\leq j}p_\ell$.
+
+\begin{theorem}[Exact Ces\`aro dephasing law]
+\label{thm:exact_tau_dephasing}
+For every fixed $j,q\geq1$,
+\begin{equation}
+\lim_{T\to\infty}\mathcal D_{j,q}(T)
+=\left(\frac{\binom{2q}{q}}{4^q}\right)^j.
+\label{eq:exact_tau_limit}
+\end{equation}
+Moreover,
+\begin{equation}
+\left|\mathcal D_{j,q}(T)-
+\left(\frac{\binom{2q}{q}}{4^q}\right)^j\right|
+\leq
+\min\!\left\{1,
+\frac{1}{T\log(1+P_j^{-q})}\right\}.
+\label{eq:finite_tau_error}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The elementary Fourier expansion
+\begin{equation}
+\sin^{2q}(\theta/2)=4^{-q}
+\sum_{m=-q}^{q}(-1)^m\binom{2q}{q+m}e^{im\theta}
+\end{equation}
+has constant coefficient $\binom{2q}{q}/4^q$ and coefficient
+$\ell^1$ norm equal to one.  Multiplying these expansions for
+$\theta=\tau\log p_\ell$ produces frequencies
+\begin{equation}
+\lambda_m=\sum_{\ell\leq j}m_\ell\log p_\ell=\log(A/B),
+\qquad |m_\ell|\leq q.
+\end{equation}
+Unique factorization makes every nonzero vector $m$ a nonzero frequency.
+Its symmetric Ces\`aro average is
+$\sin(T\lambda_m)/(T\lambda_m)$, proving~\eqref{eq:exact_tau_limit}.
+After cancellation, $A,B\leq P_j^q$; if $A>B$ then
+$\log(A/B)\geq\log(1+P_j^{-q})$.  Summing with the unit $\ell^1$ norm gives
+\eqref{eq:finite_tau_error}.
+\end{proof}
+
+\begin{warning}[What the $\tau$ theorem does and does not control]
+\label{warn:unrestricted_resonance}
+The same rational independence and Kronecker's theorem give
+\begin{equation}
+\sup_{\tau\in\mathbb R}
+2^{-j}|\widehat{dK_j}(\tau)|=1.
+\end{equation}
+Thus Theorem~\ref{thm:exact_tau_dephasing} is an averaged statement, not
+pointwise decay.  Its elementary finite-window error becomes useful only for
+very large $T$ because $P_j^q$ is enormous.  More importantly, the product
+\eqref{eq:prime_interference_product} contains all subsets of
+$p_1,\ldots,p_j$, including products beyond the arithmetic cutoff $y$.
+Restriction to the causal region $t\leq\log y$ destroys that product
+factorization.  These two facts prevent the infinite-window average from being
+used directly as a proof of~\eqref{eq:uniform_prefix_bound}.
+\end{warning}
+
+Figure~\ref{fig:tau_dephasing} illustrates the theorem for the first few
+primes.  The dashed levels are the exact $q=1$ limits $2^{-j}$; the curves are
+finite computations and have no asymptotic evidentiary role.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{../outputs/tau_dephasing.png}
+\caption{Normalized prime sine products and running Ces\`aro square means.}
+\label{fig:tau_dephasing}
+\end{figure}
+
+\subsection{A maximal-parity Walsh coefficient}
+
+Put $j=\pi(y)$ and define the Boolean halfspace
+\begin{equation}
+f_{y,t}(\varepsilon)=
+\mathbf 1\!\left\{
+\sum_{\ell=1}^j\varepsilon_\ell\log p_\ell\leq t
+\right\},
+\qquad \varepsilon\in\{0,1\}^j.
+\end{equation}
+Under the normalized Walsh convention,
+\begin{equation}
+\widehat f_{y,t}([j])
+=2^{-j}\sum_{\varepsilon\in\{0,1\}^j}
+(-1)^{\varepsilon_1+\cdots+\varepsilon_j}f_{y,t}(\varepsilon),
+\end{equation}
+we have
+\begin{equation}
+K_y(t)=2^j\widehat f_{y,t}([j]),
+\qquad
+\Mert(y)=2^{\pi(y)}\widehat f_{y,\log y}([\pi(y)]).
+\label{eq:mertens_maximal_walsh}
+\end{equation}
+Fourier analysis of Boolean halfspaces is well developed
+\cite{MatulefEtAl2010}, but the coefficient in
+\eqref{eq:mertens_maximal_walsh} has maximal degree and the threshold lies in
+a highly sparse tail of the cube.  Standard low-degree and balanced-halfspace
+estimates do not directly give the required bound.
+
+\subsection{Uniform prefix energy: a corrected sufficient principle}
+
+Let $0=z_0<z_1<\cdots$ be the return times of the compressed walk.  On a
+complete excursion set
+\begin{equation}
+D_r(u)=|X_{z_r+u}|,
+\qquad 0\leq u\leq L_r:=z_{r+1}-z_r,
+\end{equation}
+and for every prefix $1\leq v\leq L_r$ define
+\begin{equation}
+\mathcal A_q(r;v)=\sum_{u=1}^{v}D_r(u)^{2q}.
+\label{eq:prefix_catalan_energy}
+\end{equation}
+The same definition is used for every prefix of the currently open excursion,
+even when its next return time is not yet known.
+
+\begin{conjecture}[Uniform prime-Catalan prefix bound]
+\label{conj:uniform_prime_catalan_prefix}
+For every fixed integer $q\geq1$ and every $\eps>0$,
+\begin{equation}
+\mathcal A_q(r;v)
+\ll_{q,\eps}v^{q+1}(z_r+v)^\eps
+\label{eq:uniform_prefix_bound}
+\end{equation}
+uniformly over all completed excursions, all their prefixes, and all prefixes
+of the final open meander.
+\end{conjecture}
+
+\begin{theorem}[Uniform prefix moments imply RH]
+\label{thm:uniform_prefix_implies_rh}
+Conjecture~\ref{conj:uniform_prime_catalan_prefix} implies the Riemann
+hypothesis.
+\end{theorem}
+
+\begin{proof}
+Fix a compressed time $N$, let $z_\ast\leq N$ be its last return time, and put
+$v=N-z_\ast$.  If $v=0$ there is nothing to prove.  Otherwise the prefix
+containing $N$ is included in Conjecture~\ref{conj:uniform_prime_catalan_prefix},
+so
+\begin{equation}
+|X_N|^{2q}\leq\mathcal A_q(r;v)
+\ll_{q,\eps}v^{q+1}N^\eps
+\leq N^{q+1+\eps}.
+\end{equation}
+Therefore
+\begin{equation}
+|X_N|\ll_{q,\eps}
+N^{1/2+1/(2q)+\eps/(2q)}.
+\end{equation}
+Given $\delta>0$, choose a fixed $q$ sufficiently large and then choose
+$\eps>0$ sufficiently small.  This gives
+$X_N=O_\delta(N^{1/2+\delta})$.  Since the squarefree counting function
+$Q(x)\sim6x/\pi^2$ and $\Mert(x)=X_{Q(x)}$, the classical Mertens criterion
+for RH follows.
+\end{proof}
+
+\begin{remark}[Logical strength]
+Theorem~\ref{thm:uniform_prefix_implies_rh} is a rigorous implication, not an
+equivalence.  The uniform prefix conjecture can be strictly stronger than RH.
+Its purpose is to expose a structured sufficient target that controls complete
+excursions, internal prefixes, and the open meander without predicting their
+individual signs.
+\end{remark}
+
+\subsection{No-go audit: what the exact identities do not prove}
+
+The exact Fourier and prime-shell identities above remain useful diagnostics,
+but Version~4 removes them from the proposed proof mechanism.  The following
+statements isolate the reason.
+
+\begin{proposition}[Catalan universality obstruction]
+\label{prop:catalan_universality_obstruction}
+For every $n\geq1$ there is a primitive Dyck excursion of length $2n$ and
+height $n$.  More generally, every finite concatenation of primitive Dyck
+excursions followed by a strict meander is realized by a unique finite word
+of increments in $\{-1,+1\}$.
+\end{proposition}
+
+\begin{proof}
+The mountain word $+^n-^n$ is primitive and has height $n$.  For the second
+statement, read the successive differences of the prescribed paths and
+concatenate them.  The return skeleton and the final meander recover the
+decomposition uniquely.
+\end{proof}
+
+\begin{corollary}[Catalan-only no-go theorem]
+\label{cor:catalan_only_no_go}
+No estimate that uses only the nearest-neighbour property, the return
+skeleton, primitive Catalan enumeration, or uniform Catalan large deviations
+can imply a sublinear bound for the selected path.  An additional arithmetic
+statement excluding the mountain words is logically necessary.
+\end{corollary}
+
+The corollary does not deny the exact Catalan structure.  It says that ambient
+counting and typicality cannot select the Mertens word from that structure.
+
+\begin{proposition}[Redundant prime lift]
+\label{prop:redundant_prime_lift}
+Let $a=q_{z_r}$ be a return anchor, $x=q_{z_r+v}$, and
+\begin{equation}
+A_p(y)=\sum_{\substack{n\leq y\\p\nmid n}}\Mob(n).
+\end{equation}
+For every prime $p$,
+\begin{equation}
+\bigl(A_p(x)-A_p(a)\bigr)
+-\bigl(A_p(x/p)-A_p(a/p)\bigr)
+=X_{z_r+v}.
+\label{eq:redundant_prime_lift}
+\end{equation}
+Consequently, averaging any power of the left-hand side over primes reproduces
+the corresponding Catalan prefix moment exactly and gives no estimate.
+\end{proposition}
+
+\begin{proof}
+Subtract the exact shell identity
+$\Mert(y)=A_p(y)-A_p(y/p)$ at $y=x$ and $y=a$, then use
+$\Mert(a)=X_{z_r}=0$.  The final assertion follows because the difference is
+independent of $p$.
+\end{proof}
+
+This proposition invalidates the prime-dilation ``alignment'' proposal as an
+independent bridge: after definitions are expanded, its desired inequality is
+precisely Conjecture~\ref{conj:uniform_prime_catalan_prefix} again.
+
+\begin{proposition}[Stability floor for smoothed chambers]
+\label{prop:stability_floor}
+Fix $x\geq2$ and the squarefree integers not exceeding $2x$.  Perturb their
+prime weights by
+\begin{equation}
+w_p(\theta,\xi)=\log p+\theta\xi_p,
+\qquad |\xi_p|\leq1.
+\end{equation}
+Put
+\begin{equation}
+\delta_x=
+\frac{\log(1+1/(2x))}{4\log_2(2x)}.
+\label{eq:stability_radius}
+\end{equation}
+For every choice of $\xi$, the complete order of those squarefree integers is
+unchanged whenever $|\theta|\leq\delta_x$.  Hence any bad-excursion event true
+for the arithmetic order occupies at least the interval
+$[-\delta_x,\delta_x]$ in every perturbation direction.
+\end{proposition}
+
+\begin{proof}
+Distinct integers $m,n\leq2x$ satisfy
+\begin{equation}
+|\log m-\log n|\geq\log(1+1/(2x)).
+\end{equation}
+The perturbation of their energy difference is at most
+\begin{equation}
+|\theta|\bigl(\omega(m)+\omega(n)\bigr)
+\leq2|\theta|\log_2(2x).
+\end{equation}
+At the radius~\eqref{eq:stability_radius} this is at most half the deterministic
+gap, so no pair reverses order.
+\end{proof}
+
+If $\theta$ is uniform on a fixed interval $[-\eta,\eta]$, an actual bad
+excursion therefore forces bad probability at least
+\begin{equation}
+\frac{\delta_x}{\eta}\asymp\frac1{x\log x}.
+\label{eq:stability_probability_floor}
+\end{equation}
+A smoothed Catalan tail smaller than this floor cannot be obtained merely by
+replacing the arithmetic order with a typical perturbed order: it must already
+control the rigid neighbourhood containing the arithmetic point.  Version~4
+therefore does not promote smoothed analysis to a proof route.
+
+\begin{definition}[Admissible Catalan--arithmetic bridge]
+\label{def:admissible_bridge}
+A future bridge is called admissible only if it satisfies all four tests:
+\begin{enumerate}[label=(\roman*)]
+\item it is false for at least one primitive Dyck mountain word;
+\item it uses a proved arithmetic relation not recoverable from the values of
+      the single prefix path alone;
+\item after all definitions are substituted, it is not the desired uniform
+      prefix bound itself;
+\item it is uniform over internal prefixes and the final open meander.
+\end{enumerate}
+\end{definition}
+
+No admissible bridge is proved in this notebook.  This is the precise boundary
+left after the audit.  The exact target remains
+Conjecture~\ref{conj:uniform_prime_catalan_prefix}; calling it a selector,
+alignment, dephasing, or free-energy estimate does not constitute progress
+unless an admissible arithmetic mechanism proves it.
+
+\section{An aggregate route that does not predict $\Mert$ pointwise}
+\label{sec:aggregate_moment_route}
+
+The pointwise selection principle in
+Conjecture~\ref{conj:open_catalan_selection} is deliberately strong.  It asks
+for a restriction at every time and can therefore reproduce, in disguised
+form, the original difficulty of controlling $\Mert(x)$.  This section replaces
+that hypothesis by averaged positive quantities.  A large value cannot hide
+from sufficiently high moments because the Mertens walk has increments of
+absolute value at most one.
+
+\begin{remark}[Provenance]
+\label{rem:aggregate_provenance}
+The use of moments to recover a point value from local regularity is a classical
+analytic mechanism.  The specific time-moment criterion and its decomposition
+over Catalan excursions below are deductions in the present notebook
+\textnormal{[DED]}.  Verjovsky's local Fourier-moment criterion is a distinct
+recent realization of a related moment-to-point principle \cite{Verjovsky2026}
+\textnormal{[LIT]}; it averages a M\"obius Fourier polynomial over a short
+frequency arc, whereas the criterion below averages the Mertens walk over
+time.  The weak Mertens conjecture is another classical averaged sufficient
+condition, but it is stronger than RH and also forces simplicity of the zeros
+\cite{Ng2004} \textnormal{[LIT]}.
+\end{remark}
+
+\subsection{A hierarchy of moments equivalent to RH}
+
+For an integer $k\geq1$, define
+\begin{equation}
+\mathcal B_k(X)=\sum_{n\leq X}|\Mert(n)|^{2k}.
+\label{eq:ordinary_time_moment}
+\end{equation}
+
+\begin{theorem}[Aggregate moment criterion]
+\label{thm:aggregate_moment_criterion}
+The Riemann hypothesis is equivalent to the following family of estimates: for
+every fixed integer $k\geq1$ and every $\eps>0$,
+\begin{equation}
+\mathcal B_k(X)
+\ll_{k,\eps}X^{k+1+\eps}.
+\label{eq:aggregate_moment_bound}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Assume RH.  For every $\eta>0$ the classical Mertens criterion gives
+$|\Mert(n)|\ll_\eta n^{1/2+\eta}$.  Given $k$ and $\eps$, take
+$\eta=\eps/(2k)$.  Summation gives
+\eqref{eq:aggregate_moment_bound}, after an inessential adjustment of
+$\eps$.
+
+Conversely, suppose \eqref{eq:aggregate_moment_bound} holds for every fixed
+$k$.  Fix $N$ and write $H=|\Mert(N)|$.  Since
+\begin{equation}
+|\Mert(n+1)-\Mert(n)|\leq1,
+\label{eq:mertens_lipschitz}
+\end{equation}
+we have $|\Mert(N+j)|\geq H/2$ for
+$0\leq j\leq\lfloor H/2\rfloor$.  Moreover $H\leq N$, so these indices are at
+most $2N$.  Hence, for $H\geq4$,
+\begin{equation}
+\mathcal B_k(2N)
+\geq
+c_k H^{2k+1}
+\label{eq:spike_costs_interval}
+\end{equation}
+with an absolute admissible choice such as $c_k=2^{-2k-2}$.  It follows that
+\begin{equation}
+H
+\ll_{k,\eps}
+N^{(k+1+\eps)/(2k+1)}.
+\label{eq:finite_k_point_bound}
+\end{equation}
+Given $\delta>0$, choose $k$ so large that
+$1/(4k+2)<\delta/2$, and then choose $\eps$ so that
+$\eps/(2k+1)<\delta/2$.  Equation
+\eqref{eq:finite_k_point_bound} yields
+$\Mert(N)=O_\delta(N^{1/2+\delta})$, which is equivalent to RH.
+\end{proof}
+
+The first RH-equivalent statement in the new route is therefore
+Theorem~\ref{thm:aggregate_moment_criterion}.  No Catalan, physical, or
+topological statement preceding it proves RH.  This is the dependency-graph
+checkpoint for the remainder of the program.
+
+\begin{corollary}[Finite-order milestones]
+\label{cor:finite_order_milestones}
+For a single fixed $k$, estimate \eqref{eq:aggregate_moment_bound} implies
+\begin{equation}
+\Mert(X)
+\ll_{k,\eps}
+X^{\frac{k+1}{2k+1}+\eps}.
+\label{eq:finite_order_exponent}
+\end{equation}
+In particular, $k=1,2,3$ give the successive exponents
+$2/3$, $3/5$, and $4/7$.
+\end{corollary}
+
+\begin{warning}
+\label{warn:finite_moment_depth}
+Even the case $k=1$ would be a major unconditional advance: it would give a
+fixed zero-free half-plane $\Re s>2/3$.  The hierarchy avoids pointwise sign
+prediction, but it does not make the arithmetic cancellation automatic.
+Its advantage is that it supplies auditable intermediate targets rather than
+an all-or-nothing selector axiom.
+\end{warning}
+
+\subsection{Exact excursion decomposition of the moment budget}
+
+In compressed time put
+\begin{equation}
+\mathcal B_k^{\#}(Y)=\sum_{m\leq Y}|X_m|^{2k}.
+\label{eq:compressed_time_moment}
+\end{equation}
+The proof of Theorem~\ref{thm:aggregate_moment_criterion}, together with
+$q_m\asymp m$, gives the analogous equivalence
+\begin{equation}
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\mathcal B_k^{\#}(Y)ll_{k,\eps}Y^{k+1+\eps}
+\quad\text{for every fixed $k$ and every $\eps>0$}.
+\label{eq:compressed_moment_equivalence}
+\end{equation}
+
+For an excursion $D$ of length $L$, define its integrated $2k$-energy
+\begin{equation}
+\mathcal E_k(D)=\sum_{u=1}^{L-1}|D(u)|^{2k}.
+\label{eq:excursion_integrated_energy}
+\end{equation}
+At a cutoff $Y$, let $D_1,\ldots,D_R$ be the completed excursions and let
+$U_Y$ be the open terminal meander of length $t_Y$.  Then the identity
+\begin{equation}
+\boxed{
+\mathcal B_k^{\#}(Y)
+=
+\sum_{r=1}^{R}\mathcal E_k(D_r)
++\mathcal E_k(U_Y)
+}
+\label{eq:exact_excursion_moment_decomposition}
+\end{equation}
+is exact.  It converts RH into a hierarchy of total geometric-energy bounds
+over the actual excursions, without requiring the prediction of any
+individual value of $X_m$.
+
+Under the uniform Catalan law at fixed length $L$, Brownian scaling predicts
+\begin{equation}
+\E_{\mathrm{Cat},L}\mathcal E_k(D)
+\asymp_k L^{k+1}.
+\label{eq:catalan_integrated_moment_scale}
+\end{equation}
+This motivates the length budget
+\begin{equation}
+\Lambda_k(Y)
+=
+\sum_{r=1}^{R}L_r^{k+1}+t_Y^{k+1}.
+\label{eq:length_moment_budget}
+\end{equation}
+Since the segment lengths sum to $Y$,
+\begin{equation}
+\Lambda_k(Y)\leq Y^{k+1}.
+\label{eq:length_budget_convexity}
+\end{equation}
+
+\begin{conjecture}[Aggregate Catalan domination]
+\label{conj:aggregate_catalan_domination}
+For every fixed $k\geq1$ and every $\eps>0$,
+\begin{equation}
+\mathcal B_k^{\#}(Y)
+\ll_{k,\eps}
+Y^{\eps}\Lambda_k(Y).
+\label{eq:aggregate_catalan_domination}
+\end{equation}
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:aggregate_catalan_domination_implies_rh}
+Conjecture~\ref{conj:aggregate_catalan_domination} for all fixed $k$ implies
+RH.
+\end{proposition}
+
+\begin{proof}
+Combine \eqref{eq:aggregate_catalan_domination} with
+\eqref{eq:length_budget_convexity} and then apply
+\eqref{eq:compressed_moment_equivalence}.
+\end{proof}
+
+\begin{warning}
+\label{warn:aggregate_domination_strength}
+Conjecture~\ref{conj:aggregate_catalan_domination} is a sufficient selector
+principle and may be strictly stronger than RH.  RH controls the total moment
+$\mathcal B_k^{\#}(Y)$ but does not by itself compare it with the potentially
+much smaller random length budget $\Lambda_k(Y)$.  The conjecture is proposed
+as a structured attack target, not as an equivalent reformulation.
+\end{warning}
+
+Unlike a pointwise percentile bound, aggregate Catalan domination permits
+exceptional excursions: one excursion may have energy far above its Catalan
+mean provided the total energy remains within the global length budget.  This
+is the precise sense in which the route avoids predicting the real Mertens
+path excursion by excursion.
+
+\subsection{The arithmetic correlation target}
+
+Write $a_j=\Mob(q_j)\in\{-1,+1\}$.  Expanding the positive moment and changing
+the order of summation gives the exact identity
+\begin{equation}
+\mathcal B_k^{\#}(Y)
+=
+\sum_{1\leq i_1,\ldots,i_{2k}\leq Y}
+a_{i_1}\cdots a_{i_{2k}}
+\bigl(Y-\max(i_1,\ldots,i_{2k})+1\bigr).
+\label{eq:moment_correlation_expansion}
+\end{equation}
+The configurations in which every index occurs with even multiplicity make a
+contribution of order at most $O_k(Y^{k+1})$.  The remaining configurations
+form an explicit weighted off-diagonal correlation sum.  Thus the analytic
+problem is not to predict $a_j$ but to prove cancellation in the aggregate
+off-diagonal part of \eqref{eq:moment_correlation_expansion}.
+
+\begin{definition}[Off-diagonal correlation budget]
+\label{def:off_diagonal_budget}
+Let $\mathcal O_k(Y)$ denote the part of
+\eqref{eq:moment_correlation_expansion} indexed by tuples for which at least
+one index has odd multiplicity.
+\end{definition}
+
+A concrete sufficient target is
+\begin{equation}
+\mathcal O_k(Y)=O_{k,\eps}(Y^{k+1+\eps})
+\label{eq:off_diagonal_target}
+\end{equation}
+for every fixed $k$.  This target retains ordering and high-order sign
+correlations; it cannot be replaced by one-point equidistribution or by a
+fixed-shift Chowla statement without an additional uniform inversion theorem.
+
+\subsection{Finite evidence and its exact limitation}
+
+\begin{experiment}
+\label{exp:moment_budget_455m}
+For the supplied file through ordinary cutoff $455052511$, compressed time is
+$Y=276638778$.  Direct blockwise summation gave the following ratios.  The
+second column divides $\mathcal B_k^{\#}(Y)$ by the leading simple-walk moment
+$((2k-1)!!/(k+1))Y^{k+1}$; the third divides it by $\Lambda_k(Y)$, including
+the open terminal meander.
+\begin{center}
+\begin{tabular}{c|cc}
+$k$ & simple-walk ratio & $\mathcal B_k^{\#}(Y)/\Lambda_k(Y)$\\
+\hline
+1 & $3.70956\times10^{-2}$ & $0.404561$\\
+2 & $8.92436\times10^{-4}$ & $0.251180$\\
+3 & $1.64775\times10^{-5}$ & $0.188051$\\
+4 & $2.48322\times10^{-7}$ & $0.154931$\\
+5 & $3.16760\times10^{-9}$ & $0.135848$\\
+6 & $3.50903\times10^{-11}$ & $0.125099$
+\end{tabular}
+\end{center}
+These are finite measured values, not estimates uniform in $Y$.  They support
+the scale in Conjecture~\ref{conj:aggregate_catalan_domination} on this one
+range but provide no asymptotic control.
+\end{experiment}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{../outputs/moment_ratios.png}
+\caption{Finite compressed-time moment ratios through $k=6$.  The logarithmic
+left panel compares with the leading simple-walk moment; the right panel shows
+$\mathcal B_k^{\#}(Y)/\Lambda_k(Y)$.}
+\label{fig:moment_ratios}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{../outputs/excursion_geometry.png}
+\caption{Observed excursion height and return-gap geometry through
+$N=455{,}052{,}511$.  Both panels are descriptive finite data only.}
+\label{fig:excursion_geometry}
+\end{figure}
+
+\subsection{A staged proof program}
+
+The route now has intermediate statements that can fail independently:
+\begin{enumerate}[label=(M\arabic*)]
+\item Prove \eqref{eq:aggregate_moment_bound} for $k=1$.  This yields the
+      exponent $2/3+\eps$ and tests whether the method supplies any new
+      arithmetic cancellation.
+\item Prove the excursion-budget inequality
+      \eqref{eq:aggregate_catalan_domination} for $k=1$ by a filtered
+      parity-restoration or transfer-operator estimate.
+\item Extend the argument to each fixed $k$, with constants allowed to depend
+      on $k$.  No uniformity in growing $k$ is required for
+      Theorem~\ref{thm:aggregate_moment_criterion}.
+\item Translate the resulting bounds into the off-diagonal formulation
+      \eqref{eq:off_diagonal_target}; identify which multiplicity patterns are
+      controlled by known M\"obius correlation theorems and which remain new.
+\item Only after a genuine estimate is proved at M1 or M2 should one construct
+      a pinning, transfer, or hydrodynamic model intended to explain the
+      estimate.  A physical model fitted to the finite data is not an
+      arithmetic proof.
+\end{enumerate}
+
+This hierarchy is a clear route around pointwise prediction, but it is not a
+shortcut around cancellation.  Its first falsifiable analytic target is the
+quadratic energy
+\begin{equation}
+\sum_{m\leq Y}X_m^2\ll_\eps Y^{2+\eps},
+\label{eq:first_quadratic_target}
+\end{equation}
+and its first RH-complete target is the same estimate at every fixed even
+moment.
+
+\section{Research program}
+\label{sec:research_program}
+
+The route can be advanced without assuming a probabilistic model for M\"obius by attacking finite, exact questions.
+
+\subsection{Exact finite combinatorics}
+\label{subsec:program_exact}
+
+For each actual excursion or meander prefix, compute
+\begin{equation}
+(L,H,A,S_{\mathrm{Cat}},\Icat),
+\label{eq:finite_observables}
+\end{equation}
+where $L$ is duration, $H$ is maximum height or current endpoint, $A$ is area, $S_{\mathrm{Cat}}$ is Catalan entropy, and $\Icat$ is the open-sector selection energy.  The formulas for all ambient counts are exact or can be evaluated by stable dynamic programming/transfer matrices.
+
+\subsection{Finite selector chambers}
+\label{subsec:program_chambers}
+
+For a finite set of primes and squarefree products, build the hyperplane arrangement \eqref{eq:subset_order_hyperplane}.  Determine which chambers generate Catalan excursions of a prescribed length and height.  The first structural question is whether the total chamber volume of height-$H$ words exhibits the same $H^2/L$ rate as the uniform Catalan ensemble or a stronger one.
+
+\subsection{Dynamic shadows}
+\label{subsec:program_shadows}
+
+Translate Bj\"orner's static shadow inequalities into statements on increments of face numbers over multiplicative windows
+\begin{equation}
+[x,xe^{\delta}].
+\label{eq:multiplicative_window}
+\end{equation}
+The target is a lower bound on opposite-parity arrivals conditional on a current Euler-characteristic imbalance.
+
+\subsection{Transfer operators}
+\label{subsec:program_transfer}
+
+Construct a transfer operator whose states retain both Catalan height and a finite amount of arithmetic filtration data.  The ordinary Dyck transfer matrix has spectral gap scale $h^{-2}$; an arithmetic deformation could reveal whether the prime-log selector adds a confining or restoring term.
+
+\subsection{Hydrodynamic coarse graining}
+\label{subsec:program_hydrodynamic}
+
+If a local transport rule emerges, derive its conservation law and large-deviation functional.  The TASEP example shows that Brownian-excursion fluctuations can coexist with Burgers hydrodynamics \cite{DerridaEnaudLebowitz2004}.  The corresponding Mertens question is whether the arithmetic selector generates an entropy condition that suppresses macroscopic parity shocks.
+
+\section{Relation to existing literature}
+\label{sec:literature_position}
+
+The closest direct probabilistic work on M\"obius located in this literature survey is the study of Mussardo and LeClair, which reorganizes the nonzero M\"obius coefficients into a $\pm1$ walk and investigates Brownian/random-walk behaviour through statistical tests and block structures \cite{MussardoLeClair2021}.  The present program differs in its primary invariant: the exact Catalan state space attached to each return excursion and its open meander sectors.
+
+On the mathematical-probability side, conditioned random walks converging to Brownian excursion or meander are classical \cite{Kaigh1976,DurrettIglehartMiller1977,CsakiMohanty1981}; the maximum of a random Dyck path and its exponential moments and deviations are quantitatively understood \cite{KhorunzhiyMarckert2009,Kousha2012}.  On the statistical-mechanics side, Dyck paths occur as vesicle/polymer configurations with genuine partition functions and free-energy differences \cite{OwczarekPrellberg2014,HaugPrellberg2015}.  On the quantum side, Fredkin-type spin chains realize Dyck-path superpositions as physical states \cite{DellAnnaEtAl2016,SalbergerKorepin2017}.  On the non-equilibrium side, Brownian excursions arise in exact TASEP fluctuation calculations, with Burgers-type hydrodynamics at macroscopic scale \cite{DerridaEnaudLebowitz2004}.
+
+On the arithmetic-topological side, Bj\"orner's complex gives the exact identity \eqref{eq:mertens_euler_characteristic}, shifted-complex structure, Betti asymptotics, and shadow inequalities, while explicitly leaving the growth problem for $\Mert$ unresolved \cite{Bjorner2011}.  The potential new intersection is therefore
+\begin{equation}
+\boxed{
+\text{filtered arithmetic selector}
++
+\text{Catalan excursion state space}
++
+\text{physical free-energy geometry}
+}.
+\label{eq:literature_intersection}
+\end{equation}
+The notebook treats the selector theorem as the decisive missing component rather than as an implicit randomness assumption.
+
+\section{Conclusions and open questions}
+\label{sec:conclusions}
+
+The compressed Mertens function is an exact nearest-neighbour walk, and every complete zero-to-zero excursion is a primitive Dyck path counted by a Catalan number.  This yields a canonical finite state space for each excursion and a natural open-boundary meander space for every point inside an excursion.  Standard Catalan probability then supplies a quantitative geometric energy: large endpoint displacement or height is exponentially expensive on the scale $H^2/L$.
+
+The central unresolved issue is selection.  The arithmetic path is generated by a deterministic ordering of prime-subset energies and simultaneously by a filtered shifted simplicial complex whose Euler characteristic is Mertens.  The project becomes viable only if one of these structures can be shown to bound the Catalan selection energy.
+
+Version~4 performs the hidden-equivalence audit explicitly.  The shell
+identity~\eqref{eq:prime_shell_identity}, transfer recursion
+\eqref{eq:prime_delay_recursion}, convolution product
+\eqref{eq:prime_interference_product}, and maximal Walsh coefficient
+\eqref{eq:mertens_maximal_walsh} remain exact diagnostic identities.  The
+Catalan-only no-go theorem, redundant-prime-lift proposition, and stability
+floor show why none of them currently supplies the missing cancellation.
+
+The most concrete first targets are:
+\begin{enumerate}[label=(\roman*)]
+\item prove nontrivial chamber-volume inequalities for parity words induced by positive additive subset weights;
+\item derive filtered versions of Bj\"orner's shadow inequalities over multiplicative windows;
+\item test whether persistent homology forces adjacent-parity compensation on the timescale of a Catalan excursion;
+\item construct an arithmetic deformation of the Dyck transfer matrix and identify its spectral energy;
+\item determine whether a current/transport formulation leads to an entropy-production principle analogous to non-equilibrium lattice gases.
+\item subject every proposed bridge to Definition~\ref{def:admissible_bridge}
+      before treating it as a route toward the uniform Catalan prefix bound.
+\end{enumerate}
+
+A successful result need not identify M\"obius with a random walk.  The new
+aggregate route separates two logically different targets.  Theorem~\ref{thm:aggregate_moment_criterion}
+is exactly equivalent to RH and asks only for all fixed even time moments; it
+does not predict the value or sign of any individual $M(n)$.  The aggregate
+Catalan domination principle is a structured sufficient mechanism for those
+moment bounds, but is explicitly left as a possibly stronger conjecture.  Thus
+the first falsifiable analytic milestone is the quadratic estimate
+$\sum_{m\le Y}X_m^2\ll_\varepsilon Y^{2+\varepsilon}$, while the original
+pointwise selection-energy theorem remains a stronger alternative rather than
+the definition of the route.
+
+The only logically valid conditional chain retained in Version~4 is
+\begin{equation}
+\begin{aligned}
+&\text{admissible arithmetic--Catalan bridge}\\
+&\qquad\Longrightarrow \text{uniform prefix moment hierarchy}\\
+&\qquad\Longrightarrow
+|\Mert(x)|\ll_\eps x^{1/2+\eps}
+\Longrightarrow \mathrm{RH}.
+\end{aligned}
+\end{equation}
+Theorem~\ref{thm:uniform_prefix_implies_rh} supplies the second arrow.  No
+claim is made that the first arrow has been proved or reduced to a standard
+estimate.  This negative conclusion is deliberate: it prevents exact but
+tautological identities from being advertised as progress toward RH.
+
+\appendix
+
+\section{Reproducible computations and archived outputs}
+\label{app:reproducibility}
+
+The accompanying archive contains the six Python programs printed below and
+their outputs.  The binary input is not redistributed; it consists of
+$\Mob(1),\ldots,\Mob(N)$ stored as signed bytes.  For the supplied file with
+$N=455{,}052{,}511$, the moment audit found $276{,}638{,}778$ compressed steps,
+$53{,}078$ returns, $\Mert(N)=-5414$, and maximum observed absolute height
+$6695$.  The computed ratios
+$\mathcal B_k^{\#}/\Lambda_k$ for $k=1,\ldots,6$ were respectively
+\begin{equation}
+0.4045606,\ 0.2511805,\ 0.1880514,\ 0.1549310,\ 0.1358477,\ 0.1250992.
+\end{equation}
+These are finite measurements only and are not used as asymptotic premises.
+
+The finite selector audit checked the prime-shell identity through $10^5$ for
+$p=2,3,5,7,11,97$, the threshold-kernel identity through $30$, the exact
+transfer factorization, and the Fourier product at four frequencies.  All
+integer identities passed; the largest floating-point Fourier discrepancy was
+$9.54\times10^{-14}$.
+
+Typical commands are
+\begin{lstlisting}[style=pythonappendix,language=bash,numbers=none]
+python3 code/mertens_moment_audit.py /path/to/moebius.bin \
+  --output outputs/moment_audit.json
+python3 code/prime_selector_identity_check.py \
+  --output outputs/selector_check.json
+python3 code/analiza_alturas_excursiones_mertens.py /path/to/moebius.bin \
+  --output outputs/mertens_excursiones_alturas.csv
+python3 code/tau_dephasing_audit.py \
+  --output-png outputs/tau_dephasing.png \
+  --output-json outputs/tau_dephasing.json
+python3 code/plot_catalan_mertens_outputs.py \
+  --moments outputs/moment_audit.json \
+  --excursions outputs/mertens_excursiones_alturas.csv \
+  --output-dir outputs
+python3 code/catalan_no_go_audit_v4.py
+\end{lstlisting}
+
+\section{Python source: moment hierarchy audit}
+\lstinputlisting[style=pythonappendix]{../code/mertens_moment_audit.py}
+
+\section{Python source: exact selector identities}
+\lstinputlisting[style=pythonappendix]{../code/prime_selector_identity_check.py}
+
+\section{Python source: excursion heights and Catalan tails}
+\lstinputlisting[style=pythonappendix]{../code/analiza_alturas_excursiones_mertens.py}
+
+\section{Python source: finite $\tau$-dephasing illustration}
+\lstinputlisting[style=pythonappendix]{../code/tau_dephasing_audit.py}
+
+\section{Python source: publication figures}
+\lstinputlisting[style=pythonappendix]{../code/plot_catalan_mertens_outputs.py}
+
+\section{Python source: Version 4 no-go audit}
+\lstinputlisting[style=pythonappendix]{../code/catalan_no_go_audit_v4.py}
+
+\begin{thebibliography}{99}
+
+\bibitem{Bjorner2011}
+A.~Bj\"orner,
+\emph{A cell complex in number theory},
+Adv. Appl. Math. \textbf{46} (2011), 71--85.
+DOI: 10.1016/j.aam.2010.09.007.
+arXiv:1101.5704.
+
+\bibitem{Kaigh1976}
+W.~D.~Kaigh,
+\emph{An invariance principle for random walk conditioned by a late return to zero},
+Ann. Probab. \textbf{4} (1976), 115--121.
+DOI: 10.1214/aop/1176996189.
+
+\bibitem{DurrettIglehartMiller1977}
+R.~T.~Durrett, D.~L.~Iglehart, and D.~R.~Miller,
+\emph{Weak convergence to Brownian meander and Brownian excursion},
+Ann. Probab. \textbf{5} (1977), 117--129.
+DOI: 10.1214/aop/1176995895.
+
+\bibitem{CsakiMohanty1981}
+E.~Cs\'aki and S.~G.~Mohanty,
+\emph{Excursion and meander in random walk},
+Canad. J. Statist. \textbf{9} (1981), 57--70.
+DOI: 10.2307/3315296.
+
+\bibitem{KhorunzhiyMarckert2009}
+O.~Khorunzhiy and J.-F.~Marckert,
+\emph{Uniform bounds for exponential moment of maximum of a Dyck path},
+Electron. Commun. Probab. \textbf{14} (2009), 327--333.
+DOI: 10.1214/ECP.v14-1486.
+arXiv:0902.1229.
+
+\bibitem{Kousha2012}
+T.~Kousha,
+\emph{Asymptotic behavior and the moderate deviation principle for the maximum of a Dyck path},
+Statist. Probab. Lett. \textbf{82} (2012), 340--347.
+DOI: 10.1016/j.spl.2011.10.015.
+arXiv:1008.0606.
+
+\bibitem{OwczarekPrellberg2014}
+A.~L.~Owczarek and T.~Prellberg,
+\emph{Pressure exerted by a vesicle on a surface},
+J. Phys. A: Math. Theor. \textbf{47} (2014), 215001.
+DOI: 10.1088/1751-8113/47/21/215001.
+arXiv:1311.2174.
+
+\bibitem{HaugPrellberg2015}
+N.~Haug and T.~Prellberg,
+\emph{Uniform asymptotics of area-weighted Dyck paths},
+J. Math. Phys. \textbf{56} (2015), 043301.
+DOI: 10.1063/1.4917052.
+
+\bibitem{DerridaEnaudLebowitz2004}
+B.~Derrida, C.~Enaud, and J.~L.~Lebowitz,
+\emph{The asymmetric exclusion process and Brownian excursions},
+J. Stat. Phys. \textbf{115} (2004), 365--382.
+DOI: 10.1023/B:JOSS.0000019833.35328.b4.
+arXiv:cond-mat/0306078.
+
+\bibitem{DellAnnaEtAl2016}
+L.~Dell'Anna, O.~Salberger, L.~Barbiero, A.~Trombettoni, and V.~E.~Korepin,
+\emph{Violation of cluster decomposition and absence of light cones in local integer and half-integer spin chains},
+Phys. Rev. B \textbf{94} (2016), 155140.
+DOI: 10.1103/PhysRevB.94.155140.
+arXiv:1604.08281.
+
+\bibitem{SalbergerKorepin2017}
+O.~Salberger and V.~Korepin,
+\emph{Entangled spin chain},
+Rev. Math. Phys. \textbf{29} (2017), 1750031.
+DOI: 10.1142/S0129055X17500313.
+
+\bibitem{MussardoLeClair2021}
+G.~Mussardo and A.~LeClair,
+\emph{Randomness of M\"obius coefficients and Brownian motion: growth of the Mertens function and the Riemann hypothesis},
+J. Stat. Mech. Theory Exp. (2021), 113106.
+DOI: 10.1088/1742-5468/ac22fb.
+arXiv:2101.10336.
+
+\bibitem{Ng2004}
+N.~Ng,
+\emph{The distribution of the summatory function of the M\"obius function},
+Proc. London Math. Soc. (3) \textbf{89} (2004), 361--389.
+DOI: 10.1112/S0024611504014721.
+arXiv:math/0310381.
+
+\bibitem{Verjovsky2026}
+A.~Verjovsky,
+\emph{How random is the M\"obius function? Smoothing, probability, and the Riemann hypothesis},
+arXiv:2607.25002v2, 2026.
+
+\bibitem{MatulefEtAl2010}
+K.~Matulef, R.~O'Donnell, R.~Rubinfeld, and R.~A.~Servedio,
+\emph{Testing halfspaces},
+SIAM J. Comput. \textbf{39} (2010), 2004--2047.
+DOI: 10.1137/070707890.
+
+\end{thebibliography}
+
+\end{document}

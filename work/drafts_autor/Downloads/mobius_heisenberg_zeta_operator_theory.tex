@@ -1,0 +1,1251 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Hil}{\mathcal{H}}
+\newcommand{\Sch}{\mathcal{S}}
+\newcommand{\Four}{\mathcal{F}}
+\newcommand{\Dom}{\mathcal{D}}
+\newcommand{\I}{\mathrm{I}}
+\newcommand{\id}{\mathrm{Id}}
+\newcommand{\essran}{\operatorname{ess\,ran}}
+
+% hyperref must be loaded last
+\usepackage[hidelinks]{hyperref}
+
+\title[Ordinal--M\"obius Quantum Operator Framework]{
+Exact Operator Framework for an Ordinal--M\"obius Quantum Model:\\
+M\"obius Inversion, a Zeta Operator, Generalized Zero Orbitals,\\
+and Algebraic Heisenberg Non-Localization
+}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\begin{remark}[Mathematical status]
+\label{rem:status}
+This document is a research notebook.  The operator definitions, domain
+statements, closure statements, M\"obius inversion identity, generalized
+zero-mode characterization, and the algebraic non-localization theorem are
+proved below.  The resulting formulation is \emph{not} a proof of the
+Riemann Hypothesis.  The final Riemann-Hypothesis statement is an exact
+reformulation of where the generalized null modes occur in the operator
+family, and the problem of forcing all of them onto the central member of
+the family remains open.
+\end{remark}
+
+\section{Introduction: what is different in the present construction}
+\label{sec:introduction}
+
+The aim is to construct a genuine operator theory in which the M\"obius
+function enters arithmetically, the zeta operator is obtained by inversion,
+and the non-localization statement comes from the exact canonical
+commutation relation rather than from a postulated uncertainty formula.
+
+The present construction differs from the earlier attempts in four
+specific ways.
+
+\begin{enumerate}[leftmargin=*]
+\item No operator is defined by the formal expression
+``$\zeta(\widehat S)$''.  The starting objects are the standard quantum
+position and momentum operators and the unitary translation group generated
+by momentum.
+
+\item M\"obius enters through the norm-convergent operator series
+\eqref{eq:mobius_operator_definition}.  In the half-plane where this series
+is unconditionally defined in operator norm, its inverse is proved to be
+the operator series \eqref{eq:zeta_operator_definition}.  The scalar zeta
+Dirichlet series then appears as the Fourier multiplier of this inverse; it
+is not inserted into the definition.
+
+\item No probabilistic coarse graining of the values $-1,0,+1$ is used.
+The arithmetic coefficients are exactly $\mu(n)$.
+
+\item Heisenberg enters through the exact identity
+\eqref{eq:CCR_schwartz}.  The relevant consequence is not a statement about
+measurement error or variance.  It is the algebraic impossibility theorem
+\ref{thm:no_joint_exact_localization}: no nonzero state, and in fact no
+nonzero tempered distribution, can have simultaneously exact position and
+exact momentum.
+\end{enumerate}
+
+The critical-strip operator is obtained separately from an arithmetic
+alternating translation series.  Its closed realization is given with an
+exact maximal domain.  Nontrivial zeros correspond to generalized null
+modes of that operator.  These null modes are exact momentum modes, so
+Theorem~\ref{thm:no_joint_exact_localization} makes exact spatial
+localization impossible in the strict algebraic sense.
+
+The canonical commutation relation is the standard Heisenberg relation
+\cite{Heisenberg1927}.  Standard analytic facts concerning the zeta
+function are used only after the arithmetic operator identities have been
+established; a classical reference is \cite{Titchmarsh1986}.
+
+\section{Quantum kinematics and exact domains}
+\label{sec:quantum_kinematics}
+
+\subsection{Hilbert space and Fourier transform}
+\label{subsec:hilbert_fourier}
+
+\begin{definition}[Hilbert space]
+\label{def:hilbert_space}
+Let
+\begin{equation}
+\Hil=L^2(\R,dq)
+\label{eq:hilbert_space}
+\end{equation}
+with inner product
+\begin{equation}
+\langle \phi,\psi\rangle
+=\int_{\R}\overline{\phi(q)}\psi(q)\,dq.
+\label{eq:hilbert_inner_product}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Unitary Fourier transform]
+\label{def:fourier_transform}
+For $\psi\in L^1(\R)\cap L^2(\R)$ define
+\begin{equation}
+(\Four\psi)(p)
+=\widehat\psi(p)
+=\frac{1}{\sqrt{2\pi}}
+\int_{\R}e^{-ipq}\psi(q)\,dq.
+\label{eq:fourier_transform}
+\end{equation}
+The Plancherel extension is again denoted by $\Four$ and is unitary on
+$\Hil$.
+\end{definition}
+
+\subsection{Position and momentum}
+\label{subsec:position_momentum}
+
+\begin{definition}[Position operator]
+\label{def:position_operator_exact}
+Define $Q$ by
+\begin{equation}
+(Q\psi)(q)=q\psi(q)
+\label{eq:Q_action}
+\end{equation}
+with maximal domain
+\begin{equation}
+\Dom(Q)
+=\left\{\psi\in L^2(\R):q\psi(q)\in L^2(\R)\right\}.
+\label{eq:Q_domain}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Momentum operator]
+\label{def:momentum_operator_exact}
+Define $P$ by
+\begin{equation}
+(P\psi)(q)=-i\psi'(q)
+\label{eq:P_action}
+\end{equation}
+with domain
+\begin{equation}
+\Dom(P)=H^1(\R).
+\label{eq:P_domain}
+\end{equation}
+Equivalently,
+\begin{equation}
+P=\Four^{-1}M_p\Four,
+\label{eq:P_fourier_realization}
+\end{equation}
+where $M_p$ is multiplication by $p$ with maximal multiplication domain.
+\end{definition}
+
+\begin{proposition}[Self-adjointness and common core]
+\label{prop:selfadjoint_QP}
+The operators $Q$ and $P$ are self-adjoint.  The Schwartz space
+$\Sch(\R)$ is dense in $\Hil$, invariant under $Q$ and $P$, and is a common
+operator core for both.
+\end{proposition}
+
+\begin{proof}
+The operator $Q$ is the maximal multiplication operator by the real
+measurable function $q$, hence is self-adjoint.  By the unitary Fourier
+transform, $P$ is unitarily equivalent to the maximal multiplication
+operator by the real function $p$, hence is self-adjoint.  The stated
+properties of $\Sch(\R)$ follow from the defining seminorms of the Schwartz
+space and standard cutoff-and-mollification approximation in the graph
+norms of $Q$ and $P$.
+\end{proof}
+
+\begin{proposition}[Exact canonical commutation relation]
+\label{prop:CCR}
+For every $\psi\in\Sch(\R)$,
+\begin{equation}
+[Q,P]\psi
+=(QP-PQ)\psi
+=i\psi.
+\label{eq:CCR_schwartz}
+\end{equation}
+The same identity holds on tempered distributions after extending $Q$ and
+$P$ continuously from $\Sch(\R)$ to $\Sch'(\R)$ by duality.
+\end{proposition}
+
+\begin{proof}
+For $\psi\in\Sch(\R)$,
+\begin{align}
+(QP\psi)(q)
+&=-iq\psi'(q),
+\label{eq:QP_computation}\\
+(PQ\psi)(q)
+&=-i\frac{d}{dq}\bigl(q\psi(q)\bigr)
+=-i\psi(q)-iq\psi'(q).
+\label{eq:PQ_computation}
+\end{align}
+Subtracting \eqref{eq:PQ_computation} from \eqref{eq:QP_computation} gives
+\eqref{eq:CCR_schwartz}.  Polynomial multiplication and differentiation act
+continuously on $\Sch(\R)$ and therefore extend by duality to
+$\Sch'(\R)$; the same algebraic identity then holds distributionally.
+\end{proof}
+
+\subsection{The exact Heisenberg impossibility}
+\label{subsec:exact_heisenberg_impossibility}
+
+\begin{definition}[Exact localization]
+\label{def:exact_localization}
+A nonzero tempered distribution $T\in\Sch'(\R)$ is called exactly localized
+at $q_0\in\R$ if
+\begin{equation}
+QT=q_0T.
+\label{eq:exact_Q_localization}
+\end{equation}
+It has exact momentum $p_0\in\R$ if
+\begin{equation}
+PT=p_0T.
+\label{eq:exact_P_localization}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Algebraic Heisenberg non-localization]
+\label{thm:no_joint_exact_localization}
+There is no nonzero $T\in\Sch'(\R)$ satisfying both
+\eqref{eq:exact_Q_localization} and \eqref{eq:exact_P_localization} for any
+$q_0,p_0\in\R$.
+\end{theorem}
+
+\begin{proof}
+If both eigenvalue equations held, then
+\begin{align}
+[Q,P]T
+&=Q(p_0T)-P(q_0T)
+\label{eq:joint_eigen_commutator_first}\\
+&=q_0p_0T-p_0q_0T
+=0.
+\label{eq:joint_eigen_commutator_zero}
+\end{align}
+On the other hand, Proposition~\ref{prop:CCR} gives
+\begin{equation}
+[Q,P]T=iT.
+\label{eq:joint_eigen_commutator_CCR}
+\end{equation}
+Equations \eqref{eq:joint_eigen_commutator_zero} and
+\eqref{eq:joint_eigen_commutator_CCR} force $T=0$, contrary to the
+assumption.
+\end{proof}
+
+\begin{remark}[No measurement interpretation is used]
+\label{rem:no_measurement_interpretation}
+Theorem~\ref{thm:no_joint_exact_localization} contains no variance, no
+measurement error, and no statistical assumption.  It is a pure
+non-existence statement following from the exact commutator
+\eqref{eq:CCR_schwartz}.
+\end{remark}
+
+\section{Multiplicative arithmetic represented by unitary translations}
+\label{sec:unitary_arithmetic}
+
+\begin{definition}[Translation group]
+\label{def:translation_group}
+For $t\in\R$, define
+\begin{equation}
+U_t=e^{-itP}.
+\label{eq:Ut_definition}
+\end{equation}
+Then $U_t$ is unitary on $\Hil$ and acts by
+\begin{equation}
+(U_t\psi)(q)=\psi(q-t)
+\label{eq:Ut_action}
+\end{equation}
+for almost every $q$.
+\end{definition}
+
+\begin{proposition}[Fourier action and group law]
+\label{prop:translation_properties}
+For every $s,t\in\R$,
+\begin{align}
+U_tU_s
+&=U_{t+s},
+\label{eq:translation_group_law}\\
+\Four U_t\Four^{-1}
+&=M_{e^{-itp}}.
+\label{eq:translation_fourier_multiplier}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:translation_group_law} follows from the functional
+calculus of the self-adjoint operator $P$.  Fourier transformation of
+\eqref{eq:Ut_action} gives multiplication by $e^{-itp}$, proving
+\eqref{eq:translation_fourier_multiplier}.
+\end{proof}
+
+\begin{definition}[Arithmetic translations]
+\label{def:arithmetic_translations}
+For every $n\in\N$, define
+\begin{equation}
+V_n=U_{\log n}.
+\label{eq:Vn_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Representation of the multiplicative semigroup]
+\label{prop:multiplicative_representation}
+The operators $V_n$ are unitary and satisfy
+\begin{equation}
+V_mV_n=V_{mn}
+\label{eq:V_multiplicative_law}
+\end{equation}
+for all $m,n\in\N$.
+\end{proposition}
+
+\begin{proof}
+Use \eqref{eq:translation_group_law} and
+$\log m+\log n=\log(mn)$.
+\end{proof}
+
+\begin{proposition}[Ordinal--momentum commutator]
+\label{prop:Q_Vn_commutator}
+On $\Sch(\R)$,
+\begin{equation}
+[Q,V_n]=(\log n)V_n.
+\label{eq:Q_Vn_commutator}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Using \eqref{eq:Ut_action},
+\begin{align}
+(QV_n\psi)(q)
+&=q\psi(q-\log n),
+\label{eq:QVn_first}\\
+(V_nQ\psi)(q)
+&=(q-\log n)\psi(q-\log n).
+\label{eq:VnQ_first}
+\end{align}
+Subtracting gives \eqref{eq:Q_Vn_commutator}.
+\end{proof}
+
+\section{The bounded M\"obius operator and the derived zeta operator}
+\label{sec:mobius_zeta_bounded}
+
+\subsection{Exact operator definitions for $\sigma>1$}
+\label{subsec:bounded_definitions}
+
+\begin{definition}[M\"obius operator]
+\label{def:mobius_operator}
+For a real parameter $\sigma>1$, define
+\begin{equation}
+\mathcal M_\sigma
+=\sum_{n=1}^{\infty}\frac{\mu(n)}{n^\sigma}V_n.
+\label{eq:mobius_operator_definition}
+\end{equation}
+The series is understood in the operator norm of
+$\mathcal B(\Hil)$.
+\end{definition}
+
+\begin{proposition}[Norm convergence]
+\label{prop:mobius_norm_convergence}
+For every $\sigma>1$, the series
+\eqref{eq:mobius_operator_definition} converges absolutely in operator norm
+and defines a bounded operator on all of $\Hil$.  In particular,
+\begin{equation}
+\|\mathcal M_\sigma\|
+\leq
+\sum_{n=1}^{\infty}\frac{|\mu(n)|}{n^\sigma}
+\leq\zeta(\sigma).
+\label{eq:mobius_norm_bound}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Each $V_n$ is unitary, so $\|V_n\|=1$.  The scalar majorant in
+\eqref{eq:mobius_norm_bound} converges for $\sigma>1$.
+\end{proof}
+
+\begin{definition}[Candidate inverse]
+\label{def:zeta_operator_bounded}
+For $\sigma>1$, define
+\begin{equation}
+\mathcal Z_\sigma
+=\sum_{n=1}^{\infty}\frac{1}{n^\sigma}V_n,
+\label{eq:zeta_operator_definition}
+\end{equation}
+again with convergence in operator norm.
+\end{definition}
+
+\begin{theorem}[Operator M\"obius inversion]
+\label{thm:operator_mobius_inversion}
+For every $\sigma>1$,
+\begin{equation}
+\mathcal M_\sigma\mathcal Z_\sigma
+=\mathcal Z_\sigma\mathcal M_\sigma
+=I_{\Hil}.
+\label{eq:operator_mobius_inversion}
+\end{equation}
+Consequently,
+\begin{equation}
+\mathcal Z_\sigma=\mathcal M_\sigma^{-1}.
+\label{eq:zeta_as_mobius_inverse}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Both series are absolutely convergent in operator norm, so their product
+may be regrouped by $k=mn$.  Using
+\eqref{eq:V_multiplicative_law},
+\begin{align}
+\mathcal M_\sigma\mathcal Z_\sigma
+&=
+\sum_{k=1}^{\infty}
+\frac{1}{k^\sigma}
+\left(\sum_{d\mid k}\mu(d)\right)V_k
+\label{eq:mobius_product_regrouped}\\
+&=V_1
+=I_{\Hil},
+\label{eq:mobius_product_identity}
+\end{align}
+using the M\"obius inversion identity
+$\sum_{d\mid k}\mu(d)=1$ for $k=1$ and $0$ otherwise.  The same calculation
+applies in the reverse order because the $V_n$ commute.
+\end{proof}
+
+\begin{remark}[The zeta operator is not defined by substitution]
+\label{rem:not_zeta_of_operator}
+Equation \eqref{eq:zeta_as_mobius_inverse} is the defining structural point:
+$\mathcal Z_\sigma$ is the inverse of the arithmetically defined M\"obius
+operator.  No expression of the form $\zeta(P)$ or $\zeta(\widehat S)$ is
+used in Definition~\ref{def:zeta_operator_bounded}.
+\end{remark}
+
+\subsection{Fourier characterization}
+\label{subsec:fourier_characterization}
+
+\begin{proposition}[Exact multipliers]
+\label{prop:bounded_fourier_multipliers}
+For $\sigma>1$,
+\begin{align}
+\Four\mathcal Z_\sigma\Four^{-1}
+&=M_{z_\sigma},
+\qquad
+z_\sigma(p)=\sum_{n=1}^{\infty}n^{-\sigma-ip},
+\label{eq:zeta_multiplier_series}\\
+\Four\mathcal M_\sigma\Four^{-1}
+&=M_{m_\sigma},
+\qquad
+m_\sigma(p)=\sum_{n=1}^{\infty}\mu(n)n^{-\sigma-ip}.
+\label{eq:mobius_multiplier_series}
+\end{align}
+The scalar series converge uniformly in $p\in\R$.  Moreover,
+\begin{equation}
+m_\sigma(p)z_\sigma(p)=1
+\label{eq:multiplier_inverse_identity}
+\end{equation}
+for every real $p$.
+\end{proposition}
+
+\begin{proof}
+Apply \eqref{eq:translation_fourier_multiplier} termwise; operator-norm
+convergence justifies the passage to the limit.  Equation
+\eqref{eq:multiplier_inverse_identity} is the Fourier transform of
+\eqref{eq:operator_mobius_inversion}.
+\end{proof}
+
+\begin{definition}[Scalar zeta function in the initial half-plane]
+\label{def:scalar_zeta_initial}
+For $\Re s>1$, define
+\begin{equation}
+\zeta(s)=\sum_{n=1}^{\infty}n^{-s}.
+\label{eq:scalar_zeta_dirichlet}
+\end{equation}
+\end{definition}
+
+\begin{corollary}[Zeta appears as the spectral multiplier]
+\label{cor:zeta_as_multiplier}
+For $\sigma>1$,
+\begin{align}
+z_\sigma(p)
+&=\zeta(\sigma+ip),
+\label{eq:zeta_multiplier_identification}\\
+m_\sigma(p)
+&=\frac{1}{\zeta(\sigma+ip)}.
+\label{eq:mobius_multiplier_identification}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+Equation \eqref{eq:zeta_multiplier_identification} is
+Definition~\ref{def:scalar_zeta_initial};
+\eqref{eq:mobius_multiplier_identification} follows from
+\eqref{eq:multiplier_inverse_identity}.
+\end{proof}
+
+\begin{warning}[Exact right-hand boundary]
+\label{warn:sigma_gt_one_only}
+The norm-convergent definitions of $\mathcal M_\sigma$ and
+$\mathcal Z_\sigma$ in this section are asserted only for $\sigma>1$.
+No convergence of the M\"obius operator series for $\sigma\leq1$ is assumed
+or inferred.
+\end{warning}
+
+\section{The critical-strip arithmetic operator}
+\label{sec:critical_strip_operator}
+
+\subsection{Finite arithmetic operators}
+\label{subsec:finite_eta_operators}
+
+\begin{definition}[Alternating arithmetic truncations]
+\label{def:eta_operator_truncations}
+For $\sigma>0$ and $N\in\N$, define the bounded operator
+\begin{equation}
+\mathcal A_{\sigma,N}
+=\sum_{n=1}^{N}(-1)^{n-1}n^{-\sigma}V_n.
+\label{eq:eta_operator_truncation}
+\end{equation}
+Its Fourier multiplier is
+\begin{equation}
+a_{\sigma,N}(p)
+=\sum_{n=1}^{N}(-1)^{n-1}n^{-\sigma-ip}.
+\label{eq:eta_multiplier_truncation}
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Uniform convergence on compact momentum intervals]
+\label{lem:eta_uniform_compacts}
+Fix $\sigma>0$ and $R>0$.  Then $a_{\sigma,N}(p)$ converges uniformly for
+$|p|\leq R$ as $N\to\infty$.
+\end{lemma}
+
+\begin{proof}
+Write $s=\sigma+ip$.  Pair consecutive terms.  For $k\geq1$,
+\begin{equation}
+(2k-1)^{-s}-(2k)^{-s}
+=s\int_{2k-1}^{2k}x^{-s-1}\,dx.
+\label{eq:eta_pair_integral}
+\end{equation}
+For $|p|\leq R$,
+\begin{equation}
+\left|
+(2k-1)^{-s}-(2k)^{-s}
+\right|
+\leq
+\sqrt{\sigma^2+R^2}\,(2k-1)^{-\sigma-1}.
+\label{eq:eta_pair_bound}
+\end{equation}
+The majorant is summable.  The possible final unpaired term has modulus at
+most $N^{-\sigma}$ and tends uniformly to zero.  The Weierstrass test gives
+the result.
+\end{proof}
+
+\begin{definition}[Eta multiplier]
+\label{def:eta_multiplier}
+For $\sigma>0$ and $p\in\R$, define
+\begin{equation}
+a_\sigma(p)
+=\lim_{N\to\infty}a_{\sigma,N}(p)
+=\sum_{n=1}^{\infty}(-1)^{n-1}n^{-\sigma-ip}.
+\label{eq:eta_multiplier}
+\end{equation}
+Equivalently, for $\Re s>0$ define
+\begin{equation}
+\eta(s)=\sum_{n=1}^{\infty}(-1)^{n-1}n^{-s},
+\label{eq:eta_scalar_definition}
+\end{equation}
+so that $a_\sigma(p)=\eta(\sigma+ip)$.
+\end{definition}
+
+\begin{remark}[Left boundary]
+\label{rem:eta_left_boundary}
+The direct series definition \eqref{eq:eta_scalar_definition} is used only
+for $\Re s>0$.  At $\sigma=0$ the individual terms have modulus one and do
+not tend to zero, so the same direct convergence statement cannot hold.
+\end{remark}
+
+\subsection{Closed realization}
+\label{subsec:eta_closed_realization}
+
+\begin{definition}[Compact-momentum core]
+\label{def:compact_momentum_core}
+Define
+\begin{equation}
+\mathcal C
+=\Four^{-1}C_c^\infty(\R).
+\label{eq:compact_momentum_core}
+\end{equation}
+Then $\mathcal C$ is dense in $\Hil$.
+\end{definition}
+
+\begin{proposition}[Strong arithmetic limit on the core]
+\label{prop:eta_strong_core_limit}
+For every $\sigma>0$ and every $\psi\in\mathcal C$, the limit
+\begin{equation}
+\mathcal A_\sigma^{(0)}\psi
+=\lim_{N\to\infty}\mathcal A_{\sigma,N}\psi
+\label{eq:eta_core_limit}
+\end{equation}
+exists in $\Hil$.  In Fourier representation,
+\begin{equation}
+\Four\mathcal A_\sigma^{(0)}\psi
+=a_\sigma\widehat\psi.
+\label{eq:eta_core_multiplier_action}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The support of $\widehat\psi$ is contained in some compact interval
+$[-R,R]$.  Lemma~\ref{lem:eta_uniform_compacts} gives uniform convergence
+$a_{\sigma,N}\to a_\sigma$ on that interval.  Hence
+\begin{equation}
+\|\mathcal A_{\sigma,N}\psi-\mathcal A_\sigma^{(0)}\psi\|_2
+=
+\|(a_{\sigma,N}-a_\sigma)\widehat\psi\|_2
+\longrightarrow0.
+\label{eq:eta_core_norm_convergence}
+\end{equation}
+\end{proof}
+
+\begin{definition}[Closed critical-strip operator]
+\label{def:closed_eta_operator}
+For $\sigma>0$, define $\mathcal A_\sigma$ to be the maximal Fourier
+multiplication operator by $a_\sigma$:
+\begin{equation}
+\mathcal A_\sigma
+=\Four^{-1}M_{a_\sigma}\Four,
+\label{eq:eta_closed_operator}
+\end{equation}
+with exact domain
+\begin{equation}
+\Dom(\mathcal A_\sigma)
+=\left\{
+\psi\in L^2(\R):
+ a_\sigma\widehat\psi\in L^2(\R)
+\right\}.
+\label{eq:eta_closed_domain}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Closure, adjoint, and normality]
+\label{prop:eta_closed_properties}
+For every $\sigma>0$, $\mathcal A_\sigma$ is densely defined, closed, and
+normal.  The operator $\mathcal A_\sigma^{(0)}$ of
+Proposition~\ref{prop:eta_strong_core_limit} is closable and its closure is
+$\mathcal A_\sigma$.  Moreover,
+\begin{equation}
+\mathcal A_\sigma^*
+=\Four^{-1}M_{\overline{a_\sigma}}\Four
+\label{eq:eta_adjoint}
+\end{equation}
+with
+\begin{equation}
+\Dom(\mathcal A_\sigma^*)
+=\Dom(\mathcal A_\sigma).
+\label{eq:eta_adjoint_domain}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Maximal multiplication by a finite measurable function is closed and
+densely defined, and its adjoint is multiplication by the complex
+conjugate with the same maximal domain.  The space $C_c^\infty(\R)$ is a
+core for maximal multiplication by the continuous function $a_\sigma$:
+first truncate in momentum to compact sets and then approximate there by
+smooth compactly supported functions.  Unitary conjugation by $\Four$
+gives the stated properties.
+\end{proof}
+
+\subsection{Positive Hamiltonian}
+\label{subsec:positive_hamiltonian}
+
+\begin{definition}[Arithmetic Hamiltonian]
+\label{def:arithmetic_hamiltonian}
+For $\sigma>0$, define
+\begin{equation}
+H_\sigma
+=\mathcal A_\sigma^*\mathcal A_\sigma.
+\label{eq:H_sigma_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Exact realization of the Hamiltonian]
+\label{prop:H_sigma_realization}
+The operator $H_\sigma$ is positive and self-adjoint.  In Fourier
+representation,
+\begin{equation}
+H_\sigma
+=\Four^{-1}M_{|a_\sigma|^2}\Four
+\label{eq:H_sigma_multiplier}
+\end{equation}
+with exact domain
+\begin{equation}
+\Dom(H_\sigma)
+=\left\{
+\psi\in L^2(\R):
+|a_\sigma|^2\widehat\psi\in L^2(\R)
+\right\}.
+\label{eq:H_sigma_domain}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This is the standard product of a closed densely defined operator with its
+adjoint, made explicit here by the multiplication representation.  The
+multiplier $|a_\sigma|^2$ is real and nonnegative, so the corresponding
+maximal multiplication operator is positive self-adjoint.
+\end{proof}
+
+\section{Connection with the M\"obius-derived zeta operator}
+\label{sec:eta_zeta_connection}
+
+\begin{definition}[Dyadic factor]
+\label{def:dyadic_factor}
+For $\sigma>0$, define the bounded normal operator
+\begin{equation}
+B_\sigma
+=I-2^{1-\sigma}V_2.
+\label{eq:B_sigma_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Exact factorization for $\sigma>1$]
+\label{prop:eta_zeta_factorization}
+For $\sigma>1$,
+\begin{equation}
+\mathcal A_\sigma
+=B_\sigma\mathcal Z_\sigma
+=B_\sigma\mathcal M_\sigma^{-1}.
+\label{eq:eta_zeta_operator_factorization}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+All operator series are absolutely norm-convergent in this range.  The
+coefficient of $V_m$ in $B_\sigma\mathcal Z_\sigma$ is $m^{-\sigma}$ for
+$m$ odd.  If $m=2n$ is even, the coefficient is
+\begin{equation}
+m^{-\sigma}
+-2^{1-\sigma}n^{-\sigma}
+=m^{-\sigma}-2m^{-\sigma}
+=-m^{-\sigma}.
+\label{eq:dyadic_even_coefficient}
+\end{equation}
+Thus the coefficient is $(-1)^{m-1}m^{-\sigma}$, which gives
+\eqref{eq:eta_zeta_operator_factorization}.
+\end{proof}
+
+\begin{proposition}[Invertibility of the dyadic factor away from
+$\sigma=1$]
+\label{prop:B_sigma_invertibility}
+If $\sigma>0$ and $\sigma\neq1$, then $B_\sigma$ is boundedly invertible and
+\begin{equation}
+\|B_\sigma^{-1}\|
+=\frac{1}{|2^{1-\sigma}-1|}.
+\label{eq:B_sigma_inverse_norm}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By Fourier transformation, $B_\sigma$ is multiplication by
+\begin{equation}
+b_\sigma(p)
+=1-2^{1-\sigma}e^{-ip\log2}.
+\label{eq:B_sigma_multiplier}
+\end{equation}
+The minimum of $|1-re^{-i\theta}|$ over $\theta\in\R$ is $|r-1|$.  Taking
+$r=2^{1-\sigma}$ proves that the multiplier is bounded away from zero
+exactly when $\sigma\neq1$, and gives
+\eqref{eq:B_sigma_inverse_norm}.
+\end{proof}
+
+\begin{definition}[Closed zeta operator in $0<\sigma<1$]
+\label{def:critical_zeta_operator}
+For $0<\sigma<1$, define
+\begin{equation}
+\mathfrak Z_\sigma
+=B_\sigma^{-1}\mathcal A_\sigma
+\label{eq:critical_zeta_operator}
+\end{equation}
+with
+\begin{equation}
+\Dom(\mathfrak Z_\sigma)
+=\Dom(\mathcal A_\sigma).
+\label{eq:critical_zeta_domain}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Closedness and multiplier]
+\label{prop:critical_zeta_properties}
+For $0<\sigma<1$, $\mathfrak Z_\sigma$ is densely defined and closed.  Its
+Fourier multiplier is
+\begin{equation}
+z_\sigma^{\mathrm{crit}}(p)
+=
+\frac{\eta(\sigma+ip)}
+{1-2^{1-\sigma-ip}}.
+\label{eq:critical_zeta_multiplier}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Since $B_\sigma^{-1}$ is bounded and boundedly invertible while
+$\mathcal A_\sigma$ is closed, the product
+$B_\sigma^{-1}\mathcal A_\sigma$ is closed with the same domain.  The
+multiplier formula follows from \eqref{eq:B_sigma_multiplier} and
+\eqref{eq:eta_closed_operator}.
+\end{proof}
+
+\begin{definition}[Continuation of the scalar zeta function in the strip]
+\label{def:zeta_critical_strip}
+For $0<\Re s<1$, define
+\begin{equation}
+\zeta(s)
+=\frac{\eta(s)}{1-2^{1-s}}.
+\label{eq:zeta_eta_quotient}
+\end{equation}
+The denominator does not vanish in the open strip.
+\end{definition}
+
+\begin{proposition}[Compatibility with the initial half-plane]
+\label{prop:zeta_compatibility}
+For $\Re s>1$, the quotient in \eqref{eq:zeta_eta_quotient} agrees with the
+Dirichlet series \eqref{eq:scalar_zeta_dirichlet}.  Consequently,
+\eqref{eq:zeta_eta_quotient} gives its analytic continuation into the open
+critical strip.
+\end{proposition}
+
+\begin{proof}
+Absolute convergence for $\Re s>1$ allows separation of the even and odd
+terms, giving
+\begin{equation}
+\eta(s)
+=\bigl(1-2^{1-s}\bigr)\zeta(s).
+\label{eq:eta_zeta_scalar_identity}
+\end{equation}
+The paired-series proof of Lemma~\ref{lem:eta_uniform_compacts} also gives
+local uniform convergence for $\Re s>0$, hence holomorphy of $\eta$ there.
+The zeros of $1-2^{1-s}$ satisfy $\Re s=1$, so the denominator is nonzero in
+$0<\Re s<1$.  The identity theorem then yields the continuation.
+\end{proof}
+
+\begin{remark}[The line $\sigma=1$]
+\label{rem:sigma_one_boundary}
+At $\sigma=1$, $B_1$ is not boundedly invertible because its multiplier
+vanishes at $p=2\pi k/\log2$.  The scalar quotient has the zeta pole at
+$p=0$.  The present critical-strip construction therefore treats
+$0<\sigma<1$ separately from the initial bounded region $\sigma>1$.
+No bounded inverse across $\sigma=1$ is asserted.
+\end{remark}
+
+\section{Generalized zero orbitals}
+\label{sec:zero_orbitals}
+
+\subsection{Rigged Hilbert space}
+\label{subsec:rigged_hilbert}
+
+The natural setting for exact momentum modes is the standard rigged Hilbert
+space
+\begin{equation}
+\Sch(\R)
+\subset
+L^2(\R)
+\subset
+\Sch'(\R).
+\label{eq:rigged_hilbert_space}
+\end{equation}
+
+\begin{definition}[Generalized momentum orbital]
+\label{def:momentum_orbital}
+For $\gamma\in\R$, define the tempered distribution
+\begin{equation}
+\Phi_\gamma(q)
+=\frac{1}{\sqrt{2\pi}}e^{i\gamma q}.
+\label{eq:plane_wave_orbital}
+\end{equation}
+It satisfies
+\begin{equation}
+P\Phi_\gamma=\gamma\Phi_\gamma
+\label{eq:plane_wave_momentum_eigenstate}
+\end{equation}
+in $\Sch'(\R)$.
+\end{definition}
+
+\begin{remark}[Not an $L^2$ vector]
+\label{rem:plane_wave_not_L2}
+The orbital $\Phi_\gamma$ is not in $L^2(\R)$.  It is a generalized spectral
+state, exactly as an ordinary plane wave of sharp momentum in quantum
+mechanics.  This distinction is essential: isolated zeros of a Fourier
+multiplier do not normally produce nonzero $L^2$ kernel vectors.
+\end{remark}
+
+\subsection{Action of the arithmetic operator on exact momentum modes}
+\label{subsec:eta_on_plane_waves}
+
+\begin{proposition}[Generalized eigenvalue formula]
+\label{prop:eta_plane_wave_eigenvalue}
+For every $\sigma>0$ and $\gamma\in\R$, the arithmetic truncations satisfy
+\begin{equation}
+\mathcal A_{\sigma,N}\Phi_\gamma
+=a_{\sigma,N}(\gamma)\Phi_\gamma
+\label{eq:eta_truncation_plane_wave}
+\end{equation}
+in $\Sch'(\R)$.  Passing to the scalar limit gives the generalized action
+\begin{equation}
+\mathcal A_\sigma\Phi_\gamma
+=\eta(\sigma+i\gamma)\Phi_\gamma.
+\label{eq:eta_plane_wave_eigenvalue}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+From \eqref{eq:Vn_definition} and
+\eqref{eq:plane_wave_orbital},
+\begin{equation}
+V_n\Phi_\gamma
+=n^{-i\gamma}\Phi_\gamma.
+\label{eq:Vn_plane_wave}
+\end{equation}
+Substitution into \eqref{eq:eta_operator_truncation} gives
+\eqref{eq:eta_truncation_plane_wave}.  The scalar coefficients converge by
+Definition~\ref{def:eta_multiplier}; multiplication of a fixed tempered
+distribution by convergent scalars gives convergence in $\Sch'(\R)$.
+\end{proof}
+
+\begin{definition}[Generalized zero orbital]
+\label{def:generalized_zero_orbital}
+For $0<\beta<1$ and $\gamma\in\R$, the plane wave $\Phi_\gamma$ is called a
+generalized zero orbital of the member $\mathcal A_\beta$ if
+\begin{equation}
+\mathcal A_\beta\Phi_\gamma=0
+\label{eq:zero_orbital_definition}
+\end{equation}
+in $\Sch'(\R)$.
+\end{definition}
+
+\begin{theorem}[Zeros and generalized null modes]
+\label{thm:zeros_as_generalized_null_modes}
+Let $0<\beta<1$ and $\gamma\in\R$.  Then
+\begin{equation}
+\mathcal A_\beta\Phi_\gamma=0
+\quad\Longleftrightarrow\quad
+\zeta(\beta+i\gamma)=0.
+\label{eq:zero_mode_equivalence}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:eta_plane_wave_eigenvalue}, the left side is
+equivalent to
+\begin{equation}
+\eta(\beta+i\gamma)=0.
+\label{eq:eta_zero_equivalence_step}
+\end{equation}
+Inside $0<\beta<1$, the factor $1-2^{1-\beta-i\gamma}$ is nonzero.
+Equation \eqref{eq:eta_zeta_scalar_identity} therefore makes
+\eqref{eq:eta_zero_equivalence_step} equivalent to
+$\zeta(\beta+i\gamma)=0$.
+\end{proof}
+
+\begin{corollary}[Hamiltonian form]
+\label{cor:zero_orbital_hamiltonian}
+If $\rho=\beta+i\gamma$ is a nontrivial zero with $0<\beta<1$, then the
+generalized mode $\Phi_\gamma$ satisfies
+\begin{equation}
+H_\beta\Phi_\gamma=0
+\label{eq:H_zero_orbital}
+\end{equation}
+in the generalized multiplier sense.
+\end{corollary}
+
+\begin{proof}
+The Fourier multiplier of $H_\beta$ is
+$|\eta(\beta+ip)|^2$, which vanishes at $p=\gamma$ by
+Theorem~\ref{thm:zeros_as_generalized_null_modes}.  Multiplication of the
+Dirac mass at $p=\gamma$ by this smooth local multiplier gives zero; Fourier
+inversion yields \eqref{eq:H_zero_orbital}.
+\end{proof}
+
+\begin{warning}[The $L^2$ kernel is a different object]
+\label{warn:L2_kernel_not_zero_set}
+For a fixed $\beta$, isolated zeros of $p\mapsto\eta(\beta+ip)$ have
+Lebesgue measure zero.  Therefore they do not by themselves create nonzero
+vectors in $\ker_{L^2}(\mathcal A_\beta)$ or
+$\ker_{L^2}(H_\beta)$.  The zero orbitals of
+Definition~\ref{def:generalized_zero_orbital} are generalized spectral
+modes in $\Sch'(\R)$, not normalizable bound states.
+\end{warning}
+
+\section{Where exact Heisenberg non-localization enters}
+\label{sec:heisenberg_zero_orbitals}
+
+\begin{theorem}[A zero orbital cannot be exactly localized]
+\label{thm:zero_orbital_nonlocalization}
+Let $\rho=\beta+i\gamma$ be a nontrivial zero with $0<\beta<1$.  Its
+generalized zero orbital $\Phi_\gamma$ cannot satisfy
+\begin{equation}
+Q\Phi_\gamma=q_0\Phi_\gamma
+\label{eq:forbidden_zero_localization}
+\end{equation}
+for any $q_0\in\R$.
+\end{theorem}
+
+\begin{proof}
+By Definition~\ref{def:momentum_orbital},
+$P\Phi_\gamma=\gamma\Phi_\gamma$.  If
+\eqref{eq:forbidden_zero_localization} also held, then
+$\Phi_\gamma$ would be a nonzero simultaneous generalized eigenvector of
+$Q$ and $P$, contradicting
+Theorem~\ref{thm:no_joint_exact_localization}.
+\end{proof}
+
+\begin{corollary}[Exact, not statistical, non-localization]
+\label{cor:exact_not_statistical}
+For every nontrivial zero $\rho=\beta+i\gamma$, the associated exact
+momentum orbital is algebraically forbidden from being an exact position
+orbital.  The obstruction is the identity $[Q,P]=iI$ and does not depend on
+an uncertainty variance or on a measurement model.
+\end{corollary}
+
+\begin{remark}[What is and is not quantized]
+\label{rem:beta_parameter_gamma_momentum}
+In the present rigorous model, $\gamma$ is the generalized eigenvalue of
+the self-adjoint momentum $P$, while $\beta$ labels the member
+$\mathcal A_\beta$ of the arithmetic operator family.  The theory does
+\emph{not} yet promote $\beta$ to a second self-adjoint observable.  This is
+deliberate: doing so without defining a domain and a compatible canonical
+structure would reintroduce a merely formal ``hat on a variable''.
+\end{remark}
+
+\section{Operator form of the Riemann Hypothesis}
+\label{sec:operator_RH}
+
+\begin{theorem}[Exact reformulation of RH]
+\label{thm:operator_RH_equivalence}
+The Riemann Hypothesis is equivalent to the following operator statement:
+for every $0<\sigma<1$ and every $\gamma\in\R$,
+\begin{equation}
+\mathcal A_\sigma\Phi_\gamma=0
+\quad\Longrightarrow\quad
+\sigma=\frac12.
+\label{eq:operator_RH_statement}
+\end{equation}
+Equivalently, all generalized momentum-null modes of the critical-strip
+family occur in the central member $\mathcal A_{1/2}$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:zeros_as_generalized_null_modes},
+$\mathcal A_\sigma\Phi_\gamma=0$ is equivalent to
+$\zeta(\sigma+i\gamma)=0$ in the open critical strip.  Therefore
+\eqref{eq:operator_RH_statement} is exactly the assertion that every
+nontrivial zero has real part $1/2$.
+\end{proof}
+
+\begin{warning}[No proof of RH has occurred]
+\label{warn:no_RH_proof}
+Theorem~\ref{thm:operator_RH_equivalence} is an equivalence, not a proof of
+\eqref{eq:operator_RH_statement}.  The exact Heisenberg theorem proves that
+a zero orbital cannot be simultaneously localized in $Q$ and $P$; by
+itself it does not force the family parameter $\sigma$ to equal $1/2$.
+Any argument claiming otherwise would require an additional theorem tying
+$\sigma$ to the canonical pair.
+\end{warning}
+
+\section{Finite operators for exact numerical work}
+\label{sec:finite_numerics}
+
+\begin{definition}[Finite M\"obius and alternating operators]
+\label{def:finite_operators}
+For $N\in\N$ and real $\sigma$, define bounded operators on all of $\Hil$ by
+\begin{align}
+\mathcal M_{\sigma,N}
+&=\sum_{n=1}^{N}\mu(n)n^{-\sigma}V_n,
+\label{eq:finite_mobius_operator}\\
+\mathcal A_{\sigma,N}
+&=\sum_{n=1}^{N}(-1)^{n-1}n^{-\sigma}V_n.
+\label{eq:finite_alternating_operator}
+\end{align}
+\end{definition}
+
+\begin{proposition}[Finite Fourier multipliers]
+\label{prop:finite_multiplier_form}
+The operators in Definition~\ref{def:finite_operators} are bounded normal
+operators with Fourier multipliers
+\begin{align}
+m_{\sigma,N}(p)
+&=\sum_{n=1}^{N}\mu(n)n^{-\sigma-ip},
+\label{eq:finite_mobius_multiplier}\\
+a_{\sigma,N}(p)
+&=\sum_{n=1}^{N}(-1)^{n-1}n^{-\sigma-ip}.
+\label{eq:finite_eta_multiplier}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Each is a finite linear combination of commuting unitary Fourier
+multipliers $V_n$.  Equations \eqref{eq:finite_mobius_multiplier} and
+\eqref{eq:finite_eta_multiplier} follow from
+\eqref{eq:translation_fourier_multiplier}.
+\end{proof}
+
+\begin{remark}[Purpose of finite truncations]
+\label{rem:finite_truncations_purpose}
+The finite operators contain no domain ambiguity and can be used to test
+spectral profiles numerically.  Such experiments do not replace the closed
+operator definitions of Sections~\ref{sec:mobius_zeta_bounded} and
+\ref{sec:critical_strip_operator}.
+\end{remark}
+
+\section{What has been established and what remains open}
+\label{sec:open_questions}
+
+\subsection{Rigorous statements established in this notebook}
+\label{subsec:rigorous_summary}
+
+The following statements have been proved within the present framework.
+
+\begin{enumerate}[leftmargin=*]
+\item $Q$ and $P$ are self-adjoint on the exact domains
+\eqref{eq:Q_domain} and \eqref{eq:P_domain}, with the exact canonical
+commutator \eqref{eq:CCR_schwartz} on $\Sch(\R)$.
+
+\item No nonzero tempered distribution can possess simultaneously exact
+$Q$ and exact $P$; this is Theorem~\ref{thm:no_joint_exact_localization}.
+
+\item The arithmetic translations $V_n$ form a unitary representation of
+the multiplicative semigroup of positive integers.
+
+\item For $\sigma>1$, the M\"obius operator
+$\mathcal M_\sigma$ is bounded and invertible, and its inverse is the zeta
+operator $\mathcal Z_\sigma$ by the exact operator M\"obius inversion
+identity \eqref{eq:operator_mobius_inversion}.
+
+\item For every $\sigma>0$, the alternating arithmetic operator
+$\mathcal A_\sigma$ has the closed maximal realization
+\eqref{eq:eta_closed_operator}--\eqref{eq:eta_closed_domain}.
+
+\item In the open critical strip, nontrivial zeros are exactly generalized
+null momentum modes of $\mathcal A_\sigma$.
+
+\item Every such exact momentum mode is algebraically forbidden by
+Heisenberg from being an exact position mode.
+\end{enumerate}
+
+\subsection{Open problem that would be needed for an RH mechanism}
+\label{subsec:RH_mechanism_open}
+
+\begin{question}[Central structural question]
+\label{q:central_structural_question}
+Is there a property derivable from the M\"obius-generated operator structure
+itself that distinguishes $\mathcal A_{1/2}$ from all
+$\mathcal A_\sigma$, $\sigma\neq1/2$, and forces every generalized null
+momentum mode of the family to occur at $\sigma=1/2$?
+\end{question}
+
+\begin{remark}
+\label{rem:heisenberg_not_enough_for_RH}
+The exact Heisenberg obstruction is necessary for the intended
+non-localization interpretation, but it is not sufficient to answer
+Question~\ref{q:central_structural_question}.  A successful next step must
+produce a new structural link between the family parameter $\sigma$ and
+the canonical pair $(Q,P)$; it cannot be obtained merely by rewriting
+$\zeta(s)$ in operator notation.
+\end{remark}
+
+\begin{question}[Possible strengthening]
+\label{q:beta_operator_question}
+Can the real coordinate $\sigma-1/2$ be promoted to a genuinely defined
+self-adjoint observable on an enlarged Hilbert space, with a specified
+domain and an exact commutation law, while preserving the M\"obius inversion
+construction of $\mathcal Z_\sigma$?  Any such construction must be given
+before assigning a quantum interpretation to the real part of a zero.
+\end{question}
+
+\section*{Notebook History}
+
+\noindent Version 0.1: Exact Hilbert-space domains for $Q$ and $P$, the
+unitary arithmetic translations $V_n$, bounded M\"obius inversion for
+$\sigma>1$, the closed critical-strip alternating operator for $\sigma>0$,
+generalized zero orbitals, and the algebraic Heisenberg non-localization
+theorem assembled into a single framework.
+
+\begin{thebibliography}{99}
+
+\bibitem{Heisenberg1927}
+W.~Heisenberg,
+\emph{"Uber den anschaulichen Inhalt der quantentheoretischen Kinematik und
+Mechanik},
+Zeitschrift f\"ur Physik \textbf{43} (1927), 172--198.
+doi:10.1007/BF01397280.
+
+\bibitem{Titchmarsh1986}
+E.~C.~Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D.~R.~Heath-Brown,
+Oxford University Press, Oxford, 1986.
+
+\end{thebibliography}
+
+\end{document}

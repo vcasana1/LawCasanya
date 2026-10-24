@@ -1,0 +1,3529 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+\usepackage[hidelinks]{hyperref}
+
+\title[Arithmetic-Driven Leslie Towers]{Moving and Filtered Leslie Models:\\Rigid Critical Geometry, Negative Arithmetic-Free Audit,\\Divisibility Filtrations, and Coherent Arithmetic-Driven Towers}
+\author{}
+\date{Version 8.0 --- September 2026}
+
+
+
+\begin{document}
+\begin{abstract}
+This version separates three questions that must not be conflated: static spectral completion,
+exact recurrence compatibility with the observed scalar sequence, and dynamical transport between
+overlapping windows. For a fixed Perron value $b$, $K$ prescribed critical conjugate pairs, and a
+fixed auxiliary degree $q$, the repaired coefficient family has ambient degree $D=2K+1+q$ and,
+at regular points, dimension $K+q$ and codimension $K+1$, independently of $q$. For order-$D$
+recurrence windows displaced by $s$ samples, the exact common-equation slice has generic local
+dimension $\max\{0,s-K-1\}$. Hence the first generic one-dimensional repaired motion still occurs
+at $s_*=K+2$. The repaired update is generally a nonlinear curve rather than the rigid affine line.
+If the first-new-value observation is transverse to this curve, that single scalar selects the local
+next coefficient vector and the remaining $K+1$ new values are then fixed recursively.
+
+The auxiliary multiplier coefficients are therefore not independent innovations under the fixed-
+$(K,q,b)$ regular continuation hypothesis; they become hidden channels only if a completion,
+branch, $q$, or $b$ is reselected using new information. Static Toeplitz completion alone does not
+establish a data-compatible moving realization. A recurrence-first, frequency-free membership test
+is consequently made primary. The numerical audit performed on 5 September 2026 is retained as a
+negative baseline for the then-current approximate pipeline, while exact conclusions are restricted
+to the hypotheses actually verified.
+
+Version 8 retains all previous geometric and numerical results but changes the active research
+direction after a stronger predictive audit.  For the frozen arithmetic-free protocol
+$K=4$, $b=1.02$, and $q=0,\ldots,6$, exact repaired membership is absent, the corrected
+positive nonlinear approximation does not outperform a direct autoregressive baseline, and
+phase-randomized surrogates remove the apparent innovation advantage.  This closes that
+\emph{arithmetic-free} route for the frozen protocol without asserting a universal impossibility
+for Leslie matrices.
+
+The continuation therefore injects arithmetic before asking Leslie geometry to compress it.
+The arithmetic source is the finite divisibility poset.  Its incidence matrix
+$D_X=(\mathbf 1_{d\mid n})_{n,d\le X}$ is parameter-free and satisfies
+$D_X\mu_X=e_1$ and $(D_X^{-1})_{n,d}=\mu(n/d)$ when $d\mid n$.  A filtration by
+$\Omega(n)$ yields exact block extensions
+\[
+D_{k+1}=
+\begin{pmatrix}D_k&0\\ B_k&I\end{pmatrix},
+\qquad
+\mu_{k+1}=
+\begin{pmatrix}\mu_k\\-B_k\mu_k\end{pmatrix},
+\]
+so every old value is preserved and all new arithmetic information enters through the new
+incidence block $B_k$.  The active problem is no longer to make a fixed Leslie family discover
+M\"obius without arithmetic, but to determine whether a coherent tower of positive Leslie
+companions can represent these exact divisor-layer extensions without refitting old levels.
+
+\end{abstract}
+\maketitle
+
+\tableofcontents
+\bigskip
+
+\begin{remark}
+\label{rem:status}
+This document is a research notebook.  The algebraic identities, the rigid overlap theorem,
+the repaired local-dimension theorem, and the local one-scalar continuation theorem are proved
+only under their stated rank, regularity, fixed-degree, fixed-Perron, and branch hypotheses.
+The proposed connection with consecutive windows of the Mertens function remains an experimental
+programme, not a proved arithmetic theorem.  In particular, static spectral completion does not
+imply that the completed polynomial is the recurrence polynomial of the data, and no statement
+below proves a new estimate for the Mertens function or the Riemann hypothesis.
+\end{remark}
+
+\begin{remark}[Version 8 status addendum]
+\label{rem:v8_status_addendum}
+All sections inherited from Versions 1--7 remain part of the notebook.  Results later shown to be
+insufficient are not deleted; they are retained as historical lemmas, experiments, or failed
+routes.  The principal status change is the following:
+\[
+\boxed{\texttt{PURE LESLIE / ARITHMETIC-FREE ROUTE: CLOSED NEGATIVE}}
+\]
+for the frozen Version 4 predictive protocol described below.  The active continuation is an
+arithmetic-driven, dimension-growing Leslie tower.  No novelty claim is made here for the
+classical divisor identity or for stratification by $\Omega(n)$; the new object under study is
+their compatibility with the previously developed Leslie geometry.
+\end{remark}
+
+\section{Purpose and change of viewpoint}
+\label{sec:purpose}
+
+The earlier static experiments asked whether one finite collection of fitted frequencies could be embedded in one nonnegative Leslie matrix.  Allowing auxiliary eigenvalues made that static problem feasible in all forty reported configurations, but the result did not distinguish a coherent dynamical law from independent fitting.
+
+The present formulation replaces independent static realizations by a sequence of rigid or fixed-degree repaired Leslie matrices attached to consecutive logarithmic windows.  The object of study is therefore a non-autonomous product, or linear cocycle, rather than one fixed matrix.  Linear cocycles and their long products are standard objects in dynamical-systems theory \cite{DuarteKlein2016}.
+
+\begin{warning}
+\label{warn:no_automatic_novelty}
+The use of a time-dependent matrix product is not itself a new result.  The potentially discriminating content is the simultaneous enforcement of rigidity, nonnegativity, continuity through the feasible set, and prediction of a future window without recalibration.
+\end{warning}
+
+\begin{proposition}[Three logically distinct layers]
+\label{prop:three_layers}
+The following problems are distinct and must be tested separately.
+\begin{enumerate}
+\item \emph{Static spectral completion:} a prescribed critical core polynomial is multiplied by an auxiliary monic factor until a nonnegative Leslie characteristic polynomial is obtained.
+\item \emph{Data-compatible realization:} the characteristic polynomial is the polynomial of an order-$D$ recurrence actually satisfied by the scalar data window.
+\item \emph{Dynamic transport:} two consecutive data-compatible realizations are joined using only the common past equations and a predeclared state rule.
+\end{enumerate}
+Static feasibility in the first sense does not imply either of the latter two properties.
+\end{proposition}
+
+\begin{remark}
+\label{rem:data_first_principle}
+For the arithmetic programme the logically clean direction is therefore
+\[
+\text{data}\longrightarrow\text{recurrence polynomial}\longrightarrow\text{spectral factorization}\longrightarrow\text{Leslie positivity and transport}.
+\]
+A frequency estimator may remain useful as an exploratory diagnostic, but it is not needed for the exact recurrence-first membership tests developed below.
+\end{remark}
+
+\section{Rigid moving Leslie matrices}
+\label{sec:rigid_moving_leslie}
+
+\begin{definition}
+\label{def:leslie_matrix}
+For $m\geq2$, a companion Leslie matrix is
+\begin{equation}
+L(a)=
+\begin{pmatrix}
+a_1&a_2&\cdots&a_m\\
+1&0&\cdots&0\\
+0&1&\ddots&\vdots\\
+\vdots&&\ddots&0
+\end{pmatrix},
+\qquad a_\ell\geq0.
+\label{eq:leslie_matrix}
+\end{equation}
+Its characteristic polynomial is
+\begin{equation}
+P(z;a)=z^m-\sum_{\ell=1}^{m}a_\ell z^{m-\ell}.
+\label{eq:characteristic_polynomial}
+\end{equation}
+\end{definition}
+
+Fix $K\geq1$ and set
+\begin{equation}
+m=2K+1.
+\label{eq:rigid_dimension}
+\end{equation}
+For $b>1$ and phases $\Omega=(\omega_1,\ldots,\omega_K)$, prescribe the roots
+\begin{equation}
+b,
+\qquad
+\sqrt b\,e^{\pm i\omega_1},\ldots,
+\sqrt b\,e^{\pm i\omega_K}.
+\label{eq:prescribed_roots}
+\end{equation}
+The unique monic polynomial with these roots is
+\begin{equation}
+P_{b,\Omega}(z)
+=(z-b)\prod_{k=1}^{K}
+\left(z^2-2\sqrt b\cos(\omega_k)z+b\right).
+\label{eq:rigid_polynomial}
+\end{equation}
+Writing
+\begin{equation}
+P_{b,\Omega}(z)
+=z^m-\sum_{\ell=1}^{m}a_\ell(b,\Omega)z^{m-\ell}
+\label{eq:rigid_coefficients}
+\end{equation}
+defines the coefficient map $A:(b,\Omega)\mapsto a(b,\Omega)$.
+
+\begin{proposition}
+\label{prop:uniqueness}
+For fixed $(b,\Omega)$, the rigid Leslie coefficients in \eqref{eq:rigid_coefficients} are unique.  A rigid nonnegative Leslie realization exists if and only if
+\begin{equation}
+a_\ell(b,\Omega)\geq0,
+\qquad 1\leq\ell\leq m.
+\label{eq:coefficient_nonnegativity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The roots in \eqref{eq:prescribed_roots} determine the monic polynomial \eqref{eq:rigid_polynomial}.  Comparison with \eqref{eq:characteristic_polynomial} determines every coefficient.  The companion matrix is entrywise nonnegative exactly when its first-row coefficients satisfy \eqref{eq:coefficient_nonnegativity}.
+\end{proof}
+
+\begin{definition}
+\label{def:admissible_phase_set}
+The rigid admissible phase set is
+\begin{equation}
+\mathcal A_{b,K}
+=
+\left\{
+\Omega\in\mathbb T^K:
+ a_\ell(b,\Omega)\geq0
+ \text{ for all }\ell
+\right\}.
+\label{eq:admissible_phase_set}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+\label{rem:boundary}
+The boundary of \eqref{eq:admissible_phase_set} is contained in the union of the coefficient zero sets
+\begin{equation}
+\partial\mathcal A_{b,K}
+\subseteq
+\bigcup_{\ell=1}^{m}
+\left\{\Omega:a_\ell(b,\Omega)=0\right\}.
+\label{eq:admissible_boundary}
+\end{equation}
+Equality need not hold without excluding redundant inequalities and singular intersections.
+\end{remark}
+
+\section{Windowed cocycle and accumulated phase}
+\label{sec:windowed_cocycle}
+
+Let $W_0,W_1,\ldots$ be consecutive windows in logarithmic scale.  Associate a rigid Leslie matrix
+\begin{equation}
+L_j=L(a_j),
+\qquad
+a_j=a(b_j,\Omega_j)\in\mathbb R_+^m.
+\label{eq:window_leslie}
+\end{equation}
+The non-autonomous evolution is
+\begin{equation}
+v_{j+1}=L_jv_j,
+\label{eq:nonautonomous_evolution}
+\end{equation}
+with cocycle product
+\begin{equation}
+\Phi(J,0)=L_{J-1}\cdots L_1L_0.
+\label{eq:cocycle_product}
+\end{equation}
+
+\begin{remark}
+\label{rem:no_forced_periodicity}
+A moving sequence $L_j$ has no mandatory spectral periodicity.  This does not imply that every chosen trajectory is nonperiodic.  Periodicity may reappear if the coefficients or phases are selected periodically.
+\end{remark}
+
+If a locally matched branch has phase $\omega_{j,k}$ in window $j$, its formal accumulated phase is
+\begin{equation}
+\Theta_k(J)=\sum_{j=0}^{J-1}\omega_{j,k}.
+\label{eq:accumulated_phase}
+\end{equation}
+The definition requires mode matching and phase unwrapping between adjacent windows.  Without those operations, the unordered roots of successive polynomials do not determine a unique trajectory $k\mapsto\omega_{j,k}$.
+
+\section{Exact coefficient coordinates for the rigid critical spectrum}
+\label{sec:eta_coordinates}
+
+The general inverse spectral problem for Leslie matrices has an established characterization in the literature \cite{Benvenuti2019}.  The results in this section concern the special rigid spectrum in \eqref{eq:prescribed_roots} and its use as a moving-window coordinate system.
+
+Put $r=\sqrt b$ and define
+\begin{equation}
+S_\Omega(w)
+=\prod_{k=1}^{K}\left(w^2-2\cos(\omega_k)w+1\right)
+=\sum_{j=0}^{2K}d_jw^{2K-j}.
+\label{eq:unit_circle_factor}
+\end{equation}
+The polynomial is reciprocal, and hence
+\begin{equation}
+d_{2K-j}=d_j,
+\qquad
+d_0=d_{2K}=1.
+\label{eq:palindromic_d}
+\end{equation}
+Moreover,
+\begin{equation}
+P_{b,\Omega}(z)
+=(z-r^2)r^{2K}S_\Omega(z/r).
+\label{eq:scaled_rigid_polynomial}
+\end{equation}
+
+\begin{proposition}
+\label{prop:coefficient_formula}
+The coefficients in \eqref{eq:rigid_coefficients} satisfy
+\begin{align}
+a_\ell
+&=r^\ell\left(rd_{\ell-1}-d_\ell\right),
+&&1\leq\ell\leq2K,
+\label{eq:coefficient_formula_main}\\
+a_m&=r^{m+1}=b^{K+1}.
+\label{eq:last_coefficient_fixed}
+\end{align}
+For $1\leq j\leq K$, the paired coefficients are
+\begin{align}
+a_j
+&=r^j\left(rd_{j-1}-d_j\right),
+\label{eq:left_paired_coefficient}\\
+a_{m-j}
+&=r^{m-j}\left(rd_j-d_{j-1}\right).
+\label{eq:right_paired_coefficient}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Expand \eqref{eq:scaled_rigid_polynomial} and compare the coefficient of $z^{m-\ell}$ with \eqref{eq:rigid_coefficients}.  Equation \eqref{eq:right_paired_coefficient} follows from \eqref{eq:palindromic_d}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:ratio_test}
+A rigid nonnegative Leslie realization exists if and only if
+\begin{equation}
+d_j>0
+\quad\text{and}\quad
+\frac1r\leq\frac{d_j}{d_{j-1}}\leq r,
+\qquad 1\leq j\leq K.
+\label{eq:ratio_test}
+\end{equation}
+Strict inequalities are equivalent to strict positivity of all paired coefficients.
+\end{corollary}
+
+\begin{proof}
+Equations \eqref{eq:left_paired_coefficient} and \eqref{eq:right_paired_coefficient} give the two inequalities.  If one of $d_{j-1}$ and $d_j$ vanished while both paired inequalities held, the other would also vanish.  Propagation back to $d_0=1$ yields a contradiction.  Thus feasibility forces positivity of all $d_j$ for $0\leq j\leq K$.
+\end{proof}
+
+\begin{definition}
+\label{def:eta_coordinates}
+On the region where $d_1,\ldots,d_K>0$, define
+\begin{equation}
+\eta_j(\Omega)=\log\frac{d_j}{d_{j-1}},
+\qquad 1\leq j\leq K.
+\label{eq:eta_definition}
+\end{equation}
+The rigid spectral strain is
+\begin{equation}
+\Sigma(\Omega)=\|\eta(\Omega)\|_\infty.
+\label{eq:spectral_strain}
+\end{equation}
+\end{definition}
+
+\begin{corollary}
+\label{cor:box_criterion}
+The positivity test becomes
+\begin{equation}
+\|\eta(\Omega)\|_\infty
+\leq\frac12\log b.
+\label{eq:eta_box}
+\end{equation}
+The minimum compatible Perron value is
+\begin{align}
+b_*(\Omega)
+&=\exp\left(2\|\eta(\Omega)\|_\infty\right)
+\label{eq:minimal_perron_eta}\\
+&=\max_{1\leq j\leq K}
+\left\{
+\left(\frac{d_j}{d_{j-1}}\right)^2,
+\left(\frac{d_{j-1}}{d_j}\right)^2
+\right\}.
+\label{eq:minimal_perron_ratios}
+\end{align}
+If some $d_j\leq0$, set $b_*(\Omega)=+\infty$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:minimal_perron_boundary}
+If $b>b_*(\Omega)$, the rigid Leslie coefficients are strictly positive.  If $b=b_*(\Omega)<\infty$, at least one paired coefficient vanishes.  The map $b_*$ is generally nonsmooth where several coordinates attain the maximum in \eqref{eq:minimal_perron_eta}.
+\end{remark}
+
+\begin{proposition}
+\label{prop:comb_zero_strain}
+The rigid root-of-unity comb
+\begin{equation}
+\omega_k=\frac{2\pi k}{2K+1},
+\qquad 1\leq k\leq K,
+\label{eq:comb_phases}
+\end{equation}
+has $d_j=1$ for all $j$, and hence $\Sigma(\Omega)=0$.  Conversely, $\Sigma(\Omega)=0$ implies the same multiset of phases, up to ordering and conjugation.
+\end{proposition}
+
+\begin{proof}
+For \eqref{eq:comb_phases},
+\begin{equation}
+S_\Omega(w)=\frac{w^{2K+1}-1}{w-1}
+=1+w+\cdots+w^{2K}.
+\label{eq:comb_polynomial}
+\end{equation}
+Conversely, $\eta=0$ and $d_0=1$ imply $d_0=\cdots=d_{2K}=1$.  The roots of \eqref{eq:comb_polynomial} are the nontrivial $(2K+1)$-st roots of unity.
+\end{proof}
+
+\section{Memory tails and the universal critical region}
+\label{sec:memory_critical_region}
+
+Normalize the coefficients by
+\begin{equation}
+x_\ell=\frac{a_\ell}{b^\ell},
+\qquad
+X_q=\sum_{\ell=q}^{m}x_\ell.
+\label{eq:memory_tail_definition}
+\end{equation}
+
+\begin{proposition}
+\label{prop:memory_tail_formula}
+The tails telescope to
+\begin{equation}
+X_{j+1}=\frac{d_j}{r^j},
+\qquad 0\leq j\leq2K.
+\label{eq:memory_tail_formula}
+\end{equation}
+Consequently,
+\begin{align}
+X_{m-j}&=b^{j-K}X_{j+1},
+&&0\leq j\leq K,
+\label{eq:tail_palindromy}\\
+x_m&=X_m=b^{-K}.
+\label{eq:last_memory_mass}
+\end{align}
+Moreover, positivity is equivalent to
+\begin{equation}
+\frac{X_j}{b}\leq X_{j+1}\leq X_j,
+\qquad 1\leq j\leq K.
+\label{eq:tail_inequalities}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Substitute \eqref{eq:coefficient_formula_main} into \eqref{eq:memory_tail_definition}; consecutive terms telescope.  Equations \eqref{eq:tail_palindromy}--\eqref{eq:last_memory_mass} follow from \eqref{eq:palindromic_d}, and \eqref{eq:tail_inequalities} is \eqref{eq:ratio_test} rewritten using \eqref{eq:memory_tail_formula}.
+\end{proof}
+
+The reciprocal polynomial admits a Chebyshev reduction.  Define
+\begin{equation}
+C_n(y)=2T_n(y/2),
+\label{eq:scaled_chebyshev}
+\end{equation}
+where $T_n$ is the Chebyshev polynomial of the first kind, and set
+\begin{equation}
+H_\eta(y)
+=C_K(y)+d_1C_{K-1}(y)+\cdots+d_{K-1}C_1(y)+d_K.
+\label{eq:H_eta}
+\end{equation}
+Then
+\begin{equation}
+S_\Omega(w)=w^KH_\eta(w+w^{-1}).
+\label{eq:chebyshev_reduction}
+\end{equation}
+
+\begin{definition}
+\label{def:universal_region}
+Let
+\begin{equation}
+\mathcal R_K
+=
+\left\{
+\eta\in\mathbb R^K:
+H_\eta\text{ has }K\text{ simple roots in }(-2,2)
+\right\},
+\label{eq:universal_region}
+\end{equation}
+where $d_j=\exp(\eta_1+\cdots+\eta_j)$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:separation_geometry_positivity}
+In $\eta$-coordinates, the admissible rigid critical region is
+\begin{equation}
+\mathcal A^{\eta}_{b,K}
+=
+\mathcal R_K
+\cap
+\left[-\frac12\log b,\frac12\log b\right]^K.
+\label{eq:critical_box_intersection}
+\end{equation}
+Thus $\mathcal R_K$ encodes the unit-circle root geometry, while the box encodes Leslie positivity.
+\end{proposition}
+
+\begin{remark}
+\label{rem:two_boundary_mechanisms}
+Within the positive-$d$ coordinates, a path can leave \eqref{eq:critical_box_intersection} either through a box face or through the boundary of $\mathcal R_K$.  The latter occurs when roots collide or reach an endpoint.  Since
+\begin{equation}
+H_\eta(2)=d_K+2\sum_{j=0}^{K-1}d_j>0,
+\label{eq:H_at_plus_two}
+\end{equation}
+a root cannot reach $+2$.  Candidate spectral boundary equations are therefore
+\begin{equation}
+\operatorname{Disc}H_\eta=0
+\qquad\text{or}\qquad
+H_\eta(-2)=0.
+\label{eq:critical_region_boundary}
+\end{equation}
+This describes the regular boundary mechanisms; intersections and higher degeneracies form singular strata.
+\end{remark}
+
+\section{Jacobian of the phase-to-strain map}
+\label{sec:eta_jacobian}
+
+Assume distinct phases $0<\omega_k<\pi$.  Let the phases be ordered to remove permutation ambiguity.
+
+\begin{proposition}
+\label{prop:d_jacobian}
+The coefficient Jacobian satisfies
+\begin{equation}
+\left|
+\det\frac{\partial(d_1,\ldots,d_K)}
+{\partial(\omega_1,\ldots,\omega_K)}
+\right|
+=
+2^{K(K+1)/2}
+\prod_{k=1}^{K}\sin\omega_k
+\prod_{i<j}|\cos\omega_i-\cos\omega_j|.
+\label{eq:d_jacobian}
+\end{equation}
+Consequently,
+\begin{equation}
+\left|
+\det\frac{\partial\eta}{\partial\Omega}
+\right|
+=
+\frac{
+2^{K(K+1)/2}
+\displaystyle\prod_k\sin\omega_k
+\displaystyle\prod_{i<j}|\cos\omega_i-\cos\omega_j|
+}{\displaystyle\prod_{j=1}^{K}d_j}.
+\label{eq:eta_jacobian}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first $K$ reciprocal coefficients determine the monic polynomial with roots $2\cos\omega_k$ in the Chebyshev basis.  The root-to-coefficient Jacobian is a Vandermonde product, the change $2\cos\omega_k$ contributes $2\sin\omega_k$ in absolute value, and the triangular changes between monomial, Chebyshev, and reciprocal coefficient coordinates give the stated power of $2$.  The map $d\mapsto\eta$ is triangular with determinant $(d_1\cdots d_K)^{-1}$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:discriminant_jacobian}
+The same determinant can be written as
+\begin{equation}
+\left|
+\det\frac{\partial\eta}{\partial\Omega}
+\right|
+=
+\frac{
+\sqrt{\left|
+\operatorname{Disc}H_\eta\,
+H_\eta(2)H_\eta(-2)
+\right|}
+}{d_1d_2\cdots d_K}.
+\label{eq:eta_jacobian_discriminant}
+\end{equation}
+Hence the phase-to-strain map is locally invertible away from phase collisions and the endpoints $0$ and $\pi$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:reduced_transport_coordinates}
+At regular points, a moving rigid Leslie model can be transported using $K$ variables $\eta$, plus $b$ when the Perron value is allowed to vary.  The full coefficient vector is reconstructed from \eqref{eq:left_paired_coefficient}, \eqref{eq:right_paired_coefficient}, and \eqref{eq:last_coefficient_fixed}.
+\end{remark}
+
+\section{Exact viability conditions in strain coordinates}
+\label{sec:eta_viability}
+
+For fixed $b$, the box criterion \eqref{eq:eta_box} gives the exact first-order viability conditions.  On an upper active face,
+\begin{equation}
+\eta_j=\frac12\log b
+\quad\Longrightarrow\quad
+\dot\eta_j\leq0,
+\label{eq:upper_face_velocity}
+\end{equation}
+and on a lower active face,
+\begin{equation}
+\eta_j=-\frac12\log b
+\quad\Longrightarrow\quad
+\dot\eta_j\geq0.
+\label{eq:lower_face_velocity}
+\end{equation}
+Since $\dot\eta=D_\Omega\eta\,\dot\Omega$, both cases are summarized by
+\begin{equation}
+\operatorname{sgn}(\eta_j)
+\sum_{k=1}^{K}
+\frac{\partial\eta_j}{\partial\omega_k}
+\dot\omega_k
+\leq0
+\label{eq:phase_velocity_face_condition}
+\end{equation}
+on an active face.
+
+If $b=b(t)$ varies and
+\begin{equation}
+\eta_j=s_j\frac12\log b,
+\qquad s_j\in\{-1,1\},
+\label{eq:moving_active_face}
+\end{equation}
+then viability requires
+\begin{equation}
+s_j\dot\eta_j
+\leq\frac12\frac{\dot b}{b}.
+\label{eq:moving_face_velocity}
+\end{equation}
+For the minimum-Perron choice $b=b_*(\Omega)$ and a unique active index $j_*$,
+\begin{equation}
+\frac{\dot b_*}{b_*}
+=2\operatorname{sgn}(\eta_{j_*})\dot\eta_{j_*}.
+\label{eq:minimal_perron_velocity}
+\end{equation}
+
+\begin{remark}
+\label{rem:tied_active_indices}
+When several coordinates attain $\|\eta\|_\infty$, $b_*$ is not differentiable in general.  Directional derivatives or a differential inclusion must replace \eqref{eq:minimal_perron_velocity}.
+\end{remark}
+
+On a fixed upper face with tangential first-order motion, the second-order viability condition is
+\begin{equation}
+\nabla\eta_j\cdot\ddot\Omega
++
+\dot\Omega^TD^2\eta_j\dot\Omega
+\leq0.
+\label{eq:upper_face_acceleration}
+\end{equation}
+The inequality reverses on a lower face.
+
+\section{Exact modal transport and internally generated amplitudes}
+\label{sec:modal_transport}
+
+Assume that every rigid polynomial has distinct roots.  For a root $\lambda$, define the right eigenvector
+\begin{equation}
+v(\lambda)
+=(\lambda^{m-1},\lambda^{m-2},\ldots,\lambda,1)^T.
+\label{eq:companion_eigenvector}
+\end{equation}
+Let
+\begin{equation}
+V_j=
+\left[
+v(\lambda_{j,1})\ \cdots\ v(\lambda_{j,m})
+\right],
+\qquad
+\Lambda_j=\operatorname{diag}(\lambda_{j,1},\ldots,\lambda_{j,m}).
+\label{eq:modal_matrices}
+\end{equation}
+If $L_j$ acts for $h_j$ steps and $y_j=V_jc_j$, then
+\begin{align}
+y_{j+1}
+&=V_j\Lambda_j^{h_j}c_j,
+\label{eq:window_state_handoff}\\
+c_{j+1}
+&=T_j\Lambda_j^{h_j}c_j,
+\qquad
+T_j=V_{j+1}^{-1}V_j.
+\label{eq:modal_transport}
+\end{align}
+
+\begin{proposition}
+\label{prop:lagrange_transport}
+The entries of the basis-change matrix are
+\begin{equation}
+(T_j)_{pq}
+=
+\prod_{\substack{s=1\\s\neq p}}^{m}
+\frac{\lambda_{j,q}-\lambda_{j+1,s}}
+{\lambda_{j+1,p}-\lambda_{j+1,s}}.
+\label{eq:lagrange_transport_entries}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The $p$-th coordinate in the new Vandermonde basis is the cardinal Lagrange polynomial for the nodes $\lambda_{j+1,s}$, evaluated at the old node $\lambda_{j,q}$.  Inverse Vandermonde matrices and Lagrange interpolation are equivalent descriptions of this change of basis.
+\end{proof}
+
+For a small root displacement
+\begin{equation}
+\lambda_{j+1,q}=\lambda_{j,q}+\delta\lambda_{j,q},
+\label{eq:small_root_displacement}
+\end{equation}
+one obtains, for $p\neq q$,
+\begin{equation}
+(T_j)_{pq}
+=-\delta\lambda_{j,q}
+\frac{P_j'(\lambda_{j,q})}
+{(\lambda_{j,q}-\lambda_{j,p})P_j'(\lambda_{j,p})}
++O(\|\delta\lambda_j\|^2).
+\label{eq:offdiagonal_modal_mixing}
+\end{equation}
+Thus modal mixing becomes large near collisions, consistently with the vanishing of the discriminant.
+
+\begin{proposition}
+\label{prop:modal_volume}
+The exact modal volume identity is
+\begin{align}
+\det T_j
+&=\frac{\det V_j}{\det V_{j+1}},
+\label{eq:transport_determinant}\\
+|\det T_j|^2
+&=\frac{|\operatorname{Disc}P_j|}
+{|\operatorname{Disc}P_{j+1}|}.
+\label{eq:discriminant_volume_ratio}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The first identity follows from $T_j=V_{j+1}^{-1}V_j$.  The square of the absolute Vandermonde determinant equals the absolute discriminant of a monic polynomial with simple roots.
+\end{proof}
+
+Iterating \eqref{eq:modal_transport} gives
+\begin{equation}
+c_J
+=T_{J-1}\Lambda_{J-1}^{h_{J-1}}
+\cdots
+T_0\Lambda_0^{h_0}c_0,
+\label{eq:iterated_modal_transport}
+\end{equation}
+and hence
+\begin{equation}
+y_J
+=V_JT_{J-1}\Lambda_{J-1}^{h_{J-1}}
+\cdots
+T_0\Lambda_0^{h_0}c_0.
+\label{eq:global_state_predictor}
+\end{equation}
+For the first-coordinate observable,
+\begin{equation}
+U_J
+=e_1^TV_JT_{J-1}\Lambda_{J-1}^{h_{J-1}}
+\cdots
+T_0\Lambda_0^{h_0}c_0.
+\label{eq:global_scalar_predictor}
+\end{equation}
+
+\begin{warning}
+\label{warn:homogeneous_transport_assumption}
+Equations \eqref{eq:iterated_modal_transport}--\eqref{eq:global_scalar_predictor} eliminate independent amplitude fitting only under the homogeneous state-handoff model \eqref{eq:window_state_handoff}.  If each data window is reinitialized, forced, normalized independently, or connected through an additional observation operator, new parameters re-enter and must be counted explicitly.
+\end{warning}
+
+\section{Canonical boundary realization and the remaining law}
+\label{sec:canonical_boundary}
+
+Whenever $b_*(\Omega)<\infty$, define the canonical minimum-Perron realization
+\begin{equation}
+L_*(\Omega)=L\bigl(a(b_*(\Omega),\Omega)\bigr).
+\label{eq:canonical_boundary_leslie}
+\end{equation}
+This realization lies on the boundary of the nonnegative cone.  At regular points with unique active strain coordinate, the maps
+\begin{equation}
+\Omega
+\longleftrightarrow
+\eta
+\longmapsto
+b_*(\Omega)
+\longmapsto
+L_*(\Omega)
+\label{eq:canonical_coordinate_chain}
+\end{equation}
+are locally determined, with the first arrow locally invertible.
+
+\begin{remark}
+\label{rem:canonical_not_smooth_everywhere}
+The construction \eqref{eq:canonical_boundary_leslie} is canonical but only piecewise smooth because of the maximum norm in $b_*$.  It is also numerically sensitive near the spectral boundary \eqref{eq:critical_region_boundary}.
+\end{remark}
+
+The static coordinate chain \eqref{eq:canonical_coordinate_chain} does not by itself determine how a future window is reached.  The next sections derive an exact overlap law directly from the scalar sequence.  For fixed $b$, the special reciprocal structure turns the admissible coefficient differences into a linear problem.  At the first generic stride admitting motion, the entire update is reduced to one scalar innovation.
+
+
+
+\section{The fixed-Perron reciprocal affine hull}
+\label{sec:reciprocal_affine_hull}
+
+The critical-circle condition has a useful linear precursor.  Fix $b>1$, put $m=2K+1$, and for a coefficient vector $a=(a_1,\ldots,a_m)$ define the synthetic-division coefficients
+\begin{align}
+q_0(a;b)&=1,
+\label{eq:q_zero}\\
+q_j(a;b)&=b^j-\sum_{\ell=1}^{j}a_\ell b^{j-\ell},
+\qquad 1\leq j\leq 2K.
+\label{eq:q_definition}
+\end{align}
+Then
+\begin{equation}
+P(z;a)
+=(z-b)\left(
+ z^{2K}+q_1z^{2K-1}+\cdots+q_{2K}
+\right)+P(b;a).
+\label{eq:synthetic_division_identity}
+\end{equation}
+
+\begin{definition}
+\label{def:reciprocal_perron_hull}
+The fixed-$b$ reciprocal--Perron affine hull is the set
+\begin{equation}
+\mathcal C^{\mathrm{rec}}_{b,K}
+=
+\left\{
+a\in\mathbb R^m:
+P(b;a)=0,
+\quad
+q_{2K-j}(a;b)=b^{K-j}q_j(a;b),\ 0\leq j\leq K-1
+\right\}.
+\label{eq:reciprocal_perron_hull}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:reciprocal_affine_dimension}
+The set \eqref{eq:reciprocal_perron_hull} is an affine subspace of dimension $K$.  Equivalently, there is a rank-$(K+1)$ matrix $R_b$ and a vector $c_b$ such that
+\begin{equation}
+\mathcal C^{\mathrm{rec}}_{b,K}
+=\{a:R_ba=c_b\}.
+\label{eq:Rb_affine_form}
+\end{equation}
+One explicit choice of the $K+1$ affine rows is
+\begin{align}
+\sum_{\ell=1}^{m}b^{m-\ell}a_\ell
+&=b^m,
+\label{eq:Rb_perron_row}\\
+\sum_{\ell=1}^{2K-j}b^{2K-j-\ell}a_\ell
+-
+\sum_{\ell=1}^{j}b^{K-\ell}a_\ell
+&=b^{2K-j}-b^K,
+\qquad 0\leq j\leq K-1.
+\label{eq:Rb_reciprocal_rows}
+\end{align}
+Every rigid critical Leslie coefficient vector with Perron value $b$ belongs to this affine subspace.
+\end{proposition}
+
+\begin{proof}
+All equations in \eqref{eq:reciprocal_perron_hull} are affine linear in $a$.  The $K$ quantities $q_1,\ldots,q_K$ may be chosen freely.  The reciprocal identities determine $q_{K+1},\ldots,q_{2K}$, after which
+\begin{equation}
+a_j=bq_{j-1}-q_j,
+\qquad 1\leq j\leq2K,
+\label{eq:a_from_q}
+\end{equation}
+and $P(b;a)=0$ determines
+\begin{equation}
+a_m=bq_{2K}=b^{K+1}.
+\label{eq:a_m_from_q}
+\end{equation}
+Hence the affine dimension is $K$.  For a rigid critical spectrum, $q_j=r^jd_j$ with $r=\sqrt b$, and the palindromy $d_{2K-j}=d_j$ gives exactly the reciprocal equations in \eqref{eq:reciprocal_perron_hull}.
+\end{proof}
+
+\begin{remark}
+\label{rem:reciprocal_not_full_critical}
+Membership in $\mathcal C^{\mathrm{rec}}_{b,K}$ is necessary but not sufficient for all non-Perron roots to lie on $|z|=\sqrt b$.  Put
+\begin{equation}
+d_j=\frac{q_j}{b^{j/2}}.
+\label{eq:d_from_q}
+\end{equation}
+The reciprocal identities give $d_{2K-j}=d_j$.  Full criticality additionally requires the associated polynomial $H$ in \eqref{eq:H_eta} to have all $K$ roots in $[-2,2]$, together with the Leslie nonnegativity inequalities.
+\end{remark}
+
+\section{Overlapping windows and exact mobility rigidity}
+\label{sec:overlap_rigidity}
+
+Let $(u_t)$ be any scalar sequence.  In the intended arithmetic application one may take $u_t=M(B_t)$ or a predeclared normalization of those values.  Define the recurrence row
+\begin{equation}
+h_t=(u_{t-1},u_{t-2},\ldots,u_{t-m})\in\mathbb R^m.
+\label{eq:recurrence_row}
+\end{equation}
+The order-$m$ recurrence window beginning at $n$ consists of the $m$ equations
+\begin{equation}
+h_ta^{(n)}=u_t,
+\qquad
+n+m\leq t\leq n+2m-1.
+\label{eq:window_recurrence_equations}
+\end{equation}
+When the corresponding square data matrix is nonsingular, these equations determine $a^{(n)}$ uniquely.
+
+Let a second window begin at $n+s$, with $1\leq s\leq m$.  The two recurrence windows share exactly $m-s$ equations.  Let $O_{n,s}$ be the matrix whose rows are the common $h_t$:
+\begin{equation}
+O_{n,s}
+=
+\begin{pmatrix}
+h_{n+s+m}\\
+\vdots\\
+h_{n+2m-1}
+\end{pmatrix}
+\in\mathbb R^{(m-s)\times m},
+\label{eq:overlap_matrix}
+\end{equation}
+with the empty-matrix convention when $s=m$.
+
+\begin{theorem}[Exact overlap constraint]
+\label{thm:exact_overlap_constraint}
+Assume that $a^{(n)}$ and $a^{(n+s)}$ both fit their respective windows and both belong to $\mathcal C^{\mathrm{rec}}_{b,K}$ for the same fixed $b$.  Then
+\begin{equation}
+\delta a_{n,s}:=a^{(n+s)}-a^{(n)}
+\in
+\ker O_{n,s}\cap\ker R_b.
+\label{eq:overlap_kernel_intersection}
+\end{equation}
+Equivalently, with
+\begin{equation}
+Z_{n,s}
+=
+\begin{pmatrix}
+O_{n,s}\\
+R_b
+\end{pmatrix},
+\label{eq:stacked_overlap_matrix}
+\end{equation}
+one has
+\begin{equation}
+Z_{n,s}\delta a_{n,s}=0.
+\label{eq:stacked_overlap_null}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Every common recurrence equation is satisfied by both coefficient vectors, so subtraction gives $O_{n,s}\delta a_{n,s}=0$.  Since both vectors satisfy the same affine equations $R_ba=c_b$, subtraction also gives $R_b\delta a_{n,s}=0$.
+\end{proof}
+
+\begin{corollary}[Generic mobility threshold]
+\label{cor:generic_mobility_threshold}
+If the rows of $O_{n,s}$ and $R_b$ are in generic relative position, then
+\begin{equation}
+\dim\ker Z_{n,s}
+=
+\max\{0,s-K-1\}.
+\label{eq:generic_mobility_dimension}
+\end{equation}
+Hence:
+\begin{align}
+s\leq K+1
+&\quad\Longrightarrow\quad
+\text{the old coefficient vector is locally isolated},
+\label{eq:rigid_stride_small}\\
+s=K+2
+&\quad\Longrightarrow\quad
+\text{one generic coefficient direction survives},
+\label{eq:critical_stride_one_direction}\\
+s>K+2
+&\quad\Longrightarrow\quad
+s-K-1\text{ generic directions survive}.
+\label{eq:large_stride_directions}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+The common-equation matrix contributes $m-s$ generic independent rows and $R_b$ contributes $K+1$ independent rows.  Since $m=2K+1$, the generic nullity is
+\begin{equation}
+m-\min\{m,m-s+K+1\}
+=\max\{0,s-K-1\}.
+\end{equation}
+\end{proof}
+
+\begin{definition}
+\label{def:critical_stride}
+For fixed $b$, define the critical stride
+\begin{equation}
+s_*=K+2.
+\label{eq:critical_stride}
+\end{equation}
+It is the first stride at which a nonzero fixed-$b$ reciprocal--Perron motion exists generically.
+\end{definition}
+
+\begin{remark}
+\label{rem:small_stride_degeneracy}
+For $s\leq K+1$, nontrivial motion is possible only when $Z_{n,s}$ loses rank.  Thus exceptional motion is detected by the vanishing of maximal minors of $Z_{n,s}$.  In particular, any single Hankel-type minor obtained from the fixed identity $a_m=b^{K+1}$ is only one necessary degeneracy condition, not a sufficient condition for full critical motion.
+\end{remark}
+
+\begin{remark}
+\label{rem:moving_b_threshold}
+If $b$ is allowed to vary, the regular rigid critical manifold has dimension $K+1$.  A transversality count gives local intersection dimension
+\begin{equation}
+\max\{0,s-K\},
+\label{eq:moving_b_local_dimension}
+\end{equation}
+so the first generic one-dimensional mobility occurs at $s=K+1$.  Unlike the fixed-$b$ result, this statement is local and nonlinear because coefficient differences for distinct Perron values do not lie in one fixed affine subspace.
+\end{remark}
+
+\section{Scalar innovation at the critical stride}
+\label{sec:scalar_innovation}
+
+Set $s=s_*=K+2$ and assume
+\begin{equation}
+\operatorname{rank}Z_{n,s_*}=m-1.
+\label{eq:critical_stride_rank}
+\end{equation}
+Choose a nonzero vector $v_n$ spanning the one-dimensional nullspace,
+\begin{equation}
+\ker Z_{n,s_*}=\operatorname{span}\{v_n\}.
+\label{eq:critical_stride_direction}
+\end{equation}
+
+\begin{theorem}[Scalarization of the window update]
+\label{thm:scalarization}
+Under \eqref{eq:critical_stride_rank}, every next fixed-$b$ reciprocal--Perron coefficient vector that agrees with the old window on all common equations has the form
+\begin{equation}
+a^{(n+s_*)}=a^{(n)}+\tau_n v_n
+\label{eq:scalar_coefficient_update}
+\end{equation}
+for a unique scalar $\tau_n$.
+\end{theorem}
+
+\begin{proof}
+The difference belongs to the one-dimensional nullspace in \eqref{eq:critical_stride_direction}.
+\end{proof}
+
+The next window contributes $s_*=K+2$ genuinely new recurrence equations.  The first occurs at
+\begin{equation}
+t_0=n+2m.
+\label{eq:first_new_time}
+\end{equation}
+Its recurrence row $h_{t_0}$ uses only values already known before $u_{t_0}$ is observed.
+
+\begin{theorem}[One innovation sample determines the next Leslie]
+\label{thm:one_sample_determines_update}
+Assume
+\begin{equation}
+h_{t_0}v_n\neq0.
+\label{eq:innovation_observability}
+\end{equation}
+Then the first new scalar value determines the update parameter exactly:
+\begin{equation}
+\boxed{
+\tau_n
+=
+\frac{u_{t_0}-h_{t_0}a^{(n)}}{h_{t_0}v_n}.
+}
+\label{eq:tau_from_first_new_value}
+\end{equation}
+Consequently the entire next coefficient vector is fixed by \eqref{eq:scalar_coefficient_update}.
+\end{theorem}
+
+\begin{proof}
+Substitute \eqref{eq:scalar_coefficient_update} into the recurrence equation at $t_0$ and solve the resulting scalar equation for $\tau_n$.
+\end{proof}
+
+\begin{corollary}[Causal $K+1$-value forecast]
+\label{cor:causal_Kplus1_forecast}
+After observing only $u_{t_0}$, define $a^+=a^{(n)}+\tau_nv_n$ using \eqref{eq:tau_from_first_new_value}.  Then recursively define
+\begin{equation}
+\widehat u_t
+=
+\sum_{\ell=1}^{m}a^+_\ell\widehat u_{t-\ell},
+\qquad
+t_0+1\leq t\leq t_0+K+1,
+\label{eq:causal_recursive_forecast}
+\end{equation}
+using the observed historical values for indices below $t_0$ and earlier forecasts above $t_0$.  If the next window is exactly generated by a fixed-$b$ rigid critical Leslie coefficient vector, then
+\begin{equation}
+\widehat u_t=u_t,
+\qquad
+t_0+1\leq t\leq t_0+K+1.
+\label{eq:exact_Kplus1_forecast}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The first new observation determines the exact next coefficient vector.  The remaining $K+1$ new equations of that window use the same coefficient vector.  Induction on $t$ in \eqref{eq:causal_recursive_forecast} gives the result.
+\end{proof}
+
+\begin{proposition}[Rank-one block diagnostic]
+\label{prop:rank_one_block_diagnostic}
+Let $G_n$ contain the $K+2$ new recurrence rows of the next window, evaluated from the observed sequence, and let $y_n^+$ be their right-hand side.  Define
+\begin{equation}
+e_n=y_n^+-G_na^{(n)},
+\qquad
+g_n=G_nv_n.
+\label{eq:block_residual_vectors}
+\end{equation}
+Then exact critical-stride transport implies
+\begin{equation}
+e_n=\tau_ng_n.
+\label{eq:block_collinearity}
+\end{equation}
+Equivalently,
+\begin{equation}
+(e_n)_i(g_n)_j-(e_n)_j(g_n)_i=0
+\qquad
+\text{for all }i,j.
+\label{eq:block_minor_identities}
+\end{equation}
+Thus a block of $K+2$ new equations carries only one scalar innovation after the old state and overlap direction are fixed.
+\end{proposition}
+
+\section{Admissible innovation interval and boundary locking}
+\label{sec:innovation_interval}
+
+The scalar parameter in \eqref{eq:scalar_coefficient_update} cannot take arbitrary values if nonnegativity and the critical-circle root condition are retained.
+
+\begin{definition}
+\label{def:positive_tau_interval}
+For a current nonnegative coefficient vector $a$ and direction $v$, define the interval of coefficient positivity
+\begin{equation}
+I_{\mathrm{pos}}(a,v)
+=
+\left[
+\max_{v_\ell>0}\left(-\frac{a_\ell}{v_\ell}\right),
+\ 
+\min_{v_\ell<0}\left(-\frac{a_\ell}{v_\ell}\right)
+\right],
+\label{eq:positive_tau_interval}
+\end{equation}
+with the usual $-\infty$ and $+\infty$ conventions when one of the indexing sets is empty.
+\end{definition}
+
+For $a(\tau)=a+\tau v$, define $q_j(\tau)$ by \eqref{eq:q_definition}, $d_j(\tau)=q_j(\tau)/b^{j/2}$, and the corresponding reciprocal reduction $H_\tau$.  Let $I_{\mathrm{spec}}$ be the connected component containing $0$ of the set of $\tau$ for which $H_\tau$ has $K$ simple roots in $(-2,2)$.  At regular points, an endpoint of this component can occur only when
+\begin{equation}
+\operatorname{Disc}H_\tau=0
+\qquad\text{or}\qquad
+H_\tau(-2)=0.
+\label{eq:tau_spectral_boundaries}
+\end{equation}
+Define the full local innovation interval
+\begin{equation}
+I_{\mathrm{adm}}=I_{\mathrm{pos}}\cap I_{\mathrm{spec}}.
+\label{eq:admissible_tau_interval}
+\end{equation}
+
+\begin{corollary}[Pre-observation admissible range]
+\label{cor:first_value_admissible_range}
+Before $u_{t_0}$ is observed, the moving rigid Leslie hypothesis requires
+\begin{equation}
+\boxed{
+ u_{t_0}
+ \in
+ h_{t_0}a^{(n)}
+ +(h_{t_0}v_n)I_{\mathrm{adm}}.
+}
+\label{eq:first_value_allowed_interval}
+\end{equation}
+A value outside this interval falsifies the local fixed-$b$ critical transition before any later value of the new block is used.
+\end{corollary}
+
+\begin{proposition}[Boundary locking criterion]
+\label{prop:boundary_locking}
+Let
+\begin{equation}
+\mathcal Z(a)=\{\ell:a_\ell=0\}
+\label{eq:active_zero_set}
+\end{equation}
+be the active coefficient faces.  A nonzero one-sided coefficient motion $a+\tau v$ preserving nonnegativity exists locally only if the numbers $v_\ell$, $\ell\in\mathcal Z(a)$, do not contain both positive and negative values.  If both signs occur, then $\tau=0$ is the only sufficiently small feasible update.
+\end{proposition}
+
+\begin{proof}
+For each active coordinate the inequality $a_\ell+\tau v_\ell\geq0$ reduces to $\tau v_\ell\geq0$.  A common nonzero sign of $\tau$ exists exactly when the active $v_\ell$ do not impose conflicting signs.
+\end{proof}
+
+\begin{remark}
+\label{rem:minimum_perron_locking}
+The canonical minimum-Perron realization $L_*(\Omega)$ always has at least one active coefficient face.  It is therefore dynamically more restrictive than an interior choice $b>b_*(\Omega)$.  A canonical boundary trajectory may lock whenever the critical-stride direction intersects active faces with incompatible signs.
+\end{remark}
+
+\section{Exact scalar-driven strain transport}
+\label{sec:scalar_strain_transport}
+
+For the update $a^+=a+\tau v$, define
+\begin{equation}
+\psi_j(v;b)
+=
+\sum_{\ell=1}^{j}v_\ell b^{j-\ell},
+\qquad
+\psi_0=0.
+\label{eq:psi_definition}
+\end{equation}
+Equation \eqref{eq:q_definition} gives
+\begin{equation}
+q_j(a+\tau v;b)=q_j(a;b)-\tau\psi_j(v;b).
+\label{eq:q_scalar_update}
+\end{equation}
+
+\begin{theorem}[Exact strain update]
+\label{thm:exact_strain_update}
+Whenever all logarithms are defined,
+\begin{equation}
+\boxed{
+\eta_j^+-\eta_j
+=
+\log\left(1-\tau\frac{\psi_j}{q_j}\right)
+-
+\log\left(1-\tau\frac{\psi_{j-1}}{q_{j-1}}\right),
+\qquad 1\leq j\leq K.
+}
+\label{eq:exact_eta_scalar_update}
+\end{equation}
+Hence, at the critical stride, all $K$ strain coordinates are driven by the same scalar innovation $\tau$.
+\end{theorem}
+
+\begin{proof}
+Use $d_j=q_j/b^{j/2}$ in the definition $\eta_j=\log(d_j/d_{j-1})$ and substitute \eqref{eq:q_scalar_update}.
+\end{proof}
+
+Differentiating with respect to the scalar innovation gives the exact line-flow equation
+\begin{equation}
+\frac{d\eta_j}{d\tau}
+=
+-\frac{\psi_j}{q_j-\tau\psi_j}
++
+\frac{\psi_{j-1}}{q_{j-1}-\tau\psi_{j-1}}.
+\label{eq:eta_tau_flow}
+\end{equation}
+For small $\tau$,
+\begin{equation}
+\eta_j^+-\eta_j
+=
+-\tau
+\left(
+\frac{\psi_j}{q_j}
+-
+\frac{\psi_{j-1}}{q_{j-1}}
+\right)
++O(\tau^2).
+\label{eq:eta_small_tau}
+\end{equation}
+Thus the $K$-dimensional strain increment is generically confined to one first-order direction at the critical stride.
+
+\section{Frequency-free determinant identities}
+\label{sec:frequency_free_determinants}
+
+The reciprocal--Perron test can be imposed directly on a data window without first estimating any phases.  Let
+\begin{equation}
+\mathsf A_n
+=
+\begin{pmatrix}
+h_{n+m}\\
+\vdots\\
+h_{n+2m-1}
+\end{pmatrix},
+\qquad
+\mathsf g_n
+=
+\begin{pmatrix}
+u_{n+m}\\
+\vdots\\
+u_{n+2m-1}
+\end{pmatrix}.
+\label{eq:data_recurrence_matrix}
+\end{equation}
+Write the affine reciprocal constraints in \eqref{eq:Rb_affine_form} row by row as
+\begin{equation}
+\rho_\alpha(b)^Ta=\kappa_\alpha(b),
+\qquad
+0\leq\alpha\leq K.
+\label{eq:affine_constraint_rows}
+\end{equation}
+For each row define
+\begin{equation}
+\Delta_{\alpha,n}(b)
+=
+\det
+\begin{pmatrix}
+\mathsf A_n & \mathsf g_n\\
+\rho_\alpha(b)^T & \kappa_\alpha(b)
+\end{pmatrix},
+\label{eq:frequency_free_determinant}
+\end{equation}
+
+\begin{proposition}
+\label{prop:frequency_free_test}
+If $\det\mathsf A_n\neq0$, then the unique order-$m$ recurrence coefficient vector of the window belongs to $\mathcal C^{\mathrm{rec}}_{b,K}$ if and only if
+\begin{equation}
+\Delta_{\alpha,n}(b)=0,
+\qquad 0\leq\alpha\leq K.
+\label{eq:all_frequency_free_determinants}
+\end{equation}
+Full rigid criticality is obtained by adding the nonnegativity and root-location tests of Sections~\ref{sec:eta_coordinates}--\ref{sec:memory_critical_region}.
+\end{proposition}
+
+\begin{proof}
+Since $a=\mathsf A_n^{-1}\mathsf g_n$, the Schur-complement identity gives
+\begin{equation}
+\Delta_{\alpha,n}(b)
+=
+\det(\mathsf A_n)
+\left(
+\kappa_\alpha(b)-\rho_\alpha(b)^T\mathsf A_n^{-1}\mathsf g_n
+\right).
+\label{eq:schur_determinant_identity}
+\end{equation}
+Thus the determinants vanish exactly when all affine reciprocal--Perron constraints hold.
+\end{proof}
+
+\begin{remark}
+\label{rem:unknown_b_elimination}
+If $b$ is not fixed in advance, the functions $\Delta_{\alpha,n}(b)$ are explicit polynomials in $b$ whose coefficients depend only on the data window.  A necessary condition for a rigid critical realization with some $b>1$ is that these $K+1$ polynomials possess a common real root $b>1$.  This can be tested without frequencies by polynomial gcd or resultant/subresultant elimination, followed by the root-location and positivity conditions.
+\end{remark}
+
+\section{Closed form for one mode pair}
+\label{sec:K1_closed_form}
+
+For $K=1$ one has $m=3$, and the entire construction becomes explicit.  Write $\alpha=a_1$.  The fixed-$b$ reciprocal--Perron constraints give
+\begin{equation}
+\boxed{
+ a_1=\alpha,
+ \qquad
+ a_2=b^2-b-b\alpha,
+ \qquad
+ a_3=b^2.
+}
+\label{eq:K1_coefficients}
+\end{equation}
+The quotient polynomial is
+\begin{equation}
+Q(z)=z^2+(b-\alpha)z+b.
+\label{eq:K1_quotient}
+\end{equation}
+Its two roots lie on $|z|=\sqrt b$, and the Leslie coefficients are nonnegative, if and only if
+\begin{equation}
+\boxed{
+\max\{0,b-2\sqrt b\}
+\leq\alpha\leq b-1.
+}
+\label{eq:K1_alpha_interval}
+\end{equation}
+Endpoint equalities include coefficient or spectral degeneracies; strict interior conditions give the corresponding nondegenerate case.
+
+Define
+\begin{align}
+X_t(b)&=u_{t-1}-bu_{t-2},
+\label{eq:K1_X}\\
+Y_t(b)&=u_t-(b^2-b)u_{t-2}-b^2u_{t-3}.
+\label{eq:K1_Y}
+\end{align}
+Then the critical recurrence is simply
+\begin{equation}
+Y_t(b)=\alpha X_t(b).
+\label{eq:K1_rank_one_relation}
+\end{equation}
+Thus, if $(X_t,X_{t+1},X_{t+2})$ is not identically zero, three consecutive recurrence equations admit a common fixed-$b$ reciprocal coefficient vector if and only if all pairwise minors vanish:
+\begin{equation}
+X_iY_j-X_jY_i=0,
+\qquad
+t\leq i<j\leq t+2.
+\label{eq:K1_data_identities}
+\end{equation}
+If $X_t=X_{t+1}=X_{t+2}=0$, existence instead requires $Y_t=Y_{t+1}=Y_{t+2}=0$.  Full rigid criticality additionally requires the inferred $\alpha$ to satisfy \eqref{eq:K1_alpha_interval}.
+
+For $K=1$, the critical stride is $s_*=3$ and the fixed-$b$ affine direction is
+\begin{equation}
+v=(1,-b,0)^T.
+\label{eq:K1_direction}
+\end{equation}
+Hence
+\begin{equation}
+\alpha^+=\alpha+\tau,
+\qquad
+a_2^+=a_2-b\tau,
+\qquad
+a_3^+=b^2.
+\label{eq:K1_scalar_update}
+\end{equation}
+The first new recurrence equation gives
+\begin{equation}
+\tau
+=
+\frac{u_{t_0}-h_{t_0}a}{X_{t_0}(b)},
+\label{eq:K1_tau}
+\end{equation}
+provided $X_{t_0}(b)\neq0$, and the next two values are then fixed recursively.  The exact admissible scalar interval is
+\begin{equation}
+\boxed{
+\max\{0,b-2\sqrt b\}-\alpha
+\leq\tau
+\leq
+b-1-\alpha.
+}
+\label{eq:K1_tau_interval}
+\end{equation}
+This gives a completely frequency-free three-step falsification and two-value forecasting rule for the one-pair model.
+
+\section{Irreducible scalar forcing and the endpoint of the Leslie geometry}
+\label{sec:irreducible_scalar_forcing}
+
+\begin{proposition}
+\label{prop:irreducible_scalar_forcing}
+At a regular interior fixed-$b$ point and the critical stride $s_*=K+2$, the Leslie geometry cannot determine $\tau_n$ from the old window and the common equations alone.  In a neighborhood of $\tau=0$, distinct values of $\tau$ produce distinct reciprocal--Perron coefficient vectors satisfying all those old and common constraints.  Full criticality persists for a nontrivial interval whenever the current point lies in the interior of the fixed-$b$ critical region.
+\end{proposition}
+
+\begin{proof}
+The rank assumption \eqref{eq:critical_stride_rank} leaves exactly the affine line \eqref{eq:scalar_coefficient_update}.  Within the reciprocal affine hull, coefficient positivity and the condition that the reduced polynomial have simple roots in $(-2,2)$ are open.  Hence sufficiently small values of $\tau$ remain admissible.
+\end{proof}
+
+\begin{remark}
+\label{rem:true_remaining_problem}
+This identifies the exact limit of the fixed-$b$ rigid moving-Leslie mechanism.  The rigid geometry compresses a block of $K+2$ genuinely new recurrence equations to one scalar innovation and then transports all $K$ strain coordinates through \eqref{eq:exact_eta_scalar_update}.  It does not supply a law for that scalar innovation.  A zero-latency forecast of the first new value therefore requires an additional arithmetic statement about the sequence $\tau_n$.  Any such law is external to Leslie geometry and is the remaining place where genuinely Möbius-specific information would have to enter.
+\end{remark}
+
+\section{Exact first-order spectral transport}
+\label{sec:first_order_transport}
+
+Let $a(t)$ be a differentiable coefficient path and define
+\begin{equation}
+P(z,t)=z^m-\sum_{\ell=1}^{m}a_\ell(t)z^{m-\ell}.
+\label{eq:time_polynomial}
+\end{equation}
+Let $\lambda_k(t)$ be a simple root, so that
+\begin{equation}
+P(\lambda_k(t),t)=0,
+\qquad
+P_z(\lambda_k(t),t)\neq0.
+\label{eq:simple_root_hypothesis}
+\end{equation}
+Differentiability of simple eigenvalue branches is standard in matrix perturbation theory \cite{Yener2023}.
+
+\begin{proposition}
+\label{prop:first_derivative}
+Under \eqref{eq:simple_root_hypothesis},
+\begin{equation}
+\dot\lambda_k
+=
+\frac{
+\displaystyle
+\sum_{\ell=1}^{m}
+\dot a_\ell\lambda_k^{m-\ell}
+}{P_z(\lambda_k,t)}.
+\label{eq:eigenvalue_velocity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiating $P(\lambda_k(t),t)=0$ gives
+\begin{equation}
+P_z(\lambda_k,t)\dot\lambda_k
++P_t(\lambda_k,t)=0.
+\label{eq:implicit_derivative}
+\end{equation}
+Since
+\begin{equation}
+P_t(z,t)
+=-\sum_{\ell=1}^{m}\dot a_\ell z^{m-\ell},
+\label{eq:polynomial_time_derivative}
+\end{equation}
+substitution into \eqref{eq:implicit_derivative} yields \eqref{eq:eigenvalue_velocity}.
+\end{proof}
+
+Suppose now that
+\begin{equation}
+\lambda_k(t)=\sqrt{b(t)}e^{i\omega_k(t)}.
+\label{eq:critical_root_parameterization}
+\end{equation}
+Then
+\begin{equation}
+\frac{\dot\lambda_k}{\lambda_k}
+=
+\frac{\dot b}{2b}+i\dot\omega_k.
+\label{eq:logarithmic_root_velocity}
+\end{equation}
+Define
+\begin{equation}
+J_{k\ell}(L)
+=
+\frac{\lambda_k^{m-\ell-1}}{P_z(\lambda_k)}.
+\label{eq:spectral_transport_matrix}
+\end{equation}
+
+\begin{corollary}
+\label{cor:phase_and_radius_velocity}
+For every simple prescribed branch,
+\begin{align}
+\dot\omega_k
+&=
+\Im\left(
+\sum_{\ell=1}^{m}J_{k\ell}(L)\dot a_\ell
+\right),
+\label{eq:angular_velocity}\\
+\frac{\dot b}{2b}
+&=
+\Re\left(
+\sum_{\ell=1}^{m}J_{k\ell}(L)\dot a_\ell
+\right).
+\label{eq:radial_velocity}
+\end{align}
+\end{corollary}
+
+\begin{warning}
+\label{warn:radial_compatibility}
+Equation \eqref{eq:radial_velocity} must give the same scalar $\dot b/(2b)$ for every $k$.  Thus the imaginary-part formula alone is not a complete admissibility test.  The real-part compatibility equations are additional local constraints.
+\end{warning}
+
+\section{The rigid critical manifold}
+\label{sec:critical_manifold}
+
+Let
+\begin{equation}
+\mathcal M_K
+=
+\left\{
+a(b,\Omega):
+ b>1,\ \Omega\in\mathbb T^K,
+\ a(b,\Omega)\geq0
+\right\}
+\subseteq\mathbb R^{2K+1}.
+\label{eq:rigid_critical_set}
+\end{equation}
+
+\begin{proposition}
+\label{prop:generic_dimension}
+At a point where the coefficient map $(b,\Omega)\mapsto a(b,\Omega)$ has rank $K+1$ and the prescribed roots are distinct, $\mathcal M_K$ is locally a smooth manifold of dimension $K+1$ and codimension $K$ in $\mathbb R^{2K+1}$.
+\end{proposition}
+
+\begin{proof}
+The parameter space has dimension $K+1$.  Under the stated full-rank hypothesis, the constant-rank theorem gives a local image manifold of dimension $K+1$.  The ambient dimension is $2K+1$, so the codimension is $K$.
+\end{proof}
+
+Consequently, locally there are $K$ independent constraints
+\begin{equation}
+F_r(a)=0,
+\qquad 1\leq r\leq K,
+\label{eq:implicit_constraints}
+\end{equation}
+and every differentiable path in the regular part satisfies
+\begin{equation}
+\nabla F_r(a)\cdot\dot a=0,
+\qquad 1\leq r\leq K.
+\label{eq:tangent_equalities}
+\end{equation}
+
+\begin{warning}
+\label{warn:singular_manifold}
+The dimension statement is generic, not universal.  Repeated roots, collisions of phases, loss of rank, and intersections with several active coefficient faces can create singular or lower-dimensional strata.
+\end{warning}
+
+\section{Positivity and the corrected spectral velocity cone}
+\label{sec:velocity_cone}
+
+For $a\in\mathbb R_+^m$, the tangent cone of the nonnegative orthant is
+\begin{equation}
+T_a\mathbb R_+^m
+=
+\left\{
+v\in\mathbb R^m:
+ v_\ell\geq0\text{ whenever }a_\ell=0
+\right\}.
+\label{eq:orthant_tangent_cone}
+\end{equation}
+Tangent cones generalize tangent spaces at nonsmooth boundary points of convex sets \cite{Wright2019}.
+
+The velocity must satisfy three types of conditions simultaneously:
+\begin{enumerate}
+\item orthant feasibility, $v\in T_a\mathbb R_+^m$;
+\item tangency to the rigid critical manifold, $DF(a)v=0$;
+\item common radial motion across all prescribed root pairs.
+\end{enumerate}
+
+Define the common-radial constraint operator by
+\begin{equation}
+\mathcal R_Lv
+=
+\left(
+\Re(J_{2\cdot}(L)v)-\Re(J_{1\cdot}(L)v),
+\ldots,
+\Re(J_{K\cdot}(L)v)-\Re(J_{1\cdot}(L)v)
+\right)^T.
+\label{eq:common_radial_operator}
+\end{equation}
+At a regular point, define the admissible coefficient-velocity cone
+\begin{equation}
+\mathcal K(L)
+=
+T_a\mathbb R_+^m
+\cap\ker DF(a)
+\cap\ker\mathcal R_L.
+\label{eq:admissible_coefficient_cone}
+\end{equation}
+
+\begin{definition}
+\label{def:spectral_velocity_cone}
+The rigid positive spectral velocity cone is
+\begin{equation}
+\mathcal V(L)
+=
+\left\{
+\Im J(L)v:
+ v\in\mathcal K(L)
+\right\}.
+\label{eq:spectral_velocity_cone}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:necessary_velocity_condition}
+Every differentiable rigid positive Leslie path with simple prescribed roots satisfies
+\begin{equation}
+\dot\Omega(t)\in\mathcal V(L(t)).
+\label{eq:velocity_necessary_condition}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The coefficient velocity lies in the orthant tangent cone, is tangent to the rigid critical manifold, and satisfies the common-radial identities.  Equation \eqref{eq:angular_velocity} then places its phase velocity in the image \eqref{eq:spectral_velocity_cone}.
+\end{proof}
+
+\begin{remark}
+\label{rem:necessary_not_sufficient}
+Condition \eqref{eq:velocity_necessary_condition} is first-order and necessary.  At singular points or for finite window increments it is not sufficient for the existence of a global path.
+\end{remark}
+
+\section{Second-order transport}
+\label{sec:second_order_transport}
+
+\begin{proposition}
+\label{prop:second_derivative}
+If $a(t)$ is twice differentiable and \eqref{eq:simple_root_hypothesis} holds, then
+\begin{equation}
+\ddot\lambda_k
+=-
+\frac{
+P_{zz}\dot\lambda_k^2
++2P_{zt}\dot\lambda_k
++P_{tt}
+}{P_z},
+\label{eq:eigenvalue_acceleration}
+\end{equation}
+where all polynomial derivatives are evaluated at $(\lambda_k(t),t)$ and
+\begin{equation}
+P_{tt}(z,t)
+=-\sum_{\ell=1}^{m}\ddot a_\ell z^{m-\ell}.
+\label{eq:second_time_derivative}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiate \eqref{eq:implicit_derivative} once more and collect the chain-rule terms.  Division by $P_z\neq0$ gives \eqref{eq:eigenvalue_acceleration}.
+\end{proof}
+
+For the parameterization \eqref{eq:critical_root_parameterization},
+\begin{equation}
+\frac{\ddot\lambda_k}{\lambda_k}
+=
+\frac{\ddot b}{2b}
+-\frac{\dot b^2}{4b^2}
+-\dot\omega_k^2
++i\left(
+\ddot\omega_k+\frac{\dot b}{b}\dot\omega_k
+\right).
+\label{eq:angular_acceleration_identity}
+\end{equation}
+Thus a smooth Leslie path constrains not only $\Omega$ and $\dot\Omega$, but also the angular acceleration after the radial terms are removed.
+
+\begin{definition}
+\label{def:spectral_curvature}
+At a regular path point, the residual obtained by comparing the observed $\ddot\Omega$ with the imaginary part implied by \eqref{eq:eigenvalue_acceleration} is called the local Leslie spectral-curvature residual.
+\end{definition}
+
+\begin{warning}
+\label{warn:curvature_not_intrinsic}
+A numerical curvature residual depends on the chosen interpolation of discrete windows and on the time scale assigned to the window index.  It is not intrinsic until those choices are fixed before testing.
+\end{warning}
+
+\section{Discrete windows and finite increments}
+\label{sec:discrete_windows}
+
+The observations are discrete, not a differentiable curve.  Let
+\begin{equation}
+\Delta a_j=a_{j+1}-a_j,
+\qquad
+\Delta\Omega_j=\operatorname{unwrap}(\Omega_{j+1}-\Omega_j).
+\label{eq:window_increments}
+\end{equation}
+The differential model suggests the residual
+\begin{equation}
+r_j
+=
+\Delta\Omega_j-
+\Im J(L_j)\Delta a_j.
+\label{eq:first_order_window_residual}
+\end{equation}
+
+\begin{warning}
+\label{warn:finite_increment}
+Equation \eqref{eq:first_order_window_residual} is only a first-order approximation.  A valid finite-step test should also check that the segment or reconstructed path remains in the admissible set and should report an error scale of order $\|\Delta a_j\|^2$ away from singularities.
+\end{warning}
+
+A stronger discrete feasibility test is to solve for a path $a_j(s)$, $0\leq s\leq1$, satisfying
+\begin{equation}
+a_j(0)=a_j,
+\qquad
+a_j(1)=a_{j+1},
+\qquad
+a_j(s)\in\mathcal M_K\cap\mathbb R_+^m.
+\label{eq:path_between_windows}
+\end{equation}
+Existence of \eqref{eq:path_between_windows} is stronger than endpoint feasibility.
+
+\section{A genuine forecasting protocol}
+\label{sec:forecasting_protocol}
+
+\begin{experiment}
+\label{exp:window_forecast}
+Choose before examining the test windows:
+\begin{enumerate}
+\item a fixed base $b$ or a predeclared rule for $b_j$;
+\item a fixed number $K$ of mode pairs and hence $m=2K+1$;
+\item consecutive, nonoverlapping or explicitly overlapping logarithmic windows;
+\item a frequency estimator and a deterministic mode-matching rule;
+\item a coefficient-transport law trained only on past windows;
+\item a rule for handling windows outside $\mathcal A_{b,K}$;
+\item a horizon and evaluation metric.
+\end{enumerate}
+For each training endpoint $J$, infer $L_0,\ldots,L_J$, predict $\widehat a_{J+1}$ without using $W_{J+1}$, project to the admissible rigid set if that projection was predeclared, compute $\widehat\Omega_{J+1}$ from the roots, and only then evaluate the prediction on $W_{J+1}$.
+\end{experiment}
+
+The information flow must be
+\begin{equation}
+M|_{W_0,\ldots,W_J}
+\longrightarrow
+L_0,\ldots,L_J
+\longrightarrow
+\widehat L_{J+1}
+\longrightarrow
+\widehat\Omega_{J+1}
+\longrightarrow
+\widehat M|_{W_{J+1}}.
+\label{eq:forecast_information_flow}
+\end{equation}
+
+\begin{warning}
+\label{warn:law_required}
+The identities of Sections~\ref{sec:first_order_transport}--\ref{sec:second_order_transport} do not themselves specify a forecasting law for $\dot a$ or $\ddot a$.  A predictor requires a predeclared dynamical model for coefficient evolution.  Merely estimating $L_{J+1}$ from the future window would return to independent fitting.
+\end{warning}
+
+
+\section{Critical-stride forecasting protocol}
+\label{sec:critical_stride_protocol}
+
+\begin{experiment}
+\label{exp:critical_stride_forecast}
+Fix $K$, $m=2K+1$, a Perron value $b>1$, and the critical stride $s_*=K+2$ before examining the test region.  For each training window:
+\begin{enumerate}
+\item solve the $m$ recurrence equations \eqref{eq:window_recurrence_equations} directly from the past scalar sequence;
+\item reject the window unless the resulting coefficients satisfy the fixed-$b$ reciprocal determinants \eqref{eq:all_frequency_free_determinants}, nonnegativity, and the critical-circle root-location test;
+\item construct $Z_{n,s_*}$ using only common equations and $R_b$;
+\item require $\operatorname{rank}Z_{n,s_*}=m-1$ and compute its null direction $v_n$;
+\item compute the pre-observation interval \eqref{eq:first_value_allowed_interval};
+\item reveal only the first new scalar $u_{t_0}$ and compute $\tau_n$ from \eqref{eq:tau_from_first_new_value};
+\item without recalibration, predict the remaining $K+1$ new values using \eqref{eq:causal_recursive_forecast};
+\item record the $K+1$ forecast errors, the scalar innovation $\tau_n$, the strain update \eqref{eq:exact_eta_scalar_update}, and whether $\tau_n\in I_{\mathrm{adm}}$.
+\end{enumerate}
+\end{experiment}
+
+The information flow in this strongest fixed-$b$ test is therefore
+\begin{equation}
+\text{past block}
+\longrightarrow
+(a^{(n)},v_n,I_{\mathrm{adm}})
+\longrightarrow
+u_{t_0}
+\longrightarrow
+\tau_n
+\longrightarrow
+\widehat u_{t_0+1},\ldots,\widehat u_{t_0+K+1},
+\label{eq:critical_stride_information_flow}
+\end{equation}
+where $u_{t_0}$ is the single newly revealed scalar value; no later test value is used to update the coefficients.
+
+\begin{remark}
+\label{rem:innovation_sequence_next_target}
+If the $K+1$-value forecasts succeed repeatedly, the remaining arithmetic object is the scalar innovation sequence $(\tau_n)$.  A further predictive law for $\tau_n$ would upgrade the one-sample-delayed forecast to a genuine zero-latency block forecast.  Leslie geometry alone does not provide such a law by Proposition~\ref{prop:irreducible_scalar_forcing}.
+\end{remark}
+
+\section{Four nested models}
+\label{sec:nested_models}
+
+\begin{definition}
+\label{def:models_abcd}
+The comparison should separate:
+\begin{enumerate}
+\item[Model A.] free frequencies or unconstrained recurrences fitted independently in every window;
+\item[Model B.] rigid nonnegative Leslie matrices fitted independently in every window;
+\item[Model C.] one dynamically transported rigid nonnegative Leslie trajectory, forecast from past windows only;
+\item[Model D.] one dynamically transported \emph{data-compatible repaired} Leslie trajectory with fixed $K$, fixed auxiliary degree $q$, and fixed or predeclared Perron rule.
+\end{enumerate}
+\end{definition}
+
+Model B tests static rigid realizability. Model C tests rigid transport. Model D is the appropriate extension when auxiliary roots are genuinely necessary, but it is admissible only after the repaired overlap law has been verified; independently minimizing an auxiliary completion in each window is not Model D. Models C and D should be compared not only with Models A and B, but also with persistence, autoregressive, low-rank Hankel, phase-randomized, support-preserving, and multiplicative null models.
+
+\section{What the previous forty runs do and do not establish}
+\label{sec:forty_runs}
+
+\begin{experiment}
+\label{exp:previous_runs}
+The reported forty runs varied the sampling base, training fraction, and requested number of modes.  They established numerical out-of-sample prediction by free frequencies and static positive spectral completion with auxiliary eigenvalues for those forty configurations.
+\end{experiment}
+
+\begin{proposition}
+\label{prop:runs_not_trajectory}
+The forty configurations do not constitute a temporal Leslie trajectory and cannot test \eqref{eq:velocity_necessary_condition} or the forecast protocol \eqref{eq:forecast_information_flow}.
+\end{proposition}
+
+\begin{proof}
+A temporal test requires consecutively ordered windows under fixed or predeclared modelling choices.  The forty runs index alternative parameter configurations rather than successive time windows of one fixed model.
+\end{proof}
+
+\section{Verified corrections to the proposed formulation}
+\label{sec:verified_corrections}
+
+\begin{proposition}
+\label{prop:verified_formulae}
+The first derivative \eqref{eq:eigenvalue_velocity}, the angular and radial decompositions \eqref{eq:angular_velocity}--\eqref{eq:radial_velocity}, and the second derivative \eqref{eq:eigenvalue_acceleration} are algebraically correct under the simple-root hypothesis.
+\end{proposition}
+
+\begin{remark}
+\label{rem:numerical_check}
+An independent finite-difference calculation was performed for a degree-five companion polynomial with randomly chosen coefficient velocities.  The maximum discrepancy between the finite-difference root velocity and \eqref{eq:eigenvalue_velocity} was below $9\times10^{-9}$ for a step of $10^{-7}$.  This is a numerical consistency check, not a substitute for Proposition~\ref{prop:first_derivative}.
+\end{remark}
+
+\begin{remark}
+\label{rem:corrections}
+Three corrections are essential:
+\begin{enumerate}
+\item the boundary relation is the inclusion \eqref{eq:admissible_boundary}, not automatic equality;
+\item the spectral velocity cone must include tangency to the rigid manifold and common radial compatibility, as in \eqref{eq:admissible_coefficient_cone};
+\item the dimension and codimension counts are generic and require a full-rank hypothesis.
+\end{enumerate}
+\end{remark}
+
+
+\section{Numerical obstruction for the rigid \texorpdfstring{$K=7$}{K=7} core}
+\label{sec:K7_rigid_obstruction}
+
+The rigid feasibility criterion of Corollary~\ref{cor:ratio_test} can be evaluated even when the logarithmic coordinates $\eta_j$ do not exist.  For $r=\sqrt b$ define
+\begin{equation}
+\delta_j(b,\Omega)
+=
+\min\left\{
+ r d_{j-1}-d_j,
+ r d_j-d_{j-1}
+\right\},
+\qquad 1\leq j\leq K,
+\label{eq:paired_rigid_margin}
+\end{equation}
+and
+\begin{equation}
+\Delta_K(b,\Omega)
+=
+\min_{1\leq j\leq K}\delta_j(b,\Omega).
+\label{eq:global_rigid_margin}
+\end{equation}
+Because the factors multiplying the two quantities in \eqref{eq:paired_rigid_margin} in the paired Leslie coefficients are positive, one has
+\begin{equation}
+\Delta_K(b,\Omega)\geq0
+\quad\Longleftrightarrow\quad
+P_{b,\Omega}
+\text{ is the characteristic polynomial of a nonnegative rigid Leslie matrix}.
+\label{eq:delta_exact_feasibility}
+\end{equation}
+Unlike $b_*(\Omega)$, the margin \eqref{eq:global_rigid_margin} remains defined when one or more $d_j$ are nonpositive.
+
+\begin{experiment}
+\label{exp:K7_rigid_obstruction}
+A grid of $241$ values of $b$ in $[1.01,1.25]$ was examined with $K=7$ and the predeclared frequency estimator.  The estimator returned all seven frequencies at eight grid points.  For every one of these eight evaluable configurations,
+\begin{equation}
+\Delta_7(b,\Omega)<0.
+\label{eq:K7_all_negative}
+\end{equation}
+The largest observed margin was
+\begin{equation}
+\boxed{
+\Delta_{\max}=-1.228610846762
+}
+\qquad\text{at}\qquad
+\boxed{b=1.178}.
+\label{eq:K7_delta_max}
+\end{equation}
+Thus none of the eight evaluable critical spectra is the complete spectrum of a nonnegative Leslie matrix of rigid dimension $15$.
+
+Seven of the eight configurations had $d_1,\ldots,d_7>0$ and therefore admitted the logarithmic coordinates $\eta$ and the finite quantity $b_*(\Omega)$.  In all seven cases $b_*(\Omega)>b$.  The eighth configuration had all seven frequencies but at least one nonpositive $d_j$, so $b_*$ was not finite although $\Delta_7$ remained evaluable.
+
+The index attaining the most negative paired margin had the empirical distribution
+\begin{equation}
+\begin{array}{c|ccccc}
+ j_* & 2&3&4&5&6\\
+\hline
+\text{count} &1&1&3&1&2.
+\end{array}
+\label{eq:K7_obstruction_index_counts}
+\end{equation}
+In particular, $j_*=1$ did not occur.  The dominant obstruction in these eight cases is therefore not the first hemispheric condition alone; it occurs in higher symmetric combinations of the seven phases.
+\end{experiment}
+
+\begin{remark}
+\label{rem:K7_scope}
+Experiment~\ref{exp:K7_rigid_obstruction} is a statement about the eight grid points at which the full $K=7$ core was available.  The other $233$ points are not evaluations of $\Delta_7$ and must not be counted as rigidly feasible or infeasible.  Likewise, a reported prefix statistic $\kappa=0$ only excludes the tested angularly ordered prefixes; it does not exclude every possible subfamily of the seven frequencies.
+\end{remark}
+
+\begin{corollary}
+\label{cor:auxiliary_necessary}
+For each configuration in Experiment~\ref{exp:K7_rigid_obstruction} for which a nonnegative Leslie realization containing the same prescribed roots exists in a larger dimension, at least one auxiliary root is necessary.
+\end{corollary}
+
+\begin{proof}
+Equation~\eqref{eq:K7_all_negative} excludes degree-zero completion, i.e. the rigid characteristic polynomial itself.  Any larger realization containing the same roots therefore has a nonconstant complementary factor.
+\end{proof}
+
+\section{Minimal auxiliary completion as an exact linear feasibility problem}
+\label{sec:minimal_auxiliary_completion}
+
+The negative rigid test does not determine how many auxiliary eigenvalues are necessary.  That question has an exact finite-dimensional formulation that does not require re-estimating any frequency.
+
+Let
+\begin{equation}
+C(z)=z^d+c_1z^{d-1}+\cdots+c_d,
+\qquad d=2K+1,
+\label{eq:core_polynomial_C}
+\end{equation}
+be a fixed rigid core polynomial $P_{b,\Omega}$, so $C(b)=0$.  For $q\geq0$ let
+\begin{equation}
+R_q(z)=z^q+r_1z^{q-1}+\cdots+r_q
+\label{eq:auxiliary_multiplier}
+\end{equation}
+be a real monic polynomial and write
+\begin{equation}
+C(z)R_q(z)
+=
+z^{d+q}+\sum_{k=1}^{d+q}p_k z^{d+q-k}.
+\label{eq:completed_product_coefficients}
+\end{equation}
+
+\begin{definition}
+\label{def:auxiliary_completion_index}
+The auxiliary completion index of the core $C$ is
+\begin{equation}
+\nu(C)
+=
+\min\left\{
+q\geq0:
+\exists R_q\text{ monic real with }p_k\leq0\text{ for every }k\geq1
+\right\},
+\label{eq:auxiliary_completion_index}
+\end{equation}
+with $\nu(C)=+\infty$ if no such polynomial exists.  For $C=P_{b,\Omega}$ we also write $\nu_b(\Omega)=\nu(C)$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:completion_equivalence}
+A degree-$q$ auxiliary completion in Definition~\ref{def:auxiliary_completion_index} exists if and only if there is a nonnegative Leslie companion matrix of dimension $d+q$ whose spectrum contains all roots of $C$ and whose Perron eigenvalue is $b$.
+\end{proposition}
+
+\begin{proof}
+If $p_k\leq0$, set $a_k=-p_k\geq0$.  Then \eqref{eq:completed_product_coefficients} is
+\[
+z^{d+q}-\sum_{k=1}^{d+q}a_k z^{d+q-k},
+\]
+the characteristic polynomial of a nonnegative Leslie companion matrix.  Since $C(b)=0$, the product also vanishes at $b$.  The vector
+\[
+(b^{d+q-1},b^{d+q-2},\ldots,b,1)^T
+\]
+is strictly positive and is an eigenvector with eigenvalue $b$.  The Collatz--Wielandt characterization therefore gives spectral radius $b$.
+
+Conversely, if a nonnegative Leslie characteristic polynomial contains all roots of $C$, polynomial division by the monic factor $C$ gives a real monic complementary polynomial $R_q$, and nonnegativity of the Leslie coefficients is exactly the condition $p_k\leq0$.
+\end{proof}
+
+Set $c_0=1$ and $c_k=0$ outside $0\leq k\leq d$, and set $r_0=1$.  Then
+\begin{equation}
+p_k
+=
+\sum_{j=0}^{q}r_jc_{k-j}
+=
+c_k+\sum_{j=1}^{q}c_{k-j}r_j.
+\label{eq:product_convolution}
+\end{equation}
+Define the $(d+q)\times q$ Toeplitz matrix
+\begin{equation}
+(A_q)_{kj}=c_{k-j},
+\qquad
+1\leq k\leq d+q,
+\quad 1\leq j\leq q,
+\label{eq:completion_toeplitz_matrix}
+\end{equation}
+and the vector
+\begin{equation}
+h_q=(-c_1,\ldots,-c_d,0,\ldots,0)^T\in\mathbb R^{d+q}.
+\label{eq:completion_rhs}
+\end{equation}
+
+\begin{theorem}
+\label{thm:completion_lp}
+For fixed $q$, a degree-$q$ auxiliary completion exists if and only if the linear system
+\begin{equation}
+\boxed{
+A_q r\leq h_q
+}
+\label{eq:completion_lp}
+\end{equation}
+is feasible for $r=(r_1,\ldots,r_q)^T$.  Consequently,
+\begin{equation}
+\boxed{
+\nu(C)=\min\{q\geq0:A_qr\leq h_q\text{ is feasible}\}.
+}
+\label{eq:nu_first_feasible_lp}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Equation~\eqref{eq:product_convolution} gives $p_k\leq0$ exactly as the $k$th inequality in \eqref{eq:completion_lp}.  Definition~\ref{def:auxiliary_completion_index} then gives \eqref{eq:nu_first_feasible_lp}.
+\end{proof}
+
+\begin{proposition}[Dual infeasibility certificate]
+\label{prop:farkas_completion_certificate}
+Degree $q$ is impossible if and only if there exists a vector $y\in\mathbb R^{d+q}$ satisfying
+\begin{equation}
+\boxed{
+y\geq0,
+\qquad
+A_q^Ty=0,
+\qquad
+h_q^Ty<0.
+}
+\label{eq:farkas_completion_certificate}
+\end{equation}
+Such a $y$ is a Farkas certificate that no choice of $q$ auxiliary roots can repair the rigid core.
+\end{proposition}
+
+\begin{proof}
+This is Farkas' alternative applied to the system $A_qr\leq h_q$.
+\end{proof}
+
+\begin{proposition}
+\label{prop:completion_upward_closed}
+If degree $q$ is feasible, every degree $q'\geq q$ is feasible.  Hence the feasible auxiliary degrees form either the empty set or the tail
+\begin{equation}
+\{\nu(C),\nu(C)+1,\nu(C)+2,\ldots\}.
+\label{eq:completion_tail}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If $R_q$ is feasible, then $zR_q$ is monic of degree $q+1$ and
+\[
+C(z)zR_q(z)=z\,C(z)R_q(z).
+\]
+Its nonleading coefficients are the previous nonpositive coefficients shifted by one place, together with a final zero.  Iteration proves the claim.
+\end{proof}
+
+\subsection{Auxiliary defect profile}
+\label{subsec:auxiliary_defect_profile}
+
+For a quantitative profile before exact feasibility, define
+\begin{equation}
+E_q(C)
+=
+\min_{r\in\mathbb R^q,\ e\geq0}
+\left\{
+e:
+A_qr-h_q\leq e\mathbf 1
+\right\}.
+\label{eq:auxiliary_defect_profile}
+\end{equation}
+Equivalently, $E_q$ is the minimum possible largest positive coefficient of the completed product.  To compare different $b$ values, the same definition may be applied after the sign-preserving scaling $z=\sqrt b\,w$, which replaces $c_k$ by $c_k/b^{k/2}$.
+
+\begin{proposition}
+\label{prop:defect_profile_properties}
+The auxiliary defect profile satisfies
+\begin{equation}
+E_q(C)\geq0,
+\qquad
+E_{q+1}(C)\leq E_q(C),
+\qquad
+E_q(C)=0\Longleftrightarrow q\geq\nu(C).
+\label{eq:defect_profile_properties}
+\end{equation}
+Thus $q\mapsto E_q(C)$ records how the rigid obstruction is removed as auxiliary degrees are introduced, while $\nu(C)$ is its first zero.
+\end{proposition}
+
+\begin{proof}
+Nonnegativity is built into \eqref{eq:auxiliary_defect_profile}.  The construction $R_q\mapsto zR_q$ used in Proposition~\ref{prop:completion_upward_closed} preserves the coefficient violation and proves monotonicity.  Finally, $E_q=0$ is exactly feasibility of \eqref{eq:completion_lp}.
+\end{proof}
+
+\subsection{Exact one-auxiliary test}
+\label{subsec:one_auxiliary_test}
+
+Because the rigid core has
+\begin{equation}
+c_d=-b^{K+1}<0,
+\label{eq:core_constant_negative}
+\end{equation}
+a degree-one multiplier $R_1(z)=z+t$ must satisfy $t\geq0$.  Its remaining conditions are
+\begin{equation}
+c_1+t\leq0,
+\qquad
+c_k+t c_{k-1}\leq0,
+\quad 2\leq k\leq d.
+\label{eq:q1_all_conditions}
+\end{equation}
+Hence $\nu(C)=1$ exactly when the interval of $t$ values determined by \eqref{eq:q1_all_conditions} and $t\geq0$ is nonempty.  Explicitly, every index with $c_{k-1}<0$ supplies a lower bound
+\begin{equation}
+t\geq -\frac{c_k}{c_{k-1}},
+\label{eq:q1_lower_bound}
+\end{equation}
+every index with $c_{k-1}>0$ supplies an upper bound
+\begin{equation}
+t\leq -\frac{c_k}{c_{k-1}},
+\label{eq:q1_upper_bound}
+\end{equation}
+and $c_{k-1}=0$ requires $c_k\leq0$.  The first coefficient supplies $t\leq-c_1$.
+
+\begin{remark}
+\label{rem:delta_vs_nu}
+The rigid margin $\Delta_K$ and the completion index $\nu$ measure different properties.  The sign of $\Delta_K$ decides $q=0$ feasibility, but its magnitude need not determine how many auxiliary degrees are necessary.  The appropriate comparison is therefore not only $-\Delta_K$ versus $\nu$, but the full scaled defect profile
+\[
+E_0,E_1,\ldots,E_{\nu}=0.
+\]
+For the eight $K=7$ configurations in Experiment~\ref{exp:K7_rigid_obstruction}, this profile can be computed from the already estimated phase sets without any new frequency estimation.
+\end{remark}
+
+\begin{experiment}
+\label{exp:minimal_auxiliary_protocol}
+For each of the eight evaluable $K=7$ phase sets, form the fixed core polynomial $C=P_{b,\Omega}$ once.  Starting at $q=0$, solve \eqref{eq:completion_lp} in increasing degree.  For every infeasible $q$, retain a dual vector satisfying \eqref{eq:farkas_completion_certificate}; at the first feasible degree retain the multiplier coefficients, the completed Leslie coefficients, the minimum coefficient, the primal residual, and the spectral residual.  Report
+\[
+(b,\Delta_7,j_*,\nu,E_0,E_1,\ldots,E_\nu)
+\]
+for every case.  This protocol certifies the minimal auxiliary repair degree rather than merely producing one high-dimensional feasible completion.
+\end{experiment}
+
+
+
+\section{Static completion versus data-compatible repaired recurrence}
+\label{sec:data_compatible_repair}
+
+The completion problem of Section~\ref{sec:minimal_auxiliary_completion} starts from a prescribed critical core $C=P_{b,\Omega}$ and asks whether multiplication by a monic real polynomial can make all nonleading coefficients nonpositive. This is an exact static inverse-spectral problem. For a moving scalar sequence one needs an additional condition: the completed polynomial must also be the recurrence polynomial of the data.
+
+Fix $K\geq1$, an auxiliary degree $q\geq0$, and $b>1$, and put
+\begin{equation}
+D=2K+1+q.
+\label{eq:repaired_dimension}
+\end{equation}
+For an order-$D$ scalar recurrence define
+\begin{equation}
+h_t^{(D)}=(u_{t-1},\ldots,u_{t-D})\in\mathbb R^D,
+\label{eq:repaired_recurrence_row}
+\end{equation}
+and for a window beginning at $n$ set
+\begin{equation}
+\mathsf A_{n,D}=\begin{pmatrix}h_{n+D}^{(D)}\\ \vdots\\ h_{n+2D-1}^{(D)}\end{pmatrix},\qquad
+\mathsf g_{n,D}=\begin{pmatrix}u_{n+D}\\ \vdots\\ u_{n+2D-1}\end{pmatrix}.
+\label{eq:repaired_data_matrix}
+\end{equation}
+
+\begin{definition}[Data recurrence polynomial]
+\label{def:data_recurrence_polynomial}
+If $\det\mathsf A_{n,D}\neq0$, define
+\begin{equation}
+a_n^{(D)}=\mathsf A_{n,D}^{-1}\mathsf g_{n,D}
+\label{eq:data_recurrence_coefficients}
+\end{equation}
+and
+\begin{equation}
+P_{n,D}(z)=z^D-\sum_{\ell=1}^{D}a_{n,\ell}^{(D)}z^{D-\ell}.
+\label{eq:data_recurrence_polynomial}
+\end{equation}
+\end{definition}
+
+For $\theta=(\Omega,r)\in(0,\pi)^K\times\mathbb R^q$, write
+\begin{equation}
+R_q(z;r)=z^q+r_1z^{q-1}+\cdots+r_q
+\label{eq:dynamic_auxiliary_multiplier}
+\end{equation}
+and define the coefficient map $\Phi_{b,K,q}$ by
+\begin{equation}
+C_{b,\Omega}(z)R_q(z;r)=z^D-\sum_{\ell=1}^{D}\Phi_{b,K,q}(\theta)_\ell z^{D-\ell}.
+\label{eq:repaired_coefficient_map}
+\end{equation}
+Let
+\begin{equation}
+\mathcal M^{\mathrm{rep}}_{b,K,q}=\operatorname{im}\Phi_{b,K,q},\qquad
+\mathcal M^{\mathrm{rep},+}_{b,K,q}=\mathcal M^{\mathrm{rep}}_{b,K,q}\cap\mathbb R_+^D.
+\label{eq:repaired_manifold_definition}
+\end{equation}
+
+\begin{theorem}[Exact recurrence-first membership test]
+\label{thm:data_first_membership}
+Assume $\det\mathsf A_{n,D}\neq0$. The data window has an exact fixed-$(b,K,q)$ repaired Leslie realization if and only if
+\begin{equation}
+a_n^{(D)}\in\mathcal M^{\mathrm{rep},+}_{b,K,q}.
+\label{eq:data_first_membership}
+\end{equation}
+Equivalently, the uniquely determined recurrence polynomial $P_{n,D}$ factors as
+\begin{equation}
+P_{n,D}(z)=(z-b)\prod_{k=1}^{K}\left(z^2-2\sqrt b\cos\omega_k\,z+b\right)R_q(z;r)
+\label{eq:data_factorization}
+\end{equation}
+for some real $\Omega,r$, and its Leslie coefficients are nonnegative.
+\end{theorem}
+
+\begin{proof}
+Nonsingularity gives a unique order-$D$ coefficient vector satisfying the $D$ recurrence equations. A repaired fixed-$(b,K,q)$ Leslie representation of that same window must therefore have exactly that coefficient vector. By definition of $\Phi_{b,K,q}$ this is equivalent to the factorization \eqref{eq:data_factorization}; Leslie nonnegativity is exactly $a_n^{(D)}\geq0$.
+\end{proof}
+
+\begin{remark}[Frequency-free root form]
+\label{rem:frequency_free_repaired_root_test}
+For exact data one may first compute $P_{n,D}$ and then test whether it contains a real root $b>1$ and $K$ distinct conjugate pairs with squared modulus $b$. The remaining quotient is the auxiliary factor. If several critical subsets are available, their choice is a branch choice and must be fixed from past information or tracked continuously; future test values may not be used to select among them.
+\end{remark}
+
+\begin{warning}[Static LP completion is not a data fit]
+\label{warn:static_completion_not_data_fit}
+The Toeplitz LP \eqref{eq:completion_lp} answers whether a prescribed core $C$ can be embedded in some larger positive Leslie spectrum. Unless the resulting product polynomial also equals $P_{n,D}$, it does not establish that the scalar data window follows that completed recurrence. This distinction is essential for every moving-window inference.
+\end{warning}
+
+\section{Geometry and codimension of the repaired family}
+\label{sec:repaired_geometry}
+
+\begin{proposition}[Auxiliary degree does not remove the critical codimension]
+\label{prop:repaired_dimension}
+At a point $\theta$ where the Jacobian $D\Phi_{b,K,q}(\theta)$ has full column rank $K+q$, the fixed-$b$ repaired family is locally a smooth immersed manifold of dimension
+\begin{equation}K+q\label{eq:repaired_local_dimension}\end{equation}
+inside $\mathbb R^D$, and hence has codimension
+\begin{equation}D-(K+q)=K+1.\label{eq:repaired_codimension}\end{equation}
+The codimension is independent of the auxiliary degree $q$.
+\end{proposition}
+
+\begin{proof}
+The parameter domain has $K+q$ real coordinates. Full column rank gives local image dimension $K+q$ by the constant-rank theorem. Substituting $D=2K+1+q$ gives $D-(K+q)=K+1$.
+\end{proof}
+
+\begin{remark}
+\label{rem:q_not_universal_fitter}
+Each auxiliary coefficient adds one parameter and simultaneously raises the ambient recurrence degree by one. Therefore increasing $q$ does not make a generic scalar window automatically compatible with a critical Leslie core. Auxiliary completion repairs a positivity obstruction; it does not erase the $K+1$ fixed-$b$ spectral constraints.
+\end{remark}
+
+\begin{warning}[Fixed degree is part of the state model]
+\label{warn:fixed_q_required}
+The repaired mobility theorem below assumes the same $q$ on adjacent windows. Allowing $q$ to change alters the recurrence dimension and can create rank-deficient or nonminimal representations. A dynamic protocol must therefore fix $q$ before test, or specify a separate causal dimension-changing theory. Silent per-window reselection of $q$ is an additional information channel, not part of the theorem.
+\end{warning}
+
+\section{Exact repaired overlap and nonlinear scalarization}
+\label{sec:repaired_overlap}
+
+Consider two order-$D$ recurrence windows beginning at $n$ and $n+s$, with $1\leq s\leq D$. They share exactly $D-s$ recurrence equations. Define
+\begin{equation}
+O^{(D)}_{n,s}=\begin{pmatrix}h^{(D)}_{n+s+D}\\ \vdots\\ h^{(D)}_{n+2D-1}\end{pmatrix}\in\mathbb R^{(D-s)\times D}.
+\label{eq:repaired_overlap_matrix}
+\end{equation}
+Let the old coefficient vector be $a_n=\Phi_{b,K,q}(\theta_n)\in\mathcal M^{\mathrm{rep},+}_{b,K,q}$. Every candidate next coefficient vector on the same repaired branch that satisfies all common equations must obey
+\begin{equation}
+F_{n,s}(\theta):=O^{(D)}_{n,s}\left(\Phi_{b,K,q}(\theta)-a_n\right)=0.
+\label{eq:repaired_overlap_map}
+\end{equation}
+
+\begin{theorem}[Local repaired mobility dimension]
+\label{thm:repaired_mobility_dimension}
+Assume $D\Phi_{b,K,q}(\theta_n)$ has rank $K+q$ and that $DF_{n,s}(\theta_n)$ has maximal possible rank $\min\{K+q,D-s\}$. Then the local solution set of \eqref{eq:repaired_overlap_map} through $\theta_n$ has dimension
+\begin{equation}
+\boxed{\max\{0,s-K-1\}.}
+\label{eq:repaired_generic_mobility}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The parameter space has dimension $K+q$. The constant-rank theorem gives local level-set dimension $K+q-\min\{K+q,D-s\}$. Since $D=2K+1+q$, this equals $\max\{0,s-K-1\}$.
+\end{proof}
+
+\begin{corollary}[Repaired critical stride]
+\label{cor:repaired_critical_stride}
+Under the hypotheses of Theorem~\ref{thm:repaired_mobility_dimension}, the first generic one-dimensional repaired motion occurs at
+\begin{equation}\boxed{s_*=K+2,}\label{eq:repaired_critical_stride}\end{equation}
+independently of $q$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:rigid_line_repaired_curve}
+For $q=0$ and fixed $b$, the reciprocal--Perron affine hull makes the critical motion the exact line $a+\tau v$ of Section~\ref{sec:scalar_innovation}. For $q>0$, the repaired coefficient family is generally nonlinear. The one-dimensional object supplied by Corollary~\ref{cor:repaired_critical_stride} is therefore a local curve, not in general an affine line. Replacing that curve by its tangent is only a first-order approximation.
+\end{remark}
+
+At the repaired critical stride define the first genuinely new index
+\begin{equation}t_0=n+2D.\label{eq:repaired_first_new_time}\end{equation}
+All entries of $h^{(D)}_{t_0}$ are known before $u_{t_0}$ is revealed.
+
+\begin{theorem}[One observed scalar selects the local repaired continuation]
+\label{thm:repaired_one_sample}
+Assume the hypotheses of Corollary~\ref{cor:repaired_critical_stride}, and let $\Gamma_n$ be the regular one-dimensional local solution branch of \eqref{eq:repaired_overlap_map} through $\theta_n$. Define
+\begin{equation}\chi_n(\theta)=h^{(D)}_{t_0}\Phi_{b,K,q}(\theta),\qquad \theta\in\Gamma_n.\label{eq:repaired_observation_map}\end{equation}
+If the differential of $\chi_n$ does not vanish on the tangent line $T_{\theta_n}\Gamma_n$, then $\chi_n$ is locally one-to-one on $\Gamma_n$. Consequently, every sufficiently near next realization on the same branch is uniquely selected by the single observed value $u_{t_0}$.
+A canonical scalar innovation is
+\begin{equation}
+\boxed{\xi_n=u_{t_0}-h^{(D)}_{t_0}a_n.}
+\label{eq:canonical_repaired_innovation}
+\end{equation}
+Locally there is a unique map $\theta^+=\Theta_n(\xi_n)$ and hence
+\begin{equation}
+a^+=\Phi_{b,K,q}\!\left(\Theta_n(\xi_n)\right).
+\label{eq:repaired_scalar_update}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The regular common-equation set is a one-dimensional manifold by Corollary~\ref{cor:repaired_critical_stride}. A nonzero derivative of the scalar map $\chi_n$ along its tangent makes $\chi_n$ a local coordinate by the one-dimensional inverse function theorem. The observed value $u_{t_0}$ therefore selects one nearby point on the branch. Equation \eqref{eq:canonical_repaired_innovation} is a translated scalar coordinate.
+\end{proof}
+
+\begin{corollary}[Repaired $K+1$-value causal forecast]
+\label{cor:repaired_forecast}
+Under Theorem~\ref{thm:repaired_one_sample}, assume the true next window lies on the selected local branch and uses the coefficient vector $a^+$ of \eqref{eq:repaired_scalar_update}. After revealing only $u_{t_0}$, the remaining
+\begin{equation}s_*-1=K+1\label{eq:repaired_remaining_count}\end{equation}
+new values of the next window are determined recursively by the order-$D$ recurrence with coefficient vector $a^+$.
+\end{corollary}
+
+\begin{warning}[Local versus finite-step continuation]
+\label{warn:repaired_local_only}
+Theorem~\ref{thm:repaired_one_sample} is local. A finite transition must additionally certify that the continuation stays on one regular connected branch, remains nonnegative, preserves the chosen critical factor, and does not cross a point where the overlap rank or the observation derivative degenerates. At such an event the correct status is \texttt{NOT\_APPLICABLE} or \texttt{NUMERICALLY\_AMBIGUOUS}, not branch reselection from future data.
+\end{warning}
+
+\section{Causal state and hidden-information audit}
+\label{sec:hidden_information}
+
+\begin{proposition}[Rigid direction is past-determined]
+\label{prop:rigid_direction_past}
+In the rigid fixed-$b$ case at $s_*=K+2$, suppose $\ker Z_{n,s_*}$ is one-dimensional and $h_{t_0}v\neq0$. The normalization
+\begin{equation}\|v_n\|_2=1,\qquad h_{t_0}v_n>0\label{eq:canonical_v_normalization}\end{equation}
+makes $v_n$ a deterministic function of data available before $u_{t_0}$. Its variation from one window to another is therefore not, by itself, an additional external information channel.
+\end{proposition}
+
+\begin{proof}
+Both $O_{n,s_*}$ and $R_b$ are determined before $u_{t_0}$, hence so is the one-dimensional nullspace. Unit norm removes scale and the sign condition removes the remaining sign ambiguity.
+\end{proof}
+
+\begin{proposition}[Auxiliary coefficients are not independent innovations on a regular repaired branch]
+\label{prop:aux_not_independent}
+Fix $K,q,b$ and a regular local branch as in Theorem~\ref{thm:repaired_one_sample}. Then all components of $\theta^+=(\Omega^+,r^+)$ are locally functions of the single scalar $\xi_n$. In particular, the $q$ auxiliary coefficients $r^+$ do not supply $q$ independent new parameters on that transition.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:repaired_one_sample} gives the local map $\theta^+=\Theta_n(\xi_n)$. Projection onto the $r$ coordinates gives $r^+=\pi_r\Theta_n(\xi_n)$.
+\end{proof}
+
+\begin{warning}[When hidden channels re-enter]
+\label{warn:hidden_channels_reenter}
+Proposition~\ref{prop:aux_not_independent} fails as an information statement if any of the following is selected anew using unseen data:
+\begin{enumerate}
+\item the auxiliary degree $q$;
+\item the Perron value $b$ when no causal rule for $b$ has been fixed;
+\item a disconnected or singular factorization branch;
+\item an independently optimized auxiliary multiplier in each window;
+\item a window-specific normalization, forcing term, observation operator, or state reset.
+\end{enumerate}
+Every such choice must either be part of the past state with a deterministic update rule or be counted as an additional innovation.
+\end{warning}
+
+\begin{remark}[The minimum-norm LP selector]
+\label{rem:minnorm_not_dynamic}
+A minimum-norm solution of the static LP is a legitimate deterministic selector for one fixed core, but applying it independently to every new core does not prove that the resulting sequence is the continuation curve of Section~\ref{sec:repaired_overlap}. Static canonicality and dynamic causality are different requirements.
+\end{remark}
+
+\section{Information accounting}
+\label{sec:information_accounting}
+
+The phrase ``one innovation'' is a statement about local degrees of freedom, not about a finite total amount of information in an infinite trajectory.
+
+\begin{proposition}[Conditional block determinacy]
+\label{prop:conditional_block_determinacy}
+Let $X_n$ denote the complete past-determined state of a regular fixed-$(K,q,b)$ repaired transition, including the selected local branch. Under Theorem~\ref{thm:repaired_one_sample}, there is a deterministic map $G_n$ such that
+\begin{equation}
+\left(u_{t_0},u_{t_0+1},\ldots,u_{t_0+K+1}\right)=G_n(X_n,\xi_n).
+\label{eq:block_as_state_innovation}
+\end{equation}
+Moreover $\xi_n$ is itself determined by $X_n$ and $u_{t_0}$ through \eqref{eq:canonical_repaired_innovation}. Hence, after $X_n$ and the first new scalar are known, the remaining $K+1$ values contain no further exact degrees of freedom within the model.
+\end{proposition}
+
+\begin{remark}[Entropy formulation]
+\label{rem:entropy_formulation}
+If a discrete or explicitly quantized stochastic model is imposed, exact block determinacy gives
+\begin{equation}
+H\!\left(U_{t_0:t_0+K+1}\mid X_n\right)=H\!\left(U_{t_0}\mid X_n\right),
+\label{eq:conditional_entropy_block}
+\end{equation}
+because the remaining block is a deterministic function of $(X_n,U_{t_0})$. For continuous variables, differential entropy and finite-resolution coding require additional care, so no bit count is asserted without a declared quantization or probability model.
+\end{remark}
+
+\begin{remark}[Unbounded temporal information remains possible]
+\label{rem:unbounded_tau_information}
+The sequence $(\xi_n)$ can itself contain new information at every transition. Thus finite state dimension does not imply finite information for the full infinite trajectory. A law for $(\xi_n)$ is needed for a zero-latency generative model, but it is \emph{not} needed to test the weaker and already nontrivial claim that one revealed scalar makes the next $K+1$ values redundant.
+\end{remark}
+
+\section{Why the previous approximate scalarization is not a coherent relaxation}
+\label{sec:approximate_correction}
+
+The exact rigid theorem assumes that the old coefficient vector already satisfies the common recurrence equations and lies in the fixed-$b$ reciprocal--Perron affine hull. Projecting an inexact least-squares coefficient vector onto the affine hull and then moving in the exact overlap kernel does not repair a pre-existing common-equation residual.
+
+\begin{proposition}[Overlap residual is invariant along the rigid null direction]
+\label{prop:overlap_residual_invariant}
+Let $O$ be the common-equation matrix, let $y$ be the corresponding right-hand side, and let $v\in\ker O$. Then for every coefficient vector $a$ and every scalar $\tau$,
+\begin{equation}
+O(a+\tau v)-y=Oa-y.
+\label{eq:overlap_residual_invariant}
+\end{equation}
+Therefore a nonzero common-equation residual cannot be corrected by choosing $\tau$.
+\end{proposition}
+
+\begin{proof}
+Subtracting gives $\bigl(O(a+\tau v)-y\bigr)-(Oa-y)=\tau Ov=0$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:projected_pipeline_not_theorem_test}
+A causal forecast based on a projected or constrained least-squares base $a_C$ with $Oa_C\neq y$ and an exact null direction $v\in\ker O$ is not a numerical relaxation of Theorem~\ref{thm:one_sample_determines_update}. Its forecast error may diagnose that chosen projection procedure, but it does not by itself falsify or verify the exact scalarization theorem.
+\end{corollary}
+
+A coherent approximate model must instead be posed directly on the nonlinear admissible family, for example by minimizing
+\begin{equation}
+\left\|\mathsf A_{n,D}\Phi_{b,K,q}(\theta)-\mathsf g_{n,D}\right\|_W
+\label{eq:proper_approximate_fit}
+\end{equation}
+using past data only, and by propagating the full set of overlap-compatible parameters satisfying a predeclared residual tolerance. If that set is not effectively one-dimensional or the prediction interval is broad, the output is ambiguous rather than a forced scalar forecast.
+
+\begin{remark}[Conditioning]
+\label{rem:approximate_conditioning}
+Near a regular exact point, the smallest nonzero singular value of the overlap Jacobian controls first-order sensitivity of the recovered branch to perturbations. Consequently every approximate implementation should report the singular spectrum and stability under row/column scaling and perturbation; a binary numerical rank alone is insufficient.
+\end{remark}
+
+\section{Audit of the 5 September 2026 Mertens computation}
+\label{sec:2026_audit}
+
+This section records the output of \texttt{leslie\_mobius\_information\_audit\_v1\_1} and reinterprets it using the corrected distinctions above. The purpose is to freeze a baseline, not to promote approximate diagnostics to theorems.
+
+\begin{experiment}[Frozen v1.1 baseline]
+\label{exp:v11_baseline}
+The observable used $161$ values on a geometric grid with sampling base $B_{\rm obs}=1.1$, split into $96$ training and $65$ test points. Training-only model selection over $K\in\{3,4,5,6,7\}$ and $41$ Perron candidates selected
+\begin{equation}K=4,\qquad m=9,\qquad s_*=6,\qquad b=1.02.\label{eq:v11_selected_model}\end{equation}
+The selected $b$ was exactly the lower endpoint of the searched grid.
+
+For the strict rigid test, no training or test window satisfied all required conditions. In particular the exact fixed-$b$ reciprocal test and nonnegativity test had zero accepted windows in both partitions. Because the projected base vectors were not nonnegative, the theorem-level interval $I_{\rm adm}$ containing $\tau=0$ was not available; the reported zero interval coverage is therefore only a diagnostic of the projected procedure. The approximate projected pipeline nevertheless produced
+\begin{align}
+\operatorname{NRMSE}_{\rm Leslie,test}&=6.3668,\\
+\operatorname{NRMSE}_{\rm persistence,test}&=1.4657,\\
+\operatorname{NRMSE}_{\rm AR,test}&=0.67843.
+\label{eq:v11_errors}
+\end{align}
+Leslie beat AR in none of the ten evaluated test transitions.
+
+The numerical identity reconstructing the first new observation from the fitted scalar innovation had maximum relative discrepancy $2.689\times10^{-17}$, which confirms only that the scalar formula recodes the first newly observed value. The ten test innovations gave the exploratory entropy ratio
+\begin{equation}\widehat H(\tau_n\mid\tau_{n-1})/\widehat H(\tau_n)=0.3142\label{eq:v11_entropy_ratio}\end{equation}
+and an AR prediction ratio for $\tau$ of $1.8136$ relative to the median predictor. The sample size is too small for the entropy estimate to support a law for $\tau$.
+
+The median angle between successive normalized rigid null directions was $64.8726^\circ$. By Proposition~\ref{prop:rigid_direction_past}, this large variation is not itself evidence of an extra information channel.
+
+For the ten projected critical cores used by the approximate pipeline, no static auxiliary completion with $q\leq4$ was found, and all $40$ attempted positive degrees $q=1,\ldots,4$ had numerical Farkas certificates. This establishes a lower-degree obstruction for those \emph{projected cores}; because those cores were not exact recurrence polynomials of the data, it does not establish $\nu>4$ for a data-compatible repaired Mertens model.
+
+Finally, an optional exact symbolic calculation on the unnormalized integer values $M(x)$ examined two nonsingular order-$9$ windows. In both, the gcd of the $K+1$ polynomial fixed-Perron constraints was constant. For those two raw windows and $K=4$, this excludes any $b$ satisfying all rigid reciprocal--Perron identities.
+\end{experiment}
+
+\begin{remark}[Null-model comparison]
+\label{rem:v11_nulls}
+With the same frozen approximate model, the median test forecast errors across $100$ null realizations were approximately $2.354$ for support-preserving random signs and $2.464$ for permuted M\"obius values, both substantially below the M\"obius value $6.3668$. The admissible-interval fraction was zero for M\"obius and both null classes. The entropy-ratio and null-direction-angle diagnostics did not produce a favorable M\"obius separation. These observations are negative for that approximate protocol, not for the exact repaired theory developed in Sections~\ref{sec:data_compatible_repair}--\ref{sec:information_accounting}.
+\end{remark}
+
+\begin{remark}[Operational consequence]
+\label{rem:v11_consequence}
+The selected $b=1.02$ cannot be interpreted as a discovered arithmetic constant because it lies on the search boundary. Extending the numerical grid toward $1$ before repairing the model would amount to further adaptation after a failed out-of-sample test. The baseline \eqref{eq:v11_selected_model}--\eqref{eq:v11_errors} should instead remain frozen for later regression testing.
+\end{remark}
+
+\section{Revised causal protocol for repaired windows}
+\label{sec:repaired_protocol}
+
+\begin{experiment}
+\label{exp:repaired_causal_protocol}
+Before any test window is examined:
+\begin{enumerate}
+\item fix $K$, a single auxiliary degree $q$, and either a fixed $b$ or a deterministic past-only rule for $b$ covered by a separate theorem;
+\item fix the scalar observable, window convention, stride $s_*=K+2$, numerical tolerances, branch-continuation rule, and forecast metric;
+\item validate the exact algebra and continuation code on synthetic trajectories for which the true $(\Omega,r)$ path is known;
+\item on each real window, construct the order-$D$ recurrence from the data first and require the membership test of Theorem~\ref{thm:data_first_membership};
+\item reject or mark ambiguous every singular, nonpositive, branch-ambiguous, or ill-conditioned state;
+\item construct the common-equation branch from past values only;
+\item reveal only $u_{t_0}$, compute the canonical innovation $\xi_n$, and solve for the next point on the same branch without using later test values;
+\item predict the remaining $K+1$ values and compare against predeclared baselines and nulls.
+\end{enumerate}
+\end{experiment}
+
+A successful repaired experiment must therefore establish both \emph{membership} and \emph{transport}. Static completion of an externally estimated phase set is not a substitute for either step.
+
+
+\section{Version 4 predictive audit: closure of the arithmetic-free route}
+\label{sec:v4_closure}
+
+The recurrence-first and nonlinear-continuation corrections of Version 7 were subsequently
+implemented in a stricter predictive instrument.  The synthetic gate was first required to pass
+before the Mertens data were inspected.  Three exact synthetic oracles passed:
+\[
+(K,q,D)=(1,0,3),\qquad (2,1,6),\qquad (3,2,9).
+\]
+In the $q=2$ case the five-dimensional parameter
+$(\omega_1,\omega_2,\omega_3,r_1,r_2)$ was recovered from the overlap plus one new scalar with
+relative state error approximately $1.45\times10^{-8}$ and subsequent forecast error
+approximately $1.37\times10^{-15}$.  Thus the repaired nonlinear scalarization mechanism itself
+survived a nontrivial synthetic test.
+
+The corresponding first-sample conditioning diagnostics were
+\[
+\begin{array}{c|c|c|c}
+(K,q,D) & \text{observability margin} & \operatorname{rcond} & \text{forecast relative error}\\
+\hline
+(1,0,3) & 9.958\times10^{-1} & 1.000 & 0\\
+(2,1,6) & 5.613\times10^{-3} & 1.132\times10^{-5} & 2.599\times10^{-12}\\
+(3,2,9) & 9.145\times10^{-7} & 7.813\times10^{-9} & 1.369\times10^{-15}
+\end{array}
+\]
+so the exact mechanism survives while becoming increasingly ill-conditioned in these particular
+synthetic examples.  This conditioning trend is a numerical warning, not a failure of the local
+dimension count.
+
+\begin{experiment}[Frozen Version 4 Mertens audit]
+\label{exp:v4_frozen}
+The real-data protocol kept
+\[
+K=4,\qquad b=1.02
+\]
+frozen from the previous train-only selection and tested auxiliary degrees
+$q=0,1,\ldots,6$.  The exact recurrence-first membership count was
+\[
+\boxed{0\text{ strict windows}}
+\]
+in both train and test for every tested $q$.  The detailed frozen recurrence-first scan was
+\[
+\begin{array}{c|c|c|c|c|c|c}
+q&D&N_{\rm train}&N_{\rm strict,train}&\widetilde s_{\rm train}
+&N_{\rm test}&\widetilde s_{\rm test}\\
+\hline
+0& 9&13&0&0.8761&11&1.084\\
+1&10&13&0&1.106 &11&0.8054\\
+2&11&13&0&0.8857&11&0.9118\\
+3&12&12&0&0.9261&11&1.211\\
+4&13&12&0&0.9057&11&0.8922\\
+5&14&12&0&1.292 &11&1.102\\
+6&15&11&0&2.500 &11&1.197
+\end{array}
+\]
+where $\widetilde s$ denotes the median membership score.  These values are of order one rather
+than numerical noise.  In the corrected positive approximate nonlinear-manifold layer,
+the reported test errors were
+\[
+\operatorname{NRMSE}_{\rm Leslie,assisted}\approx0.909,
+\qquad
+\operatorname{NRMSE}_{\rm AR,direct}\approx0.646,
+\]
+so the Leslie construction was approximately $1.374$ times the direct AR error.
+
+The primary predictive comparisons did not separate Mertens from the stronger controls:
+support-preserving random-sign comparisons gave empirical $p$-values approximately $0.235$ and
+$0.196$ on the reported primary scores, and the phase-randomized surrogate comparison gave
+approximately $0.192$.  Only the simpler Gaussian white null produced a nominally small value,
+approximately $0.0196$.
+\end{experiment}
+
+\begin{remark}[Interpretation of the negative result]
+\label{rem:v4_negative_interpretation}
+Experiment~\ref{exp:v4_frozen} does not prove that no Leslie representation of Mertens can
+exist.  It closes the specific arithmetic-free route in which the frozen critical geometry,
+fixed Perron value, and auxiliary degrees through $q=6$ were asked to discover a predictive law
+from the scalar Mertens observable alone.  The combination
+\[
+\text{zero exact membership}
+\quad+\quad
+\text{worse forecast than direct AR}
+\quad+\quad
+\text{no separation from phase surrogates}
+\]
+provides no empirical reason to continue increasing geometric flexibility without supplying
+arithmetic structure.
+\end{remark}
+
+\begin{remark}[Why the small first-value residual is not predictive evidence]
+\label{rem:first_value_residual_contamination}
+The Version 4 approximate continuation reported a median first-value residual about $0.1336$,
+compared with a common-equation residual about $0.9567$.  This factor-of-seven difference is not
+a sevenfold predictive gain: the observed first value $u_{t_0}$ enters the nonlinear objective
+used to select the assisted next state.  The quantity is therefore a conditional fitting
+residual.  The zero-latency innovation predictor is the relevant non-tautological test.  Its
+reported RMSE was about $0.1634$.  The corresponding empirical values were approximately
+$0.0196$ against support-preserving random signs, $0.0392$ against the Gaussian null, and
+$0.3077$ against the phase-randomized surrogate.  The failure against the phase surrogate removes
+the arithmetic interpretation of the small RMSE.  No further rescue test of the $0.1336$ residual
+is required for the present branch.
+\end{remark}
+
+
+\section{Independent finite-range cancellation baseline}
+\label{sec:finite_range_envelope}
+
+A separate exhaustive computation over every integer, not a logarithmic grid, gives a useful
+baseline for interpreting null models.  For
+\[
+1000\le x\le455\,052\,511
+\]
+the exact finite-range maximum observed was
+\begin{equation}
+\max_x\frac{|M(x)|}{\sqrt x}
+=
+0.472203,
+\label{eq:finite_C_mu}
+\end{equation}
+attained at $x=2803$.  At the final endpoint,
+\[
+M(455\,052\,511)=-5414,
+\]
+and the squarefree-support density was $0.607927$.
+
+The decade maxima recorded in the same exhaustive run were
+\[
+\begin{array}{c|c}
+10^3\le x<10^4 & 0.472203\\
+10^4\le x<10^5 & 0.462977\\
+10^5\le x<10^6 & 0.437776\\
+10^6\le x<10^7 & 0.418245\\
+10^7\le x<10^8 & 0.462729\\
+10^8\le x<10^9 & 0.464162
+\end{array}
+\]
+within the available finite range.
+
+On the same squarefree support, $25$ global random-sign realizations had mean maximum constant
+$1.8972$, standard deviation $0.3384$, minimum $1.1371$, and maximum $2.7911$.
+None fell below \eqref{eq:finite_C_mu}; the observed ratio of the null mean to the Mertens
+maximum was about $4.018$.
+
+\begin{warning}
+\label{warn:finite_not_asymptotic}
+These are exact finite-range computations, not an asymptotic $O(\sqrt x)$ theorem.  They also show
+why a random-sign null alone is too weak for the Leslie programme: Mertens already has unusually
+strong finite-range cancellation before any Leslie transformation is applied.  This motivated the
+phase-randomized controls used in the Version 4 closure.
+\end{warning}
+
+
+\section{Periodicity, lifted states, and what moving matrices do not guarantee}
+\label{sec:lifted_periodicity}
+
+A moving sequence $L_n$ has no mandatory spectral periodicity, but time dependence alone does not
+exclude cycles.  Three different notions must be separated.
+
+\begin{definition}[Three periodicities]
+\label{def:three_periodicities}
+Let $X_n$ be the complete dynamical state, let $L_n=\mathcal L(X_n)$, and let $u_n$ be the scalar
+observable.
+\begin{enumerate}
+\item Matrix periodicity of period $p$: $L_{n+p}=L_n$.
+\item Lifted-state periodicity of period $p$: $X_{n+p}=X_n$.
+\item Observable periodicity of period $p$: $u_{n+p}=u_n$.
+\end{enumerate}
+None of these implications is automatic in both directions.
+\end{definition}
+
+For spectral tracking, the state should contain continuously unwrapped phases
+$\widetilde\Omega_n$, not only their cosines:
+\begin{equation}
+X_n=
+\left(
+a_n,\widetilde\Omega_n,r_n,\mathfrak b_n
+\right),
+\label{eq:lifted_state}
+\end{equation}
+where $\mathfrak b_n$ records the continued factorization branch.  Equality of instantaneous
+coefficient vectors can then represent a projected return without a true return of the lifted
+state.
+
+\begin{proposition}[Return equation]
+\label{prop:return_equation}
+Suppose a causal transition has the form
+\[
+X_{n+1}=F(X_n,\xi_n).
+\]
+A genuine period-$p$ return requires
+\begin{equation}
+F_{\xi_{n+p-1}}\circ\cdots\circ F_{\xi_n}(X_n)=X_n.
+\label{eq:p_step_return}
+\end{equation}
+Thus periodicity is an additional fixed-point condition on the innovation word and the state; it
+is not a consequence of allowing $L_n$ to vary.
+\end{proposition}
+
+\begin{remark}[Periodic coefficients need not give a periodic observable]
+\label{rem:periodic_coeff_not_signal}
+Even if $L_{n+p}=L_n$, the one-period monodromy
+\[
+\Pi_p=L_{p-1}\cdots L_0
+\]
+controls the evolution over complete periods.  Unless the relevant monodromy action itself closes
+on the initial state, the generated scalar sequence need not be periodic.  Hence matrix
+periodicity, lifted-state periodicity, and observable periodicity must not be conflated.
+\end{remark}
+
+The arithmetic filtration introduced below supplies a second way to avoid a false finite-state
+periodicity argument: the state dimension itself grows as new divisor layers are admitted.  This
+does not prove aperiodicity, but it removes any requirement that the entire arithmetic trajectory
+be generated by one fixed finite-dimensional spectrum.
+
+
+\section{Methodological firewall for the arithmetic continuation}
+\label{sec:arithmetic_firewall}
+
+The continuation below deliberately introduces arithmetic, but only through exact finite
+divisibility relations.  The firewall is operational rather than ontological.
+
+\begin{definition}[Divisibility-only route]
+\label{def:divisibility_only_route}
+For the active arithmetic route, the allowed primitives are finite divisor incidence,
+restriction/extension maps of finite divisor posets, integer matrix inversion when exact, and
+identities retaining every floor function exactly.  The route does not invoke Dirichlet
+generating series, Mellin transforms, zeta functions, zero sets, or a replacement
+\[
+\left\lfloor\frac xd\right\rfloor\mapsto\frac xd+\text{error}.
+\]
+\end{definition}
+
+\begin{remark}
+\label{rem:classical_origin_declared}
+The identity
+\[
+\sum_{d\mid n}\mu(d)=\delta_{n,1}
+\]
+and the associated incidence-algebra inversion are classical.  Their use here is not claimed as
+new.  The research question is whether this parameter-free arithmetic source can be represented
+by a coherent tower of the previously developed positive Leslie systems without independent
+refitting at each level.
+\end{remark}
+
+
+\section{The finite divisibility system}
+\label{sec:finite_divisibility_system}
+
+Fix $X\ge1$ and define the $X\times X$ incidence matrix
+\begin{equation}
+(D_X)_{n,d}=\mathbf 1_{d\mid n},
+\qquad 1\le n,d\le X.
+\label{eq:divisibility_matrix}
+\end{equation}
+It is lower triangular with unit diagonal.
+
+\begin{theorem}[Exact finite M\"obius inversion]
+\label{thm:finite_mobius_inversion}
+The matrix $D_X$ is unimodular and
+\begin{equation}
+(D_X^{-1})_{n,d}
+=
+\begin{cases}
+\mu(n/d),&d\mid n,\\
+0,&d\nmid n.
+\end{cases}
+\label{eq:divisibility_inverse}
+\end{equation}
+Consequently, with
+\[
+\mu_X=(\mu(1),\ldots,\mu(X))^{\mathsf T},
+\]
+one has
+\begin{equation}
+D_X\mu_X=e_1,
+\qquad
+\mu_X=D_X^{-1}e_1,
+\label{eq:Dmu_e1}
+\end{equation}
+and
+\begin{equation}
+M(X)=\mathbf 1^{\mathsf T}D_X^{-1}e_1.
+\label{eq:M_as_incidence_observable}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For $d\mid n$, the $(n,d)$ entry of the proposed product
+$D_XD_X^{-1}$ is
+\[
+\sum_{d\mid m\mid n}\mu(n/m)
+=
+\sum_{r\mid n/d}\mu(r),
+\]
+which equals $1$ when $n=d$ and $0$ otherwise.  The triangular unit diagonal gives
+$\det D_X=1$.
+\end{proof}
+
+\begin{remark}[Forced input and output]
+\label{rem:forced_h_v}
+In the divisibility realization there is no free observation vector or initial vector:
+\[
+\boxed{h=\mathbf 1,\qquad v=e_1.}
+\]
+The contrast with the earlier Leslie fits is fundamental.  Here both vectors are fixed before
+$M$ is inspected.
+\end{remark}
+
+Summing \eqref{eq:Dmu_e1} over rows $n\le x$ yields the exact floor identity
+\begin{equation}
+\sum_{d\le x}\mu(d)
+\left\lfloor\frac xd\right\rfloor
+=1.
+\label{eq:floor_identity}
+\end{equation}
+Within the divisibility-only route, the floor in \eqref{eq:floor_identity} is never relaxed.
+
+
+\section{A coherent filtration by divisor rank}
+\label{sec:omega_filtration}
+
+Let $\Omega(n)$ denote the number of prime factors counted with multiplicity.  Equivalently for
+the present purpose, $\Omega(n)$ is the number of cover steps in a longest saturated divisor
+chain from $1$ to $n$.  For fixed $X$, define
+\begin{equation}
+I_k(X)=
+\{n\le X:\Omega(n)\le k\},
+\qquad
+S_{k+1}(X)=I_{k+1}(X)\setminus I_k(X).
+\label{eq:Ik_Sk}
+\end{equation}
+
+Because $d\mid n$ implies $\Omega(d)\le\Omega(n)$, each $I_k(X)$ is an order ideal and
+\[
+I_0(X)\subset I_1(X)\subset\cdots.
+\]
+For fixed $X$ the tower reaches all integers by
+$k=\lfloor\log_2X\rfloor$, since $2^k$ minimizes an integer with $\Omega(n)=k$.
+
+\begin{warning}[Maximum level versus typical level]
+\label{warn:omega_max_typical}
+The exact maximum filtration height is $\lfloor\log_2X\rfloor$.  It must not be replaced by a
+heuristic ``typical'' order such as $\log\log X$ inside an exact induction argument.  No
+probabilistic distribution theorem for $\Omega$ is used in the present route.
+\end{warning}
+
+Let $D_k(X)$ be the restriction of $D_X$ to rows and columns indexed by $I_k(X)$.
+
+\begin{theorem}[Exact block extension of the divisor filtration]
+\label{thm:block_divisor_extension}
+After ordering $I_{k+1}(X)$ with the old ideal first and the new layer second,
+\begin{equation}
+D_{k+1}
+=
+\begin{pmatrix}
+D_k&0\\
+B_k&I
+\end{pmatrix},
+\label{eq:D_block_extension}
+\end{equation}
+where $B_k$ is the incidence block from old divisors to the new layer.  Therefore
+\begin{equation}
+D_{k+1}^{-1}
+=
+\begin{pmatrix}
+D_k^{-1}&0\\
+-B_kD_k^{-1}&I
+\end{pmatrix}.
+\label{eq:Dinv_block_extension}
+\end{equation}
+If
+\[
+\mu_k=D_k^{-1}e_1,
+\]
+then
+\begin{equation}
+\boxed{
+\mu_{k+1}
+=
+\begin{pmatrix}
+\mu_k\\
+-B_k\mu_k
+\end{pmatrix}.
+}
+\label{eq:mu_layer_extension}
+\end{equation}
+In particular,
+\begin{equation}
+\mu_{k+1}|_{I_k}=\mu_k.
+\label{eq:coherent_restriction}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The upper-right block is zero because a new-layer element cannot divide an old element.
+If $d,n\in S_{k+1}(X)$ and $d\mid n$, then
+$\Omega(d)=\Omega(n)$, hence $\Omega(n/d)=0$ and $d=n$.  The new-layer diagonal block is therefore
+the identity.  The inverse follows by direct block multiplication, and
+\eqref{eq:mu_layer_extension} follows by applying the inverse to $e_1$, which belongs to the old
+block.
+\end{proof}
+
+\begin{corollary}[Exact location of new arithmetic information]
+\label{cor:new_arithmetic_information}
+No previously determined M\"obius value is altered when the filtration grows.  The entire new
+layer is
+\begin{equation}
+\boxed{\Delta_{k+1}^{\rm arith}=-B_k\mu_k.}
+\label{eq:new_arithmetic_layer}
+\end{equation}
+Thus the sequence of incidence blocks
+\[
+B_0,B_1,B_2,\ldots
+\]
+is a parameter-free source of new arithmetic constraints.
+\end{corollary}
+
+This resolves a conceptual issue left open by the arithmetic-free Leslie programme.  An infinite
+trajectory need not hide its information inside arbitrary real innovations.  The information may
+enter by exact finite extensions of a growing arithmetic state, with coherence enforced by
+\eqref{eq:coherent_restriction}.
+
+
+\section{Why the naive level envelope is not the right induction variable}
+\label{sec:omega_envelope_obstruction}
+
+Define the truncated level sum
+\begin{equation}
+M_k(x)
+=
+\sum_{\substack{n\le x\\\Omega(n)\le k}}\mu(n).
+\label{eq:Mk_level}
+\end{equation}
+Also let
+\begin{equation}
+Q_j(x)
+=
+\#\{n\le x:\ n\text{ is squarefree},\ \Omega(n)=j\}.
+\label{eq:Qj_squarefree}
+\end{equation}
+Then, purely from the definition of $\mu$,
+\begin{equation}
+M_k(x)=
+\sum_{j=0}^k(-1)^jQ_j(x),
+\qquad
+M_k(x)-M_{k-1}(x)=(-1)^kQ_k(x).
+\label{eq:Mk_layer_decomposition}
+\end{equation}
+
+\begin{proposition}[No within-layer cancellation]
+\label{prop:no_within_layer_cancellation}
+Every nonzero M\"obius value in the squarefree layer $\Omega(n)=k$ has the same sign $(-1)^k$.
+Consequently, cancellation in $M_k$ occurs between different filtration layers, not within the
+new layer itself.
+\end{proposition}
+
+This makes a direct induction on
+\[
+C_k(X)=
+\max_{x\le X}\frac{|M_k(x)|}{\sqrt x}
+\]
+a poor first invariant.  A small $C_{k+1}$ would have to result from cancellation between the
+old partial sum and an entire fixed-sign layer; it is not generated by a contractive norm on the
+new layer alone.  Normalizing a single layer by its own density does not create cancellation.
+
+A more faithful elementary object is the paired-layer increment
+\begin{equation}
+P_j(x)=Q_{2j}(x)-Q_{2j-1}(x),
+\label{eq:paired_layer}
+\end{equation}
+for which
+\begin{equation}
+M_{2J}(x)=1+\sum_{j=1}^J P_j(x).
+\label{eq:paired_reconstruction}
+\end{equation}
+No bound is asserted here.  The point is only that \eqref{eq:paired_layer} places opposite
+M\"obius signs inside the same object before any norm is applied.
+
+
+\section{An exact prime-injection route inside the same firewall}
+\label{sec:prime_injection_route}
+
+The $\Omega$ filtration is the primary dimension-growing route.  A second exact construction,
+useful as a controlled auxiliary experiment, introduces prime constraints one at a time without
+using a Dirichlet series.
+
+For a prime $p$, define the finite divisor-shift operator
+\begin{equation}
+(T_pf)(n)
+=
+\begin{cases}
+f(n/p),&p\mid n,\\
+0,&p\nmid n.
+\end{cases}
+\label{eq:Tp}
+\end{equation}
+and $Q_p=I-T_p$.  Distinct $T_p$ commute.
+
+\begin{proposition}[Prime-by-prime exact construction]
+\label{prop:prime_by_prime_mu}
+On the finite interval $1\le n\le X$,
+\begin{equation}
+\mu_X
+=
+\prod_{p\le X}(I-T_p)e_1.
+\label{eq:prime_product_mu}
+\end{equation}
+If $M_{\mathcal P}(x)$ denotes the cumulative sequence after a finite set
+$\mathcal P$ of prime operators has been applied, adjoining one new prime $p$ gives
+\begin{equation}
+M_{\mathcal P\cup\{p\}}(x)
+=
+M_{\mathcal P}(x)
+-
+M_{\mathcal P}
+\left(\left\lfloor\frac xp\right\rfloor\right).
+\label{eq:prime_floor_update}
+\end{equation}
+\end{proposition}
+
+This makes precise the earlier idea of imposing arithmetic rigidity only through selected prime
+channels.  For a predeclared integer $r$, the primes may be partitioned by their index modulo
+$r$:
+\[
+\mathcal P_j^{(r)}=
+\{p_\ell:\ell\equiv j\pmod r\},
+\qquad
+j=0,\ldots,r-1.
+\]
+The $r$ commuting channel operators together recover
+\eqref{eq:prime_product_mu}.  Values such as $r=2$ or $r=5$ are legitimate experimental
+designs only if fixed before evaluating the arithmetic output; selecting $r$ after inspection
+would reintroduce a tuning channel.
+
+\begin{remark}[Status of this route]
+\label{rem:prime_route_status}
+This prime-channel construction does not replace the divisor-rank filtration of
+Section~\ref{sec:omega_filtration}.  It is retained as an exact side route for testing whether
+the Leslie representation reacts differently to sparse, predeclared subsets of arithmetic
+constraints.
+\end{remark}
+
+
+\section{Coherent Leslie towers}
+\label{sec:coherent_leslie_towers}
+
+The arithmetic filtration suggests that the Leslie state should be allowed to grow rather than
+forcing every level into one fixed finite-dimensional model.
+
+\begin{definition}[Coherent Leslie tower]
+\label{def:coherent_leslie_tower}
+A coherent Leslie tower is a sequence of positive Leslie companion matrices
+\[
+L_k\in\mathbb R^{m_k\times m_k},
+\qquad
+m_1<m_2<\cdots,
+\]
+together with surjective maps
+\[
+\Pi_k:\mathbb R^{m_{k+1}}\to\mathbb R^{m_k}
+\]
+such that
+\begin{equation}
+\boxed{\Pi_kL_{k+1}=L_k\Pi_k.}
+\label{eq:leslie_intertwining}
+\end{equation}
+\end{definition}
+
+In coordinates adapted to $\ker\Pi_k$, the intertwining relation has the block form
+\begin{equation}
+\widetilde L_{k+1}
+=
+\begin{pmatrix}
+L_k&0\\
+C_k&G_k
+\end{pmatrix},
+\label{eq:leslie_block_tower}
+\end{equation}
+which is structurally parallel to the arithmetic extension
+\eqref{eq:D_block_extension}.  The old quotient dynamics is preserved exactly, while a new
+state layer may receive information from the old one.
+
+The companion representation gives an exact polynomial criterion.
+
+\begin{theorem}[Polynomial divisibility and companion quotients]
+\label{thm:companion_quotient}
+Let $P_k$ and $P_{k+1}$ be monic polynomials and let $C(P_k)$,
+$C(P_{k+1})$ denote their companion operators.  If
+\begin{equation}
+P_{k+1}(z)=P_k(z)R_{k+1}(z)
+\label{eq:nested_characteristic_polynomials}
+\end{equation}
+for a monic polynomial $R_{k+1}$, then there exists a surjective linear map $\Pi_k$ satisfying
+\[
+\Pi_kC(P_{k+1})=C(P_k)\Pi_k.
+\]
+Conversely, for cyclic companion operators, a surjective intertwining map implies that the
+minimal polynomial of the quotient divides the parent polynomial; hence
+$P_k\mid P_{k+1}$.
+\end{theorem}
+
+\begin{proof}
+View the companion operator of a monic polynomial $P$ as multiplication by $z$ on the cyclic
+module $\mathbb R[z]/(P)$.  If $P_k\mid P_{k+1}$, reduction modulo $P_k$ defines a surjective
+module homomorphism
+\[
+\mathbb R[z]/(P_{k+1})
+\longrightarrow
+\mathbb R[z]/(P_k)
+\]
+that intertwines multiplication by $z$.  Conversely, the minimal polynomial of a quotient
+operator divides that of the parent.  A companion operator is cyclic, so its minimal polynomial
+equals its characteristic polynomial.
+\end{proof}
+
+\begin{remark}[New interpretation of the auxiliary multiplier]
+\label{rem:auxiliary_as_arithmetic_layer}
+In Versions 2, 6, and 7 the multiplier
+\[
+R_q(z)
+\]
+was introduced mainly as a static positivity repair.  Equation
+\eqref{eq:nested_characteristic_polynomials} supplies a different possible interpretation:
+the multiplier can represent the genuinely new state layer of a coherent arithmetic extension.
+Under this interpretation old characteristic factors are not refitted or discarded; they divide
+the next polynomial exactly.
+\end{remark}
+
+\begin{warning}[Positivity remains nontrivial]
+\label{warn:tower_positivity}
+Polynomial divisibility alone does not guarantee that every $C(P_k)$ is a nonnegative Leslie
+matrix.  The tower problem therefore contains two simultaneous exact requirements:
+\[
+P_k\mid P_{k+1}
+\qquad\text{and}\qquad
+P_k(z)=z^{m_k}-\sum_{\ell=1}^{m_k}a_{k,\ell}z^{m_k-\ell},
+\quad
+a_{k,\ell}\ge0.
+\]
+The auxiliary-completion LP of the earlier sections remains relevant, but it can no longer be
+used independently at every level; the multipliers must also obey arithmetic coherence.
+\end{warning}
+
+
+\section{Arithmetic--Leslie compatibility problem}
+\label{sec:arithmetic_leslie_compatibility}
+
+The active problem can now be stated without asking Leslie geometry to invent arithmetic.
+
+For the arithmetic filtration define the exact extension
+\begin{equation}
+A_kx=
+\begin{pmatrix}
+x\\
+-B_kx
+\end{pmatrix},
+\qquad
+A_k:\mathbb R^{|I_k|}\to\mathbb R^{|I_{k+1}|}.
+\label{eq:arithmetic_extension_operator}
+\end{equation}
+Then
+\[
+\mu_{k+1}=A_k\mu_k
+\qquad\text{and}\qquad
+\operatorname{Res}_kA_k=I,
+\]
+where $\operatorname{Res}_k$ restricts to the old ideal.
+
+\begin{definition}[Arithmetic-driven Leslie realization]
+\label{def:arithmetic_driven_leslie}
+An arithmetic-driven Leslie realization of the filtration consists of
+\begin{enumerate}
+\item a coherent positive Leslie tower $(L_k,\Pi_k)$;
+\item arithmetic-to-Leslie encoders
+$E_k:\mathbb R^{|I_k|}\to\mathbb R^{m_k}$ determined by a single
+predeclared rule from the divisor incidence data;
+\item Leslie embeddings $J_k:\mathbb R^{m_k}\to\mathbb R^{m_{k+1}}$
+with $\Pi_kJ_k=I$;
+\item compatibility
+\begin{equation}
+\boxed{E_{k+1}A_k=J_kE_k;}
+\label{eq:arithmetic_leslie_commuting_square}
+\end{equation}
+\item induced observation and source vectors satisfying
+\begin{equation}
+h_k^{\mathsf T}E_k=\mathbf 1^{\mathsf T},
+\qquad
+E_ke_1=v_k.
+\label{eq:induced_hv}
+\end{equation}
+\end{enumerate}
+\end{definition}
+
+If \eqref{eq:arithmetic_leslie_commuting_square} and
+\eqref{eq:induced_hv} hold, then
+\begin{equation}
+h_k^{\mathsf T}E_k\mu_k
+=
+\mathbf 1^{\mathsf T}\mu_k,
+\label{eq:observable_commutes}
+\end{equation}
+so the arithmetic observable is preserved by construction rather than fitted afterward.
+
+\begin{warning}[The encoder is the new nontrivial bridge]
+\label{warn:encoder_tautology}
+If $E_k$ is allowed to be chosen freely after seeing $\mu_k$ or $M_k$, the construction is
+tautological.  The central unsolved requirement of Version 8 is therefore:
+\[
+\boxed{
+E_k,\ J_k,\ R_{k+1}
+\text{ must be determined from }
+D_k,\ B_k
+\text{ by one fixed rule, before inspecting the Mertens output.}
+}
+\label{eq:canonical_bridge_requirement}
+\]
+Finding such a rule while preserving Leslie positivity is the active mathematical problem.
+\end{warning}
+
+This formulation explains why the Version 4 negative result is useful rather than terminal.
+The missing ingredient was not another fitted frequency, another Perron value, or another
+empirical innovation law.  It was a source of arithmetic constraints that is external to the
+scalar Mertens history but exact and parameter-free.
+
+
+\section{A low-dimensional compression question for each new arithmetic layer}
+\label{sec:layer_compression_question}
+
+The full divisor layer \eqref{eq:new_arithmetic_layer} may have large dimension.  Leslie
+geometry would become informative if its effect could be represented by much fewer coordinates
+without changing old levels.
+
+Let $\mathcal G_k$ denote the tangent space of the admissible Leslie extension at level $k$ and
+let $\Delta_k^{\rm arith}=-B_k\mu_k$ be the exact new arithmetic layer.  Let
+\[
+\iota_{k+1}:\mathbb R^{|S_{k+1}|}\to\mathbb R^{|I_{k+1}|},
+\qquad
+\iota_{k+1}y=
+\begin{pmatrix}0\\y\end{pmatrix},
+\]
+be the canonical embedding of the new layer into the full arithmetic state.  After a fixed,
+predeclared encoding into the Leslie state space, define the best $r$-dimensional defect
+\begin{equation}
+\rho_{k,r}
+=
+\frac{
+\operatorname{dist}\!\left(
+E_{k+1}\iota_{k+1}\Delta_k^{\rm arith},
+\mathcal G_{k,r}
+\right)
+}{
+\|E_{k+1}\iota_{k+1}\Delta_k^{\rm arith}\|
+},
+\label{eq:layer_compression_defect}
+\end{equation}
+where $\mathcal G_{k,r}$ is a predeclared $r$-dimensional admissible subspace or tangent model.
+
+The earlier one-innovation programme corresponds conceptually to $r=1$, but Version 8 no longer
+assumes that $r=1$ must work.  The falsifiable question is instead whether
+\[
+r_k\ll |S_{k+1}(X)|
+\]
+can remain small under coherent arithmetic extension.  A failure at $r=1$ would therefore not
+force the entire arithmetic-driven tower to fail; it would measure the information dimension
+actually required by the new divisor layer.
+
+
+\section{Concrete $X=20$ arithmetic audit and contrast with a rigid Leslie matrix}
+\label{sec:X20_contrast}
+
+For $X=20$, the exact divisibility matrix is:
+
+\begingroup
+\scriptsize
+\begin{verbatim}
+n= 1 | 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 2 | 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 3 | 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 4 | 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 5 | 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 6 | 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 7 | 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+n= 8 | 1 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0
+n= 9 | 1 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0
+n=10 | 1 1 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0
+n=11 | 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
+n=12 | 1 1 1 1 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+n=13 | 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0
+n=14 | 1 1 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0
+n=15 | 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0
+n=16 | 1 1 0 1 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0
+n=17 | 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+n=18 | 1 1 1 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 0 0
+n=19 | 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+n=20 | 1 1 0 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1
+\end{verbatim}
+\endgroup
+
+Its exact inverse is:
+
+\begingroup
+\scriptsize
+\begin{verbatim}
+n= 1 |  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 2 | -1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 3 | -1  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 4 |  0 -1  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 5 | -1  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 6 |  1 -1 -1  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 7 | -1  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0
+n= 8 |  0  0  0 -1  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0
+n= 9 |  0  0 -1  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0
+n=10 |  1 -1  0  0 -1  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0
+n=11 | -1  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0
+n=12 |  0  1  0 -1  0 -1  0  0  0  0  0  1  0  0  0  0  0  0  0  0
+n=13 | -1  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0
+n=14 |  1 -1  0  0  0  0 -1  0  0  0  0  0  0  1  0  0  0  0  0  0
+n=15 |  1  0 -1  0 -1  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0
+n=16 |  0  0  0  0  0  0  0 -1  0  0  0  0  0  0  0  1  0  0  0  0
+n=17 | -1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0
+n=18 |  0  0  1  0  0 -1  0  0 -1  0  0  0  0  0  0  0  0  1  0  0
+n=19 | -1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0
+n=20 |  0  1  0 -1  0  0  0  0  0 -1  0  0  0  0  0  0  0  0  0  1
+\end{verbatim}
+\endgroup
+
+The first column is exactly
+\[
+(1,-1,-1,0,-1,1,-1,0,0,1,-1,0,-1,1,1,0,-1,0,-1,0)^{\mathsf T},
+\]
+and
+\[
+\mathbf 1^{\mathsf T}D_{20}^{-1}e_1=-3=M(20).
+\]
+
+For comparison, a rigid critical Leslie matrix with
+\[
+K=9,\qquad m=19,\qquad b=1.15,\qquad r=\sqrt b=1.0723805295
+\]
+has first-row coefficients
+\[
+a_\ell=r^\ell(r-1),\quad 1\le\ell\le18,
+\qquad
+a_{19}=r^{20},
+\]
+numerically
+\[
+\begin{array}{rrrrrr}
+0.077619&0.083238&0.089262&0.095723&0.102652&0.110082\\
+0.118050&0.126594&0.135757&0.145583&0.156120&0.167421\\
+0.179539&0.192534&0.206469&0.221414&0.237440&0.254626\\
+\multicolumn{6}{c}{4.045558}
+\end{array}
+\]
+with the usual unit subdiagonal.  Its Perron eigenvalue is $1.15$ and the other $18$ eigenvalues
+have modulus $\sqrt b$ to numerical error about $1.78\times10^{-15}$.
+
+\begin{remark}[The structural contrast]
+\label{rem:D_vs_L_contrast}
+The two matrices have comparable finite size but opposite epistemic roles.  $D_{20}$ has no
+fitted parameter: divisibility fixes every entry, and its inverse contains M\"obius literally.
+The rigid Leslie matrix realizes its prescribed spectrum to machine precision but has no
+arithmetic content unless arithmetic is supplied externally.  Version 4 showed that spectral
+precision alone does not repair this deficit.  Version 8 therefore asks for an exact structural
+map from the first object into a coherent tower of the second.
+\end{remark}
+
+
+\section{Version 8 route map}
+\label{sec:v8_route_map}
+
+The accumulated programme now separates three routes.
+
+\begin{enumerate}
+\item[\texttt{[CLOSED]}]
+\emph{Arithmetic-free fixed-family prediction.}
+The frozen Version 4 protocol is negative: exact membership is absent and the corrected
+approximate dynamics does not outperform the relevant controls.
+
+\item[\texttt{[ADAPT]}]
+\emph{Divisor-rank filtration.}
+The classical stratification by $\Omega(n)$ is used only as an exact nested order-ideal
+decomposition.  The new question is coherence and low-dimensional Leslie representation of the
+layer maps $-B_k\mu_k$.  No literature novelty claim is made here.
+
+\item[\texttt{[SIDE]}]
+\emph{Predeclared prime channels.}
+Exact operators $I-T_p$ may be grouped by prime index classes such as one channel out of every
+two or five.  This does not override the filtration route; it is a controlled way to probe how
+sparse arithmetic restrictions enter a Leslie representation.
+\end{enumerate}
+
+The active target is not an asymptotic estimate at this stage.  It is the existence or
+nonexistence of a parameter-free commuting bridge
+\[
+(D_k,B_k)
+\longrightarrow
+(E_k,J_k,R_{k+1},L_k)
+\]
+that preserves old arithmetic constraints, retains Leslie positivity, and quantifies the
+dimension of genuinely new information at each level.
+
+
+\section{Decision criterion for the Leslie programme}
+\label{sec:decision_criterion}
+
+\begin{conjecture}[Data-compatible repaired trajectory]
+\label{conj:transportable_trajectory_v7}
+There exist fixed integers $K\geq1$ and $q\geq0$, together with a fixed or predeclared past-only Perron rule, such that a persistent family of Mertens windows admits data-compatible repaired Leslie recurrence polynomials in $\mathcal M^{\mathrm{rep},+}_{b,K,q}$ and the corresponding regular critical-stride continuations predict the remaining $K+1$ new values from one revealed scalar innovation better than predeclared null and baseline models without recalibration.
+\end{conjecture}
+
+\begin{remark}[Version 8 status of Conjecture \ref{conj:transportable_trajectory_v7}]
+\label{rem:v8_status_old_conjecture}
+The conjecture is retained unchanged as part of the Version 7 record.  Under the frozen
+Version 4 protocol $(K,b)=(4,1.02)$ and $q\le6$, its tested arithmetic-free realization is
+negative: strict membership is absent and the approximate predictive layer fails the relevant
+out-of-sample comparisons.  The conjecture is therefore no longer the active route in
+Version 8.  This status is protocol-specific and is not promoted to a universal impossibility
+theorem for all Leslie constructions.
+\end{remark}
+
+\begin{remark}[Falsification]
+\label{rem:falsification_v7}
+For a fixed protocol, the conjecture fails if exact or tolerance-certified membership is sporadic, the auxiliary degree or Perron rule must be repeatedly retuned, branch continuation is not causal and unique, the repaired overlap fails to be effectively one-dimensional, the first-new-value map loses observability, or the out-of-sample forecast does not improve on the predeclared controls.
+\end{remark}
+
+\begin{remark}[What a positive result would and would not mean]
+\label{rem:success_v7}
+Persistent success would establish a strong dynamic redundancy property of the chosen Mertens observable: conditioned on the past state, one newly revealed scalar would determine the next $K+1$ values. It would not by itself produce a zero-latency law for Mertens. That stronger goal requires an additional arithmetic law or restriction for the innovation sequence $(\xi_n)$.
+\end{remark}
+
+\begin{remark}[Pre-M\"obius validation gate]
+\label{rem:premobius_gate}
+Before Conjecture~\ref{conj:transportable_trajectory_v7} is tested again, the repaired membership, continuation, branch tracking, and forecast routines should be validated on exact synthetic examples, including cases with known auxiliary degree and deliberately introduced rank, positivity, and observability failures. Numerical outputs should distinguish \texttt{PASS}, \texttt{FAIL}, \texttt{NOT\_APPLICABLE}, and \texttt{NUMERICALLY\_AMBIGUOUS}.
+\end{remark}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+\begin{proposition}[Version 7 structural conclusion]
+\label{prop:final_conclusion_v7}
+The exact moving-window theory now has four distinct structural layers.
+\begin{enumerate}
+\item Rigid critical Leslie spectra possess the coefficient, strain, positivity, and modal geometry developed in the earlier sections.
+\item For fixed $b$, rigid coefficient vectors obey the exact reciprocal--Perron affine constraints, which yield the affine critical-stride scalarization at $s_*=K+2$.
+\item Static positive completion of a prescribed rigid core is exactly the Toeplitz feasibility problem \eqref{eq:completion_lp}, but this completion is not automatically a recurrence of the data.
+\item For fixed $(K,q,b)$, the data-compatible repaired coefficient family has regular codimension $K+1$ independently of $q$. Exact overlap of order-$D$ data windows therefore has the same generic critical stride $s_*=K+2$; at that stride the repaired continuation is locally a one-dimensional curve. Under first-sample transversality, one newly observed scalar selects the local next coefficient vector and the remaining $K+1$ new values are causally determined.
+\end{enumerate}
+These are geometric and algebraic statements. They do not assert that Mertens windows satisfy the repaired membership conditions persistently.
+\end{proposition}
+
+\begin{remark}[Corrected status of the numerical evidence]
+\label{rem:final_status_v7}
+The rigid $K=7$ experiment remains a valid negative statement only for its eight evaluable frequency-estimator configurations. The 5 September 2026 v1.1 Mertens audit gives a separate negative baseline for the approximate projected protocol: zero strict rigid coverage at the selected $(K,b)$ and much worse causal forecast error than AR. Its auxiliary $q\leq4$ obstruction applies to projected cores, not to exact data-compatible repaired recurrences. The exact symbolic gcd calculation on two raw Mertens windows is a cleaner rigid obstruction for those two windows. None of these results establishes or refutes the repaired Conjecture~\ref{conj:transportable_trajectory_v7}; that conjecture requires the corrected recurrence-first protocol of Section~\ref{sec:repaired_protocol}.
+\end{remark}
+
+\begin{remark}[Remaining arithmetic problem]
+\label{rem:remaining_arithmetic_v7}
+If the repaired one-sample forecast succeeds persistently, Leslie geometry will have reduced each critical block to one external scalar innovation but will not have supplied a law for the innovation sequence. A zero-latency characterization therefore requires genuinely arithmetic information about $(\xi_n)$ or an equivalent state forcing. Conversely, failure of the one-sample forecast already rules out the proposed dynamic compression without needing any theory of $\xi_n$.
+\end{remark}
+
+
+\section{Version 8 synthesis and active conjectures}
+\label{sec:v8_synthesis}
+
+\begin{proposition}[What is now exact]
+\label{prop:v8_exact_summary}
+The following statements require no empirical fit:
+\begin{enumerate}
+\item finite divisibility inversion
+$D_X^{-1}(n,d)=\mu(n/d)$ on divisor pairs;
+\item the forced arithmetic realization
+$D_X\mu_X=e_1$ with $h=\mathbf1$ and $v=e_1$;
+\item the divisor-rank block extension
+$D_{k+1}=\left(\begin{smallmatrix}D_k&0\\B_k&I\end{smallmatrix}\right)$;
+\item coherent arithmetic restriction
+$\mu_{k+1}|_{I_k}=\mu_k$ and new layer $-B_k\mu_k$;
+\item prime-by-prime finite construction by commuting operators $I-T_p$;
+\item the companion-module fact that
+$P_k\mid P_{k+1}$ is equivalent to the existence of the corresponding cyclic quotient
+intertwining.
+\end{enumerate}
+None of these statements supplies a positive Leslie tower by itself.
+\end{proposition}
+
+\begin{conjecture}[Arithmetic-driven coherent Leslie tower]
+\label{conj:arithmetic_driven_tower}
+There exists a fixed, parameter-free rule depending only on the finite divisor incidence data
+$(D_k,B_k)$ that produces encoders, embeddings, and positive Leslie characteristic multipliers
+so that the commuting relation
+\[
+E_{k+1}A_k=J_kE_k
+\]
+and the induced observable constraints
+\[
+h_k^{\mathsf T}E_k=\mathbf1^{\mathsf T},
+\qquad
+E_ke_1=v_k
+\]
+hold coherently through an unbounded sequence of levels.
+\end{conjecture}
+
+\begin{question}[Information dimension of a divisor layer]
+\label{q:divisor_layer_information_dimension}
+If Conjecture~\ref{conj:arithmetic_driven_tower} is too strong, what is the smallest
+predeclared dimension $r_k$ required to represent the exact layer
+$-B_k\mu_k$ inside the admissible Leslie extension with a controlled defect?
+Does $r_k$ remain bounded, grow slowly, or scale with the layer size?
+\end{question}
+
+\begin{remark}[What would constitute genuine progress]
+\label{rem:v8_genuine_progress}
+A useful result is no longer a low regression error obtained after fitting Mertens.  It is one of:
+\begin{enumerate}
+\item an explicit divisor-determined construction of the multiplier $R_{k+1}$ and the
+intertwiner $\Pi_k$ preserving positivity;
+\item a proof that no such positive coherent extension exists beyond a stated class;
+\item a nontrivial bound on the minimal information dimension $r_k$ of the new arithmetic layer;
+\item an exact structural invariant of the incidence blocks $B_k$ that transports through the
+Leslie tower.
+\end{enumerate}
+Each target is falsifiable without introducing zeta functions or asymptotic smoothing.
+\end{remark}
+
+
+\section*{Notebook History}
+Version 1.0: static rigid Leslie family and spectral comparison.\\
+Version 2.0: positive spectral completion with auxiliary eigenvalues.\\
+Version 3.0: moving rigid Leslie matrices on consecutive windows, corrected tangent-cone formulation, first- and second-order spectral transport, and a falsifiable forecasting protocol.\\
+Version 4.0: exact strain coordinates, minimum Perron value, universal critical region, phase Jacobian, viability conditions, and modal amplitude transport.\\
+Version 5.0: fixed-Perron reciprocal affine hull, exact overlap rigidity, critical stride $K+2$, scalar innovation transport, admissible innovation intervals, direct determinant tests, and the closed $K=1$ model.\\
+Version 6.0: negative rigid $K=7$ margin test, exact minimal auxiliary-completion index, Toeplitz LP formulation, Farkas certificates of lower-degree impossibility, and the monotone auxiliary defect profile.\\
+Version 7.0: recurrence-first data compatibility, separation of static completion from dynamic realization, exact local repaired mobility with codimension independent of auxiliary degree, nonlinear one-scalar continuation at $s_*=K+2$, explicit hidden-information accounting, correction of the previous approximate scalarization, and a frozen reinterpretation of the 5 September 2026 numerical audit.\\
+Version 8.0: closure of the frozen arithmetic-free predictive route after the corrected Version 4 audit; lifted-state treatment of periodicity; exact finite divisibility realization with forced $h=\mathbf1$ and $v=e_1$; coherent $\Omega$-filtration and block extension $-B_k\mu_k$; exact prime-injection side route; reinterpretation of auxiliary polynomial factors as possible new arithmetic layers; and formulation of the arithmetic-driven coherent Leslie tower problem.
+
+\begin{thebibliography}{99}
+
+\bibitem{Benvenuti2019}
+L.~Benvenuti,
+\emph{The inverse eigenvalue problem for Leslie matrices},
+Electronic Journal of Linear Algebra \textbf{35} (2019), 319--330.
+DOI: \href{https://doi.org/10.13001/1081-3810.3980}{10.13001/1081-3810.3980}.
+
+\bibitem{DuarteKlein2016}
+P.~Duarte and S.~Klein,
+\emph{Lyapunov Exponents of Linear Cocycles: Continuity via Large Deviations},
+Atlantis Studies in Dynamical Systems, vol.~3, Atlantis Press, 2016.
+DOI: \href{https://doi.org/10.2991/978-94-6239-124-6}{10.2991/978-94-6239-124-6}.
+
+\bibitem{Yener2023}
+N.~Yener,
+\emph{On derivatives of eigenvalues, eigenvectors and generalized eigenvectors of matrices},
+International Journal of Algebra \textbf{17} (2023), 61--75.
+DOI: \href{https://doi.org/10.12988/ija.2023.91740}{10.12988/ija.2023.91740}.
+
+\bibitem{Wright2019}
+S.~J. Wright,
+\emph{Nonlinear Optimization 2: Lecture Notes},
+University of Wisconsin--Madison, 2019.
+
+\end{thebibliography}
+
+\end{document}

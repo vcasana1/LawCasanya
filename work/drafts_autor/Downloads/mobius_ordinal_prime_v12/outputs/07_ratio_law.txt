@@ -1,0 +1,9 @@
+median |E_mid|/|T| over n>=10^3, |M|>=8 : 9.4954e-06
+median |E_mid|/|T| over all n>=100     : 8.8937e-06
+
+predicted law  |E_mid|/|T| ~ c sqrt(|M|)/n  with c = 0.155*pi^2/3 = 0.5099
+ n band                      median of (|E_mid|/|T|) * n / sqrt(|M|)
+  [1.00e+03, 1.00e+04)      0.4385
+  [1.00e+04, 1.00e+05)      0.4800
+  [1.00e+05, 3.16e+05)      0.4995
+  [3.16e+05, 1.00e+06)      0.4955

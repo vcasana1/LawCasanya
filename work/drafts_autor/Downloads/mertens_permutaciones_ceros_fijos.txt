@@ -1,0 +1,208 @@
+%% MERTENS: TODAS LAS PERMUTACIONES DE +/-1, CEROS FIJOS
+% Ejecutar como script. No requiere toolboxes adicionales.
+% Nsmall=30: 19 signos, 8 positivos, 75 582 ordenaciones DISTINTAS.
+% Cambiar a Nsmall=39: M(39)=0 y la media es cero; debido al
+% numero de combinaciones se usa el resultado exacto + Monte Carlo.
+clear; clc; close all;
+
+filename = '/Users/vcasana/Documents/·.· MATLAB/·.· bin_unicos/moebius.bin';
+Nsmall = 30;             % SOLO los primeros Nsmall enteros
+maxEnumerate = 250000;   % limite de ordenaciones distintas a enumerar
+nExamples = 35;          % caminos aleatorios que se dibujan
+nMonteCarlo = 1000;      % solo para comprobar la convergencia del promedio
+rng(271828,'twister');
+
+info = dir(filename);
+if isempty(info), error('No se encuentra %s',filename); end
+if Nsmall<2 || Nsmall~=floor(Nsmall) || Nsmall>info.bytes
+    error('Nsmall debe ser entero entre 2 y %d',info.bytes);
+end
+fid = fopen(filename,'rb');
+if fid<0, error('No se puede abrir el archivo.'); end
+mu = fread(fid,[Nsmall,1],'*int8');
+fclose(fid);
+if numel(mu)~=Nsmall || any(~ismember(mu,[-1 0 1]))
+    error('Datos incompletos o valores de mu no validos.');
+end
+
+n = (0:Nsmall)';
+M = [0; cumsum(double(mu))];
+nzPos = find(mu~=0);            % POSICIONES FISICAS: inalteradas
+signos = double(mu(nzPos));
+Q = numel(signos);               % numero de +/-1
+P = nnz(signos==1);             % numero de +1
+Z = Nsmall-Q;
+m = M(end);                    % desequilibrio global P-(Q-P)
+if Q<2, error('Se requieren al menos 2 valores no nulos.'); end
+q = [0; cumsum(double(mu~=0))]; % no ceros hasta cada n FISICO
+
+% TRUCO EXACTO: NO hace falta enumerar nada para media y varianza.
+% Uniforme entre las nchoosek(Q,P) ordenaciones distintas de signos.
+media = q*(m/Q);
+varianza = q.*(Q-q)/(Q-1) * (1-(m/Q)^2);
+sd = sqrt(max(varianza,0));
+centrada = M-media;
+Toriginal = max(abs(centrada))/sqrt(Q);  % discrepancia de trayectoria entera
+
+% El numero de ordenaciones distintas es Q!/(P!(Q-P)!), NO Q!.
+logK = gammaln(Q+1)-gammaln(P+1)-gammaln(Q-P+1);
+exacto = logK<=log(maxEnumerate)+1e-12;
+if exacto
+    K = round(exp(logK));
+else
+    K = NaN;
+end
+fprintf('\nN=%d, Q=%d, ceros=%d, +1=%d, -1=%d, M(N)=%d\n', ...
+    Nsmall,Q,Z,P,Q-P,m);
+fprintf('Numero de ordenaciones distintas: exp(%.7f)\n',logK);
+fprintf('Media EXACTA: E[M_pi(n)] = Q(n)*M(N)/Q\n');
+fprintf('Media final: %.12g; la media es identicamente cero SOLO si M(N)=0.\n',media(end));
+fprintf('T original = max_n |M(n)-E[M_pi(n)]| / sqrt(Q) = %.10f\n',Toriginal);
+
+% Caminos aleatorios solo para visualizar, tambien con ceros fijos.
+ejemplos = zeros(Nsmall+1,nExamples);
+for r=1:nExamples
+    signosP = signos(randperm(Q));
+    inc = zeros(Nsmall,1); inc(nzPos)=signosP;
+    ejemplos(:,r)=[0;cumsum(inc)];
+end
+
+%% Enumeracion exhaustiva si es viable. El iterador lexicografico
+% NO crea la matriz nchoosek(1:Q,P) ni enumera Q! duplicados.
+if exacto
+    suma = zeros(Nsmall+1,1);
+    sumaCuadrados = zeros(Nsmall+1,1);
+    Tperm = zeros(K,1);
+    combinacion = 1:P;
+    for r=1:K
+        sp = -ones(Q,1);
+        sp(combinacion)=1;
+        inc = zeros(Nsmall,1);
+        inc(nzPos)=sp;
+        camino = [0;cumsum(inc)];
+        suma = suma+camino;
+        sumaCuadrados = sumaCuadrados+camino.^2;
+        Tperm(r)=max(abs(camino-media))/sqrt(Q);
+        % Proxima combinacion de P indices en 1:Q.
+        if P>0
+            j = find(combinacion < (Q-P)+(1:P),1,'last');
+            if ~isempty(j)
+                combinacion(j)=combinacion(j)+1;
+                if j<P
+                    combinacion(j+1:P)=combinacion(j)+(1:(P-j));
+                end
+            end
+        end
+    end
+    promedioExhaustivo=suma/K;
+    varianzaExhaustiva=sumaCuadrados/K-promedioExhaustivo.^2;
+    errorMedia=max(abs(promedioExhaustivo-media));
+    errorVar=max(abs(varianzaExhaustiva-varianza));
+    pExacta=nnz(Tperm>=Toriginal-1e-12)/K;
+    fprintf('\nENUMERACION COMPLETA: K=%d\n',K);
+    fprintf('max error media exacta / exhaustiva = %.3g\n',errorMedia);
+    fprintf('max error varianza exacta / exhaustiva = %.3g\n',errorVar);
+    fprintf('p exacta: proporcion con T_permutada >= T_original = %.9f\n',pExacta);
+    fprintf('Suma de TODAS las curvas en N: %.0f = K*M(N) = %.0f\n',suma(end),K*m);
+    fprintf('La curva suma/K es exactamente la recta media, NO M(n).\n');
+    if errorMedia>1e-9 || errorVar>1e-8 || suma(end)~=K*m
+        error('Fallo en los tests internos de la enumeracion.');
+    end
+else
+    fprintf('\nEnumeracion completa OMITIDA (supera %d).\n',maxEnumerate);
+    fprintf('Media y varianza SIGUEN SIENDO EXACTAS, sin enumeracion.\n');
+    pExacta=NaN;
+    Tperm=[];
+end
+
+%% Convergencia empirica del PROMEDIO de permutaciones independientes.
+% Sumar sin dividir diverge si m ~= 0; promediar converge a media(n).
+checkpoints=unique([1 2 5 10 20 50 100 200 500 nMonteCarlo]);
+checkpoints=checkpoints(checkpoints<=nMonteCarlo);
+errProm=zeros(size(checkpoints));
+sumaMC=zeros(Nsmall+1,1);
+Tmc=zeros(nMonteCarlo,1);
+kCheck=1;
+for r=1:nMonteCarlo
+    sp=signos(randperm(Q));
+    inc=zeros(Nsmall,1); inc(nzPos)=sp;
+    camino=[0;cumsum(inc)];
+    sumaMC=sumaMC+camino;
+    Tmc(r)=max(abs(camino-media))/sqrt(Q);
+    if kCheck<=numel(checkpoints) && r==checkpoints(kCheck)
+        errProm(kCheck)=max(abs(sumaMC/r-media));
+        kCheck=kCheck+1;
+    end
+end
+if ~exacto
+    pMC=(nnz(Tmc>=Toriginal-1e-12)+1)/(nMonteCarlo+1);
+    fprintf('p Monte Carlo aproximada (corregida) = %.6f (B=%d)\n',pMC,nMonteCarlo);
+end
+
+%% FIGURA 1: TODO UNA DEBAJO DE OTRA, x = n FISICO, ceros fijos.
+figure('Color','w','Position',[70 30 1250 1000], ...
+    'Name','Mertens original y permutaciones con ceros fijos');
+tl=tiledlayout(3,1,'TileSpacing','compact','Padding','compact');
+
+ax1=nexttile(tl);
+hold(ax1,'on');
+for r=1:nExamples
+    plot(ax1,n,ejemplos(:,r),'Color',[0.80 0.80 0.80],'LineWidth',0.55);
+end
+hOriginal=plot(ax1,n,M,'b-','LineWidth',1.8);
+hMedia=plot(ax1,n,media,'k--','LineWidth',1.6);
+yline(ax1,0,'k:');
+xlim(ax1,[0 Nsmall]);
+ylabel(ax1,'M(n)');
+title(ax1,sprintf('M real y %d permutaciones; ceros en su sitio',nExamples));
+legend(ax1,[hOriginal,hMedia],{'M original','media exacta de permutaciones'}, ...
+    'Location','best');
+grid(ax1,'on'); box(ax1,'on');
+
+ax2=nexttile(tl);
+hold(ax2,'on');
+plot(ax2,n,M-media,'b-','LineWidth',1.8);
+plot(ax2,n,2*sd,'r--','LineWidth',1.0);
+plot(ax2,n,-2*sd,'r--','LineWidth',1.0);
+yline(ax2,0,'k:');
+xlim(ax2,[0 Nsmall]);
+ylabel(ax2,'M(n) - media');
+title(ax2,'Trayectoria original centrada y bandas +/-2 desviaciones tipicas exactas');
+grid(ax2,'on'); box(ax2,'on');
+
+ax3=nexttile(tl);
+hold(ax3,'on');
+plot(ax3,n,media,'k--','LineWidth',1.8);
+if exacto
+    plot(ax3,n,promedioExhaustivo,'r:','LineWidth',1.8);
+    legend(ax3,{'media teorica','suma de TODAS las permutaciones / K'}, ...
+        'Location','best');
+else
+    plot(ax3,n,sumaMC/nMonteCarlo,'r-','LineWidth',1.2);
+    legend(ax3,{'media EXACTA','promedio Monte Carlo'},'Location','best');
+end
+yline(ax3,0,'k:');
+xlim(ax3,[0 Nsmall]);
+xlabel(ax3,'n fisico (ceros conservados)');
+ylabel(ax3,'promedio');
+title(ax3,'Truco combinatorio: suma/K = Q(n) M(N)/Q');
+grid(ax3,'on'); box(ax3,'on');
+
+%% FIGURA 2: diagnostico global y aproximacion por muestreo.
+figure('Color','w','Position',[110 100 1150 700], ...
+    'Name','Discrepancia de Mertens frente a permutaciones');
+tiledlayout(2,1,'TileSpacing','compact','Padding','compact');
+nexttile;
+if exacto, histogram(Tperm,'Normalization','probability');
+else, histogram(Tmc,'Normalization','probability'); end
+hold on; xline(Toriginal,'r-','LineWidth',2);
+xlabel('T=max |M_pi(n)-media(n)| / sqrt(Q)');
+ylabel('frecuencia relativa');
+title('Estadistico global: rojo = trayectoria aritmetica original');
+grid on;
+nexttile;
+semilogx(checkpoints,errProm,'o-','LineWidth',1.2);
+xlabel('numero K de permutaciones independientes promediadas');
+ylabel('max_n |promedio_K(n)-media(n)|');
+title('Al promediar muchas permutaciones se recupera la media exacta');
+grid on;

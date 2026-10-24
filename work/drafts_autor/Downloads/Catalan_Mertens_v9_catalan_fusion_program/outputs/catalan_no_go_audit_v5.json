@@ -1,0 +1,49 @@
+{
+  "purpose": "audit identities and demonstrate the Catalan-only obstruction",
+  "primitive_excursions": [
+    {
+      "semilength": 1,
+      "enumerated_primitive_paths": 1,
+      "expected_catalan": 1,
+      "largest_possible_height": 1
+    },
+    {
+      "semilength": 2,
+      "enumerated_primitive_paths": 1,
+      "expected_catalan": 1,
+      "largest_possible_height": 2
+    },
+    {
+      "semilength": 3,
+      "enumerated_primitive_paths": 2,
+      "expected_catalan": 2,
+      "largest_possible_height": 3
+    },
+    {
+      "semilength": 4,
+      "enumerated_primitive_paths": 5,
+      "expected_catalan": 5,
+      "largest_possible_height": 4
+    },
+    {
+      "semilength": 5,
+      "enumerated_primitive_paths": 14,
+      "expected_catalan": 14,
+      "largest_possible_height": 5
+    },
+    {
+      "semilength": 6,
+      "enumerated_primitive_paths": 42,
+      "expected_catalan": 42,
+      "largest_possible_height": 6
+    },
+    {
+      "semilength": 7,
+      "enumerated_primitive_paths": 132,
+      "expected_catalan": 132,
+      "largest_possible_height": 7
+    }
+  ],
+  "prime_dilation_identity_max_abs_error": 0,
+  "conclusion": "Primitive Catalan structure permits mountain excursions of height L/2; the prime-dilation average reproduces M exactly and supplies no bound."
+}

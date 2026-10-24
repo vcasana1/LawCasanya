@@ -1,0 +1,4464 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\li}{li}
+\newcommand{\Ms}{M_{\mathrm{s}}}
+\newcommand{\Msk}{M_{\mathrm{sk}}}
+\newcommand{\Ap}{\mathcal{A}_{+}}
+\newcommand{\Am}{\mathcal{A}_{-}}
+\newcommand{\Anet}{\mathcal{A}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Pp}{P^{+}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\Sq}{\mathcal{S}}
+\newcommand{\En}{\mathcal{E}}
+\newcommand{\mt}{\widetilde{m}}
+\newcommand{\F}{\mathcal{F}}
+
+\title[The Mertens excursion skeleton]{The area function of the Mertens excursion skeleton\\
+and horizon-localized criteria for the Riemann hypothesis}
+
+\author{V.~Casa\~na-Giner}
+\date{}
+
+\subjclass[2020]{Primary 11N37; Secondary 11M26, 60G70}
+\keywords{Mertens function, M\"obius function, excursions, Riemann hypothesis,
+Kaczorowski--Pintz oscillation, lacunary sequences, Dyck paths, Catalan tails, extreme values}
+
+\begin{document}
+
+\begin{abstract}
+We decompose the Mertens function $M(x)=\sum_{n\le x}\mu(n)$ into its
+excursions between zero runs and study a regularized triangular skeleton of
+these excursions, its area curves, and exact quadratic and correlation
+identities inside each completed excursion.
+
+For any ordered family of disjoint integer intervals $(x_0,x_1]$, elementary
+counting shows that the members starting at most $X$ with $x_1>x_0^A$
+$(A>1)$ are $O_A(\log\log X)$, those with $x_1>cx_0^2$ are
+$O_c(\log\log X)$, those with $x_1>x_0\psi(x_0)$ are $o(\log X)$ whenever
+$\psi\to\infty$, and those with $x_1>\lambda x_0$ are at most
+$\log X/\log\lambda+O(1)$. Combined with the Kaczorowski--Pintz oscillation
+theorem, this gives a horizon-localization principle: if the excursions
+starting at most $X$ that belong to an exceptional family or cross a horizon
+$\mathfrak h$ number at most $(\kappa+o(1))\log X$ with $\kappa<\gamma_1/\pi$,
+then the Riemann hypothesis is equivalent to Littlewood's bound
+$|M(t)|\ll_\eps t^{1/2+\eps}$ restricted to $x_0<t\le\min\{x_1,\mathfrak h(x_0)\}$
+on the remaining excursions. The horizon can be lowered from $x_0^2$ through
+$cx_0^2$ and $x_0\psi(x_0)$ to $\lambda x_0$ for every
+$\lambda>\lambda_*:=e^{\pi/\gamma_1}$, the exact threshold of this counting
+mechanism. The same input shows that late excursions end at
+$x_1=x_0^{1+o(1)}$, so that their length satisfies $\ell=x_1-x_0\le x_0^{1+o(1)}$. On the resulting window every $\theta>\theta_*:=\frac12e^{\pi/\gamma_1}$
+is an admissible prefix-dependency cutoff: with $M(u)=0$ and
+$u<t\le\lambda u<2u$,
+\[
+M(t)=-\sum_{d\le\lambda u/2}\mu(d)
+\Bigl(\Bigl\lfloor\frac td\Bigr\rfloor-\Bigl\lfloor\frac ud\Bigr\rfloor\Bigr).
+\]
+
+After deleting zero increments, a completed excursion is a primitive Dyck
+path on its fixed support mask. Under the uniform primitive Catalan
+reference law on that mask, a value $|M(t)|\ge t^{1/2+\eps}$ in an excursion
+with $x_1\le\lambda x_0$ has probability at most $x_0^{O(1)}e^{-x_0^{2\eps}/2}$,
+and polynomial lower bounds for the complete-excursion or open-prefix tail
+weights imply $|M(t)|\ll\sqrt{t\log t}$ on the corresponding ranges.
+
+The one-step recursion concentrates, for every fixed $K\ge2$, all dependence
+above $\lambda u/(K+1)$ in the $K-1$ channels $M(t/k)-M(u/k)$, $2\le k\le K$,
+and a persistence lemma quantifies how a large value must be carried by one
+of them or by the deeper remainder. A multiplicative-layer filtration shows
+that for every fixed depth $k$ the first $k$ M\"obius layers determine the
+$(k+1)$-st layer of the future window; the determined positions have density
+zero, while their signed contribution is of order $u(\log\log u)^k/\log u$.
+Thus substantial cancellation with the remaining layers is necessary to
+reach the RH scale; no assertion on the number of layers required is made.
+
+Inside a completed excursion, signed lag averages of two-point correlations
+are forced by the return to zero, while the weighted identity
+$Q=-\sum_hhC_h$ holds globally at every zero of $M$ with exact cancellation
+of the cross-excursion terms; this yields an RH criterion in terms of
+$h$-weighted correlations at zeros of $M$, showing that RH is a statement
+of cancellation between lags. Combining the Fourier-uniform estimate of
+Matom\"aki--Ter\"av\"ainen with Parseval, we obtain uniform two-point
+Ces\`aro cancellation in every interval $(u,u+L]$ with $L\ge u^{3/5+\eta}$,
+averaged over lags $h\le R$ with $R\ge L(\log u)^{-2+\delta}$ for every fixed $0<\delta<1$; it applies
+to all Kaczorowski--Pintz excursions if $\Theta>3/5$. A separate Fej\'er reduction shows that, for complete excursions and $R=o(\sqrt L)$, the weaker target $F_R=o(RL)$ is equivalent to a diagonal local-variance law for increments of $M$; this target may in principle extend below the $3/5$ Fourier threshold.
+
+A recent theorem of Pintz on the average and maximal order of the Mertens
+function gives a further consequence of the excursion decomposition.  Writing
+$\Theta=\sup\Re\rho$, the cumulative absolute excursion area, the quadratic
+mass, and the chord-energy functional introduced here satisfy
+\[
+ \sum_{n\le X}|M(n)|=X^{1+\Theta+o(1)},\qquad
+ \sum_{n\le X}M(n)^2=X^{1+2\Theta+o(1)},\qquad
+ \En(X)=X^{1+\Theta+o(1)}.
+\]
+Moreover, if $D_I(s)=\sum_{n\in I}\mu(n)n^{-s}$ denotes the Dirichlet block
+of a completed excursion, then the block series $\sum_I D_I(s)$ has abscissa
+of absolute convergence exactly $\Theta$ and represents $1/\zeta(s)$
+throughout $\Re s>\Theta$.  At zeros $v$ of $M$ this also yields
+$-\sum_{h<v}hC_h^{[v]}=v^{1+2\Theta+o(1)}$; combined with averaged Chowla,
+all lags $h\le v^\alpha$ are negligible relative to this weighted mass for
+every fixed $\alpha<\Theta$.
+
+Under a uniform sub-Weibull tail hypothesis for a normalized excursion
+statistic, the counting bounds give extreme-value scales by a union bound
+and a Borel--Cantelli argument. We also give an exact bilinear
+representation of $M$ on the square range of an excursion, an exact Mellin
+decomposition of $1/\zeta$ into completed excursion blocks, and asymptotic
+decompositions of $M$ into smooth and large-prime parts.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+\label{sec:introduction}
+
+The object of this paper is the Mertens function $M$, decomposed into
+excursions between zero runs (Section~\ref{sec:definitions}). Two kinds of
+information about $M$ are separated throughout: what is forced by the
+ordering and local geometry of the excursions alone, and what requires
+arithmetic input.
+
+\subsection*{Main results}
+
+The central results are in Section~\ref{sec:lacunary}.
+
+\smallskip\noindent\emph{Geometric counts.} For any ordered family of
+disjoint integer intervals $(x_{0},x_{1}]$, the members with $x_1>x_0^A$
+($A>1$) starting below $X$ are $O_A(\log\log X)$, those with
+$x_1>cx_0^2$ are $O_c(\log\log X)$, those with $x_1>x_0\psi(x_0)$ are
+$o(\log X)$ whenever $\psi\to\infty$, and those with $x_1>\lambda x_0$ are at
+most $\log X/\log\lambda+O(1)$ (Lemmas~\ref{lem:power-lacunary},
+\ref{lem:partition}, \ref{lem:superlinear}, \ref{lem:linear-lacunary}). No
+arithmetic enters.
+
+\smallskip\noindent\emph{Horizon localization.} By
+Kaczorowski--Pintz~\cite{KP86}, if $\Theta>1/2$ then at least
+$(\gamma_1/\pi-o(1))\log X$ distinct excursions starting below $X$ contain
+values of size $t^{\Theta-\eta}$. Theorem~\ref{thm:horizon} turns every
+geometric count below this threshold into an equivalent form of RH: for any
+horizon $h$ whose crossing family has at most $(\kappa+o(1))\log X$ members
+with $\kappa<\gamma_1/\pi$,
+\[
+\mathrm{RH}\iff |M(t)|\ll_\eps t^{1/2+\eps}\quad\text{for }x_0<t\le\min\{x_1,\mathfrak h(x_0)\}.
+\]
+In particular (Corollary~\ref{cor:descending})
+\[
+\mathrm{RH}\iff\text{Littlewood's bound holds on }x_0<t\le\min\{x_1,\lambda x_0\},
+\qquad\lambda>\lambda_*:=e^{\pi/\gamma_1}=1.2488\ldots,
+\]
+and the square horizon $x_0^2$ is eroded from above through $cx_0^2$ and
+$x_0\psi(x_0)$. If RH fails, a positive proportion (on the scale $\log X$) of the
+Kaczorowski--Pintz excursions carry their large value in
+$[x_0+\frac12x_0^{\Theta-\eta},\lambda x_0]$ (Corollary~\ref{cor:two-sided}). The threshold $\lambda_*$ is the multiplicative distance
+between consecutive sign changes of $\cos(\gamma_1\log x)$
+(Remark~\ref{rem:lambda-star}). It is the exact threshold of this counting mechanism, not a
+proved limit for other localization methods. The local form of the
+Kaczorowski--Pintz theorem also shows that for every fixed $A>1$ all late
+excursions satisfy $x_1\le x_0^A$ (Corollary~\ref{cor:KP-local-returns}):
+the endpoints of late Mertens excursions satisfy $x_1=x_0^{1+o(1)}$, and
+hence $\ell=x_1-x_0\le x_0^{1+o(1)}$; no lower bound on $\ell$ follows.  The fractional-square lemma makes the
+intermediate erosion explicit:
+\[
+x_0^2\longrightarrow \frac{x_0^2}{2}\longrightarrow
+\frac{x_0^2}{4}\longrightarrow\frac{x_0^2}{8}\longrightarrow\cdots
+\longrightarrow x_0\psi(x_0)\longrightarrow\lambda x_0.
+\]
+For each fixed dyadic level the crossing family is $O(\log\log X)$; the
+passage to a level depending on $x_0$ is supplied by the superlinear-horizon
+lemma, not by a uniform use of the fixed-$c$ estimate.
+
+Kaczorowski--Pintz~\cite{KP86} provide the oscillation-density input.  The
+excursion-counting lemmas, the horizon-localization theorem, the
+descending-horizon principle, the threshold
+$\lambda_*=e^{\pi/\gamma_1}$, and the resulting prefix-dependency cutoff
+$\theta_*=\tfrac12e^{\pi/\gamma_1}$ are developed here from that input.
+
+\smallskip\noindent\emph{Linear window.} For $u<t\le2u$ one has
+$\mu(n)=-\sum_{d\mid n,\,d\le u}\mu(d)$.  After horizon localization,
+if $u<t\le\lambda u<2u$, the terms with $d>\lambda u/2$ have no multiple
+in $(u,t]$, and therefore
+\[
+M(t)=-\sum_{d\le\lambda u/2}\mu(d)
+\Bigl(\Bigl\lfloor\frac td\Bigr\rfloor-\Bigl\lfloor\frac ud\Bigr\rfloor\Bigr).
+\]
+Thus every $\theta>\theta_*:=\frac12e^{\pi/\gamma_1}$ is an admissible
+prefix cutoff for the RH-equivalent excursion window; the convenient choice
+$\lambda=5/4$ uses only $d\le5u/8$.  This is a descent of dependency, not
+of size.  More sharply, for every fixed $K\ge2$ the dependence above
+$\lambda u/(K+1)$ is concentrated in the $K-1$ increments
+$M(t/k)-M(u/k)$, $2\le k\le K$; for $K=2$ and $\lambda=5/4$, the only channel
+above $5u/12$ is the increment across $(u/2,t/2]$.  The one-step recursion
+does not by itself give an iterable maximum principle, and a termwise
+absolute-value contraction gives no nontrivial gain.  The exact
+intra-excursion formulation, the scale cascade, a persistence extraction
+lemma, and a ballistic counterexample to the relaxed divisor-sum version are
+given below. A bounded number of multiplicative layers determines only a
+density-zero set of increments in the localized window, but for every fixed
+depth $k$ the signed contribution of the determined layers is of order
+$u(\log\log u)^k/\log u$, far above the RH scale; reaching the RH scale
+requires substantial cancellation with the remaining layers, and the present
+arguments do not determine how many layers are needed.
+
+Section~\ref{sec:chowla} connects the excursions with averaged forms of
+Chowla's conjecture. Signed lag averages of correlations inside a bridge are
+forced by the return to zero, while the weighted identity
+$Q_\nu=-\sum_hhC^{(\nu)}_h$ holds globally at every zero of $M$ with exact
+cancellation of the cross-excursion terms. This gives an RH criterion in
+terms of $h$-weighted correlations at zeros of $M$ and shows that RH is a
+statement of cancellation between lags. Combined with the averaged Chowla theorem of Matom\"aki--Radziwi\l\l--Tao, it forces the energy of linear-scale high excursions beyond every admissible small-lag cutoff. Fourier uniformity in all short intervals extends absolute two-point Ces\`aro cancellation to $L\ge u^{3/5+\eta}$. Separately, the Fej\'er identity reduces a weaker local question on complete excursions to a diagonal variance law for short increments of $M$; this is not equivalent to absolute Chowla or to localization of the full weighted energy.
+
+\smallskip\noindent\emph{Exact logarithmic exponents.}
+Pintz's 2026 oscillation theorem implies that the average and late maximal
+orders of $|M|$ have logarithmic exponent $\Theta$.  Transferred to the
+excursion variables, this gives
+\[
+ \sum_{n\le X}|M(n)|=X^{1+\Theta+o(1)},\qquad
+ \sum_{n\le X}M(n)^2=X^{1+2\Theta+o(1)},\qquad
+ \En(X)=X^{1+\Theta+o(1)}.
+\]
+Thus the area and energy quantities recover the rightmost-zero exponent
+exactly, not merely through RH-equivalent upper bounds.  The same input
+shows that the completed-excursion blocks of $1/\zeta$ have abscissa of
+absolute block convergence exactly $\Theta$.  At a zero $v$ of $M$ the
+weighted correlation identity therefore has size $v^{1+2\Theta+o(1)}$, and
+MRT implies that, for each fixed $\alpha<\Theta$, the part from
+$h\le v^\alpha$ is $o(1)$ of the total weighted mass.
+
+\smallskip\noindent\emph{Extreme values.} If a normalized excursion statistic
+has a uniform tail $\Pr(Z>z)\le Ce^{-\kappa_0z^\varpi}$, the counting bounds force the
+maximum over a family with at most $\Lambda(X)$ members starting below $X$ to be
+of order $(\log \Lambda(X))^{1/\varpi}$ in probability, with an almost sure $\limsup$ constant
+$\kappa_0^{-1/\varpi}$ (Theorems~\ref{thm:ev-union} and~\ref{thm:ev-as}). Each level of
+lacunarity removes one logarithm from the extreme scale:
+$\sqrt{\log X}$, $\sqrt{\log\log X}$, $\sqrt{\log\log\log X}$.
+
+\smallskip
+The remaining sections contain exact identities for the skeleton and its area
+curves (Sections~\ref{sec:definitions}--\ref{sec:formulas}), exact
+correlation identities and sharp bounds inside an excursion
+(Section~\ref{sec:internal_corr}), the relation with $\zeta$
+(Section~\ref{sec:zeta}), area bounds and global criteria equivalent to RH
+(Sections~\ref{sec:bounds}--\ref{sec:criteria}), the exact bilinear form of
+$M$ on the square range of an excursion and the Mellin mass of an excursion
+(Section~\ref{sec:lacunary}), and the decomposition of $M$ by large prime
+factors, globally and inside an excursion
+(Sections~\ref{sec:prime_horizon}--\ref{sec:local_large_prime}).
+Section~\ref{sec:data} records numerical data on the excursion census.
+
+\subsection*{Conventions}
+$\rho$ runs over nontrivial zeros of $\zeta$, with ordinate $\gamma=\Im\rho$,
+\[
+\Theta=\sup\{\Re\rho\},\qquad \gamma_1=14.134725\ldots
+\]
+is the ordinate of the lowest zero, and RH means $\Theta=1/2$. Littlewood's
+criterion \cite[\S14.25]{Titchmarsh1986} states that RH holds if and only if
+$M(x)\ll_\eps x^{1/2+\eps}$ for every $\eps>0$. Statements labelled
+\emph{Heuristic} are not used in any proof.
+
+\subsection*{Notation}
+\label{subsec:notation}
+The following symbols keep one meaning throughout; symbols defined and used
+only inside a single proof are not listed. The letters $c,C$ (with or without
+subscripts other than those listed) denote positive constants whose value may
+change from line to line.
+
+\smallskip
+\noindent\emph{Zeros and constants.}
+$\rho$, $\gamma=\Im\rho$: nontrivial zeros of $\zeta$;
+$\Theta=\sup\Re\rho$;
+$\gamma_1=14.1347\ldots$;
+$\lambda_*=e^{\pi/\gamma_1}=1.24889\ldots$, the threshold of the counting
+mechanism of Theorem~\ref{thm:horizon};
+$\theta_*=\lambda_*/2=0.62444\ldots$, the prefix cutoff;
+$M_0=M+2$.
+
+\smallskip
+\noindent\emph{Excursions.}
+$I_\nu=(x_{0,\nu},x_{1,\nu}]$ an excursion, also written $(u_\nu,v_\nu]$ or
+$(u,v]$; $\sigma_\nu\in\{\pm1\}$ its orientation (always $\sigma$, never a
+real part); $\ell_\nu=x_{1,\nu}-x_{0,\nu}$; $H_\nu$ its height; $\tau_\nu$ its
+apex; $a_\nu=\tau_\nu-x_{0,\nu}$, $b_\nu=x_{1,\nu}-\tau_\nu$;
+$u(x)$, $L_x$: last zero $\le x$ and length of the terminal block.
+
+\smallskip
+\noindent\emph{Skeleton and curves.}
+$\Ms$, $\Msk$: regularized and unregularized skeletons;
+$\Ap,\Am,\Anet$: area curves; $\widetilde A(x)=\int_0^xM$.
+
+\smallskip
+\noindent\emph{Quadratic data.}
+$S_t$, $S_r$: oriented partial sums inside a block or excursion;
+$C_h$, $C_h^{(\nu)}$: lag correlations; $q_\nu$: number of nonzero steps;
+$Q_\nu$, $Q_{\rm term}$: quadratic masses; $\beta_\nu$, $\beta_{\rm term}$:
+absolute masses $\sum|M|$; $P_h^{(\nu)},D_h^{(\nu)}$: support and
+opposite-sign pair counts; $\En$: energy.
+
+\smallskip
+\noindent\emph{Families and counts.}
+$\F$ a family of excursions; $E_\F(X)$ the number of its members starting at
+most $X$; $\mathfrak h$ a horizon function and $\F_{\mathfrak h}$ the family
+crossing it; $E_A$, $E_\square=E_2$, $E_\lambda$ the counts for
+$x_1>x_0^A$, $x_1>x_0^2$, $x_1>\lambda x_0$; $c$ in $cx_0^2$ is a fixed
+horizon fraction; $\kappa$ the density constant in \eqref{eq:horizon-hyp};
+$N_\eta(Y)$ the Kaczorowski--Pintz excursion count.
+
+\smallskip
+\noindent\emph{Extreme values.}
+$Z_k$ normalized excursion statistics; $Z_{\max,\F}(X)$ their family maximum;
+$C,\kappa_0,\varpi$ the constants of $(\mathrm{SG}_\varpi)$;
+$\Lambda(X)$ a deterministic bound for $E_\F(X)$.
+
+\smallskip
+\noindent\emph{Linear window and recursion.}
+$\mu_u=\mu\mathbf 1_{[1,u]}$; $\mathcal B_u(t)$ the bilinear form;
+$c_q(t,u)$ the kernel coefficients, with $e_q$ and $\mathrm{Err}(t,u)$
+their remainder; $\Delta_k(u,t)=M(t/k)-M(u/k)$ the channels and
+$\mathcal R_K(u,t)$ the deep remainder; $X_k,Y_K$ their oriented values;
+$\alpha\in(0,1)$ the exponent in the normalized ratios
+$|M(q)|/q^\alpha$; $w_r$, $K_q$ weights and combined kernel;
+$\delta_d$ a relaxed prefix and $D_\delta(n)$ its divisor sums;
+$\Omega,\omega$ the number of prime factors with and without multiplicity.
+
+\smallskip
+\noindent\emph{Catalan comparison.}
+$\Sq(x)=\#\{n\le x:\mu(n)\ne0\}$ the squarefree-compressed clock;
+$L^\#(I)$ the compressed length; $r_I(t)$ the support time;
+$\mathrm{Cat}_n$ the Catalan numbers; $p_{\mathrm{Cat}}(I,t)$,
+$p^{\max}_{\mathrm{Cat}}(I)$, $p_{\mathrm{open}}(t)$ reference tail weights;
+$\mathcal I_{\mathrm{Cat}}$ selection energy; $\mathcal M_r$ positive meanders.
+
+\smallskip
+\noindent\emph{Large-prime decomposition.}
+$U\ge2$ a level (not an excursion start); $M^{\rm sm}_U$, $M^{\rm lp}_U$ the
+$U^2$-smooth and large-prime parts; $R=t/U^2$; $N_y(t,U)$ copy
+multiplicities; $\Cc(R)$, $\Upsilon(R)$ the coherent and multiplicity-weighted
+coefficients; $\mt(y)=\sum_{a\le y}\mu(a)/a$; $\Pp(n)$ the largest prime
+factor; $\Pi_a(t)$ local prime counts.
+
+\smallskip
+\noindent\emph{Mellin.}
+$s=\varsigma+it$ in Section~\ref{sec:criteria} and in
+Proposition~\ref{prop:excursion-mellin}; $D_I(s)$ the excursion block of
+$1/\zeta$; $J$ a leg in Proposition~\ref{prop:dipoles}.
+
+\section{Excursions and the regularized skeleton}
+\label{sec:definitions}
+
+Let $\mu$ be the M\"obius function and
+\begin{equation}
+\label{eq:mertens_def}
+M(x)=\sum_{n\le x}\mu(n),\qquad x\ge0,
+\end{equation}
+piecewise constant and right-continuous, with jumps $\mu(n)\in\{-1,0,1\}$
+at the integers. The segmentation of $M$ by zero runs and the record of its
+extrema are standard computational objects; Hurst~\cite{Hurst18} computed
+$M(x)$ for all $x\le10^{16}$. The area and quadratic functionals of lattice
+excursions are classical
+\cite{Takacs91,NguyenThe04,Richard05,Janson07,DKW15,CP17}; here they are
+applied to the deterministic M\"obius walk.
+
+\begin{definition}[Excursions and zero runs]
+\label{def:excursion}
+An \emph{excursion} is an interval
+\[
+I_\nu=(x_{0,\nu},x_{1,\nu}]
+\]
+with integer endpoints, $M(x_{0,\nu})=M(x_{1,\nu})=0$,
+$M(x_{0,\nu}+1)=\sigma_\nu\in\{\pm1\}$, and
+$\sigma_\nu M(n)\ge1$ for every integer $x_{0,\nu}<n<x_{1,\nu}$. Thus
+$x_{1,\nu}$ is the first return to zero after the departure from
+$x_{0,\nu}$. Consecutive excursions may be separated by a \emph{zero run}
+$[x_{1,\nu},x_{0,\nu+1}]$, a maximal set of consecutive integers on which
+$M=0$; it may consist of a single point. The first excursion is $(0,2]$.
+Since $M$ takes values of both signs of size $\gg\sqrt x$ infinitely often
+(Remark~\ref{rem:omega}) and has unit steps, it has infinitely many zeros
+and every excursion is finite. We also write $u_\nu=x_{0,\nu}$ and
+$v_\nu=x_{1,\nu}$.
+
+Put
+\[
+\ell_\nu=x_{1,\nu}-x_{0,\nu},\qquad
+H_\nu=\max_{x_{0,\nu}<n<x_{1,\nu}}|M(n)|,
+\]
+\[
+\tau_\nu=\min\{n\in I_\nu:|M(n)|=H_\nu\},\qquad
+a_\nu=\tau_\nu-x_{0,\nu},\qquad b_\nu=x_{1,\nu}-\tau_\nu.
+\]
+Every excursion has $H_\nu\ge1$ and $\ell_\nu\ge2$.
+\end{definition}
+
+\begin{definition}[Completed excursions and open prefixes]
+\label{def:completed-open}
+An excursion in the sense of Definition~\ref{def:excursion} is always
+\emph{completed}: both $M(x_{0,\nu})=0$ and $M(x_{1,\nu})=0$ are part of
+the definition. A segment $(u,x]$ with $M(u)=0$ and $M(n)\ne0$ for
+$u<n\le x$, with no return condition at $x$, is an \emph{open prefix}; the
+terminal block of Definition~\ref{def:Ms-terminal} is one. Any estimate
+whose proof uses the backward bound $|M(u+r)|\le x_{1,\nu}-u-r$ holds for
+completed excursions only and is never applied to an open prefix.
+\end{definition}
+
+\begin{lemma}[Height and step count]
+\label{lem:height_steps}
+For every excursion,
+\begin{equation}
+\label{eq:height_steps}
+H_\nu\le\min(a_\nu,b_\nu)\le\frac{\ell_\nu}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The steps of $M$ are $0$ or $\pm1$, so at least $H_\nu$ steps are needed to
+reach height $H_\nu$ from zero and at least $H_\nu$ more to return to zero.
+\end{proof}
+
+\begin{definition}[Crossing and touching zero runs]
+\label{def:crossing_touching}
+The zero run $[x_{1,\nu},x_{0,\nu+1}]$ between consecutive excursions is a
+\emph{crossing run} if $\sigma_{\nu+1}=-\sigma_\nu$ and a \emph{touching run}
+if $\sigma_{\nu+1}=\sigma_\nu$.
+\end{definition}
+
+\begin{definition}[Regularized skeleton]
+\label{def:Ms}
+The \emph{skeleton} $\Ms$ is the continuous, piecewise linear function
+defined on every excursion by
+\begin{equation}
+\label{eq:Ms_def}
+\Ms(t)=
+\begin{cases}
+\sigma_\nu\sqrt{H_\nu}\dfrac{t-x_{0,\nu}}{a_\nu},
+ &x_{0,\nu}\le t\le\tau_\nu,\\[2ex]
+\sigma_\nu\sqrt{H_\nu}\dfrac{x_{1,\nu}-t}{b_\nu},
+ &\tau_\nu\le t\le x_{1,\nu},
+\end{cases}
+\end{equation}
+and by $\Ms\equiv0$ on zero runs. The \emph{unregularized skeleton} $\Msk$
+is defined in the same way with peak $\sigma_\nu H_\nu$.
+\end{definition}
+
+\begin{definition}[Terminal block of a truncated computation]
+\label{def:Ms-terminal}
+Let $N\ge2$ and $u=\max\{n\le N:M(n)=0\}$. If $u=N$ there is no terminal
+block. Otherwise $M(n)\ne0$ for $u<n\le N$, and since $M$ has steps
+$0,\pm1$ all these values have the sign of $M(N)$. Put
+\[
+\sigma_{\rm term}=\sgn M(N),\qquad
+H_{\rm term}=\max_{u<n\le N}|M(n)|,\qquad
+\tau_{\rm term}=\min\{n\in(u,N]:|M(n)|=H_{\rm term}\}.
+\]
+On $[u,N]$ the regularized skeleton is the segment from $(u,0)$ to
+$(\tau_{\rm term},\sigma_{\rm term}\sqrt{H_{\rm term}})$ followed, if
+$\tau_{\rm term}<N$, by the segment ending at
+$(N,\sigma_{\rm term}\sqrt{|M(N)|})$. Its signed area is
+\[
+\Delta\Anet(u,N]=\frac{\sigma_{\rm term}}2
+\Bigl[\sqrt{H_{\rm term}}(N-u)+
+\sqrt{|M(N)|}(N-\tau_{\rm term})\Bigr].
+\]
+The terminal skeleton is provisional: after the next return to zero the
+completed excursion acquires a different descending side. Independently of
+it, for real $x$ with last zero $u(x)\le\lfloor x\rfloor$ define
+\[
+\beta_{\rm term}(x):=\sum_{u(x)<n\le\lfloor x\rfloor}|M(n)|,\qquad
+Q_{\rm term}(x):=\sum_{u(x)<n\le\lfloor x\rfloor}M(n)^2,\qquad
+L_x:=\lfloor x\rfloor-u(x).
+\]
+These depend only on $M$.
+\end{definition}
+
+\begin{definition}[The three curves]
+\label{def:areas}
+With $\Ms^{\pm}=\max(\pm\Ms,0)$,
+\begin{equation}
+\label{eq:areas_def}
+\Ap(x)=\int_0^x\Ms^+(t)\,dt,\qquad
+\Am(x)=-\int_0^x\Ms^-(t)\,dt,\qquad
+\Anet(x)=\int_0^x\Ms(t)\,dt.
+\end{equation}
+$\Ap$ is nondecreasing, $\Am$ is nonincreasing, and both are constant on
+zero runs and on excursions of the opposite sign.
+\end{definition}
+
+\begin{remark}[The family of $g$-skeletons]
+\label{rem:g-skeleton}
+For any $g:\mathbb N_0\to[0,\infty)$ with $g(0)=0$ and $g(h)>0$ for $h\ge1$,
+one may replace the apex height $\sqrt H$ by $g(H)$. The signed area
+increment becomes $\tfrac12\sigma_\nu g(H_\nu)\ell_\nu$. The correlation
+identities of Section~\ref{sec:internal_corr} concern the M\"obius
+increments and do not depend on $g$. The choice $g(H)=\sqrt H$ is a
+normalization.
+\end{remark}
+
+\section{Exact formulas}
+\label{sec:formulas}
+
+\begin{lemma}[Increment per excursion]
+\label{lem:jump}
+For every complete excursion,
+\begin{equation}
+\label{eq:jump}
+\Anet(x_{1,\nu})-\Anet(x_{0,\nu})
+=\sigma_\nu\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+\qquad
+\sum_{n\in I_\nu}\Ms(n)
+=\sigma_\nu\sqrt{H_\nu}\frac{\ell_\nu}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The two pieces are triangles of height $\sqrt{H_\nu}$ and bases $a_\nu,b_\nu$.
+For the discrete sum, the ascending values at $j=1,\ldots,a_\nu$ sum to
+$\sqrt{H_\nu}\sum_{j\le a_\nu}j/a_\nu=\sqrt{H_\nu}(a_\nu+1)/2$; the
+descending values at $\tau_\nu+r$, $r=1,\ldots,b_\nu$, sum to
+$\sqrt{H_\nu}\sum_{r\le b_\nu}(b_\nu-r)/b_\nu=\sqrt{H_\nu}(b_\nu-1)/2$.
+\end{proof}
+
+\begin{proposition}[Explicit form of the three curves]
+\label{prop:explicit}
+Let $x\in I_\nu$. Then
+\begin{equation}
+\label{eq:explicit_A}
+\Anet(x)=
+\begin{cases}
+\Anet(x_{0,\nu})+\sigma_\nu\sqrt{H_\nu}
+\dfrac{(x-x_{0,\nu})^2}{2a_\nu},&x\le\tau_\nu,\\[2ex]
+\Anet(x_{0,\nu})+\sigma_\nu\sqrt{H_\nu}
+\left(\dfrac{a_\nu}{2}+(x-\tau_\nu)-
+\dfrac{(x-\tau_\nu)^2}{2b_\nu}\right),&x\ge\tau_\nu.
+\end{cases}
+\end{equation}
+At excursion endpoints,
+\begin{equation}
+\label{eq:explicit_net}
+\Anet(x_{1,k})=\sum_{\nu\le k}\sigma_\nu\frac{\sqrt{H_\nu}\ell_\nu}{2},\qquad
+\Ap(x_{1,k})=\sum_{\substack{\nu\le k\\\sigma_\nu=+1}}
+\frac{\sqrt{H_\nu}\ell_\nu}{2},\qquad
+\Am(x_{1,k})=-\sum_{\substack{\nu\le k\\\sigma_\nu=-1}}
+\frac{\sqrt{H_\nu}\ell_\nu}{2}.
+\end{equation}
+The curves are piecewise quadratic and $C^1$.
+\end{proposition}
+
+\begin{proof}
+Integrate \eqref{eq:Ms_def}; the endpoint formulas follow from
+Lemma~\ref{lem:jump}.
+\end{proof}
+
+A point $y$ is a \emph{strict inflection point} of a function if there
+exists $\delta>0$ such that the function is strictly convex on one side of
+$y$ and strictly concave on the other, within distance $\delta$. The second
+derivative need not exist at $y$.
+
+\begin{lemma}[Critical geometry of $\Anet$]
+\label{lem:critical}
+Let $R=[p,q]$ be the zero run between an excursion of sign $\sigma_-$ ending
+at $p$ and the next excursion of sign $\sigma_+$ starting at $q$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Every apex $\tau_\nu$ is a strict inflection point.
+\item If $\sigma_+=-\sigma_-$, then $R$ is an extremal plateau; it is a
+strict local extremum exactly when $p=q$.
+\item If $\sigma_+=\sigma_-=:\sigma$, then $\Anet$ has no local extremum on
+$R$. Its concavity has sign $-\sigma$ immediately to the left and $+\sigma$
+immediately to the right. If $p=q$ the point is a strict inflection; if
+$p<q$, no point of $R$ is a strict inflection, and the change of concavity
+is carried by the whole plateau.
+\item Strict local extrema occur exactly at isolated crossing zeros, and
+plateaus of extrema exactly at crossing runs of positive length; every point
+of such a plateau is a non-strict local extremum.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+On the descending side of the left excursion,
+$\sgn\Anet'=\sigma_-$ and $\sgn\Anet''=-\sigma_-$. On the ascending side of
+the right excursion, $\sgn\Anet'=\sigma_+$ and $\sgn\Anet''=\sigma_+$. On
+$R$, $\Anet'=0$. The assertions follow, and at every apex the sign of
+$\Anet''$ reverses.
+\end{proof}
+
+\section{Internal correlations of an excursion}
+\label{sec:internal_corr}
+
+For a real block $x_1,\dots,x_L$ put
+\begin{equation}
+\label{eq:block_def}
+S_t=\sum_{j=1}^t x_j,\qquad
+C_h=\sum_{j=1}^{L-h}x_jx_{j+h}.
+\end{equation}
+
+\begin{lemma}[Triangular identity]
+\label{lem:triangular-corr}
+For every real finite sequence,
+\begin{equation}
+\label{eq:general-triangular}
+\sum_{t=1}^{L-1}S_t^2+\sum_{h=1}^{L-1}hC_h
+=S_L\sum_{t=1}^{L-1}S_t.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the partial sums,
+\[
+\sum_{t=1}^{L}S_t^2
+=\sum_{i,j=1}^{L}x_ix_j\bigl(L+1-\max(i,j)\bigr).
+\]
+Write $\max(i,j)=\tfrac12(i+j+|i-j|)$. The part containing $|i-j|$ is
+$\tfrac12\sum_{i,j}x_ix_j|i-j|=\sum_{h=1}^{L-1}hC_h$. The remaining part is
+$(L+1)S_L^2-S_L\sum_i ix_i$, and $\sum_i ix_i=LS_L-\sum_{t=1}^{L-1}S_t$.
+Hence
+$\sum_{t=1}^{L}S_t^2=S_L^2+S_L\sum_{t<L}S_t-\sum_hhC_h$; subtract $S_L^2$.
+\end{proof}
+
+\begin{corollary}[Bridge case]
+\label{cor:bridge}
+If $S_L=0$, then
+\begin{equation}
+\label{eq:bridge-triangular}
+\sum_{t=1}^{L-1}S_t^2=-\sum_{h=1}^{L-1}hC_h.
+\end{equation}
+\end{corollary}
+
+\begin{remark}[Hermitian form]
+\label{rem:hermitian}
+For complex $x_j$ and $C_h=\sum_{j=1}^{L-h}x_j\overline{x_{j+h}}$, the same
+computation gives
+\[
+\sum_{t=1}^{L-1}|S_t|^2+\sum_{h=1}^{L-1}h\Re C_h
+=\Re\!\left(\overline{S_L}\sum_{t=1}^{L-1}S_t\right).
+\]
+\end{remark}
+
+For a complete excursion orient the increments by
+\begin{equation}
+\label{eq:orientation}
+x_j=\sigma_\nu\mu(x_{0,\nu}+j),\qquad
+S_t=|M(x_{0,\nu}+t)|.
+\end{equation}
+Then $S_t>0$ for $1\le t<\ell_\nu$ and $S_{\ell_\nu}=0$. Put
+\begin{equation}
+\label{eq:Q_def}
+Q_\nu=\sum_{t=1}^{\ell_\nu-1}S_t^2,\qquad
+C_h^{(\nu)}=\sum_{j=1}^{\ell_\nu-h}x_jx_{j+h},
+\qquad\text{so that}\qquad
+Q_\nu=-\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}.
+\end{equation}
+
+\begin{lemma}[Zeroth moment and extreme lag]
+\label{lem:zeroth-corr}
+\label{lem:extreme-lag}
+With $q_\nu=\sum_jx_j^2$,
+\begin{equation}
+\label{eq:zeroth-corr}
+\sum_{h=1}^{\ell_\nu-1}C_h^{(\nu)}=-\frac{q_\nu}{2},\qquad
+C_{\ell_\nu-1}^{(\nu)}=-1,
+\end{equation}
+and $q_\nu$ is even and at least $2$.
+\end{lemma}
+
+\begin{proof}
+$0=(\sum_jx_j)^2=q_\nu+2\sum_hC_h^{(\nu)}$. The first oriented step is $+1$;
+immediately before the first return the path is at height $1$, so the last
+step is $-1$. The bridge condition forces equally many positive and negative
+active steps.
+\end{proof}
+
+\begin{proposition}[Quadratic decomposition by excursions]
+\label{prop:quadratic-decomp}
+For real $x\ge1$ let $u(x)$ and $L_x$ be as in
+Definition~\ref{def:Ms-terminal}, and for $1\le j\le L_x$ put
+$y_j=\mu(u(x)+j)$ and $C_h^{\rm term}=\sum_{j=1}^{L_x-h}y_jy_{j+h}$. Then
+\begin{equation}
+\label{eq:quadratic-decomp-general}
+\sum_{n\le x}M(n)^2
+=\sum_{\nu:x_{1,\nu}\le u(x)}Q_\nu+Q_{\rm term}(x),
+\end{equation}
+\begin{equation}
+\label{eq:terminal-Q-exact}
+Q_{\rm term}(x)=M(\lfloor x\rfloor)^2
++M(\lfloor x\rfloor)\sum_{t=1}^{L_x-1}M(u(x)+t)
+-\sum_{h=1}^{L_x-1}hC_h^{\rm term},
+\end{equation}
+with $Q_{\rm term}(x)=0$ if $L_x=0$. At a zero $x$ of $M$,
+\begin{equation}
+\label{eq:quadratic-decomp-zero}
+\sum_{n\le x}M(n)^2
+=\sum_{x_{1,\nu}\le x}Q_\nu
+=-\sum_{x_{1,\nu}\le x}\sum_hhC_h^{(\nu)}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Every integer up to $u(x)$ lies either in a zero run or in a unique excursion
+interior. Apply Lemma~\ref{lem:triangular-corr} to the terminal block and
+add its final term $S_{L_x}^2$.
+\end{proof}
+
+\begin{lemma}[Elementary bound for an open terminal block]
+\label{lem:terminal-Q-elementary}
+Let $u$ be a zero of $M$ and $L\ge0$. Then $|M(u+r)|\le r$ for
+$1\le r\le L$, and
+\begin{equation}
+\label{eq:terminal-Q-elementary}
+\sum_{r=1}^{L}M(u+r)^2\le\frac{L(L+1)(2L+1)}6 .
+\end{equation}
+In particular $Q_{\rm term}(x)\ll L_x^3$. The bridge bound
+\eqref{eq:Q_upper}, whose leading coefficient is $1/12$ rather than $1/3$,
+applies only to complete excursions.
+\end{lemma}
+
+\begin{proof}
+$M(u+r)=\sum_{j\le r}\mu(u+j)$ with $|\mu|\le1$; square and sum.
+\end{proof}
+
+
+Thus the quadratic sum sees only lag correlations internal to excursions:
+pairs of M\"obius increments in different completed excursions do not
+contribute.
+
+Let
+\begin{equation}
+\label{eq:beta_def}
+\beta_\nu=\sum_{t=1}^{\ell_\nu-1}S_t=\sum_{n\in I_\nu}|M(n)|.
+\end{equation}
+Cauchy--Schwarz gives
+\begin{equation}
+\label{eq:beta-Q}
+\beta_\nu^2\le(\ell_\nu-1)Q_\nu,
+\end{equation}
+with equality exactly for a flat excursion of height $1$. To separate
+support from sign geometry, let $P_h^{(\nu)}=\#\{j:x_jx_{j+h}\ne0\}$ and let
+$D_h^{(\nu)}$ count the opposite-sign pairs among them. Then
+\begin{equation}
+\label{eq:C-P-D}
+C_h^{(\nu)}=P_h^{(\nu)}-2D_h^{(\nu)},\qquad
+Q_\nu=\sum_{h=1}^{\ell_\nu-1}h\bigl(2D_h^{(\nu)}-P_h^{(\nu)}\bigr).
+\end{equation}
+
+\begin{proposition}[Sharp bounds at fixed length and height]
+\label{prop:sharp-LH}
+Let $S_0=S_L=0$, $S_t\ge1$ for $0<t<L$, $S_t-S_{t-1}\in\{-1,0,1\}$ and
+$H=\max S_t$. Then $L\ge2H$ and
+\begin{align}
+H^2+L-2H&\le\beta\le H(L-H),\label{eq:beta-LH}\\
+\frac{2H^3+H}{3}+L-2H&\le Q\le
+\frac{2H^3+H}{3}+(L-2H)H^2.\label{eq:Q-LH}
+\end{align}
+All four bounds are attained. In particular
+\begin{equation}
+\label{eq:height_Q_min}
+Q\ge\frac{2H^3+H}{3},\qquad Q\ge L-1.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Before and after the first visit to $H$ the path visits each level
+$1,\dots,H-1$. Together with one visit to $H$, these $2H-1$ designated
+interior times contribute $2(1+\cdots+(H-1))+H=H^2$ to $\beta$ and
+$2\sum_{j<H}j^2+H^2=(2H^3+H)/3$ to $Q$. The remaining $L-2H$ interior times
+lie at heights between $1$ and $H$; placing them all at height $1$, or all
+at height $H$, attains the bounds.
+\end{proof}
+
+\begin{corollary}[Sharp fixed-length bounds]
+\label{cor:fixed-L}
+For $L\ge2$,
+\[
+\beta\le\left\lfloor\frac{L^2}{4}\right\rfloor,\qquad
+Q\le
+\begin{cases}
+L(L^2+2)/12,&L\text{ even},\\
+L(L^2-1)/12,&L\text{ odd},
+\end{cases}
+\]
+and in particular
+\begin{equation}
+\label{eq:Q_upper}
+Q\le\frac{L^3+2L}{12}.
+\end{equation}
+Both bounds are attained by the tent path, with one horizontal step at
+maximal height when $L$ is odd.
+\end{corollary}
+
+\begin{proof}
+Use $S_t\le\min(t,L-t)$ and sum this bound and its square.
+\end{proof}
+
+\section{Where \texorpdfstring{$\zeta$}{zeta} enters}
+\label{sec:zeta}
+
+The black curve depends nonlinearly on $M$. The dependence enters through
+$\sqrt{H_\nu}$ and through the selection of
+$x_{0,\nu},\tau_\nu,x_{1,\nu}$; no closed expression of its Mellin transform
+in terms of $\zeta$ is known. The nodes
+$x_{0,\nu},x_{1,\nu}$ are zeros of $M$. If RH holds and all zeros are
+simple, there is a sequence $T_k\to\infty$ such that, for non-integer $x$,
+\begin{equation}
+\label{eq:explicitM}
+  M(x)=\lim_{k\to\infty}\sum_{|\gamma|<T_k}\frac{x^\rho}{\rho\,\zeta'(\rho)}-2
+  +\sum_{n\ge1}\frac{(-1)^{n-1}(2\pi/x)^{2n}}{(2n)!\,n\,\zeta(2n+1)}
+\end{equation}
+\cite[\S14.27]{Titchmarsh1986}. For $\widetilde{A}(x):=\int_0^xM(t)\,dt$ one
+has, for $\Re s>1$,
+\begin{equation}
+\label{eq:mellin_A}
+  \int_1^\infty \widetilde{A}(x)x^{-s-2}\,dx=\frac{1}{s(s+1)\zeta(s)}.
+\end{equation}
+Shifting the contour formally, the residues are
+\begin{equation}
+\label{eq:explicitA}
+  \sum_\rho\frac{x^{\rho+1}}{\rho(\rho+1)\zeta'(\rho)}-2x+12
+  +(\text{residues at the trivial zeros}),
+\end{equation}
+where $x/\zeta(0)=-2x$ is the residue at $s=0$ and
+$1/((-1)\zeta(-1))=12$ the residue at $s=-1$. The factor $(\rho+1)^{-1}$
+improves convergence, but RH and simplicity alone do not control
+$1/\zeta'(\rho)$ well enough to turn \eqref{eq:explicitA} into an identity
+with an untruncated sum; results of this type require additional input of
+Gonek--Hejhal type \cite{Ng2004}. The area of $\Msk$ differs from
+$\widetilde A$ by explicit local terms.
+
+\begin{proposition}[Dipole identity]
+\label{prop:dipoles}
+For each excursion let its \emph{legs} be the integer sets
+$J=(u_\nu,\tau_\nu]\cap\mathbb{Z}$ and
+$(\tau_\nu,v_\nu]\cap\mathbb{Z}$, with midpoints $c_J=(u_\nu+\tau_\nu)/2$
+and $(\tau_\nu+v_\nu)/2$. Then for every zero $v_k$,
+\begin{equation}
+\label{eq:dipoles}
+  \int_0^{v_k}\Msk(t)\,dt=\widetilde{A}(v_k)
+  +\sum_{J\subset(0,v_k]}\ \sum_{m\in J}\mu(m)\,(m-c_J).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Since $M$ is constant on each $[n,n+1)$, $\int_a^bM(t)\,dt=\sum_{n=a}^{b-1}M(n)$
+for integers $a<b$. On an ascent leg, $\int_{u}^{\tau}\Msk=\sigma H a/2$ and
+$\int_u^\tau M=\sum_{m=u+1}^{\tau}\mu(m)(\tau-m)$, while
+$\sigma H=\sum_{m=u+1}^{\tau}\mu(m)$; the difference is
+$\sum_m\mu(m)(a/2-\tau+m)=\sum_m\mu(m)(m-c_J)$. On a descent leg,
+$\int_\tau^v\Msk=\sigma Hb/2$ and
+$\int_\tau^vM=b\,\sigma H+\sum_{m=\tau+1}^{v}\mu(m)(v-m)$ with
+$\sum_{m=\tau+1}^{v}\mu(m)=-\sigma H$; the difference is
+$\sum_m\mu(m)(m-(v-b/2))$, and $v-b/2=(\tau+v)/2=c_J$. On zero runs
+both integrands vanish. Sum over legs.
+\end{proof}
+
+\section{Bounds for the area curves}
+\label{sec:bounds}
+
+\begin{lemma}[Transfer]
+\label{lem:transfer}
+Let $x\ge1$ and let $x^*\ge x$ be a zero of $M$ (in a computation truncated
+at $N\ge x$, take $x^*=N$ and the terminal skeleton of
+Definition~\ref{def:Ms-terminal}). If $|M(n)|\le C_0\,n^{1/2}$ for all
+$1\le n\le x^*$ (so necessarily $C_0\ge1$), then
+\begin{equation}
+\label{eq:transfer_bound}
+  |\Ms(t)|\le C_0^{1/2}t^{1/4}\quad(0\le t\le x),\qquad
+  \Ap(x)+|\Am(x)|\le\tfrac45\,C_0^{1/2}x^{5/4}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $t\ge\tau_\nu$, $|\Ms(t)|\le\sqrt{H_\nu}\le C_0^{1/2}\tau_\nu^{1/4}\le
+C_0^{1/2}t^{1/4}$. For $u_\nu\le t\le\tau_\nu$ the chord from $(u_\nu,0)$ to
+$(\tau_\nu,\sqrt{H_\nu})$ lies below the chord of $C_0^{1/2}t^{1/4}$ over
+$[u_\nu,\tau_\nu]$, whose endpoints $C_0^{1/2}u_\nu^{1/4}\ge0$ and
+$C_0^{1/2}\tau_\nu^{1/4}\ge\sqrt{H_\nu}$ (as $\tau_\nu\le x^*$) are at
+least as high; that chord lies below $C_0^{1/2}t^{1/4}$ by concavity.
+Integrate.
+\end{proof}
+
+\begin{lemma}[A concave majorant]
+\label{lem:concave-majorant}
+Let $\phi(y)=(\log y)^{3/5}(\log\log y)^{-1/5}$ and, for $\kappa>0$,
+$F(y)=y^{1/2}e^{-\kappa\phi(y)}$. There is $y_0=y_0(\kappa)$ such that $F$
+is increasing and concave on $[y_0,\infty)$.
+\end{lemma}
+
+\begin{proof}
+With $y=e^s$ and $g(s)=s^{3/5}(\log s)^{-1/5}$, one has
+$F=\exp(s/2-\kappa g(s))$. Put $h(s)=\frac12-\kappa g'(s)$. Then
+\[
+yF'(y)=F\,h(s),\qquad
+y^2F''(y)=F\bigl(h(s)^2-h(s)-\kappa g''(s)\bigr).
+\]
+Since $g'(s)\to0$ and $g''(s)\to0$, $h(s)\to\frac12$ and
+$h^2-h-\kappa g''\to-\frac14$. Hence $F'>0$ and $F''<0$ for large $y$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:uncond}
+From the Vinogradov--Korobov bound \cite{Walfisz1963}
+\begin{equation}
+\label{eq:VK_M}
+  M(x)\ll x\exp\bigl(-c\,\phi(x)\bigr)
+\end{equation}
+one obtains
+\begin{equation}
+\label{eq:uncond_area}
+  \Ap(x)+|\Am(x)|\ll x^{3/2}\exp\bigl(-\tfrac c2\,\phi(x)\bigr).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Let $K$ be such that $|M(y)|\le Ky\,e^{-c\phi(y)}$ for $y\ge y_1$, and let
+$F$ be as in Lemma~\ref{lem:concave-majorant} with $\kappa=c/2$, so that
+$\sqrt{|M(y)|}\le K^{1/2}F(y)$ for $y\ge y_1$. Only finitely many excursions
+start below $Y_0:=\max(y_0,y_1)$; they are finite, so they contribute
+$O(1)$ to the area. Consider an excursion with $u_\nu\ge Y_0$. Its apex
+satisfies $\sqrt{H_\nu}=\sqrt{|M(\tau_\nu)|}\le K^{1/2}F(\tau_\nu)$; the
+bound is taken at the apex $\tau_\nu$, which lies in the excursion, and not
+at its future endpoint $v_\nu$. For $t\ge\tau_\nu$ monotonicity of $F$ gives
+$|\Ms(t)|\le\sqrt{H_\nu}\le K^{1/2}F(t)$. For $u_\nu\le t\le\tau_\nu$,
+$|\Ms(t)|$ is the chord from $(u_\nu,0)$ to $(\tau_\nu,\sqrt{H_\nu})$. This
+chord lies below the chord from $(u_\nu,K^{1/2}F(u_\nu))$ to
+$(\tau_\nu,K^{1/2}F(\tau_\nu))$, which has both endpoints at least as high,
+and the latter lies below $K^{1/2}F$ on $[u_\nu,\tau_\nu]\subset[y_0,\infty)$
+by concavity. Hence $|\Ms(t)|\le K^{1/2}F(t)$ for all $t\ge Y_0$ outside the
+finitely many early excursions, and since $F$ is increasing,
+\[
+\Ap(x)+|\Am(x)|\le O(1)+K^{1/2}\int_{Y_0}^xF(t)\,dt
+\le O(1)+K^{1/2}xF(x)=O(1)+K^{1/2}x^{3/2}e^{-\frac c2\phi(x)}.
+\qedhere
+\]
+\end{proof}
+
+\begin{corollary}
+\label{cor:rh}
+If RH holds, then
+\begin{equation}
+\label{eq:rh_area}
+  \Ap(x)+|\Am(x)|\ll_\eps x^{5/4+\eps}.
+\end{equation}
+Consequently, if $\Ap(x)+|\Am(x)|\gg x^{5/4+\delta}$ along an unbounded
+sequence for some fixed $\delta>0$, then RH is false.
+\end{corollary}
+
+\begin{remark}[Endpoint-indexed bounds]
+\label{rem:onedirection}
+From $\ell_\nu\ge2H_\nu$ and $\sqrt{H_\nu}\ell_\nu\ll v_\nu^{5/4+\eps}$ one
+deduces only $H_\nu\ll v_\nu^{5/6+O(\eps)}$. This bound is indexed by the
+\emph{future} endpoint $v_\nu$ of the excursion; it gives no bound for $M(x)$
+in terms of $x$ at interior points, and hence no zero-free half-plane.
+Whether \eqref{eq:rh_area} is equivalent to RH is open.
+\end{remark}
+
+\begin{remark}[Oscillation of the heights]
+\label{rem:omega}
+The Mertens conjecture is false \cite{OdlyzkoTeRiele1985,KotnikTeRiele2006};
+the current bounds are due to Hurst~\cite{Hurst18}, who proves
+$\limsup M(x)/\sqrt{x}>1.826054$ and
+$\liminf M(x)/\sqrt{x}<-1.837625$. The excursion containing a point $n$ with
+$M(n)>1.826054\sqrt n$ has $u_\nu<n$, so $H_\nu>1.826054\,u_\nu^{1/2}$ for
+infinitely many positive excursions, and similarly with $1.837625$ for
+negative ones. A lower bound indexed by $v_\nu$ does not follow, since
+$v_\nu$ may be much larger than $n$.
+\end{remark}
+
+\section{Global criteria equivalent to RH}
+\label{sec:criteria}
+
+The Mellin identity and the global $L^1/L^2$ equivalences below are
+consequences of Littlewood's criterion and partial summation; the excursion
+decompositions and pruning lemmas repackage them in terms of excursions.
+For $\Re s>1$,
+\begin{equation}
+\label{eq:mellin_M}
+  \int_1^\infty M(x)x^{-s-1}\,dx=\frac{1}{s\,\zeta(s)} .
+\end{equation}
+If $\int_1^\infty|M(x)|x^{-\varsigma-1}dx<\infty$ for every $\varsigma>1/2$, the
+left side continues analytically to $\Re s>1/2$, so $\zeta$ has no zeros
+there.
+
+\begin{proposition}[$L^1$ criterion]
+\label{prop:L1}
+RH holds if and only if, for every $\eps>0$,
+\begin{equation}
+\label{eq:L1_criterion}
+  \sum_{v_\nu\le x}\beta_\nu+\beta_{\rm term}(x)=\sum_{n\le x}|M(n)|
+  \ll x^{3/2+\eps}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+RH gives $M(x)\ll_\eps x^{1/2+\eps}$. Conversely, for $\varsigma>1/2$ choose
+$0<\eps<\varsigma-1/2$; partial summation gives
+$\sum_n|M(n)|n^{-\varsigma-1}<\infty$, and since $M$ is constant on $[n,n+1)$
+the remark after \eqref{eq:mellin_M} applies.
+\end{proof}
+
+\begin{lemma}[Pruning]
+\label{lem:pruning}
+$\beta_\nu\le H_\nu(\ell_\nu-1)\le\ell_\nu^2/2$, hence
+\begin{equation}
+\label{eq:pruning}
+  \sum_{v_\nu\le x,\ \ell_\nu\le L_0}\beta_\nu\le\frac{xL_0}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{corollary}[Reduction to long excursions]
+\label{cor:long}
+For fixed $\delta\ge0$ and $L_0=x^{1/2-\delta}$, RH holds if and only if
+\begin{equation}
+\label{eq:long_reduction}
+  \sum_{\substack{v_\nu\le x\\ \ell_\nu>L_0}}\beta_\nu
+  +\mathbf 1_{\{L_x>L_0\}}\beta_{\rm term}(x)\ll x^{3/2+\eps}
+  \quad\text{for every }\eps>0.
+\end{equation}
+At most $x/L_0$ long excursions are involved.
+\end{corollary}
+
+\begin{proof}
+If RH holds, the left side is at most $\sum_{n\le x}|M(n)|\ll x^{3/2+\eps}$.
+Conversely, the complete excursions with $\ell_\nu\le L_0$ contribute at
+most $xL_0/2\le x^{3/2}$ by Lemma~\ref{lem:pruning}, and if $L_x\le L_0$
+the terminal block contributes
+$\beta_{\rm term}(x)\le\sum_{r\le L_x}r=L_x(L_x+1)/2\le L_0^2\le x$.
+Hence $\sum_{n\le x}|M(n)|\ll x^{3/2+\eps}$, and
+Proposition~\ref{prop:L1} applies.
+\end{proof}
+
+\begin{remark}[The $\sqrt{x}$ frontier]
+\label{rem:sqrt_frontier}
+The cut may depend on $\eps$: with $L_0=x^{1/2+\eps/2}$ the discarded part is
+$\le x^{3/2+\eps/2}/2$. The frontier of pruning is therefore $x^{1/2+o(1)}$;
+what requires new information is a cut $x^{\theta}$ with a fixed
+$\theta>1/2$. For $\ell_\nu\asymp x$ the trivial bound gives
+$\beta_\nu\ll x^2$ against a budget $x^{3/2+\eps}$, and there are only
+$O(1)$ such excursions.
+\end{remark}
+
+\begin{heuristic}[Renewal tail]
+\label{heu:renewal}
+If excursion lengths behave like those of a recurrent random walk,
+\begin{equation}
+\label{eq:renewal_tail}
+  \#\{v_\nu\le x:\ \ell_\nu>L\}\asymp\sqrt{x}\,L^{-1/2},
+\end{equation}
+and with $\beta_\nu\asymp\ell_\nu^{3/2}$ the dyadic range $[L,2L]$
+contributes $\asymp\sqrt{x}\,L$ to \eqref{eq:L1_criterion}, so the terminal
+scales $L\asymp x$ dominate the $L^1$ sum.
+\end{heuristic}
+
+\begin{theorem}[Correlation criterion]
+\label{thm:corr-criterion}
+RH holds if and only if, for every $\eps>0$,
+\begin{equation}
+\label{eq:RH-corr}
+  \sum_{n\le x}M(n)^2=\sum_{v_\nu\le x}Q_\nu+Q_{\rm term}(x)
+  =-\sum_{v_\nu\le x}\sum_{h}hC^{(\nu)}_h+Q_{\rm term}(x)\ll x^{2+\eps}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Under RH, $M(n)^2\ll_\eps n^{1+\eps}$. Conversely, by Cauchy--Schwarz,
+\[
+\sum_{n\le x}|M(n)|\le x^{1/2}\Bigl(\sum_{n\le x}M(n)^2\Bigr)^{1/2}\ll x^{3/2+\eps/2};
+\]
+apply
+Proposition~\ref{prop:L1}.
+\end{proof}
+
+\begin{corollary}[Local sufficient conditions]
+\label{cor:local-corr-sufficient}
+\label{cor:pruned_local}
+Suppose that for every $\eps>0$ there is $C_\eps$ such that
+\begin{equation}
+\label{eq:pruned_Q}
+  Q_\nu\le C_\eps\,\ell_\nu^{2+\eps}\quad\text{for every complete excursion with }
+  \ell_\nu>v_\nu^{1/2},
+\end{equation}
+Then RH holds.
+\end{corollary}
+
+\begin{proof}
+Let $\eps_0\in(0,1)$, put $\eps=\eps_0/4$, and let $C_\eps$ be as in the
+hypothesis. Split the completed excursions at $\ell_\nu=x^{1/2}$. If
+$\ell_\nu\le x^{1/2}$, then \eqref{eq:Q_upper} gives
+$Q_\nu\le\ell_\nu x/12+\ell_\nu/6$, and disjointness bounds the total by
+$x^2/12+x/6$. If $\ell_\nu>x^{1/2}$ then $\ell_\nu>v_\nu^{1/2}$ since
+$v_\nu\le x$, and the hypothesis bounds the total by
+$C_\eps\sum\ell_\nu^{2+\eps}\le C_\eps(\sum\ell_\nu)^{2+\eps}\le C_\eps x^{2+\eps}$.
+The terminal block is not a complete excursion, and \eqref{eq:Q_upper} does
+not apply to it. By Lemma~\ref{lem:terminal-Q-elementary},
+$Q_{\rm term}(x)\le L_x(L_x+1)(2L_x+1)/6$, which is $O(x^{3/2})$ if $L_x\le x^{1/2}$. If $L_x>x^{1/2}$, let $\nu$ be the
+complete excursion containing $x$, starting at $u(x)$; then
+$Q_{\rm term}(x)\le Q_\nu$. Fix $A=1+\eps$. By
+Corollary~\ref{cor:KP-local-returns}, $v_\nu\le u(x)^A\le x^A$ once $x$ is
+large, so $\ell_\nu\le x^A$. If $\ell_\nu>v_\nu^{1/2}$ the hypothesis gives
+$Q_\nu\le C_\eps x^{A(2+\eps)}$; otherwise \eqref{eq:Q_upper} gives
+$Q_\nu\ll\ell_\nu^3\le v_\nu^{3/2}\le x^{3A/2}$. In all cases
+$Q_{\rm term}(x)\ll_\eps x^{(1+\eps)(2+\eps)}\le x^{2+4\eps}=x^{2+\eps_0}$. This step uses the arithmetic
+input of Corollary~\ref{cor:KP-local-returns}: for a general family of
+disjoint intervals, the future return of the terminal block is not
+controlled by $x$, and a bound for complete excursions would not control
+$Q_{\rm term}(x)$. Altogether
+$\sum_{n\le x}M(n)^2\ll_{\eps_0}x^{2+\eps_0}$ for every $\eps_0\in(0,1)$,
+and Theorem~\ref{thm:corr-criterion} gives RH.
+\end{proof}
+
+\begin{heuristic}[Ballistic excursions]
+\label{heu:local_fails}
+In a model where, after a zero of $M$, the next values of $\mu$ behave
+locally at random with squarefree density $6/\pi^2$, the pattern ``$k$
+non-zero steps of one sign followed by $k$ of the other'' follows a given
+zero with probability $\ge c_0^{-k}$. If excursions with $H_\nu=k$ and
+$\ell_\nu\asymp k$ occur for unbounded $k$, then by \eqref{eq:height_Q_min}
+$Q_\nu/\ell_\nu^{2+\eps}\gg k^{1-\eps}\to\infty$, so the unpruned version of
+\eqref{eq:pruned_Q} fails for every $\eps\in(0,1)$. Such excursions have
+$\ell_\nu\ll v_\nu^{1/2}$ and do not affect the pruned condition
+\eqref{eq:pruned_Q}; this is why the pruning in
+Corollary~\ref{cor:pruned_local} is needed.
+\end{heuristic}
+
+\begin{theorem}[Energy criterion]
+\label{thm:energy}
+With $u$ the last zero $\le x$ and $H_{\rm run}(x)=\max_{u<n\le x}|M(n)|$,
+define
+\begin{equation}
+\label{eq:energy_def}
+  \En(x):=\frac14\Bigl(\sum_{v_\nu\le x}H_\nu\ell_\nu+(x-u)H_{\rm run}(x)\Bigr).
+\end{equation}
+For a complete excursion let $J$ be the chord joining
+$(u_\nu,\Anet(u_\nu))$ to $(v_\nu,\Anet(v_\nu))$. By \eqref{eq:jump},
+$J'=\sigma_\nu\sqrt{H_\nu}/2$, so $\tfrac14H_\nu\ell_\nu=\int_{I_\nu}(J')^2$
+is the Dirichlet energy of the chord. Then
+\begin{equation}
+\label{eq:energy_sandwich}
+  \sum_{n\le x}|M(n)|\le4\En(x)\le x\max_{n\le x}|M(n)|,
+\end{equation}
+and RH holds if and only if $\En(x)\ll x^{3/2+\eps}$ for every $\eps>0$.
+\end{theorem}
+
+\begin{proof}
+$\beta_\nu\le H_\nu\ell_\nu$, $\beta_{\rm term}(x)\le(x-u)H_{\rm run}(x)$ and
+$\sum\ell_\nu+(x-u)\le x$; apply Proposition~\ref{prop:L1}.
+\end{proof}
+
+\subsection{Exact logarithmic exponents from Pintz's oscillation theorem}
+\label{subsec:pintz-exponents}
+
+The criteria above are upper-bound equivalences.  A recent theorem of
+Pintz~\cite{Pintz2026} determines the logarithmic exponent of the average
+and maximal order of $|M|$ in terms of the rightmost zeros of $\zeta$.
+We record the consequence for the excursion quantities used in this paper.
+
+\begin{theorem}[Pintz, logarithmic form {\cite{Pintz2026}}]
+\label{thm:pintz-2026}
+Let $\Theta=\sup\{\Re\rho:\zeta(\rho)=0\}$.  Then
+\[
+ D_M(X):=\frac1X\int_1^X|M(t)|\,dt=X^{\Theta+o(1)}.
+\]
+Moreover, for every fixed $\delta>0$,
+\[
+ S_{M,\delta}(X):=\max_{X^{1-\delta}\le t\le X}|M(t)|
+ =X^{\Theta+o(1)}.
+\]
+Here the equalities are in logarithmic scale, equivalently
+\[
+ \frac{\log D_M(X)}{\log X}\to\Theta,
+ \qquad
+ \frac{\log S_{M,\delta}(X)}{\log X}\to\Theta.
+\]
+\end{theorem}
+
+\begin{corollary}[Exact exponents of excursion area and quadratic mass]
+\label{cor:pintz-excursion-exponents}
+Put
+\[
+ B_1(X):=\sum_{n\le X}|M(n)|,
+ \qquad
+ B_2(X):=\sum_{n\le X}M(n)^2.
+\]
+Then
+\begin{equation}
+\label{eq:pintz-B1-B2}
+ B_1(X)=X^{1+\Theta+o(1)},
+ \qquad
+ B_2(X)=X^{1+2\Theta+o(1)},
+ \qquad
+ \En(X)=X^{1+\Theta+o(1)}.
+\end{equation}
+Consequently
+\begin{equation}
+\label{eq:Theta-from-excursions}
+ \Theta=\lim_{X\to\infty}\left(\frac{\log B_1(X)}{\log X}-1\right)
+ =\frac12\lim_{X\to\infty}
+ \left(\frac{\log B_2(X)}{\log X}-1\right)
+ =\lim_{X\to\infty}\left(\frac{\log\En(X)}{\log X}-1\right).
+\end{equation}
+In particular RH is equivalent to any one of the three logarithmic exponents
+being respectively $3/2$, $2$, and $3/2$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:pintz-2026} and the fact that $M$ is constant on
+half-open unit intervals,
+\[
+ B_1(X)=X^{1+\Theta+o(1)}.
+\]
+We first note that
+\begin{equation}
+\label{eq:global-M-max-exponent}
+ \max_{n\le X}|M(n)|=X^{\Theta+o(1)}.
+\end{equation}
+The lower bound follows from $S_{M,\delta}$.  For the upper bound, if
+$\Theta<1$, choose a fixed $\delta>1-\Theta$ and split at
+$X^{1-\delta}$: the early range is trivially at most $X^{1-\delta}$ and the
+late range is controlled by Theorem~\ref{thm:pintz-2026}; when $\Theta=1$
+the trivial bound $|M(n)|\le n$ suffices.
+
+Cauchy--Schwarz and \eqref{eq:global-M-max-exponent} now give
+\[
+ \frac{B_1(X)^2}{X}\le B_2(X)
+ \le X\max_{n\le X}|M(n)|^2,
+\]
+so both sides have exponent $1+2\Theta$.  Finally
+\eqref{eq:energy_sandwich} squeezes $4\En(X)$ between $B_1(X)$ and
+\[
+ X\max_{n\le X}|M(n)|,
+\]
+both of exponent $1+\Theta$.
+\end{proof}
+
+\begin{corollary}[Length localization of the area and quadratic mass]
+\label{cor:pintz-length-localization}
+Fix $0\le\alpha<\Theta$.  Among the complete excursions ending at most $X$,
+the total contribution of those with $\ell_\nu\le X^\alpha$ is negligible:
+\[
+ \sum_{\substack{v_\nu\le X\\ \ell_\nu\le X^\alpha}}\beta_\nu
+ +\mathbf 1_{\{L_X\le X^\alpha\}}\beta_{\rm term}(X)
+ =o(B_1(X)),
+\]
+and
+\[
+ \sum_{\substack{v_\nu\le X\\ \ell_\nu\le X^\alpha}}Q_\nu
+ +\mathbf 1_{\{L_X\le X^\alpha\}}Q_{\rm term}(X)
+ =o(B_2(X)).
+\]
+Thus, on the logarithmic scale forced by the zeta zeros, essentially all
+$L^1$ and $L^2$ mass is carried by excursion blocks longer than
+$X^\alpha$ for every $\alpha<\Theta$.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:pruning} bounds the first complete-excursion sum by
+$O(X^{1+\alpha})$, while the short terminal block contributes
+$O(X^{2\alpha})$.  Both are $o(X^{1+\Theta+o(1)})$ when $\alpha<\Theta$.
+For the quadratic mass use \eqref{eq:Q_upper} and disjointness:
+\[
+ \sum_{\ell_\nu\le X^\alpha}Q_\nu\ll X^{1+2\alpha},
+ \qquad
+ Q_{\rm term}(X)\ll X^{3\alpha}
+ \quad(L_X\le X^\alpha).
+\]
+Because $\alpha<\Theta\le1$, both exponents are strictly below
+$1+2\Theta$.
+\end{proof}
+
+\section{Lacunary excursion families and horizon-localized criteria}
+\label{sec:lacunary}
+
+\subsection{Geometric counts}
+\label{subsec:geometric}
+
+The lemmas of this subsection use only that excursions are disjoint integer
+intervals ordered by their starting points, the next one starting at or
+after the end of the previous one. They therefore hold verbatim for every
+sequence of disjoint integer intervals, deterministic or random, and in
+particular pathwise for any stochastic model of excursions
+(Section~\ref{subsec:extreme}). For a family $\F$ of excursions and $X\ge2$
+put
+\[
+E_\F(X):=\#\{\nu\in\F:x_{0,\nu}\le X\}.
+\]
+For a function $\mathfrak h:[0,\infty)\to[0,\infty]$, the family of
+excursions \emph{crossing the horizon} $h$ is
+\[
+\F_{\mathfrak h}:=\{\nu:x_{1,\nu}>\mathfrak h(x_{0,\nu})\}.
+\]
+For $A>1$ the excursion $I_\nu$ is \emph{$A$-exceptional} if
+$x_{1,\nu}>x_{0,\nu}^A$, i.e.\ $\nu\in\F_{x^A}$, and \emph{$A$-ordinary}
+otherwise; for $A=2$ we say \emph{square-exceptional} and
+\emph{square-ordinary}. For $\lambda>1$ it is \emph{$\lambda$-long} if
+$x_{1,\nu}>\lambda x_{0,\nu}$. We write $E_A=E_{\F_{x^A}}$,
+$E_\square=E_2$ and $E_\lambda=E_{\F_{\lambda x}}$; the context separates
+$E_A$ ($A$ an exponent) from $E_\lambda$ ($\lambda$ a factor).
+
+\begin{lemma}[Power lacunarity]
+\label{lem:power-lacunary}
+For every $A>1$ and $X\ge2$,
+\begin{equation}
+\label{eq:power-lacunary-count}
+E_A(X)\le2+\frac1{\log A}\log\frac{\log X}{\log2}.
+\end{equation}
+In particular
+\begin{equation}
+\label{eq:square-exception-count}
+E_\square(X)\le2+\log_2\frac{\log X}{\log2},\qquad
+E_\square(X)\le4\log\log X\quad(X\ge e^e).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+No excursion starts at $1$, since $M(1)=1$. List the $A$-exceptional starts
+$\ge2$ as $2\le a_1<a_2<\cdots$. The next excursion starts at or after the
+end of the preceding one, so $a_{j+1}\ge x_{1,j}>a_j^A$ and
+$\log a_j\ge A^{j-1}\log2$. If $a_j\le X$ then
+$j\le1+\log(\log X/\log2)/\log A$; add $1$ for the excursion $(0,2]$. For the
+second bound in \eqref{eq:square-exception-count},
+$\log_2(\log X/\log2)=(\log\log X-\log\log2)/\log2\le1.443\log\log X+0.529$.
+\end{proof}
+
+The next lemma is the partition of the square horizon
+$[x_0,x_0^2]=[x_0,cx_0^2]\cup[cx_0^2,x_0^2]$: the upper part is accessible
+only to a doubly lacunary family, for every fixed $c>0$.
+
+\begin{lemma}[Fractional square horizon]
+\label{lem:partition}
+For $0<c\le1$ and $X\ge2$,
+\begin{equation}
+\label{eq:partition-count}
+E_{\F_{cx^2}}(X)=\#\{\nu:x_{0,\nu}\le X,\ x_{1,\nu}>cx_{0,\nu}^2\}
+\le\frac2c+2+\log_2\frac{\log X}{\log2}.
+\end{equation}
+Consequently, the range $cx_0^2<t\le x_0^2$ of the excursions starting at
+most $X$ is visited by at most $O_c(\log\log X)$ excursions.
+\end{lemma}
+
+\begin{proof}
+At most $\lceil2/c\rceil\le2/c+1$ members start below $2/c$. List the others
+as $a_1<a_2<\cdots$ and put $b_j=ca_j\ge2$. Then
+$a_{j+1}\ge x_{1,j}>ca_j^2$, so
+\[
+b_{j+1}=ca_{j+1}>c^2a_j^2=b_j^2,
+\]
+and $\log b_j\ge2^{j-1}\log2$. Since $b_j\le cX\le X$, the number of such
+$j$ is at most $1+\log_2(\log X/\log2)$. An excursion containing a point
+$t>cx_0^2$ has $x_1\ge t>cx_0^2$.
+\end{proof}
+
+\begin{lemma}[Superlinear horizons]
+\label{lem:superlinear}
+Let $\psi:[1,\infty)\to(0,\infty)$ satisfy $\psi(x)\to\infty$. Then
+\[
+E_{\F_{x\psi(x)}}(X)
+=\#\{\nu:x_{0,\nu}\le X,\ x_{1,\nu}>x_{0,\nu}\psi(x_{0,\nu})\}
+=o(\log X).
+\]
+\end{lemma}
+
+\begin{proof}
+Given $K>0$ choose $x_K$ with $\psi(x)\ge e^K$ for $x\ge x_K$. At most
+$x_K+1$ members start below $x_K$. For consecutive members
+$a_j<a_{j+1}$ starting at or above $x_K$,
+$a_{j+1}\ge x_{1,j}>a_j\psi(a_j)\ge e^Ka_j$, so $\log a_j$ increases by more
+than $K$ at each step and there are at most $1+\log X/K$ of them. Hence
+$\limsup E(X)/\log X\le1/K$ for every $K$.
+\end{proof}
+
+\begin{lemma}[Linear lacunarity]
+\label{lem:linear-lacunary}
+For every $\lambda>1$ and $X\ge2$,
+\begin{equation}
+\label{eq:linear-lacunary-count}
+E_\lambda(X)=\#\{\nu:x_{0,\nu}\le X,\ x_{1,\nu}>\lambda x_{0,\nu}\}
+\le2+\frac{\log(X/2)}{\log\lambda}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For starts $a_j\ge2$, $a_{j+1}\ge x_{1,j}>\lambda a_j$, hence
+$a_j>2\lambda^{j-1}$ for $j\ge2$; add $1$ for $(0,2]$.
+\end{proof}
+
+All four bounds are sharp up to constants for general families of disjoint
+intervals, as geometric and doubly geometric chains of intervals show.
+
+\subsection{Arithmetic input: Kaczorowski--Pintz}
+
+We separate the published statement, its translation from $M_0=M+2$ to
+$M$, and the consequences for excursions.
+
+\begin{theorem}[Kaczorowski--Pintz {\cite{KP86}}]
+\label{thm:KP-quoted}
+Let $M_0(x)=M(x)-1/\zeta(0)=M(x)+2$, the function $M_a$ of \cite{KP86} at
+$a=0$. Let $V(f,Y)$ be defined as in \cite{KP86}, through the largest number of
+points of $[1,Y]$ at which $f$ is nonzero with alternating signs; the number
+of sign changes of $f$ on $[1,Y]$ is at least $V(f,Y)-1$, which does not
+affect the asymptotic statements below. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \cite[Corollary~4, p.~178, (2.13)--(2.15)]{KP86}
+\begin{equation}
+\label{eq:KP-signchanges}
+\liminf_{Y\to\infty}\frac{V(M_0,Y)}{\log Y}\ge\frac{\gamma_1}{\pi},
+\end{equation}
+with combined oscillation of size $x^{\Theta-\eta}$ for every $\eta>0$, in
+the sense of their definition following (1.1): the alternating points $t_j$
+counted by $V$ can be chosen with $|M_0(t_j)|\ge t_j^{\Theta-\eta}$;
+\item Corollary~4 is deduced from their Corollary~1, which asserts relations
+(2.1)--(2.3) of their Theorem~1 \cite[pp.~175--176]{KP86}; in particular,
+for every $\delta>0$ and $\eta>0$ there is $Y_0(\delta,\eta)$ such that for
+$Y>Y_0(\delta,\eta)$ the interval $[Y^{1-\delta},Y]$ contains two points
+$t_+,t_-$ with $M_0(t_+)\ge t_+^{\Theta-\eta}$ and
+$M_0(t_-)\le-t_-^{\Theta-\eta}$. (In \cite{KP86} both losses are governed
+by a single parameter $\varepsilon$; the form above follows by taking
+$\varepsilon=\min\{\delta,\eta\}$.)
+\end{enumerate}
+\end{theorem}
+
+\begin{lemma}[From $M_0$ to $M$]
+\label{lem:KP-translation}
+If $|M_0(t)|>2$, then $\sgn M(t)=\sgn M_0(t)$ and
+$|M(t)|\ge|M_0(t)|-2$. In particular, for points with
+$|M_0(t)|\ge t^{\Theta-\eta}$ and $t$ large,
+$\sgn M(t)=\sgn M_0(t)$ and $|M(t)|\ge\frac12t^{\Theta-\eta}$.
+\end{lemma}
+
+\begin{proof}
+$M_0>2$ gives $M>0$; $M_0<-2$ gives $M<-4$. The second assertion uses
+$t^{\Theta-\eta}\to\infty$ for $\eta<\Theta$.
+\end{proof}
+
+\begin{corollary}[Distinct large excursions]
+\label{cor:KP-large-excursions}
+\label{thm:KP-M}
+If $\Theta>1/2$ and $0<\eta<\Theta-1/2$, then
+\begin{equation}
+\label{eq:KP-large-excursions}
+N_\eta(Y)\ge\left(\frac{\gamma_1}{\pi}-o(1)\right)\log Y,
+\end{equation}
+where $N_\eta(Y)$ counts distinct excursions starting at most $Y$ that
+contain a point $t\le Y$ with $|M(t)|\ge\tfrac12 t^{\Theta-\eta}$.
+\end{corollary}
+
+\begin{proof}
+Take the alternating points of Theorem~\ref{thm:KP-quoted}(i) in $[1,Y]$,
+discarding the boundedly many below the threshold of
+Lemma~\ref{lem:KP-translation}. By that lemma, consecutive points $t<t'$
+have $M(t)$ and $M(t')$ of opposite signs. Since $M$ is integer valued with
+steps $0,\pm1$, it vanishes at some integer in $(t,t')$, so $t$ and $t'$ lie
+in different excursions. Each point with $M(t)\ne0$ belongs to exactly one
+excursion, and excursions are ordered, so the excursions containing the
+ordered points are pairwise distinct. Their starts are below the points,
+hence at most $Y$, and $|M(t)|\ge\frac12t^{\Theta-\eta}$ at each point.
+\end{proof}
+
+\begin{corollary}[Multiplicative localization of Mertens returns]
+\label{cor:KP-local-returns}
+\label{cor:finiteness_expanding}
+For every fixed $A>1$ there exists $U_A$ such that every excursion starting
+at $u\ge U_A$ ends at $v\le u^A$. Equivalently, $M$ has only finitely many
+$A$-exceptional excursions; in particular only finitely many
+square-exceptional ones.
+\end{corollary}
+
+\begin{proof}
+Put $\delta=1-1/A$ and $Y=u^A$, so that $[Y^{1-\delta},Y]=[u,u^A]$, and fix
+$0<\eta<\Theta$ (possible since $\Theta\ge1/2$). For $u$ large,
+Theorem~\ref{thm:KP-quoted}(ii) and Lemma~\ref{lem:KP-translation} give
+$t_+,t_-\in[u,u^A]$ with $M(t_+)>0>M(t_-)$. Neither point lies in $[u,u+1)$,
+because $M(u)=0$; so $u<\lfloor t_\pm\rfloor$. Since $M$ changes by
+$0,\pm1$ at each integer, it vanishes at some integer $n$ strictly between
+$\lfloor t_+\rfloor$ and $\lfloor t_-\rfloor$, and $u<n<u^A$. If
+$u=x_{0,\nu}$, the first return satisfies $x_{1,\nu}\le n<u^A$.
+\end{proof}
+
+\begin{remark}
+A bare sign change of $M_0=M+2$ would not force a zero of $M$. The
+decisive point is that the local sign change is combined with oscillation of
+size $t^{\Theta-\eta}\to\infty$, so that Lemma~\ref{lem:KP-translation}
+applies to both witnesses.
+\end{remark}
+
+\begin{remark}[Geometric counts and arithmetic localization]
+\label{rem:geom-vs-arith}
+For the actual Mertens excursions Corollary~\ref{cor:KP-local-returns} is
+stronger than Lemma~\ref{lem:power-lacunary}: each $A$-exceptional family is
+finite. The geometric lemmas remain separate results because they are
+elementary, independent of $\zeta$, and valid for every ordered family of
+disjoint intervals. This is exactly what the localization theorem below and
+the extreme-value theorems of Section~\ref{subsec:extreme} use: the former
+needs only a count below $(\gamma_1/\pi)\log X$, the latter needs a count
+valid pathwise in a model where no analogue of Kaczorowski--Pintz is
+available.
+\end{remark}
+
+\subsection{Horizon localization}
+\label{subsec:horizon}
+
+\begin{theorem}[Horizon-localized RH criterion]
+\label{thm:horizon}
+\label{thm:sparse-RH}
+Let $\mathfrak h:[0,\infty)\to[0,\infty]$ be a function, let $\F$ be a family
+of excursions, and suppose that for some $\kappa<\gamma_1/\pi$
+\begin{equation}
+\label{eq:horizon-hyp}
+E_{\F\cup\F_{\mathfrak h}}(X)\le(\kappa+o(1))\log X\qquad(X\to\infty).
+\end{equation}
+Then RH is equivalent to the following statement: for every $\eps>0$ there
+is $C_\eps$ such that
+\begin{equation}
+\label{eq:restricted-RH}
+|M(t)|\le C_\eps t^{1/2+\eps}
+\qquad\text{for all }t\in I_\nu,\ \nu\notin\F,\ t\le \mathfrak h(x_{0,\nu}).
+\end{equation}
+No condition is imposed on the excursions in $\F$, nor on the part of any
+excursion lying beyond its horizon $\mathfrak h(x_0)$.
+\end{theorem}
+
+\begin{proof}
+RH implies \eqref{eq:restricted-RH} by Littlewood's criterion. Conversely,
+suppose $\Theta>1/2$ and fix $\eta,\eps>0$ with
+$1/2+\eps<\Theta-\eta$. By \eqref{eq:KP-large-excursions} there are at least
+$(\gamma_1/\pi-o(1))\log X$ distinct excursions starting at most $X$, each
+containing a witness $t$ with $|M(t)|\ge\frac12t^{\Theta-\eta}$. Consider
+such an excursion $\nu$ with witness $t$. If $\nu\notin\F$ and
+$t\le \mathfrak h(x_{0,\nu})$, the witness lies in the range of
+\eqref{eq:restricted-RH}. Otherwise $\nu\in\F$, or $t>\mathfrak h(x_{0,\nu})$, in
+which case $x_{1,\nu}>t>\mathfrak h(x_{0,\nu})$ (as $M(t)\ne0$) and $\nu\in\F_{\mathfrak h}$. By
+\eqref{eq:horizon-hyp} at least
+\[
+\Bigl(\frac{\gamma_1}{\pi}-\kappa-o(1)\Bigr)\log X\longrightarrow\infty
+\]
+witnesses lie in the range of \eqref{eq:restricted-RH}. They belong to
+distinct excursions, so they are unbounded, and at them
+$t^{\Theta-\eta}/t^{1/2+\eps}\to\infty$, contradicting
+\eqref{eq:restricted-RH}.
+\end{proof}
+
+The case $\mathfrak h(x)=\infty$ excludes a sparse family $\F$ of whole excursions;
+the case $\F=\emptyset$ truncates every excursion at its horizon.
+
+\begin{corollary}[Square horizon]
+\label{cor:power-ordinary-RH}
+\label{cor:square-truncated-RH}
+For every fixed $A>1$, RH is equivalent to \eqref{eq:restricted-RH}
+restricted to $A$-ordinary excursions. In particular
+\begin{equation}
+\label{eq:square-horizon-RH}
+\boxed{\ \mathrm{RH}\iff
+|M(t)|\ll_\eps t^{1/2+\eps}
+\ \text{for all $t$ in excursions with }x_1\le x_0^2,\ }
+\end{equation}
+and, equivalently, RH holds if and only if
+$|M(t)|\ll_\eps t^{1/2+\eps}$ for $x_{0,\nu}<t\le\min\{x_{1,\nu},x_{0,\nu}^2\}$
+over all excursions.
+\end{corollary}
+
+\begin{proof}
+Take $\F=\F_{x^A}$, $\mathfrak h=\infty$, respectively $\F=\emptyset$, $\mathfrak h(x)=x^2$, in
+Theorem~\ref{thm:horizon}; Lemma~\ref{lem:power-lacunary} gives
+$\kappa=0$.
+\end{proof}
+
+The count $E_\square(X)=O(\log\log X)$ is thus what makes the square
+horizon admissible. The square horizon can be lowered.
+
+\begin{corollary}[Descending horizons]
+\label{cor:descending}
+\label{cor:linear-ordinary-RH}
+RH is equivalent to Littlewood's bound
+$|M(t)|\ll_\eps t^{1/2+\eps}$ on the ranges
+\[
+x_{0,\nu}<t\le\min\{x_{1,\nu},\mathfrak h(x_{0,\nu})\}
+\]
+over all excursions, for each of the following horizons:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathfrak h(x)=cx^2$, for any fixed $c>0$;
+\item $\mathfrak h(x)=x\psi(x)$, for any $\psi$ with $\psi(x)\to\infty$;
+\item $\mathfrak h(x)=\lambda x$, for any fixed $\lambda>\lambda_*:=e^{\pi/\gamma_1}=1.24889\ldots$
+\end{enumerate}
+The same holds with ``truncate at $\mathfrak h(x_0)$'' replaced by ``discard the
+excursions with $x_1>\mathfrak h(x_0)$''. In particular it is enough to control the
+excursions with $x_1\le\frac54x_0$.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:horizon} with $\F=\emptyset$ (respectively
+$\F=\F_{\mathfrak h}$, $\mathfrak h=\infty$). For (i), $c\ge1$ reduces to
+Lemma~\ref{lem:power-lacunary} and $0<c<1$ to Lemma~\ref{lem:partition};
+$\kappa=0$. For (ii), Lemma~\ref{lem:superlinear} gives $\kappa=0$. For
+(iii), Lemma~\ref{lem:linear-lacunary} gives $\kappa=1/\log\lambda$, and
+$1/\log\lambda<\gamma_1/\pi$ exactly when $\lambda>\lambda_*$. Finally
+$5/4>\lambda_*$.
+\end{proof}
+
+Case (iii) implies (i) and (ii): in both, $\mathfrak h(x_0)\ge\lambda x_0$ for large
+$x_0$, so the bound on the larger ranges implies it on the ranges of (iii),
+the finitely many remaining excursions affecting only $C_\eps$. The horizon has
+been lowered from $x_0^2$ to $\lambda x_0$: the possible failure of
+Littlewood's bound, if any, is visible within a bounded multiplicative
+distance of the start of an excursion. Quantitatively:
+
+\begin{corollary}[Two-sided localization of large values]
+\label{cor:two-sided}
+Suppose $\Theta>1/2$, and fix $0<\eta<\Theta-\frac12$ and $\lambda>\lambda_*$.
+Among the excursions starting at $x_0\le X$, at least
+\[
+\Bigl(\frac{\gamma_1}{\pi}-\frac1{\log\lambda}-o(1)\Bigr)\log X
+\]
+contain a point $t_*$ with $|M(t_*)|\ge\frac12t_*^{\Theta-\eta}$ and
+\[
+x_0+\tfrac12x_0^{\Theta-\eta}\le t_*\le\lambda x_0 .
+\]
+\end{corollary}
+
+\begin{proof}
+Of the excursions of Corollary~\ref{cor:KP-large-excursions}, those whose
+witness exceeds $\lambda x_0$ are $\lambda$-long, hence at most
+$\log X/\log\lambda+2$ by Lemma~\ref{lem:linear-lacunary}. For the others,
+$M(x_0)=0$ and unit steps give $|M(t_*)|\le t_*-x_0$, so
+$t_*-x_0\ge\frac12t_*^{\Theta-\eta}\ge\frac12x_0^{\Theta-\eta}$.
+\end{proof}
+
+
+\begin{remark}[Dyadic erosion and the uniform transition]
+\label{rem:dyadic-erosion}
+For every fixed integer $j\ge0$, Lemma~\ref{lem:partition} with
+$c=2^{-j}$ gives
+\[
+\#\left\{\nu:x_{0,\nu}\le X,\ x_{1,\nu}>
+\frac{x_{0,\nu}^2}{2^j}\right\}=O_{2^j}(\log\log X),
+\]
+so Theorem~\ref{thm:horizon} successively permits the horizons
+\[
+x_0^2,\quad \frac{x_0^2}{2},\quad \frac{x_0^2}{4},\quad
+\frac{x_0^2}{8},\ldots.
+\]
+The constant in the fixed-$c$ estimate depends on $c$; hence one may not set
+$j=j(x_0)\sim\log_2x_0$ by that lemma alone.  If instead
+$2^{j(x)}=x/\psi(x)$ with $\psi(x)\to\infty$, then the corresponding
+horizon is $x\psi(x)$ and Lemma~\ref{lem:superlinear} supplies the uniform
+$o(\log X)$ crossing count.  Thus the rigorous erosion chain is
+\[
+x_0^2\to\frac{x_0^2}{2}\to\frac{x_0^2}{4}\to\cdots
+\to x_0\psi(x_0)\to\lambda x_0,\qquad\lambda>\lambda_*.
+\]
+\end{remark}
+
+\subsection{Fixed-mask Catalan compression inside fractional square horizons}
+\label{subsec:catalan-square}
+
+The fractional-square localization has a useful interaction with the exact
+combinatorics of a completed excursion.  The relevant Catalan time is not
+physical time: zero M\"obius increments must first be removed.  This
+support-time distinction is essential below.
+
+\begin{definition}[Support-time path and fixed-mask Catalan law]
+\label{def:support-catalan}
+Let $I=(x_0,x_1]$ be a complete excursion, and list the nonzero increments in
+$I$ as
+\[
+ x_0<a_1<a_2<\cdots<a_L\le x_1,
+ \qquad \mu(a_j)\ne0.
+\]
+Put
+\[
+ r_I(t):=\#\{j:a_j\le t\},\qquad x_0<t\le x_1.
+\]
+If $\sigma\in\{\pm1\}$ is the orientation of the excursion, define
+\[
+ S_0=0,\qquad
+ S_r:=\sigma\sum_{j=1}^r\mu(a_j)\qquad(1\le r\le L).
+\]
+Then $L=2n$ is even and
+\[
+ S_0=S_L=0,\qquad S_r>0\quad(1\le r<L),\qquad
+ S_r-S_{r-1}\in\{-1,+1\}.
+\]
+Thus $(S_r)_{0\le r\le L}$ is a primitive Dyck path.  The
+\emph{fixed-mask primitive Catalan law} keeps the physical support
+$\{a_1,\dots,a_L\}$ fixed and assigns to those support positions a uniformly
+chosen primitive Dyck sign sequence of length $L$.  We denote its probability
+by $\mathbb P_{\mathrm{pCat},I}$.
+\end{definition}
+
+For the observed excursion one has, exactly,
+\begin{equation}
+\label{eq:support-time-height}
+ |M(t)|=S_{r_I(t)},
+ \qquad
+ r_I(t)\le t-x_0<t.
+\end{equation}
+The first equality uses the orientation of the excursion and the fact that
+$M$ is constant across the zero increments.
+
+We first record the global Catalan estimate, since it is useful in its own
+right and clarifies why a different estimate is needed at the square
+horizon.
+
+\begin{lemma}[Catalan maximum tail]
+\label{lem:catalan-max-tail}
+Let $L=2n$ and let $H_{\max}$ be the maximum of a uniformly chosen Dyck path
+of length $2n$.  For $1\le h\le n$,
+\begin{equation}
+\label{eq:catalan-max-tail}
+ \mathbb P_{\mathrm{Cat},L}\{H_{\max}\ge h\}
+ \le (n+1)\frac{\binom{2n}{n+h}}{\binom{2n}{n}}
+ \le (n+1)\exp\!\left(-\frac{h^2}{n+h}\right)
+ \le \left(\frac L2+1\right)e^{-h^2/L}.
+\end{equation}
+For a uniformly chosen primitive Dyck path of length $L=2n$,
+\begin{equation}
+\label{eq:primitive-catalan-max-tail}
+ \mathbb P_{\mathrm{pCat},L}\{H_{\max}\ge h\}
+ \le \frac L2\exp\!\left(-\frac{(h-1)^2}{L-2}\right),
+ \qquad 2\le h\le n.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+There are $\mathrm{Cat}_n=(n+1)^{-1}\binom{2n}{n}$ Dyck paths of length $2n$ and
+$\binom{2n}{n}$ unrestricted bridges.  Reflecting a bridge after its first
+visit to level $h$ gives a bijection between bridges that reach $h$ and
+unrestricted walks ending at $2h$, hence their number is
+$\binom{2n}{n+h}$.  Therefore
+\[
+ \mathbb P_{\mathrm{Cat},2n}\{H_{\max}\ge h\}
+ \le (n+1)\frac{\binom{2n}{n+h}}{\binom{2n}{n}}.
+\]
+Moreover
+\[
+ \frac{\binom{2n}{n+h}}{\binom{2n}{n}}
+ =\prod_{j=1}^h\frac{n-j+1}{n+j},
+\]
+and $\log(1-x)\le-x$ gives
+\[
+ \log\frac{\binom{2n}{n+h}}{\binom{2n}{n}}
+ \le-\sum_{j=1}^h\frac{2j-1}{n+j}
+ \le-\frac{h^2}{n+h}.
+\]
+Since $n+h\le2n=L$, \eqref{eq:catalan-max-tail} follows.  A primitive path
+of length $2n$ has the form $+1$, followed by a Dyck path of length $2n-2$,
+followed by $-1$; its maximum is one plus the maximum of the interior Dyck
+path.  Applying the preceding bound with $n-1$ and $h-1$ proves
+\eqref{eq:primitive-catalan-max-tail}.
+\end{proof}
+
+\begin{remark}[Why the maximum tail is not the square-horizon estimate]
+\label{rem:max-tail-square-limit}
+The exponent in \eqref{eq:primitive-catalan-max-tail} is of order
+$H^2/L$.  For a general family of disjoint intervals retained by the
+square horizon one may have $L\asymp x_0^2$ (for $M$ itself such excursions
+are finitely many by Corollary~\ref{cor:KP-local-returns}), while the relevant witness lies much earlier, at physical
+time $t\asymp x_0$.  Then a violation of size $t^{1/2+\eps}$ need not make
+$H^2/L$ large.  Thus the global maximum tail, although correct, is not the
+right Catalan quantity for combining with the fractional-square horizon.
+The correct quantity is the pointwise height at the support time
+$r_I(t)$.
+\end{remark}
+
+\begin{lemma}[Pointwise primitive-Catalan tail]
+\label{lem:pointwise-catalan-tail}
+Let $L=2n\ge4$ and let $(S_r)$ be a uniformly chosen primitive Dyck path of
+length $L$.  For $1\le r\le L-1$ and $h\ge1$,
+\begin{equation}
+\label{eq:pointwise-catalan-tail-left}
+ \mathbb P_{\mathrm{pCat},L}\{S_r\ge h\}
+ \le 8n^{3/2}\exp\!\left(-\frac{h^2}{2r}\right)
+ \le 3L^{3/2}\exp\!\left(-\frac{h^2}{2r}\right).
+\end{equation}
+By time reversal the same estimate holds with $r$ replaced by $L-r$;
+hence
+\begin{equation}
+\label{eq:pointwise-catalan-tail-two-sided}
+ \mathbb P_{\mathrm{pCat},L}\{S_r\ge h\}
+ \le 3L^{3/2}
+ \exp\!\left[-\frac{h^2}{2\min\{r,L-r\}}\right].
+\end{equation}
+If $h>\min\{r,L-r\}$ the probability is $0$, so the bound is only
+relevant for $h\le\min\{r,L-r\}$.
+\end{lemma}
+
+\begin{proof}
+Ignore both positivity and the endpoint constraint.  Among all $2^L$ sign
+words, the proportion whose first $r$ signs have sum at least $h$ is at most
+$\exp(-h^2/(2r))$ by the elementary Chernoff bound for a Rademacher sum.
+Therefore the number of primitive Dyck paths satisfying $S_r\ge h$ is at
+most
+\[
+ 2^L\exp\!\left(-\frac{h^2}{2r}\right).
+\]
+The total number of primitive Dyck paths of length $2n$ is $\mathrm{Cat}_{n-1}$.  The
+standard central-binomial lower bound
+$\binom{2m}{m}\ge4^m/(2\sqrt m)$ gives
+\[
+ \mathrm{Cat}_{n-1}=\frac1n\binom{2n-2}{n-1}
+ \ge\frac{4^{n-1}}{2n\sqrt{n-1}}.
+\]
+Since $2^L=4^n$, division gives the first inequality in
+\eqref{eq:pointwise-catalan-tail-left}; the second follows from
+$8n^{3/2}<3(2n)^{3/2}$.  Reversing the path and changing the signs of the
+reversed increments preserves the primitive Dyck class and carries height
+$S_r$ to height $S_{L-r}$, which proves
+\eqref{eq:pointwise-catalan-tail-two-sided}.
+\end{proof}
+
+For an observed excursion $I$ define its pointwise Catalan upper-tail value
+by
+\begin{equation}
+\label{eq:pointwise-catalan-pvalue}
+ p_{\mathrm{Cat}}(I,t):=
+ \mathbb P_{\mathrm{pCat},I}
+ \left\{S_{r_I(t)}\ge |M(t)|\right\}.
+\end{equation}
+This is a tail probability under the fixed-mask Catalan reference law; it is
+not a probability assigned to the arithmetic M\"obius path itself.
+
+\begin{corollary}[Fractional-square Catalan rarity]
+\label{cor:fractional-square-catalan-rarity}
+Fix $c>0$ and $\eps>0$.  Let $I=(x_0,x_1]$ be a complete excursion with
+$x_1\le cx_0^2$, and keep its zero mask fixed.  For all sufficiently large
+$x_0$,
+\begin{equation}
+\label{eq:fractional-square-catalan-union}
+ \mathbb P_{\mathrm{pCat},I}
+ \left\{\exists\,t\in I:\ S_{r_I(t)}\ge t^{1/2+\eps}\right\}
+ \le 3c^{5/2}x_0^5
+ \exp\!\left(-\frac12x_0^{2\eps}\right).
+\end{equation}
+In particular the right-hand side is smaller than $x_0^{-A}$ for every
+fixed $A>0$ once $x_0$ is large enough.
+\end{corollary}
+
+\begin{proof}
+At a support position $t=a_r$ one has $r\le t-x_0<t$.  Hence
+Lemma~\ref{lem:pointwise-catalan-tail} with $h=t^{1/2+\eps}$ gives
+\[
+ \mathbb P_{\mathrm{pCat},I}\{S_r\ge t^{1/2+\eps}\}
+ \le3L^{3/2}\exp\!\left(-\frac12t^{2\eps}\right)
+ \le3L^{3/2}\exp\!\left(-\frac12x_0^{2\eps}\right).
+\]
+There are at most $L$ support positions.  Since
+$L\le x_1-x_0\le x_1\le cx_0^2$, the union bound gives
+\eqref{eq:fractional-square-catalan-union}.  Between support positions the
+path is constant, so no additional physical times have to be counted.
+\end{proof}
+
+The preceding statement is purely combinatorial: it measures how far a large
+value lies in the tail of a reference law, not how the M\"obius constraints
+select a path. Combined with the localization theorem it gives the following
+quantitative form.
+
+\begin{corollary}[Catalan surprise of a violation]
+\label{cor:catalan-surprise}
+\label{thm:catalan-selector-square}
+Suppose $\Theta>1/2$, fix $0<\eta<\Theta-\frac12$, put
+$\delta=\Theta-\eta-\frac12$, and fix $\lambda>\lambda_*$. Then there are
+infinitely many excursions $I=(x_0,x_1]$ with $x_1\le\lambda x_0$ containing
+a point $t$ with
+\begin{equation}
+\label{eq:KP-catalan-surprise}
+-\log p_{\mathrm{Cat}}(I,t)\ \ge\ \frac18x_0^{2\delta}-O(\log x_0).
+\end{equation}
+The same holds with $x_1\le\lambda x_0$ replaced by $x_1\le cx_0^2$ for any
+fixed $c>0$.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:KP-large-excursions} and Lemma~\ref{lem:linear-lacunary},
+at least $(\gamma_1/\pi-1/\log\lambda-o(1))\log X$ excursions starting at
+most $X$ have $x_1\le\lambda x_0$ and contain $t$ with
+$h=|M(t)|\ge\frac12t^{1/2+\delta}$; for $cx_0^2$ use
+Lemma~\ref{lem:partition} instead. With $r=r_I(t)<t$ and $L\le x_1-x_0$,
+Lemma~\ref{lem:pointwise-catalan-tail} gives
+$p_{\mathrm{Cat}}(I,t)\le3L^{3/2}\exp(-h^2/(2r))\le3L^{3/2}\exp(-t^{2\delta}/8)$,
+and $t>x_0$, $L\le\lambda x_0$ (respectively $L\le cx_0^2$).
+\end{proof}
+
+\begin{remark}[Selector bounds are pointwise bounds]
+\label{rem:catalan-selector-gap}
+Up to polynomial factors, $p_{\mathrm{Cat}}(I,t)$ is a decreasing function of
+$|M(t)|^2/r_I(t)$: by Lemma~\ref{lem:pointwise-catalan-tail},
+\[
+-\log p_{\mathrm{Cat}}(I,t)\ \ge\ \frac{|M(t)|^2}{2r_I(t)}-\log\bigl(3L^{3/2}\bigr).
+\]
+Hence a selector bound $-\log p_{\mathrm{Cat}}(I,t)\le\Phi(x_0)$ with
+$\Phi(x)=x^{o(1)}$ on the excursions with $x_1\le\lambda x_0$ implies
+$|M(t)|\le t^{1/2}x_0^{o(1)}$ there, and RH then follows from
+Corollary~\ref{cor:descending}; it is not an independent criterion. The
+selector bound is strictly stronger than Littlewood's bound on these
+ranges: it controls $|M(t)|$ at the diffusive scale $r_I(t)^{1/2}$ of the
+support time, which may be much smaller than $t^{1/2}$, and a polynomial
+selector $p_{\mathrm{Cat}}\ge x_0^{-A}$ would give $|M(t)|\ll\sqrt{t\log t}$
+on the retained ranges, beyond any bound known to follow from RH. Turning
+$p_{\mathrm{Cat}}$ into an exact measure of deviation would require the
+matching lower bound $-\log p_{\mathrm{Cat}}(I,t)\ll|M(t)|^2/r_I(t)+\log L$
+for the primitive Catalan tail, which is not proved here.
+\end{remark}
+
+\begin{remark}[The correct quantifier]
+\label{rem:quantifier}
+A single value $|M(t)|\ge t^{1/2+\eps}$, or many values with bounded ratio
+$|M(t)|/t^{1/2+\eps}$, is compatible with RH, since Littlewood's criterion
+allows a constant $C_\eps$. The negation of the criterion is
+\[
+\exists\,\eps_0>0:\qquad
+\sup_{t\ge1}\frac{|M(t)|}{t^{1/2+\eps_0}}=\infty,
+\]
+equivalently there are $t_j\to\infty$ and $A_j\to\infty$ with
+$|M(t_j)|\ge A_jt_j^{1/2+\eps_0}$. Accordingly, the rarity bound
+\eqref{eq:fractional-square-catalan-union} is a statement about the
+reference law, and the arithmetic content lies in the sequence form
+below. If $\Theta>1/2$ and $0<\delta<\Theta-\frac12$, the oscillation
+theorem gives $|M(t_j)|\ge\frac12t_j^{1/2+\delta}$ along a sequence, and then
+$|M(t_j)|/t_j^{1/2+\eps}\ge\frac12t_j^{\delta-\eps}\to\infty$ for every
+$0<\eps<\delta$.
+\end{remark}
+
+\begin{corollary}[Catalan cost along a Littlewood-violating sequence]
+\label{cor:catalan-sequence}
+Let $t_j\to\infty$, $A_j\to\infty$ and $\eps_0>0$ with
+$|M(t_j)|\ge A_jt_j^{1/2+\eps_0}$, and let $I_j=(x_{0,j},x_{1,j}]$ be the
+excursion containing $t_j$. If $x_{1,j}\le x_{0,j}^{B}$ for a fixed $B$,
+then
+\[
+-\log p_{\mathrm{Cat}}(I_j,t_j)\ \ge\ \frac{A_j^2}{2}\,t_j^{2\eps_0}
+-O_B(\log x_{0,j})\ \ge\ \frac{A_j^2}{2}\,x_{0,j}^{2\eps_0}-O_B(\log x_{0,j}).
+\]
+\end{corollary}
+
+\begin{proof}
+With $r=r_{I_j}(t_j)<t_j$ and $h=|M(t_j)|$,
+$h^2/(2r)\ge A_j^2t_j^{1+2\eps_0}/(2t_j)$; apply
+Lemma~\ref{lem:pointwise-catalan-tail} with $L\le x_{1,j}\le x_{0,j}^B$.
+\end{proof}
+
+\subsubsection*{Selection energies: complete excursions and open prefixes}
+
+The support-time clock of Definition~\ref{def:support-catalan} is the
+squarefree-compressed clock
+\[
+\Sq(x)=\#\{n\le x:\mu(n)\ne0\},\qquad L^\#(I)=\Sq(x_1)-\Sq(x_0)\le x_1-x_0,
+\]
+and $r_I(t)=\Sq(t)-\Sq(x_0)$. Two tail quantities are natural: one for the
+height of a complete excursion, and one for an open prefix, which does not
+require knowledge of the future return.
+
+\begin{definition}[Selection energies]
+\label{def:selection-energies}
+For a complete excursion $I$ with height $H(I)$ and compressed length
+$L^\#=L^\#(I)$, put
+\[
+p^{\max}_{\mathrm{Cat}}(I):=\mathbb P_{\mathrm{pCat},L^\#}\{H_{\max}\ge H(I)\},
+\qquad
+\mathcal I_{\mathrm{Cat}}(I):=-\log p^{\max}_{\mathrm{Cat}}(I).
+\]
+For $t\ge1$ with $M(t)\ne0$ let $a(t)$ be the last zero of $M$ before $t$ and
+$r=\Sq(t)-\Sq(a(t))$. After orientation, the compressed segment from $a(t)$ to
+$t$ is a positive meander of length $r$: a $\pm1$ path $(S_k)_{k\le r}$ with
+$S_0=0$ and $S_k>0$ for $1\le k\le r$. Let $\mathcal M_r$ be the set of such
+paths and
+\[
+p_{\mathrm{open}}(t):=\mathbb P_{\mathcal M_r}\{S_r\ge|M(t)|\},
+\]
+the uniform measure on $\mathcal M_r$.
+\end{definition}
+
+\begin{lemma}[Height--entropy inequalities]
+\label{lem:height-entropy}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $L^\#=2$, the compressed path is $0,1,0$ and $H(I)=1$. For every
+complete excursion with $L^\#\ge4$,
+\[
+\mathcal I_{\mathrm{Cat}}(I)\ \ge\ \frac{(H(I)-1)^2}{L^\#-2}-\log\frac{L^\#}2 .
+\]
+\item $\#\mathcal M_r=\binom{r-1}{\lfloor(r-1)/2\rfloor}\ge2^r/(4\sqrt r)$,
+and for $h\ge1$
+\[
+\mathbb P_{\mathcal M_r}\{S_r\ge h\}\le4\sqrt r\,e^{-h^2/(2r)},
+\qquad
+-\log p_{\mathrm{open}}(t)\ \ge\ \frac{M(t)^2}{2r}-\log\bigl(4\sqrt r\bigr).
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) is \eqref{eq:primitive-catalan-max-tail}. (ii) The count of positive
+meanders is classical (ballot theorem; the number ending at $s$ is
+$\frac sr\binom{r}{(r+s)/2}$). From
+$\binom{2m}{m}\ge4^m/(2\sqrt m)$ and
+$\binom{2m+1}{m}=\frac12\binom{2m+2}{m+1}$ one gets
+$\#\mathcal M_r\ge2^r/(4\sqrt r)$. Among all $2^r$ words the proportion with
+$S_r\ge h$ is at most $e^{-h^2/(2r)}$ by the Chernoff bound; divide.
+\end{proof}
+
+\begin{proposition}[Selector criteria]
+\label{prop:selector-criteria}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Complete excursions.} Fix $\lambda>\lambda_*$. If there is $A$
+such that $p^{\max}_{\mathrm{Cat}}(I)\ge x_0^{-A}$ for every sufficiently
+large complete excursion with $x_1\le\lambda x_0$, then
+$H(I)\ll_{A,\lambda}\sqrt{x_0\log x_0}$ on that family, and RH holds.
+\item \emph{Open prefixes.} If there is $A$ such that
+$p_{\mathrm{open}}(t)\ge t^{-A}$ for all large $t$ with $M(t)\ne0$, then
+$|M(t)|\ll_A\sqrt{t\log t}$, and RH holds.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) If $L^\#=2$ then $H(I)=1$. Otherwise $L^\#\ge4$ and, by
+Lemma~\ref{lem:height-entropy}(i), $(H-1)^2\le(L^\#-2)(A\log x_0+\log L^\#)$, and $L^\#\le(\lambda-1)x_0$.
+Littlewood's bound therefore holds on every excursion with
+$x_1\le\lambda x_0$, and Corollary~\ref{cor:descending}(iii), in the form
+that discards the $\lambda$-long excursions, gives RH.
+(ii) By Lemma~\ref{lem:height-entropy}(ii),
+$M(t)^2\le2r(A\log t+\log(4\sqrt r))$ with $r\le t$.
+\end{proof}
+
+\begin{remark}[Status of the two selectors]
+\label{rem:selector-status}
+Both hypotheses are stronger than RH: each yields $|M|\ll\sqrt{t\log t}$ on
+its range, beyond any bound known to follow from RH. Neither is known to follow
+from RH alone: a ballistic stretch of compressed length $r$ has $-\log p\asymp r$,
+and RH does not exclude such stretches with $r$ a small power of $t$. The open selector controls every point without reference
+to the future return; the complete selector uses only the horizon-localized
+family, where $L^\#\le(\lambda-1)x_0$ is controlled. By contraposition and
+Corollary~\ref{cor:catalan-sequence}, failure of RH forces the compressed
+M\"obius path to realize, along an unbounded sequence, sectors of Catalan or
+meander weight $\exp(-c\,t^{2\delta})$ with $\delta>0$, not merely
+polynomially rare ones.
+\end{remark}
+
+
+
+
+
+\begin{remark}[The threshold $\lambda_*$]
+\label{rem:lambda-star}
+The function $\cos(\gamma_1\log x)$ changes sign $\gamma_1/\pi$ times per
+unit of $\log x$, i.e.\ once in every multiplicative interval of ratio
+$e^{\pi/\gamma_1}=\lambda_*$; the constant in \eqref{eq:KP-signchanges} is
+this density. On the geometric side, a chain of $\lambda$-long intervals
+realizes the bound of Lemma~\ref{lem:linear-lacunary}. The method of
+Theorem~\ref{thm:horizon} compares these two counts, and $\lambda_*$ is the
+exact point where they balance: for $\lambda\le\lambda_*$ the $\lambda$-long
+family can, as far as counting alone is concerned, absorb every
+Kaczorowski--Pintz excursion. Going below $\lambda_*$ requires information
+on where inside an excursion the large values occur, not only how many
+excursions carry them.
+\end{remark}
+
+\begin{proposition}[Logarithmic-length budget]
+\label{prop:log-budget}
+Let $\F$ be a family of excursions and let $u_1<\dots<u_N$ be the starts of
+its members with $2\le u_j\le X$, with ends $v_j$. Then
+\[
+\sum_{j=1}^{N-1}\log\frac{v_j}{u_j}\le\log\frac X2 .
+\]
+If moreover $v_N\le u_N^A$ for some $A\ge1$, then
+$\sum_{j=1}^{N}\log(v_j/u_j)\le A\log X$.
+\end{proposition}
+
+\begin{proof}
+Disjointness gives $u_{j+1}\ge v_j$, so
+$\log(v_j/u_j)\le\log u_{j+1}-\log u_j$; the sum telescopes to at most
+$\log u_N-\log u_1\le\log(X/2)$. The last term is at most
+$(A-1)\log u_N\le(A-1)\log X$.
+\end{proof}
+
+Lemmas~\ref{lem:power-lacunary}--\ref{lem:linear-lacunary} are the special
+cases in which every term is bounded below. The budget form shows what the
+horizon theorem actually measures.
+
+\begin{corollary}[Mean logarithmic length of Kaczorowski--Pintz excursions]
+\label{cor:KP-mean-log-length}
+Suppose $\Theta>1/2$, fix $0<\eta<\Theta-\frac12$, and let $\mathcal K(X)$
+be any set of distinct excursions starting at most $X$, each containing a
+point $t$ with $|M(t)|\ge\frac12t^{\Theta-\eta}$, such that
+$\#\mathcal K(X)\ge(\gamma_1/\pi-o(1))\log X$ (such sets exist by
+Corollary~\ref{cor:KP-large-excursions}). Then
+\[
+\frac1{\#\mathcal K(X)}\sum_{\nu\in\mathcal K(X)}\log\frac{v_\nu}{u_\nu}
+\ \le\ \frac{\pi}{\gamma_1}+o(1)=\log\lambda_*+o(1).
+\]
+\end{corollary}
+
+\begin{proof}
+Fix $A>1$. By Corollary~\ref{cor:KP-local-returns}, all but finitely many
+excursions satisfy $v\le u^A$; the finitely many others contribute $O_A(1)$.
+Proposition~\ref{prop:log-budget} gives a total of at most
+$A\log X+O_A(1)$. Divide by $\#\mathcal K(X)$ and let $A\downarrow1$.
+\end{proof}
+
+\begin{remark}[What lowering $\lambda_*$ requires]
+\label{rem:surplus}
+Corollary~\ref{cor:descending}(iii) is the statement that the
+excursions carrying Kaczorowski--Pintz witnesses cannot all have
+$\log(v/u)>\log\lambda$ with $\lambda>\lambda_*$;
+Corollary~\ref{cor:KP-mean-log-length} is its averaged form. Consequently,
+any proof that such excursions have mean logarithmic length at least
+$\pi/\gamma_1+\delta$ for some fixed $\delta>0$ would contradict
+Corollary~\ref{cor:KP-mean-log-length} and prove RH, and a surplus
+$\delta>\log(\lambda_*/\lambda)$ among the excursions whose witness lies
+beyond $\lambda x_0$ would extend Corollary~\ref{cor:descending}(iii) to
+that $\lambda<\lambda_*$. Kaczorowski--Pintz, as stated, gives neither: it
+supplies at least one return in each band $[Y^{1-\delta},Y]$ but no upper
+separation between consecutive witnesses. Nor do short-interval estimates
+for $\mu$ supply it: $|M(x+h)-M(x)|=o(h)$ is compatible with $M$ staying
+positive throughout $(x,x+h]$, whereas a return requires a decrement of
+size at least $M(x)$ in a prescribed direction. Energy bounds do not help
+either, since a flat excursion of height $1$ has $\beta_I,Q_I\asymp\ell_I$.
+\end{remark}
+
+\subsection*{Wide peaks from cancellation in all short intervals}
+
+The only arithmetic input of the following lemma is the theorem of
+Matom\"aki--Ter\"av\"ainen \cite{MatomakiTeravainen2023}: for every fixed
+$\theta>0.55$, $\sum_{x<n\le x+x^\theta}\mu(n)=o(x^\theta)$ as $x\to\infty$.
+
+\begin{lemma}[Mesoscopic Lipschitz bound]
+\label{lem:meso-lipschitz}
+Fix $\Lambda>1$ and $\vartheta>0.55$. For large $u$ put
+$h_u=\lceil(\Lambda u)^\vartheta\rceil$ and
+\[
+\eta_u:=\max\Bigl\{h_u^{-1},\ \max_{u\le a\le\Lambda u}
+\frac{|M(a+h_u)-M(a)|}{h_u}\Bigr\}.
+\]
+Then $\eta_u\to0$, and for all integers $u\le a<b\le\Lambda u$,
+\begin{equation}
+\label{eq:meso-lipschitz}
+|M(b)-M(a)|\le\eta_u(b-a)+h_u .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Fix $\theta'\in(0.55,\vartheta)$. For $u\le a\le\Lambda u$ cover $(a,a+h_u]$
+by consecutive intervals $(b,b+\lceil b^{\theta'}\rceil]$, $b\ge a$, and a
+final piece of length at most $\lceil(2\Lambda u)^{\theta'}\rceil=o(h_u)$.
+By \cite{MatomakiTeravainen2023} each full piece has Möbius sum
+$o(b^{\theta'})$, uniformly as $u\to\infty$, so
+$|M(a+h_u)-M(a)|=o(h_u)$ uniformly in $a$, and $\eta_u\to0$. For
+\eqref{eq:meso-lipschitz}, write $b-a=qh_u+r$ with $0\le r<h_u$: the $q$
+full blocks start in $[u,\Lambda u]$ and contribute at most $q\eta_uh_u$,
+and the remainder at most $r<h_u$.
+\end{proof}
+
+\begin{proposition}[Wide peaks]
+\label{prop:wide-peaks}
+Let $(u,v]$ be an excursion with $v\le\Lambda u$, let $u<t<v$ with
+$|M(t)|=H$, and put $A=(H-h_u)_+$ and $m=\lfloor A/\eta_u\rfloor$. Then
+\[
+t-u\ge\frac A{\eta_u},\qquad v-t\ge\frac A{\eta_u},
+\]
+\[
+\beta\ge H+2\sum_{j=1}^m(A-\eta_uj),\qquad
+Q\ge H^2+2\sum_{j=1}^m(A-\eta_uj)^2 .
+\]
+Consequently, uniformly for such excursions with $H/h_u\to\infty$,
+\[
+v-u\ge(2+o(1))\frac H{\eta_u},\qquad
+\beta\ge(1+o(1))\frac{H^2}{\eta_u},\qquad
+Q\ge\Bigl(\frac23+o(1)\Bigr)\frac{H^3}{\eta_u},
+\]
+so that $(v-u)/H$, $\beta/H^2$ and $Q/H^3$ tend to infinity, whereas the
+unit-step bounds of Lemma~\ref{lem:height_steps} and
+Proposition~\ref{prop:sharp-LH} give only $2$, $1$ and $\frac23$.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:meso-lipschitz} applied to $(u,t]$ and $(t,v]$,
+$H\le\eta_u(t-u)+h_u$ and $H\le\eta_u(v-t)+h_u$. For $1\le j\le m$ the
+points $t\pm j$ lie in $[u,v]$, and \eqref{eq:meso-lipschitz} gives
+$\sigma M(t\pm j)\ge A-\eta_uj\ge0$. Summing $t$ and the pairs $t\pm j$
+gives the bounds for $\beta$ and $Q$. Finally
+$2\sum_{j\le m}(A-\eta_uj)=A^2/\eta_u+O(A)$,
+$2\sum_{j\le m}(A-\eta_uj)^2=\frac23A^3/\eta_u+O(A^2)$, and $A=(1+o(1))H$.
+\end{proof}
+
+\begin{corollary}[Packing of high excursions]
+\label{cor:packing}
+Let $Y=Y(U)$ with $Y/U^\vartheta\to\infty$. The number of excursions with
+$U\le u\le2U$, $v\le\Lambda u$ and height at least $Y$ is
+$o(U/Y)$, whereas the unit-step bound gives $O(U/Y)$.
+\end{corollary}
+
+\begin{proof}
+They are disjoint and contained in $[U,2\Lambda U]$. By
+Proposition~\ref{prop:wide-peaks}, each has length at least
+$$(2+o(1))Y/\max_{U\le u\le2U}\eta_u.$$
+\end{proof}
+
+\begin{remark}[Scope]
+\label{rem:wide-peaks-scope}
+Proposition~\ref{prop:wide-peaks} is informative only for heights above
+$u^{0.55+o(1)}$. If $\Theta>0.55$ and $0.55<\vartheta<\Theta-\eta$, it
+applies to the Kaczorowski--Pintz witness excursions of
+Corollary~\ref{cor:two-sided} with $v\le\lambda u$: their peaks are wide in
+the sense above. It does not lower $\lambda_*$: the resulting lower bound
+for $\log(v/u)$ is of order $H/(\eta_uu)$, which may still tend to $0$,
+whereas Remark~\ref{rem:surplus} requires a fixed surplus. The published
+quantitative estimate of Matom\"aki--Ter\"av\"ainen
+\cite[Theorem~1.1]{MatomakiTeravainen2023} makes the gain explicit. If
+$0.55<\theta'<\vartheta$, then the blocking argument in
+Lemma~\ref{lem:meso-lipschitz} gives, for every fixed $\varepsilon>0$,
+\[
+\eta_u\ll_{\varepsilon,\theta',\vartheta,\Lambda}
+(\log u)^{-1/3+\varepsilon}+u^{\theta'-\vartheta}.
+\]
+Consequently, in the regime $H/h_u\to\infty$ of
+Proposition~\ref{prop:wide-peaks},
+\[
+Q\gg_{\varepsilon}H^3(\log u)^{1/3-\varepsilon}.
+\]
+\end{remark}
+
+
+
+\subsection{The linear window and the one-step recursion}
+\label{subsec:linear-window}
+
+Once the horizon is below $2x_0$, the square-range bilinear structure of
+Proposition~\ref{prop:prefix-bilinear} is no longer needed: on $(u,2u]$ the
+M\"obius function is a \emph{linear} expression in the prefix
+$\mu\mathbf 1_{[1,u]}$.
+
+\begin{proposition}[Linear window]
+\label{prop:linear-window}
+Let $u\ge1$. For every integer $u<n\le2u$,
+\begin{equation}
+\label{eq:linear-window-mu}
+\mu(n)=-\sum_{\substack{d\mid n\\ d\le u}}\mu(d).
+\end{equation}
+Consequently, if $M(u)=0$ and $u<t\le2u$,
+\begin{equation}
+\label{eq:linear-window-M}
+M(t)=-\sum_{d\le u}\mu(d)\left(\left\lfloor\frac td\right\rfloor
+-\left\lfloor\frac ud\right\rfloor\right).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Since $n\ge2$, $\sum_{d\mid n}\mu(d)=0$. Every proper divisor of $n$ is at
+most $n/2\le u$, and every divisor $d\le u$ is proper because $n>u$. Summing
+\eqref{eq:linear-window-mu} over $u<n\le t$, the number of multiples of $d$
+in $(u,t]$ is $\lfloor t/d\rfloor-\lfloor u/d\rfloor$.
+\end{proof}
+
+\begin{corollary}[Localized prefix formula]
+\label{cor:localized-prefix}
+Let $M(u)=0$, let $1<\lambda<2$, and let $u<t\le\lambda u$.  Then
+\begin{equation}
+\label{eq:localized-prefix}
+M(t)=-\sum_{d\le\lambda u/2}\mu(d)
+\left(\left\lfloor\frac td\right\rfloor-
+\left\lfloor\frac ud\right\rfloor\right).
+\end{equation}
+Indeed, if $\lambda u/2<d\le u$, then $d>u/2$ and the first multiple of
+$d$ strictly larger than $u$ is $2d>\lambda u\ge t$.
+\end{corollary}
+
+\begin{corollary}[Prefix-dependency cutoff]
+\label{cor:prefix-cutoff}
+Put
+\[
+\theta_*:=\frac12e^{\pi/\gamma_1}=0.6244\ldots .
+\]
+For every fixed $\theta$ with $\theta_*<\theta<1$, RH is equivalent to
+Littlewood's bound on every excursion starting at $u$ throughout
+\[
+u<t\le\min\{x_1,2\theta u\},
+\]
+where, throughout that window, $M(t)$ is given by the sum
+\eqref{eq:localized-prefix} using only the prefix
+$\mu(d)$ with $d\le\theta u$.  In particular, the choice
+$\theta=5/8$ corresponds to $\lambda=5/4$ and gives the RH-equivalent
+window
+\[
+1\le r=t-u\le\min\{\ell-1,u/4\}
+\]
+using only $d\le5u/8$.
+
+The number $\theta_*$ is an infimum, not an attained endpoint, because the
+horizon theorem requires $\lambda>\lambda_*$.
+\end{corollary}
+
+\begin{proof}
+Take $\lambda=2\theta>\lambda_*$ in
+Corollary~\ref{cor:descending}(iii), then use
+Corollary~\ref{cor:localized-prefix}.
+\end{proof}
+
+
+\begin{corollary}[Algebraic dependency gap]
+\label{cor:dependency-gap}
+Let $\theta_*<\theta<1$.  If $u$ is a zero of $M$, then every increment
+$\mu(n)$ with
+\[
+u<n\le2\theta u
+\]
+is determined by the prefix
+$\mu(1),\ldots,\mu(\lfloor\theta u\rfloor)$.  Consequently the intermediate
+block
+\[
+(\theta u,u]
+\]
+does not occur as a direct input in the divisor recursion determining the
+localized future window.  As $\theta\downarrow\theta_*$, the omitted block
+has relative length tending to
+$1-\theta_*=0.3755\ldots$.
+\end{corollary}
+
+\begin{proof}
+For $u<n\le2\theta u$, every proper divisor $d\mid n$ satisfies
+$d\le n/2\le\theta u$.  Hence
+\[
+\mu(n)=-\sum_{\substack{d\mid n\\ d<n}}\mu(d)
+\]
+uses only $d\le\theta u$.
+\end{proof}
+
+\begin{remark}[Direct dependency is not independence]
+Corollary~\ref{cor:dependency-gap} is an algebraic statement about which
+values occur as inputs of the divisor recursion.  It does not assert
+statistical or arithmetic independence between the omitted block
+$(\theta u,u]$ and the earlier prefix.
+\end{remark}
+
+In convolution form, \eqref{eq:linear-window-mu} says that
+$(\mu-\mu_u)*1=\mu\mathbf 1_{(u,\infty)}$ on $n\le2u$, the order-one analogue
+of \eqref{eq:bilinear-general}, which for $u<n\le u^2$ reads
+$\mu(n)=-(\mu_u*\mu_u*1)(n)$; on $(u,2u]$ both give $\mu(n)$, the
+bilinear form being the quadratic continuation of the linear one. Equivalently, \eqref{eq:linear-window-M}
+follows from $\sum_{d\le t}\mu(d)\lfloor t/d\rfloor=1$, since
+$\lfloor t/d\rfloor=1$ for $u<d\le t\le2u$.
+
+\begin{proposition}[One-step recursion]
+\label{prop:one-step}
+For real $x\ge1$,
+\begin{equation}
+\label{eq:hyperbola-M}
+\sum_{k\le x}M\!\left(\frac xk\right)=1 .
+\end{equation}
+Hence, if $M(u)=0$ and $t>u$,
+\begin{equation}
+\label{eq:descent-identity}
+M(t)=-\sum_{2\le k\le t}\left[M\!\left(\frac tk\right)-M\!\left(\frac uk\right)\right],
+\end{equation}
+with $M(y)=0$ for $y<1$. Every argument on the right is at most $t/2$; hence on a localized
+window $u<t\le\lambda u$ all arguments are at most $\lambda u/2$.  For
+$\lambda=5/4$ this is $5u/8$.
+\end{proposition}
+
+\begin{proof}
+$\sum_{k\le x}M(x/k)=\sum_{k\le x}\sum_{d\le x/k}\mu(d)
+=\sum_{m\le x}\sum_{d\mid m}\mu(d)=1$. Subtract the identity at $u$, where
+$M(u)=0$, and note $M(u/k)=0$ for $k>u$.
+\end{proof}
+
+\begin{proposition}[Scale cascade in the localized excursion window]
+\label{prop:scale-cascade}
+Let $(u,v]$ be an excursion, let $\lambda_*<\lambda<2$, and let
+$u<t\le\min\{v,\lambda u\}$.  For $k\ge2$ put
+\[
+\Delta_k(u,t):=M(t/k)-M(u/k),
+\]
+and for an integer $K\ge2$ put
+\[
+\mathcal R_K(u,t):=-\sum_{K<k\le t}\Delta_k(u,t).
+\]
+Then, exactly,
+\begin{equation}
+\label{eq:scale-cascade}
+M(t)=-\sum_{k=2}^{K}\Delta_k(u,t)+\mathcal R_K(u,t),
+\end{equation}
+and $\mathcal R_K(u,t)$ uses only values $M(q)$ with
+\[
+q\le\frac{\lambda u}{K+1}.
+\]
+Equivalently, all dependence on values above $\lambda u/(K+1)$ is
+concentrated in the $K-1$ increments
+$\Delta_2,\ldots,\Delta_K$.  Moreover
+\[
+\Delta_k(u,t)=\sum_{u/k<n\le t/k}\mu(n),
+\]
+so the supporting interval has length $(t-u)/k$.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:scale-cascade} is Proposition~\ref{prop:one-step} with
+the terms $2\le k\le K$ separated.  If $k>K$, then
+$t/k\le\lambda u/(K+1)$ and $u/k\le\lambda u/(K+1)$.  The last identity is
+the definition of the summatory function on the interval $(u/k,t/k]$.
+\end{proof}
+
+\begin{corollary}[First channels]
+\label{cor:first-channels}
+For $K=2$,
+\[
+M(t)=-\bigl(M(t/2)-M(u/2)\bigr)+R_2(u,t),
+\]
+where $R_2$ uses only $q\le\lambda u/3$.  With the convenient localized
+choice $\lambda=5/4$, the only channel above $5u/12$ is
+\[
+\Delta_2(u,u+r)=\sum_{u/2<n\le u/2+r/2}\mu(n),
+\qquad 0<r\le u/4,
+\]
+whose supporting interval has length at most $u/8$.  In the limiting
+sense $\lambda\downarrow\lambda_*$, the successive remainder cutoffs are
+\[
+\frac{\lambda_*}{2}u=0.6244\ldots u,\quad
+\frac{\lambda_*}{3}u=0.4162\ldots u,\quad
+\frac{\lambda_*}{4}u=0.3122\ldots u,\quad
+\frac{\lambda_*}{5}u=0.2497\ldots u.
+\]
+\end{corollary}
+
+\begin{lemma}[Channel persistence extracted from a high excursion]
+\label{lem:channel-persistence}
+Let $S_r=\sigma M(u+r)>0$ on $1\le r\le h$ with $S_0=0$ and
+$|S_r-S_{r-1}|\le1$.  Fix $K\ge2$ and write, using
+Proposition~\ref{prop:scale-cascade},
+\[
+S_r=\sum_{k=2}^{K}X_k(r)+Y_K(r),
+\quad
+X_k(r):=-\sigma\Delta_k(u,u+r),
+\quad
+Y_K(r):=\sigma \mathcal R_K(u,u+r).
+\]
+If $H=\max_{r\le h}S_r$ and $\tau$ is a point with $S_\tau=H$, then among
+the last $\lfloor H/2\rfloor+1$ indices
+\[
+\tau-\lfloor H/2\rfloor,\ldots,\tau
+\]
+there is one fixed component among
+$X_2,\ldots,X_K,Y_K$ which is at least $H/(2K)$ at no fewer than
+$\lfloor H/(2K)\rfloor$ indices.
+\end{lemma}
+
+\begin{proof}
+Since $S_0=0$ and the path has unit steps, $\tau\ge H$ and
+$S_{\tau-j}\ge H-j\ge H/2$ for
+$0\le j\le\lfloor H/2\rfloor$.  At every one of these indices the sum of
+the $K$ displayed components is at least $H/2$, hence some component is at
+least $H/(2K)$.  Pigeonholing the indices among the $K$ components gives the
+claim.
+\end{proof}
+
+\begin{remark}[What the persistence lemma adds]
+\label{rem:persistence-content}
+Lemma~\ref{lem:channel-persistence} is not a bound for $M$.  It converts a
+large value attained inside one excursion into a quantified persistence
+requirement: either one of the finitely many scaled interval sums
+$\Delta_2,\ldots,\Delta_K$ repeatedly carries a positive fraction of the
+height, or the responsibility lies repeatedly in the deeper remainder,
+which is supported entirely below $\lambda u/(K+1)$.  This avoids the
+iteration defect of Remark~\ref{rem:iteration-gap}: no new point is claimed
+to be the start-window point of another excursion.
+\end{remark}
+\begin{corollary}[Channel descent with explicit loss]
+\label{cor:channel-descent}
+Let $u$ be a zero of $M$, $t>u$, $K\ge2$, and $0<\alpha<1$. Then either
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item there are $2\le k\le K$ and $q\in\{\lfloor u/k\rfloor,\lfloor t/k\rfloor\}$
+with $|M(q)|\ge|M(t)|/(2K)$, hence
+\[
+\frac{|M(q)|}{q^\alpha}\ge\frac{k^\alpha}{2K}\cdot\frac{|M(t)|}{t^\alpha},
+\qquad q\le\frac tk;
+\]
+or
+\item $|\mathcal R_K(u,t)|\ge|M(t)|/K$, where $\mathcal R_K$ depends only on
+$M(q)$ with $q\le t/(K+1)$.
+\end{enumerate}
+The statement holds at every $t>u$, not only in a localized window.
+\end{corollary}
+
+\begin{proof}
+The proof of Proposition~\ref{prop:scale-cascade} applies verbatim to every
+$t>u$, with $\mathcal R_K$ supported on $q\le t/(K+1)$. By \eqref{eq:scale-cascade}, one of the $K$ terms
+$\Delta_2,\dots,\Delta_K,\mathcal R_K$ has modulus at least $|M(t)|/K$. If it is
+$\Delta_k=M(\lfloor t/k\rfloor)-M(\lfloor u/k\rfloor)$, one of its two values
+has modulus at least $|M(t)|/(2K)$, and $q\le t/k$.
+\end{proof}
+
+\begin{remark}[Channels do not iterate to a bound]
+\label{rem:channel-loss}
+Corollary~\ref{cor:channel-descent} has no iteration gap: it applies at
+the new point $q$ relative to the last zero of $M$ before $q$. Its defect
+is the constant loss $k^\alpha/(2K)<1$ per step. If alternative~(i) held at
+every step, a chain of length $m\asymp\log t$ would give only
+$|M(t)|\le(2K)^m\,O(1)=t^{O(\log K)}$, weaker than the trivial bound.
+A closing argument must therefore show that alternative~(ii), or
+alternative~(i) with loss factor at least $1$, occurs along the chain; both
+are statements about cancellation, not about dependency.
+\end{remark}
+
+
+\begin{remark}[What the recursion determines]
+\label{rem:recursion-content}
+Iterating \eqref{eq:hyperbola-M} determines all of $M$ from $M(1)=1$, so
+determinacy alone carries no information; cf.\
+Remark~\ref{rem:information}.  The content of
+\eqref{eq:descent-identity}, after Corollary~\ref{cor:prefix-cutoff}, is
+more precise: at the start $u$ of an excursion, every value in an
+RH-equivalent window $u<t\le\lambda u$ is a signed sum of increments of
+$M$ over scaled intervals $(u/k,t/k]$ lying below $\lambda u/2$.  This is a
+descent of dependency only; no descent of normalized size follows from the
+identity.
+\end{remark}
+
+\begin{corollary}[RH in the localized linear window]
+\label{cor:linear-window-RH}
+RH holds if and only if, for every $\eps>0$,
+\[
+\left|\sum_{d\le5u/8}\mu(d)\left(\left\lfloor\frac td\right\rfloor
+-\left\lfloor\frac ud\right\rfloor\right)\right|
+=\left|\sum_{2\le k\le t}\left[M\left(\frac tk\right)-M\left(\frac uk\right)\right]\right|
+\ll_\eps t^{1/2+\eps}
+\]
+for every excursion starting at $u$ and every
+\[
+u<t\le\min\left\{x_1,\frac54u\right\}.
+\]
+Equivalently, in intra-excursion coordinates $t=u+r$ it is enough to
+control
+\[
+1\le r\le\min\{\ell-1,u/4\}.
+\]
+\end{corollary}
+
+\begin{proof}
+Use Corollary~\ref{cor:prefix-cutoff} with $\theta=5/8$, together with
+Proposition~\ref{prop:one-step}.
+\end{proof}
+
+\begin{proposition}[Kernel form of the recursion]
+\label{prop:kernel}
+Let $M(u)=0$ and let $t$ be an integer with $u<t<2u$. For $1\le q\le t/2$ put
+\[
+c_q(t,u)=\Bigl(\Bigl\lfloor\frac tq\Bigr\rfloor-\Bigl\lfloor\frac t{q+1}\Bigr\rfloor\Bigr)
+-\Bigl(\Bigl\lfloor\frac uq\Bigr\rfloor-\Bigl\lfloor\frac u{q+1}\Bigr\rfloor\Bigr).
+\]
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $M(t)=-\sum_{1\le q\le t/2}c_q(t,u)M(q)$;
+\item $c_q(t,u)=\dfrac{t-u}{q(q+1)}+e_q$ with $|e_q|<2$; for $q>\sqrt t$
+one has $c_q\in\{-1,0,1\}$, and $c_q\ne0$ only if $q=\lfloor t/k\rfloor$ or
+$q=\lfloor u/k\rfloor$ for some $k<\sqrt t$;
+\item $c_1(t,u)\ge\frac12(t-u-1)$;
+\item $M(t)=-(t-u)\,\Upsilon(\sqrt t)+\mathrm{Err}(t,u)$, where $\Upsilon$ is the
+coefficient \eqref{eq:Upsilon_def} and
+\[
+|\mathrm{Err}(t,u)|\le2\sum_{q\le\sqrt t}|M(q)|
++\sum_{k<\sqrt t}\Bigl(\Bigl|M\Bigl(\frac tk\Bigr)\Bigr|+\Bigl|M\Bigl(\frac uk\Bigr)\Bigr|\Bigr).
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) In \eqref{eq:descent-identity} group the indices $k\ge2$ by the value
+$q=\lfloor t/k\rfloor$, respectively $q=\lfloor u/k\rfloor$. The number of
+$k\ge1$ with $\lfloor t/k\rfloor=q$ is
+$\lfloor t/q\rfloor-\lfloor t/(q+1)\rfloor$, and for $q\le t/2$ none of them
+is $k=1$. The same holds for $u$, because $k=1$ gives $q=u>t/2$. (ii) Each
+bracket equals $x/(q(q+1))$ minus a difference of two fractional parts, so
+it differs from $x/(q(q+1))$ by less than $1$. For $q>\sqrt t\ge\sqrt u$ both
+$t/q-t/(q+1)$ and $u/q-u/(q+1)$ are $<1$, so each bracket is $0$ or $1$, and
+it is $1$ only if $q=\lfloor x/k\rfloor$ with $k\le x/q<\sqrt t$.
+(iii) $c_1=(t-u)-(\lfloor t/2\rfloor-\lfloor u/2\rfloor)$ and
+$\lfloor t/2\rfloor-\lfloor u/2\rfloor\le\lceil(t-u)/2\rceil$.
+(iv) Insert (ii) into (i) for $q\le\sqrt t$; the smooth part is
+$(t-u)\sum_{q\le\sqrt t}M(q)/(q(q+1))=(t-u)\Upsilon(\sqrt t)$. For
+$q>\sqrt t$ use the last assertion of (ii).
+\end{proof}
+
+\begin{corollary}[Loss of the pointwise induction]
+\label{cor:induction-loss}
+Let $0<\alpha<1$ and suppose $|M(q)|\le Cq^\alpha$ for all $q\le t/2$. Then,
+for $u<t<2u$ with $M(u)=0$,
+\begin{equation}
+\label{eq:induction-loss}
+\bigl|M(t)+(t-u)\Upsilon(\sqrt t)\bigr|\ll_\alpha C\,t^{(1+\alpha)/2},
+\end{equation}
+while the termwise bound of the full kernel gives only
+$|M(t)|\ll_\alpha C\,t$. For $\alpha=\frac12+\eps$ the pointwise induction
+therefore loses $t^{1/2-\eps}$, and $t^{1/4-\eps/2}$ after the smooth
+component $-(t-u)\Upsilon(\sqrt t)$ is extracted.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:kernel}(iv),
+$|\mathrm{Err}|\le2C\sum_{q\le\sqrt t}q^\alpha+2Ct^\alpha\sum_{k<\sqrt t}k^{-\alpha}
+\ll_\alpha Ct^{(1+\alpha)/2}$. The full kernel satisfies
+$\sum_q|c_q|q^\alpha\ge c_1\ge\frac12(t-u-1)$ by (iii), and
+$\sum_q|c_q|q^\alpha\ll_\alpha t$ by (ii).
+\end{proof}
+
+The smooth component is not small for termwise reasons: by
+\eqref{eq:C_tail},
+\[
+\Upsilon(\sqrt t)=-\sum_{n>\sqrt t}\frac{M(n)}{n(n+1)},
+\]
+so its size is governed by the global identity
+$\sum_{n\ge1}M(n)/(n(n+1))=0$, i.e.\ by the pole of $\zeta$ at $s=1$
+(Remark~\ref{rem:why_log2}), and involves values of $M$ beyond $t/2$. Even
+under RH the tail gives only $(t-u)\Upsilon(\sqrt t)\ll t^{3/4+\eps/2}$, the
+same order as the bound for $\mathrm{Err}(t,u)$; the RH scale for $M(t)$ is a statement
+about their sum.
+
+\begin{remark}[Localized intra-excursion system]
+\label{rem:sign-cone}
+Let $I=(u,x_1]$ be an excursion of length $\ell=x_1-u$ and orientation
+$\sigma$, and put
+\[
+S_r:=\sigma M(u+r)>0\qquad(1\le r<\ell),\qquad S_0=S_\ell=0.
+\]
+For a fixed $\lambda\in(\lambda_*,2)$ set
+\[
+h_\lambda(u):=\min\{\ell-1,(\lambda-1)u\}.
+\]
+Then the entire RH-relevant initial segment satisfies simultaneously
+\[
+S_r=-\sigma\sum_{q\le\lambda u/2}c_q(u+r,u)M(q)>0,
+\qquad1\le r\le h_\lambda(u),
+\]
+and $|S_r-S_{r-1}|\le1$.  For $\lambda=5/4$ this is the segment
+$r\le\min\{\ell-1,u/4\}$ and all dependencies lie below $5u/8$.
+\end{remark}
+
+\begin{definition}[Relaxed divisor-sum window class]
+\label{def:relaxed-divisor-cone}
+Fix $u\ge2$ and $1\le h<u$.  For
+$\delta=(\delta_d)_{d\le u}\in\{-1,0,1\}^u$ with $\delta_1=1$ and
+$\sum_{d\le u}\delta_d=0$, put
+\[
+D_\delta(n):=\sum_{\substack{d\mid n\\ d\le u}}\delta_d,
+\qquad u<n\le u+h.
+\]
+We call $\delta$ window-admissible with orientation $\sigma\in\{-1,1\}$ if
+$D_\delta(n)\in\{-1,0,1\}$ throughout the window and
+\[
+\sigma\sum_{u<n\le u+r}D_\delta(n)<0
+\qquad(1\le r\le h).
+\]
+The induced oriented path is
+$S_r=-\sigma\sum_{u<n\le u+r}D_\delta(n)>0$.
+For the genuine M\"obius prefix, $\delta_d=\mu(d)$, these are exactly the
+increment and excursion conditions coming from $\mu*1=\delta_1$.
+\end{definition}
+
+\begin{proposition}[Ballistic counterexample to the relaxed window class]
+\label{prop:relaxed-ballistic}
+The relaxed class of Definition~\ref{def:relaxed-divisor-cone} admits
+ballistic paths.  Namely, take
+\[
+\delta_1=1,\qquad\delta_u=-1,\qquad\delta_d=0\quad(1<d<u).
+\]
+Then for every $u<n<2u$ one has $D_\delta(n)=1$, and with $\sigma=-1$,
+\[
+S_r=r\qquad(1\le r<u).
+\]
+If $m_q:=\sum_{d\le q}\delta_d$, then $m_q=1$ for every $q<u$.  Hence for
+any $0<\alpha<1$, any fixed $1<\lambda<2$, and
+$h=\lfloor(\lambda-1)u\rfloor$,
+\[
+\sup_{q\le\lambda u/2}\frac{|m_q|}{q^\alpha}=1,
+\qquad
+\frac{S_h}{(u+h)^\alpha}\asymp_\lambda u^{1-\alpha}\longrightarrow\infty.
+\]
+Thus a maximum principle comparing the normalized localized-window height
+to the normalized history is false on this relaxed class.
+\end{proposition}
+
+\begin{proof}
+For $u<n<2u$, the integer $u$ does not divide $n$.  Hence among the two
+nonzero coordinates of $\delta$ only $d=1$ contributes to $D_\delta(n)$,
+so $D_\delta(n)=1$.  The remaining assertions are immediate.
+\end{proof}
+
+\begin{remark}[What the relaxation loses]
+\label{rem:relaxed-loses}
+The counterexample violates the internal divisor identities of the M\"obius
+prefix.  Already for every prime $p<u$ the genuine identity requires
+$\delta_1+\delta_p=0$, whereas the ballistic vector above has
+$\delta_p=0$.  Consequently any successful localized argument of this type
+must use some of the relations
+\[
+\sum_{d\mid n}\delta_d=0\qquad(2\le n\le u),
+\]
+not merely the future-window constraints.
+\end{remark}
+
+\begin{remark}[The prefix correlation identity]
+\label{rem:prefix-correlation}
+The complete-excursion bridge identity must not be applied to a truncated
+localized window.  For $1\le h<\ell$, put
+$x_j=\sigma\mu(u+j)$,
+$S_r=\sum_{j\le r}x_j$, and
+$C_a^{[h]}=\sum_{j=1}^{h-a}x_jx_{j+a}$.  Lemma~\ref{lem:triangular-corr}
+applied to the prefix of length $h$ gives exactly
+\[
+\sum_{r=1}^{h-1}S_r^2+\sum_{a=1}^{h-1}aC_a^{[h]}
+=S_h\sum_{r=1}^{h-1}S_r.
+\]
+The right-hand side vanishes only for a complete bridge.  Thus
+$Q_\nu=-\sum_a aC_a^{(\nu)}$ cannot be used as an identity internal to a
+truncated horizon unless the excursion actually returns there.  In
+particular, passing from a large localized value to the energy of the whole
+excursion mixes the retained window with the part deliberately discarded by
+the horizon theorem.
+\end{remark}
+
+\begin{remark}[The one-step iteration gap]
+\label{rem:iteration-gap}
+Even a one-step implication sending a large value in the localized window
+to a large value at some $q\le\lambda u/2$ would not automatically iterate.
+The point $q$ need not lie in the localized window of the excursion that
+contains $q$; it may lie beyond $\lambda u'$ relative to that excursion's
+start $u'$.  Sparsity of the family of $\lambda$-long excursions does not
+repair a single descent chain.  Iteration therefore requires either a
+principle valid for all $t$, or a mechanism that places the new point inside
+an admissible window at every step.
+\end{remark}
+
+\begin{proposition}[Termwise absolute-value contraction gives no nontrivial gain]
+\label{prop:cone-obstruction}
+Let $(u,x_1]$ be an excursion, $1\le h<\min\{x_1-u,u\}$, and let
+$w_1,\dots,w_h\ge0$, not all zero. Put
+$K_q=\sum_{r\le h}w_rc_q(u+r,u)$, so that
+$\sum_rw_rM(u+r)=-\sum_qK_qM(q)$. If, for some $0<\alpha<1$ and
+$C_\alpha>0$,
+\[
+\sum_q|K_q|q^\alpha\le C_\alpha\sum_{r\le h}w_r(u+r)^\alpha,
+\]
+then
+\[
+\sum_{r\le h}w_r|M(u+r)|
+\le(1+2C_\alpha)\sum_{r\le h}w_r(u+r)^\alpha.
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:kernel}(iii) gives
+$c_1(u+r,u)\ge(r-1)/2\ge0$, hence
+$\frac12\sum_rw_r(r-1)\le K_1\le
+C_\alpha\sum_rw_r(u+r)^\alpha$. Since $M(u)=0$ and $M$ has unit steps,
+$|M(u+r)|\le r$, and the stated inequality follows.
+\end{proof}
+
+\begin{remark}[No strict coercivity from the first coefficient]
+\label{rem:c1-parity}
+Writing $t=u+r$ gives the exact formula
+\[
+c_1(u+r,u)=
+\begin{cases}
+\lceil r/2\rceil,&u\ \text{even},\\
+\lfloor r/2\rfloor,&u\ \text{odd}.
+\end{cases}
+\]
+In particular $c_1(u+1,u)=0$ when $u$ is odd.  The preceding proposition
+therefore rules out only this particular termwise absolute-value mechanism;
+it does not rule out a global signed contraction or cancellation among the
+coefficients $K_q$.
+\end{remark}
+
+\begin{definition}[Multiplicative layers of the prefix]
+\label{def:multiplicative-layers}
+Let $\Omega(n)$ denote the number of prime factors of $n$, counted with
+multiplicity.  For $R\ge2$ and $k\ge1$, a vector
+$(\delta_d)_{d\le R}$ satisfies the first $k$ M\"obius layers if
+$\delta_1=1$ and
+\[
+\sum_{d\mid n}\delta_d=0
+\qquad(2\le n\le R,\ \Omega(n)\le k).
+\]
+Thus layer $1$ imposes the identities at primes, layer $2$ adds prime
+squares and products of two primes, and so on.
+\end{definition}
+
+\begin{proposition}[One-layer propagation into the localized future]
+\label{prop:layer-propagation}
+Suppose $(\delta_d)_{d\le R}$ satisfies the first $k$ M\"obius layers. Then
+\[
+\delta_d=\mu(d)\qquad(d\le R,\ \Omega(d)\le k).
+\]
+Moreover, for every integer $n$ with
+\[
+R<n\le2R,\qquad\Omega(n)\le k+1,
+\]
+one has
+\[
+-\sum_{\substack{d\mid n\\d\le R}}\delta_d=\mu(n).
+\]
+Thus the $k$-th multiplicative layer of the prefix determines exactly the
+$(k+1)$-st multiplicative layer of the future increments in a window of
+length at most $R$.
+\end{proposition}
+
+\begin{proof}
+The first assertion follows recursively from
+$\delta_n=-\sum_{d\mid n,\ d<n}\delta_d$: every proper divisor of an
+integer with $\Omega(n)\le k$ has smaller $\Omega$.  For the second, every
+proper divisor of $n\le2R$ is at most $n/2\le R$ and has
+$\Omega(d)\le k$.  Hence the displayed sum equals
+$-\sum_{d\mid n,\ d<n}\mu(d)=\mu(n)$.
+\end{proof}
+
+\begin{question}[Multiplicative-layer depth]
+\label{q:layer-depth}
+Fix $\theta\in(\theta_*,1)$ and the localized window $u<n\le2\theta u$.
+Let $k=k(u)$ be a depth up to which the internal M\"obius divisor identities
+are imposed below $R=\theta u$. What growth of $k(u)$, if any, suffices to
+combine those identities with $M(u)=0$ and the unit-step and excursion-sign
+constraints so as to force
+$\max_{u<t\le2\theta u}|M(t)|\ll_\eps u^{1/2+\eps}$? A bounded depth would
+give a compressed arithmetic mechanism; imposing all layers reconstructs the
+M\"obius prefix. Proposition~\ref{prop:layer-propagation} makes the depth a
+quantifiable intermediate invariant; the results below treat only fixed
+$k$.
+\end{question}
+\begin{proposition}[Layer sums in the localized window]
+\label{prop:layer-sums}
+Fix $1<\lambda<2$ and $j\ge1$. As $u\to\infty$,
+\begin{equation}
+\label{eq:layer-sum}
+\sum_{\substack{u<n\le\lambda u\\ \Omega(n)=j}}\mu(n)
+=(-1)^j\,(1+o(1))\,\frac{(\lambda-1)\,u\,(\log\log u)^{j-1}}{(j-1)!\,\log u}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If $\Omega(n)=j$ and $\mu(n)\ne0$, then $n$ is squarefree with exactly $j$
+prime factors and $\mu(n)=(-1)^j$. By Landau's theorem (see
+\cite[Ch.~7]{MontgomeryVaughan2007}), the number $\pi_j^\flat(x)$ of such
+$n\le x$ satisfies $\pi_j^\flat(x)\sim f_j(x):=x(\log\log x)^{j-1}/((j-1)!\log x)$.
+Since $f_j(x)/x$ is slowly varying, $f_j(\lambda u)-f_j(u)=(\lambda-1+o(1))f_j(u)$.
+\end{proof}
+
+\begin{corollary}[Bounded layer depth]
+\label{cor:bounded-depth}
+Fix $k\ge1$, $\theta\in(\theta_*,1)$, $R=\theta u$, and the window
+$u<n\le2\theta u$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The increments fixed by the first $k$ layers
+(Proposition~\ref{prop:layer-propagation}), namely those with
+$\Omega(n)\le k+1$, form a set of $o(u)$ integers of the window.
+\item Their summed contribution over the window is
+\[
+\sum_{\substack{u<n\le2\theta u\\ \Omega(n)\le k+1}}\mu(n)
+=(-1)^{k+1}(1+o(1))\frac{(2\theta-1)\,u\,(\log\log u)^{k}}{k!\,\log u},
+\]
+so it exceeds $u^{1-\eps}$ in modulus and has a fixed sign.
+\item Let $\delta_d=\mu(d)$ for $\Omega(d)\le k$ and $\delta_d=0$ otherwise.
+For squarefree $n$ in the window with $\omega(n)=w\ge k+2$,
+\[
+D_\delta(n)=\sum_{\substack{d\mid n\\ d\le R}}\delta_d
+=\sum_{j=0}^{k}(-1)^j\binom wj=(-1)^k\binom{w-1}{k},
+\]
+which has modulus at least $k+1\ge2$. Thus the zero extension of a
+$k$-layer prefix violates the unit-step constraint at every such $n$, i.e.\
+at all but $o(u)$ squarefree integers of the window.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(i) and (ii) follow from Proposition~\ref{prop:layer-sums} summed over
+$j\le k+1$, the term $j=k+1$ dominating. For (iii), all divisors of $n$
+other than $n$ are $\le n/2\le R$, and $n$ itself has $\Omega(n)=w>k$, so
+$D_\delta(n)$ is the truncated alternating binomial sum, evaluated by
+induction on $k$ via $\binom{w-1}{k}=\binom wk-\binom{w-1}{k-1}$. The
+proportion of squarefree $n\le x$ with $\omega(n)\le k+1$ tends to $0$ by
+Proposition~\ref{prop:layer-sums}.
+\end{proof}
+
+\begin{remark}[What fixed layer depth proves]
+\label{rem:depth-content}
+For every fixed $k$, Corollary~\ref{cor:bounded-depth} shows that the first
+$k$ layers determine only a density-zero subset of the localized window,
+while the signed sum of the determined increments has modulus
+$(1+o(1))(2\theta-1)u(\log\log u)^k/(k!\log u)$, larger than $u^{1-\eps}$
+for all large $u$. Hence, if the full sum on the window is
+$O(u^{1/2+\eps})$, substantial cancellation must occur between the
+increments determined by any fixed set of initial layers and the remaining
+ones. The results proved here do not determine how the required depth grows
+with $u$; in particular they do not show that $\asymp\log\log u$ layers
+(the typical size of $\Omega$) are necessary or sufficient, which would
+require estimates uniform in $k=k(u)$. Part~(iii) shows that the unit-step
+constraint is far from vacuous on a $k$-layer relaxation: it forbids the
+naive completion at almost every integer of the window, so the free
+coordinates $\delta_d$ with $\Omega(d)>k$ are strongly constrained.
+\end{remark}
+
+
+\subsection{Conditional extreme-value consequence of excursion sparsity}
+\label{subsec:extreme}
+
+The counts of Section~\ref{subsec:geometric} bound the number of excursions
+in a family, not their heights. They acquire a second function when combined
+with a tail hypothesis on a normalized excursion statistic: they fix the
+scale of the family maximum, with no independence assumption.
+
+Let $(\Omega,\mathcal G,\Pr)$ be a probability space carrying a random
+sequence of disjoint integer intervals $I_k=(x_{0,k},x_{1,k}]$ with
+$x_{1,k}\le x_{0,k+1}$, and real random variables $Z_k$ (for instance a model
+of the M\"obius walk with $Z_k=H_k/\sqrt{\ell_k}$). A family $\F$ is given by
+a rule selecting indices from $(x_{0,k},x_{1,k})_k$, such as $\F_{\mathfrak h}$; let
+$k_\F(1)<k_\F(2)<\cdots$ enumerate its members, and put
+\[
+Z_{\max,\F}(X):=\max\{Z_k:k\in\F,\ x_{0,k}\le X\}\qquad(\max\emptyset=-\infty).
+\]
+The lemmas of Section~\ref{subsec:geometric} hold for every $\omega$.
+
+\begin{hypothesis}[$\mathrm{SG}_\varpi$]
+\label{hyp:SG}
+There are $C,\kappa_0,\varpi>0$ such that for every $j\ge1$ and $z\ge0$
+\[
+\Pr\bigl(k_\F(j)\text{ exists and }Z_{k_\F(j)}>z\bigr)\le Ce^{-\kappa_0z^\varpi}.
+\]
+For $\varpi=2$ this is a uniform sub-Gaussian tail, denoted (SG).
+\end{hypothesis}
+
+\begin{theorem}[Extreme scale from a count]
+\label{thm:ev-union}
+Assume $(\mathrm{SG}_\varpi)$ for $\F$ and suppose that $E_\F(X)\le \Lambda(X)$ for
+every $\omega$, with $\Lambda(X)\ge1$ deterministic. Then
+\begin{equation}
+\label{eq:ev-union}
+\Pr\bigl(Z_{\max,\F}(X)>z\bigr)\le \Lambda(X)\,Ce^{-\kappa_0z^\varpi}.
+\end{equation}
+Consequently, for every $\delta>0$,
+\begin{equation}
+\label{eq:ev-scale}
+\Pr\Bigl(Z_{\max,\F}(X)>\Bigl(\frac{1+\delta}{\kappa_0}\log \Lambda(X)\Bigr)^{1/\varpi}\Bigr)
+\le C\,\Lambda(X)^{-\delta},
+\end{equation}
+and $Z_{\max,\F}(X)=O_{\Pr}\bigl((\log \Lambda(X))^{1/\varpi}\bigr)$ as $\Lambda(X)\to\infty$.
+\end{theorem}
+
+\begin{proof}
+The members of $\F$ starting at most $X$ are the first $E_\F(X)\le \Lambda(X)$
+members of the enumeration, so
+$\{Z_{\max,\F}(X)>z\}\subset\bigcup_{j\le \Lambda(X)}\{k_\F(j)\text{ exists},\
+Z_{k_\F(j)}>z\}$, and \eqref{eq:ev-union} is the union bound. Substituting
+$\kappa_0z^\varpi=(1+\delta)\log \Lambda(X)$ gives \eqref{eq:ev-scale}.
+\end{proof}
+
+\begin{corollary}[Triple-logarithmic scale on the square family]
+\label{cor:ev-square}
+Assume (SG) for the square-exceptional family $\F_{x^2}$ of the model. Then,
+for $X\ge e^e$ and every $\delta>0$,
+\begin{equation}
+\label{eq:ev-square}
+\Pr\bigl(Z_{\max,\square}(X)>z\bigr)\le4C(\log\log X)e^{-\kappa_0z^2},
+\end{equation}
+\begin{equation}
+\label{eq:ev-square-b}
+\Pr\Bigl(Z_{\max,\square}(X)>\sqrt{\tfrac{1+\delta}{\kappa_0}\log\log\log X}\Bigr)
+\le4C(\log\log X)^{-\delta}.
+\end{equation}
+Thus $Z_{\max,\square}(X)=O_{\Pr}(\sqrt{\log\log\log X})$. The same holds for
+the family $\F_{cx^2}$ of Lemma~\ref{lem:partition} with a constant depending
+on $c$.
+\end{corollary}
+
+\begin{proof}
+Use \eqref{eq:square-exception-count} in \eqref{eq:ev-union} and note that
+$e^{-\kappa_0z^2}=(\log\log X)^{-(1+\delta)}$ at the stated $z$.
+\end{proof}
+
+The union bound gives convergence in probability; a Borel--Cantelli argument
+along a sequence adapted to $\Lambda$ gives an almost sure bound with the same
+constant.
+
+\begin{theorem}[Almost sure extreme scale]
+\label{thm:ev-as}
+Assume $(\mathrm{SG}_\varpi)$ for $\F$ and $E_\F(X)\le \Lambda(X)$ for every $\omega$,
+where $\Lambda$ is continuous, nondecreasing and unbounded. Then almost surely
+\[
+\limsup_{X\to\infty}\frac{Z_{\max,\F}(X)}{(\log \Lambda(X))^{1/\varpi}}\le \kappa_0^{-1/\varpi}.
+\]
+\end{theorem}
+
+\begin{proof}
+Fix $\delta>0$. For $j\ge j_0$ let $X_j$ be the least $X$ with $\Lambda(X)=2^j$.
+Put $z_j=\bigl((1+\delta)(j+1)\log2/\kappa_0\bigr)^{1/\varpi}$ and
+$A_j=\{Z_{\max,\F}(X_{j+1})>z_j\}$. By \eqref{eq:ev-union},
+$\Pr(A_j)\le2^{j+1}Ce^{-(1+\delta)(j+1)\log2}=C2^{-(j+1)\delta}$, which is
+summable, so almost surely $A_j$ occurs only finitely often. For
+$X_j\le X\le X_{j+1}$, monotonicity of $Z_{\max,\F}$ in $X$ gives
+$Z_{\max,\F}(X)\le z_j$ outside $A_j$, while $\log \Lambda(X)\ge j\log2$. Hence
+the $\limsup$ is at most
+$\lim_j\bigl((1+\delta)(j+1)/(\kappa_0j)\bigr)^{1/\varpi}=((1+\delta)/\kappa_0)^{1/\varpi}$. Let
+$\delta\downarrow0$ along a countable sequence.
+\end{proof}
+
+With $\Lambda_\square(X)=2+\log_2(\log X/\log2)$, which is continuous and
+increasing, Theorem~\ref{thm:ev-as} gives under (SG)
+\[
+\limsup_{X\to\infty}\frac{Z_{\max,\square}(X)}{\sqrt{\log\log\log X}}\le \kappa_0^{-1/2}
+\quad\text{almost surely.}
+\]
+Applied to the three counts available for any sequence of disjoint
+intervals (all excursions: at most $X+1$; Lemma~\ref{lem:linear-lacunary};
+Lemma~\ref{lem:power-lacunary}), Theorems~\ref{thm:ev-union}
+and~\ref{thm:ev-as} give three levels:
+\[
+\begin{array}{c|c|c}
+\text{family} & \text{members starting}\le X & \text{extreme scale under (SG)}\\
+\hline
+\text{all excursions} & \le X+1 & \sqrt{\log X}\\
+x_1>\lambda x_0 & O(\log X) & \sqrt{\log\log X}\\
+x_1>cx_0^2\ \ (\text{or }x_0^A) & O(\log\log X) & \sqrt{\log\log\log X}
+\end{array}
+\]
+Each level of lacunarity removes one logarithm from the extreme scale.
+Under $(\mathrm{SG}_\varpi)$ the last column reads $(\log X)^{1/\varpi}$,
+$(\log\log X)^{1/\varpi}$, $(\log\log\log X)^{1/\varpi}$.
+
+\begin{remark}[Scope]
+\label{rem:ev-scope}
+For $M$ itself the square-exceptional family is finite by
+Corollary~\ref{cor:KP-local-returns}, so
+Theorems~\ref{thm:ev-union}--\ref{thm:ev-as} concern stochastic models of
+the M\"obius walk, in which the pathwise counts of
+Section~\ref{subsec:geometric} persist while no analogue of the
+Kaczorowski--Pintz localization is available. Hypothesis (SG) is an
+assumption on the model; the theorems state exactly what the counts
+contribute to its extremes.
+\end{remark}
+
+\subsection{The square range as an exact bilinear form of the prefix}
+
+\begin{proposition}[Bilinear square-range identity]
+\label{prop:prefix-bilinear}
+Let $u\ge1$ and $1\le t\le u^2$. Then
+\begin{equation}
+\label{eq:bilinear-general}
+M(t)=2M(\min(t,u))-
+\sum_{d,j\le u}\mu(d)\mu(j)\left\lfloor\frac{t}{dj}\right\rfloor.
+\end{equation}
+In particular, if $M(u)=0$ and $u<t\le u^2$,
+\begin{equation}
+\label{eq:bilinear-excursion}
+M(t)=-\mathcal B_u(t),\qquad
+\mathcal B_u(t):=\sum_{d,j\le u}\mu(d)\mu(j)
+\left\lfloor\frac{t}{dj}\right\rfloor,
+\qquad \mathcal B_u(u)=0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $\mu_u=\mu\mathbf1_{[1,u]}$. Each factor of $(\mu-\mu_u)*(\mu-\mu_u)$ is
+supported on integers $\ge u+1$, so the convolution, and its convolution
+with $1$, vanish on $n<(u+1)^2$, in particular on $n\le u^2$. Expanding and using $\mu*1=\delta$ gives
+$\mu(n)=2\mu_u(n)-(\mu_u*\mu_u*1)(n)$ for $n\le u^2$; sum over $n\le t$.
+\end{proof}
+
+\begin{remark}[Higher-order determinacy]
+\label{rem:prefix-k}
+For every $k\ge1$ and $n\le u^k$,
+\begin{equation}
+\label{eq:HB-k}
+\mu(n)=\sum_{j=1}^{k}(-1)^{j-1}\binom{k}{j}
+\bigl(\mu_u^{*j}*1^{*(j-1)}\bigr)(n),
+\end{equation}
+because $(\mu-\mu_u)^{*k}*1^{*(k-1)}$ vanishes on $n\le u^k$; expand by the
+binomial theorem and use $\mu*1=\delta$. Thus determination by the prefix
+is not special to $u^2$. What is special to $t\le u^2$ is the order-two form
+\eqref{eq:bilinear-excursion}, with rank-one coefficients $\mu(d)\mu(j)$ and
+elementary kernel $\lfloor t/(dj)\rfloor$. This is a truncation identity of
+Heath-Brown/Vaughan type \cite{HB82}; summed forms of this kind are used in
+the fast computation of $M$ \cite{HT23}.
+\end{remark}
+
+\begin{question}[Square-excursion bridges]
+\label{q:excursion-constraint}
+Let $u=x_{0,\nu}$ and $x_{1,\nu}\le u^2$. Then
+$\mathcal B_u(u)=\mathcal B_u(x_{1,\nu})=0$ and
+$-\sigma_\nu\mathcal B_u(t)>0$ for $u<t<x_{1,\nu}$. Can the rank-one
+coefficients $\mu(d)\mu(j)$, the kernel $\lfloor t/(dj)\rfloor$ and these
+bridge and sign constraints be combined to prove
+\[
+\max_{u<t\le x_{1,\nu}}|\mathcal B_u(t)|
+\ll_\eps x_{1,\nu}^{1/2+\eps}
+\]
+uniformly over square-ordinary excursions? By
+Corollary~\ref{cor:power-ordinary-RH} this uniform bound is equivalent to
+RH. By Corollary~\ref{cor:linear-window-RH} it suffices to consider
+$t\le\min\{x_{1,\nu},\frac54u\}$, where $\mathcal B_u(t)$ reduces to
+the localized linear form and uses only $\mu(d)$ with $d\le5u/8$.
+\end{question}
+
+\subsection{Mellin mass of a complete excursion}
+
+\begin{proposition}[Excursion blocks of $1/\zeta$]
+\label{prop:excursion-mellin}
+For a complete excursion $I=(x_0,x_1]$ put
+$D_I(s)=\sum_{x_0<n\le x_1}\mu(n)n^{-s}$. Then
+\begin{equation}
+\label{eq:excursion-abel}
+D_I(s)=\sum_{n=x_0+1}^{x_1-1}M(n)
+\bigl(n^{-s}-(n+1)^{-s}\bigr).
+\end{equation}
+For real $\varsigma>0$, $D_I(\varsigma)$ has the sign of the excursion and
+\begin{equation}
+\label{eq:excursion-mass-lower}
+|D_I(\varsigma)|\ge
+\varsigma\beta_I x_1^{-\varsigma-1}
+\ge\varsigma H_I^2x_1^{-\varsigma-1}.
+\end{equation}
+For $\Re s>1$,
+\begin{equation}
+\label{eq:1overzeta-excursions}
+\frac1{\zeta(s)}=\sum_I D_I(s),
+\end{equation}
+zero runs contributing nothing.
+\end{proposition}
+
+\begin{proof}
+Summation by parts gives \eqref{eq:excursion-abel} because $M$ vanishes at
+both endpoints. All interior $M(n)$ have the sign of the excursion, and
+$n^{-\varsigma}-(n+1)^{-\varsigma}\ge\varsigma x_1^{-\varsigma-1}$ for $n<x_1$. The
+bound $\beta_I\ge H_I^2$ is \eqref{eq:beta-LH}. If $M$ vanishes at two
+consecutive integers the intervening $\mu(n)$ is zero, so every $n$ with
+$\mu(n)\ne0$ lies in an excursion; sum the disjoint blocks in the
+half-plane of absolute convergence.
+\end{proof}
+
+\begin{theorem}[Abscissa of absolute excursion-block convergence]
+\label{thm:excursion-block-abscissa}
+Let $D_I(s)$ be the completed-excursion blocks of
+Proposition~\ref{prop:excursion-mellin}.  The series
+\[
+ \sum_I D_I(s)
+\]
+has abscissa of absolute convergence, with respect to the excursion blocks,
+exactly
+\[
+ \boxed{\ \sigma_{a,\mathrm{exc}}=\Theta\ }.
+\]
+More precisely, it converges absolutely and locally uniformly for
+$\Re s>\Theta$ and there represents $1/\zeta(s)$, while for every real
+$0<\varsigma<\Theta$ one has
+\[
+ \sum_I|D_I(\varsigma)|=\infty.
+\]
+Consequently,
+\[
+ \mathrm{RH}\iff
+ \sum_I D_I(s)\ \text{converges absolutely for every }\Re s>\tfrac12.
+\]
+This is block absolute convergence; the ordinary termwise Dirichlet series
+$\sum_n\mu(n)n^{-s}$ still has abscissa of absolute convergence $1$.
+\end{theorem}
+
+\begin{proof}
+Let $s=\sigma+it$.  From \eqref{eq:excursion-abel} and
+\[
+ |n^{-s}-(n+1)^{-s}|\le |s|\,n^{-\sigma-1}
+\]
+we obtain
+\[
+ \sum_I|D_I(s)|
+ \le |s|\sum_{n\ge1}|M(n)|n^{-\sigma-1}.
+\]
+By Corollary~\ref{cor:pintz-excursion-exponents}, the last series converges
+for $\sigma>\Theta$, locally uniformly on compact sub-half-planes.  Hence
+the block series is analytic there; since it equals $1/\zeta(s)$ for
+$\Re s>1$, the identity theorem gives the same equality throughout
+$\Re s>\Theta$.
+
+For real $\varsigma>0$, every completed excursion has one sign, and Abel
+summation gives the exact positive identity
+\begin{equation}
+\label{eq:block-absolute-real-axis}
+ \sum_I|D_I(\varsigma)|
+ =\sum_{n\ge1}|M(n)|
+ \bigl(n^{-\varsigma}-(n+1)^{-\varsigma}\bigr).
+\end{equation}
+Kaczorowski--Pintz supply infinitely many returns, so every nonzero value of
+$M(n)$ belongs to a completed excursion.  If the right side converged for
+some $\varsigma<\Theta$, positivity and partial summation would imply
+$B_1(X)=O(X^{1+\varsigma})$, contradicting
+$B_1(X)=X^{1+\Theta+o(1)}$.  Thus the abscissa is exactly $\Theta$.
+\end{proof}
+
+\begin{remark}[Status of the result]
+\label{rem:block-abscissa-status}
+The input $D_M(X)=X^{\Theta+o(1)}$ is Pintz's theorem; the new point here is
+the excursion grouping.  The fixed sign of each completed excursion turns
+Abel summation into the positive identity
+\eqref{eq:block-absolute-real-axis}, so the rightmost-zero exponent becomes
+an absolute-convergence boundary for the grouped reciprocal-zeta series.
+We did not locate this excursion-block formulation in the literature.
+\end{remark}
+
+\section{Two-point correlations and the energy of excursions}
+\label{sec:chowla}
+
+For integers $0\le u<X$ and $1\le h<X-u$ put
+\[
+C^{(u,X]}_h:=\sum_{u<n\le X-h}\mu(n)\mu(n+h),\qquad
+C^{[X]}_h:=C^{(0,X]}_h .
+\]
+For an excursion $I_\nu=(x_{0,\nu},x_{1,\nu}]$ one has
+$C_h^{(\nu)}=C_h^{(x_{0,\nu},x_{1,\nu}]}$, since $\sigma_\nu^2=1$.
+Chowla's conjecture asserts $C^{[X]}_h=o(X)$ for each fixed $h\ge1$; it is
+open. Matom\"aki, Radziwi\l\l\ and Tao \cite{MRT15} prove, for
+$H=H(X)\to\infty$, $H\le X$,
+\[
+\sum_{h\le H}\left|\sum_{n\le X}\mu(n)\mu(n+h)\right|=o(HX).
+\]
+Since replacing the upper limit $X$ by $X-h$ changes the $h$-th sum by at
+most $h$, we shall use the triangular consequence
+\begin{equation}
+\label{eq:MRT}
+\sum_{h\le H}\bigl|C^{[X]}_h\bigr|=o(HX)
+\qquad(H\to\infty,\ H=o(X)).
+\end{equation}
+Their stronger averaged Elliott form permits translated shifts of size
+$O(X)$ and covers $\mu$.
+
+\subsection{Signed lag averages and the weighted RH criterion}
+
+\begin{remark}[Unweighted signed averages are degenerate]
+\label{rem:chowla-degenerate}
+By Lemma~\ref{lem:zeroth-corr}, every excursion satisfies
+$\sum_hC_h^{(\nu)}=-q_\nu/2$, with $q_\nu\le\ell_\nu$. Hence
+$\ell_\nu^{-2}\sum_hC^{(\nu)}_h=O(\ell_\nu^{-1})$ for purely algebraic
+reasons: a signed average over lags of the correlations inside a bridge is
+small without any pseudorandomness of $\mu$. Statements of Chowla type
+inside an excursion must therefore carry absolute values inside the lag
+average, or impose a genuinely weighted condition.
+\end{remark}
+
+The weighted sum behaves differently. By \eqref{eq:Q_def},
+$Q_\nu=-\sum_hhC_h^{(\nu)}$: the weight $h$ records at which lags the
+correlation responsible for the excursion energy sits. The same identity
+holds globally at every zero of $M$, and the cross terms between different
+excursions cancel exactly.
+
+\begin{proposition}[Weighted correlations at zeros of $M$]
+\label{prop:weighted-global}
+Let $v\ge2$ be a zero of $M$. Then
+\begin{equation}
+\label{eq:weighted-global}
+\sum_{n<v}M(n)^2=-\sum_{h<v}h\,C^{[v]}_h,
+\qquad
+\sum_{h<v}h\,C^{[v]}_h=\sum_{\nu:\,x_{1,\nu}\le v}\ \sum_hh\,C^{(\nu)}_h .
+\end{equation}
+Thus, in the $h$-weighted sum, the correlations between increments lying in
+different completed excursions, or in zero runs, cancel exactly.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{lem:triangular-corr} to the block $x_n=\mu(n)$,
+$1\le n\le v$: then $S_t=M(t)$ and $S_v=M(v)=0$, which gives the first
+identity. By \eqref{eq:quadratic-decomp-zero}, $\sum_{n\le v}M(n)^2=\sum_\nu
+Q_\nu$ over the completed excursions ending at or before $v$, and
+$Q_\nu=-\sum_hhC^{(\nu)}_h$ by \eqref{eq:Q_def}.
+\end{proof}
+
+\begin{theorem}[Weighted-correlation criterion]
+\label{thm:weighted-corr-RH}
+RH holds if and only if, for every $\eps>0$,
+\[
+-\sum_{h<v}h\,C^{[v]}_h\ll_\eps v^{2+\eps}
+\qquad\text{for every zero $v$ of $M$.}
+\]
+\end{theorem}
+
+\begin{proof}
+If RH holds, Theorem~\ref{thm:corr-criterion} and
+\eqref{eq:weighted-global} give the bound. Conversely, fix a target
+$\eps_0>0$ and choose $\eps>0$ so small that
+$(1+\eps)(2+\eps)\le2+\eps_0$. Let $x$ be large and let $v\ge x$ be the
+first zero of $M$ at or after $x$. If $x$ lies in an excursion starting at
+$u<x$, Corollary~\ref{cor:KP-local-returns} gives $v\le u^{1+\eps}\le
+x^{1+\eps}$ for all sufficiently large $x$. Hence
+\[
+\sum_{n\le x}M(n)^2\le\sum_{n<v}M(n)^2
+\ll_\eps v^{2+\eps}\le x^{2+\eps_0}.
+\]
+Theorem~\ref{thm:corr-criterion} now applies.
+\end{proof}
+
+\begin{proposition}[Square-root lag cutoff at zeros]
+\label{prop:sqrt-lag-cutoff}
+Let $v\to\infty$ through zeros of $M$, and let $H=H(v)\to\infty$ with
+$H\le v^{1/2}$. Then
+\begin{equation}
+\label{eq:small-lag-weighted}
+\sum_{h\le H}h\,C_h^{[v]}=o(H^2v).
+\end{equation}
+In particular,
+\begin{equation}
+\label{eq:sqrt-lag-tail}
+\sum_{n<v}M(n)^2
+=-\sum_{\sqrt v<h<v}h\,C_h^{[v]}+o(v^2),
+\end{equation}
+where the lower limit may be replaced by $\lfloor\sqrt v\rfloor$ without
+changing the statement.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:MRT},
+$\sum_{h\le H}|C_h^{[v]}|=o(Hv)$. Therefore
+\[
+\left|\sum_{h\le H}hC_h^{[v]}\right|
+\le H\sum_{h\le H}|C_h^{[v]}|=o(H^2v).
+\]
+Taking $H=\lfloor\sqrt v\rfloor$ and using
+Proposition~\ref{prop:weighted-global} gives \eqref{eq:sqrt-lag-tail}.
+\end{proof}
+
+\begin{corollary}[RH after deleting all small lags]
+\label{cor:RH-large-lags}
+RH holds if and only if, for every $\eps>0$,
+\[
+-\sum_{\sqrt v<h<v}h\,C_h^{[v]}\ll_\eps v^{2+\eps}
+\qquad\text{for every sufficiently large zero $v$ of $M$.}
+\]
+Thus the lags $h\le\sqrt v$ are unconditionally negligible at the critical
+$v^2$ scale of the weighted-correlation criterion.
+\end{corollary}
+
+\begin{theorem}[Zero-edge lag localization]
+\label{thm:theta-lag-localization}
+Let $v\to\infty$ through zeros of $M$.  Then
+\begin{equation}
+\label{eq:weighted-corr-exponent}
+ -\sum_{h<v}hC_h^{[v]}
+ =\sum_{n<v}M(n)^2
+ =v^{1+2\Theta+o(1)}.
+\end{equation}
+Moreover, for every fixed $0\le\alpha<\Theta$,
+\begin{equation}
+\label{eq:theta-small-lags-negligible}
+ \sum_{h\le v^\alpha}hC_h^{[v]}
+ =o\!\left(\sum_{n<v}M(n)^2\right),
+\end{equation}
+and hence
+\begin{equation}
+\label{eq:theta-large-lag-mass}
+ -\sum_{v^\alpha<h<v}hC_h^{[v]}
+ =(1+o(1))\sum_{n<v}M(n)^2.
+\end{equation}
+Thus the weighted correlation mass is forced beyond every power
+$v^\alpha$ with $\alpha<\Theta$.
+\end{theorem}
+
+\begin{proof}
+The first equality is Proposition~\ref{prop:weighted-global}, and the
+asymptotic exponent is Corollary~\ref{cor:pintz-excursion-exponents}.
+For $H=\lfloor v^\alpha\rfloor$ with $\alpha>0$, \eqref{eq:MRT} gives
+\[
+ \left|\sum_{h\le H}hC_h^{[v]}\right|
+ \le H\sum_{h\le H}|C_h^{[v]}|
+ =o(H^2v)=o(v^{1+2\alpha}).
+\]
+Since $\alpha<\Theta$, this is $o(v^{1+2\Theta+o(1)})$.  The case
+$\alpha=0$ follows trivially from the fixed finite number of lags and
+$|C_h^{[v]}|\le v$.
+\end{proof}
+
+\begin{remark}[Endpoint versus the universal square-root cutoff]
+\label{rem:theta-vs-sqrt-cutoff}
+Proposition~\ref{prop:sqrt-lag-cutoff} is uniform without knowing $\Theta$
+and reaches the endpoint $H=\sqrt v$ at the absolute $v^2$ scale.
+Theorem~\ref{thm:theta-lag-localization} is stronger in relative terms but
+requires a strict power gap $\alpha<\Theta$; it does not settle the endpoint
+$\alpha=\Theta$.  Under RH it says that every range
+$h\le v^{1/2-\delta}$ carries $o(1)$ of the total weighted mass, while if RH
+fails the negligible range extends correspondingly beyond the square-root
+scale.
+\end{remark}
+
+\begin{remark}[Where the cancellation must occur]
+\label{rem:cross-lag}
+The trivial bound is $\sum_hh|C^{[v]}_h|\le\sum_hh(v-h)\le v^3/6$.
+RH requires the signed weighted sum to be $v^{2+o(1)}$. Absolute values
+cannot give this at the natural scale: even square-root cancellation
+$|C^{[v]}_h|\ll v^{1/2+o(1)}$ in every single lag would give only
+$\sum_hh|C^{[v]}_h|\ll v^{5/2+o(1)}$. Corollary~\ref{cor:RH-large-lags}
+sharpens the location of the unresolved cancellation: at the $v^2$ scale,
+only lags $h>\sqrt v$ remain. By Proposition~\ref{prop:weighted-global} the
+signed weighted identity itself decomposes excursion by excursion.
+\end{remark}
+
+\subsection{Lag localization of the energy of an excursion}
+
+\begin{proposition}[Energy beyond a lag cutoff]
+\label{prop:lag-localization}
+For every excursion $I_\nu$ of length $\ell=\ell_\nu$ and every
+$1\le h_0<\ell$,
+\[
+\Bigl|Q_\nu+\sum_{h_0<h<\ell}h\,C^{(\nu)}_h\Bigr|
+\le h_0\sum_{h\le h_0}\bigl|C^{(\nu)}_h\bigr| .
+\]
+Consequently, if $\sum_{h\le h_0}|C^{(\nu)}_h|\le\delta h_0\ell$, then
+\[
+\sum_{h_0<h<\ell}h\,C^{(\nu)}_h
+=-Q_\nu+O(\delta h_0^2\ell).
+\]
+\end{proposition}
+
+\begin{proof}
+Split $Q_\nu=-\sum_{h<\ell}hC^{(\nu)}_h$ at $h_0$.
+\end{proof}
+
+\begin{corollary}[Averaged Chowla on linear-scale intervals]
+\label{cor:chowla-linear}
+Let $(u_j,u_j+L_j]$ be intervals with $L_j\to\infty$ and $u_j\le BL_j$ for a
+fixed $B$, and let $h_j\to\infty$ with $h_j=o(L_j)$. Then
+\[
+\sum_{h\le h_j}\bigl|C^{(u_j,u_j+L_j]}_h\bigr|=o(h_jL_j).
+\]
+\end{corollary}
+
+\begin{proof}
+This is the translated averaged Elliott form of \cite{MRT15}; equivalently,
+one may subtract the two initial sums at $u_j+L_j$ and $u_j$ and absorb the
+$O(h)$ boundary terms. Since $u_j=O(L_j)$ and $h_j=o(L_j)$, all translated
+parameters remain on the scale permitted by that theorem.
+\end{proof}
+
+\begin{corollary}[Large-lag concentration in linear-scale excursions]
+\label{cor:large-lag}
+Let $I_j$ be excursions with $\ell_j\to\infty$, $x_{0,j}\le B\ell_j$ and
+heights $H_j$ with $H_j^3/\ell_j\to\infty$. For every $h_j\to\infty$ with
+$h_j^2\ell_j=o(H_j^3)$,
+\[
+\sum_{h_j<h<\ell_j}h\,C^{(I_j)}_h=-(1+o(1))Q_{I_j}.
+\]
+If in addition $\Theta>1/2$ and such excursions carry
+Kaczorowski--Pintz witnesses
+$H_j\ge\frac12x_{0,j}^{\Theta-\eta}$, then for every fixed
+\[
+0<\rho<\frac{3(\Theta-\eta)-1}{2}
+\]
+one may take $h_j=x_{0,j}^{\rho}$, and hence
+\[
+\sum_{x_{0,j}^{\rho}<h<\ell_j}h\,C_h^{(I_j)}=-(1+o(1))Q_{I_j}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:chowla-linear},
+$\sum_{h\le h_j}|C^{(I_j)}_h|=\delta_jh_j\ell_j$ with $\delta_j\to0$.
+Proposition~\ref{prop:lag-localization} gives an error at most
+$\delta_jh_j^2\ell_j=o(H_j^3)=o(Q_{I_j})$. In the witness case
+$x_{0,j}\asymp\ell_j$ and
+$H_j^3/\ell_j\gg x_{0,j}^{3\Theta-3\eta-1}$, so the displayed condition on
+$\rho$ gives $h_j^2\ell_j=o(H_j^3)$.
+\end{proof}
+
+\begin{remark}[Direction of the lag statement]
+\label{rem:large-lag-direction}
+Corollary~\ref{cor:large-lag} says that the energy lies beyond every cutoff
+$h_j$ satisfying $h_j=o(H_j^{3/2}\ell_j^{-1/2})$; it does \emph{not} say
+that the energy is concentrated only at lags larger than the endpoint scale
+$H_j^{3/2}\ell_j^{-1/2}$ itself.
+\end{remark}
+
+\subsection{Uniform two-point cancellation in sublinear intervals}
+\label{subsec:sublinear-chowla}
+
+The linear-scale restriction can be removed for mesoscopic lags by a
+Fourier-uniform estimate valid in every short interval. The needed input is
+Theorem~1.5 and Remark~5.2 of Matom\"aki--Ter\"av\"ainen
+\cite{MatomakiTeravainen2023}: for every fixed $0<A<1$ and $\eta>0$,
+\begin{equation}
+\label{eq:MT-fourier}
+\sup_{\alpha\in\mathbb R}\Bigl|\sum_{x<n\le x+L}\mu(n)e(\alpha n)\Bigr|
+\ll_{A,\eta}\frac{L}{(\log x)^A}
+\qquad(x^{3/5+\eta}\le L\le x).
+\end{equation}
+The enlargement from the stated $A<1/3$ to $A<1$ in their theorem is
+recorded explicitly in \cite{MSTT23}.
+
+\begin{theorem}[Uniform two-point Ces\`aro cancellation]
+\label{thm:sublinear-two-point}
+Fix $0<A<1$ and $\eta>0$. Uniformly for all integers $u,L,R$ with
+$u^{3/5+\eta}\le L\le u$ and $1\le R\le L/2$,
+\begin{equation}
+\label{eq:sublinear-two-point}
+\frac1R\sum_{h=1}^{R}\frac{|C^{(u,u+L]}_h|}{L-h}
+\ll_{A,\eta}\Bigl(\frac LR\Bigr)^{1/2}(\log u)^{-A}.
+\end{equation}
+In particular, if $R\ge L(\log u)^{-2A+2\kappa}$ with
+$0<\kappa<A$, the left side is $O((\log u)^{-\kappa})$.
+\end{theorem}
+
+\begin{proof}
+Put $a_i=\mu(u+i)$ for $1\le i\le L$ and
+$A_I(\alpha)=\sum_ia_ie(i\alpha)$. The correlations
+$C^{(u,u+L]}_{|h|}$, $|h|<L$ (with $C_0=q=\sum_ia_i^2\le L$), are the
+Fourier coefficients of $|A_I(\alpha)|^2$. Parseval gives
+\[
+\sum_{|h|<L}|C^{(u,u+L]}_{|h|}|^2
+=\int_0^1|A_I(\alpha)|^4\,d\alpha
+\le\|A_I\|_\infty^2q\le L\|A_I\|_\infty^2.
+\]
+Hence Cauchy--Schwarz gives
+$\sum_{h\le R}|C_h|\le\sqrt{RL}\,\|A_I\|_\infty$, and since
+$L-h\ge L/2$ the left side of \eqref{eq:sublinear-two-point} is at most
+$2\|A_I\|_\infty/\sqrt{RL}$. Apply \eqref{eq:MT-fourier}.
+\end{proof}
+
+\begin{corollary}[Near-log-squared mesoscopic range]
+\label{cor:near-log2-lags}
+Fix $\eta>0$ and $0<\delta<1$. Uniformly for
+\[
+u^{3/5+\eta}\le L\le u,
+\qquad
+\frac{L}{(\log u)^{2-\delta}}\le R\le\frac L2,
+\]
+one has
+\[
+\frac1R\sum_{h\le R}\frac{|C^{(u,u+L]}_h|}{L-h}
+\ll_{\eta,\delta}(\log u)^{-\delta/4}.
+\]
+\end{corollary}
+
+\begin{proof}
+In Theorem~\ref{thm:sublinear-two-point} take
+$A=1-\delta/4$ and $\kappa=\delta/4$.
+\end{proof}
+
+\begin{remark}[What is and is not new]
+\label{rem:sublinear-status}
+Theorem~\ref{thm:sublinear-two-point} is a short Parseval--Cauchy--Schwarz
+corollary of the published Fourier estimate \eqref{eq:MT-fourier}; it does
+not use the excursion condition. Its role here is to provide an arithmetic
+input on every adaptively selected interval, something that ``almost all
+intervals'' results cannot supply. The factor $(L/R)^{1/2}$ is inherent in
+this direct $L^2$-to-$L^1$ Cauchy--Schwarz step using only the displayed
+second-moment control of the $C_h$; additional information on the
+distribution of the correlations could in principle improve it.
+\end{remark}
+
+\begin{corollary}[Sublinear large-lag estimate]
+\label{cor:sublinear-large-lag}
+Let $I=(u,u+L]$ be a complete excursion with
+$L\ge u^{3/5+\eta}$, and fix $0<\delta<1$. Put
+\[
+R=\left\lceil\frac{L}{(\log u)^{2-\delta}}\right\rceil.
+\]
+Then
+\begin{equation}
+\label{eq:sublinear-large-lag}
+\sum_{R<h<L}hC_h^{(I)}
+=-Q_I+O_{\eta,\delta}\!\left(
+\frac{L^3}{(\log u)^{4-7\delta/4}}
+\right).
+\end{equation}
+Consequently, if
+$Q_I L^{-3}(\log u)^{4-7\delta/4}\to\infty$, then the left side is
+$-(1+o(1))Q_I$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:near-log2-lags} gives
+$\sum_{h\le R}|C_h^{(I)}|\ll RL(\log u)^{-\delta/4}$. Hence
+\[
+\left|\sum_{h\le R}hC_h^{(I)}\right|
+\le R\sum_{h\le R}|C_h^{(I)}|
+\ll R^2L(\log u)^{-\delta/4},
+\]
+which is the error in \eqref{eq:sublinear-large-lag} after inserting the
+chosen value of $R$ into $Q_I=-\sum_{h<L}hC_h^{(I)}$.
+\end{proof}
+
+\begin{remark}[Connection with wide peaks]
+\label{rem:sublinear-wide-peaks}
+The quantitative form of the short-interval estimate in
+\cite[Theorem~1.1]{MatomakiTeravainen2023} gives, after the blocking argument
+of Lemma~\ref{lem:meso-lipschitz},
+$\eta_u\ll_\varepsilon(\log u)^{-1/3+\varepsilon}+u^{-c}$ for some $c>0$
+(depending on the two fixed short-interval exponents used there). Thus, in
+the regime $H/h_u\to\infty$ of Proposition~\ref{prop:wide-peaks},
+\[
+Q_I\gg_\varepsilon H^3(\log u)^{1/3-\varepsilon}.
+\]
+Combining this with Corollary~\ref{cor:sublinear-large-lag}, a sufficient
+condition for large-lag concentration is
+\[
+\left(\frac HL\right)^3
+(\log u)^{13/3-7\delta/4-\varepsilon}\longrightarrow\infty.
+\]
+For Kaczorowski--Pintz witnesses this machinery applies automatically when
+$\Theta>3/5$ (after choosing the loss parameters so that
+$\Theta-\eta>3/5+\eta'$), but it still does not yield a contradiction: the
+excursion may be much longer than its height.
+\end{remark}
+
+\subsection{Fej\'er reduction and the weaker local-variance target}
+
+\begin{remark}[Excursion geometry alone does not give cancellation]
+\label{rem:tent-chowla}
+For the tent excursion $a_i=+1$ ($i\le k$), $a_i=-1$ ($k<i\le2k$), which
+satisfies the bridge and one-sign constraints of a primitive excursion,
+$C_h=2k-3h$ for $1\le h<k$. Hence for $R\to\infty$, $R=o(k)$,
+\[
+\frac1R\sum_{h\le R}\frac{|C_h|}{2k-h}\longrightarrow1,
+\qquad
+\sum_{h<R}(R-h)C_h\asymp kR^2,
+\]
+whereas $RL\asymp kR$. Arithmetic input is indispensable.
+\end{remark}
+
+\begin{lemma}[Finite Fej\'er identity]
+\label{lem:fejer}
+For a real sequence $(a_i)_{1\le i\le L}$, extended by $0$ outside
+$[1,L]$, put
+\[
+q=\sum_{i=1}^La_i^2,
+\qquad
+C_h=\sum_{i=1}^{L-h}a_ia_{i+h},
+\qquad
+F_R:=\sum_{h=1}^{R-1}(R-h)C_h.
+\]
+Then for $1\le R\le L$,
+\begin{equation}
+\label{eq:fejer}
+Rq+2F_R
+=\sum_{m\in\mathbb Z}\left(\sum_{j=1}^{R}a_{m+j}\right)^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand the square. Each diagonal term occurs $R$ times, and a pair at lag
+$h$, $1\le h<R$, occurs $2(R-h)$ times.
+\end{proof}
+
+\begin{proposition}[Bridge--Fej\'er identity and interior variance]
+\label{prop:bridge-fejer}
+Let $I=(u,u+L]$ be a complete excursion, put
+$a_i=\mu(u+i)$ and
+$S_t=\sum_{i=1}^ta_i=M(u+t)$ for $0\le t\le L$. Then
+$S_0=S_L=0$, and for every $1\le R<L$,
+\begin{equation}
+\label{eq:bridge-fejer-Q}
+Rq+2F_R
+=2Q_I-2\sum_{t=1}^{L-1-R}S_tS_{t+R}.
+\end{equation}
+Moreover
+\begin{equation}
+\label{eq:fejer-interior-boundary}
+Rq+2F_R
+=E_{\rm bd}(R)
++\sum_{m=0}^{L-R}\bigl(M(u+m+R)-M(u+m)\bigr)^2,
+\end{equation}
+where
+\[
+E_{\rm bd}(R)=\sum_{t=1}^{R-1}S_t^2
++\sum_{t=L-R+1}^{L-1}S_t^2
+=O(R^3).
+\]
+Consequently, if $R=o(\sqrt L)$, then
+\begin{equation}
+\label{eq:fejer-variance-equivalence}
+F_R=o(RL)
+\quad\Longleftrightarrow\quad
+\sum_{m=0}^{L-R}\bigl(M(u+m+R)-M(u+m)\bigr)^2
+=Rq+o(RL).
+\end{equation}
+If in addition $L\ge u^{1/2+\eps}$ and $L\le u$, then
+\begin{equation}
+\label{eq:q-squarefree-local}
+q=\left(\frac6{\pi^2}+o(1)\right)L,
+\end{equation}
+and the right side of \eqref{eq:fejer-variance-equivalence} is equivalently
+\begin{equation}
+\label{eq:local-variance-diagonal}
+\sum_{m=0}^{L-R}\bigl(M(u+m+R)-M(u+m)\bigr)^2
+=\left(\frac6{\pi^2}+o(1)\right)RL.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Extend $S_t$ by $0$ outside $0\le t\le L$. Since
+$\sum_{j=1}^Ra_{m+j}=S_{m+R}-S_m$, \eqref{eq:fejer} gives
+\[
+Rq+2F_R=\sum_m(S_{m+R}-S_m)^2
+=2\sum_mS_m^2-2\sum_mS_mS_{m+R},
+\]
+which is \eqref{eq:bridge-fejer-Q}. Splitting the same sum into
+$m<0$, $0\le m\le L-R$, and $m>L-R$ gives
+\eqref{eq:fejer-interior-boundary}. Since $|a_i|\le1$ and the path returns
+to zero, $|S_t|\le t$ and $|S_{L-t}|\le t$, whence
+$E_{\rm bd}(R)\le2\sum_{t<R}t^2=O(R^3)$. Thus
+$E_{\rm bd}(R)=o(RL)$ when $R=o(\sqrt L)$, proving the equivalence.
+Finally the classical estimate
+$\sum_{n\le x}\mu(n)^2=(6/\pi^2)x+O(\sqrt x)$ gives
+$q=(6/\pi^2)L+O(\sqrt{u+L})$; under $L\ge u^{1/2+\eps}$ this is
+\eqref{eq:q-squarefree-local}.
+\end{proof}
+
+\begin{remark}[Fej\'er density at frequency zero]
+\label{rem:fejer-spectrum}
+With $A_I(\alpha)=\sum_{i=1}^La_ie(i\alpha)$ and
+\[
+K_R(\alpha)=\frac1R\left|\sum_{j=1}^Re(j\alpha)\right|^2,
+\]
+one has
+\[
+q+\frac{2F_R}{R}=\int_0^1|A_I(\alpha)|^2K_R(\alpha)\,d\alpha.
+\]
+Thus $F_R=o(RL)$ says that the Fej\'er average of the local spectral density
+at frequency $0$, at resolution $1/R$, equals $q+o(L)$. It is not a
+statement that $|A_I(\alpha)|^2$ is spectrally flat on the whole circle.
+\end{remark}
+
+\begin{remark}[Three distinct targets]
+\label{rem:three-chowla-targets}
+The following conditions must not be conflated.
+
+First, absolute averaged Chowla,
+$\sum_{h<R}|C_h|=o(RL)$, implies only
+$|F_R|\le R\sum_{h<R}|C_h|=o(R^2L)$, not the sharper
+$F_R=o(RL)$ when $R\to\infty$. Conversely, $F_R=o(RL)$ allows cancellation
+between the $C_h$ and does not control their absolute values.
+
+Second, $F_R$ does not by itself control the small-lag contribution to the
+excursion energy. If
+\[
+V_R:=\sum_{h<R}hC_h,
+\]
+then exactly
+\begin{equation}
+\label{eq:F-V-relation}
+F_R+V_R=R\sum_{h<R}C_h.
+\end{equation}
+Thus a Fej\'er estimate alone does not imply $V_R=o(Q_I)$.
+
+Third, Proposition~\ref{prop:bridge-fejer} requires both endpoints of the
+block to be zeros of $M$. For a block beginning at a zero but ending before
+the return, additional boundary terms remain.
+\end{remark}
+
+\begin{remark}[Why the variance target may go below $3/5$]
+\label{rem:variance-target}
+For the Fej\'er problem one does not need the stronger absolute estimate
+$\sum|C_h|$. By Proposition~\ref{prop:bridge-fejer}, on a complete excursion
+and for $R=o(\sqrt L)$ it is enough to prove the diagonal local-variance law
+\[
+\sum_{m=0}^{L-R}\bigl(M(u+m+R)-M(u+m)\bigr)^2
+=Rq+o(RL).
+\]
+This is strictly weaker than absolute averaged Chowla and is therefore a
+plausible target below the Fourier-uniform threshold $L\ge u^{3/5+\eta}$.
+The all-interval $U^2$/Fourier estimates currently used above do not, by
+themselves, supply this asymptotic for every adaptively selected block in
+the range $L\ge u^{1/2+\eps}$. Results holding for almost all starting
+points cannot be substituted, because excursion endpoints are selected by
+$M$ itself.
+
+No fixed-prefix formula for the increments in
+\eqref{eq:local-variance-diagonal} is asserted here. In particular, the
+identity $\sum_{d\le x}\mu(d)\lfloor x/d\rfloor=1$ introduces lower-scale
+terms such as $M(x/2)$ when one truncates at $x/2$; omitting those terms
+would give an invalid reduction.
+\end{remark}
+
+
+\section{Trial-division horizon of an excursion}
+\label{sec:prime_horizon}
+
+\begin{lemma}[Square horizon]
+\label{lem:square-horizon}
+Let $u\ge2$. Trial division by the primes $p\le u$ alone determines $\mu(n)$
+for every $n\le u^2$.
+\end{lemma}
+
+\begin{proof}
+Remove the prime factors $p\le u$ of $n$; if one occurs twice, $\mu(n)=0$.
+The cofactor $q\le u^2$ has all prime factors $>u$, so it is $1$ or a single
+prime.
+\end{proof}
+
+\begin{remark}[Determinacy is not information]
+\label{rem:information}
+\label{warn:information_language}
+Primes $>u$ are not logically new information, and determination by a
+finite prefix is not special to $u^2$: \eqref{eq:HB-k} propagates a prefix
+to every power range, and \eqref{eq:hyperbola-M} determines $M$ from $M(1)$.
+The ranges $(u,2u]$ and $(u,u^2]$ are special only in the concrete sense
+that the exact summatory formula is of order one
+(\eqref{eq:linear-window-M}) or two (\eqref{eq:bilinear-excursion}) in the
+prefix, and that one-stage trial division by primes $\le u$ suffices on
+$(u,u^2]$.
+\end{remark}
+
+\begin{definition}[Smooth and rough parts]
+\label{def:smooth_rough}
+For $y>1$ write $n=s_y(n)\,r_y(n)$, where every prime factor of $s_y(n)$
+is $\le y$ and every prime factor of $r_y(n)$ is $>y$. Let $\Pp(n)$ be the
+largest prime factor of $n$, with $\Pp(1)=1$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:rough_part}
+$\mu(n)=\mu(s_y(n))\,\mu(r_y(n))$. If $n<y^k$ then $\Omega(r_y(n))\le k-1$,
+and if $n\le y^2$ then $r_y(n)$ is $1$ or a prime.
+\end{lemma}
+
+\begin{proof}
+The two parts are coprime. If $\Omega(r)\ge1$ then $y^{\Omega(r)}<r\le n$.
+\end{proof}
+
+\begin{remark}[The horizon $u^2$ is not the multiplicative threshold of an excursion]
+\label{rem:horizon_inactive}
+For a square-ordinary excursion $\sqrt{v_\nu}\le u_\nu$. Every $n\le v_\nu$
+has at most one prime factor $>\sqrt{v_\nu}$, so the threshold that governs
+the multiplicative structure inside $I_\nu$ is $\sqrt{v_\nu}$, below
+$u_\nu$. The regime $t>u_\nu^2$ of Section~\ref{sec:prime_copy_propagation}
+lies beyond $v_\nu$ for a square-ordinary excursion; that section concerns
+$M(t)$ globally, and Section~\ref{sec:local_large_prime} gives the local
+version inside an excursion.
+\end{remark}
+
+\section{Large-prime decomposition at level \texorpdfstring{$U^2$}{U squared}}
+\label{sec:prime_copy_propagation}
+
+The identities of this section are decompositions by large prime factors of
+Buchstab/Legendre type. The asymptotic statements use only the prime number
+theorem with classical error term and the Vinogradov--Korobov bound
+\cite{MontgomeryVaughan2007,Walfisz1963}.
+
+\begin{definition}[Smooth baseline and large-prime part]
+\label{def:baseline_channel}
+For $U\ge2$ and $t\ge1$ put
+\begin{equation}
+\label{eq:baseline_channel_def}
+  M^{\rm sm}_U(t):=\sum_{\substack{n\le t\\ \Pp(n)\le U^2}}\mu(n),\qquad
+  M^{\rm lp}_U(t):=\sum_{\substack{n\le t\\ \Pp(n)>U^2}}\mu(n),\qquad
+  M(t)=M^{\rm sm}_U(t)+M^{\rm lp}_U(t).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Single-prime copy]
+\label{prop:single_prime_copy}
+For a prime $p$ and $t<p^2$,
+\begin{equation}
+\label{eq:single-prime-copy}
+  \Delta_p(t):=\sum_{a\le t/p}\mu(ap)=-M(t/p).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$a\le t/p<p$, so $p\nmid a$ and $\mu(ap)=-\mu(a)$.
+\end{proof}
+
+\begin{proposition}[Sign content of one prime cone]
+\label{prop:prime-cone-signs}
+Let $\Sq(y)=\sum_{a\le y}\mu(a)^2$. Among the numbers $ap$ with $a\le y<p$,
+the numbers of values $+1,-1,0$ of $\mu$ are
+\begin{equation}
+\label{eq:cone_counts}
+  N_+=\frac{\Sq(y)-M(y)}{2},\qquad N_-=\frac{\Sq(y)+M(y)}{2},\qquad
+  N_0=\lfloor y\rfloor-\Sq(y),
+\end{equation}
+with limiting proportions $3/\pi^2,\ 3/\pi^2,\ 1-6/\pi^2$.
+\end{proposition}
+
+\begin{proof}
+$\mu(ap)=-\mu(a)$, and $\#\{a\le y:\mu(a)=\mp1\}=(\Sq(y)\mp M(y))/2$.
+\end{proof}
+
+\begin{proposition}[First-order window]
+\label{prop:linear-new-primes}
+If $U^2<t<U^4$, no $n\le t$ has two prime factors $>U^2$ (with
+multiplicity), and
+\begin{equation}
+\label{eq:first-order-total}
+  M^{\rm lp}_U(t)=-\sum_{U^2<p\le t}M(t/p).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Two such factors would give $n>U^4>t$. Hence $M^{\rm lp}_U(t)=\sum_{U^2<p\le t}
+\Delta_p(t)$, and $t<U^4<p^2$; apply \eqref{eq:single-prime-copy}.
+\end{proof}
+
+\begin{proposition}[Prime-count form]
+\label{prop:prime_count_form}
+For $U^2<t<U^4$ and $R:=t/U^2$,
+\begin{equation}
+\label{eq:prime_count_form}
+  M^{\rm lp}_U(t)=-\sum_{a\le R}\mu(a)\bigl(\pi(t/a)-\pi(U^2)\bigr),
+  \qquad
+  M(t)=M^{\rm sm}_U(t)-\sum_{a\le R}\mu(a)\pi(t/a)+M(R)\pi(U^2).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expand \eqref{eq:first-order-total} as $-\sum_{p}\sum_{a\le t/p}\mu(a)$ and
+interchange: for fixed $a$ the prime runs over $U^2<p\le t/a$, which is
+non-empty only if $a<R$.
+\end{proof}
+
+Thus the only input from primes $>U^2$ is the value of $\pi$ at the points
+$t/a$, $a\le R$, weighted by $\mu(a)$ at the small scale $R<U^2$.
+
+\begin{definition}[Copy multiplicities]
+\label{def:copy-multiplicity}
+For $U^2<t<U^4$, $R=t/U^2$ and $1\le y\le\lfloor R\rfloor$ put
+\begin{equation}
+\label{eq:Ny-exact}
+  N_y(t,U)=\#\Bigl\{p:\ \max\bigl(U^2,\tfrac{t}{y+1}\bigr)<p\le\tfrac ty\Bigr\},
+  \qquad\text{so that}\qquad
+  M^{\rm lp}_U(t)=-\sum_{1\le y\le\lfloor R\rfloor}N_y(t,U)M(y).
+\end{equation}
+\end{definition}
+
+\begin{remark}[Asymptotics of the multiplicities]
+\label{rem:copy-count-asymptotic}
+For fixed $R>1$ and $U\to\infty$,
+\begin{equation}
+\label{eq:Ny-fixed-R}
+  N_y\sim\frac{RU^2}{2\log U}\cdot\frac1{y(y+1)}\quad(1\le y\le\lfloor R\rfloor-1),
+  \qquad
+  N_{\lfloor R\rfloor}\sim\frac{U^2}{2\log U}\Bigl(\frac R{\lfloor R\rfloor}-1\Bigr)
+  \quad(R\notin\mathbb{Z}),
+\end{equation}
+and $N_R=0$ if $R\in\mathbb{Z}$. The top multiplicity is truncated because
+$t/(\lfloor R\rfloor+1)<U^2$.
+\end{remark}
+
+\begin{definition}[Coherent coefficient]
+\label{def:coherent_coefficient}
+\begin{equation}
+\label{eq:C_def}
+  \Cc(R):=\int_1^R\frac{M(w)}{w^2}\,dw
+  =\sum_{a\le R}\mu(a)\Bigl(\frac1a-\frac1R\Bigr)
+  =\sum_{a\le R}\frac{\mu(a)}a-\frac{M(R)}R .
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Fixed $R$]
+\label{prop:fixed_R_corrected}
+For fixed $R>1$, as $U\to\infty$,
+\begin{equation}
+\label{eq:E_fixed_R}
+  M^{\rm lp}_U(RU^2)=-\frac{RU^2}{2\log U}\bigl(\Cc(R)+o(1)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+In \eqref{eq:prime_count_form} the sum is finite; for $a<R$ the prime number
+theorem gives $\pi(RU^2/a)-\pi(U^2)\sim(R/a-1)U^2/(2\log U)$, and
+$\sum_{a\le R}\mu(a)(R/a-1)=R\,\Cc(R)$.
+\end{proof}
+
+\begin{lemma}[The multiplicity-weighted coefficient]
+\label{lem:copy-weight-coefficient}
+The coefficient
+\begin{equation}
+\label{eq:Upsilon_def}
+  \Upsilon(R):=\sum_{1\le y\le R}\frac{M(y)}{y(y+1)}
+  =\sum_{n\le R}\frac{\mu(n)}n-\frac{M(R)}{\lfloor R\rfloor+1}
+\end{equation}
+satisfies
+\begin{equation}
+\label{eq:Upsilon_C}
+  \Upsilon(R)=\Cc\bigl(\lfloor R\rfloor+1\bigr),\qquad
+  \Cc(R)=\Upsilon(R)-M(R)\Bigl(\frac1R-\frac1{\lfloor R\rfloor+1}\Bigr),
+\end{equation}
+and
+\begin{equation}
+\label{eq:C_tail}
+  \Cc(R)=-\int_R^\infty\frac{M(w)}{w^2}\,dw,\qquad
+  \Upsilon(R)=-\sum_{n>R}\frac{M(n)}{n(n+1)}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$M$ is constant on $[y,y+1)$ and $\int_y^{y+1}w^{-2}dw=1/(y(y+1))$, which
+gives \eqref{eq:Upsilon_C}. For $s>1$, \eqref{eq:mellin_M} gives
+$\int_1^\infty M(w)w^{-s-1}\,dw=1/(s\zeta(s))\to0$ as $s\downarrow1$. For
+$s\in[1,1+\delta]$ the bound $M(w)\ll we^{-c\sqrt{\log w}}$ dominates the
+integrand by an integrable multiple of $e^{-c\sqrt{\log w}}/w$, so dominated
+convergence gives $\int_1^\infty M(w)w^{-2}dw=0$.
+\end{proof}
+
+\begin{remark}[$\Cc$ versus $\Upsilon$]
+\label{rem:C-vs-Upsilon}
+Summing \eqref{eq:Ny-fixed-R} against $M(y)$ suggests the coefficient
+$\Upsilon(R)$, but the truncated top multiplicity replaces it by $\Cc(R)$; by
+\eqref{eq:Upsilon_C} the two agree exactly when $M(\lfloor R\rfloor)=0$. For
+$1<R<2$ one has $M^{\rm lp}_U=-(\pi(t)-\pi(U^2))\sim-(R-1)U^2/(2\log U)$, i.e.\
+$\Cc(R)=1-1/R$, whereas $\Upsilon(R)=1/2$.
+\end{remark}
+
+\begin{corollary}[Decay of the coefficients]
+\label{cor:AR-VK}
+By \eqref{eq:C_tail} and \eqref{eq:VK_M},
+\begin{equation}
+\label{eq:AR-VK}
+  \Cc(R),\ \Upsilon(R)\ll\exp\bigl(-c_1(\log R)^{3/5}(\log\log R)^{-1/5}\bigr).
+\end{equation}
+\end{corollary}
+
+\begin{proposition}[Both parts are large]
+\label{prop:both_parts_large}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For fixed $R>1$ with $\Cc(R)\ne0$,
+\begin{equation}
+\label{eq:E_fixed_R_size}
+  M^{\rm lp}_U(RU^2)\sim-\frac{RU^2}{2\log U}\Cc(R),\qquad
+  M^{\rm sm}_U(RU^2)\sim+\frac{RU^2}{2\log U}\Cc(R);
+\end{equation}
+for $1<R<2$, $\Cc(R)=1-1/R>0$.
+\item There is $C>0$ such that, as $t\to\infty$, uniformly for $U^2<t<U^4$
+with $R=t/U^2\ge\exp(C(\log\log t)^2)$,
+\begin{equation}
+\label{eq:E_log2}
+  M^{\rm lp}_U(t)=(1+o(1))\frac{t}{(\log t)^2},\qquad
+  M^{\rm sm}_U(t)=-(1+o(1))\frac{t}{(\log t)^2}.
+\end{equation}
+\end{enumerate}
+In particular, in both regimes $|M^{\rm lp}_U(t)|$ and $|M^{\rm sm}_U(t)|$ exceed
+$t^{1/2+\eps}$ for every fixed $\eps<1/2$ and all large $t$, and only their
+sum $M$ can be compared with the scale $t^{1/2+\eps}$.
+\end{proposition}
+
+\begin{proof}
+We use the classical form \cite{MontgomeryVaughan2007}: for some $c>0$,
+\begin{equation}
+\label{eq:pnt_inputs}
+  \pi(y)=\li(y)+O\bigl(ye^{-c\sqrt{\log y}}\bigr),\quad
+  M(y)\ll ye^{-c\sqrt{\log y}},\quad
+  \mt(y):=\sum_{a\le y}\frac{\mu(a)}a\ll e^{-c\sqrt{\log y}},
+\end{equation}
+and $\sum_{n\ge1}\mu(n)\log n/n=-1$ as a convergent series (the value at
+$s=1$ of $-\frac{d}{ds}\zeta(s)^{-1}$, since $\zeta'/\zeta^2\to-1$). The
+integral below converges absolutely by the bound on $\mt$, and
+\begin{equation}
+\label{eq:mtilde_integral}
+  \int_1^\infty\mt(w)\frac{dw}w
+  =\lim_{Y\to\infty}\Bigl(\mt(Y)\log Y-\sum_{a\le Y}\frac{\mu(a)\log a}a\Bigr)=1.
+\end{equation}
+
+(i) Proposition~\ref{prop:fixed_R_corrected}, and $M(t)=o(t/\log t)$. For
+$1<R<2$, $M=1$ on $[1,2)$.
+
+(ii) Since $t<U^4$, $R<\sqrt t$, so $\log(t/a)\ge\frac12\log t$ for $a\le R$.
+By \eqref{eq:prime_count_form},
+\begin{equation}
+\label{eq:E_three_terms}
+  M^{\rm lp}_U(t)=-\sum_{a\le R}\mu(a)\li(t/a)
+  -\sum_{a\le R}\mu(a)\bigl(\pi(t/a)-\li(t/a)\bigr)+M(R)\pi(U^2).
+\end{equation}
+The second term is $\ll t(1+\log R)e^{-c\sqrt{\log t/2}}=o(t/\log^2t)$. For
+the third, $\tfrac14\log t<\log U<\tfrac12\log t$, so
+\[
+|M(R)|\pi(U^2)\ll Re^{-c\sqrt{\log R}}\frac{U^2}{\log U}
+\ll e^{-c\sqrt{\log R}}\frac{t}{\log t}=o(t/\log^2t)
+\]
+once $c\sqrt C>1$. For the first, with $F(w)=w\li(t/w)$,
+\begin{align}
+\label{eq:partial_summation_li}
+  \sum_{a\le R}\mu(a)\li(t/a)
+  &=\mt(R)F(R)-\int_1^R\mt(w)F'(w)\,dw,\\
+  F'(w)&=\li(t/w)-\frac{t/w}{\log(t/w)}
+  =\frac{t/w}{\log^2(t/w)}\Bigl(1+O\Bigl(\frac1{\log t}\Bigr)\Bigr).\notag
+\end{align}
+The boundary term is $\ll e^{-c\sqrt{\log R}}t/\log t=o(t/\log^2t)$. The
+integral equals
+\[
+\frac t{\log^2t}\left(\int_1^R\mt(w)g_t(w)\frac{dw}w+O(1/\log t)\right),
+\qquad
+g_t(w)=\frac{\log^2t}{\log^2(t/w)}\in[1,4].
+\]
+Extend $g_t(w)\mathbf1_{\{w\le R\}}$ by zero to $[1,\infty)$. Since
+$R\ge\exp(C(\log\log t)^2)\to\infty$, this factor tends to $1$ pointwise and is
+bounded by $4$, while $|\mt(w)|/w$ is integrable; dominated convergence gives
+$\int_1^R\mt(w)g_t(w)\,dw/w=1+o(1)$, where the $o(1)$ depends only on $t$
+and tends to $0$ as $t\to\infty$ uniformly over all pairs $(U,R)$ in the
+stated range: indeed $g_t(w)\mathbf 1_{\{w\le R\}}\to1$ uniformly for $w$ in
+compact sets, since $R\ge\exp(C(\log\log t)^2)$ and $w\le W$ give
+$|g_t(w)-1|\ll\log W/\log t$. Hence
+$M^{\rm lp}_U(t)=(1+o(1))t/\log^2t$, and $M^{\rm sm}_U=M-M^{\rm lp}_U$ with $M(t)=o(t/\log^2t)$.
+\end{proof}
+
+\begin{remark}[Why $t/\log^2t$]
+\label{rem:why_log2}
+$\Cc(R)$ captures only the $1/\log t$ term, whose coefficient tends to zero
+by Corollary~\ref{cor:AR-VK}. The $1/\log^2t$ term comes from
+$\zeta'(s)/\zeta(s)^2\to-1$, that is, from the pole of $\zeta$ at $s=1$,
+and does not decay in $R$.
+\end{remark}
+
+\begin{remark}[First copy transitions]
+\label{rem:first-copy-transitions}
+For $1<R<2$ every copy has length $1$ and $M^{\rm lp}_U(t)=-(\pi(t)-\pi(U^2))$. For
+$2<R<3$ copies of length $2$ appear but $M(2)=0$. For $3<R<4$ copies of
+length $3$ enter with $M(3)=-1$, of opposite net sign.
+\end{remark}
+
+\section{Local large-prime decomposition of an excursion}
+\label{sec:local_large_prime}
+
+\begin{proposition}[Local decomposition]
+\label{prop:local_large_prime}
+Let $I_\nu=(u,v]$ be a complete excursion and $y=\sqrt v$. For $u<t\le v$,
+\begin{equation}
+\label{eq:local_split}
+  M(t)=\sum_{\substack{u<n\le t\\ \Pp(n)\le y}}\mu(n)
+  -\sum_{a<y}\mu(a)\,\Pi_a(t),\qquad
+  \Pi_a(t):=\#\Bigl\{p:\ \max\bigl(y,\tfrac ua\bigr)<p\le\tfrac ta\Bigr\},
+\end{equation}
+and the bridge condition $M(v)=0$ reads
+\begin{equation}
+\label{eq:local_bridge}
+  \sum_{\substack{u<n\le v\\ \Pp(n)\le\sqrt v}}\mu(n)
+  =\sum_{a<\sqrt v}\mu(a)\,\Pi_a(v).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$M(u)=0$. An $n\le v=y^2$ has at most one prime factor $p>y$; then
+$n=ap$ with $a<v/y=y<p$, so $\mu(n)=-\mu(a)$, and $(a,p)\mapsto ap$ is a
+bijection onto these $n$.
+\end{proof}
+
+\begin{remark}[Primes in short intervals]
+\label{rem:local_meaning}
+The decomposition holds for every excursion, with threshold $\sqrt{v_\nu}$.
+The large-prime input consists of prime counts in the intervals
+$(u/a,t/a]$, of length at most $\ell_\nu/a$ at height about $v_\nu/a$.
+Huxley proved the prime number theorem uniformly in intervals of length
+$h\ge x^{7/12+\eps}$ \cite{Huxley1972}; the zero-density estimates of
+Guth--Maynard give intervals of length $x^{17/30+o(1)}$
+\cite{GuthMaynard2024}. For M\"obius sums, Matom\"aki--Ter\"av\"ainen prove
+$\sum_{x<n\le x+x^\theta}\mu(n)=o(x^\theta)$ for every $\theta>0.55$
+\cite{MatomakiTeravainen2023}. The cited results do not provide, below these ranges, an asymptotic for
+$\Pi_a$ uniform in $a$.
+\end{remark}
+
+\begin{lemma}[Inverse logarithms]
+\label{lem:inverse_log_sum}
+Let $C$ be as in Proposition~\ref{prop:both_parts_large}. Uniformly for
+\[
+\exp\bigl(C(\log\log x)^2\bigr)\le z\le\sqrt x,
+\]
+\begin{equation}
+\label{eq:inverse_log_sum}
+  \sum_{a\le z}\frac{\mu(a)}{a\log(x/a)}=-\frac{1+o(1)}{(\log x)^2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Partial summation gives
+\[
+\frac{\mt(z)}{\log(x/z)}-
+\int_1^z\frac{\mt(w)}{w\log^2(x/w)}\,dw.
+\]
+Since $z\le\sqrt x$, the boundary term is uniformly
+$O(e^{-c\sqrt{\log z}}/\log x)$, hence $o(1/\log^2x)$. Write
+$\log^{-2}(x/w)=g_x(w)\log^{-2}x$ with $1\le g_x(w)\le4$, extend
+$g_x\mathbf1_{\{w\le z\}}$ by zero, and apply dominated convergence with
+\eqref{eq:mtilde_integral}.
+\end{proof}
+
+\begin{heuristic}[Opposite drifts]
+\label{heu:local_drift}
+Let $u\ge\sqrt v\exp(C(\log\log v)^2)$. Near $t\in I_\nu$ the counts
+$\Pi_a$ grow for $a<t/\sqrt v$, at rate $1/(a\log(t/a))$ if primes near
+$t/a$ have their expected local density uniformly in $a$. Over $(t,t+h]$
+the large-prime part then changes by about
+$-h\sum_{a<t/\sqrt v}\mu(a)/(a\log(t/a))=(1+o(1))h/\log^2t$ by
+Lemma~\ref{lem:inverse_log_sum}. Since $M(v)-M(u)=0$, the $\sqrt v$-smooth
+part drifts at rate about $-1/\log^2v$, independently of $\sigma_\nu$. As
+\[
+\frac{\ell_\nu}{\log^2v_\nu}\gg\sqrt{\ell_\nu}
+\iff
+\ell_\nu\gg\log^4v_\nu,
+\]
+for $\ell_\nu\gg(\log v_\nu)^4$ both drift contributions exceed
+$\sqrt{\ell_\nu}$, and \eqref{eq:local_bridge} is a balance between two
+opposite drifts: the local analogue of
+Proposition~\ref{prop:both_parts_large}.
+\end{heuristic}
+
+\section{A one-frequency model for the black curve}
+\label{sec:model}
+
+\begin{heuristic}[Scale and period]
+\label{heu:model}
+Motivated by \eqref{eq:explicitM}, model $M(x)\approx\sqrt x\,F(\log x)$
+with $F$ almost periodic, and retain only the lowest zero $\gamma_1$ (RH
+does not imply that its coefficient dominates). Within an excursion of
+length $\asymp x$ this gives $H_\nu\asymp\sqrt x$ and
+$\sqrt{H_\nu}\ell_\nu\asymp x^{5/4}$, so the black curve oscillates at scale
+\begin{equation}
+\label{eq:model_scale}
+  |\Anet(x)|\asymp x^{5/4},
+\end{equation}
+the scale of Corollary~\ref{cor:rh}, with period $2\pi/\gamma_1$ in
+$\log x$, i.e.\ a factor $e^{2\pi/\gamma_1}\approx1.5597$ in $x$. In this
+model consecutive zeros of $M$ are separated by the factor
+$e^{\pi/\gamma_1}=\lambda_*$, the threshold of
+Corollary~\ref{cor:descending}(iii): a model excursion is exactly
+$\lambda_*$-long.
+\end{heuristic}
+
+\section{Numerical data}
+\label{sec:data}
+
+The following census covers $n\le N=455\,052\,511$, with $Z(N)=87\,385$
+excursions, recording $(u_\nu,\tau_\nu,v_\nu,H_\nu,\sigma_\nu)$ and the
+curves $\Ap,\Am,\Anet$:
+\begin{equation}
+\label{eq:census_values}
+  \Ap(N)=6.3449\times10^9,\quad \Am(N)=-7.0877\times10^9,\quad
+  \Anet(N)=-7.4279\times10^8,
+\end{equation}
+\begin{equation}
+\label{eq:census_max}
+  \max_\nu\frac{H_\nu}{\sqrt{\ell_\nu}}=2.0743,\qquad
+  \max_\nu\frac{\beta_\nu}{\ell_\nu^{3/2}}=1.0214 .
+\end{equation}
+Since $|M(x)|\le0.571\sqrt x$ for $33\le x\le10^{16}$ \cite{Hurst18}, and
+$|M(n)|\le\sqrt n$ for $n<33$ with equality only at $n=1$, the
+constant $C_0=1$ is admissible in Lemma~\ref{lem:transfer}, which gives
+$\Ap(N)+|\Am(N)|\le\frac45N^{5/4}=5.317\times10^{10}$ against the observed
+$1.3433\times10^{10}$, a ratio of $3.96$. Heuristic~\ref{heu:renewal} with
+$L=\sqrt N$ predicts $\#\{\ell_\nu>\sqrt N\}\asymp N^{1/4}\approx146$. At
+this range $N^{0.05}\approx2.7$, so factors $x^\eps$ are not separable from
+constants. Reproducing these values requires the excursion file, the
+area-integration convention of Proposition~\ref{prop:explicit}, and the
+terminal convention of Definition~\ref{def:Ms-terminal}. These data are not used in any proof.
+
+\section{Concluding remarks}
+\label{sec:conclusions}
+
+The main results can be summarized in five statements. First, the
+Kaczorowski--Pintz oscillation density, combined with elementary counts of
+lacunary families of excursions, localizes Littlewood's criterion to the
+initial part $x_0<t\le\min\{x_1,\lambda x_0\}$ of each excursion for every
+$\lambda>\lambda_*=e^{\pi/\gamma_1}$, the exact threshold of the counting
+mechanism; in averaged form, the excursions carrying large values have mean
+logarithmic length at most $\log\lambda_*$. Second, on this window the
+future increments depend directly only on the M\"obius prefix up to
+$\theta u$ for every $\theta>\theta_*=\frac12e^{\pi/\gamma_1}$, and the
+endpoints of late excursions satisfy $x_1=x_0^{1+o(1)}$. Third, the
+remaining difficulty is not one of dependency: the one-step recursion, the
+relaxed divisor-sum cone and any bounded number of multiplicative layers
+provably fail to produce the RH scale by themselves. Fourth, Pintz's 2026
+oscillation theorem transfers to the excursion variables as exact
+logarithmic exponent identities: cumulative absolute area has exponent
+$1+\Theta$, quadratic mass has exponent $1+2\Theta$, and the chord-energy
+functional has exponent $1+\Theta$.  The same input makes $\Theta$ exactly
+the abscissa of absolute convergence of the completed-excursion block
+series for $1/\zeta$. Fifth, in the language of two-point correlations, RH
+is equivalent to cancellation between lags of the $h$-weighted correlations
+at the zeros of $M$.  More precisely, the total weighted mass has exponent
+$1+2\Theta$, and every range $h\le v^\alpha$, $\alpha<\Theta$, is negligible
+relative to it; the universal endpoint statement $h\le\sqrt v$ remains
+$o(v^2)$. Uniform absolute two-point Ces\`aro cancellation is available in
+every interval of length $\ge u^{3/5+\eta}$ down to lags
+$R\ge L(\log u)^{-2+\delta}$. A distinct, weaker Fej\'er target on a complete
+excursion is equivalent, for $R=o(\sqrt L)$, to a diagonal local-variance
+law for increments of $M$. Absolute Chowla, this Fej\'er target, and
+localization of the weighted energy are separate problems and are not
+claimed to be equivalent.
+
+\section{Open problems}
+\label{sec:open_questions}
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Extend the absolute two-point estimate of
+Theorem~\ref{thm:sublinear-two-point} to every adaptively selected excursion
+with $x_0^{1/2+\eps}\le\ell<x_0^{3/5}$, and if possible to lags much smaller
+than $\ell(\log x_0)^{-2+\delta}$. This is a stronger target than the Fej\'er
+problem below.
+\item For complete excursions with $L\ge u^{1/2+\eps}$, prove for some
+$R\to\infty$, $R=o(\sqrt L)$, the diagonal variance law
+\[
+\sum_{m=0}^{L-R}\bigl(M(u+m+R)-M(u+m)\bigr)^2
+=\left(\frac6{\pi^2}+o(1)\right)RL.
+\]
+By Proposition~\ref{prop:bridge-fejer} this is equivalent to
+$F_R=\sum_{h<R}(R-h)C_h=o(RL)$, but not to absolute averaged Chowla and not,
+without further information, to $\sum_{h<R}hC_h=o(Q)$.
+\item In the localized form of Corollary~\ref{cor:linear-window-RH}, bound
+\[
+\sum_{d\le5u/8}\mu(d)
+\bigl(\lfloor t/d\rfloor-\lfloor u/d\rfloor\bigr)
+\]
+by $t^{1/2+\eps}$ on
+$u<t\le\min\{x_1,5u/4\}$, using the full simultaneous intra-excursion
+constraints rather than pointwise estimates.
+\item Quantify the multiscale persistence forced by
+Lemma~\ref{lem:channel-persistence}.  By Corollary~\ref{cor:channel-descent}
+and Remark~\ref{rem:channel-loss}, channel descent iterates but loses the
+factor $2K/k^\alpha$ per step; the problem is to show that along a descent
+chain from an RH-violating value the loss is eventually absent, or that the
+deep remainder $\mathcal R_K$ carries the value and can be bounded.
+\item Question~\ref{q:layer-depth} in the form left by
+Corollary~\ref{cor:bounded-depth}: bounded depth fixes only $o(u)$ window
+increments, whose sum is of order $u(\log\log u)^k/\log u$; decide whether
+the unit-step and excursion constraints on the remaining free coordinates
+$\delta_d$, $\Omega(d)>k$, already force the cancellation down to
+$u^{1/2+\eps}$. The first case is $k=1$ (primes fixed, $\delta_p=-1$).
+\item Can the threshold $\lambda_*=e^{\pi/\gamma_1}$ of
+Corollary~\ref{cor:descending} be lowered? By
+Remark~\ref{rem:lambda-star} this requires information on the position of
+large values inside excursions, beyond the count
+\eqref{eq:KP-large-excursions}.
+\item Whether \eqref{eq:rh_area} is equivalent to RH.
+\item Whether the pruned local condition \eqref{eq:pruned_Q} holds, and
+whether the bridge constraints \eqref{eq:Q_def}, \eqref{eq:zeroth-corr}
+admit a third independent relation involving the defect
+$\ell_\nu/2-H_\nu\ge0$.
+\item Establish (SG) for $Z=H/\sqrt\ell$ in the simple random walk model of
+the M\"obius walk, and compute the extreme scale of
+Corollary~\ref{cor:ev-square} there; the Brownian-excursion limit suggests
+$c=2$.
+\item Determine what happens at the endpoint of
+Theorem~\ref{thm:theta-lag-localization}: is the contribution of
+$h\le v^\Theta$ negligible relative to
+$\sum_{n<v}M(n)^2$ along zeros $v$?  Even under RH the theorem presently
+gives relative negligibility only for $h\le v^{1/2-\delta}$, while
+Proposition~\ref{prop:sqrt-lag-cutoff} gives the endpoint only at the
+absolute $v^2$ scale.
+\item Determine convergence on the boundary
+$\Re s=\Theta$ for the excursion-block series of
+Theorem~\ref{thm:excursion-block-abscissa}.  The abscissa is exact, but the
+argument does not decide boundary convergence.
+\item Numerically: the number of excursions with $\ell_\nu>\sqrt N$ against
+$N^{1/4}$, the maxima of $H_\nu/\sqrt{\ell_\nu}$ and $\beta_\nu/\ell_\nu^{3/2}$
+over them; the split \eqref{eq:local_split} and the $\sigma_\nu$-independence
+of Heuristic~\ref{heu:local_drift}; the frequency of touching runs and of
+ballistic excursions (Heuristic~\ref{heu:local_fails}); and the distribution
+of $x_1/x_0$, to be compared with $\lambda_*$.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+
+\bibitem{CP17}
+P.~Carmona and N.~P\'etr\'elis, \emph{Limit theorems for random walk excursion
+conditioned to enclose a typical area}, arXiv:1709.06448.
+
+\bibitem{DKW15}
+D.~Denisov, M.~Kolb and V.~Wachtel, \emph{Local asymptotics for the area of
+random walk excursions}, J. London Math. Soc. \textbf{91} (2015), 495--513.
+
+\bibitem{GuthMaynard2024}
+L.~Guth and J.~Maynard, \emph{New large value estimates for Dirichlet
+polynomials}, Ann. of Math. (2) \textbf{203} (2026), no.~2, 623--675,
+doi:10.4007/annals.2026.203.2.6.
+
+\bibitem{HB82}
+D.~R. Heath-Brown, \emph{Prime numbers in short intervals and a generalized
+Vaughan identity}, Canad. J. Math. \textbf{34} (1982), 1365--1377.
+
+\bibitem{HT23}
+H.~A. Helfgott and L.~Thompson, \emph{Summing $\mu(n)$: a faster elementary
+algorithm}, Res. Number Theory \textbf{9} (2023), Paper No.~6.
+
+\bibitem{Hurst18}
+G.~Hurst, \emph{Computations of the Mertens function and improved bounds on
+the Mertens conjecture}, Math. Comp. \textbf{87} (2018), no.~310, 1013--1028.
+
+\bibitem{Huxley1972}
+M.~N. Huxley, \emph{On the difference between consecutive primes}, Invent.
+Math. \textbf{15} (1972), 164--170.
+
+\bibitem{Janson07}
+S.~Janson, \emph{Brownian excursion area, Wright's constants in graph
+enumeration, and other Brownian areas}, Probab. Surveys \textbf{4} (2007),
+80--145.
+
+\bibitem{KP86}
+J.~Kaczorowski and J.~Pintz, \emph{Oscillatory properties of arithmetical
+functions. I}, Acta Math. Hungar. \textbf{48} (1986), 173--185.
+
+\bibitem{KotnikTeRiele2006}
+T.~Kotnik and H.~te Riele, \emph{The Mertens conjecture revisited}, in
+Algorithmic Number Theory (ANTS VII), Lecture Notes in Comput. Sci.
+\textbf{4076}, Springer, Berlin, 2006.
+
+\bibitem{MRT15}
+K.~Matom\"aki, M.~Radziwi\l\l\ and T.~Tao, \emph{An averaged form of Chowla's
+conjecture}, Algebra Number Theory \textbf{9} (2015), no.~9, 2167--2196.
+
+\bibitem{MSTT23}
+K.~Matom\"aki, X.~Shao, T.~Tao and J.~Ter\"av\"ainen, \emph{Higher uniformity
+of arithmetic functions in short intervals I. All intervals}, Forum Math.
+Pi \textbf{11} (2023), Paper No.~e29.
+
+\bibitem{MatomakiTeravainen2023}
+K.~Matom\"aki and J.~Ter\"av\"ainen, \emph{On the M\"obius function in all
+short intervals}, J. Eur. Math. Soc. \textbf{25} (2023), no.~4, 1207--1225.
+
+\bibitem{MontgomeryVaughan2007}
+H.~L. Montgomery and R.~C. Vaughan, \emph{Multiplicative Number Theory I:
+Classical Theory}, Cambridge Stud. Adv. Math. \textbf{97}, Cambridge
+University Press, 2007.
+
+\bibitem{Ng2004}
+N.~Ng, \emph{The distribution of the summatory function of the M\"obius
+function}, Proc. London Math. Soc. (3) \textbf{89} (2004), no.~2, 361--389.
+
+\bibitem{NguyenThe04}
+M.~Nguy\^en Th\^e, \emph{Area and inertial moment of Dyck paths}, Combin.
+Probab. Comput. \textbf{13} (2004), 697--716.
+
+\bibitem{OdlyzkoTeRiele1985}
+A.~M. Odlyzko and H.~J.~J. te Riele, \emph{Disproof of the Mertens
+conjecture}, J. Reine Angew. Math. \textbf{357} (1985), 138--160.
+
+\bibitem{Pintz2026}
+J.~Pintz, \emph{Oscillation of partial sums of the M\"obius function and
+zeros of Riemann's zeta function}, arXiv:2608.24878 (2026).
+
+\bibitem{Richard05}
+C.~Richard, \emph{On $q$-functional equations and excursion moments},
+arXiv:math/0503198.
+
+\bibitem{Takacs91}
+L.~Tak\'acs, \emph{A Bernoulli excursion and its various applications},
+Adv. Appl. Probab. \textbf{23} (1991), 557--585.
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+revised by D.~R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\bibitem{Walfisz1963}
+A.~Walfisz, \emph{Weylsche Exponentialsummen in der neueren Zahlentheorie},
+VEB Deutscher Verlag der Wissenschaften, Berlin, 1963.
+
+\end{thebibliography}
+
+\end{document}

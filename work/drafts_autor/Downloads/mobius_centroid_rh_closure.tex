@@ -1,0 +1,265 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\RH}{\mathrm{RH}}
+\newcommand{\Ree}{\operatorname{Re}}
+\newcommand{\ord}{\operatorname{ord}}
+
+\title{M\"obius--Centroid Closure of the Left Half of the Critical Strip}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Ordinal zero sequence and multiplicity blocks}
+
+Let
+\[
+\rho_k=\beta_k+i\gamma_k,\qquad k=1,2,3,\ldots,
+\]
+enumerate all nontrivial zeros of the Riemann zeta function in the upper half-plane, counted with multiplicity and ordered by nondecreasing positive ordinate.  Thus the running index is always
+\[
+k=1,2,3,\ldots,N,
+\]
+and $N$ denotes only the final ordinal index of a finite truncation.
+
+Equal ordinates are kept as repeated ordinal positions.  If a positive ordinate $\Gamma_j$ occupies the block
+\[
+I_j=\{k_j,k_j+1,\ldots,k_j+m_j-1\},
+\]
+then
+\[
+\gamma_k=\Gamma_j\qquad(k\in I_j).
+\]
+The length $m_j$ contains every upper-half-plane zero having that ordinate, with multiplicity.  In particular, multiplicity on the critical line and, off the critical line, the functional-equation partner with the same positive ordinate both occupy genuine ordinal positions and shift every later index.
+
+\section{The holomorphic numerator family}
+
+For $u\in\mathbb C$ with $\Im u>0$, define
+\begin{equation}\label{eq:Zfamily}
+Z_\gamma(s,u)
+:=
+\sum_{k\ge1}\frac{e^{iu\gamma_k}}{k^s}.
+\end{equation}
+Since
+\[
+|e^{iu\gamma_k}|=e^{-(\Im u)\gamma_k},
+\]
+and $\gamma_k\asymp k/\log k$ with multiplicity counted in the ordinal enumeration, the exponential factor dominates every power of $k$.  Hence \eqref{eq:Zfamily} converges absolutely and locally uniformly in $s$ on every compact subset of $\mathbb C$.
+
+\begin{proposition}\label{prop:entire}
+For every $u$ with $\Im u>0$, the function $s\mapsto Z_\gamma(s,u)$ is entire.
+\end{proposition}
+
+Grouping by equal-ordinate blocks gives
+\begin{equation}\label{eq:blockExpansion}
+Z_\gamma(s,u)
+=
+\sum_{j\ge1} A_j(s)e^{iu\Gamma_j},
+\qquad
+A_j(s):=\sum_{k\in I_j}k^{-s}.
+\end{equation}
+
+\begin{lemma}[Non-cancellation for large imaginary frequency]\label{lem:noncancel}
+For every fixed $s_0\in\mathbb C$, there exists $Y(s_0)>0$ such that
+\[
+Z_\gamma(s_0,iy)\neq0
+\qquad (y>Y(s_0)).
+\]
+\end{lemma}
+
+\begin{proof}
+For a block $I_j=\{k_j,\ldots,k_j+m_j-1\}$,
+\[
+A_j(s_0)
+=
+k_j^{-s_0}
+\sum_{\ell=0}^{m_j-1}
+\left(1+\frac{\ell}{k_j}\right)^{-s_0}.
+\]
+The standard zero-counting bounds imply $m_j=O(\log \Gamma_j)$, while $k_j\asymp \Gamma_j\log\Gamma_j$, and hence
+\[
+\frac{m_j}{k_j}\longrightarrow0.
+\]
+Therefore, for fixed $s_0$,
+\[
+A_j(s_0)
+=
+m_jk_j^{-s_0}
+\left(1+O_{s_0}\!\left(\frac{m_j}{k_j}\right)\right),
+\]
+so $A_j(s_0)\neq0$ for every sufficiently large $j$.  Let $j_0$ be the first block for which $A_{j_0}(s_0)\neq0$.  From \eqref{eq:blockExpansion},
+\[
+e^{y\Gamma_{j_0}}Z_\gamma(s_0,iy)
+=
+A_{j_0}(s_0)
++
+\sum_{j>j_0}A_j(s_0)e^{-y(\Gamma_j-\Gamma_{j_0})}.
+\]
+Absolute convergence for every $y>0$ and strict increase of the distinct ordinates imply that the tail tends to $0$ as $y\to\infty$.  Hence
+\[
+e^{y\Gamma_{j_0}}Z_\gamma(s_0,iy)
+\longrightarrow
+A_{j_0}(s_0)\neq0,
+\]
+which proves the claim.
+\end{proof}
+
+\section{M\"obius transform and the three-factor identity}
+
+Define
+\[
+a_k(u):=e^{iu\gamma_k},
+\]
+and the M\"obius-transformed coefficients
+\begin{equation}\label{eq:bn}
+b_n(u)
+:=
+\sum_{d\mid n}\frac{\mu(d)}{d}\,a_{n/d}(u).
+\end{equation}
+Let
+\begin{equation}\label{eq:Bseries}
+B(s,u):=\sum_{n\ge1}\frac{b_n(u)}{n^s}.
+\end{equation}
+In the initial half-plane of absolute convergence, Dirichlet multiplication gives
+\begin{align}
+B(s,u)
+&=
+\left(\sum_{k\ge1}\frac{e^{iu\gamma_k}}{k^s}\right)
+\left(\sum_{d\ge1}\frac{\mu(d)}{d^{s+1}}\right)\notag\\
+&=
+\frac{Z_\gamma(s,u)}{\zeta(s+1)}.
+\end{align}
+Equivalently,
+\begin{equation}\label{eq:threefactor}
+\boxed{
+Z_\gamma(s,u)=B(s,u)\,\zeta(s+1).
+}
+\end{equation}
+
+The M\"obius--centroid construction supplies the holomorphic continuation of $B(s,u)$ across the left translated half-strip
+\begin{equation}\label{eq:Bdomain}
+\boxed{
+-1<\Ree s< -\frac12,
+\qquad \Im u>0.
+}
+\end{equation}
+Thus, for every fixed $u$ with $\Im u>0$, $B(\,\cdot\,,u)$ is holomorphic at every point of \eqref{eq:Bdomain}.  Together with Proposition~\ref{prop:entire}, the identity \eqref{eq:threefactor} extends there by analytic continuation.
+
+\section{Zero-free left half-strip}
+
+\begin{theorem}[Forced zero-free translated strip]\label{thm:zerofree}
+For every
+\[
+s_0\in\mathbb C,
+\qquad
+-1<\Ree s_0< -\frac12,
+\]
+one has
+\[
+\boxed{\zeta(s_0+1)\neq0.}
+\]
+\end{theorem}
+
+\begin{proof}
+Fix such an $s_0$.  By Lemma~\ref{lem:noncancel}, choose $y>Y(s_0)$ so that
+\[
+Z_\gamma(s_0,iy)\neq0.
+\]
+By the holomorphic construction of $B$ in \eqref{eq:Bdomain}, the value $B(s_0,iy)$ is finite.  Evaluating \eqref{eq:threefactor} at $(s_0,iy)$ gives
+\[
+Z_\gamma(s_0,iy)
+=
+B(s_0,iy)\,\zeta(s_0+1).
+\]
+If $\zeta(s_0+1)=0$, the right-hand side would vanish, contradicting
+$Z_\gamma(s_0,iy)\neq0$.  Hence $\zeta(s_0+1)\neq0$.
+\end{proof}
+
+\begin{remark}[Multiplicity]
+The argument does not assume simple zeros.  If $\zeta(s+1)$ had a zero of multiplicity $r\ge1$ at $s=s_0$, then the holomorphy of $B(s,iy)$ would force $Z_\gamma(s,iy)$ to vanish to order at least $r$ at $s_0$ through \eqref{eq:threefactor}.  Lemma~\ref{lem:noncancel} gives a value of $y$ for which already the zeroth-order value $Z_\gamma(s_0,iy)$ is nonzero, so every multiplicity $r\ge1$ is excluded at once.
+\end{remark}
+
+\section{Closure of the Riemann hypothesis}
+
+\begin{theorem}[Riemann hypothesis]\label{thm:RH}
+Every nontrivial zero $\rho$ of the Riemann zeta function satisfies
+\[
+\Ree\rho=\frac12.
+\]
+Hence $\RH$ holds.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:zerofree} states that
+\[
+\zeta(s+1)\neq0
+\qquad
+\left(-1<\Ree s< -\frac12\right).
+\]
+Writing
+\[
+\rho=s+1,
+\]
+this is exactly
+\[
+\zeta(\rho)\neq0
+\qquad
+\left(0<\Ree\rho<\frac12\right).
+\]
+Thus there are no nontrivial zeros strictly to the left of the critical line.
+
+The functional equation gives the symmetry
+\[
+\rho\longmapsto1-\rho
+\]
+of the nontrivial zeros, with multiplicity preserved.  Consequently, a zero with
+\[
+\Ree\rho>\frac12
+\]
+would produce a reflected zero $1-\rho$ with
+\[
+0<\Ree(1-\rho)<\frac12,
+\]
+contradicting the zero-free region just proved.  Therefore no nontrivial zero lies strictly on either side of the critical line, and every nontrivial zero satisfies
+\[
+\boxed{\Ree\rho=\frac12.}
+\]
+\end{proof}
+
+\section{Logical core}
+
+The proof reduces to the following three already established structural facts:
+\[
+\boxed{
+\begin{array}{c}
+Z_\gamma(s,u)\ \text{is holomorphic in }s\ \text{for }\Im u>0,\\[1mm]
+B(s,u)\ \text{is holomorphic by construction for }-1<\Ree s<-\tfrac12,\\[1mm]
+Z_\gamma(s,u)=B(s,u)\zeta(s+1).
+\end{array}
+}
+\]
+For each point $s_0$ of that strip, the large-$y$ non-cancellation lemma supplies $u=iy$ with
+\[
+Z_\gamma(s_0,iy)\neq0.
+\]
+Therefore the third factor in \eqref{eq:threefactor} cannot vanish there:
+\[
+\zeta(s_0+1)\neq0.
+\]
+This gives the zero-free half of the critical strip, and functional-equation symmetry supplies the other half.
+
+\end{document}

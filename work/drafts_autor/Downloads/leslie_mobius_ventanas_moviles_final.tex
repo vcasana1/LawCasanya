@@ -1,0 +1,1142 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+\usepackage[hidelinks]{hyperref}
+
+\title{Moving Rigid Leslie Models on Consecutive Logarithmic Windows:\\Admissible Phase Geometry, Spectral Transport,\\Tangent Cones, and a Genuine Forecasting Test}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\bigskip
+
+\begin{remark}
+\label{rem:status}
+This document is a research notebook.  The algebraic identities and local differential constraints are proved under explicit regularity and simplicity hypotheses.  The proposed connection with consecutive windows of the Mertens function is an experimental programme, not a proved arithmetic theorem.  No statement below proves a new estimate for the Mertens function or the Riemann hypothesis.
+\end{remark}
+
+\section{Purpose and change of viewpoint}
+\label{sec:purpose}
+
+The earlier static experiments asked whether one finite collection of fitted frequencies could be embedded in one nonnegative Leslie matrix.  Allowing auxiliary eigenvalues made that static problem feasible in all forty reported configurations, but the result did not distinguish a coherent dynamical law from independent fitting.
+
+The present formulation replaces independent static realizations by a sequence of rigid Leslie matrices attached to consecutive logarithmic windows.  The object of study is therefore a non-autonomous product, or linear cocycle, rather than one fixed matrix.  Linear cocycles and their long products are standard objects in dynamical-systems theory \cite{DuarteKlein2016}.
+
+\begin{warning}
+\label{warn:no_automatic_novelty}
+The use of a time-dependent matrix product is not itself a new result.  The potentially discriminating content is the simultaneous enforcement of rigidity, nonnegativity, continuity through the feasible set, and prediction of a future window without recalibration.
+\end{warning}
+
+\section{Rigid moving Leslie matrices}
+\label{sec:rigid_moving_leslie}
+
+\begin{definition}
+\label{def:leslie_matrix}
+For $m\geq2$, a companion Leslie matrix is
+\begin{equation}
+L(a)=
+\begin{pmatrix}
+a_1&a_2&\cdots&a_m\\
+1&0&\cdots&0\\
+0&1&\ddots&\vdots\\
+\vdots&&\ddots&0
+\end{pmatrix},
+\qquad a_\ell\geq0.
+\label{eq:leslie_matrix}
+\end{equation}
+Its characteristic polynomial is
+\begin{equation}
+P(z;a)=z^m-\sum_{\ell=1}^{m}a_\ell z^{m-\ell}.
+\label{eq:characteristic_polynomial}
+\end{equation}
+\end{definition}
+
+Fix $K\geq1$ and set
+\begin{equation}
+m=2K+1.
+\label{eq:rigid_dimension}
+\end{equation}
+For $b>1$ and phases $\Omega=(\omega_1,\ldots,\omega_K)$, prescribe the roots
+\begin{equation}
+b,
+\qquad
+\sqrt b\,e^{\pm i\omega_1},\ldots,
+\sqrt b\,e^{\pm i\omega_K}.
+\label{eq:prescribed_roots}
+\end{equation}
+The unique monic polynomial with these roots is
+\begin{equation}
+P_{b,\Omega}(z)
+=(z-b)\prod_{k=1}^{K}
+\left(z^2-2\sqrt b\cos(\omega_k)z+b\right).
+\label{eq:rigid_polynomial}
+\end{equation}
+Writing
+\begin{equation}
+P_{b,\Omega}(z)
+=z^m-\sum_{\ell=1}^{m}a_\ell(b,\Omega)z^{m-\ell}
+\label{eq:rigid_coefficients}
+\end{equation}
+defines the coefficient map $A:(b,\Omega)\mapsto a(b,\Omega)$.
+
+\begin{proposition}
+\label{prop:uniqueness}
+For fixed $(b,\Omega)$, the rigid Leslie coefficients in \eqref{eq:rigid_coefficients} are unique.  A rigid nonnegative Leslie realization exists if and only if
+\begin{equation}
+a_\ell(b,\Omega)\geq0,
+\qquad 1\leq\ell\leq m.
+\label{eq:coefficient_nonnegativity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The roots in \eqref{eq:prescribed_roots} determine the monic polynomial \eqref{eq:rigid_polynomial}.  Comparison with \eqref{eq:characteristic_polynomial} determines every coefficient.  The companion matrix is entrywise nonnegative exactly when its first-row coefficients satisfy \eqref{eq:coefficient_nonnegativity}.
+\end{proof}
+
+\begin{definition}
+\label{def:admissible_phase_set}
+The rigid admissible phase set is
+\begin{equation}
+\mathcal A_{b,K}
+=
+\left\{
+\Omega\in\mathbb T^K:
+ a_\ell(b,\Omega)\geq0
+ \text{ for all }\ell
+\right\}.
+\label{eq:admissible_phase_set}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+\label{rem:boundary}
+The boundary of \eqref{eq:admissible_phase_set} is contained in the union of the coefficient zero sets
+\begin{equation}
+\partial\mathcal A_{b,K}
+\subseteq
+\bigcup_{\ell=1}^{m}
+\left\{\Omega:a_\ell(b,\Omega)=0\right\}.
+\label{eq:admissible_boundary}
+\end{equation}
+Equality need not hold without excluding redundant inequalities and singular intersections.
+\end{remark}
+
+\section{Windowed cocycle and accumulated phase}
+\label{sec:windowed_cocycle}
+
+Let $W_0,W_1,\ldots$ be consecutive windows in logarithmic scale.  Associate a rigid Leslie matrix
+\begin{equation}
+L_j=L(a_j),
+\qquad
+a_j=a(b_j,\Omega_j)\in\mathbb R_+^m.
+\label{eq:window_leslie}
+\end{equation}
+The non-autonomous evolution is
+\begin{equation}
+v_{j+1}=L_jv_j,
+\label{eq:nonautonomous_evolution}
+\end{equation}
+with cocycle product
+\begin{equation}
+\Phi(J,0)=L_{J-1}\cdots L_1L_0.
+\label{eq:cocycle_product}
+\end{equation}
+
+\begin{remark}
+\label{rem:no_forced_periodicity}
+A moving sequence $L_j$ has no mandatory spectral periodicity.  This does not imply that every chosen trajectory is nonperiodic.  Periodicity may reappear if the coefficients or phases are selected periodically.
+\end{remark}
+
+If a locally matched branch has phase $\omega_{j,k}$ in window $j$, its formal accumulated phase is
+\begin{equation}
+\Theta_k(J)=\sum_{j=0}^{J-1}\omega_{j,k}.
+\label{eq:accumulated_phase}
+\end{equation}
+The definition requires mode matching and phase unwrapping between adjacent windows.  Without those operations, the unordered roots of successive polynomials do not determine a unique trajectory $k\mapsto\omega_{j,k}$.
+
+\section{Exact coefficient coordinates for the rigid critical spectrum}
+\label{sec:eta_coordinates}
+
+The general inverse spectral problem for Leslie matrices has an established characterization in the literature \cite{Benvenuti2019}.  The results in this section concern the special rigid spectrum in \eqref{eq:prescribed_roots} and its use as a moving-window coordinate system.
+
+Put $r=\sqrt b$ and define
+\begin{equation}
+S_\Omega(w)
+=\prod_{k=1}^{K}\left(w^2-2\cos(\omega_k)w+1\right)
+=\sum_{j=0}^{2K}d_jw^{2K-j}.
+\label{eq:unit_circle_factor}
+\end{equation}
+The polynomial is reciprocal, and hence
+\begin{equation}
+d_{2K-j}=d_j,
+\qquad
+d_0=d_{2K}=1.
+\label{eq:palindromic_d}
+\end{equation}
+Moreover,
+\begin{equation}
+P_{b,\Omega}(z)
+=(z-r^2)r^{2K}S_\Omega(z/r).
+\label{eq:scaled_rigid_polynomial}
+\end{equation}
+
+\begin{proposition}
+\label{prop:coefficient_formula}
+The coefficients in \eqref{eq:rigid_coefficients} satisfy
+\begin{align}
+a_\ell
+&=r^\ell\left(rd_{\ell-1}-d_\ell\right),
+&&1\leq\ell\leq2K,
+\label{eq:coefficient_formula_main}\\
+a_m&=r^{m+1}=b^{K+1}.
+\label{eq:last_coefficient_fixed}
+\end{align}
+For $1\leq j\leq K$, the paired coefficients are
+\begin{align}
+a_j
+&=r^j\left(rd_{j-1}-d_j\right),
+\label{eq:left_paired_coefficient}\\
+a_{m-j}
+&=r^{m-j}\left(rd_j-d_{j-1}\right).
+\label{eq:right_paired_coefficient}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Expand \eqref{eq:scaled_rigid_polynomial} and compare the coefficient of $z^{m-\ell}$ with \eqref{eq:rigid_coefficients}.  Equation \eqref{eq:right_paired_coefficient} follows from \eqref{eq:palindromic_d}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:ratio_test}
+A rigid nonnegative Leslie realization exists if and only if
+\begin{equation}
+d_j>0
+\quad\text{and}\quad
+\frac1r\leq\frac{d_j}{d_{j-1}}\leq r,
+\qquad 1\leq j\leq K.
+\label{eq:ratio_test}
+\end{equation}
+Strict inequalities are equivalent to strict positivity of all paired coefficients.
+\end{corollary}
+
+\begin{proof}
+Equations \eqref{eq:left_paired_coefficient} and \eqref{eq:right_paired_coefficient} give the two inequalities.  If one of $d_{j-1}$ and $d_j$ vanished while both paired inequalities held, the other would also vanish.  Propagation back to $d_0=1$ yields a contradiction.  Thus feasibility forces positivity of all $d_j$ for $0\leq j\leq K$.
+\end{proof}
+
+\begin{definition}
+\label{def:eta_coordinates}
+On the region where $d_1,\ldots,d_K>0$, define
+\begin{equation}
+\eta_j(\Omega)=\log\frac{d_j}{d_{j-1}},
+\qquad 1\leq j\leq K.
+\label{eq:eta_definition}
+\end{equation}
+The rigid spectral strain is
+\begin{equation}
+\Sigma(\Omega)=\|\eta(\Omega)\|_\infty.
+\label{eq:spectral_strain}
+\end{equation}
+\end{definition}
+
+\begin{corollary}
+\label{cor:box_criterion}
+The positivity test becomes
+\begin{equation}
+\|\eta(\Omega)\|_\infty
+\leq\frac12\log b.
+\label{eq:eta_box}
+\end{equation}
+The minimum compatible Perron value is
+\begin{align}
+b_*(\Omega)
+&=\exp\left(2\|\eta(\Omega)\|_\infty\right)
+\label{eq:minimal_perron_eta}\\
+&=\max_{1\leq j\leq K}
+\left\{
+\left(\frac{d_j}{d_{j-1}}\right)^2,
+\left(\frac{d_{j-1}}{d_j}\right)^2
+\right\}.
+\label{eq:minimal_perron_ratios}
+\end{align}
+If some $d_j\leq0$, set $b_*(\Omega)=+\infty$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:minimal_perron_boundary}
+If $b>b_*(\Omega)$, the rigid Leslie coefficients are strictly positive.  If $b=b_*(\Omega)<\infty$, at least one paired coefficient vanishes.  The map $b_*$ is generally nonsmooth where several coordinates attain the maximum in \eqref{eq:minimal_perron_eta}.
+\end{remark}
+
+\begin{proposition}
+\label{prop:comb_zero_strain}
+The rigid root-of-unity comb
+\begin{equation}
+\omega_k=\frac{2\pi k}{2K+1},
+\qquad 1\leq k\leq K,
+\label{eq:comb_phases}
+\end{equation}
+has $d_j=1$ for all $j$, and hence $\Sigma(\Omega)=0$.  Conversely, $\Sigma(\Omega)=0$ implies the same multiset of phases, up to ordering and conjugation.
+\end{proposition}
+
+\begin{proof}
+For \eqref{eq:comb_phases},
+\begin{equation}
+S_\Omega(w)=\frac{w^{2K+1}-1}{w-1}
+=1+w+\cdots+w^{2K}.
+\label{eq:comb_polynomial}
+\end{equation}
+Conversely, $\eta=0$ and $d_0=1$ imply $d_0=\cdots=d_{2K}=1$.  The roots of \eqref{eq:comb_polynomial} are the nontrivial $(2K+1)$-st roots of unity.
+\end{proof}
+
+\section{Memory tails and the universal critical region}
+\label{sec:memory_critical_region}
+
+Normalize the coefficients by
+\begin{equation}
+x_\ell=\frac{a_\ell}{b^\ell},
+\qquad
+X_q=\sum_{\ell=q}^{m}x_\ell.
+\label{eq:memory_tail_definition}
+\end{equation}
+
+\begin{proposition}
+\label{prop:memory_tail_formula}
+The tails telescope to
+\begin{equation}
+X_{j+1}=\frac{d_j}{r^j},
+\qquad 0\leq j\leq2K.
+\label{eq:memory_tail_formula}
+\end{equation}
+Consequently,
+\begin{align}
+X_{m-j}&=b^{j-K}X_{j+1},
+&&0\leq j\leq K,
+\label{eq:tail_palindromy}\\
+x_m&=X_m=b^{-K}.
+\label{eq:last_memory_mass}
+\end{align}
+Moreover, positivity is equivalent to
+\begin{equation}
+\frac{X_j}{b}\leq X_{j+1}\leq X_j,
+\qquad 1\leq j\leq K.
+\label{eq:tail_inequalities}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Substitute \eqref{eq:coefficient_formula_main} into \eqref{eq:memory_tail_definition}; consecutive terms telescope.  Equations \eqref{eq:tail_palindromy}--\eqref{eq:last_memory_mass} follow from \eqref{eq:palindromic_d}, and \eqref{eq:tail_inequalities} is \eqref{eq:ratio_test} rewritten using \eqref{eq:memory_tail_formula}.
+\end{proof}
+
+The reciprocal polynomial admits a Chebyshev reduction.  Define
+\begin{equation}
+C_n(y)=2T_n(y/2),
+\label{eq:scaled_chebyshev}
+\end{equation}
+where $T_n$ is the Chebyshev polynomial of the first kind, and set
+\begin{equation}
+H_\eta(y)
+=C_K(y)+d_1C_{K-1}(y)+\cdots+d_{K-1}C_1(y)+d_K.
+\label{eq:H_eta}
+\end{equation}
+Then
+\begin{equation}
+S_\Omega(w)=w^KH_\eta(w+w^{-1}).
+\label{eq:chebyshev_reduction}
+\end{equation}
+
+\begin{definition}
+\label{def:universal_region}
+Let
+\begin{equation}
+\mathcal R_K
+=
+\left\{
+\eta\in\mathbb R^K:
+H_\eta\text{ has }K\text{ simple roots in }(-2,2)
+\right\},
+\label{eq:universal_region}
+\end{equation}
+where $d_j=\exp(\eta_1+\cdots+\eta_j)$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:separation_geometry_positivity}
+In $\eta$-coordinates, the admissible rigid critical region is
+\begin{equation}
+\mathcal A^{\eta}_{b,K}
+=
+\mathcal R_K
+\cap
+\left[-\frac12\log b,\frac12\log b\right]^K.
+\label{eq:critical_box_intersection}
+\end{equation}
+Thus $\mathcal R_K$ encodes the unit-circle root geometry, while the box encodes Leslie positivity.
+\end{proposition}
+
+\begin{remark}
+\label{rem:two_boundary_mechanisms}
+Within the positive-$d$ coordinates, a path can leave \eqref{eq:critical_box_intersection} either through a box face or through the boundary of $\mathcal R_K$.  The latter occurs when roots collide or reach an endpoint.  Since
+\begin{equation}
+H_\eta(2)=d_K+2\sum_{j=0}^{K-1}d_j>0,
+\label{eq:H_at_plus_two}
+\end{equation}
+a root cannot reach $+2$.  Candidate spectral boundary equations are therefore
+\begin{equation}
+\operatorname{Disc}H_\eta=0
+\qquad\text{or}\qquad
+H_\eta(-2)=0.
+\label{eq:critical_region_boundary}
+\end{equation}
+This describes the regular boundary mechanisms; intersections and higher degeneracies form singular strata.
+\end{remark}
+
+\section{Jacobian of the phase-to-strain map}
+\label{sec:eta_jacobian}
+
+Assume distinct phases $0<\omega_k<\pi$.  Let the phases be ordered to remove permutation ambiguity.
+
+\begin{proposition}
+\label{prop:d_jacobian}
+The coefficient Jacobian satisfies
+\begin{equation}
+\left|
+\det\frac{\partial(d_1,\ldots,d_K)}
+{\partial(\omega_1,\ldots,\omega_K)}
+\right|
+=
+2^{K(K+1)/2}
+\prod_{k=1}^{K}\sin\omega_k
+\prod_{i<j}|\cos\omega_i-\cos\omega_j|.
+\label{eq:d_jacobian}
+\end{equation}
+Consequently,
+\begin{equation}
+\left|
+\det\frac{\partial\eta}{\partial\Omega}
+\right|
+=
+\frac{
+2^{K(K+1)/2}
+\displaystyle\prod_k\sin\omega_k
+\displaystyle\prod_{i<j}|\cos\omega_i-\cos\omega_j|
+}{\displaystyle\prod_{j=1}^{K}d_j}.
+\label{eq:eta_jacobian}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first $K$ reciprocal coefficients determine the monic polynomial with roots $2\cos\omega_k$ in the Chebyshev basis.  The root-to-coefficient Jacobian is a Vandermonde product, the change $2\cos\omega_k$ contributes $2\sin\omega_k$ in absolute value, and the triangular changes between monomial, Chebyshev, and reciprocal coefficient coordinates give the stated power of $2$.  The map $d\mapsto\eta$ is triangular with determinant $(d_1\cdots d_K)^{-1}$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:discriminant_jacobian}
+The same determinant can be written as
+\begin{equation}
+\left|
+\det\frac{\partial\eta}{\partial\Omega}
+\right|
+=
+\frac{
+\sqrt{\left|
+\operatorname{Disc}H_\eta\,
+H_\eta(2)H_\eta(-2)
+\right|}
+}{d_1d_2\cdots d_K}.
+\label{eq:eta_jacobian_discriminant}
+\end{equation}
+Hence the phase-to-strain map is locally invertible away from phase collisions and the endpoints $0$ and $\pi$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:reduced_transport_coordinates}
+At regular points, a moving rigid Leslie model can be transported using $K$ variables $\eta$, plus $b$ when the Perron value is allowed to vary.  The full coefficient vector is reconstructed from \eqref{eq:left_paired_coefficient}, \eqref{eq:right_paired_coefficient}, and \eqref{eq:last_coefficient_fixed}.
+\end{remark}
+
+\section{Exact viability conditions in strain coordinates}
+\label{sec:eta_viability}
+
+For fixed $b$, the box criterion \eqref{eq:eta_box} gives the exact first-order viability conditions.  On an upper active face,
+\begin{equation}
+\eta_j=\frac12\log b
+\quad\Longrightarrow\quad
+\dot\eta_j\leq0,
+\label{eq:upper_face_velocity}
+\end{equation}
+and on a lower active face,
+\begin{equation}
+\eta_j=-\frac12\log b
+\quad\Longrightarrow\quad
+\dot\eta_j\geq0.
+\label{eq:lower_face_velocity}
+\end{equation}
+Since $\dot\eta=D_\Omega\eta\,\dot\Omega$, both cases are summarized by
+\begin{equation}
+\operatorname{sgn}(\eta_j)
+\sum_{k=1}^{K}
+\frac{\partial\eta_j}{\partial\omega_k}
+\dot\omega_k
+\leq0
+\label{eq:phase_velocity_face_condition}
+\end{equation}
+on an active face.
+
+If $b=b(t)$ varies and
+\begin{equation}
+\eta_j=s_j\frac12\log b,
+\qquad s_j\in\{-1,1\},
+\label{eq:moving_active_face}
+\end{equation}
+then viability requires
+\begin{equation}
+s_j\dot\eta_j
+\leq\frac12\frac{\dot b}{b}.
+\label{eq:moving_face_velocity}
+\end{equation}
+For the minimum-Perron choice $b=b_*(\Omega)$ and a unique active index $j_*$,
+\begin{equation}
+\frac{\dot b_*}{b_*}
+=2\operatorname{sgn}(\eta_{j_*})\dot\eta_{j_*}.
+\label{eq:minimal_perron_velocity}
+\end{equation}
+
+\begin{remark}
+\label{rem:tied_active_indices}
+When several coordinates attain $\|\eta\|_\infty$, $b_*$ is not differentiable in general.  Directional derivatives or a differential inclusion must replace \eqref{eq:minimal_perron_velocity}.
+\end{remark}
+
+On a fixed upper face with tangential first-order motion, the second-order viability condition is
+\begin{equation}
+\nabla\eta_j\cdot\ddot\Omega
++
+\dot\Omega^TD^2\eta_j\dot\Omega
+\leq0.
+\label{eq:upper_face_acceleration}
+\end{equation}
+The inequality reverses on a lower face.
+
+\section{Exact modal transport and internally generated amplitudes}
+\label{sec:modal_transport}
+
+Assume that every rigid polynomial has distinct roots.  For a root $\lambda$, define the right eigenvector
+\begin{equation}
+v(\lambda)
+=(\lambda^{m-1},\lambda^{m-2},\ldots,\lambda,1)^T.
+\label{eq:companion_eigenvector}
+\end{equation}
+Let
+\begin{equation}
+V_j=
+\left[
+v(\lambda_{j,1})\ \cdots\ v(\lambda_{j,m})
+\right],
+\qquad
+\Lambda_j=\operatorname{diag}(\lambda_{j,1},\ldots,\lambda_{j,m}).
+\label{eq:modal_matrices}
+\end{equation}
+If $L_j$ acts for $h_j$ steps and $y_j=V_jc_j$, then
+\begin{align}
+y_{j+1}
+&=V_j\Lambda_j^{h_j}c_j,
+\label{eq:window_state_handoff}\\
+c_{j+1}
+&=T_j\Lambda_j^{h_j}c_j,
+\qquad
+T_j=V_{j+1}^{-1}V_j.
+\label{eq:modal_transport}
+\end{align}
+
+\begin{proposition}
+\label{prop:lagrange_transport}
+The entries of the basis-change matrix are
+\begin{equation}
+(T_j)_{pq}
+=
+\prod_{\substack{s=1\\s\neq p}}^{m}
+\frac{\lambda_{j,q}-\lambda_{j+1,s}}
+{\lambda_{j+1,p}-\lambda_{j+1,s}}.
+\label{eq:lagrange_transport_entries}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The $p$-th coordinate in the new Vandermonde basis is the cardinal Lagrange polynomial for the nodes $\lambda_{j+1,s}$, evaluated at the old node $\lambda_{j,q}$.  Inverse Vandermonde matrices and Lagrange interpolation are equivalent descriptions of this change of basis.
+\end{proof}
+
+For a small root displacement
+\begin{equation}
+\lambda_{j+1,q}=\lambda_{j,q}+\delta\lambda_{j,q},
+\label{eq:small_root_displacement}
+\end{equation}
+one obtains, for $p\neq q$,
+\begin{equation}
+(T_j)_{pq}
+=-\delta\lambda_{j,q}
+\frac{P_j'(\lambda_{j,q})}
+{(\lambda_{j,q}-\lambda_{j,p})P_j'(\lambda_{j,p})}
++O(\|\delta\lambda_j\|^2).
+\label{eq:offdiagonal_modal_mixing}
+\end{equation}
+Thus modal mixing becomes large near collisions, consistently with the vanishing of the discriminant.
+
+\begin{proposition}
+\label{prop:modal_volume}
+The exact modal volume identity is
+\begin{align}
+\det T_j
+&=\frac{\det V_j}{\det V_{j+1}},
+\label{eq:transport_determinant}\\
+|\det T_j|^2
+&=\frac{|\operatorname{Disc}P_j|}
+{|\operatorname{Disc}P_{j+1}|}.
+\label{eq:discriminant_volume_ratio}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The first identity follows from $T_j=V_{j+1}^{-1}V_j$.  The square of the absolute Vandermonde determinant equals the absolute discriminant of a monic polynomial with simple roots.
+\end{proof}
+
+Iterating \eqref{eq:modal_transport} gives
+\begin{equation}
+c_J
+=T_{J-1}\Lambda_{J-1}^{h_{J-1}}
+\cdots
+T_0\Lambda_0^{h_0}c_0,
+\label{eq:iterated_modal_transport}
+\end{equation}
+and hence
+\begin{equation}
+y_J
+=V_JT_{J-1}\Lambda_{J-1}^{h_{J-1}}
+\cdots
+T_0\Lambda_0^{h_0}c_0.
+\label{eq:global_state_predictor}
+\end{equation}
+For the first-coordinate observable,
+\begin{equation}
+U_J
+=e_1^TV_JT_{J-1}\Lambda_{J-1}^{h_{J-1}}
+\cdots
+T_0\Lambda_0^{h_0}c_0.
+\label{eq:global_scalar_predictor}
+\end{equation}
+
+\begin{warning}
+\label{warn:homogeneous_transport_assumption}
+Equations \eqref{eq:iterated_modal_transport}--\eqref{eq:global_scalar_predictor} eliminate independent amplitude fitting only under the homogeneous state-handoff model \eqref{eq:window_state_handoff}.  If each data window is reinitialized, forced, normalized independently, or connected through an additional observation operator, new parameters re-enter and must be counted explicitly.
+\end{warning}
+
+\section{Canonical boundary realization and the remaining law}
+\label{sec:canonical_boundary}
+
+Whenever $b_*(\Omega)<\infty$, define the canonical minimum-Perron realization
+\begin{equation}
+L_*(\Omega)=L\bigl(a(b_*(\Omega),\Omega)\bigr).
+\label{eq:canonical_boundary_leslie}
+\end{equation}
+This realization lies on the boundary of the nonnegative cone.  At regular points with unique active strain coordinate, the maps
+\begin{equation}
+\Omega
+\longleftrightarrow
+\eta
+\longmapsto
+b_*(\Omega)
+\longmapsto
+L_*(\Omega)
+\label{eq:canonical_coordinate_chain}
+\end{equation}
+are locally determined, with the first arrow locally invertible.
+
+\begin{remark}
+\label{rem:canonical_not_smooth_everywhere}
+The construction \eqref{eq:canonical_boundary_leslie} is canonical but only piecewise smooth because of the maximum norm in $b_*$.  It is also numerically sensitive near the spectral boundary \eqref{eq:critical_region_boundary}.
+\end{remark}
+
+The unresolved dynamical object is a law of the form
+\begin{equation}
+\eta_{j+1}
+=\mathcal F(\eta_j,\eta_{j-1},\ldots)
+\label{eq:eta_evolution_law}
+\end{equation}
+that is fixed using past windows and predicts future strain coordinates.  Re-estimating $\eta_{j+1}$ from the future Mertens window is description, not prediction.
+
+
+\section{Exact first-order spectral transport}
+\label{sec:first_order_transport}
+
+Let $a(t)$ be a differentiable coefficient path and define
+\begin{equation}
+P(z,t)=z^m-\sum_{\ell=1}^{m}a_\ell(t)z^{m-\ell}.
+\label{eq:time_polynomial}
+\end{equation}
+Let $\lambda_k(t)$ be a simple root, so that
+\begin{equation}
+P(\lambda_k(t),t)=0,
+\qquad
+P_z(\lambda_k(t),t)\neq0.
+\label{eq:simple_root_hypothesis}
+\end{equation}
+Differentiability of simple eigenvalue branches is standard in matrix perturbation theory \cite{Yener2023}.
+
+\begin{proposition}
+\label{prop:first_derivative}
+Under \eqref{eq:simple_root_hypothesis},
+\begin{equation}
+\dot\lambda_k
+=
+\frac{
+\displaystyle
+\sum_{\ell=1}^{m}
+\dot a_\ell\lambda_k^{m-\ell}
+}{P_z(\lambda_k,t)}.
+\label{eq:eigenvalue_velocity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiating $P(\lambda_k(t),t)=0$ gives
+\begin{equation}
+P_z(\lambda_k,t)\dot\lambda_k
++P_t(\lambda_k,t)=0.
+\label{eq:implicit_derivative}
+\end{equation}
+Since
+\begin{equation}
+P_t(z,t)
+=-\sum_{\ell=1}^{m}\dot a_\ell z^{m-\ell},
+\label{eq:polynomial_time_derivative}
+\end{equation}
+substitution into \eqref{eq:implicit_derivative} yields \eqref{eq:eigenvalue_velocity}.
+\end{proof}
+
+Suppose now that
+\begin{equation}
+\lambda_k(t)=\sqrt{b(t)}e^{i\omega_k(t)}.
+\label{eq:critical_root_parameterization}
+\end{equation}
+Then
+\begin{equation}
+\frac{\dot\lambda_k}{\lambda_k}
+=
+\frac{\dot b}{2b}+i\dot\omega_k.
+\label{eq:logarithmic_root_velocity}
+\end{equation}
+Define
+\begin{equation}
+J_{k\ell}(L)
+=
+\frac{\lambda_k^{m-\ell-1}}{P_z(\lambda_k)}.
+\label{eq:spectral_transport_matrix}
+\end{equation}
+
+\begin{corollary}
+\label{cor:phase_and_radius_velocity}
+For every simple prescribed branch,
+\begin{align}
+\dot\omega_k
+&=
+\Im\left(
+\sum_{\ell=1}^{m}J_{k\ell}(L)\dot a_\ell
+\right),
+\label{eq:angular_velocity}\\
+\frac{\dot b}{2b}
+&=
+\Re\left(
+\sum_{\ell=1}^{m}J_{k\ell}(L)\dot a_\ell
+\right).
+\label{eq:radial_velocity}
+\end{align}
+\end{corollary}
+
+\begin{warning}
+\label{warn:radial_compatibility}
+Equation \eqref{eq:radial_velocity} must give the same scalar $\dot b/(2b)$ for every $k$.  Thus the imaginary-part formula alone is not a complete admissibility test.  The real-part compatibility equations are additional local constraints.
+\end{warning}
+
+\section{The rigid critical manifold}
+\label{sec:critical_manifold}
+
+Let
+\begin{equation}
+\mathcal M_K
+=
+\left\{
+a(b,\Omega):
+ b>1,\ \Omega\in\mathbb T^K,
+\ a(b,\Omega)\geq0
+\right\}
+\subseteq\mathbb R^{2K+1}.
+\label{eq:rigid_critical_set}
+\end{equation}
+
+\begin{proposition}
+\label{prop:generic_dimension}
+At a point where the coefficient map $(b,\Omega)\mapsto a(b,\Omega)$ has rank $K+1$ and the prescribed roots are distinct, $\mathcal M_K$ is locally a smooth manifold of dimension $K+1$ and codimension $K$ in $\mathbb R^{2K+1}$.
+\end{proposition}
+
+\begin{proof}
+The parameter space has dimension $K+1$.  Under the stated full-rank hypothesis, the constant-rank theorem gives a local image manifold of dimension $K+1$.  The ambient dimension is $2K+1$, so the codimension is $K$.
+\end{proof}
+
+Consequently, locally there are $K$ independent constraints
+\begin{equation}
+F_r(a)=0,
+\qquad 1\leq r\leq K,
+\label{eq:implicit_constraints}
+\end{equation}
+and every differentiable path in the regular part satisfies
+\begin{equation}
+\nabla F_r(a)\cdot\dot a=0,
+\qquad 1\leq r\leq K.
+\label{eq:tangent_equalities}
+\end{equation}
+
+\begin{warning}
+\label{warn:singular_manifold}
+The dimension statement is generic, not universal.  Repeated roots, collisions of phases, loss of rank, and intersections with several active coefficient faces can create singular or lower-dimensional strata.
+\end{warning}
+
+\section{Positivity and the corrected spectral velocity cone}
+\label{sec:velocity_cone}
+
+For $a\in\mathbb R_+^m$, the tangent cone of the nonnegative orthant is
+\begin{equation}
+T_a\mathbb R_+^m
+=
+\left\{
+v\in\mathbb R^m:
+ v_\ell\geq0\text{ whenever }a_\ell=0
+\right\}.
+\label{eq:orthant_tangent_cone}
+\end{equation}
+Tangent cones generalize tangent spaces at nonsmooth boundary points of convex sets \cite{Wright2019}.
+
+The velocity must satisfy three types of conditions simultaneously:
+\begin{enumerate}
+\item orthant feasibility, $v\in T_a\mathbb R_+^m$;
+\item tangency to the rigid critical manifold, $DF(a)v=0$;
+\item common radial motion across all prescribed root pairs.
+\end{enumerate}
+
+Define the common-radial constraint operator by
+\begin{equation}
+\mathcal R_Lv
+=
+\left(
+\Re(J_{2\cdot}(L)v)-\Re(J_{1\cdot}(L)v),
+\ldots,
+\Re(J_{K\cdot}(L)v)-\Re(J_{1\cdot}(L)v)
+\right)^T.
+\label{eq:common_radial_operator}
+\end{equation}
+At a regular point, define the admissible coefficient-velocity cone
+\begin{equation}
+\mathcal K(L)
+=
+T_a\mathbb R_+^m
+\cap\ker DF(a)
+\cap\ker\mathcal R_L.
+\label{eq:admissible_coefficient_cone}
+\end{equation}
+
+\begin{definition}
+\label{def:spectral_velocity_cone}
+The rigid positive spectral velocity cone is
+\begin{equation}
+\mathcal V(L)
+=
+\left\{
+\Im J(L)v:
+ v\in\mathcal K(L)
+\right\}.
+\label{eq:spectral_velocity_cone}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:necessary_velocity_condition}
+Every differentiable rigid positive Leslie path with simple prescribed roots satisfies
+\begin{equation}
+\dot\Omega(t)\in\mathcal V(L(t)).
+\label{eq:velocity_necessary_condition}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The coefficient velocity lies in the orthant tangent cone, is tangent to the rigid critical manifold, and satisfies the common-radial identities.  Equation \eqref{eq:angular_velocity} then places its phase velocity in the image \eqref{eq:spectral_velocity_cone}.
+\end{proof}
+
+\begin{remark}
+\label{rem:necessary_not_sufficient}
+Condition \eqref{eq:velocity_necessary_condition} is first-order and necessary.  At singular points or for finite window increments it is not sufficient for the existence of a global path.
+\end{remark}
+
+\section{Second-order transport}
+\label{sec:second_order_transport}
+
+\begin{proposition}
+\label{prop:second_derivative}
+If $a(t)$ is twice differentiable and \eqref{eq:simple_root_hypothesis} holds, then
+\begin{equation}
+\ddot\lambda_k
+=-
+\frac{
+P_{zz}\dot\lambda_k^2
++2P_{zt}\dot\lambda_k
++P_{tt}
+}{P_z},
+\label{eq:eigenvalue_acceleration}
+\end{equation}
+where all polynomial derivatives are evaluated at $(\lambda_k(t),t)$ and
+\begin{equation}
+P_{tt}(z,t)
+=-\sum_{\ell=1}^{m}\ddot a_\ell z^{m-\ell}.
+\label{eq:second_time_derivative}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiate \eqref{eq:implicit_derivative} once more and collect the chain-rule terms.  Division by $P_z\neq0$ gives \eqref{eq:eigenvalue_acceleration}.
+\end{proof}
+
+For the parameterization \eqref{eq:critical_root_parameterization},
+\begin{equation}
+\frac{\ddot\lambda_k}{\lambda_k}
+=
+\frac{\ddot b}{2b}
+-\frac{\dot b^2}{4b^2}
+-\dot\omega_k^2
++i\left(
+\ddot\omega_k+\frac{\dot b}{b}\dot\omega_k
+\right).
+\label{eq:angular_acceleration_identity}
+\end{equation}
+Thus a smooth Leslie path constrains not only $\Omega$ and $\dot\Omega$, but also the angular acceleration after the radial terms are removed.
+
+\begin{definition}
+\label{def:spectral_curvature}
+At a regular path point, the residual obtained by comparing the observed $\ddot\Omega$ with the imaginary part implied by \eqref{eq:eigenvalue_acceleration} is called the local Leslie spectral-curvature residual.
+\end{definition}
+
+\begin{warning}
+\label{warn:curvature_not_intrinsic}
+A numerical curvature residual depends on the chosen interpolation of discrete windows and on the time scale assigned to the window index.  It is not intrinsic until those choices are fixed before testing.
+\end{warning}
+
+\section{Discrete windows and finite increments}
+\label{sec:discrete_windows}
+
+The observations are discrete, not a differentiable curve.  Let
+\begin{equation}
+\Delta a_j=a_{j+1}-a_j,
+\qquad
+\Delta\Omega_j=\operatorname{unwrap}(\Omega_{j+1}-\Omega_j).
+\label{eq:window_increments}
+\end{equation}
+The differential model suggests the residual
+\begin{equation}
+r_j
+=
+\Delta\Omega_j-
+\Im J(L_j)\Delta a_j.
+\label{eq:first_order_window_residual}
+\end{equation}
+
+\begin{warning}
+\label{warn:finite_increment}
+Equation \eqref{eq:first_order_window_residual} is only a first-order approximation.  A valid finite-step test should also check that the segment or reconstructed path remains in the admissible set and should report an error scale of order $\|\Delta a_j\|^2$ away from singularities.
+\end{warning}
+
+A stronger discrete feasibility test is to solve for a path $a_j(s)$, $0\leq s\leq1$, satisfying
+\begin{equation}
+a_j(0)=a_j,
+\qquad
+a_j(1)=a_{j+1},
+\qquad
+a_j(s)\in\mathcal M_K\cap\mathbb R_+^m.
+\label{eq:path_between_windows}
+\end{equation}
+Existence of \eqref{eq:path_between_windows} is stronger than endpoint feasibility.
+
+\section{A genuine forecasting protocol}
+\label{sec:forecasting_protocol}
+
+\begin{experiment}
+\label{exp:window_forecast}
+Choose before examining the test windows:
+\begin{enumerate}
+\item a fixed base $b$ or a predeclared rule for $b_j$;
+\item a fixed number $K$ of mode pairs and hence $m=2K+1$;
+\item consecutive, nonoverlapping or explicitly overlapping logarithmic windows;
+\item a frequency estimator and a deterministic mode-matching rule;
+\item a coefficient-transport law trained only on past windows;
+\item a rule for handling windows outside $\mathcal A_{b,K}$;
+\item a horizon and evaluation metric.
+\end{enumerate}
+For each training endpoint $J$, infer $L_0,\ldots,L_J$, predict $\widehat a_{J+1}$ without using $W_{J+1}$, project to the admissible rigid set if that projection was predeclared, compute $\widehat\Omega_{J+1}$ from the roots, and only then evaluate the prediction on $W_{J+1}$.
+\end{experiment}
+
+The information flow must be
+\begin{equation}
+M|_{W_0,\ldots,W_J}
+\longrightarrow
+L_0,\ldots,L_J
+\longrightarrow
+\widehat L_{J+1}
+\longrightarrow
+\widehat\Omega_{J+1}
+\longrightarrow
+\widehat M|_{W_{J+1}}.
+\label{eq:forecast_information_flow}
+\end{equation}
+
+\begin{warning}
+\label{warn:law_required}
+The identities of Sections~\ref{sec:first_order_transport}--\ref{sec:second_order_transport} do not themselves specify a forecasting law for $\dot a$ or $\ddot a$.  A predictor requires a predeclared dynamical model for coefficient evolution.  Merely estimating $L_{J+1}$ from the future window would return to independent fitting.
+\end{warning}
+
+\section{Three nested models}
+\label{sec:nested_models}
+
+\begin{definition}
+\label{def:models_abc}
+The comparison should separate:
+\begin{enumerate}
+\item free frequencies fitted independently in every window;
+\item rigid nonnegative Leslie matrices fitted independently in every window;
+\item one dynamically transported rigid nonnegative Leslie trajectory, forecast from past windows only.
+\end{enumerate}
+\end{definition}
+
+Model B tests static realizability.  Model C tests whether a low-complexity trajectory inside the constrained geometry has forecasting content.  Model C should be compared not only with Models A and B, but also with persistence, autoregressive, phase-randomized, and support-preserving null models.
+
+\section{What the previous forty runs do and do not establish}
+\label{sec:forty_runs}
+
+\begin{experiment}
+\label{exp:previous_runs}
+The reported forty runs varied the sampling base, training fraction, and requested number of modes.  They established numerical out-of-sample prediction by free frequencies and static positive spectral completion with auxiliary eigenvalues for those forty configurations.
+\end{experiment}
+
+\begin{proposition}
+\label{prop:runs_not_trajectory}
+The forty configurations do not constitute a temporal Leslie trajectory and cannot test \eqref{eq:velocity_necessary_condition} or the forecast protocol \eqref{eq:forecast_information_flow}.
+\end{proposition}
+
+\begin{proof}
+A temporal test requires consecutively ordered windows under fixed or predeclared modelling choices.  The forty runs index alternative parameter configurations rather than successive time windows of one fixed model.
+\end{proof}
+
+\section{Verified corrections to the proposed formulation}
+\label{sec:verified_corrections}
+
+\begin{proposition}
+\label{prop:verified_formulae}
+The first derivative \eqref{eq:eigenvalue_velocity}, the angular and radial decompositions \eqref{eq:angular_velocity}--\eqref{eq:radial_velocity}, and the second derivative \eqref{eq:eigenvalue_acceleration} are algebraically correct under the simple-root hypothesis.
+\end{proposition}
+
+\begin{remark}
+\label{rem:numerical_check}
+An independent finite-difference calculation was performed for a degree-five companion polynomial with randomly chosen coefficient velocities.  The maximum discrepancy between the finite-difference root velocity and \eqref{eq:eigenvalue_velocity} was below $9\times10^{-9}$ for a step of $10^{-7}$.  This is a numerical consistency check, not a substitute for Proposition~\ref{prop:first_derivative}.
+\end{remark}
+
+\begin{remark}
+\label{rem:corrections}
+Three corrections are essential:
+\begin{enumerate}
+\item the boundary relation is the inclusion \eqref{eq:admissible_boundary}, not automatic equality;
+\item the spectral velocity cone must include tangency to the rigid manifold and common radial compatibility, as in \eqref{eq:admissible_coefficient_cone};
+\item the dimension and codimension counts are generic and require a full-rank hypothesis.
+\end{enumerate}
+\end{remark}
+
+\section{Decision criterion for the Leslie programme}
+\label{sec:decision_criterion}
+
+\begin{conjecture}
+\label{conj:transportable_trajectory}
+There exists a fixed $K$, a fixed or predeclared base rule, and a low-complexity transport law on $\mathcal M_K\cap\mathbb R_+^m$ such that consecutive rigid Leslie matrices inferred from past Mertens windows satisfy small transport residuals and predict future windows better than the null models without recalibration.
+\end{conjecture}
+
+\begin{remark}
+\label{rem:falsification}
+The conjecture is falsified for a chosen protocol if rigid feasibility occurs only sporadically, mode matching is unstable, finite increments repeatedly leave the admissible set, velocity residuals are no smaller than in null sequences, or the transported model fails to improve future-window prediction.
+\end{remark}
+
+\begin{remark}
+\label{rem:success}
+A positive result would require all of the following: persistent rigid feasibility, coherent branch tracking, compatibility with the corrected cone \eqref{eq:spectral_velocity_cone}, a transport law fixed from past data, and reproducible out-of-sample improvement.  Static feasibility alone is insufficient.
+\end{remark}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+\begin{proposition}
+\label{prop:final_conclusion}
+The moving-window formulation yields an exact local geometry for rigid Leslie spectra.  At regular points, coefficient paths are confined to a codimension-$K$ critical manifold, positivity restricts velocities through the orthant tangent cone, and simple roots obey the exact transport laws \eqref{eq:eigenvalue_velocity} and \eqref{eq:eigenvalue_acceleration}.  These facts provide necessary differential constraints on any proposed Leslie trajectory.
+\end{proposition}
+
+\begin{remark}
+\label{rem:final_status}
+What is closed is the mathematical formulation of the dynamic test.  What is not closed is the existence of a stable transport law for Mertens windows.  The decisive next experiment is not another collection of parameter runs.  It is one pre-registered sequence of consecutive logarithmic windows with fixed $K$, rigid dimension $2K+1$, branch matching, path-feasibility checks, and genuine one-window-ahead forecasts.
+\end{remark}
+
+\section*{Notebook History}
+Version 1.0: static rigid Leslie family and spectral comparison.\\
+Version 2.0: positive spectral completion with auxiliary eigenvalues.\\
+Version 3.0: moving rigid Leslie matrices on consecutive windows, corrected tangent-cone formulation, first- and second-order spectral transport, and a falsifiable forecasting protocol.\\
+Version 4.0: exact strain coordinates, minimum Perron value, universal critical region, phase Jacobian, viability conditions, and modal amplitude transport.
+
+\begin{thebibliography}{99}
+
+\bibitem{Benvenuti2019}
+L.~Benvenuti,
+\emph{The inverse eigenvalue problem for Leslie matrices},
+Electronic Journal of Linear Algebra \textbf{35} (2019), 319--330.
+DOI: \href{https://doi.org/10.13001/1081-3810.3980}{10.13001/1081-3810.3980}.
+
+\bibitem{DuarteKlein2016}
+P.~Duarte and S.~Klein,
+\emph{Lyapunov Exponents of Linear Cocycles: Continuity via Large Deviations},
+Atlantis Studies in Dynamical Systems, vol.~3, Atlantis Press, 2016.
+DOI: \href{https://doi.org/10.2991/978-94-6239-124-6}{10.2991/978-94-6239-124-6}.
+
+\bibitem{Yener2023}
+N.~Yener,
+\emph{On derivatives of eigenvalues, eigenvectors and generalized eigenvectors of matrices},
+International Journal of Algebra \textbf{17} (2023), 61--75.
+DOI: \href{https://doi.org/10.12988/ija.2023.91740}{10.12988/ija.2023.91740}.
+
+\bibitem{Wright2019}
+S.~J. Wright,
+\emph{Nonlinear Optimization 2: Lecture Notes},
+University of Wisconsin--Madison, 2019.
+
+\end{thebibliography}
+
+\end{document}

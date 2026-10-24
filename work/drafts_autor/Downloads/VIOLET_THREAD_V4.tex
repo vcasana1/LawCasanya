@@ -1,0 +1,1837 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.05cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs,longtable,array}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\usepackage{float}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}[theorem]{Problem}
+
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Ree}{\operatorname{Re}}
+\newcommand{\Imm}{\operatorname{Im}}
+\newcommand{\sgn}{\operatorname{sgn}}
+
+\title{\textbf{Euclidean Lobe Geometry, Reciprocal Scattering, and Transverse Dynamics of the Riemann Zeta Function}}
+\author{Víctor Casaña-Giner\\
+\small Bio Logic Crop Science S.L.\\
+\small ORCID: 0000-0002-8252-2608}
+\date{24 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We treat the Euclidean trace
+\[
+\Gamma(t)=\left(t,\Re\zeta\!\left(\tfrac12+it\right),
+                 \Im\zeta\!\left(\tfrac12+it\right)\right)
+\]
+as a primary geometric object.  The trace, referred to throughout as the
+\emph{Violet Thread}, is naturally segmented by its successive contacts with
+the value-axis origin into zero-to-zero lobes.  The construction packages,
+within the same object, radial excursion, angular sweep, Euclidean length,
+zero-to-zero segmentation, and an exact transverse quarter-turn law.
+
+The central structural equation is global and first order.  With transverse
+coordinate $\delta$,
+\[
+F(\delta,t)=\zeta\!\left(\tfrac12+\delta+it\right)
+\]
+satisfies
+\[
+F_\delta=-iF_t.
+\]
+Thus the entire transverse family is generated from the longitudinal geometry
+by an exact $90^\circ$ rotation of the value-plane velocity.  This is the
+complete first-order evolution law, not the first term of an independent
+higher-order hierarchy.
+
+The visually striking feature of the thread is that its zero-to-zero lobes
+are eccentric: the zero-axis is a contact/pinching locus, not the geometric
+center of the lobes.  We show that the smooth Riemann--von Mangoldt/Lambert
+phase produces the corresponding ideal geometry exactly.  A unit phase sweep
+with a one-arch radial profile is an eccentric circle tangent to the origin.
+The exact RVM/Lambert model consists of such tangent circles and satisfies a
+global first-order no-exit theorem with an explicit positive modulus barrier
+for every nonzero transverse displacement.
+
+For the actual zeta lobes we introduce a phase centroid $\mathcal C_n$,
+normalized eccentricity $E_n$, and circle-tangency defect $D_n$.  On the first
+49 zero intervals, the measured $E_n$ is predicted by the closed-form
+RVM-phase one-arch law with correlation $0.997589$, RMSE $0.017527$, and MAE
+$0.014155$.  The same lobe architecture also controls Euclidean arc inflation:
+directly recomputed $R_n=L_n/(\gamma_{n+1}-\gamma_n)$ agrees with its
+one-arch elliptic reduction at correlation $0.999162$.  Global phase/RVM
+diagnostics use all $2{,}001{,}052$ supplied zeta and Lambert ordinates.
+
+The paper isolates the analytic issue cleanly.  A global no-exit theorem for
+the exact zeta lobes, derived from the same first-order field and their
+eccentric geometry, would already give zero confinement.  No subsequent
+second-, third-, or infinite-order condition would remain.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Main geometric statements}
+
+The purpose of this section is to state the architecture before introducing
+technical details.
+
+\begin{proposition}[The Violet Thread packages five geometries]\label{prop:package}
+Let
+\[
+W(t)=\zeta\!\left(\frac12+it\right).
+\]
+The single Euclidean curve
+\[
+\Gamma(t)=(t,\Re W(t),\Im W(t))
+\]
+simultaneously carries:
+\begin{enumerate}[leftmargin=1.8em]
+\item the radial excursion $|W(t)|$;
+\item the angular sweep $\arg W(t)$ between successive zeros;
+\item the Euclidean arc element
+\[
+\dd\ell=\sqrt{1+|W_t(t)|^2}\,\dd t;
+\]
+\item the zero-to-zero decomposition
+\[
+[\gamma_n,\gamma_{n+1}];
+\]
+\item the generator of the complete transverse continuation,
+\[
+F_\delta=-iF_t.
+\]
+\end{enumerate}
+Thus the longitudinal lobe geometry and the transverse generator are not two
+separate constructions.
+\end{proposition}
+
+\begin{theorem}[Exact global quarter-turn law]\label{thm:quarter-main}
+For
+\[
+F(\delta,t)=\zeta\!\left(\frac12+\delta+it\right),
+\]
+one has everywhere in the analytic strip
+\[
+\boxed{F_\delta=-iF_t.}
+\]
+Consequently the transverse and longitudinal value-plane velocities are
+orthogonal and have identical magnitude.
+\end{theorem}
+
+\begin{theorem}[First-order sufficiency of global confinement]\label{thm:firstorder-suff}
+Suppose the exact zeta flow governed by Theorem~\ref{thm:quarter-main} is
+shown, by a global property of this first-order field and the exact lobe
+geometry, to satisfy
+\[
+F(\delta,t)\neq0
+\qquad
+\text{for every }t\in\R,\quad 0<|\delta|<\frac12.
+\]
+Then every nontrivial zero is confined to the central thread.  No independent
+second-, third-, or higher-order transverse condition is required.
+\end{theorem}
+
+\begin{proof}
+The displayed nonvanishing statement is exactly zero confinement in the
+transverse coordinate.  Equation $F_\delta=-iF_t$ is already the complete
+first-order evolution equation for $F$; higher $\delta$-derivatives are
+obtained by differentiating it and are not additional hypotheses.
+\end{proof}
+
+\begin{theorem}[RVM tangent-circle no-exit]\label{thm:rvm-main}
+The smooth RVM/Lambert tangent-circle model defined in
+Section~\ref{sec:rvm} satisfies the same first-order translation law and,
+for $t>2\pi$, cannot meet the origin at any nonzero transverse displacement.
+An explicit positive lower bound for its modulus is given in
+Theorem~\ref{thm:rvmnoexit}.
+\end{theorem}
+
+These statements separate what is exact from what remains to be transferred.
+The paper does not replace the Violet Thread by an external zero criterion:
+the unresolved analytic content is whether the exact zeta lobes inherit a
+global no-exit property from the eccentric first-order geometry quantified
+below.
+
+\section{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth}p{0.70\textwidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$W(t)$ & $\zeta(\tfrac12+it)$, complex value trace of the Violet Thread \\
+$\Gamma(t)$ & $(t,\Re W(t),\Im W(t))\in\R^3$ \\
+$Z(t)$ & Hardy's real function, $W(t)=Z(t)e^{-i\vartheta(t)}$ \\
+$\vartheta(t)$ & Riemann--Siegel phase \\
+$\gamma_n$ & successive zero ordinates of $W$ \\
+$I_n$ & zero-to-zero interval $(\gamma_n,\gamma_{n+1})$ \\
+$g_n$ & $\gamma_{n+1}-\gamma_n$ \\
+$\Omega_n$ & $\vartheta(\gamma_{n+1})-\vartheta(\gamma_n)$ \\
+$s_n$ & $\Omega_n/\pi$, phase-unfolded lobe sweep \\
+$A_n$ & $\max_{I_n}|Z(t)|$ \\
+$L_n$ & Euclidean arc length of the $n$th lobe \\
+$R_n$ & $L_n/g_n$ \\
+$F(\delta,t)$ & $\zeta(\tfrac12+\delta+it)$, transverse continuation \\
+$\Theta_0$ & $\frac z2\log(z/(2\pi e))-\pi/8$, smooth RVM phase \\
+$\tau_n$ & supplied RVM/Lambert ordinates \\
+$\mathcal C_n$ & phase centroid of a rotated, sign-normalized lobe \\
+$E_n$ & normalized eccentricity $2|\mathcal C_n|/A_n$ \\
+$D_n$ & normalized circle-tangency defect \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The Euclidean thread itself}
+
+\begin{definition}[Violet Thread]
+Define
+\[
+\boxed{
+W(t):=\zeta\!\left(\frac12+it\right)=u(t)+iv(t)
+}
+\]
+and
+\[
+\boxed{
+\Gamma(t)=\bigl(t,u(t),v(t)\bigr).
+}
+\]
+\end{definition}
+
+The height $t$ is retained as an actual Euclidean coordinate.  A crossing in
+the value-plane projection is therefore not a self-intersection of
+$\Gamma\subset\R^3$ unless the heights also agree.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.97\textwidth]{../figures/fig01_euclidean_zeta_thread.png}
+\caption{The Euclidean zeta thread over the first fifty supplied zero
+ordinates.  The lobes repeatedly contact the value-axis origin while their
+bulk lies away from that axis.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.80\textwidth]{../figures/fig02_transverse_eccentric_lobes.png}
+\caption{Transverse projection.  The common zero point is not the center of
+the lobe geometry; it is an eccentric contact/pinching point.}
+\end{figure}
+
+This eccentricity is not an incidental plotting effect.  It is forced by the
+phase-amplitude structure described next.
+
+\section{Exact cylindrical anatomy of a zero-to-zero lobe}
+
+Hardy's function gives
+\[
+\boxed{
+W(t)=Z(t)e^{-i\vartheta(t)}.
+}
+\]
+Hence
+\[
+\boxed{
+\Gamma(t)=
+\bigl(t,Z(t)\cos\vartheta(t),-Z(t)\sin\vartheta(t)\bigr).
+}
+\]
+Differentiating,
+\[
+W_t=e^{-i\vartheta}(Z'-i\vartheta'Z),
+\]
+and therefore
+\[
+\boxed{
+|W_t|^2=Z'^2+\vartheta'^2Z^2.
+}
+\]
+
+The decomposition is geometrically exact:
+\[
+\boxed{
+\text{radial speed}=Z',
+\qquad
+\text{angular speed contribution}=\vartheta'Z.
+}
+\]
+
+Between two successive zeros the sign of $Z$ is constant.  Put
+\[
+\varepsilon_n=\sgn Z(t),\qquad t\in I_n,
+\]
+and rotate away the absolute initial phase:
+\[
+\widehat W_n(t)
+=
+\varepsilon_ne^{i\vartheta(\gamma_n)}W(t).
+\]
+Then
+\[
+\boxed{
+\widehat W_n(t)
+=
+|Z(t)|e^{-i\phi_n(t)},
+\qquad
+\phi_n(t)=\vartheta(t)-\vartheta(\gamma_n).
+}
+\]
+Thus every lobe has a nonnegative radial profile and a phase sweep.  Define
+\[
+\boxed{
+\Omega_n=\phi_n(\gamma_{n+1}),
+\qquad
+s_n=\frac{\Omega_n}{\pi}.
+}
+\]
+
+This $s_n$ is not an auxiliary statistic attached after the fact: it is the
+angular extent of the actual Euclidean lobe.
+
+\section{Why the zeros are eccentric}
+
+Introduce uniform phase coordinate
+\[
+q=\frac{\phi_n(t)}{\Omega_n},
+\qquad 0\le q\le1.
+\]
+The simplest single-arch radial profile is
+\[
+r_n(q)=A_n\sin(\pi q).
+\]
+Keeping the actual lobe phase sweep gives
+\[
+\boxed{
+\widehat W_n^{(\mathrm{arch})}(q)
+=
+A_n\sin(\pi q)e^{-i\pi s_nq}.
+}
+\]
+
+\begin{theorem}[Unit sweep produces a tangent circle]\label{thm:circle}
+When $s_n=1$,
+\[
+\widehat W_n^{(\mathrm{arch})}(q)
+=
+-\frac{iA_n}{2}
++\frac{iA_n}{2}e^{-2\pi iq},
+\]
+so
+\[
+\boxed{
+\left|
+\widehat W_n^{(\mathrm{arch})}(q)+\frac{iA_n}{2}
+\right|
+=
+\frac{A_n}{2}.
+}
+\]
+The lobe is exactly a circle whose center is displaced by one radius from the
+origin.  The origin is a tangency point.
+\end{theorem}
+
+\begin{proof}
+Use
+\[
+\sin(\pi q)e^{-i\pi q}
+=
+\frac{1-e^{-2\pi iq}}{2i}.
+\]
+\end{proof}
+
+This elementary identity explains the systematic visual eccentricity:
+a one-arch radial pulse combined with one RVM phase unit cannot be centered
+on the zero axis.  Its natural center is displaced, and the zero is the point
+where the displaced circle touches the origin.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.72\textwidth]{../figures/fig20_tangent_circle_identity.png}
+\caption{The unit-sweep one-arch identity.  Rotation changes orientation but
+not the fact that the circle is eccentric and tangent to the origin.}
+\end{figure}
+
+The exact zeta lobe is not assumed to be a perfect circle.  The point is that
+the dominant phase/radial architecture already predicts why the zeros occupy
+an eccentric contact locus.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.75\textwidth]{../figures/fig17_single_lobe_phase_geometry.png}
+\caption{Representative actual lobe in uniform phase coordinate together
+with its one-arch phase model and phase centroid.}
+\end{figure}
+
+\section{The RVM/Lambert phase creates the ideal lobe geometry}\label{sec:rvm}
+
+The smooth counting phase is
+\[
+\boxed{
+\Theta_0(z)
+=
+\frac z2\log\frac{z}{2\pi e}-\frac{\pi}{8}.
+}
+\]
+The supplied Lambert ordinates satisfy
+\[
+\boxed{
+\Theta_0(\tau_n)
+=
+\pi\left(n-\frac32\right),
+}
+\]
+so each consecutive interval carries exactly one phase unit $\pi$.
+
+Define
+\[
+\boxed{
+M_0(t)=\cos\Theta_0(t)e^{-i\Theta_0(t)}.
+}
+\]
+Then
+\[
+M_0(t)
+=
+\frac12\left(1+e^{-2i\Theta_0(t)}\right),
+\]
+and therefore
+\[
+\boxed{
+\left|M_0(t)-\frac12\right|=\frac12.
+}
+\]
+Every RVM/Lambert zero-to-zero lobe is an exact circle tangent to the origin.
+
+This gives a precise interpretation:
+
+\[
+\boxed{
+\text{RVM supplies the angular tangent-circle skeleton;}
+\quad
+\text{the actual }Z\text{-profile supplies the arithmetic deformation.}
+}
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.94\textwidth]{../figures/fig13_rvm_tangent_circle_thread.png}
+\caption{Exact tangent-circle thread generated by the RVM/Lambert phase.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.98\textwidth]{../figures/fig16_zeta_rvm_overlay_3d.png}
+\caption{Actual zeta lobes and the RVM/Lambert tangent-circle skeleton shown
+in the same Euclidean coordinates.  The comparison is geometric, not merely
+a comparison of zero ordinates.}
+\end{figure}
+
+\section{Exact first-order transverse dynamics}
+
+Set
+\[
+F(\delta,t)=
+\zeta\!\left(\frac12+\delta+it\right),
+\qquad
+F(0,t)=W(t).
+\]
+
+\begin{proof}[Proof of Theorem~\ref{thm:quarter-main}]
+Writing $s=\frac12+\delta+it$,
+\[
+F_\delta=\zeta'(s),
+\qquad
+F_t=i\zeta'(s),
+\]
+hence
+\[
+F_\delta=-iF_t.
+\]
+\end{proof}
+
+The crucial point is that this is not a local approximation at $\delta=0$.
+It is the exact PDE obeyed by the complete two-variable family.
+
+On the central thread,
+\[
+F_\delta(0,t)
+=
+-iW_t(t)
+=
+e^{-i\vartheta(t)}
+\left(-\vartheta'(t)Z(t)-iZ'(t)\right).
+\]
+Hence, in the Hardy frame,
+\[
+\boxed{
+N_{\rm radial}=-\vartheta'Z,
+\qquad
+N_{\rm angular}=-Z'.
+}
+\]
+
+The same lobe therefore carries its transverse generator.  Radial position,
+radial derivative and RVM angular velocity determine how the lobe initially
+moves across the transverse coordinate.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.75\textwidth]{../figures/fig18_quarter_turn_vector_field.png}
+\caption{Along an actual lobe, each longitudinal value-plane tangent has an
+exact quarter-turned transverse direction.  These vectors illustrate the
+global law $F_\delta=-iF_t$ on the central trace.}
+\end{figure}
+
+\subsection{Why no hierarchy of higher-order conditions is needed}
+
+Differentiating the first-order PDE gives identities such as
+\[
+F_{\delta\delta}=-F_{tt},
+\qquad
+F_{\delta\delta\delta}=iF_{ttt},
+\]
+but these are consequences of the same evolution equation.  They do not
+constitute separate dynamical laws.
+
+Equivalently, if
+\[
+\mathcal W(z)=\zeta\!\left(\frac12+iz\right),
+\]
+then
+\[
+\boxed{
+F(\delta,t)=\mathcal W(t-i\delta).
+}
+\]
+The transverse family is the analytic continuation of the same thread data.
+There is no independent ``off-thread'' degree of freedom to be specified.
+
+\begin{proposition}[Single-thread determination]\label{prop:identity}
+If another analytic family agrees with $W(t)$ on an interval of the central
+thread and is analytic in the same connected domain, then it agrees with the
+corresponding continuation everywhere in that domain.
+\end{proposition}
+
+\begin{proof}
+This is the identity theorem applied to the analytic continuation in the
+complexified thread coordinate.
+\end{proof}
+
+This proposition is structural: it says that the transverse geometry is
+encoded in the thread.  It does not by itself prove nonvanishing; the no-exit
+content must come from a global geometric property of that encoded flow.
+
+\section{Conformal and minimal surface generated by the thread}
+
+Write $F=u+iv$ and define
+\[
+X(\delta,t)=(\delta,t,u(\delta,t),v(\delta,t))\in\R^4.
+\]
+Cauchy--Riemann gives
+\[
+u_\delta=v_t,\qquad v_\delta=-u_t.
+\]
+Consequently
+\[
+\boxed{X_\delta\cdot X_t=0}
+\]
+and
+\[
+\boxed{
+\|X_\delta\|^2=\|X_t\|^2
+=
+1+\left|\zeta'\!\left(\frac12+\delta+it\right)\right|^2.
+}
+\]
+Thus the induced metric is
+\[
+\boxed{
+\dd s^2
+=
+\left(1+|\zeta'|^2\right)
+(\dd\delta^2+\dd t^2).
+}
+\]
+The holomorphic graph is conformal and minimal.  Its Gaussian curvature is
+\[
+\boxed{
+K
+=
+-\frac{2|\zeta''|^2}{(1+|\zeta'|^2)^3}
+\le0.
+}
+\]
+
+The central zero-to-zero arc length introduced below is therefore not an
+arbitrary statistic: it is the intrinsic metric length of a coordinate curve
+on the same minimal surface whose transverse direction is generated by the
+quarter-turn law.
+
+\subsection{Intersection orientation}
+
+Let the value-axis plane in the four-dimensional graph be
+\[
+\mathcal A=\{(\delta,t,0,0)\}.
+\]
+Zeros are intersections of the zeta surface with $\mathcal A$.  The
+transverse Jacobian is
+\[
+\det
+\begin{pmatrix}
+u_\delta&u_t\\
+v_\delta&v_t
+\end{pmatrix}
+=
+u_t^2+v_t^2
+=
+|F_t|^2.
+\]
+At a simple zero this is strictly positive.  Thus every simple intersection
+has the same local orientation.  This is a geometric property of the same
+surface, not a separate zero criterion.
+
+\section{Polar form of the transverse evolution}
+
+Away from zeros write
+\[
+F(\delta,t)=r(\delta,t)e^{i\alpha(\delta,t)}.
+\]
+The first-order quarter-turn law is equivalent to
+\[
+\boxed{
+(\log r)_\delta=\alpha_t,
+\qquad
+\alpha_\delta=-(\log r)_t.
+}
+\]
+On the central thread, between zeros,
+\[
+\alpha(0,t)=-\vartheta(t)+k\pi,
+\]
+and therefore
+\[
+\boxed{
+(\log r)_\delta(0,t)=-\vartheta'(t),
+}
+\]
+while
+\[
+\boxed{
+\alpha_\delta(0,t)=-\frac{Z'(t)}{Z(t)}.
+}
+\]
+
+These identities provide a direct geometric conjugacy:
+the longitudinal twist of the lobe controls normal radial response, while the
+longitudinal radial profile controls normal phase response.
+
+\section{Exact no-exit in the RVM tangent-circle model}
+
+Analytically continue the RVM skeleton by
+\[
+M(\delta,t)=M_0(t-i\delta)
+=
+\frac12\left(
+1+e^{-2i\Theta_0(t-i\delta)}
+\right).
+\]
+It satisfies
+\[
+M_\delta=-iM_t.
+\]
+
+\begin{theorem}[Global RVM no-exit and modulus barrier]\label{thm:rvmnoexit}
+For $t>2\pi$ and $\delta\ne0$,
+\[
+\boxed{M(\delta,t)\ne0.}
+\]
+Moreover
+\[
+\boxed{
+|M(\delta,t)|
+\ge
+\frac12
+\left|
+1-\left(\frac{t}{2\pi}\right)^{-\delta}
+\right|
+>0.
+}
+\]
+\end{theorem}
+
+\begin{proof}
+Let
+\[
+v(\delta)=\Im\Theta_0(t-i\delta).
+\]
+Since
+\[
+\Theta_0'(z)=\frac12\log\frac{z}{2\pi},
+\]
+\[
+v'(\delta)
+=
+-\frac12\log
+\frac{\sqrt{t^2+\delta^2}}{2\pi}.
+\]
+For $t>2\pi$ this is strictly negative for every real $\delta$, and $v(0)=0$.
+Hence $v(\delta)$ has the opposite sign to $\delta$ and is nonzero whenever
+$\delta\ne0$.
+
+If $M(\delta,t)=0$, then
+\[
+e^{-2i\Theta_0(t-i\delta)}=-1,
+\]
+whose modulus is one.  But
+\[
+\left|e^{-2i\Theta_0(t-i\delta)}\right|
+=
+e^{2v(\delta)}\ne1
+\]
+for nonzero $\delta$, contradiction.
+
+For the lower bound use
+\[
+|M|
+\ge
+\frac12|1-e^{2v(\delta)}|
+\]
+and
+\[
+|v(\delta)|
+\ge
+\frac{|\delta|}{2}\log\frac{t}{2\pi}.
+\]
+\end{proof}
+
+This theorem exposes the mechanism visible in the eccentric lobe:
+the central circle touches the origin, but transverse continuation changes
+the modulus of the rotating component relative to the displaced center.
+Exact contact is destroyed immediately for every nonzero displacement.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.70\textwidth]{../figures/fig04_circular_lobe_first_order_no_exit.png}
+\caption{Constant-phase-speed version of the same mechanism: the eccentric
+center and rotating radius cease to satisfy the tangency equality as soon as
+$\delta\ne0$.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.82\textwidth]{../figures/fig15_rvm_no_exit_barrier.png}
+\caption{Explicit positive RVM no-exit barrier from
+Theorem~\ref{thm:rvmnoexit}.}
+\end{figure}
+
+This is the exact model result that makes the actual zeta lobe geometry
+important: the ideal geometry produced by the same RVM phase already has the
+desired first-order confinement mechanism.
+
+\section{Quantifying the eccentricity of actual zeta lobes}
+
+For a rotated exact lobe in uniform phase coordinate define
+\[
+\boxed{
+\mathcal C_n
+=
+\int_0^1\widehat W_n(q)\,\dd q
+}
+\]
+and
+\[
+\boxed{
+E_n=\frac{2|\mathcal C_n|}{A_n}.
+}
+\]
+An exact tangent circle has $E_n=1$.
+
+Define also
+\[
+\boxed{
+D_n=
+\frac1{A_n}
+\left[
+\int_0^1
+\left(
+|\widehat W_n(q)-\mathcal C_n|-|\mathcal C_n|
+\right)^2
+\dd q
+\right]^{1/2}.
+}
+\]
+An exact circle centered at $\mathcal C_n$ and tangent to the origin has
+$D_n=0$.
+
+For the one-arch model,
+\[
+\frac{\mathcal C_n^{(\mathrm{arch})}}{A_n}
+=
+\frac{1+e^{-i\pi s_n}}{\pi(1-s_n^2)}
+\]
+with continuous value $-i/2$ at $s_n=1$, so
+\[
+\boxed{
+E_n^{(\mathrm{arch})}
+=
+\frac{4|\cos(\pi s_n/2)|}
+{\pi|1-s_n^2|},
+\qquad
+E_n^{(\mathrm{arch})}\to1\quad(s_n\to1).
+}
+\]
+
+Thus the phase sweep alone predicts the dominant displacement of the lobe
+center.
+
+For the first 49 intervals,
+\[
+\operatorname{mean}(E_n)=0.989545,
+\qquad
+\operatorname{median}(E_n)=1.012541,
+\]
+\[
+\operatorname{mean}(D_n)=0.139212,
+\qquad
+\operatorname{median}(D_n)=0.134423.
+\]
+The observed organization is strong:
+\[
+\boxed{\operatorname{corr}(E_n,s_n)=-0.998661,}
+\]
+\[
+\boxed{\operatorname{corr}(D_n,|s_n-1|)=0.989876.}
+\]
+Most significantly,
+\[
+\boxed{
+\operatorname{corr}(E_n,E_n^{(\mathrm{arch})})=0.997589,
+}
+\]
+with
+\[
+\boxed{
+\operatorname{RMSE}=0.017527,
+\qquad
+\operatorname{MAE}=0.014155.
+}
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.84\textwidth]{../figures/fig05_eccentricity_En.png}
+\caption{Normalized eccentricity $E_n$ of the first 49 actual lobes.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.84\textwidth]{../figures/fig06_circle_tangency_defect_Dn.png}
+\caption{Circle-tangency defect $D_n$.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.75\textwidth]{../figures/fig19_eccentricity_phase_law.png}
+\caption{The measured eccentricity follows the closed-form phase-sweep law
+very closely.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.72\textwidth]{../figures/fig14_eccentricity_model_vs_actual.png}
+\caption{Measured versus one-arch predicted eccentricity.}
+\end{figure}
+
+The result is stronger than the statement that the lobes ``look circular''.
+Their eccentric center displacement is quantitatively controlled by the same
+phase sweep that RVM fixes to one unit in the ideal skeleton.
+
+\section{Euclidean arc geometry}
+
+Define
+\[
+\boxed{
+L_n
+=
+\int_{\gamma_n}^{\gamma_{n+1}}
+\sqrt{
+1+
+\left|
+\zeta'\!\left(\frac12+it\right)
+\right|^2
+}\,\dd t
+}
+\]
+and
+\[
+\boxed{
+R_n=\frac{L_n}{\gamma_{n+1}-\gamma_n}.
+}
+\]
+Using the Hardy decomposition,
+\[
+\boxed{
+L_n
+=
+\int_{\gamma_n}^{\gamma_{n+1}}
+\sqrt{1+Z'^2+\vartheta'^2Z^2}\,\dd t.
+}
+\]
+
+This shows why a visually tall lobe can have a much larger length than its
+horizontal zero gap: both radial motion and angular sweep contribute.
+
+For example, interval $8\to9$ has
+\[
+\gamma_8\approx43.32707328,
+\qquad
+\gamma_9\approx48.00515088,
+\]
+\[
+g_8\approx4.67808,
+\qquad
+L_8\approx14.508,
+\qquad
+R_8\approx3.10.
+\]
+It is long because the thread makes a large transverse excursion while also
+sweeping substantial phase.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.87\textwidth]{../figures/fig10_arc_length_Ln.png}
+\caption{Directly recomputed Euclidean lobe lengths.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.87\textwidth]{../figures/fig11_arc_ratio_Rn.png}
+\caption{Arc inflation ratio $R_n=L_n/g_n$.}
+\end{figure}
+
+The first-49 correlations are
+\[
+\operatorname{corr}(R_n,g_n)=0.338036,
+\]
+\[
+\boxed{\operatorname{corr}(R_n,s_n)=0.864608,}
+\]
+\[
+\boxed{\operatorname{corr}(R_n,A_n)=0.911802,}
+\]
+and
+\[
+\boxed{\operatorname{corr}(L_n,A_n)=0.995181.}
+\]
+
+Thus Euclidean length is overwhelmingly controlled by radial excursion, while
+its normalized inflation also retains substantial phase information.
+
+\section{Exact phase-coordinate form of the arc length}
+
+Let
+\[
+q(t)=\frac{\vartheta(t)}{\pi}.
+\]
+Since
+\[
+\dd q=\frac{\vartheta'(t)}{\pi}\dd t,
+\]
+write $r(q)=|Z(t(q))|$.  Then
+\[
+\boxed{
+L_n
+=
+\int_{q_n}^{q_{n+1}}
+\sqrt{
+\left(\frac{\pi}{\vartheta'(t(q))}\right)^2
++
+\left(\frac{\dd r}{\dd q}\right)^2
++
+\pi^2r(q)^2
+}\,\dd q.
+}
+\]
+At the same time,
+\[
+\boxed{
+q_{n+1}-q_n
+=
+\frac{\vartheta(\gamma_{n+1})-\vartheta(\gamma_n)}{\pi}
+=
+s_n.
+}
+\]
+
+Therefore the domain length of the Euclidean lobe integral in phase
+coordinates is exactly the phase-unfolded spacing.  This is the direct
+geometric bridge between lobe length and zero-spacing statistics.
+
+\section{One-arch elliptic law for arc inflation}
+
+Take
+\[
+u=\frac{t-\gamma_n}{g_n},
+\qquad
+Z(t)\approx A_n\sin(\pi u),
+\]
+and freeze $\vartheta'$ at the midpoint $m_n$.  Set
+\[
+a_n=\frac{\pi A_n}{g_n},
+\qquad
+b_n=A_n\vartheta'(m_n).
+\]
+Then
+\[
+R_n
+\approx
+\int_0^1
+\sqrt{
+1+a_n^2\cos^2(\pi u)+b_n^2\sin^2(\pi u)
+}\,\dd u,
+\]
+hence
+\[
+\boxed{
+R_n^{(\mathrm{arch})}
+=
+\frac2\pi\sqrt{1+a_n^2}\,
+E\!\left(
+\frac{a_n^2-b_n^2}{1+a_n^2}
+\right),
+}
+\]
+where $E$ is the complete elliptic integral of the second kind.
+
+The recomputed values give
+\[
+\boxed{
+\operatorname{corr}(R_n,R_n^{(\mathrm{arch})})=0.999162,
+\qquad
+\operatorname{RMSE}=0.116004.
+}
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.72\textwidth]{../figures/fig12_elliptic_arch_prediction.png}
+\caption{Measured arc inflation versus the one-arch elliptic reduction.}
+\end{figure}
+
+The same one-arch geometry therefore controls two different observables:
+the eccentric displacement of the lobe center and its Euclidean length
+inflation.
+
+\section{Angular lobe sweep and local zero statistics}
+
+The angular sweep
+\[
+\Omega_n
+=
+\vartheta(\gamma_{n+1})-\vartheta(\gamma_n)
+\]
+defines
+\[
+\boxed{s_n=\Omega_n/\pi.}
+\]
+At large height,
+\[
+s_n
+\sim
+\frac{\log(\gamma_n/2\pi)}{2\pi}
+(\gamma_{n+1}-\gamma_n).
+\]
+Thus the conventional local unfolding of zero gaps is geometrically the
+angular sweep of consecutive Violet-Thread lobes.
+
+For $k$ consecutive lobes,
+\[
+\boxed{
+\frac{\vartheta(\gamma_{n+k})-\vartheta(\gamma_n)}{\pi}
+=
+\sum_{j=n}^{n+k-1}s_j.
+}
+\]
+Consequently nearest-neighbor and multi-gap statistics may be read directly
+as statistics of one-lobe and cumulative lobe rotations.  No separate
+geometric object is required.
+
+\section{Full $2{,}001{,}052$-ordinate audit}
+
+The package contains $2{,}001{,}052$ zeta ordinates and the same number of
+RVM/Lambert ordinates.  All are used for the global phase/RVM diagnostics.
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Quantity & Value\\
+\midrule
+Number of ordinates & $2{,}001{,}052$\\
+Number of intervals & $2{,}001{,}051$\\
+$\gamma_1$ & $14.134725142$\\
+$\gamma_N$ & $1{,}132{,}490.658714411$\\
+$\tau_1$ & $14.521346953066$\\
+$\tau_N$ & $1{,}132{,}490.722587622$\\
+Mean $(\gamma_n-\tau_n)$ & $-1.730666\times10^{-7}$\\
+Std. $(\gamma_n-\tau_n)$ & $0.188066347$\\
+RMS $(\gamma_n-\tau_n)$ & $0.188066300$\\
+Max $|\gamma_n-\tau_n|$ & $0.993710851$\\
+Mean $s_n$ & $0.999999964$\\
+Std. $s_n$ & $0.407523227$\\
+Min $s_n$ & $0.005446783$\\
+Max $s_n$ & $3.303473427$\\
+1\% quantile $s_n$ & $0.223931915$\\
+99\% quantile $s_n$ & $2.078183297$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.88\textwidth]{../figures/fig07_full_phase_spacing_histogram.png}
+\caption{Phase-unfolded lobe sweep for all $2{,}001{,}051$ consecutive
+intervals.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.90\textwidth]{../figures/fig08_full_zeta_minus_rvm_lambert.png}
+\caption{Difference between zeta and RVM/Lambert ordinates across the complete
+data set; every 500th point is displayed for legibility.}
+\end{figure}
+
+The full data support the interpretation that RVM fixes the mean phase
+architecture, while the arithmetic zero sequence supplies the fluctuating
+lobe sweep.
+
+
+\section{Reciprocal lobe geometry and scattering normal form}\label{sec:reciprocal}
+
+The direct lobe geometry becomes more rigid after inversion.  For a rotated
+zero-to-zero lobe
+\[
+\widehat W_n(\phi)=r_n(\phi)e^{-i\phi},
+\qquad
+0<\phi<\Omega_n,
+\]
+define
+\[
+\boxed{
+U_n(\phi)=\frac{1}{\widehat W_n(\phi)}
+=
+\frac{e^{i\phi}}{r_n(\phi)}.
+}
+\]
+The two contacts of the original lobe with the origin become the two
+asymptotic ends of an $\infty\!\to\!\infty$ reciprocal branch.
+
+\subsection{RVM as the flat reciprocal state}
+
+For the unit-sweep one-arch model
+\[
+\widehat W_{\rm RVM}(\phi)
+=
+A\sin\phi\,e^{-i\phi},
+\qquad 0<\phi<\pi,
+\]
+one has
+\[
+\boxed{
+U_{\rm RVM}(\phi)
+=
+\frac1A\cot\phi+\frac{i}{A}.
+}
+\]
+Hence the eccentric tangent circle of the direct picture is exactly a
+straight line after inversion.
+
+For a general polar reciprocal curve $\rho(\phi)=1/r(\phi)$, the signed
+curvature is
+\[
+\kappa_U
+=
+\frac{\rho^2+2\rho_\phi^2-\rho\rho_{\phi\phi}}
+     {(\rho^2+\rho_\phi^2)^{3/2}}
+=
+\frac{r^3(r+r_{\phi\phi})}
+     {(r^2+r_\phi^2)^{3/2}}.
+\]
+Therefore
+\[
+\boxed{
+\operatorname{sgn}\kappa_U
+=
+\operatorname{sgn}(r_{\phi\phi}+r).
+}
+\]
+In particular,
+\[
+\boxed{
+\kappa_U\equiv0
+\iff
+r_{\phi\phi}+r=0,
+}
+\]
+and the positive zero-to-zero solution is $r=A\sin\phi$ with total sweep
+$\pi$.  Thus the RVM one-arch model is precisely the zero-curvature state of
+the reciprocal lobe.
+
+\subsection{Phase spacing as reciprocal scattering angle}
+
+Near the left end,
+\[
+r_n(\phi)=a_n^-\phi+O(\phi^2),
+\]
+where
+\[
+a_n^-=
+\frac{|\zeta'(1/2+i\gamma_n)|}{\vartheta'(\gamma_n)}.
+\]
+Near the right end,
+\[
+r_n(\phi)=a_n^+(\Omega_n-\phi)+O((\Omega_n-\phi)^2),
+\]
+with
+\[
+a_n^+=
+\frac{|\zeta'(1/2+i\gamma_{n+1})|}
+     {\vartheta'(\gamma_{n+1})}.
+\]
+Consequently
+\[
+U_n(\phi)
+=
+\frac1{a_n^-\phi}
++\frac{i}{a_n^-}+O(\phi)
+\]
+at the incoming end, whereas at the outgoing end
+\[
+U_n(\phi)
+=
+\frac{e^{i\Omega_n}}
+     {a_n^+(\Omega_n-\phi)}
+-\frac{i e^{i\Omega_n}}{a_n^+}
++O(\Omega_n-\phi).
+\]
+The scattering-angle defect from the flat RVM state is therefore exactly
+\[
+\boxed{
+\Delta_n^{\rm sc}
+=
+\Omega_n-\pi
+=
+\pi(s_n-1).
+}
+\]
+
+\subsection{Corrected scattering cocycle}
+
+Set
+\[
+a_n=
+\frac{|\zeta'(1/2+i\gamma_n)|}{\vartheta'(\gamma_n)},
+\qquad
+b_n=\log a_n,
+\qquad
+\psi_n=\vartheta(\gamma_n)-n\pi.
+\]
+The endpoint scattering coefficient compatible with the exact lobe
+normalization is
+\[
+\boxed{
+\mathfrak S_n
+=
+\frac{a_{n+1}}{a_n}
+e^{\,i(\Omega_n-\pi)}.
+}
+\]
+Since
+\[
+\Omega_n-\pi=\psi_{n+1}-\psi_n,
+\]
+the correct complex potential is
+\[
+\boxed{
+Q_n=-b_n-i\psi_n.
+}
+\]
+Then
+\[
+\boxed{
+\mathfrak S_n=e^{Q_n-Q_{n+1}}.
+}
+\]
+Accordingly,
+\[
+\boxed{
+\prod_{j=n}^{n+k-1}\mathfrak S_j
+=
+\frac{a_{n+k}}{a_n}
+\exp\!\left(
+i[
+\vartheta(\gamma_{n+k})-\vartheta(\gamma_n)-k\pi
+]
+\right).
+}
+\]
+The real sign in $Q_n$ is essential.  Reversing it would incorrectly replace
+$a_{n+1}/a_n$ by its reciprocal.
+
+\subsection{Exact endpoint-normalized lobe factorization}
+
+Using uniform phase coordinate
+\[
+q=\frac{\phi}{\Omega_n}\in(0,1),
+\]
+write
+\[
+\widehat W_n(q)
+=
+\sin(\pi q)e^{-i\pi s_nq}H_n(q),
+\qquad
+H_n(q)>0.
+\]
+The endpoint values are
+\[
+\boxed{
+H_n(0)=s_na_n,
+\qquad
+H_n(1)=s_na_{n+1}.
+}
+\]
+Define
+\[
+\boxed{
+J_n(q)
+=
+\frac{H_n(q)}
+     {H_n(0)^{1-q}H_n(1)^q}.
+}
+\]
+Then
+\[
+J_n(0)=J_n(1)=1,
+\qquad
+J_n(q)>0\quad(0<q<1),
+\]
+and the exact lobe normal form is
+\[
+\boxed{
+\widehat W_n(q)
+=
+s_n\sin(\pi q)e^{-i\pi s_nq}
+a_n^{1-q}a_{n+1}^{q}J_n(q).
+}
+\]
+All interior information not already carried by the two contacts, the phase
+sweep and the endpoint scattering amplitudes is concentrated in the single
+residual factor $J_n$.
+
+\subsection{Integrated reciprocal-curvature identity}
+
+Let
+\[
+\ell_n(q)=\log H_n(q)
+\]
+on the real lobe.  A direct calculation gives
+\[
+\boxed{
+V_n(q)
+:=
+\pi^2s_n^2\frac{r_{\phi\phi}+r}{r}
+=
+\ell_n''
++\ell_n'^2
++2\pi\cot(\pi q)\ell_n'
++\pi^2(s_n^2-1).
+}
+\]
+Multiplying by $\sin^2(\pi q)$ and integrating,
+\[
+\boxed{
+\int_0^1
+\sin^2(\pi q)V_n(q)\,\mathrm dq
+=
+\int_0^1
+\sin^2(\pi q)\ell_n'(q)^2\,\mathrm dq
++
+\frac{\pi^2}{2}(s_n^2-1).
+}
+\]
+Thus the weighted reciprocal curvature has a strictly positive integral for
+every $s_n>1$, independent of the detailed arithmetic deformation.  The
+sub-RVM side $s_n<1$ admits competition between the negative RVM term and the
+nonnegative deformation energy.
+
+\section{The exponential spectral-purity attempt}\label{sec:spectral-purity}
+
+The preceding normal form suggests an appealing route: prove that the
+endpoint-normalized residual $J_n$ is spectrally concentrated so strongly
+that it cannot acquire a transverse zero.  This section records the exact
+criterion, and also the precise reason why the available analytic input does
+not yet prove it.
+
+\subsection{A genuine zero-free criterion}
+
+Suppose, in a complexified affine lobe coordinate $x$, that
+\[
+J_n(x)-1
+=
+\sum_{m\ge1} d_{n,m}\sin(m\pi x)
+\]
+in a band $|\Im x|\le\eta$.  Since
+\[
+|\sin(m\pi x)|
+\le
+e^{m\pi\eta},
+\]
+the condition
+\[
+\boxed{
+\sum_{m\ge1}
+|d_{n,m}|e^{m\pi\eta}<1
+}
+\]
+implies
+\[
+|J_n(x)-1|<1
+\]
+throughout that band, hence
+\[
+\boxed{
+J_n(x)\neq0.
+}
+\]
+This is a non-circular first-order no-exit criterion: it is a quantitative
+property of the same lobe residual, not a restatement of zero-freeness.
+
+\subsection{Why strip analyticity does not prove the sine criterion}
+
+Analyticity of $J_n$ in a complex neighborhood is not enough to force
+exponential decay of its ordinary sine coefficients.  Endpoint compatibility
+matters.  The entire function
+\[
+f(x)=x(1-x)
+\]
+vanishes at both endpoints, but its sine coefficients are
+\[
+\boxed{
+d_m
+=
+2\int_0^1f(x)\sin(m\pi x)\,\mathrm dx
+=
+\frac{4(1-(-1)^m)}{\pi^3m^3}.
+}
+\]
+They decay only algebraically.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.78\textwidth]{../figures/fig21_sine_series_endpoint_obstruction.png}
+\caption{Even an entire function with zero endpoint values can have only
+algebraic sine-series decay.  A strip of analyticity therefore does not by
+itself yield the desired weighted sine $\ell^1$ bound.}
+\end{figure}
+
+The obstruction is structural: shifting the sine-coefficient contour creates
+vertical endpoint contributions unless the odd periodic continuation has the
+required compatibility to all orders.  The lobe normalization
+$J_n(0)=J_n(1)=1$ does not imply those infinite endpoint identities.
+
+\subsection{A stronger counterexample to real-axis control}
+
+Real-axis closeness, endpoint normalization, and even small ordinary
+derivatives do not exclude nearby complex zeros.  For
+\[
+\boxed{
+J_{M,\varepsilon}(x)
+=
+1+\varepsilon\sin^2(M\pi x)
+}
+\]
+one has
+\[
+J_{M,\varepsilon}(x)\ge1
+\qquad (x\in[0,1]),
+\]
+and
+\[
+J_{M,\varepsilon}(0)=J_{M,\varepsilon}(1)=1.
+\]
+Its complex zeros satisfy
+\[
+\sin(M\pi x)
+=
+\pm\frac{i}{\sqrt{\varepsilon}},
+\]
+hence the nearest zero has distance
+\[
+\boxed{
+|\Im x|
+=
+\frac{1}{M\pi}
+\operatorname{arsinh}\frac1{\sqrt{\varepsilon}}.
+}
+\]
+Taking $\varepsilon=c/M^2$ gives
+\[
+\sup_{[0,1]}|J_{M,\varepsilon}-1|=O(M^{-2}),
+\]
+while
+\[
+|\Im x_{\rm zero}|
+\sim
+\frac{\log M}{\pi M}
+\longrightarrow0.
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.78\textwidth]{../figures/fig22_hidden_complex_zeros_counterexample.png}
+\caption{A residual can be arbitrarily close to $1$ on the real lobe while
+its complex zeros approach the lobe.  Real-axis purity is therefore not the
+transverse purity needed for confinement.}
+\end{figure}
+
+\subsection{What Phragm\'en--Lindel\"of and convexity can and cannot supply}
+
+A possible analytic input is a uniform bound for the complexified lobe
+residual in a fixed neighborhood.  Classical convexity bounds for $\zeta$
+can contribute boundary estimates, but four points must be completed before
+such an argument is a theorem in the present normalization:
+
+\begin{enumerate}[leftmargin=1.8em]
+\item a boundary convexity estimate must be propagated through the whole
+strip by a Phragm\'en--Lindel\"of argument with explicit constants;
+\item the complex Stirling remainder entering the continuation of
+$\vartheta'$ must be bounded uniformly in the required neighborhood;
+\item the map from the complex height variable to phase coordinate must be
+shown globally univalent on that neighborhood, not merely satisfy
+$\vartheta'\neq0$ pointwise;
+\item an explicit surviving neighborhood parameter must be computed.
+\end{enumerate}
+
+Even if all four items are completed, a bounded analytic strip would still
+not establish the preceding sine-series criterion because of the endpoint
+obstruction just proved.
+
+\subsection{Chebyshev replacement}
+
+The endpoint obstruction can be removed by using a basis adapted to analytic
+functions on a finite interval.  Map $x\in[0,1]$ to $y=2x-1\in[-1,1]$ and
+expand
+\[
+J_n\!\left(\frac{y+1}{2}\right)-1
+=
+\sum_{m\ge0} c_{n,m}T_m(y).
+\]
+If the residual extends holomorphically to a Bernstein ellipse
+$\mathcal E_\rho$ and
+\[
+\sup_{\mathcal E_\rho}|J_n-1|\le M,
+\]
+then the standard contour argument gives
+\[
+\boxed{
+|c_{n,m}|\le 2M\rho^{-m}.
+}
+\]
+Thus a fully explicit strip/ellipse bound would indeed imply exponential
+\emph{Chebyshev} spectral decay.
+
+However, exponential decay alone is not enough for no-exit.  On a smaller
+ellipse $\mathcal E_r$, $1<r<\rho$, a sufficient condition is
+\[
+\boxed{
+\sum_{m\ge0}|c_{n,m}|\,r^m<1.
+}
+\]
+Convexity and Phragm\'en--Lindel\"of can at best provide an upper bound $M$;
+they do not presently provide the required smallness relative to $1$.
+Accordingly, the spectral-purity route reaches a genuine analytic
+obstruction: the missing statement is a quantitative \emph{closeness} bound
+for the normalized residual in a complex neighborhood, not merely
+holomorphy or boundedness there.
+
+\subsection{Verdict of the spectral-purity route}
+
+The attempted proof of exponential transverse purity does not close with the
+current ingredients.
+
+What is proved:
+\begin{enumerate}[leftmargin=1.8em]
+\item the endpoint-normalized residual $J_n$ isolates the interior lobe
+deformation exactly;
+\item a weighted spectral $\ell^1$ bound $<1$ gives a genuine zero-free
+band;
+\item ordinary sine coefficients need not decay exponentially even for an
+entire endpoint-normalized function;
+\item an analytic Bernstein-ellipse bound does give exponential Chebyshev
+decay;
+\item exponential decay without a quantitative smallness bound does not
+imply no-exit.
+\end{enumerate}
+
+What remains unproved is a non-circular complex-neighborhood estimate strong
+enough to force
+\[
+\sum |c_{n,m}|r^m<1
+\]
+uniformly for the exact zeta residuals.
+
+Thus the present route ends in a precise failure rather than a hidden
+assumption: the real lobe geometry and classical upper bounds do not yet
+control the transverse amplitude of the endpoint-normalized residual
+strongly enough to exclude complex zeros.
+
+
+\section{What the geometry has actually established}
+
+The following are exact:
+\begin{enumerate}[leftmargin=1.8em]
+\item the Euclidean/cylindrical representation of the thread;
+\item the zero-to-zero decomposition into lobes;
+\item the speed identity
+\[
+|W_t|^2=Z'^2+\vartheta'^2Z^2;
+\]
+\item the global first-order equation
+\[
+F_\delta=-iF_t;
+\]
+\item the conformal metric and minimal-surface structure;
+\item the polar conjugacy
+\[
+(\log r)_\delta=\alpha_t,
+\qquad
+\alpha_\delta=-(\log r)_t;
+\]
+\item the exact tangent-circle identity of the unit-sweep one-arch model;
+\item the exact RVM/Lambert tangent-circle skeleton;
+\item the exact global no-exit theorem for that RVM model;
+\item the phase-coordinate form of the Euclidean arc length;
+\item the reciprocal-lobe characterization of RVM as the zero-curvature state;
+\item the corrected exact scattering cocycle
+\[
+\mathfrak S_n=e^{Q_n-Q_{n+1}},
+\qquad
+Q_n=-\log a_n-i\psi_n;
+\]
+\item the endpoint-normalized factorization with residual $J_n$;
+\item the integrated reciprocal-curvature identity;
+\item the rigorous failure of strip analyticity alone to imply exponential
+sine spectral purity.
+\end{enumerate}
+
+The following are numerical findings from the supplied data:
+\begin{enumerate}[leftmargin=1.8em]
+\item actual low-height lobes have normalized eccentricity near the tangent
+circle value;
+\item their eccentricity is predicted almost completely by the phase sweep;
+\item the one-arch phase model matches measured $E_n$ with correlation
+$0.997589$;
+\item the one-arch elliptic model matches measured $R_n$ with correlation
+$0.999162$;
+\item the global phase-sweep mean is essentially one across all
+$2{,}001{,}051$ intervals.
+\end{enumerate}
+
+The central analytic target is therefore not an artificial higher-order
+expansion.  It is one global statement about the exact first-order geometry:
+
+\[
+\boxed{
+F(\delta,t)\neq0
+\quad
+\text{for every nonzero transverse displacement inside the strip}.
+}
+\]
+
+By Theorem~\ref{thm:firstorder-suff}, a proof of that property from the exact
+eccentric lobe geometry closes the zero-confinement problem immediately.
+
+\section{Why the RVM result is the decisive model property}
+
+The RVM model is relevant here for a geometric reason, not merely because
+$\tau_n$ approximates $\gamma_n$.
+
+It supplies three properties simultaneously:
+\begin{enumerate}[leftmargin=1.8em]
+\item exactly one phase unit per lobe;
+\item exact eccentric tangent circles;
+\item exact global no-exit under the same first-order transverse translation.
+\end{enumerate}
+
+The actual zeta lobes then show, numerically, that both their center
+displacement and their Euclidean length are extraordinarily well organized
+by the corresponding one-arch/RVM phase geometry.
+
+This is the concrete transfer problem generated by the Violet Thread:
+identify an exact lobe invariant or inequality, visible in the true
+$Z$-deformed lobes, that preserves the RVM no-exit separation under
+\[
+F_\delta=-iF_t.
+\]
+Such an invariant would not be a later classical criterion; it would be a
+property of the same Euclidean lobe and its exact transverse field.
+
+\section{Provenance of the construction}
+
+The Riemann zeta function, Hardy's $Z$-function, the Riemann--Siegel phase,
+the smooth Riemann--von Mangoldt phase, Lambert $W$, Cauchy--Riemann
+equations, Euclidean arc length, minimal holomorphic graphs and complete
+elliptic integrals are classical ingredients.
+
+The primary construction developed here is the organization of the
+three-dimensional value trace into a single geometric object---the Violet
+Thread---and the decision to retain its zero-to-zero lobes, Euclidean lengths,
+arc inflation ratios, phase sweeps and transverse quarter-turn field as parts
+of that same object.  The emphasis on the systematic eccentricity visible in
+the actual thread, the phase-centroid observables
+$\mathcal C_n,E_n,D_n$, the interpretation of the RVM phase as the generator
+of an exact tangent-circle lobe skeleton, and the use of the RVM first-order
+no-exit mechanism as the direct geometric model for confinement belong to
+this program.
+
+The logical point repeatedly used in the paper is also part of this
+construction: once a global no-exit property is obtained from the exact
+first-order flow, there is no subsequent hierarchy of higher transverse
+orders to check.
+
+\section{Conclusion}
+
+The Violet Thread is not well described as a helix centered on its zero axis.
+Its natural pieces are eccentric zero-to-zero lobes.  In uniform phase
+coordinate, the basic one-arch geometry becomes a circle tangent to the
+origin when the angular sweep is one RVM unit.  The smooth RVM/Lambert
+construction produces precisely that tangent-circle architecture.
+
+This observation explains the eccentric location of the zeros in the
+Euclidean plot and gives the geometry a dynamical role.  The same exact
+first-order equation
+\[
+F_\delta=-iF_t
+\]
+that generates the transverse zeta family also generates an exact no-exit
+barrier for the RVM tangent circles.  In the actual zeta data, the lobe
+eccentricity follows the corresponding RVM-phase prediction with correlation
+$0.997589$, while the independent Euclidean arc inflation follows the
+one-arch elliptic law with correlation $0.999162$.
+
+The resulting picture is unified:
+\[
+\boxed{
+\text{RVM phase}
+\longrightarrow
+\text{eccentric tangent-circle skeleton}
+\longrightarrow
+\text{actual arithmetic lobe deformation}
+\longrightarrow
+\text{first-order transverse dynamics}.
+}
+\]
+The remaining analytic question is therefore sharply geometric, but the
+spectral-purity analysis makes the obstruction more precise.  A bounded
+analytic continuation of the endpoint-normalized lobe residual is not enough:
+one needs a quantitatively small complex-neighborhood norm, in a basis such
+as Chebyshev that is compatible with finite-interval analyticity.  Without
+that additional estimate, real-axis circularity, reciprocal curvature,
+endpoint scattering and ordinary spectral concentration do not exclude
+nearby transverse zeros.  The first-order confinement program therefore
+remains open at this explicit norm-control step, not at any hierarchy of
+higher transverse orders.
+
+\appendix
+
+\section{Complete first-49 Euclidean arc table}
+\small
+\begin{longtable}{rrrrrrr}
+\toprule
+$n$ & $\gamma_n$ & $\gamma_{n+1}$ & $g_n$ & $L_n$ & $R_n$ & $s_n$\\
+\midrule
+\endfirsthead
+\toprule
+$n$ & $\gamma_n$ & $\gamma_{n+1}$ & $g_n$ & $L_n$ & $R_n$ & $s_n$\\
+\midrule
+\endhead
+\input{../outputs/arc_metrics_table.tex}
+\end{longtable}
+\normalsize
+
+\section{Complete first-49 eccentric-lobe table}
+\scriptsize
+\begin{longtable}{rrrrrrrr}
+\toprule
+$n$ & $s_n$ & $A_n$ & $\Re\mathcal C_n$ & $\Im\mathcal C_n$ & $E_n$ & $D_n$ & $E_n^{(\mathrm{arch})}$\\
+\midrule
+\endfirsthead
+\toprule
+$n$ & $s_n$ & $A_n$ & $\Re\mathcal C_n$ & $\Im\mathcal C_n$ & $E_n$ & $D_n$ & $E_n^{(\mathrm{arch})}$\\
+\midrule
+\endhead
+\input{../outputs/eccentric_lobe_table.tex}
+\end{longtable}
+\normalsize
+
+\section{Reproducibility package}
+
+The archive contains:
+\begin{itemize}[leftmargin=1.6em]
+\item \texttt{manuscript/VIOLET\_THREAD\_V3.tex};
+\item \texttt{manuscript/VIOLET\_THREAD\_V3.pdf};
+\item twenty-two PNG figures;
+\item the complete numerical analysis script from Version 2;
+\item the Version 3 additional-geometry Python script;
+\item the Version 4 analytic-obstruction Python script (which reads no corpus data);
+\item \texttt{data/zeross.bin} and \texttt{data/zLamb.bin}, each with
+$2{,}001{,}052$ IEEE-754 doubles;
+\item CSV outputs for the global audit, exact first-49 arc metrics and
+eccentric-lobe metrics;
+\item generated TeX tables used in the appendices.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem{Titchmarsh}
+E. C. Titchmarsh, revised by D. R. Heath-Brown,
+\emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+Oxford University Press, 1986.
+
+\bibitem{Edwards}
+H. M. Edwards,
+\emph{Riemann's Zeta Function},
+Dover Publications, 2001.
+
+\bibitem{Montgomery}
+H. L. Montgomery,
+The pair correlation of zeros of the zeta function,
+\emph{Proc. Sympos. Pure Math.} \textbf{24} (1973), 181--193.
+
+\bibitem{Corless}
+R. M. Corless, G. H. Gonnet, D. E. G. Hare, D. J. Jeffrey and D. E. Knuth,
+On the Lambert $W$ function,
+\emph{Advances in Computational Mathematics} \textbf{5} (1996), 329--359.
+\end{thebibliography}
+
+\end{document}

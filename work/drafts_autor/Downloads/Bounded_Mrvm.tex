@@ -1,0 +1,316 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage[no-math]{fontspec}
+\fi
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[pagebackref=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{pdfcomment}
+
+% Hover previews for internal references (no layout change).
+\makeatletter
+\let\CG@origref\ref
+\let\CG@origeqref\eqref
+\newcommand{\CG@gettip}[1]{\@ifundefined{CGTip@#1}{Reference: #1}{\csname CGTip@#1\endcsname}}
+\DeclareRobustCommand{\CGref}[1]{\pdftooltip{\CG@origref{#1}}{\CG@gettip{#1}}}
+\DeclareRobustCommand{\CGeqref}[1]{\pdftooltip{\CG@origeqref{#1}}{\CG@gettip{#1}}}
+% ---- tooltips for the labels of this insert (copy into the v57 preamble) ----
+\expandafter\gdef\csname CGTip@sec:BM-transport\endcsname{Section: The transported product and the identification of its endpoint.}
+\expandafter\gdef\csname CGTip@eq:BM-Plambda\endcsname{Equation: P\_lambda(s) = product over k of (1 + s(s-1)/(1/4 + gamma\_k(lambda)\textasciicircum\{\}2)), gamma\_k(lambda) = (1-lambda) gamma\_k + lambda tau\_k.}
+\expandafter\gdef\csname CGTip@thm:BM-product\endcsname{Theorem - Transported product: locally uniform convergence on [0,1] x C, zeros 1/2 +- i gamma\_k(lambda), symmetries, P\_lambda(0)=P\_lambda(1)=1, convergence of all derivatives as lambda -> 0.}
+\expandafter\gdef\csname CGTip@eq:BM-zeta-lambda\endcsname{Equation: zeta\_lambda = P\_lambda/G, zeta\_1 = zeta\_RVM, zeta\_Z1 = zeta\_0 = P\_0/G.}
+\expandafter\gdef\csname CGTip@thm:BM-flow\endcsname{Theorem - Flow: zeta\_lambda -> zeta\_Z1 locally uniformly (spherical metric); d/dlambda log P\_lambda = V\_lambda; exp(-integral\_0\textasciicircum\{\}1 V) = P\_0/P\_1.}
+\expandafter\gdef\csname CGTip@eq:BM-generator\endcsname{Equation: V\_lambda(s) = -2s(s-1) sum\_k gamma\_k(lambda) eta\_k / ((1/4+gamma\_k(lambda)\textasciicircum\{\}2)(1/4+gamma\_k(lambda)\textasciicircum\{\}2+s(s-1))).}
+\expandafter\gdef\csname CGTip@eq:BM-integrated\endcsname{Equation: zeta\_Z1 = zeta\_RVM P\_0/P\_1 = zeta\_RVM exp(-integral\_0\textasciicircum\{\}1 V\_u du).}
+\expandafter\gdef\csname CGTip@eq:BM-xi-product\endcsname{Equation: 2 xi(s) = product over rho with Im rho > 0 of (1 + s(s-1)/(rho(1-rho))).}
+\expandafter\gdef\csname CGTip@prop:BM-normalization\endcsname{Proposition - Normalization of the endpoint: P\_0 = 2 xi iff every zero has beta = 1/2; equivalently zeta\_Z1 = zeta iff RH.}
+\expandafter\gdef\csname CGTip@thm:BM-identification\endcsname{Theorem - Identification: M\_Z1 = M iff 1/zeta\_Z1 has Dirichlet coefficients mu(n) iff zeta\_Z1 = zeta iff RH.}
+\expandafter\gdef\csname CGTip@prop:BM-no-Dirichlet\endcsname{Proposition - Neither zeta\_RVM nor 1/zeta\_RVM is an absolutely convergent Dirichlet series in any half-plane: 1/zeta\_RVM(sigma+it) -> L as |t| -> infinity and Carlson's mean value theorem.}
+\expandafter\gdef\csname CGTip@rem:BM-status\endcsname{Remark - Status: the transport and the equivalence are proved; M\_Z1 = M is not; the endpoint depends only on the ordinates.}
+\makeatother
+
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 1},
+  linkbordercolor={1 0 0},
+  citebordercolor={0 0.3 1},
+  urlbordercolor={0 0.6 0.6},
+  filebordercolor={0 0.6 0.6},
+  linktoc=all,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=1,
+  pdfstartview=FitH,
+  pdftitle={Bounded M_RVM: transport of ordinates and identification of the endpoint},
+  pdfauthor={V. Casa\~na-Giner},
+  pdfsubject={Continuous transport of the midpoint RVM product to the genuine ordinates; identification of the endpoint with zeta and its status},
+  pdfkeywords={Riemann zeta function, Riemann-von Mangoldt clock, Hadamard product, Mertens function, transport of ordinates}
+}
+% Back-references in the bibliography.
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+  \ifcase #1 %
+    \relax
+  \or
+    \ (Cited on p.~#2.)%
+  \else
+    \ (Cited on pp.~#2.)%
+  \fi}
+
+% In \cite[note]{key} the note (e.g. a section number) is linked too.
+\makeatletter
+\let\CG@origcite\cite
+\renewcommand*{\cite}[2][]{\def\CG@citekey{#2}%
+  \ifx\relax#1\relax\CG@origcite{#2}\else\CG@origcite[#1]{#2}\fi}
+\def\@cite#1#2{{\@citestyle[\citeform{#1}\if@tempswa, \hyper@link{cite}{cite.\CG@citekey}{#2}\fi]}}
+\makeatother
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setlength{\emergencystretch}{1.5em}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+% As in v56:
+\theoremstyle{plain}
+\newtheorem{auditproposition}{Audit proposition}
+\renewcommand{\theauditproposition}{A\arabic{auditproposition}}
+
+\begin{document}
+
+\title[Bounded $M_{\rm RVM}$]{Bounded $M_{\rm RVM}$: transport of ordinates\\
+and identification of the endpoint}
+\author{V. Casa\~na-Giner}
+\date{4 October 2026}
+\maketitle
+
+\noindent\textbf{Scope.} This note reviews and corrects the three-step
+argument that transports the critical RVM product to the genuine
+ordinates.  Steps~1 and~2 are correct and are stated with proofs; the
+identification theorem of Step~3 is correct as an equivalence; the
+verification proposed in Step~3 through Dirichlet coefficients of
+$1/\zeta_{\rm RVM}$ is not available, because those coefficients do not
+exist (Proposition~\CGref{prop:BM-no-Dirichlet}).  The notation and the
+transition theorem (TR) are those of the insert
+\texttt{TE\_tracking\_v57}.
+
+\tableofcontents
+
+\section{The transported product and the identification of its endpoint}
+\label{sec:BM-transport}
+
+Let $\gamma_k$ be the $k$-th genuine ordinate, counted with multiplicity
+and without assuming $\beta_k=\tfrac12$; let $\tau_k=\gamma_k^{\rm RVM}$,
+defined by $\mathcal N_{\rm RVM}(\tau_k)=k-\tfrac12$, and
+$\eta_k=\tau_k-\gamma_k$.  Put $q(s)=s(s-1)$ and
+$G(s)=s(s-1)\Gamma(s/2)\pi^{-s/2}$.
+
+\subsection{Step 1: the transported product}
+
+For $0\le\lambda\le1$ let $\gamma_k(\lambda)=(1-\lambda)\gamma_k+\lambda\tau_k$ and
+\begin{equation}\label{eq:BM-Plambda}
+P_\lambda(s)=\prod_{k\ge1}\Big(1+\frac{s(s-1)}{\tfrac14+\gamma_k(\lambda)^2}\Big).
+\end{equation}
+
+\begin{theorem}[Transported product]\label{thm:BM-product}
+The product \eqref{eq:BM-Plambda} converges locally uniformly on
+$[0,1]\times\mathbb C$.  Each $P_\lambda$ is entire, depends continuously on
+$\lambda$, has zeros exactly at $\tfrac12\pm i\gamma_k(\lambda)$ (with
+multiplicity), satisfies $P_\lambda(1-s)=P_\lambda(s)$,
+$P_\lambda(\bar s)=\overline{P_\lambda(s)}$ and $P_\lambda(0)=P_\lambda(1)=1$,
+and $P_\lambda^{(j)}\to P_0^{(j)}$ locally uniformly as $\lambda\to0^+$ for
+every $j\ge0$.  Moreover $P_1=P^{\rm crit}_{\rm RVM}$.
+\end{theorem}
+
+\begin{proof}
+From $N(T)=\mathcal N_{\rm RVM}(T)+S(T)+O(1/T)$ and $S(T)=O(\log T)$ one
+gets $\mathcal N_{\rm RVM}(\tau_k)-\mathcal N_{\rm RVM}(\gamma_k)=O(\log\gamma_k)$;
+since $\mathcal N'_{\rm RVM}(t)=\frac1{2\pi}\log\frac t{2\pi}$, the mean value
+theorem gives $\eta_k=O(1)$, and $\gamma_k\asymp\tau_k\asymp k/\log k$.  On a
+compact set $K$, $|q|\le C_K$ and $\tfrac14+\gamma_k(\lambda)^2\gg\gamma_k^2$
+uniformly in $\lambda$ for $k$ large, so
+$\sup_{K\times[0,1]}|q/(\tfrac14+\gamma_k(\lambda)^2)|\ll_K(\log k)^2k^{-2}$,
+which is summable: the product converges normally.  The zero statement
+follows from
+$\tfrac14+\gamma_k(\lambda)^2+s(s-1)=(s-\tfrac12)^2+\gamma_k(\lambda)^2$, the
+symmetries from the dependence on $s(s-1)$ and the reality of
+$\gamma_k(\lambda)$, and $P_\lambda(0)=P_\lambda(1)=1$ from $q(0)=q(1)=0$.
+With $A_{k,\lambda}=\tfrac14+\gamma_k(\lambda)^2$,
+$|q/A_{k,\lambda}-q/A_{k,0}|\ll_K\lambda|\eta_k|\gamma_k^{-3}+\lambda^2\eta_k^2\gamma_k^{-4}$,
+which is summable; hence $P_\lambda\to P_0$ locally uniformly, and Cauchy's
+formula gives the derivatives.
+\end{proof}
+
+\subsection{Step 2: the flow of $\zeta_{\rm RVM}$}
+
+Define
+\begin{equation}\label{eq:BM-zeta-lambda}
+\zeta_\lambda=\frac{P_\lambda}{G},\qquad \zeta_1=\zeta_{\rm RVM},\qquad
+\zeta_{Z1}:=\zeta_0=\frac{P_0}{G},\qquad F_\lambda=\frac1{\zeta_\lambda}.
+\end{equation}
+
+\begin{theorem}[Flow]\label{thm:BM-flow}
+As $\lambda\to0^+$, $\zeta_\lambda\to\zeta_{Z1}$ locally uniformly in the
+spherical metric, and $F_\lambda\to F_0$ uniformly on compact sets free of
+zeros of $P_0$.  Off the moving divisor,
+\begin{equation}\label{eq:BM-generator}
+\partial_\lambda\log P_\lambda(s)=\mathcal V_\lambda(s):=
+-2s(s-1)\sum_{k\ge1}\frac{\gamma_k(\lambda)\eta_k}
+{\big(\tfrac14+\gamma_k(\lambda)^2\big)\big(\tfrac14+\gamma_k(\lambda)^2+s(s-1)\big)},
+\end{equation}
+the series converging locally uniformly, and
+\begin{equation}\label{eq:BM-integrated}
+\zeta_{Z1}=\zeta_{\rm RVM}\,\frac{P_0}{P_1}
+=\zeta_{\rm RVM}\exp\Big(-\int_0^1\mathcal V_u\,du\Big).
+\end{equation}
+If a zero $\tfrac12+i\gamma_k$ of $P_0$ is simple, the residues
+$G(\rho_{k,\lambda})/(\rho_{k,\lambda}P'_\lambda(\rho_{k,\lambda}))$ of
+$F_\lambda(s)/s$ at $\rho_{k,\lambda}=\tfrac12+i\gamma_k(\lambda)$ converge to
+the corresponding residue of $F_0(s)/s$.
+\end{theorem}
+
+\begin{proof}
+Uniform convergence of $P_\lambda$ and division by the fixed function $G$
+give the first claim; on a compact set with $\min|P_0|=m>0$ one has
+$|P_\lambda|\ge m/2$ for small $\lambda$ and
+$|F_\lambda-F_0|\le2\sup|G|\,m^{-2}|P_\lambda-P_0|$.  Termwise,
+$\partial_\lambda\operatorname{Log}(1+q/A_{k,\lambda})=-2q\gamma_k(\lambda)\eta_k/(A_{k,\lambda}(A_{k,\lambda}+q))
+=O_K(|\eta_k|\gamma_k^{-3})$, summable.  For \eqref{eq:BM-integrated},
+integrating each mode with $u=\gamma_k(\lambda)$, $du=\eta_k\,d\lambda$, gives
+$\frac1{2q}\operatorname{Log}\frac{u^2+1/4}{u^2+1/4+q}\big|_{\gamma_k}^{\tau_k}$
+modulo $2\pi i$ (the principal branch is valid only while the argument
+does not cross $(-\infty,0]$); after exponentiation the factor
+$\prod_k(1+q/A_{k,0})/(1+q/A_{k,1})=P_0/P_1$ is exact.  The residues
+converge by Theorem~\CGref{thm:BM-product}.
+\end{proof}
+
+Identity \eqref{eq:BM-integrated} is the trivial factorization
+$P_0/G=(P_1/G)(P_0/P_1)$ written as a flow.  The endpoint is determined
+directly by the genuine ordinates placed on the critical line:
+\[
+\zeta_{Z1}(s)=\frac1{G(s)}\prod_{k\ge1}\Big(1+\frac{s(s-1)}{\tfrac14+\gamma_k^2}\Big).
+\]
+
+\subsection{Step 3: identification of the endpoint}
+
+The Hadamard factorization of
+$\xi(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$, pairing $\rho$ with
+$1-\rho$ and using $2\xi(0)=1$, gives
+\begin{equation}\label{eq:BM-xi-product}
+2\xi(s)=\prod_{\rho:\ \Im\rho>0}\Big(1+\frac{s(s-1)}{\rho(1-\rho)}\Big),
+\end{equation}
+the product taken in order of increasing $\Im\rho$.
+
+\begin{proposition}[Normalization of the endpoint]\label{prop:BM-normalization}
+$P_0=2\xi$ if and only if every nontrivial zero has real part $\tfrac12$.
+Equivalently, $\zeta_{Z1}=\zeta$ if and only if RH holds.
+\end{proposition}
+
+\begin{proof}
+For $\rho=\beta+i\gamma$,
+$\rho(1-\rho)=\beta(1-\beta)+\gamma^2+i\gamma(1-2\beta)$, which equals
+$\tfrac14+\gamma^2$ if and only if $\beta=\tfrac12$.  If RH holds, the
+factors of \eqref{eq:BM-xi-product} and of $P_0$ coincide and $P_0=2\xi$.
+Conversely, if $P_0=2\xi$ the two functions have the same zeros, and the
+zeros of $P_0$ lie on $\Re s=\tfrac12$.  Since $\zeta=2\xi/G$ and
+$\zeta_{Z1}=P_0/G$, the second statement follows.  The constant is fixed by
+$P_0(0)=1=2\xi(0)$.
+\end{proof}
+
+For $c>1$ put
+$M_{Z1}(x)=\lim_{U\to\infty}\frac1{2\pi i}\int_{c-iU}^{c+iU}F_0(s)\frac{x^s}{s}\,ds$
+whenever the limit exists.
+
+\begin{theorem}[Identification]\label{thm:BM-identification}
+The following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.2em]
+\item $M_{Z1}$ exists and $M_{Z1}(n)=M(n)$ for every $n\ge1$;
+\item $1/\zeta_{Z1}$ is, in $\Re s>1$, the Dirichlet series
+$\sum_n\mu(n)n^{-s}$;
+\item $\zeta_{Z1}=\zeta$;
+\item RH.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)$\Rightarrow$(ii): the normalized Mellin transform
+$s\int_1^\infty M(x)x^{-s-1}dx=1/\zeta(s)$ coincides with $1/\zeta_{Z1}$ for
+$\Re s>c$.  (ii)$\Rightarrow$(iii): identity of meromorphic functions.
+(iii)$\Leftrightarrow$(iv): Proposition~\CGref{prop:BM-normalization}.
+(iii)$\Rightarrow$(i): Perron's formula for $1/\zeta$.
+\end{proof}
+
+\begin{proposition}[No Dirichlet expansion for $\zeta_{\rm RVM}$]\label{prop:BM-no-Dirichlet}
+Neither $\zeta_{\rm RVM}$ nor $1/\zeta_{\rm RVM}$ is an absolutely convergent
+Dirichlet series in any half-plane $\Re s>\sigma_0$.
+\end{proposition}
+
+\begin{proof}
+In the proof of the transition theorem (TR) of \texttt{TE\_tracking\_v57},
+the restriction $\sigma'<\tfrac12$ ($s=\tfrac12+\sigma'+it$) is used only in
+the passage from $w$ to $\chi$; the form
+$\zeta_{\rm RVM}(s)=Z_{\rm RVM}(1+w)(1+O(1/t))$, with
+$w=e^{-2\pi i\mathcal N_{\rm RVM}(t-i\sigma')}$, holds uniformly on every
+compact range of $\sigma'>0$ (in the bound on the rays it suffices that
+$t^2\ge2(\tau_0^2+\sigma'^2)$).  For fixed $\sigma'>0$,
+$\Im\mathcal N_{\rm RVM}(t-i\sigma')=-\frac{\sigma'}{2\pi}\log\frac t{2\pi}+O(t^{-2})\to-\infty$,
+so $w\to0$ and $1/\zeta_{\rm RVM}(\sigma+it)\to L=1/Z_{\rm RVM}$ as
+$|t|\to\infty$, for every fixed $\sigma>\tfrac12$.  If
+$1/\zeta_{\rm RVM}-L=\sum_nc(n)n^{-s}$ converged absolutely on
+$\Re s=\sigma>\sigma_0$, the mean value theorem for absolutely convergent
+Dirichlet series would give
+\[
+\sum_{n\ge1}|c(n)|^2n^{-2\sigma}=\lim_{T\to\infty}\frac1{2T}\int_{-T}^{T}
+\Big|\frac1{\zeta_{\rm RVM}(\sigma+it)}-L\Big|^2dt=0,
+\]
+so $1/\zeta_{\rm RVM}\equiv L$, contradicting $1/\zeta_{\rm RVM}(1)=0$.  The
+same argument with $\zeta_{\rm RVM}\to Z_{\rm RVM}$ excludes
+$\zeta_{\rm RVM}$.
+\end{proof}
+
+Consequently the coefficients $a_{\rm RVM}(n)$ with
+$1/\zeta_{\rm RVM}=\sum a_{\rm RVM}(n)n^{-s}$ do not exist, and under RH
+neither do coefficients $\kappa(n)$ of $\exp\int_0^1\mathcal V=\zeta_{\rm RVM}/\zeta$,
+since otherwise $\zeta_{\rm RVM}=\zeta\cdot\sum\kappa(n)n^{-s}$ would be a
+Dirichlet series.  The proposed check
+$(a_{\rm RVM}*\kappa)(n)=\mu(n)$ is therefore not a verifiable condition.
+
+\begin{remark}[Status]\label{rem:BM-status}
+Proved: the transport
+$\zeta_{\rm RVM}=\zeta_1\to\zeta_\lambda\to\zeta_{Z1}=P_0/G$, locally
+uniformly and with divisors and residues transported, and the equivalence
+$M_{Z1}=M\iff\zeta_{Z1}=\zeta\iff P_0=2\xi\iff\mathrm{RH}$.  Not proved:
+$M_{Z1}=M$.  The endpoint depends only on the ordinates $\gamma_k$, while
+the content of RH lies in the abscissae $\beta_k$, which the transport does
+not move: $\zeta_{Z1}=\zeta$ exactly when every factor
+$1+s(s-1)/(\rho(1-\rho))$ of \eqref{eq:BM-xi-product} equals the
+corresponding factor $1+s(s-1)/(\tfrac14+\gamma^2)$ of $P_0$.
+\end{remark}
+
+\end{document}

@@ -1,0 +1,188 @@
+% Ms por excursiones de Mertens, vectorizado.
+% En cada excursion (u,v] entre ceros de M:
+%   subida lineal desde 0 en u hasta sigma*sqrt(H) en tau (primer argmax de |M|),
+%   bajada lineal desde sigma*sqrt(H) en tau hasta 0 en v.
+% Bloque terminal (si M(N) ~= 0): la bajada termina en sigma*sqrt(|M(N)|).
+
+clear
+clc
+Ttot = tic;
+
+%% 1. Lectura
+tic
+fid = fopen('moebius.bin','rb');
+if fid == -1
+    error('No se puede abrir moebius.bin')
+end
+mu = fread(fid, Inf, 'int8=>int8');
+fclose(fid);
+N = numel(mu);
+fprintf('1 lectura             %8.2f s   N = %d\n', toc, N);
+
+%% 2. Mertens, ceros y bloques
+tic
+M  = cumsum(int32(mu));                       % M(n), n = 1..N  (int32: 4 bytes)
+z  = [0; find(M == 0)];                       % tiempos con M = 0 (incluye 0)
+nb = numel(z);
+b  = cumsum(uint32([true; M(1:N-1) == 0]));   % bloque de n: (z(b), z(b+1)]
+u  = z;                                       % inicio de cada bloque
+v  = [z(2:end); N];                           % fin de cada bloque
+fprintf('2 Mertens y bloques   %8.2f s   %d ceros\n', toc, nb);
+
+C = 2^24;                                     % tamano de trozo
+
+%% 3. Maximo de |M| por bloque (cummax segmentado, por trozos)
+tic
+K = double(max(abs(M))) + 1;
+H = zeros(nb,1);
+carry = -Inf;
+for i0 = 1:C:N
+    i1  = min(i0+C-1, N);
+    n   = (i0:i1)';
+    bb  = double(b(i0:i1));
+    key = cummax([carry; bb*K + double(abs(M(i0:i1)))]);
+    key(1) = [];
+    carry  = key(end);
+    fin = (n == v(bb));                       % n es final de su bloque
+    H(bb(fin)) = key(fin) - bb(fin)*K;
+end
+fprintf('3 maximo por bloque   %8.2f s\n', toc);
+
+%% 4. Primer argmax por bloque (por trozos)
+tic
+tau = zeros(nb,1);
+for i0 = 1:C:N
+    i1  = min(i0+C-1, N);
+    bb  = double(b(i0:i1));
+    f   = find(double(abs(M(i0:i1))) == H(bb));
+    if isempty(f), continue, end
+    bf  = bb(f);
+    pr  = [true; diff(bf) ~= 0];
+    cb  = bf(pr);
+    cp  = f(pr) + i0 - 1;
+    nuevo = (tau(cb) == 0);
+    tau(cb(nuevo)) = cp(nuevo);
+end
+fprintf('4 argmax por bloque   %8.2f s\n', toc);
+
+%% 5. Signo, amplitud y extremo final por bloque
+tic
+sg = zeros(nb,1);
+ok = tau > 0;
+sg(ok) = double(sign(M(tau(ok))));                    % 0 en mesetas de ceros
+A  = sqrt(H);                                 % maximo regularizado
+e  = zeros(nb,1);
+if z(end) < N
+    e(nb) = sqrt(double(abs(M(N))));                  % bloque terminal
+end
+fprintf('5 parametros bloque   %8.2f s\n', toc);
+
+%% 6. Ms lineal a trozos (por trozos, vectorizado)
+tic
+Ms = zeros(N,1,'single');
+for i0 = 1:C:N
+    i1 = min(i0+C-1, N);
+    n  = (i0:i1)';
+    bb = double(b(i0:i1));
+    ub = u(bb);  vb = v(bb);  tb = tau(bb);
+    Ab = A(bb);  sb = sg(bb); eb = e(bb);
+    sube = n <= tb;
+    y = zeros(size(n));
+    y(sube)  = Ab(sube) .* (n(sube) - ub(sube)) ./ (tb(sube) - ub(sube));
+    baja = ~sube;
+    y(baja)  = eb(baja) + (Ab(baja) - eb(baja)) .* ...
+               (vb(baja) - n(baja)) ./ (vb(baja) - tb(baja));
+    Ms(i0:i1) = single(sb .* y);
+end
+fprintf('6 Ms                  %8.2f s\n', toc);
+
+%% 7. Grafico (diezmado)
+tic
+paso = max(1, floor(N / 2e6));
+idx  = (1:paso:N)';
+figure
+plot(idx, double(M(idx)),  'Color', [0.65 0.65 0.65])
+hold on
+plot(idx, Ms(idx), 'r', 'LineWidth', 1.5)
+plot([1 N], [0 0], 'k-')
+xlabel('n')
+ylabel('valor')
+legend('M(n)', 'Ms(n)')
+grid on
+title('M y Ms por excursiones')
+fprintf('7 grafico             %8.2f s\n', toc);
+
+%% 8. Areas positiva y negativa de Ms en funcion de x (acumuladas, double)
+%   Apos(x) = sum_{n<=x} max(Ms(n),0),  Aneg(x) = sum_{n<=x} min(Ms(n),0)
+%   Se guardan solo en la malla diezmada idx (no se almacenan vectores de N).
+tic
+Apos = zeros(numel(idx),1);
+Aneg = zeros(numel(idx),1);
+cP = 0;  cN = 0;
+cM = 0;                                   % c = max |M(n)|/sqrt(n)
+for i0 = 1:C:N
+    i1 = min(i0+C-1, N);
+    cM = max(cM, max(double(abs(M(i0:i1))) ./ sqrt((i0:i1)')));
+    y  = double(Ms(i0:i1));
+    sp = cP + cumsum(max(y,0));
+    sn = cN + cumsum(min(y,0));
+    sel = (idx >= i0) & (idx <= i1);
+    k   = idx(sel) - i0 + 1;
+    Apos(sel) = sp(k);
+    Aneg(sel) = sn(k);
+    cP = sp(end);  cN = sn(end);
+end
+figure
+plot(idx, Apos, 'b', 'LineWidth', 1.2)
+hold on
+plot(idx, Aneg, 'r', 'LineWidth', 1.2)
+plot(idx, Apos + Aneg, 'k', 'LineWidth', 1.5)
+plot([1 N], [0 0], 'k:')
+% Cota: |M(t)| <= c*sqrt(t)  =>  |Ms(t)| <= sqrt(c)*t^(1/4)  =>  |A(x)| <= (4/5)*sqrt(c)*x^(5/4)
+env = 0.8 * sqrt(cM) * idx.^1.25;
+plot(idx,  env, 'g--', 'LineWidth', 1.2)
+plot(idx, -env, 'g--', 'LineWidth', 1.2)
+xlabel('x'); ylabel('area');
+legend('A_+(x)', 'A_-(x)', 'A_+(x)+A_-(x)', '', '\pm(4/5)c^{1/2}x^{5/4}', '', 'Location', 'best'); grid on
+title('Areas acumuladas de Ms')
+fprintf('8 areas               %8.2f s   A+ = %.6g   A- = %.6g   neta = %.6g   c = %.4f\n', ...
+        toc, cP, cN, cP + cN, cM);
+
+%% 8b. Diagonal: area beta = sum |M| y altura H frente a la longitud l de cada excursion
+tic
+beta = zeros(nb,1);
+for i0 = 1:C:N
+    i1 = min(i0+C-1, N);
+    beta = beta + accumarray(double(b(i0:i1)), double(abs(M(i0:i1))), [nb 1]);
+end
+Lx  = v - u;
+okk = (H > 0) & (Lx > 0);
+[rH, iH] = max(H(okk)    ./ sqrt(Lx(okk)));
+[rB, iB] = max(beta(okk) ./ Lx(okk).^1.5);
+jj = find(okk);
+figure
+subplot(1,2,1)
+loglog(Lx(okk), H(okk), '.', 'MarkerSize', 4); hold on
+lx = logspace(0, log10(max(Lx)), 60);
+loglog(lx, sqrt(lx), 'k--'); grid on
+xlabel('\ell'); ylabel('H'); title('H frente a \ell  (recta: \ell^{1/2})')
+subplot(1,2,2)
+loglog(Lx(okk), beta(okk), '.', 'MarkerSize', 4); hold on
+loglog(lx, lx.^1.5, 'k--'); grid on
+xlabel('\ell'); ylabel('\beta'); title('\beta frente a \ell  (recta: \ell^{3/2})')
+fprintf('8b diagonal           %8.2f s   max H/sqrt(l) = %.4f (u = %d)   max beta/l^1.5 = %.4f (u = %d)\n', ...
+        toc, rH, u(jj(iH)), rB, u(jj(iB)));
+
+%% 9. Guardado: solo Ms, binario plano (M y mu se reconstruyen de moebius.bin)
+tic
+fid = fopen('Ms.bin','wb');
+if fid == -1
+    error('No se puede crear Ms.bin')
+end
+fwrite(fid, Ms, 'single');
+fclose(fid);
+fprintf('9 guardado Ms.bin     %8.2f s\n', toc);
+% Para leerlo:  fid = fopen('Ms.bin','rb'); Ms = fread(fid,Inf,'single=>single'); fclose(fid);
+% Si se quiere .mat:  save('Ms.mat','Ms','-v7.3','-nocompression')
+
+fprintf('TOTAL                 %8.2f s\n', toc(Ttot));

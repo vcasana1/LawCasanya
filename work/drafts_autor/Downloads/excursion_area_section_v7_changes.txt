@@ -1,0 +1,550 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cA}{\mathcal A}
+\newcommand{\Ms}{\mathcal M_s}
+\newcommand{\cE}{\mathcal E}
+\DeclareMathOperator{\sgn}{sgn}
+
+\title{The area function of the Mertens excursion skeleton\\[1mm]
+\large Version 7 --- change set against version 6 (\S\S1--4, from Part I of the review)\\
+and a new section on lacunary exceptional excursions}
+\author{V.~Casa\~na-Giner}
+\date{25 September 2026}
+
+\begin{document}
+\maketitle
+
+\section*{How to merge this change set into v6}
+
+Every block below is keyed to a v6 label. ``Replace'' means the v6 environment with that
+label is deleted and the block below takes its place; ``insert'' means new material.
+Sections~5--7 of v6 are \emph{not} touched here: Part~II of the review (explicit formula,
+dipole identity, \texttt{lem:transfer}, area bounds, RH criteria, pruning of short
+excursions) is still pending.
+
+\begin{enumerate}[leftmargin=2em]
+\item \S2 status paragraph: replace by Block~\ref{blk:status}.
+\item \texttt{def:Ms}: keep; append Definition~\ref{def:Ms-terminal} immediately after it.
+\item Insert Remark~\ref{rem:g-skeleton} at the end of \S2.
+\item \texttt{lem:critical}: replace by Lemma~\ref{lem:critical-v7} (keep the v6 label
+      \texttt{lem:critical} when merging).
+\item \texttt{rem:critical\_v5}: replace by Remark~\ref{rem:critical-v5-v7}.
+\item \texttt{lem:triangular-corr}: replace by Lemma~\ref{lem:triangular-v7} and
+      Corollary~\ref{cor:bridge}; insert Remark~\ref{rem:hermitian}.
+\item Insert Lemma~\ref{lem:extreme-lag} after \texttt{lem:zeroth-corr}.
+\item \texttt{prop:quadratic-decomp}: replace by Proposition~\ref{prop:quadratic-decomp-v7}.
+\item \texttt{rem:height-Q}: replace by Proposition~\ref{prop:sharp-LH} (keep the label
+      \texttt{rem:height-Q} as an alias pointing to it).
+\item \texttt{eq:Q\_upper} and the inequality $\beta_\nu^2\le\ell_\nu Q_\nu$: replace by
+      Corollary~\ref{cor:fixed-L} and Corollary~\ref{cor:CS}. \emph{Every later use of
+      \texttt{eq:Q\_upper} in \S\S5--7 must be re-checked with the constant $1/12$ in
+      place of $1/4$.}
+\item Insert the new Section~\ref{sec:lacunary} after the section containing the RH
+      criteria (v6 \S7), before the open-problems/history material.
+\item Append the bibliography entries at the end of this file.
+\end{enumerate}
+
+\paragraph{Conventions used in this change set.}
+$M(0)=0$. An \emph{excursion} is $I_\nu=(a_\nu,b_\nu]$ with $M(a_\nu)=0$,
+$M(a_\nu+1)=\sigma_\nu\in\{\pm1\}$, $\sigma_\nu M(n)\ge1$ for $a_\nu<n<b_\nu$ and $M(b_\nu)=0$;
+$\ell_\nu=b_\nu-a_\nu\ge2$. Consecutive excursions are separated by \emph{zero runs}
+$[b_\nu,a_{\nu+1}]$, maximal sets of consecutive integers on which $M=0$ (possibly a single
+point). The null excursions of v6 \texttt{def:null} are, in this change set, part of zero
+runs; nothing below depends on whether they are indexed.
+The oriented path is $S_t=\sigma_\nu M(a_\nu+t)$, $0\le t\le\ell_\nu$; $H_\nu=\max_tS_t$;
+$\tau_\nu=a_\nu+\min\{t:S_t=H_\nu\}$ (first maximum). Steps are $x_j=\mu(a_\nu+j)$,
+$1\le j\le\ell_\nu$, and
+\[
+C_h=\sum_{j=1}^{\ell-h}x_jx_{j+h},\qquad
+\beta_\nu=\sum_{t=1}^{\ell_\nu-1}S_t,\qquad
+Q_\nu=\sum_{t=1}^{\ell_\nu-1}S_t^2 .
+\]
+In the discussion leading to Section~\ref{sec:lacunary} the endpoints were written
+$x_{0,\nu},x_{1,\nu}$; here they are $a_\nu,b_\nu$ to avoid a clash with the steps $x_j$.
+
+%=====================================================================
+\section{\texorpdfstring{Changes to \S2}{Changes to section 2}}
+
+\begin{remark}[Status of \S2 --- replaces the v6 status paragraph]\label{blk:status}
+The segmentation of $M$ by its zeros and the record of its extrema between zeros are not
+new: Hurst~\cite{Hurst18} computed $M(x)$ for all $x\le10^{16}$, recording all zeros and
+all extrema. The area $\beta=\sum S_t$ of a lattice excursion and the quadratic functional
+$Q=\sum S_t^2$ are classical: Tak\'acs~\cite{Takacs91} (distribution, moments and
+asymptotics of the Bernoulli excursion area), Nguy\^en Th\^e~\cite{NguyenThe04} (joint law
+of area and inertial moment $\sum x_i^2$ for Bernoulli bridges and excursions),
+Richard~\cite{Richard05} (higher power sums of heights), Janson~\cite{Janson07} (Brownian
+limits), Denisov--Kolb--Wachtel~\cite{DKW15} and Carmona--P\'etr\'elis~\cite{CP17}
+(random-walk excursion areas). The scalings $\ell^{3/2}$ for $\beta$ and $\ell^{2}$ for $Q$
+are the standard Brownian ones. What is specific to this notebook is (a) the regularized
+triangular skeleton of \texttt{def:Ms}, with apex at the first maximum and height $g(H)$,
+and (b) the use of these functionals on the deterministic M\"obius walk. Proofs in
+\S\S2--4 are complete.
+\end{remark}
+
+\begin{definition}[Terminal block of a truncated computation --- addendum to \texttt{def:Ms}]
+\label{def:Ms-terminal}
+Let $N\ge2$ be an integer and $u=u(N)=\max\{n\le N:M(n)=0\}$. If $u=N$ there is no terminal
+block. Otherwise $M$ has constant sign $\sigma_{\rm term}=\sgn M(N)$ on $(u,N]$; put
+\[
+H_{\rm term}=\max_{u<n\le N}|M(n)|\ \ (\ge1),\qquad
+\tau_{\rm term}=\min\{n\in(u,N]:|M(n)|=H_{\rm term}\}.
+\]
+On $[u,N]$ the skeleton is
+\[
+\Ms(x)=
+\begin{cases}
+\sigma_{\rm term}\,g(H_{\rm term})\,\dfrac{x-u}{\tau_{\rm term}-u}, & u\le x\le\tau_{\rm term},\\[2ex]
+\sigma_{\rm term}\Bigl[g(H_{\rm term})+\bigl(g(|M(N)|)-g(H_{\rm term})\bigr)
+\dfrac{x-\tau_{\rm term}}{N-\tau_{\rm term}}\Bigr], & \tau_{\rm term}\le x\le N,
+\end{cases}
+\]
+the second line being present only when $\tau_{\rm term}<N$. If $\tau_{\rm term}=N$ then
+$|M(N)|=H_{\rm term}$ and the skeleton is the ascending segment alone. For nondecreasing $g$
+(in particular $g=\sqrt{\cdot}$) the descending segment has slope of sign $-\sigma_{\rm term}$,
+or slope $0$ exactly when $|M(N)|=H_{\rm term}$ with $\tau_{\rm term}<N$ (the maximum is
+attained again at $N$; the first-maximum convention keeps the apex at $\tau_{\rm term}$).
+The terminal area is
+\[
+\Delta\cA(u,N]=\frac{\sigma_{\rm term}}{2}\Bigl[g(H_{\rm term})(N-u)+g(|M(N)|)(N-\tau_{\rm term})\Bigr].
+\]
+The terminal skeleton is provisional: it is not the restriction of the skeleton that the
+same block acquires once $M$ returns to $0$.
+\end{definition}
+
+\begin{remark}[The family of $g$-skeletons]\label{rem:g-skeleton}
+Nothing in \S\S2--3 uses $g(H)=\sqrt H$. For any $g:\mathbb N_0\to[0,\infty)$ with $g(0)=0$
+and $g(h)>0$ for $h\ge1$, define the $g$-skeleton with apex $(\tau_\nu,\sigma_\nu g(H_\nu))$.
+Then $\Delta\cA_g(I_\nu)=\tfrac12\sigma_\nu g(H_\nu)\ell_\nu$, Lemma~\ref{lem:critical-v7}
+holds verbatim (it uses only $g(H_\nu)>0$), and the quadratic statements of \S4 do not
+involve $g$ at all. The positivity $g(h)>0$ for $h\ge1$ is needed: if $g(h)=0$ for some
+$h\ge1$, excursions of height $h$ become invisible to the skeleton, merge into zero runs, and
+the crossing/touching classification changes. The choice $\sqrt H$ is a normalization fixed
+by the scalings used later, not a geometric consequence.
+\end{remark}
+
+%=====================================================================
+\section{\texorpdfstring{Changes to \S3}{Changes to section 3}}
+
+Recall $\cA'=\Ms$. Hence $\cA\in C^1$, and $\cA''$ exists off the nodes and is piecewise
+constant: it equals $\sigma_\nu g(H_\nu)/(\tau_\nu-a_\nu)$ on $(a_\nu,\tau_\nu)$,
+$-\sigma_\nu g(H_\nu)/(b_\nu-\tau_\nu)$ on $(\tau_\nu,b_\nu)$, and $0$ on zero runs.
+A point $p$ is a \emph{strict inflection point} of $\cA$ if $\cA$ is strictly concave on
+$(p-\delta,p]$ and strictly convex on $[p,p+\delta)$, or vice versa, for some $\delta>0$.
+(Under the non-strict definition every point of an affine piece qualifies, so that
+definition is useless here.)
+
+\begin{lemma}[Critical geometry of $\cA$ --- replaces \texttt{lem:critical}]\label{lem:critical-v7}
+Let $R=[p,q]$ ($p\le q$ integers) be a zero run between an excursion of sign $\sigma_-$
+ending at $p$ and an excursion of sign $\sigma_+$ starting at $q$.
+\begin{enumerate}[label=(\roman*)]
+\item Every apex $\tau_\nu$ is a strict inflection point: $\sgn\cA''$ jumps from
+$\sigma_\nu$ to $-\sigma_\nu$ there.
+\item \emph{Crossing run} ($\sigma_+=-\sigma_-$). If $p=q$, $\cA$ has a strict local maximum
+at $p$ when $\sigma_-=+1$ and a strict local minimum when $\sigma_-=-1$. If $p<q$, $\cA$ is
+constant on $R$ and $\cA(x)<\cA(p)$ (resp.\ $>$) for all $x\notin R$ close to $R$: $R$ is a
+\emph{plateau of maxima} (resp.\ \emph{minima}). Each point of $R$ is a non-strict local
+maximum (resp.\ minimum); points of $(p,q)$ are simultaneously non-strict local maxima and
+minima; no point of $R$ is a strict local extremum.
+\item \emph{Touching run} ($\sigma_+=\sigma_-=:\sigma$). $\cA$ has no local extremum on
+$R$; it is strictly monotone on each side of $R$ and constant on $R$. Moreover
+$\sgn\cA''=-\sigma$ on a left neighbourhood of $p$ and $+\sigma$ on a right neighbourhood
+of $q$. If $p=q$, $p$ is a strict inflection point. If $p<q$, $\cA''\equiv0$ on $(p,q)$ and
+no point of $R$ is a strict inflection point: the change of concavity is carried by the
+whole plateau.
+\item Consequently, strict local extrema of $\cA$ occur exactly at isolated crossing zeros,
+and plateaus of extrema exactly at crossing runs of positive length.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+On $(\tau_-,p)$ the skeleton is linear from $\sigma_-g(H_-)$ to $0$, with $g(H_-)>0$ and
+$\tau_-<p$ (the apex carries $|M|=H_-\ge1$, the endpoint carries $0$); so $\sgn\cA'=\sigma_-$
+and $\sgn\cA''=-\sigma_-$ there. Symmetrically, on $(q,\tau_+)$, $\sgn\cA'=\sigma_+$ and
+$\sgn\cA''=\sigma_+$. On $R$, $\cA'=0$. (ii): for $\sigma_-=+1=-\sigma_+$, $\cA$ increases
+strictly on $(\tau_-,p]$, is constant on $R$, decreases strictly on $[q,\tau_+)$. (iii): for
+$\sigma=+1$, $\cA$ increases strictly, is constant, increases strictly; $\cA''<0$, $=0$,
+$>0$ on the three pieces; at $p<q$ the right side of $p$ is affine, hence not strictly
+convex, and likewise at $q$ and at interior points. (i) is the same computation at the apex.
+(iv) collects (ii)--(iii): $\cA'$ changes sign across $R$ only at crossing runs.
+\end{proof}
+
+\begin{remark}[Replaces \texttt{rem:critical\_v5}]\label{rem:critical-v5-v7}
+Version~5 stated that a touching zero is an inflection point of $\cA$. That is correct
+verbatim only for touching runs consisting of one zero. For a touching run of several zeros
+$\cA''$ takes the signs $-\sigma,0,+\sigma$ on three consecutive blocks and there is no
+point with strict concavity of opposite type on both sides
+(Lemma~\ref{lem:critical-v7}(iii)). The v6 claim ``$\cA''$ changes sign at every touching
+run'' is correct only in this sense: $\cA''$ has opposite signs immediately to the left of
+$p$ and immediately to the right of $q$.
+\end{remark}
+
+%=====================================================================
+\section{\texorpdfstring{Changes to \S4}{Changes to section 4}}
+
+\begin{lemma}[Triangular identity --- replaces \texttt{lem:triangular-corr}]\label{lem:triangular-v7}
+Let $L\ge1$ and $x_1,\dots,x_L\in\mathbb R$ be arbitrary. Put $S_0=0$,
+$S_t=\sum_{j\le t}x_j$ and $C_h=\sum_{j=1}^{L-h}x_jx_{j+h}$. Then
+\begin{equation}\label{eq:triangular-general}
+\sum_{t=1}^{L-1}S_t^2+\sum_{h=1}^{L-1}hC_h=S_L\sum_{t=1}^{L-1}S_t .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$\sum_{t=1}^{L}S_t^2=\sum_{i,j}x_ix_j\,\#\{t:\max(i,j)\le t\le L\}
+=\sum_{i,j}x_ix_j\,(L+1-\max(i,j))$. With $\max(i,j)=\tfrac12(i+j+|i-j|)$,
+\[
+\sum_{i,j}x_ix_j\max(i,j)=S_L\sum_i i\,x_i+\sum_{h\ge1}hC_h ,
+\]
+and summation by parts gives $\sum_i i\,x_i=LS_L-\sum_{t=1}^{L-1}S_t$. Hence
+$\sum_{t=1}^{L}S_t^2=S_L^2+S_L\sum_{t=1}^{L-1}S_t-\sum_h hC_h$; subtract $S_L^2$.
+\end{proof}
+
+\begin{corollary}[Bridge case]\label{cor:bridge}
+If $S_L=0$, then $\sum_{t=1}^{L-1}S_t^2=-\sum_{h=1}^{L-1}hC_h$. In particular, for every
+complete excursion,
+\[
+Q_\nu=-\sum_{h=1}^{\ell_\nu-1}h\,C_h^{(\nu)} .
+\]
+\end{corollary}
+
+\begin{remark}[Scope]\label{rem:hermitian}
+The hypothesis $x_j\in\{-1,0,1\}$ of v6 is not used: \eqref{eq:triangular-general} is an
+identity for arbitrary real finite sequences, and the M\"obius content of
+Corollary~\ref{cor:bridge} lies entirely in the values $x_j$. For complex $x_j$, with
+$C_h=\sum_jx_j\overline{x_{j+h}}$, the same computation gives
+\[
+\sum_{t=1}^{L-1}|S_t|^2+\sum_{h=1}^{L-1}h\,\Re C_h=\Re\Bigl(\overline{S_L}\sum_{t=1}^{L-1}S_t\Bigr).
+\]
+\end{remark}
+
+\begin{lemma}[Extreme lag --- insert after \texttt{lem:zeroth-corr}]\label{lem:extreme-lag}
+For every complete excursion, $C^{(\nu)}_{\ell_\nu-1}=-1$, and $q_\nu:=C^{(\nu)}_0
+=\#\{j:x_j\ne0\}$ is even and at least $2$.
+\end{lemma}
+
+\begin{proof}
+$x_1=M(a_\nu+1)=\sigma_\nu$. Since $\sigma_\nu M(b_\nu-1)\ge1$, $M(b_\nu)=0$ and
+$|\mu|\le1$, we have $M(b_\nu-1)=\sigma_\nu$ and $x_{\ell_\nu}=-\sigma_\nu$. Thus
+$C_{\ell_\nu-1}=x_1x_{\ell_\nu}=-1$, independently of orientation. Evenness: $\sum_jx_j=0$
+with $x_j\in\{-1,0,1\}$ forces equally many $+1$ and $-1$.
+\end{proof}
+
+\begin{proposition}[Quadratic decomposition --- replaces \texttt{prop:quadratic-decomp}]
+\label{prop:quadratic-decomp-v7}
+For real $x\ge1$ let $u(x)=\max\{n\le\lfloor x\rfloor:M(n)=0\}$, $L_x=\lfloor x\rfloor-u(x)$,
+and for $1\le j\le L_x$ put $x_j=\mu(u(x)+j)$, $S_t=M(u(x)+t)$,
+$C_h^{\rm term}=\sum_{j=1}^{L_x-h}x_jx_{j+h}$. Then
+\[
+\sum_{n\le x}M(n)^2=\sum_{\nu:\,b_\nu\le u(x)}Q_\nu+T(x),
+\qquad Q_\nu=-\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)},
+\]
+\[
+T(x)=\sum_{t=1}^{L_x}S_t^2
+=M(\lfloor x\rfloor)^2+M(\lfloor x\rfloor)\sum_{t=1}^{L_x-1}M(u(x)+t)
+-\sum_{h=1}^{L_x-1}hC_h^{\rm term},
+\]
+with $T(x)=0$ when $L_x=0$.
+\end{proposition}
+
+\begin{proof}
+Every $n\le u(x)$ either lies in a zero run ($M(n)=0$) or in the interior of a unique
+complete excursion $I_\nu$ with $b_\nu\le u(x)$, whose interior contributes $Q_\nu$
+(Corollary~\ref{cor:bridge}). The integers in $(u(x),\lfloor x\rfloor]$ contribute $T(x)$;
+apply Lemma~\ref{lem:triangular-v7} with $L=L_x$ and add $S_{L_x}^2$. The terminal block is
+not bridged; the term $M(\lfloor x\rfloor)\sum_tM(u(x)+t)$ is exactly what the bridge
+constraint removes in complete blocks.
+\end{proof}
+
+\begin{proposition}[Sharp bounds at fixed length and height --- replaces
+\texttt{rem:height-Q}]\label{prop:sharp-LH}
+Let $S_0=S_L=0$, $S_t\ge1$ for $0<t<L$, $S_t-S_{t-1}\in\{-1,0,1\}$, and $H=\max S_t$. Then
+$L\ge2H$ and
+\begin{align}
+H^2+L-2H\ &\le\ \beta\ \le\ H(L-H), \label{eq:beta-LH}\\
+\frac{2H^3+H}{3}+L-2H\ &\le\ Q\ \le\ \frac{2H^3+H}{3}+(L-2H)H^2. \label{eq:Q-LH}
+\end{align}
+All four bounds are attained for every pair $(L,H)$ with $L\ge2H\ge2$. In particular
+$Q\ge(2H^3+H)/3$, with equality exactly for the tent path ($L=2H$, no null step), and
+$Q\ge L-1$.
+\end{proposition}
+
+\begin{proof}
+Let $t_0$ be the first time with $S_{t_0}=H$. Steps have size at most $1$, so for each
+$r\in\{1,\dots,H-1\}$ there is a time in $(0,t_0)$ with $S=r$ and a time in $(t_0,L)$ with
+$S=r$. Designate one such time on each side for each $r$, together with $t_0$: these are
+$2H-1$ distinct times in $\{1,\dots,L-1\}$ carrying exactly the values
+$1,1,2,2,\dots,H-1,H-1,H$. Hence $L-1\ge2H-1$, and the designated times contribute exactly
+$H^2$ to $\beta$ and $2\sum_{r<H}r^2+H^2=(2H^3+H)/3$ to $Q$. The remaining $L-2H$ times
+carry values in $[1,H]$, which gives the four bounds. Attainment: the steps
+$(+1,\,0^{L-2H},\,+1^{H-1},\,-1^{H})$ give both lower bounds; the trapezoid
+$(+1^{H},\,0^{L-2H},\,-1^{H})$ gives both upper bounds. For the equality case of
+$Q\ge(2H^3+H)/3$: any undesignated time adds at least $1$, so $L=2H$, and then there is no
+room for a null step. $Q\ge L-1$ is $S_t\ge1$.
+\end{proof}
+
+\begin{corollary}[Fixed length --- replaces \texttt{eq:Q\_upper}]\label{cor:fixed-L}
+Under the hypotheses of Proposition~\ref{prop:sharp-LH}, with $L\ge2$,
+\[
+\beta\le\Bigl\lfloor\frac{L^2}{4}\Bigr\rfloor,\qquad
+Q\le
+\begin{cases}
+\dfrac{L(L^2+2)}{12}, & L\ \text{even},\\[1.5ex]
+\dfrac{L(L^2-1)}{12}, & L\ \text{odd},
+\end{cases}
+\]
+both attained by $S_t=\min(t,L-t)$ (a tent, with one null step at the top when $L$ is
+odd). In all cases $Q\le(L^3+2L)/12$: the constant $1/4$ of v6 improves to $1/12$.
+\end{corollary}
+
+\begin{proof}
+$S_t\le\min(t,L-t)$ because steps have size at most $1$ and $S_0=S_L=0$. For $L=2m$:
+$\sum_{t=1}^{2m-1}\min(t,2m-t)^2=2\sum_{t<m}t^2+m^2=(2m^3+m)/3=L(L^2+2)/12$ and the linear
+sum is $m^2$. For $L=2m+1$: $2\sum_{t\le m}t^2=m(m+1)(2m+1)/3=L(L^2-1)/12$ and the linear
+sum is $m(m+1)=\lfloor L^2/4\rfloor$. The extremal path has steps
+$(+1^m,-1^m)$ or $(+1^m,0,-1^m)$.
+\end{proof}
+
+\begin{corollary}[Cauchy--Schwarz, sharp form --- replaces $\beta_\nu^2\le\ell_\nu Q_\nu$]
+\label{cor:CS}
+$\beta_\nu^2\le(\ell_\nu-1)Q_\nu$, with equality if and only if $S_t$ is constant on
+$1\le t\le\ell_\nu-1$, i.e.\ (since $S_1=1$) for the flat excursion of height $1$.
+\end{corollary}
+
+%=====================================================================
+\section{Lacunary exceptional excursions and a localized RH criterion}
+\label{sec:lacunary}
+
+Throughout, $\Theta:=\sup\{\Re\rho:\zeta(\rho)=0,\ 0<\Re\rho<1\}$, so that RH is
+$\Theta=\tfrac12$.
+
+\begin{definition}\label{def:ordinary}
+For $A>1$, the excursion $I_\nu=(a_\nu,b_\nu]$ is \emph{$A$-ordinary} if $b_\nu\le a_\nu^A$
+and \emph{$A$-exceptional} otherwise. (The first excursion $(0,2]$ is exceptional for every
+$A$.)
+\end{definition}
+
+\begin{lemma}[Lacunary count]\label{lem:lacunary-count}
+Let $\cE$ be any family of excursions such that $b_\nu>a_\nu^A$ for $\nu\in\cE$. Then for
+$X\ge2$,
+\[
+\#\{\nu\in\cE:a_\nu\le X\}\le2+\frac{1}{\log A}\log\frac{\log X}{\log2}.
+\]
+\end{lemma}
+
+\begin{proof}
+The only excursion with $a_\nu<2$ is $(0,2]$, since $M(1)=1$. Let
+$2\le a_{\nu_1}<a_{\nu_2}<\cdots$ be the remaining starting points in $\cE$. Excursions are
+disjoint and ordered, so $a_{\nu_{k+1}}\ge b_{\nu_k}>a_{\nu_k}^A$, whence
+$\log a_{\nu_k}\ge A^{k-1}\log2$. If $a_{\nu_k}\le X$ then
+$k\le1+\log(\log X/\log2)/\log A$.
+\end{proof}
+
+The proof uses only that excursions are pairwise disjoint and ordered; it holds for any
+family of disjoint intervals and contains no arithmetic information. The arithmetic input
+of the section is the following localization hypothesis.
+
+\begin{hypothesis}[$\mathrm{KP}_C$, for a fixed $C>1$]\label{hyp:KP}
+If $\Theta>\tfrac12$, then for every $\eta\in(0,\Theta-\tfrac12)$ there is
+$Y_0=Y_0(\eta,C)$ such that every window $[Y,Y^C]$ with $Y\ge Y_0$ contains integers
+$x_+,x_-$ with
+\[
+M(x_+)\ge x_+^{\Theta-\eta},\qquad M(x_-)\le-x_-^{\Theta-\eta}.
+\]
+\end{hypothesis}
+
+\noindent
+Kaczorowski and Pintz~\cite{KP86} prove localized $\Omega_\pm$-results of this type; in
+secondary sources their Corollary~1 is quoted in the form $\mathrm{KP}_C$ for every $C>1$
+(windows $[Y,Y^{1+o(1)}]$). [Not yet checked against the primary source; the admissible
+range of $C$ must be read off \cite{KP86} before Hypothesis~\ref{hyp:KP} is removed from the
+statements below.] The paper is not in the local library.
+
+\begin{lemma}[Many large excursions]\label{lem:many-large}
+Assume $\mathrm{KP}_C$ and $\Theta>\tfrac12$, and fix $\eta\in(0,\Theta-\tfrac12)$. Let
+$N_\eta(X)$ be the number of excursions with $a_\nu\le X$ that contain some $t$ with
+$|M(t)|\ge t^{\Theta-\eta}$. Then
+\[
+N_\eta(X)\ge\frac{\log\log X}{\log C}-c(\eta,C)\qquad(X\ge X_0(\eta,C)).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $Y_0'=\max(Y_0(\eta,C),3)$, $Y_j=Y_0'^{\,C^j}$, and $J=\max\{j:Y_j\le X\}
+=\lfloor\log(\log X/\log Y_0')/\log C\rfloor$. For $0\le j<J$ the window
+$W_j=[Y_j,Y_{j+1}]$ contains $x_\pm^{(j)}$ as in $\mathrm{KP}_C$. Every $t\ge3$ with
+$M(t)\ne0$ lies in a unique excursion: $M(2)=0$, and $M$ vanishes somewhere beyond $t$
+because it takes both signs there and moves by steps in $\{-1,0,1\}$. Let $P_j,N_j$ be the
+excursions containing $x_+^{(j)},x_-^{(j)}$; $P_j\ne N_j$ since excursions have constant
+sign. If $P_j=P_{j'}$ with $j'\ge j+2$, this positive excursion contains
+$[x_+^{(j)},x_+^{(j')}]\supset W_{j+1}\ni x_-^{(j+1)}$, a contradiction. So each positive
+excursion equals $P_j$ for at most two consecutive $j$, and likewise for the negative ones;
+there are at least $\lceil J/2\rceil+\lceil J/2\rceil\ge J$ distinct excursions among the
+$P_j,N_j$, all with $a_\nu<Y_J\le X$.
+\end{proof}
+
+\begin{theorem}[Localized criterion]\label{thm:lacunary-RH}
+Assume $\mathrm{KP}_C$ for some $C>1$. Let $\cE$ be a family of excursions with
+$\#\{\nu\in\cE:a_\nu\le X\}\le\kappa\log\log X+O(1)$ for some $\kappa<1/\log C$. Then RH is
+equivalent to:
+\begin{quote}
+for every $\varepsilon>0$ there is $C_\varepsilon$ such that $|M(t)|\le C_\varepsilon
+t^{1/2+\varepsilon}$ for every $t$ in every excursion $I_\nu$ with $\nu\notin\cE$.
+\end{quote}
+No bound of any kind (length, height, area, energy) is required on the excursions in $\cE$.
+\end{theorem}
+
+\begin{proof}
+RH implies $M(x)\ll_\varepsilon x^{1/2+\varepsilon}$ for all $x$ (Littlewood;
+\cite[\S14.25]{Titchmarsh}). Conversely, assume the bound off $\cE$ and suppose
+$\Theta>\tfrac12$. Take $\eta=\varepsilon=(\Theta-\tfrac12)/3$. By
+Lemma~\ref{lem:many-large}, the number of excursions not in $\cE$, with $a_\nu\le X$ and
+containing some $t$ with $|M(t)|\ge t^{\Theta-\eta}$, is at least
+$(1/\log C-\kappa)\log\log X-O(1)\to\infty$. Only finitely many excursions start below any
+given bound, so there are such $t$ tending to infinity; for them
+$t^{\Theta-\eta}/t^{1/2+\varepsilon}=t^{\eta}\to\infty$, contradicting the bound.
+\end{proof}
+
+\begin{corollary}\label{cor:A-ordinary}
+Assume $\mathrm{KP}_C$ for some $C<A$. Then RH holds if and only if for every
+$\varepsilon>0$ there is $C_\varepsilon$ with $|M(t)|\le C_\varepsilon t^{1/2+\varepsilon}$
+for all $t$ in all $A$-ordinary excursions. If $\mathrm{KP}_C$ holds for every $C>1$, this is
+valid for every $A>1$; in particular for $A=2$, i.e.\ for the excursions with $b_\nu\le a_\nu^2$.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:lacunary-count} gives $\kappa=1/\log A<1/\log C$.
+\end{proof}
+
+\begin{remark}[What the criterion uses and what it does not]\label{rem:lacunary-content}
+\begin{enumerate}[label=(\alph*)]
+\item The counting side is combinatorial (Lemma~\ref{lem:lacunary-count}); all arithmetic
+enters through $\mathrm{KP}_C$.
+\item The exponent $2$ plays no role in the equivalence: any $A>C$ works. If $\mathrm{KP}_C$
+holds for every $C>1$, the ordinary class can be shrunk to $b_\nu\le a_\nu^{1+\delta}$ for
+any fixed $\delta>0$.
+\item Both signs in each window are essential. A one-sided localization ($|M|$ large in
+every window) would not suffice, because a single exceptional excursion can cover
+arbitrarily many consecutive windows.
+\item The criterion is equivalent to RH; it relocates the difficulty and does not reduce it.
+We have not found it stated in the literature (targeted search only, which is weak
+evidence of absence).
+\end{enumerate}
+\end{remark}
+
+\subsection{\texorpdfstring{Ordinary excursions with $A\le2$ are values of a bilinear form in the prefix}{Ordinary excursions with A<=2 are values of a bilinear form in the prefix}}
+
+\begin{proposition}\label{prop:prefix-bilinear}
+Let $u\ge1$ be an integer and $1\le t\le u^2$. Then
+\[
+M(t)=2M(\min(t,u))-\sum_{d,j\le u}\mu(d)\mu(j)\Bigl\lfloor\frac{t}{dj}\Bigr\rfloor .
+\]
+In particular, if $M(u)=0$ and $u<t\le u^2$,
+\[
+M(t)=-B_u(t),\qquad B_u(t):=\sum_{d,j\le u}\mu(d)\mu(j)\Bigl\lfloor\frac{t}{dj}\Bigr\rfloor,
+\qquad B_u(u)=0 .
+\]
+\end{proposition}
+
+\begin{proof}
+Let $\mu_u=\mu\cdot\mathbf 1_{[1,u]}$. Each factor of $(\mu-\mu_u)*(\mu-\mu_u)*1$ in the
+first two slots is supported on $(u,\infty)$, so the product is supported on $(u^2,\infty)$.
+Expanding with $\mu*1=\delta$ gives $\mu-2\mu_u+\mu_u*\mu_u*1$; hence
+$\mu(n)=2\mu_u(n)-(\mu_u*\mu_u*1)(n)$ for $n\le u^2$. Summing over $n\le t$ gives the
+formula. At $t=u$ it reads $M(u)=2M(u)-B_u(u)$, so $B_u(u)=M(u)$.
+\end{proof}
+
+This is the case $k=2$ of Heath-Brown's identity~\cite{HB82}; in summed form it is
+identity~(2.2) of Helfgott--Thompson~\cite{HT23}, used there for $u\ge\sqrt x$ in the
+computation of $M(x)$. Consequently every $A$-ordinary excursion with $A\le2$ is a stretch
+of values of $-B_{a_\nu}$: $B_{a_\nu}(a_\nu)=B_{a_\nu}(b_\nu)=0$ and
+$\sigma_\nu B_{a_\nu}(t)<0$ for $a_\nu<t<b_\nu$. The trivial bound is
+$|B_u(t)|\le t(1+\log u)^2$; at $t\asymp u^2$ the RH size $t^{1/2+\varepsilon}\asymp
+u^{1+2\varepsilon}$ requires almost square-root cancellation in a form with $u^2$ terms.
+
+\begin{remark}[``Determined by the prefix'' carries no information by itself]\label{rem:prefix-k}
+For every $k\ge1$ and $n\le u^k$,
+\[
+\mu(n)=\sum_{j=1}^{k}(-1)^{j-1}\binom kj\bigl(\mu_u^{*j}*1^{*(j-1)}\bigr)(n),
+\]
+because $\delta-1*\mu_u$ vanishes on $[1,u]$, so $\mu*(\delta-1*\mu_u)^{*k}$ is supported
+on $(u^k,\infty)$, and the binomial expansion with $\mu*1^{*j}=1^{*(j-1)}$ gives the
+identity. Thus $M$ on $(u,u^k]$ is an explicit function of $\mu|_{[1,u]}$ for every $k$,
+with kernels $D_{j-1}(y)=\sum_{n\le y}1^{*(j-1)}(n)$ ($D_1=\lfloor\cdot\rfloor$, $D_2$ the
+divisor summatory function). Taking $u=2$ and $k=\lceil\log_2t\rceil$, $M(t)$ is a fixed
+function of $\mu(1),\mu(2)$ alone: the arithmetic content sits in the kernels, i.e.\ in the
+powers of $\zeta$, not in the prefix. What distinguishes the range $t\le u^2$ is that the
+only kernel is $\lfloor\cdot\rfloor$: $M(t)$ is a bilinear form in $\mu_u$ whose kernel
+depends only on the product $dj$. That, and not determinacy, is what the choice $A\le2$ in
+Corollary~\ref{cor:A-ordinary} buys.
+\end{remark}
+
+\begin{question}\label{q:excursion-constraint}
+Let $u=a_\nu$, $b_\nu\le u^2$, and suppose $B_u(u)=B_u(b_\nu)=0$ and $\sigma_\nu B_u(t)<0$
+for $u<t<b_\nu$. Do these conditions imply a bound on $\max_{u<t\le b_\nu}|B_u(t)|$ that is
+not available for an arbitrary $t\le u^2$? By Corollary~\ref{cor:A-ordinary} (with $A=2$,
+under $\mathrm{KP}_C$ for some $C<2$), an affirmative answer of size
+$\ll_\varepsilon b_\nu^{1/2+\varepsilon}$, uniform over ordinary excursions, is equivalent to
+RH. The conditions are the excursion conditions on $M$ rewritten, so they carry no
+information beyond them; any gain has to come from the structure of $B_u$: the rank-one
+coefficient matrix $\mu(d)\mu(j)$ on $[1,u]^2$ and a kernel depending on $dj$ only.
+\end{question}
+
+%=====================================================================
+\begin{thebibliography}{99}
+
+\bibitem{CP17} P.~Carmona and N.~P\'etr\'elis, \emph{Limit theorems for random walk
+excursion conditioned to enclose a typical area}, arXiv:1709.06448.
+% Journal version reported as J. London Math. Soc. (2020); volume/pages not verified.
+
+\bibitem{DKW15} D.~Denisov, M.~Kolb and V.~Wachtel, \emph{Local asymptotics for the area of
+random walk excursions}, J. London Math. Soc. \textbf{91} (2015), 495--513.
+
+\bibitem{HB82} D.~R.~Heath-Brown, \emph{Prime numbers in short intervals and a generalized
+Vaughan identity}, Canad. J. Math. \textbf{34} (1982), 1365--1377.
+
+\bibitem{HT23} H.~A.~Helfgott and L.~Thompson, \emph{Summing $\mu(n)$: a faster elementary
+algorithm}, Res. Number Theory \textbf{9} (2023), Paper No.~6,
+doi:10.1007/s40993-022-00408-8.
+
+\bibitem{Hurst18} G.~Hurst, \emph{Computations of the Mertens function and improved bounds
+on the Mertens conjecture}, Math. Comp. \textbf{87} (2018), no.~310, 1013--1028.
+
+\bibitem{Janson07} S.~Janson, \emph{Brownian excursion area, Wright's constants in graph
+enumeration, and other Brownian areas}, Probab. Surveys \textbf{4} (2007), 80--145,
+doi:10.1214/07-PS104.
+
+\bibitem{KP86} J.~Kaczorowski and J.~Pintz, \emph{Oscillatory properties of arithmetical
+functions.~I}, Acta Math. Hungar. \textbf{48} (1986), 173--185.
+
+\bibitem{NguyenThe04} M.~Nguy\^en Th\^e, \emph{Area and inertial moment of Dyck paths},
+Combin. Probab. Comput. \textbf{13} (2004), no.~4--5, 697--716.
+
+\bibitem{Richard05} C.~Richard, \emph{On $q$-functional equations and excursion moments},
+arXiv:math/0503198.
+
+\bibitem{Takacs91} L.~Tak\'acs, \emph{A Bernoulli excursion and its various applications},
+Adv. Appl. Probab. \textbf{23} (1991), 557--585, doi:10.2307/1427622.
+
+\bibitem{Titchmarsh} E.~C.~Titchmarsh, \emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D.~R.~Heath-Brown, Oxford, 1986.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,155 @@
+function mobius_lag_profile
+clc; clear;
+% MOBIUS_LAG_PROFILE  -- perfil de C_h y cancelacion ENTRE desfases.
+%
+% Identidad exacta (comprobada en el programa):
+%   C(N) = sum_{k<=N} mu(k) M(k-1)/k = sum_{h>=1} C_h(N)
+%   C_h(N) = sum_{m} mu(m) * [mu(m+h)/(m+h)]
+%
+% Todos los C_h de golpe por FFT: correlacion cruzada de
+%   a(m) = mu(m)   contra   b(k) = mu(k)/k.
+%
+% NUMERO TITULAR:
+%   dentro = sqrt(sum_h C_h^2)   (lo que daria si los C_h tuvieran signos sin estructura)
+%   fuera  = |sum_h C_h| = |C(N)|
+%   factor de cancelacion entre desfases = dentro / fuera
+%
+% Renombra a .m para ejecutar.
+
+%% CONFIGURACION
+fileName   = 'moebius.bin';
+Nread      = 5000000;     % baja a 1e6 si te quedas sin memoria
+Hfine      = 2000;        % perfil exacto para h = 1..Hfine
+nullCount  = 10;          % permutaciones globales de control
+nLogBins   = 60;
+randomSeed = 17092026;
+savePrefix = 'mobius_lag_profile';
+rng(randomSeed,'twister');
+
+if ~isfile(fileName), error('%s no encontrado.',fileName); end
+fid = fopen(fileName,'rb');
+if fid < 0, error('No se pudo abrir %s.',fileName); end
+cleaner = onCleanup(@() fclose(fid));
+mu = double(fread(fid,Nread,'*int8'));
+clear cleaner;
+if isempty(mu) || any(mu < -1 | mu > 1), error('Palabra invalida.'); end
+mu = mu(:); N = numel(mu); k = (1:N).';
+L  = 2^nextpow2(2*N);
+
+fprintf('Enteros leidos: %d;  longitud FFT: %d\n',N,L);
+fprintf('Memoria pico aproximada: %.2f GB\n',3*L*16/2^30);
+fprintf('Permutaciones de control: %d\n\n',nullCount);
+
+%% PERFIL REAL
+[Ch,Cdirect] = lag_profile(mu,k,L);
+Ctotal  = sum(Ch);
+inside  = sqrt(sum(Ch.^2));
+factor  = inside/abs(Ctotal);
+checkErr = Ctotal - Cdirect;
+
+fprintf('C(N) directo      = %+.12g\n',Cdirect);
+fprintf('sum_h C_h         = %+.12g\n',Ctotal);
+fprintf('error identidad   = %+.3e   (debe ser ruido de coma flotante)\n',checkErr);
+fprintf('C(N)/log(N)       = %+.9f\n',Cdirect/log(N));
+fprintf('dentro = sqrt(sum C_h^2) = %.9g\n',inside);
+fprintf('fuera  = |sum C_h|       = %.9g\n',abs(Ctotal));
+fprintf('FACTOR DE CANCELACION ENTRE DESFASES = %.6g\n\n',factor);
+
+%% DONDE SE ACUMULA LA MASA
+S = cumsum(Ch);            % suma parcial hasta H
+T = cumsum(abs(Ch));       % masa absoluta hasta H
+H = (1:numel(Ch)).';
+fracAbs = T/T(end);
+targets = [.10 .25 .50 .75 .90 .99];
+fprintf('Desfase H que acumula una fraccion dada de sum|C_h|:\n');
+for q = targets
+    idx = find(fracAbs >= q,1,'first');
+    fprintf('   %4.0f%%  ->  H = %d   (H/N = %.4g);  suma parcial S(H) = %+.6g\n', ...
+        100*q,H(idx),H(idx)/N,S(idx));
+end
+fprintf('\n');
+
+%% CONTROL: PERMUTACIONES GLOBALES
+nz = find(mu ~= 0); signs = mu(nz); q = numel(signs);
+nullTotal = zeros(nullCount,1); nullInside = zeros(nullCount,1);
+nullFactor = zeros(nullCount,1);
+cand = zeros(N,1);
+for p = 1:nullCount
+    cand(:) = 0; cand(nz) = signs(randperm(q));
+    Chp = lag_profile(cand,k,L);
+    nullTotal(p)  = sum(Chp);
+    nullInside(p) = sqrt(sum(Chp.^2));
+    nullFactor(p) = nullInside(p)/abs(nullTotal(p));
+    if p == 1, ChNull1 = Chp; end
+    fprintf('  control %d/%d: sum C_h = %+.6g; dentro = %.6g; factor = %.4g\n', ...
+        p,nullCount,nullTotal(p),nullInside(p),nullFactor(p));
+    clear Chp;
+end
+fprintf('\nControl: |sum C_h| medio = %.6g (sd %.3g); dentro medio = %.6g\n', ...
+    mean(abs(nullTotal)),std(nullTotal),mean(nullInside));
+fprintf('Control: factor medio = %.6g (sd %.3g)\n',mean(nullFactor),std(nullFactor));
+fprintf('REAL vs CONTROL (factor): %.6g  vs  %.6g\n\n', ...
+    factor,mean(nullFactor));
+
+%% TABLAS
+nf = min(Hfine,numel(Ch));
+fineTable = table((1:nf).',Ch(1:nf),S(1:nf),T(1:nf), ...
+    'VariableNames',{'h','C_h','CumSum_C_h','CumSum_absC_h'});
+
+edges = unique(round(logspace(0,log10(numel(Ch)),nLogBins))).';
+lo = edges(1:end-1); hi = edges(2:end)-1; hi(end) = numel(Ch);
+nb = numel(lo);
+binSum = zeros(nb,1); binAbs = zeros(nb,1); binSumNull = zeros(nb,1);
+for j = 1:nb
+    r = lo(j):hi(j);
+    binSum(j) = sum(Ch(r)); binAbs(j) = sum(abs(Ch(r)));
+    binSumNull(j) = sum(ChNull1(r));
+end
+binTable = table(lo,hi,binSum,binAbs,cumsum(binSum),cumsum(binAbs),binSumNull, ...
+    'VariableNames',{'hLow','hHigh','SumC_h','SumAbsC_h','CumSumC_h', ...
+    'CumSumAbsC_h','SumC_h_control1'});
+
+summaryTable = table(N,Cdirect,Ctotal,checkErr,inside,factor, ...
+    mean(abs(nullTotal)),mean(nullInside),mean(nullFactor), ...
+    'VariableNames',{'N','C_direct','C_sumLags','IdentityError', ...
+    'Inside_sqrtSumSq','CancellationFactor','NullMeanAbsTotal', ...
+    'NullMeanInside','NullMeanFactor'});
+
+disp(summaryTable);
+fprintf('Primeros 20 desfases:\n'); disp(fineTable(1:min(20,nf),:));
+fprintf('Perfil por bins logaritmicos:\n'); disp(binTable);
+
+writetable(fineTable,[savePrefix,'_fine.csv']);
+writetable(binTable,[savePrefix,'_logbins.csv']);
+writetable(summaryTable,[savePrefix,'_summary.csv']);
+save([savePrefix,'.mat'],'summaryTable','binTable','fineTable', ...
+    'nullTotal','nullInside','nullFactor','N','Nread','randomSeed','-v7.3');
+
+%% GRAFICAS
+figure('Name','Perfil de desfases');
+subplot(3,1,1);
+semilogx(1:nf,Ch(1:nf),'.-'); grid on;
+xlabel('h'); ylabel('C_h'); title('Perfil exacto de desfases pequenos');
+subplot(3,1,2);
+semilogx(H,S,'-'); hold on; yline(Cdirect,'r--'); grid on;
+xlabel('H'); ylabel('\Sigma_{h\leq H} C_h');
+title('Donde se acumula el total (rojo = C(N))');
+subplot(3,1,3);
+loglog(H,T,'-'); hold on; yline(abs(Cdirect),'r--'); grid on;
+xlabel('H'); ylabel('\Sigma_{h\leq H} |C_h|');
+title('Masa absoluta frente al total con signo');
+
+fprintf('\nTERMINADO. Tres CSV y %s.mat guardados.\n',savePrefix);
+end
+
+%% ------------------------------------------------------------------
+function [Ch,Cdirect] = lag_profile(x,k,L)
+% C_h = sum_m x(m) * b(m+h) con b(k) = x(k)/k, todos los h por FFT.
+x = x(:); b = x./k;
+Cdirect = sum(x.*[0;cumsum(x(1:end-1))]./k);   % = sum_k x(k) X(k-1)/k
+A = fft(x,L); clear x;
+B = fft(b,L); clear b;
+P = conj(A).*B; clear A B;
+c = real(ifft(P)); clear P;
+Ch = c(2:numel(k));                            % indice j -> h = j-1
+end

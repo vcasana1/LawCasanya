@@ -1,0 +1,683 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{bm}
+\geometry{margin=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{conjecture}{Conjetura}
+\newtheorem{remark}{Observación}
+\newtheorem{proposition}{Proposición}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\IPR}{\operatorname{IPR}}
+\newcommand{\GOE}{\mathrm{GOE}}
+\newcommand{\GUE}{\mathrm{GUE}}
+\newcommand{\Poisson}{\mathrm{Poisson}}
+
+\title{Conjetura de universalidad GOE para la matriz de Gram\\de la superficie de Möbius\\\large Nota técnica independiente y estado numérico}
+\author{}
+\date{31 de agosto de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Esta nota reúne de forma autocontenida la formulación, motivación, evidencia numérica y contexto bibliográfico de una conjetura de universalidad espectral para la matriz de Gram de una superficie aritmética construida con la función de Möbius. El objeto básico es la matriz
+\[
+B_N(n,r)=F(n,r),\qquad
+F(n,r)=\sum_{\substack{a\mid n\\a>r}}\mu(n/a),
+\]
+para $2\le n\le N$ y $1\le r\le N-1$, y su Gram positivo
+\[
+G_N=B_N^*B_N.
+\]
+La conjetura propuesta afirma que las estadísticas locales del espectro de $G_N$ en el bulk pertenecen a la clase ortogonal de Dyson, $\beta=1$. Se separan cuidadosamente tres niveles: (a) universalidad local de autovalores; (b) consecuencias como gap ratios, distribución de espaciados y number variance; y (c) deslocalización de autovectores, que es una conjetura complementaria y no una consecuencia lógica automática de (a). También se distingue el bulk, numéricamente de escala $O(1)$, de un borde de rango fijo de escala $N^2$. Se incluyen los datos originales de $N=2000,4000$ y nuevas comprobaciones directas sobre el bulk central, así como las referencias estándar de random matrix theory y las familias aritméticas vecinas encontradas en la búsqueda bibliográfica.
+\end{abstract}
+
+\tableofcontents
+
+\section{La superficie de Möbius y su matriz de Gram}
+
+Sea $\mu$ la función de Möbius. Para $n>1$ y $r\ge1$ se define
+\begin{equation}
+F(n,r)=\sum_{\substack{a\mid n\\a>r}}\mu(n/a).
+\label{eq:Fdef}
+\end{equation}
+Para cada $N\ge2$ se forma la matriz cuadrada real
+\begin{equation}
+B_N=\bigl(F(n,r)\bigr)_{2\le n\le N,\,1\le r\le N-1}
+\in M_{N-1}(\mathbb R).
+\label{eq:BNdef}
+\end{equation}
+La matriz de Gram asociada es
+\begin{equation}
+G_N=B_N^*B_N=B_N^TB_N.
+\label{eq:GNdef}
+\end{equation}
+Por construcción $G_N$ es real simétrica y positiva definida. Su espectro se escribe, según convenga,
+\begin{equation}
+0<\lambda_1^{(N)}\le\lambda_2^{(N)}\le\cdots\le\lambda_{N-1}^{(N)}.
+\label{eq:eigs-ascending}
+\end{equation}
+También puede interpretarse $G_N$ como matriz de rigidez del sistema lineal
+\begin{equation}
+\ddot q+G_Nq=0,
+\end{equation}
+con frecuencias normales
+\begin{equation}
+\omega_j^{(N)}=\sqrt{\lambda_j^{(N)}}.
+\end{equation}
+Esta interpretación es útil para la intuición, pero la conjetura GOE que se formula abajo se refiere primariamente al espectro $\{\lambda_j(G_N)\}$ del Gram.
+
+La estructura de $B_N$ no es aleatoria. Está fijada por divisibilidad y por $\mu$. Entre las identidades exactas obtenidas para esta construcción están la factorización por incidencia, la inversa explícita
+\begin{equation}
+(B_N^{-1})_{r,n}=\mathbf 1_{n\mid r+1}-\mathbf 1_{n\mid r},
+\end{equation}
+y una fórmula explícita para $G_N^{-1}$ como doble primera diferencia del kernel $\tau(\gcd)$. Por tanto, la aparición numérica de estadísticas GOE no proviene de haber introducido entradas aleatorias en la definición.
+
+\section{Qué significa ``GOE'' en este problema}
+
+El Gaussian Orthogonal Ensemble es la clase de matrices reales simétricas invariantes bajo conjugación ortogonal. En el límite de gran dimensión, las estadísticas locales del espectro en el interior regular del soporte pertenecen a la clase de universalidad de Dyson $\beta=1$; véanse Mehta~\cite{Mehta2004}, Haake--Gnutzmann--Kus~\cite{Haake2018} y las revisiones de Erdős--Yau~\cite{ErdosYau2012}. Para matrices aleatorias reales de tipo Wigner, esta universalidad local se ha demostrado bajo hipótesis muy generales~\cite{ErdosYauYin2012,TaoVu2011}. Para matrices de covarianza aleatorias $X^*X$ existen asimismo resultados de universalidad local~\cite{BenArousPeche2005,TaoVuCov2012}.
+
+El punto del presente problema es diferente: $G_N=B_N^*B_N$ es una \emph{única secuencia determinista y aritmética}. No hay ensemble sobre el que promediar. La conjetura es que, pese a ello, sus fluctuaciones locales de bulk convergen a las del proceso espectral GOE.
+
+La comparación conceptual con matrices de covarianza es natural porque $G_N$ es un Gram. No obstante, los teoremas probabilísticos para $X^*X$ no se aplican directamente a $B_N^*B_N$, porque en $B_N$ no hay entradas independientes ni aleatoriedad externa.
+
+\section{Separación esencial entre borde y bulk}
+
+Los datos muestran dos escalas espectrales radicalmente distintas.
+
+\subsection{Borde superior de rango fijo}
+
+Para $j$ fijo contado desde arriba se observa
+\begin{equation}
+\lambda_{N-j}^{(N)}\asymp N^2.
+\end{equation}
+Por ejemplo, para $N=4000$, los diez autovalores superiores normalizados por $N^2$ son
+\begin{equation}
+\begin{split}
+&0.17958665,\ 0.07980940,\ 0.03589911,\ 0.01887220,\ 0.01109675,\\
+&0.00728255,\ 0.00517749,\ 0.00410527,\ 0.00337763,\ 0.00292132.
+\end{split}
+\label{eq:edge4000}
+\end{equation}
+En particular,
+\begin{equation}
+\frac{\omega_{\max}}{N}
+=\sqrt{\frac{\lambda_{\max}}{N^2}}
+\approx0.42378
+\end{equation}
+en este tamaño. Los valores observados
+\[
+\omega_{\max}(2000)=847.80697,\qquad
+\omega_{\max}(4000)=1695.10660
+\]
+son consistentes con crecimiento lineal de $\omega_{\max}$, equivalentes a crecimiento $N^2$ de $\lambda_{\max}$.
+
+\subsection{Bulk de escala $O(1)$}
+
+Por contraste, los cuantiles centrales de $\lambda(G_N)$ permanecen prácticamente inmóviles al crecer $N$. Los valores obtenidos por diagonalización densa directa son:
+
+\begin{table}[htbp]
+\centering
+\caption{Cuantiles del espectro de $G_N$ sin reescalado.}
+\label{tab:bulk-quantiles}
+\begin{tabular}{rcccc}
+\toprule
+$N$ & $Q_{25}$ & $Q_{50}$ & $Q_{75}$ & $Q_{90}$\\
+\midrule
+250  & 0.177810 & 0.745665 & 3.799364 & 23.24687\\
+500  & 0.178985 & 0.762101 & 3.791154 & 24.57262\\
+1000 & 0.177832 & 0.761060 & 3.898696 & 24.92342\\
+1500 & 0.178292 & 0.762145 & 3.876423 & 24.97416\\
+2000 & 0.177393 & 0.764150 & 3.895654 & 25.04307\\
+4000 & 0.177265 & 0.761991 & 3.886677 & 25.34260\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La estabilidad de $Q_{25},Q_{50},Q_{75}$ indica numéricamente que el espectro típico del bulk vive en escala $N^0$, mientras un número pequeño de niveles del borde vive en escala $N^2$. Por eso no debe hacerse un reescalado global $\lambda\mapsto\lambda/N^\alpha$ antes de estudiar las correlaciones locales del bulk.
+
+Esta separación es también una advertencia metodológica: un unfolding global puede quedar dominado o deformado por el borde. Los tests GOE deben hacerse en ventanas macroscópicas internas, por ejemplo los índices entre los cuantiles $1/4$ y $3/4$, o en varias ventanas interiores separadas.
+
+\section{Formulación fuerte de la conjetura}
+
+Sea $0<\varepsilon<1/2$ fijo y restrinjamos los índices a
+\begin{equation}
+\varepsilon(N-1)\le j\le(1-\varepsilon)(N-1).
+\end{equation}
+Sea $\xi_j^{(N)}$ el espectro localmente desplegado de $G_N$ en una ventana regular del bulk, normalizado a densidad media uno.
+
+\begin{conjecture}[Universalidad local GOE de la superficie de Möbius]
+\label{conj:strong-GOE}
+Para toda ventana compacta regular del bulk y para todo orden fijo $k\ge1$, las funciones de correlación locales de $k$ puntos del espectro desplegado $\{\xi_j^{(N)}\}$ convergen, cuando $N\to\infty$, a las funciones de correlación del proceso bulk del Gaussian Orthogonal Ensemble, es decir, a la clase de universalidad de Dyson
+\begin{equation}
+\boxed{\beta=1.}
+\end{equation}
+\end{conjecture}
+
+Esta es la formulación conceptualmente fuerte. Las afirmaciones sobre espaciados vecinos, gap ratios y number variance son consecuencias o tests parciales de esta universalidad, pero ninguna de ellas por separado equivale a la convergencia de todas las correlaciones locales.
+
+\section{Consecuencia I: nearest-neighbor spacings}
+
+Definimos los espaciados del espectro desplegado
+\begin{equation}
+s_j^{(N)}=\xi_{j+1}^{(N)}-\xi_j^{(N)}.
+\end{equation}
+La Conjetura~\ref{conj:strong-GOE} predice
+\begin{equation}
+P_N(s)\Longrightarrow P_{\GOE}(s),
+\label{eq:spacing-conj}
+\end{equation}
+donde $P_{\GOE}$ denota la distribución exacta de nearest-neighbor gaps del proceso GOE del bulk.
+
+Para figuras y tests preliminares se usa a menudo la \emph{Wigner surmise}
+\begin{equation}
+P_{\mathrm W}(s)=\frac{\pi}{2}s\exp\!\left(-\frac{\pi s^2}{4}\right).
+\label{eq:wigner-surmise}
+\end{equation}
+Es una aproximación de baja dimensión extraordinariamente precisa, pero no debe identificarse en el enunciado del teorema/conjetura con la ley GOE exacta de dimensión infinita.
+
+\section{Consecuencia II: gap ratio sin unfolding}
+
+Sean
+\begin{equation}
+\delta_j=\lambda_{j+1}^{(N)}-\lambda_j^{(N)}
+\end{equation}
+y
+\begin{equation}
+\widetilde r_j
+=\frac{\min(\delta_j,\delta_{j+1})}
+{\max(\delta_j,\delta_{j+1})}.
+\label{eq:gapratio}
+\end{equation}
+El principal atractivo de $\widetilde r_j$ es que no requiere unfolding~\cite{OganesyanHuse2007,Atas2013}.
+
+Para niveles Poisson independientes,
+\begin{equation}
+\langle\widetilde r\rangle_{\Poisson}
+=2\log2-1
+=0.386294\ldots.
+\end{equation}
+Para matrices GOE grandes, el valor numérico de referencia es aproximadamente
+\begin{equation}
+\boxed{\langle\widetilde r\rangle_{\GOE}\approx0.5307.}
+\label{eq:rgoe}
+\end{equation}
+La surmise analítica de Atas--Bogomolny--Giraud--Roux basada en matrices pequeñas produce
+\begin{equation}
+4-2\sqrt3=0.535898\ldots,
+\end{equation}
+valor muy próximo pero distinguible del promedio GOE numérico de gran dimensión~\cite{Atas2013}. Conviene no mezclar ambos números.
+
+\subsection{Datos originales de v8}
+
+El experimento original diagonalizó $G_N$, convirtió los autovalores a frecuencias $\omega_j=\sqrt{\lambda_j}$, normalizó los espaciados por una media local de ventana $41$ y calculó $\widetilde r$. Los resultados reproducidos directamente del script son:
+
+\begin{table}[htbp]
+\centering
+\caption{Diagnóstico original de v8 sobre las frecuencias $\omega=\sqrt\lambda$.}
+\label{tab:v8-original}
+\begin{tabular}{rccccc}
+\toprule
+$N$ & $\omega_{\min}$ & $\omega_{\max}$ & mean IPR & $N\,$mean IPR & mean $\widetilde r$\\
+\midrule
+2000 & 0.0162114 & 847.80697  & $2.15952\times10^{-3}$ & 4.31905 & 0.532099\\
+4000 & 0.0114335 & 1695.10660 & $1.13038\times10^{-3}$ & 4.52152 & 0.537288\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No aparecieron degeneraciones exactas en ninguno de los dos tamaños.
+
+Estos números fueron el primer indicio GOE, pero mezclan todo el espectro, incluido el borde, y usan $\omega$ en lugar de $\lambda$. Un cambio suave monótono no debe alterar la clase universal después de un unfolding ideal en el límite, pero para un test finito es preferible trabajar directamente con $\lambda(G_N)$ y con una ventana de bulk bien definida.
+
+\subsection{Comprobación posterior: bulk central de $\lambda(G_N)$, sin unfolding}
+
+Se volvió a diagonalizar la matriz correcta y se calculó \eqref{eq:gapratio} directamente sobre los autovalores $\lambda_j(G_N)$ restringidos al intervalo de índices entre los cuantiles $25\%$ y $75\%$. No se aplicó unfolding. Los resultados son:
+
+\begin{table}[htbp]
+\centering
+\caption{Gap ratio directo en el bulk central de $\lambda(G_N)$.}
+\label{tab:r-central}
+\begin{tabular}{rcc}
+\toprule
+$N$ & $\langle\widetilde r\rangle_{25\%-75\%}$ & distancia a $0.5307$\\
+\midrule
+250  & 0.520592 & $-0.010108$\\
+500  & 0.537154 & $+0.006454$\\
+1000 & 0.508334 & $-0.022366$\\
+1500 & 0.545478 & $+0.014778$\\
+2000 & 0.539149 & $+0.008449$\\
+4000 & 0.537655 & $+0.006955$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La secuencia no es monótona y muestra fluctuaciones finitas apreciables, especialmente en $N=1000$ y $1500$. No obstante, los dos tamaños mayores siguen claramente en la zona GOE y lejos de Poisson. Estos datos apoyan la conjetura, pero no constituyen evidencia suficiente por sí solos para una ley límite.
+
+\section{Consecuencia III: number variance}
+
+Después del unfolding a intensidad media uno, sea $N_L(x)$ el número de niveles en un intervalo de longitud $L$ iniciado en $x$. La number variance se define por
+\begin{equation}
+\Sigma_N^2(L)
+=\operatorname{Var}_x N_L(x).
+\end{equation}
+La formulación correcta para universalidad local es
+\begin{equation}
+\boxed{
+\Sigma_N^2(L)\longrightarrow\Sigma_{\GOE}^2(L)
+\qquad\text{para cada }L>0\text{ fijo},
+}
+\label{eq:numbervariance-fixed}
+\end{equation}
+donde $\Sigma_{\GOE}^2$ es la función exacta del proceso GOE del bulk.
+
+La expresión
+\begin{equation}
+\frac{2}{\pi^2}
+\left[
+\log(2\pi L)+\gamma+1-\frac{\pi^2}{8}
+\right]
+\label{eq:numbervariance-asymp-main}
+\end{equation}
+no debe usarse como identidad exacta para $L$ fijo. Es la asintótica GOE para $L\to\infty$:
+\begin{equation}
+\boxed{
+\Sigma_{\GOE}^2(L)
+=
+\frac{2}{\pi^2}
+\left[
+\log(2\pi L)+\gamma+1-\frac{\pi^2}{8}
+\right]
++O(L^{-1}).
+}
+\label{eq:numbervariance-asymptotic}
+\end{equation}
+Aquí $\gamma$ es la constante de Euler. La lentitud logarítmica contrasta con
+\begin{equation}
+\Sigma_{\Poisson}^2(L)=L
+\end{equation}
+para un proceso Poisson y expresa la rigidez espectral característica del ensemble ortogonal; véanse Mehta~\cite{Mehta2004} y Haake--Gnutzmann--Kus~\cite{Haake2018}.
+
+A fecha de esta nota no se ha calculado todavía una curva sistemática $\Sigma_N^2(L)$ para la superficie de Möbius. Es uno de los tests prioritarios para un paper centrado en la conjetura GOE.
+
+\section{Autovectores: deslocalización y IPR}
+
+Para un autovector real normalizado $v_j\in\mathbb R^{N-1}$ se define
+\begin{equation}
+\IPR(v_j)=\sum_{r=1}^{N-1}|v_j(r)|^4.
+\end{equation}
+Un vector localizado en $O(1)$ coordenadas tiene $\IPR=O(1)$, mientras un vector extendido sobre $O(N)$ coordenadas tiene
+\begin{equation}
+\IPR=O(N^{-1}).
+\end{equation}
+
+La afirmación de deslocalización debe mantenerse separada de la universalidad de autovalores.
+
+\begin{conjecture}[Deslocalización de los autovectores del bulk]
+\label{conj:ipr}
+Para los autovectores normalizados cuyo índice permanece en una ventana macroscópica regular del bulk,
+\begin{equation}
+\boxed{
+\IPR(v_j)=O(N^{-1})
+}
+\end{equation}
+uniformemente, o al menos para una proporción $1-o(1)$ de los índices de dicha ventana.
+\end{conjecture}
+
+Si un vector fuese exactamente Haar en la esfera real de dimensión $d=N-1$, entonces
+\begin{equation}
+\mathbb E\,\IPR(v)=\frac{3}{d+2}\sim\frac3N.
+\label{eq:haar-ipr}
+\end{equation}
+Por tanto el coeficiente $3$ es un benchmark más exigente que la mera ley $O(N^{-1})$.
+
+\subsection{IPR medio sobre todo el espectro}
+
+Los datos de v8 dieron
+\begin{equation}
+N\,\overline{\IPR}=4.31905\quad(N=2000),
+\qquad
+4.52152\quad(N=4000).
+\end{equation}
+Esto demuestra numéricamente un comportamiento compatible con deslocalización global, pero el coeficiente está por encima del benchmark Haar $3$.
+
+\subsection{IPR restringido al bulk central}
+
+Al promediar únicamente los autovectores cuyos autovalores están entre los cuantiles $25\%$ y $75\%$, se obtiene:
+
+\begin{table}[htbp]
+\centering
+\caption{IPR medio de los autovectores del bulk central.}
+\label{tab:ipr-central}
+\begin{tabular}{rc}
+\toprule
+$N$ & $N\,\overline{\IPR}_{25\%-75\%}$\\
+\midrule
+250  & 3.27989\\
+500  & 3.39029\\
+1000 & 3.45095\\
+1500 & 3.47150\\
+2000 & 3.48632\\
+4000 & 3.51018\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Estos valores son significativamente más próximos a $3$ que el promedio sobre todo el espectro. Muestran que la contribución no-Haar más fuerte procede en parte de regiones espectrales alejadas del bulk central. Aun así, la deriva $3.28\to3.51$ no autoriza a conjeturar todavía convergencia exacta a $3$; el enunciado robusto actual es deslocalización $O(N^{-1})$.
+
+\section{Versión recomendada de la conjetura para un paper}
+
+Una formulación compacta y técnicamente correcta sería la siguiente.
+
+\begin{conjecture}[Estadística GOE para el Gram de la superficie de Möbius]
+Sea $B_N$ la matriz definida por \eqref{eq:BNdef} y $G_N=B_N^*B_N$. Sea $\{\lambda_j(G_N)\}$ el espectro ordenado y considérese cualquier ventana macroscópica regular contenida en el bulk. Tras el unfolding local a densidad media unidad, las correlaciones locales del espectro convergen, cuando $N\to\infty$, a las de la clase de universalidad de Dyson $\beta=1$.
+
+En particular, se predicen:
+\begin{enumerate}[label=(\roman*)]
+\item convergencia de la distribución de nearest-neighbor spacings a la distribución GOE;
+\item para cada $L>0$ fijo,
+\begin{equation}
+\Sigma_N^2(L)\to\Sigma_{\GOE}^2(L),
+\end{equation}
+y, en el régimen posterior $L\to\infty$,
+\begin{equation}
+\Sigma_{\GOE}^2(L)
+=
+\frac{2}{\pi^2}
+\left[
+\log(2\pi L)+\gamma+1-\frac{\pi^2}{8}
+\right]+O(L^{-1});
+\end{equation}
+\item el gap ratio directo del bulk satisface
+\begin{equation}
+\langle\widetilde r\rangle\to0.5307\ldots.
+\end{equation}
+\end{enumerate}
+Separadamente, se conjetura la deslocalización de autovectores
+\begin{equation}
+\IPR(v_j)=O(N^{-1})
+\end{equation}
+en el bulk.
+\end{conjecture}
+
+No debe escribirse que (i)--(iii) son \emph{equivalentes} a universalidad GOE completa. Son consecuencias y diagnósticos de ella. En particular, la deslocalización de autovectores es una propiedad adicional.
+
+\section{Por qué el diagnóstico mediante gap ratio es especialmente importante}
+
+El espectro de $G_N$ no tiene una densidad global simple: coexiste un bulk de escala $O(1)$ con un borde de escala $N^2$. Por ello, cualquier unfolding polinómico global corre el riesgo de introducir una estructura artificial.
+
+El gap ratio \eqref{eq:gapratio} evita ese problema porque divide dos espaciados consecutivos y elimina, en primera aproximación, la densidad local. Para el primer paper, la jerarquía de evidencia recomendable es:
+\begin{enumerate}
+\item gap ratio directo en varias ventanas de bulk y varios $N$;
+\item distribución completa $P(\widetilde r)$ frente a la predicción GOE, no sólo su media;
+\item nearest-neighbor spacings después de un unfolding local documentado;
+\item number variance y $\Delta_3$ para correlaciones de mayor alcance;
+\item estadística de componentes de autovectores e IPR;
+\item finalmente correlaciones de $k$ puntos o spectral form factor si el tamaño computacional lo permite.
+\end{enumerate}
+
+Una coincidencia de $\langle\widetilde r\rangle$ puede ocurrir accidentalmente. La coincidencia simultánea de la distribución completa de ratios, gaps, number variance y deslocalización sería mucho más difícil de atribuir a un artefacto de unfolding o a una ventana concreta.
+
+\section{Controles numéricos que debería contener el paper}
+
+Para que la evidencia de GOE sea convincente, conviene fijar desde el principio un protocolo reproducible.
+
+\subsection{Ventanas de bulk}
+Usar al menos las ventanas de cuantiles
+\begin{equation}
+[0.20,0.40],\qquad[0.30,0.50],\qquad[0.40,0.60],\qquad[0.50,0.70],\qquad[0.60,0.80],
+\end{equation}
+y la ventana agregada $[0.25,0.75]$. Si GOE es realmente una propiedad del bulk, los estadísticos deberían acercarse al mismo límite en todas las ventanas interiores regulares.
+
+\subsection{Secuencia de tamaños}
+La evidencia actual fuerte sólo llega a $N=4000$ mediante diagonalización completa. Un paper debería incluir una secuencia más larga y no sólo dos tamaños, por ejemplo
+\begin{equation}
+N=500,1000,1500,2000,3000,4000,\ldots
+\end{equation}
+según permita el coste computacional. Los datos de la Tabla~\ref{tab:r-central} muestran precisamente por qué esto importa: $\bar r$ no se acerca monótonamente a GOE en tamaños pequeños.
+
+\subsection{No mezclar $\lambda$ y $\omega$}
+La conjetura debe definirse sobre $\lambda(G_N)$. Los datos del oscilador $\omega=\sqrt\lambda$ pueden darse como diagnóstico complementario, pero no deben mezclarse en una misma tabla de convergencia sin explicitar la transformación.
+
+\subsection{Distribución completa del gap ratio}
+Atas et al.~\cite{Atas2013} proporcionan una surmise muy precisa para la distribución de ratios. La comparación debe hacerse mediante histograma/CDF y, preferiblemente, métricas cuantitativas (KS, Cramér--von Mises o distancia integrada), no sólo mediante la media.
+
+\subsection{Number variance}
+El cálculo debe especificar exactamente el unfolding. Es recomendable repetirlo con varias elecciones razonables de ventana/suavizado y comprobar que la conclusión no depende del procedimiento. La referencia correcta es la función GOE exacta para $L$ fijo; la fórmula logarítmica \eqref{eq:numbervariance-asymptotic} debe dibujarse o citarse sólo como asintótica de $L$ grande.
+
+\subsection{Autovectores}
+Además de $\IPR$, un test más fuerte compara la distribución de
+\begin{equation}
+\sqrt{N}\,v_j(r)
+\end{equation}
+con una normal real estándar, que es el benchmark Haar. También conviene medir
+\begin{equation}
+\max_r |v_j(r)|^2
+\end{equation}
+y sus cuantiles. La conjetura mínima de deslocalización no exige Gaussianidad exacta de componentes.
+
+\section{Qué está observado y qué sigue sin calcularse}
+
+\begin{center}
+\begin{tabular}{p{0.43\textwidth}p{0.22\textwidth}p{0.25\textwidth}}
+\toprule
+Diagnóstico & Estado & Resultado actual\\
+\midrule
+$\bar r$ de v8 sobre $\omega$, espectro casi completo & calculado & $0.53210$ ($N=2000$), $0.53729$ ($N=4000$)\\
+$\bar r$ directo sobre $\lambda$, bulk $25$--$75\%$ & calculado & $0.53915$ ($N=2000$), $0.53766$ ($N=4000$)\\
+IPR global & calculado & $N\overline{\IPR}=4.319,4.522$\\
+IPR bulk $25$--$75\%$ & calculado & $N\overline{\IPR}=3.486,3.510$ para $N=2000,4000$\\
+Cuantiles del bulk sin escala & calculado & estables, Tabla~\ref{tab:bulk-quantiles}\\
+Borde superior $\lambda/N^2$ & calculado & estabilización fuerte; ec.~\eqref{eq:edge4000}\\
+Distribución completa $P(\widetilde r)$ & pendiente & ---\\
+Nearest-neighbor $P(s)$ con unfolding controlado & pendiente & ---\\
+Number variance $\Sigma^2(L)$ & pendiente & ---\\
+Rigidez $\Delta_3(L)$ & pendiente & ---\\
+Correlaciones $k$-punto / form factor & pendiente & ---\\
+Distribución de componentes de autovectores & pendiente & ---\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Contexto bibliográfico y búsqueda de antecedentes}
+
+Se realizó una búsqueda específica de las siguientes familias de términos y equivalentes: ``Möbius surface matrix'', ``Möbius Gram matrix'', ``truncated Möbius divisor sums'', ``divisibility Gram matrix'', ``Möbius incidence spectrum'', y combinaciones de ``GOE'', ``Wigner--Dyson'', ``level statistics'', ``GCD matrix'', ``LCM matrix'', ``Redheffer matrix'' y ``arithmetic matrix''.
+
+No se localizó una publicación que defina simultáneamente
+\begin{equation}
+F(n,r)=\sum_{\substack{a\mid n\\a>r}}\mu(n/a),
+\qquad
+B_N=(F(n,r)),
+\qquad
+G_N=B_N^*B_N,
+\end{equation}
+ni una conjetura de universalidad GOE para el bulk de este Gram concreto.
+
+Sí existen familias vecinas importantes:
+
+\begin{enumerate}
+\item \textbf{GCD y meet matrices.} La teoría moderna de matrices con entradas $\gcd(x_i,x_j)$ y sus generalizaciones aritméticas estudia determinantes, positividad, inversas y cotas espectrales; véase Beslin--Ligh~\cite{BeslinLigh1989} y la literatura posterior. Estas matrices no son $G_N$.
+
+\item \textbf{Matriz de Redheffer.} Barrett--Jarvis~\cite{BarrettJarvis1992} estudian una matriz construida con incidencia de divisibilidad y su espectro. La estructura y el régimen espectral son distintos del Gram de la superficie de Möbius.
+
+\item \textbf{Matrices aleatorias reales y covarianza.} Para Wigner real y para matrices de covarianza aleatorias, la universalidad local de tipo $\beta=1$ pertenece a una teoría rigurosa muy desarrollada~\cite{ErdosYau2012,ErdosYauYin2012,TaoVuCov2012}. Estos resultados aportan el benchmark, no una demostración para $G_N$.
+
+\item \textbf{Sistemas deterministas caóticos.} La conexión entre espectros deterministas y GOE es central en la conjetura de Bohigas--Giannoni--Schmit~\cite{BGS1984}. Esto muestra que una secuencia determinista puede exhibir estadística GOE sin ser una matriz aleatoria de entradas independientes, pero tampoco proporciona un teorema aplicable automáticamente a la presente matriz aritmética.
+\end{enumerate}
+
+Por tanto, el aspecto específico que emerge de esta construcción es la coexistencia de una estructura aritmética explícita de divisibilidad, un Gram positivo determinista, un borde macroscópico no trivial y un bulk cuyas primeras estadísticas numéricas son compatibles con la clase $\beta=1$.
+
+\section{Interpretación conceptual}
+
+El fenómeno propuesto puede resumirse como una separación entre estructura global y fluctuación local:
+\begin{equation}
+\boxed{
+\text{aritmética rígida global}
+\quad+\quad
+\text{estadística universal local GOE en el bulk}.
+}
+\end{equation}
+El borde conserva información determinista fuerte y escalas específicas de la superficie. El bulk, por el contrario, parece perder buena parte de esa estructura al nivel de los espaciados locales y comportarse como una clase ortogonal universal.
+
+Esta coexistencia no sería extraña desde la perspectiva general de random matrix theory: la universalidad afirma precisamente que las correlaciones locales pueden ser independientes de muchos detalles globales. Lo notable aquí sería que dicha universalidad apareciese en una matriz totalmente determinista cuya definición está controlada por divisibilidad y Möbius.
+
+\section{Qué demostrar analíticamente}
+
+La conjetura completa es difícil, pero puede organizarse en objetivos crecientes.
+
+\subsection{Nivel 0: densidad macroscópica del bulk}
+Determinar si la medida empírica
+\begin{equation}
+\nu_N=\frac1{N-1}\sum_{j=1}^{N-1}\delta_{\lambda_j(G_N)}
+\end{equation}
+converge débilmente a una medida límite $\nu$ en la escala natural $O(1)$ del bulk, después de separar cualquier masa de borde que escape a infinito. La estabilidad de los cuantiles de la Tabla~\ref{tab:bulk-quantiles} indica que esta pregunta es razonable.
+
+\subsection{Nivel 1: ley local}
+Probar control de la resolvente
+\begin{equation}
+m_N(z)=\frac1{N-1}\Tr(G_N-zI)^{-1}
+\end{equation}
+a escalas cada vez menores. En ensembles aleatorios, una ley local es uno de los pasos centrales hacia universalidad; en esta matriz determinista habría que reemplazar los mecanismos probabilísticos por identidades aritméticas propias.
+
+\subsection{Nivel 2: repulsión de niveles}
+Una cota que impida acumulaciones anómalas de autovalores del bulk ya sería un resultado intermedio importante. El dato $\bar r\approx0.53$ sugiere repulsión, pero no la demuestra.
+
+\subsection{Nivel 3: correlaciones $k$-punto}
+La meta completa es la Conjetura~\ref{conj:strong-GOE}: demostrar convergencia al proceso Pfaffiano de bulk de la clase $\beta=1$.
+
+No existe actualmente una plantilla probabilística que pueda aplicarse sin modificación a $G_N$, precisamente porque $G_N$ no es un ensemble.
+
+\section{De quién viene esta idea}
+
+La teoría GOE, las clases de Dyson, la Wigner surmise, la number variance, los gap ratios y el IPR son herramientas clásicas de random matrix theory, caos cuántico y localización~\cite{Mehta2004,Haake2018,OganesyanHuse2007,Atas2013}. La universalidad local para matrices aleatorias y matrices de covarianza también es clásica en la literatura moderna~\cite{ErdosYau2012,ErdosYauYin2012,TaoVuCov2012}.
+
+La parte específica de esta nota es aplicar ese lenguaje al objeto aritmético
+\begin{equation}
+B_N(n,r)=\sum_{\substack{a\mid n\\a>r}}\mu(n/a),
+\qquad
+G_N=B_N^*B_N,
+\end{equation}
+y formular explícitamente que el \emph{bulk} de este Gram determinista pertenece asintóticamente a la clase $\beta=1$, manteniendo separado el borde de escala $N^2$. La búsqueda bibliográfica realizada para esta nota no encontró esta matriz concreta ni esta conjetura GOE formuladas previamente.
+
+\section{Resumen operativo}
+
+La situación actual puede condensarse en cinco puntos.
+
+\begin{enumerate}
+\item $G_N$ es un Gram aritmético real, positivo y determinista, con estructura exacta de divisibilidad.
+\item El borde superior y el bulk viven en escalas diferentes: $N^2$ para niveles de rango fijo desde arriba, frente a cuantiles centrales numéricamente $O(1)$.
+\item En el bulk central, el gap ratio directo de $\lambda(G_N)$ da
+\[
+0.53915\quad(N=2000),\qquad
+0.53766\quad(N=4000),
+\]
+frente al benchmark GOE $0.5307$ y Poisson $0.38629$.
+\item Los autovectores del bulk son deslocalizados a la escala observada:
+\[
+N\overline{\IPR}_{\rm bulk}=3.4863\quad(N=2000),\qquad
+3.5102\quad(N=4000),
+\]
+cercanos en orden al benchmark Haar real $3$.
+\item Aún faltan los tests que convertirían la observación en una evidencia numérica amplia: distribución completa de ratios, $P(s)$ con unfolding controlado, number variance, $\Delta_3$, correlaciones de mayor orden y distribución de componentes de autovectores.
+\end{enumerate}
+
+La conjetura central a conservar es, por tanto,
+\begin{equation}
+\boxed{
+\text{las correlaciones espectrales locales del bulk de }G_N
+\text{ pertenecen a la clase universal }\beta=1.
+}
+\end{equation}
+
+\begin{thebibliography}{99}
+
+\bibitem{Mehta2004}
+M. L. Mehta,
+\emph{Random Matrices}, 3rd ed.,
+Pure and Applied Mathematics, Vol. 142,
+Elsevier/Academic Press, 2004,
+ISBN 978-0-12-088409-4.
+
+\bibitem{Haake2018}
+F. Haake, S. Gnutzmann, and M. Kuś,
+\emph{Quantum Signatures of Chaos}, 4th ed.,
+Springer Series in Synergetics,
+Springer, Cham, 2018,
+doi:10.1007/978-3-319-97580-1.
+
+\bibitem{BGS1984}
+O. Bohigas, M. J. Giannoni, and C. Schmit,
+Characterization of chaotic quantum spectra and universality of level fluctuation laws,
+\emph{Physical Review Letters} \textbf{52} (1984), 1--4,
+doi:10.1103/PhysRevLett.52.1.
+
+\bibitem{OganesyanHuse2007}
+V. Oganesyan and D. A. Huse,
+Localization of interacting fermions at high temperature,
+\emph{Physical Review B} \textbf{75} (2007), 155111,
+doi:10.1103/PhysRevB.75.155111.
+
+\bibitem{Atas2013}
+Y. Y. Atas, E. Bogomolny, O. Giraud, and G. Roux,
+Distribution of the ratio of consecutive level spacings in random matrix ensembles,
+\emph{Physical Review Letters} \textbf{110} (2013), 084101,
+doi:10.1103/PhysRevLett.110.084101.
+
+\bibitem{ErdosYau2012}
+L. Erdős and H.-T. Yau,
+Universality of local spectral statistics of random matrices,
+\emph{Bulletin of the American Mathematical Society} \textbf{49} (2012), 377--414,
+doi:10.1090/S0273-0979-2012-01372-1.
+
+\bibitem{ErdosYauYin2012}
+L. Erdős, H.-T. Yau, and J. Yin,
+Bulk universality for generalized Wigner matrices,
+\emph{Probability Theory and Related Fields} \textbf{154} (2012), 341--407,
+doi:10.1007/s00440-011-0390-3.
+
+\bibitem{TaoVu2011}
+T. Tao and V. Vu,
+Random matrices: universality of local eigenvalue statistics,
+\emph{Acta Mathematica} \textbf{206} (2011), 127--204,
+doi:10.1007/s11511-011-0061-3.
+
+\bibitem{BenArousPeche2005}
+G. Ben Arous and S. Péché,
+Universality of local eigenvalue statistics for some sample covariance matrices,
+\emph{Communications on Pure and Applied Mathematics} \textbf{58} (2005), 1316--1357,
+doi:10.1002/cpa.20070.
+
+\bibitem{TaoVuCov2012}
+T. Tao and V. Vu,
+Random covariance matrices: universality of local statistics of eigenvalues,
+\emph{Annals of Probability} \textbf{40} (2012), 1285--1315,
+doi:10.1214/11-AOP648.
+
+\bibitem{BeslinLigh1989}
+S. Beslin and S. Ligh,
+Greatest common divisor matrices,
+\emph{Linear Algebra and its Applications} \textbf{118} (1989), 69--76,
+doi:10.1016/0024-3795(89)90572-7.
+
+\bibitem{BarrettJarvis1992}
+W. W. Barrett and T. J. Jarvis,
+Spectral properties of a matrix of Redheffer,
+\emph{Linear Algebra and its Applications} \textbf{162--164} (1992), 673--683,
+doi:10.1016/0024-3795(92)90401-U.
+
+\end{thebibliography}
+
+\end{document}

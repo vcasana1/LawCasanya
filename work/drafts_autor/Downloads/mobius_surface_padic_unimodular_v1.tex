@@ -1,0 +1,2108 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Mathematics
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+\emergencystretch=2em
+\raggedbottom
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\mob}{\mu}
+\newcommand{\liou}{\lambda}
+\newcommand{\Fsurf}{F}
+\newcommand{\Vjump}{V}
+\newcommand{\TauSum}{\mathcal T}
+\newcommand{\sfproj}{P_{\mathrm{sf}}}
+\newcommand{\what}{\mathfrak w}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\Span}{span}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  showstringspaces=false,
+  language=Python
+}
+
+\title{Möbius Surface Coordinates, Squarefree Unimodular Renormalization,\\and Exact $p$-Adic Martingale Shells}
+\author{Víctor Casaña-Giner}
+\address{Bio Logic Crop Science S.L., Spain}
+\email{ORCID: 0000-0002-8252-2608}
+\date{August 2026}
+
+\begin{document}
+\pagestyle{plain}
+
+\begin{abstract}
+We combine three exact structures around the Möbius and Liouville functions.  First, the divisibility surface
+\begin{equation}
+\Fsurf(n,r)=\sum_{\substack{a\mid n\\a>r}}\mob(n/a)
+\label{eq:abstract_surface}
+\end{equation}
+has a finite unimodular minor with an explicit inverse given by first differences of divisibility indicators.  In these coordinates the Möbius vector is a single basis vector, whereas the Liouville vector is the first difference of the indicator of the squares.  Second, the pointwise squarefree projection and the distinct square-extraction convolution become exact operators in the same finite coordinate system.  Third, valuation-parity signs admit explicit $p$-adic martingale shells, with $p=3$ the unique centered prime for the adjacent pair.
+
+For affine pairs of determinant one we prove an exact bilateral square-extraction theorem: every admissible squarefree branch obtained by Chinese remaindering and dividing the two values by squares is again represented by a matrix in $SL_2(\Z)$.  This yields a closed squarefree-unimodular renormalization of Möbius correlations into signed Liouville correlations.  We then give a complete proof of the logarithmically averaged two-point Möbius correlation theorem from Tao's published logarithmic Liouville theorem, including the squarefree truncation, tail estimates, CRT branches, determinant computation, logarithmic-weight change, and the final double limiting argument.
+
+The paper separates proved finite and local statements from the remaining global problems.  Ordinary fixed-shift Cesàro Chowla for Möbius remains open, as does any estimate implying
+$M(X)=O_\eps(X^{1/2+\eps})$; the latter is equivalent to the Riemann hypothesis.  The matrix and $p$-adic structures identify precise compressed and centered operators on which new cancellation would have to be proved, but a change of coordinates alone cannot create a spectral gap.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\section{Introduction}
+\label{sec:introduction}
+
+The Möbius function is
+\begin{equation}
+\mob(n)=
+\begin{cases}
+1,&n=1,\\
+(-1)^k,&n \text{ is a product of }k\text{ distinct primes},\\
+0,&p^2\mid n\text{ for some prime }p,
+\end{cases}
+\label{eq:mobius_definition}
+\end{equation}
+and the Liouville function is
+\begin{equation}
+\liou(n)=(-1)^{\Omega(n)},
+\label{eq:liouville_definition}
+\end{equation}
+where $\Omega(n)$ counts prime factors with multiplicity.  The classical relation
+\begin{equation}
+\mob(n)=\liou(n)\mob(n)^2
+\label{eq:mu_lambda_squarefree}
+\end{equation}
+separates the completely multiplicative sign from squarefreeness.  The purpose of this paper is to place that separation inside a finite invertible Möbius-surface coordinate system and to connect it to exact local $p$-adic shell calculations.
+
+The basic surface is \eqref{eq:abstract_surface}.  Its divisor-poset origin is classical; see Möbius \cite{Mobius1832}, Rota \cite{Rota1964}, and Stanley \cite{Stanley2012}.  Equivalently, putting $d=n/a$,
+\begin{equation}
+\Fsurf(n,r)=\sum_{\substack{d\mid n\\d<n/r}}\mob(d),
+\qquad n\ge1,
+\label{eq:surface_small_divisors}
+\end{equation}
+with the condition empty when $r\ge n$.  The associated vertical jump is
+\begin{equation}
+\Vjump(n,r)=\Fsurf(n,r-1)-\Fsurf(n,r).
+\label{eq:vertical_jump_definition_intro}
+\end{equation}
+
+The finite matrix
+\begin{equation}
+B_N=\bigl(\Fsurf(n,r)\bigr)_{2\le n\le N,\ 1\le r\le N-1}
+\label{eq:BN_intro}
+\end{equation}
+is unimodular.  Its inverse will be shown to satisfy
+\begin{equation}
+(B_N^{-1})_{r,n}=\one_{n\mid r+1}-\one_{n\mid r}.
+\label{eq:BN_inverse_intro}
+\end{equation}
+This turns divisor summation into an ordinary first difference.  Two consequences will be central:
+\begin{equation}
+B_N^{-1}\mob_N=-e_1,
+\qquad
+B_N^{-1}\liou_N=s_N,
+\label{eq:mu_lambda_coordinate_preview}
+\end{equation}
+where
+\begin{equation}
+s_N(r)=\one_{r+1=\square}-\one_{r=\square}.
+\label{eq:sN_preview}
+\end{equation}
+Thus Liouville has only $O(\sqrt N)$ nonzero coordinates in the surface basis.
+
+A second exact structure is local.  For a prime $p$, the adjacent valuation-parity sign
+\begin{equation}
+\eta_p(x)=(-1)^{v_p(x)+v_p(x+1)}
+\label{eq:eta_preview}
+\end{equation}
+on $\Z_p$ has a complete martingale-shell decomposition.  Its mean is $(p-3)/(p+1)$; hence $p=3$ is the unique centered prime.  The shell values and energies are explicit at every depth.
+
+The bridge between the two structures comes from determinant one.  If
+\begin{equation}
+L_1(m)=qm+A,
+\qquad
+L_2(m)=rm+B,
+\qquad
+qB-rA=1,
+\label{eq:unimodular_pair_preview}
+\end{equation}
+then $L_1(m)$ and $L_2(m)$ are coprime for every $m$.  If $d_1^2\mid L_1(m)$ and $d_2^2\mid L_2(m)$, the CRT branch obtained after dividing those squares is represented by another determinant-one affine pair.  This is the exact closure that is used below.
+
+\section{Notation and status conventions}
+\label{sec:notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.23\textwidth} >{\raggedright\arraybackslash}p{0.65\textwidth}}
+\toprule
+Symbol & Meaning\\
+\midrule
+$\mob(n)$ & Möbius function.\\
+$\liou(n)$ & Liouville function $(-1)^{\Omega(n)}$.\\
+$\Omega(n)$ & Number of prime factors counted with multiplicity.\\
+$\omega(n)$ & Number of distinct prime factors.\\
+$\Fsurf(n,r)$ & Divisibility surface in \eqref{eq:abstract_surface}.\\
+$\Vjump(n,r)$ & Vertical jump in \eqref{eq:vertical_jump_definition_intro}.\\
+$B_N$ & Surface matrix on $2\le n\le N$, $1\le r\le N-1$.\\
+$G_N$ & Gram matrix $B_N^*B_N$.\\
+$S_h$ & Truncated additive shift on the integer coordinate.\\
+$T_{N,h}$ & Conjugated shift $B_N^{-1}S_hB_N$.\\
+$P_{\mathrm{sf}}$ & Pointwise squarefree projection $f(n)\mapsto\mob(n)^2f(n)$.\\
+$Q,R$ & Mutually inverse square-extraction convolution operators; they are not projections.\\
+$\what(X)$ & Logarithmic-window parameter, $1\le\what(X)\le X$, $\what(X)\to\infty$.\\
+$\zeta(s)$ & Riemann zeta function.\\
+$\rho=\beta+i\gamma$ & Generic nontrivial zero of $\zeta$; $\gamma$ is reserved for zero ordinates.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Every theorem in the paper is labeled by status in its title or opening sentence.  ``Unconditional'' means that no unproved hypothesis such as RH is assumed; a theorem may still use a previously proved theorem from the literature as an external input, and that input is stated explicitly.  Results that merely rewrite a classical identity are identified as such.
+
+\section{The Möbius divisibility surface}
+\label{sec:surface}
+
+\begin{definition}[Divisibility surface]
+\label{def:surface}
+For $n\ge1$ and integer $r\ge0$, define
+\begin{equation}
+\Fsurf(n,r)=\sum_{\substack{a\mid n\\a>r}}\mob(n/a).
+\label{eq:surface_definition}
+\end{equation}
+For $r\ge1$ define the vertical jump by
+\begin{equation}
+\Vjump(n,r)=\Fsurf(n,r-1)-\Fsurf(n,r).
+\label{eq:vertical_jump_definition}
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Vertical jump identity, unconditional]
+\label{lem:vertical_jump}
+For all integers $n,r\ge1$,
+\begin{equation}
+\Vjump(n,r)=\one_{r\mid n}\mob(n/r).
+\label{eq:vertical_jump_identity}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The two finite divisor sums in \eqref{eq:vertical_jump_definition} differ only by the divisor $a=r$.  This divisor occurs exactly when $r\mid n$, and then its contribution is $\mob(n/r)$.
+\end{proof}
+
+\subsection{Finite inversion}
+\label{subsec:finite_inversion}
+
+\begin{theorem}[Finite inverse, unconditional]
+\label{thm:finite_inverse}
+Let $N\ge2$ and define $B_N$ by \eqref{eq:BN_intro}.  Then
+\begin{equation}
+\det B_N=1,
+\label{eq:BN_determinant}
+\end{equation}
+and
+\begin{equation}
+(B_N^{-1})_{r,n}=\one_{n\mid r+1}-\one_{n\mid r},
+\qquad
+1\le r\le N-1,\ 2\le n\le N.
+\label{eq:BN_inverse}
+\end{equation}
+Consequently, if
+\begin{equation}
+y(n)=\sum_{r=1}^{N-1}\Fsurf(n,r)x(r),
+\qquad 2\le n\le N,
+\label{eq:finite_system}
+\end{equation}
+then
+\begin{equation}
+x(r)=
+\sum_{\substack{n\mid r+1\\2\le n\le N}}y(n)
+-
+\sum_{\substack{n\mid r\\2\le n\le N}}y(n).
+\label{eq:finite_reconstruction}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Define the $(N-1)\times(N-1)$ matrices
+\begin{equation}
+K_{n,a}=\one_{a\mid n}\mob(n/a),
+\qquad 2\le n,a\le N,
+\label{eq:K_definition}
+\end{equation}
+and
+\begin{equation}
+L_{a,r}=\one_{a>r},
+\qquad 2\le a\le N,\ 1\le r\le N-1.
+\label{eq:L_definition}
+\end{equation}
+Then
+\begin{equation}
+(KL)_{n,r}=\sum_{\substack{a\mid n\\a>r}}\mob(n/a)=\Fsurf(n,r),
+\label{eq:BN_factorization}
+\end{equation}
+so $B_N=KL$.  In increasing order, $K$ is lower triangular with diagonal one.  Its inverse is the finite divisor-zeta matrix
+\begin{equation}
+(K^{-1})_{a,n}=\one_{n\mid a}.
+\label{eq:K_inverse}
+\end{equation}
+After reindexing $a=i+1$, $L$ is the ordinary lower-triangular summation matrix, whose inverse is the first-difference matrix.  Therefore
+\begin{align}
+(B_N^{-1})_{r,n}
+&=(L^{-1}K^{-1})_{r,n}
+\label{eq:BN_inverse_factorized}\\
+&=(K^{-1})_{r+1,n}-(K^{-1})_{r,n}
+\label{eq:BN_inverse_difference}\\
+&=\one_{n\mid r+1}-\one_{n\mid r}.
+\label{eq:BN_inverse_final}
+\end{align}
+Both $K$ and $L$ have determinant one, proving \eqref{eq:BN_determinant}.  Equation \eqref{eq:finite_reconstruction} is $x=B_N^{-1}y$.  All matrices are finite, so there is no convergence or boundary issue.
+\end{proof}
+
+\begin{corollary}[Biorthogonality, unconditional]
+\label{cor:biorthogonality}
+For $1\le r,q\le N-1$,
+\begin{equation}
+\sum_{n=2}^{N}
+\bigl(\one_{n\mid r+1}-\one_{n\mid r}\bigr)\Fsurf(n,q)
+=\delta_{rq}.
+\label{eq:biorthogonality}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+This is the $(r,q)$ entry of $B_N^{-1}B_N=I$.
+\end{proof}
+
+\subsection{Frobenius identity}
+\label{subsec:frobenius}
+
+\begin{proposition}[Exact Frobenius identity, unconditional]
+\label{prop:frobenius}
+Let $\sigma_1,\ldots,\sigma_{N-1}$ be the singular values of $B_N$, and let
+\begin{equation}
+\TauSum(N)=\sum_{m\le N}\tau(m).
+\label{eq:tau_summatory}
+\end{equation}
+Then
+\begin{equation}
+\prod_{j=1}^{N-1}\sigma_j=1
+\label{eq:singular_product}
+\end{equation}
+and
+\begin{equation}
+\sum_{j=1}^{N-1}\sigma_j^{-2}
+=2\TauSum(N)-\tau(N)-2N+1.
+\label{eq:frobenius_identity}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first identity is $|\det B_N|=1$.  By \eqref{eq:BN_inverse}, row $r$ of $B_N^{-1}$ contains disjoint indicators of divisors $n\ge2$ of $r+1$ and $r$; they cannot overlap because a common $n\ge2$ would divide $1$.  Hence
+\begin{equation}
+\sum_{n=2}^{N}|(B_N^{-1})_{r,n}|^2
+=\tau(r+1)+\tau(r)-2.
+\label{eq:inverse_row_norm}
+\end{equation}
+Summing over $1\le r\le N-1$ yields \eqref{eq:frobenius_identity}, because the singular values of $B_N^{-1}$ are $\sigma_j^{-1}$.
+\end{proof}
+
+\section{Difference--convolution intertwining}
+\label{sec:intertwining}
+
+For arithmetic functions $f,g$, use the convention
+\begin{equation}
+(f*g)(n)=\sum_{a\mid n}f(n/a)g(a).
+\label{eq:dirichlet_convolution}
+\end{equation}
+
+\begin{theorem}[Difference--convolution intertwining, unconditional]
+\label{thm:intertwining}
+For any arithmetic function $g$ and every $n>1$,
+\begin{equation}
+(\mob*g)(n)=\sum_{r=1}^{n-1}\Fsurf(n,r)\bigl(g(r+1)-g(r)\bigr).
+\label{eq:intertwining}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+All sums are finite.  Interchanging them gives
+\begin{align}
+\sum_{r=1}^{n-1}\Fsurf(n,r)(g(r+1)-g(r))
+&=\sum_{a\mid n}\mob(n/a)\sum_{r=1}^{a-1}(g(r+1)-g(r))
+\label{eq:intertwining_swap}\\
+&=\sum_{a\mid n}\mob(n/a)(g(a)-g(1))
+\label{eq:intertwining_telescope}\\
+&=(\mob*g)(n)-g(1)\sum_{a\mid n}\mob(n/a).
+\label{eq:intertwining_last}
+\end{align}
+The last divisor sum is zero for $n>1$.
+\end{proof}
+
+\begin{corollary}[Universal finite reconstruction, unconditional]
+\label{cor:universal_reconstruction}
+Let $f:\N\to\C$ and define
+\begin{equation}
+G_f(m)=\sum_{d\mid m}f(d).
+\label{eq:Gf_definition}
+\end{equation}
+Then for $n>1$,
+\begin{equation}
+f(n)=\sum_{r=1}^{n-1}\Fsurf(n,r)\bigl(G_f(r+1)-G_f(r)\bigr).
+\label{eq:universal_reconstruction}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Classical Möbius inversion gives $f=\mob*G_f$.  Apply Theorem \ref{thm:intertwining}.
+\end{proof}
+
+\section{Dirichlet transforms and Mellin domain}
+\label{sec:analytic_transforms}
+
+This section records the analytic transforms that are needed later and states their domains explicitly; the underlying Dirichlet-series manipulations are classical, see \cite{Apostol1976}.  No contour shift is used to deduce any arithmetic theorem in this paper.
+
+\begin{definition}[Double zeta tail]
+\label{def:zeta2}
+For $\Re s>1$ and $\Re w>1$, define
+\begin{equation}
+\zeta_2(s,w)=\sum_{a>r\ge1}a^{-s}r^{-w}.
+\label{eq:zeta2_definition}
+\end{equation}
+The series converges absolutely and locally uniformly in that product half-plane and is therefore holomorphic there.
+\end{definition}
+
+\begin{proposition}[Surface transform, unconditional]
+\label{prop:surface_transform}
+If $\Re s>1$ and $\Re w>1$, then
+\begin{equation}
+\mathscr F(s,w)
+:=\sum_{n,r\ge1}\frac{\Fsurf(n,r)}{n^s r^w}
+=\frac{\zeta_2(s,w)}{\zeta(s)}.
+\label{eq:surface_transform}
+\end{equation}
+Both sides are holomorphic in this domain.
+\end{proposition}
+
+\begin{proof}
+Put $\sigma=\Re s$ and $\tau=\Re w$.  Absolute convergence follows from
+\begin{align}
+\sum_{r\ge1}\sum_{a>r}\sum_{m\ge1}
+\frac{|\mob(m)|}{(am)^\sigma r^\tau}
+&\le \zeta(\sigma)\sum_{a,r\ge1}\frac1{a^\sigma r^\tau}
+\label{eq:surface_absolute_bound}\\
+&=\zeta(\sigma)^2\zeta(\tau)<\infty.
+\label{eq:surface_absolute_bound_final}
+\end{align}
+Tonelli's theorem therefore justifies the rearrangement of absolute values, and Fubini's theorem justifies the rearrangement of the original series.  Writing $n=am$ gives
+\begin{align}
+\mathscr F(s,w)
+&=\sum_{r\ge1}\sum_{a>r}\sum_{m\ge1}
+\frac{\mob(m)}{(am)^s r^w}
+\label{eq:surface_transform_expand}\\
+&=\left(\sum_{m\ge1}\frac{\mob(m)}{m^s}\right)
+\sum_{a>r\ge1}\frac1{a^s r^w}
+\label{eq:surface_transform_factor}\\
+&=\frac{\zeta_2(s,w)}{\zeta(s)}.
+\label{eq:surface_transform_finish}
+\end{align}
+Since $\zeta(s)$ has no zeros for $\Re s>1$, the quotient is holomorphic there.  Local uniform convergence supplies the same conclusion directly for the defining series.
+\end{proof}
+
+\begin{proposition}[Jump transform, unconditional]
+\label{prop:jump_transform}
+If
+\begin{equation}
+\Re s>1,
+\qquad
+\Re(s+w)>1,
+\label{eq:jump_transform_domain}
+\end{equation}
+then
+\begin{equation}
+\mathscr V(s,w)
+:=\sum_{n,r\ge1}\frac{\Vjump(n,r)}{n^s r^w}
+=\frac{\zeta(s+w)}{\zeta(s)}.
+\label{eq:jump_transform}
+\end{equation}
+The defining double series converges absolutely and locally uniformly on compact subsets of \eqref{eq:jump_transform_domain}; hence it is holomorphic there.
+\end{proposition}
+
+\begin{proof}
+Using Lemma \ref{lem:vertical_jump}, put $n=rm$.  For $\sigma=\Re s$ and $\upsilon=\Re(s+w)$,
+\begin{equation}
+\sum_{r,m\ge1}\frac{|\mob(m)|}{m^\sigma r^\upsilon}
+\le \zeta(\sigma)\zeta(\upsilon)<\infty.
+\label{eq:jump_absolute_bound}
+\end{equation}
+Thus
+\begin{align}
+\mathscr V(s,w)
+&=\sum_{r,m\ge1}\frac{\mob(m)}{m^s r^{s+w}}
+\label{eq:jump_transform_expand}\\
+&=\left(\sum_{m\ge1}\frac{\mob(m)}{m^s}\right)
+\left(\sum_{r\ge1}\frac1{r^{s+w}}\right)
+\label{eq:jump_transform_factor}\\
+&=\frac{\zeta(s+w)}{\zeta(s)}.
+\label{eq:jump_transform_finish}
+\end{align}
+The same absolute bounds are uniform on compact subsets separated from the boundary of the two half-planes, proving local uniform convergence and holomorphy.
+\end{proof}
+
+\begin{definition}[One-parameter jump family]
+\label{def:Aw}
+For $w\in\C$ and $n\ge1$, define the finite divisor sum
+\begin{equation}
+A_w(n)=\sum_{r\mid n}\mob(n/r)r^{-w}.
+\label{eq:Aw_definition}
+\end{equation}
+For each fixed $n$, $w\mapsto A_w(n)$ is an entire function.
+\end{definition}
+
+\begin{proposition}[Dirichlet series and logarithmic derivatives, unconditional]
+\label{prop:Aw}
+In the domain \eqref{eq:jump_transform_domain},
+\begin{equation}
+\sum_{n\ge1}\frac{A_w(n)}{n^s}=\frac{\zeta(s+w)}{\zeta(s)}.
+\label{eq:Aw_dirichlet}
+\end{equation}
+For $k\ge0$, define
+\begin{equation}
+\operatorname{Mang}_k(n)=\sum_{r\mid n}\mob(n/r)(\log r)^k.
+\label{eq:Mang_definition}
+\end{equation}
+Then, for each fixed $n$,
+\begin{equation}
+\operatorname{Mang}_k(n)
+=(-1)^k\left.\frac{\partial^k}{\partial w^k}A_w(n)\right|_{w=0},
+\label{eq:Mang_from_Aw}
+\end{equation}
+and for $\Re s>1$,
+\begin{equation}
+\sum_{n\ge1}\frac{\operatorname{Mang}_k(n)}{n^s}
+=(-1)^k\frac{\zeta^{(k)}(s)}{\zeta(s)}.
+\label{eq:Mang_dirichlet}
+\end{equation}
+In particular $\operatorname{Mang}_1$ is the usual von Mangoldt function.
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:Aw_dirichlet} is Proposition \ref{prop:jump_transform} with the $r$-sum performed first.  Equation \eqref{eq:Mang_from_Aw} is differentiation of a finite divisor sum and requires no convergence argument.  To justify differentiation of \eqref{eq:Aw_dirichlet}, fix $\Re s>1$ and choose $\delta>0$ such that $\Re s-\delta>1$.  For $|w|\le\delta/2$ the double series for $\zeta(s+w)/\zeta(s)$ and all $w$-derivatives up to any fixed order are dominated by
+\begin{equation}
+\sum_{r,m\ge1}\frac{(\log r)^k}{m^{\Re s}r^{\Re s-\delta/2}},
+\label{eq:Aw_derivative_domination}
+\end{equation}
+which converges.  Uniform convergence on the closed disk permits termwise differentiation by the Weierstrass theorem.  Evaluating at $w=0$ gives \eqref{eq:Mang_dirichlet}.
+\end{proof}
+
+\begin{proposition}[Mellin representation, unconditional in its domain]
+\label{prop:mellin}
+Let $h\in C_c^\infty(0,\infty)$ and define
+\begin{equation}
+\widehat h(s)=\int_0^\infty h(x)x^{s-1}\,dx.
+\label{eq:mellin_transform}
+\end{equation}
+Let $c\in\R$ satisfy
+\begin{equation}
+c>1,
+\qquad
+\Re(c+w)>1.
+\label{eq:mellin_domain}
+\end{equation}
+Then for $X>0$,
+\begin{equation}
+\sum_{n\ge1}A_w(n)h(n/X)
+=\frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}
+\frac{\zeta(s+w)}{\zeta(s)}\widehat h(s)X^s\,ds.
+\label{eq:mellin_representation}
+\end{equation}
+The integral is absolutely convergent.
+\end{proposition}
+
+\begin{proof}
+For $h\in C_c^\infty(0,\infty)$, $\widehat h$ is entire and, on every fixed vertical line, decays faster than any inverse power of $|\Im s|$.  Mellin inversion gives
+\begin{equation}
+h(n/X)=\frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}\widehat h(s)X^s n^{-s}\,ds.
+\label{eq:mellin_inversion}
+\end{equation}
+On $\Re s=c$, Proposition \ref{prop:Aw} gives absolute convergence of $\sum_n A_w(n)n^{-s}$ under \eqref{eq:mellin_domain}.  More explicitly, the absolute majorant is bounded by
+\begin{equation}
+\sum_{r,m\ge1}\frac1{m^c r^{c+\Re w}}<\infty.
+\label{eq:mellin_series_majorant}
+\end{equation}
+Multiplying this finite bound by the integrable function $|\widehat h(c+it)|X^c$ justifies interchange of the series and the vertical integral by Fubini.  Substitution of \eqref{eq:Aw_dirichlet} proves \eqref{eq:mellin_representation}.
+\end{proof}
+
+\begin{remark}[Contour shifts]
+\label{rem:contour_shifts}
+No contour shift is needed in the arguments of this paper.  If one shifts the line in \eqref{eq:mellin_representation}, a rigorous residue formula must account for the pole of $\zeta(s+w)$ at $s=1-w$, the trivial and nontrivial zeros of the denominator, possible numerator-denominator cancellations, multiple zeros, horizontal contour estimates, and the convergence prescription for the resulting zero sum.  At $w=0$ the quotient is identically one after removable singularities are canceled; one must cancel first and differentiate only afterward if derivatives in $w$ are intended.
+\end{remark}
+
+\section{Exact \texorpdfstring{$p$}{p}-adic valuation-parity shells}
+\label{sec:padic_shells}
+
+Fix a prime $p$.  Let $m_p$ denote normalized Haar probability measure on the compact additive group $\Z_p$.  The valuation $v_p$ is finite away from $0$; values assigned at finitely many singular points do not affect integrals.
+
+\begin{definition}[Adjacent valuation-parity sign]
+\label{def:eta_p}
+For $x\in\Z_p\setminus\{0,-1\}$, define
+\begin{equation}
+\eta_p(x)=(-1)^{v_p(x)+v_p(x+1)}.
+\label{eq:eta_p}
+\end{equation}
+Let $\mathcal F_j$ be the finite sigma-algebra generated by residue classes modulo $p^j$, with $\mathcal F_0$ trivial.  Put
+\begin{equation}
+M_j=\E(\eta_p\mid\mathcal F_j),
+\qquad
+\Delta_j=M_j-M_{j-1}\quad(j\ge1).
+\label{eq:padic_martingale}
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Conditional valuation sign, unconditional]
+\label{lem:conditional_valuation}
+Conditioned on $p\mid x$,
+\begin{equation}
+\Prob\bigl(v_p(x)=k\mid p\mid x\bigr)=(p-1)p^{-k},
+\qquad k\ge1,
+\label{eq:valuation_distribution}
+\end{equation}
+and
+\begin{equation}
+\E\bigl((-1)^{v_p(x)}\mid p\mid x\bigr)
+=-\frac{p-1}{p+1}.
+\label{eq:conditional_valuation_mean}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The shell $p^k\Z_p\setminus p^{k+1}\Z_p$ has Haar measure $(p-1)p^{-k-1}$.  Division by $m_p(p\Z_p)=p^{-1}$ yields \eqref{eq:valuation_distribution}.  The absolutely convergent geometric series then gives
+\begin{equation}
+(p-1)\sum_{k\ge1}\frac{(-1)^k}{p^k}=-\frac{p-1}{p+1}.
+\label{eq:conditional_valuation_series}
+\end{equation}
+\end{proof}
+
+\begin{proposition}[Mean and first shell, unconditional]
+\label{prop:padic_mean_first_shell}
+The Haar mean is
+\begin{equation}
+M_0=\int_{\Z_p}\eta_p\,dm_p=\frac{p-3}{p+1}.
+\label{eq:padic_global_mean}
+\end{equation}
+On the classes $0,-1\pmod p$, $\Delta_1$ equals
+\begin{equation}
+-\frac{2(p-2)}{p+1},
+\label{eq:first_shell_exceptional}
+\end{equation}
+and on each of the other $p-2$ classes it equals
+\begin{equation}
+\frac4{p+1}.
+\label{eq:first_shell_ordinary}
+\end{equation}
+Its energy is
+\begin{equation}
+\|\Delta_1\|_2^2=\frac{8(p-2)}{(p+1)^2}.
+\label{eq:first_shell_energy}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On the two exceptional classes the conditional mean is $-(p-1)/(p+1)$ by Lemma \ref{lem:conditional_valuation}; on the remaining classes both valuations vanish, so the value is one.  Averaging over the $p$ classes gives \eqref{eq:padic_global_mean}.  Subtracting this mean gives \eqref{eq:first_shell_exceptional} and \eqref{eq:first_shell_ordinary}; squaring and averaging gives \eqref{eq:first_shell_energy}.
+\end{proof}
+
+\begin{corollary}[The unique centered prime, unconditional]
+\label{cor:unique_centered_prime}
+Among primes,
+\begin{equation}
+\int_{\Z_p}\eta_p\,dm_p=0
+\quad\Longleftrightarrow\quad
+p=3.
+\label{eq:unique_centered_prime}
+\end{equation}
+Thus the dyadic local factor has mean $-1/3$, the triadic factor is centered, and every $p>3$ factor has positive mean.
+\end{corollary}
+
+\begin{proof}
+This is immediate from \eqref{eq:padic_global_mean}.
+\end{proof}
+
+\begin{theorem}[Exact martingale shells, unconditional]
+\label{thm:exact_shells}
+For every $j\ge2$, $\Delta_j$ vanishes outside the two parent classes
+\begin{equation}
+x\equiv0,-1\pmod{p^{j-1}}.
+\label{eq:active_parents}
+\end{equation}
+On each active parent, its $p$ child values are a permutation of
+\begin{equation}
+\frac{2(-1)^{j-1}}{p+1}\bigl(-(p-1),1,\ldots,1\bigr).
+\label{eq:shell_child_values}
+\end{equation}
+Consequently,
+\begin{equation}
+\|\Delta_j\|_2^2
+=\frac{8(p-1)}{(p+1)^2}p^{1-j},
+\qquad j\ge2,
+\label{eq:shell_energy}
+\end{equation}
+and for $J\ge1$,
+\begin{equation}
+\sum_{j>J}\|\Delta_j\|_2^2
+=\frac{8p^{1-J}}{(p+1)^2}.
+\label{eq:shell_tail_energy}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+On the parent $x\equiv0\pmod{p^{j-1}}$, the conditional mean is
+\begin{equation}
+(-1)^{j-1}\frac{p-1}{p+1}.
+\label{eq:parent_mean_shell}
+\end{equation}
+The exceptional child $x\equiv0\pmod{p^j}$ has conditional mean with the opposite sign, while each other child has exact valuation $j-1$.  Subtracting the parent mean gives exactly the vector in \eqref{eq:shell_child_values}.  The tower above $-1$ is obtained by $x\mapsto-1-x$ and has the same child multiset.
+
+Each active parent has measure $p^{1-j}$.  The mean square of the child vector within one parent is
+\begin{equation}
+\frac1p\left(
+\frac{4(p-1)^2}{(p+1)^2}
++(p-1)\frac4{(p+1)^2}
+\right)
+=\frac{4(p-1)}{(p+1)^2}.
+\label{eq:child_mean_square}
+\end{equation}
+Multiplication by the total measure $2p^{1-j}$ gives \eqref{eq:shell_energy}.  Summing the geometric tail gives \eqref{eq:shell_tail_energy}.
+\end{proof}
+
+\begin{corollary}[Exact $L^2$ closure and triadic specialization, unconditional]
+\label{cor:padic_closure}
+The martingale differences are pairwise orthogonal and
+\begin{equation}
+M_0^2+\sum_{j\ge1}\|\Delta_j\|_2^2=1.
+\label{eq:energy_closure}
+\end{equation}
+For $p=3$,
+\begin{equation}
+\Delta_1=(-1/2,1,-1/2)
+\label{eq:triadic_first_shell}
+\end{equation}
+on classes $0,1,2\pmod3$,
+\begin{equation}
+\|\Delta_1\|_2^2=\frac12,
+\qquad
+\|\Delta_j\|_2^2=3^{1-j}\quad(j\ge2),
+\label{eq:triadic_shell_energies}
+\end{equation}
+and all unit energy lies in the centered nonconstant shells.
+\end{corollary}
+
+\begin{proof}
+Since conditional expectations onto nested finite sigma-algebras form an $L^2$ martingale, the differences are orthogonal.  The sigma-algebras generated by all residue classes modulo $p^j$ generate the Borel sigma-algebra of $\Z_p$; by the standard $L^2$ martingale convergence theorem, $M_J\to\eta_p$ in $L^2$.  As $|\eta_p|=1$ almost everywhere, Pythagoras gives \eqref{eq:energy_closure}.  The triadic formulas follow by substituting $p=3$ into Proposition \ref{prop:padic_mean_first_shell} and Theorem \ref{thm:exact_shells}.
+\end{proof}
+
+\section{Two-shift collision depth and determinant-one geometry}
+\label{sec:two_shift}
+
+\begin{definition}[Shifted local parity]
+\label{def:eta_ph}
+For a prime $p$ and nonzero integer $h$, define
+\begin{equation}
+\eta_{p,h}(x)=(-1)^{v_p(x)+v_p(x+h)},
+\qquad x\in\Z_p\setminus\{0,-h\}.
+\label{eq:eta_ph}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Exact two-shift mean, unconditional]
+\label{thm:two_shift_mean}
+Write
+\begin{equation}
+h=p^s u,
+\qquad s=v_p(h),
+\qquad p\nmid u.
+\label{eq:h_factorization}
+\end{equation}
+Then
+\begin{equation}
+\int_{\Z_p}\eta_{p,h}(x)\,dm_p(x)
+=1-\frac{4p^{-s}}{p+1}.
+\label{eq:two_shift_mean}
+\end{equation}
+Equivalently, for distinct integers $h_1,h_2$ and
+\begin{equation}
+d=v_p(h_1-h_2),
+\label{eq:collision_depth}
+\end{equation}
+we have
+\begin{equation}
+\int_{\Z_p}(-1)^{v_p(x+h_1)+v_p(x+h_2)}\,dm_p(x)
+=1-\frac{4p^{-d}}{p+1}.
+\label{eq:two_shift_collision_formula}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+If $s=0$, multiplication by the unit $h^{-1}$ preserves Haar measure and valuations, reducing the pair $\{0,h\}$ to $\{0,1\}$, so the mean is $(p-3)/(p+1)$, which is \eqref{eq:two_shift_mean} for $s=0$.
+
+If $s\ge1$, then outside $p\Z_p$ both $x$ and $x+h$ are units, so the sign is one.  On $x=py$,
+\begin{equation}
+v_p(x)+v_p(x+h)=2+v_p(y)+v_p(y+h/p),
+\label{eq:shift_recursion_valuation}
+\end{equation}
+so the sign on the divisible branch is the same problem with $h/p$.  Iterating $s$ times gives value one off $p^s\Z_p$ and the unit-shift problem on the remaining branch of measure $p^{-s}$.  Hence
+\begin{equation}
+(1-p^{-s})+p^{-s}\frac{p-3}{p+1}
+=1-\frac{4p^{-s}}{p+1}.
+\label{eq:two_shift_mean_proof}
+\end{equation}
+Translation by $-h_1$ gives \eqref{eq:two_shift_collision_formula}.
+\end{proof}
+
+\begin{proposition}[Unimodular local noncollision, unconditional]
+\label{prop:unimodular_local}
+Let
+\begin{equation}
+L_1(m)=qm+A,
+\qquad
+L_2(m)=rm+B,
+\qquad
+qB-rA=1,
+\label{eq:unimodular_forms}
+\end{equation}
+with $q,r\in\N$ and $A,B\in\Z$.  Then
+\begin{equation}
+\gcd(L_1(m),L_2(m))=1
+\qquad\text{for every }m\in\Z.
+\label{eq:unimodular_value_coprimality}
+\end{equation}
+For each prime $p$, the two $p$-adic valuation towers never collide.  More precisely:
+\begin{equation}
+\int_{\Z_p}(-1)^{v_p(L_1(x))+v_p(L_2(x))}\,dm_p(x)
+=
+\begin{cases}
+\dfrac{p-3}{p+1},&p\nmid qr,\\[2mm]
+\dfrac{p-1}{p+1},&p\mid qr.
+\end{cases}
+\label{eq:unimodular_local_mean}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Any common divisor of $L_1(m)$ and $L_2(m)$ divides
+\begin{equation}
+qL_2(m)-rL_1(m)=qB-rA=1,
+\label{eq:determinant_bezout}
+\end{equation}
+which proves \eqref{eq:unimodular_value_coprimality}.
+
+If $p\nmid qr$, both slopes are units.  The roots in $\Z_p$ are $-A/q$ and $-B/r$, and their difference is
+\begin{equation}
+-\frac Aq+\frac Br=\frac1{qr},
+\label{eq:root_difference_unit}
+\end{equation}
+a $p$-adic unit.  An affine unit change of variable therefore reduces the local sign to the adjacent sign $\eta_p$, whose mean is \eqref{eq:padic_global_mean}.
+
+If $p\mid q$, then $p\nmid r$ and $p\nmid A$ by $qB-rA=1$.  Thus $L_1$ is always a $p$-adic unit, while $L_2$ has one ordinary valuation tower.  The global mean of $(-1)^{v_p(L_2)}$ is
+\begin{equation}
+\left(1-\frac1p\right)
++\frac1p\left(-\frac{p-1}{p+1}\right)
+=\frac{p-1}{p+1}.
+\label{eq:single_tower_mean}
+\end{equation}
+The case $p\mid r$ is symmetric.  Both cannot occur because $(q,r)=1$.
+\end{proof}
+
+
+\section{Exact dyadic--triadic gauge comparison}
+\label{sec:dyadic_triadic_gauges}
+
+The preceding shells distinguish the primes $2$ and $3$ locally.  The following exact comparison records what can and cannot be obtained by comparing the two corresponding Liouville gauges.
+
+\begin{definition}[Prime-removed Liouville gauges]
+\label{def:prime_removed_gauges}
+For $p\in\{2,3\}$ define
+\begin{equation}
+f_p(m)=\liou\!\left(\frac{m}{p^{v_p(m)}}\right),
+\qquad
+h_p(n)=f_p(n+1).
+\label{eq:fp_hp_definition}
+\end{equation}
+On finitely supported sequences in $\ell^2(\N)$ let
+\begin{equation}
+(P_\ell a)(n)=a(\ell n),
+\qquad
+U_\ell^{(p)}=M_{h_p}P_\ell M_{h_p},
+\label{eq:gauge_operator_definition}
+\end{equation}
+where $M_h$ denotes multiplication by the sign $h$.
+\end{definition}
+
+\begin{proposition}[Exact dyadic--triadic gauge conjugacy, unconditional]
+\label{prop:dyadic_triadic_conjugacy}
+Define
+\begin{equation}
+g(n)=(-1)^{v_2(n+1)+v_3(n+1)},
+\qquad G=M_g.
+\label{eq:gauge_g_definition}
+\end{equation}
+Then
+\begin{equation}
+h_2(n)h_3(n)=g(n)
+\label{eq:h2_h3_g}
+\end{equation}
+and, for every positive integer $\ell$,
+\begin{equation}
+U_\ell^{(3)}=G U_\ell^{(2)}G.
+\label{eq:gauge_conjugacy}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Complete multiplicativity gives
+\begin{equation}
+f_p(m)=\liou(m)(-1)^{v_p(m)}.
+\label{eq:fp_complete_multiplicativity}
+\end{equation}
+Multiplication for $p=2,3$ proves \eqref{eq:h2_h3_g}.  Since diagonal multiplication operators commute and $M_{h_3}=GM_{h_2}$, direct substitution into \eqref{eq:gauge_operator_definition} gives \eqref{eq:gauge_conjugacy}.
+\end{proof}
+
+\begin{proposition}[Relative dyadic--triadic information does not recover the absolute correlation, unconditional]
+\label{prop:relative_not_absolute}
+For $q,n\ge1$, put
+\begin{equation}
+C_{p,q}(n)=h_p(n)h_p(qn),
+\qquad
+\kappa_q(n)=C_{2,q}(n)C_{3,q}(n).
+\label{eq:gauge_correlations}
+\end{equation}
+Then $\kappa_q(n)$ does not determine either $C_{2,q}(n)$ or $C_{3,q}(n)$.  In particular, a contraction or cancellation theorem involving only the relative sign $\kappa_q$ cannot by itself imply cancellation of either absolute gauge correlation.
+\end{proposition}
+
+\begin{proof}
+The two sign pairs
+\begin{equation}
+(C_{2,q}(n),C_{3,q}(n))
+\quad\text{and}\quad
+(-C_{2,q}(n),-C_{3,q}(n))
+\label{eq:relative_sign_ambiguity}
+\end{equation}
+have the same product $\kappa_q(n)$ and opposite values in each coordinate.  Hence neither coordinate is a function of the product alone.
+\end{proof}
+
+\begin{remark}[Scope of the dyadic--triadic comparison]
+\label{rem:dyadic_triadic_scope}
+The gauge conjugacy is an exact structural identity, not a proof of Chowla.  It is included because it prevents a recurring false inference: relative information between the dyadic and triadic gauges loses the common Liouville sign.  The squarefree-unimodular operator developed below is different; its signs come from square-divisor inclusion--exclusion rather than from a dyadic--triadic gauge ratio.
+\end{remark}
+
+\section{Surface coordinates for Möbius, Liouville, and squarefreeness}
+\label{sec:coordinates}
+
+Let
+\begin{equation}
+\mathcal H_N=\C^{\{2,\ldots,N\}},
+\qquad
+\mathcal R_N=\C^{\{1,\ldots,N-1\}}.
+\label{eq:finite_spaces}
+\end{equation}
+For an arithmetic function $f$ defined at least on $1,\ldots,N$, write $f_N=(f(2),\ldots,f(N))^T$.
+
+\begin{proposition}[Coordinate formula, unconditional]
+\label{prop:coordinate_formula}
+For every such $f$,
+\begin{equation}
+(B_N^{-1}f_N)(r)=G_f(r+1)-G_f(r),
+\qquad
+G_f(m)=\sum_{d\mid m}f(d).
+\label{eq:coordinate_formula}
+\end{equation}
+The term $f(1)$ cancels from the difference.
+\end{proposition}
+
+\begin{proof}
+Insert \eqref{eq:BN_inverse}:
+\begin{align}
+(B_N^{-1}f_N)(r)
+&=\sum_{\substack{n\mid r+1\\n\ge2}}f(n)
+-\sum_{\substack{n\mid r\\n\ge2}}f(n)
+\label{eq:coordinate_formula_expand}\\
+&=G_f(r+1)-G_f(r).
+\label{eq:coordinate_formula_finish}
+\end{align}
+\end{proof}
+
+\begin{corollary}[Möbius and Liouville coordinates, unconditional]
+\label{cor:mu_lambda_coordinates}
+Let $e_1$ denote the first standard basis vector of $\mathcal R_N$.  Then
+\begin{equation}
+B_N^{-1}\mob_N=-e_1,
+\qquad
+\mob_N=-B_Ne_1.
+\label{eq:mu_coordinates}
+\end{equation}
+Define
+\begin{equation}
+s_N(r)=\one_{r+1=\square}-\one_{r=\square},
+\qquad 1\le r\le N-1.
+\label{eq:sN_definition}
+\end{equation}
+Then
+\begin{equation}
+B_N^{-1}\liou_N=s_N,
+\qquad
+\liou_N=B_Ns_N.
+\label{eq:lambda_coordinates}
+\end{equation}
+Moreover,
+\begin{equation}
+|\supp s_N|
+=\lfloor\sqrt{N-1}\rfloor+\lfloor\sqrt N\rfloor-1
+=O(\sqrt N).
+\label{eq:sN_support}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The classical identities
+\begin{equation}
+\sum_{d\mid m}\mob(d)=\one_{m=1}
+\label{eq:mobius_divisor_sum}
+\end{equation}
+and
+\begin{equation}
+\sum_{d\mid m}\liou(d)=\one_{m=\square}
+\label{eq:liouville_divisor_sum}
+\end{equation}
+inserted into Proposition \ref{prop:coordinate_formula} give \eqref{eq:mu_coordinates} and \eqref{eq:lambda_coordinates}.  The support count follows because squares in $[1,N-1]$ contribute the negative locations and squares in $[2,N]$ contribute the positive locations; no two such locations coincide.
+\end{proof}
+
+\subsection{Pointwise squarefree projection}
+\label{subsec:pointwise_squarefree}
+
+\begin{definition}[Squarefree projection]
+\label{def:squarefree_projection}
+On $\mathcal H_N$, define
+\begin{equation}
+(P_{\mathrm{sf},N}f)(n)=\mob(n)^2f(n),
+\qquad 2\le n\le N.
+\label{eq:squarefree_projection}
+\end{equation}
+Its conjugate in surface coordinates is
+\begin{equation}
+\Pi_N=B_N^{-1}P_{\mathrm{sf},N}B_N.
+\label{eq:PiN_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Squarefree coordinate projection, unconditional]
+\label{prop:squarefree_coordinate_projection}
+The operators $P_{\mathrm{sf},N}$ and $\Pi_N$ are idempotent.  Moreover,
+\begin{equation}
+\Pi_Ns_N=-e_1.
+\label{eq:squarefree_maps_lambda_to_mu}
+\end{equation}
+For every integer $d\ge1$, define
+\begin{equation}
+E_d=\diag\bigl(\one_{d^2\mid n}\bigr)_{2\le n\le N},
+\qquad
+\widetilde E_d=B_N^{-1}E_dB_N.
+\label{eq:Ed_definitions}
+\end{equation}
+Then
+\begin{equation}
+\widetilde E_d^2=\widetilde E_d,
+\qquad
+\widetilde E_a\widetilde E_b=\widetilde E_{\lcm(a,b)},
+\label{eq:Ed_semilattice}
+\end{equation}
+and
+\begin{equation}
+\Pi_N=\sum_{d\le\sqrt N}\mob(d)\widetilde E_d.
+\label{eq:PiN_expansion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Pointwise multiplication by $\mob^2\in\{0,1\}$ is a projection, and conjugation preserves idempotence.  Since $P_{\mathrm{sf},N}\liou_N=\mob_N$, equations \eqref{eq:mu_coordinates} and \eqref{eq:lambda_coordinates} imply \eqref{eq:squarefree_maps_lambda_to_mu}.
+
+Each $E_d$ is a diagonal projection.  Since
+\begin{equation}
+\one_{a^2\mid n}\one_{b^2\mid n}=\one_{\lcm(a,b)^2\mid n},
+\label{eq:divisibility_projection_product}
+\end{equation}
+conjugation gives \eqref{eq:Ed_semilattice}.  Finally the classical finite identity
+\begin{equation}
+\mob(n)^2=\sum_{d^2\mid n}\mob(d)
+\label{eq:mobius_squarefree_identity}
+\end{equation}
+gives $P_{\mathrm{sf},N}=\sum_{d\le\sqrt N}\mob(d)E_d$, and conjugation gives \eqref{eq:PiN_expansion}.
+\end{proof}
+
+\subsection{Square extraction is a different operator}
+\label{subsec:square_extraction}
+
+\begin{definition}[Square-extraction convolution]
+\label{def:square_extraction}
+On functions defined on $\{1,\ldots,N\}$, define
+\begin{align}
+(Q_Nf)(n)&=\sum_{d^2\mid n}\mob(d)f(n/d^2),
+\label{eq:Q_definition}\\
+(R_Nf)(n)&=\sum_{d^2\mid n}f(n/d^2).
+\label{eq:R_definition}
+\end{align}
+\end{definition}
+
+\begin{proposition}[Inverse square-extraction operators, unconditional]
+\label{prop:QR_inverse}
+The matrices $Q_N,R_N$ in the standard basis $1,\ldots,N$ are lower triangular with diagonal one and
+\begin{equation}
+Q_NR_N=R_NQ_N=I.
+\label{eq:QR_inverse}
+\end{equation}
+Furthermore,
+\begin{equation}
+Q_N\liou=\mob,
+\qquad
+R_N\mob=\liou
+\label{eq:QR_mu_lambda}
+\end{equation}
+on $1\le n\le N$.  Thus $Q_N$ is invertible and is not the squarefree projection.
+\end{proposition}
+
+\begin{proof}
+In the composition, the coefficient attached to extraction by $k^2$ is
+\begin{equation}
+\sum_{de=k}\mob(d)=\one_{k=1},
+\label{eq:QR_coefficient}
+\end{equation}
+which proves \eqref{eq:QR_inverse}.  Complete multiplicativity gives $\liou(d^2)=1$, so
+\begin{equation}
+(Q_N\liou)(n)=\liou(n)\sum_{d^2\mid n}\mob(d)=\liou(n)\mob(n)^2=\mob(n).
+\label{eq:Q_lambda_mu_proof}
+\end{equation}
+The second identity in \eqref{eq:QR_mu_lambda} follows by applying $R_N=Q_N^{-1}$.
+\end{proof}
+
+\begin{remark}[The index $1$ and the augmented surface]
+\label{rem:augmented_surface}
+The operator $Q_N$ must include the coordinate $f(1)$.  If one restricts prematurely to $2,\ldots,N$, the term $f(1)$ is lost on rows $n=d^2$.  The canonical augmentation uses rows $n=1,\ldots,N$ and columns $r=0,\ldots,N-1$:
+\begin{equation}
+\widehat B_N=1\oplus B_N.
+\label{eq:augmented_B}
+\end{equation}
+Indeed $F(1,0)=1$, $F(n,0)=0$ for $n>1$, and $F(1,r)=0$ for $r\ge1$.  Therefore
+\begin{equation}
+\widehat B_N^{-1}\widehat\mob_N=e_0-e_1,
+\qquad
+\widehat B_N^{-1}\widehat\liou_N=e_0+s_N,
+\label{eq:augmented_coordinates}
+\end{equation}
+and the conjugated square-extraction operator is well typed on the full $N$-dimensional space.
+\end{remark}
+
+\section{Squarefree--unimodular renormalization}
+\label{sec:unimodular_renormalization}
+
+\begin{theorem}[Quadratic branch closure in $SL_2(\Z)$, unconditional]
+\label{thm:SL2_square_closure}
+Let
+\begin{equation}
+M=\begin{pmatrix}q&A\\r&B\end{pmatrix}\in SL_2(\Z),
+\qquad q,r>0,
+\label{eq:M_SL2}
+\end{equation}
+and let $I\subset\Z$ be a finite interval on which
+\begin{equation}
+L_1(m)=qm+A>0,
+\qquad
+L_2(m)=rm+B>0.
+\label{eq:positive_forms}
+\end{equation}
+Suppose an admissible branch satisfies
+\begin{equation}
+d_1^2\mid L_1(m),
+\qquad
+d_2^2\mid L_2(m)
+\label{eq:square_branch_conditions}
+\end{equation}
+for at least one $m\in I$.  Then
+\begin{equation}
+(d_1,d_2)=1,
+\qquad
+(d_1,q)=1,
+\qquad
+(d_2,r)=1.
+\label{eq:branch_coprimalities}
+\end{equation}
+There is a unique residue class
+\begin{equation}
+c\pmod{D^2},
+\qquad D=d_1d_2,
+\label{eq:CRT_class}
+\end{equation}
+solving the two congruences in \eqref{eq:square_branch_conditions}.  Writing
+\begin{equation}
+m=c+D^2t,
+\label{eq:branch_parameterization}
+\end{equation}
+and
+\begin{equation}
+a=\frac{qc+A}{d_1^2},
+\qquad
+b=\frac{rc+B}{d_2^2},
+\label{eq:a_b_branch}
+\end{equation}
+we obtain the divided forms
+\begin{equation}
+\widetilde L_1(t)=qd_2^2t+a,
+\qquad
+\widetilde L_2(t)=rd_1^2t+b,
+\label{eq:renormalized_forms}
+\end{equation}
+and
+\begin{equation}
+\det\begin{pmatrix}qd_2^2&a\\rd_1^2&b\end{pmatrix}=1.
+\label{eq:renormalized_determinant}
+\end{equation}
+Thus every nonempty simultaneous square-extraction branch remains in $SL_2(\Z)$.
+\end{theorem}
+
+\begin{proof}
+Since $qB-rA=1$,
+\begin{equation}
+qL_2(m)-rL_1(m)=1.
+\label{eq:branch_bezout}
+\end{equation}
+Hence the two values are coprime.  Any common prime divisor of $d_1$ and $d_2$ would divide both values, proving $(d_1,d_2)=1$.  If $p\mid d_1$ and $p\mid q$, then $p\mid L_1(m)$ implies $p\mid A$, contradicting $qB-rA=1$; this proves $(d_1,q)=1$.  The third assertion is symmetric.
+
+The first congruence in \eqref{eq:square_branch_conditions} determines one class modulo $d_1^2$ because $q$ is invertible modulo $d_1^2$; the second determines one class modulo $d_2^2$ because $r$ is invertible modulo $d_2^2$.  Since $(d_1,d_2)=1$, CRT gives the unique class \eqref{eq:CRT_class}.  The quantities $a,b$ in \eqref{eq:a_b_branch} are integers by construction.  Substituting \eqref{eq:branch_parameterization} gives \eqref{eq:renormalized_forms}.  Finally,
+\begin{align}
+qd_2^2b-rd_1^2a
+&=q(rc+B)-r(qc+A)
+\label{eq:determinant_branch_first}\\
+&=qB-rA
+\label{eq:determinant_branch_second}\\
+&=1.
+\label{eq:determinant_branch_final}
+\end{align}
+This proves \eqref{eq:renormalized_determinant}.
+\end{proof}
+
+\begin{theorem}[Exact Möbius--Liouville branch identity, unconditional]
+\label{thm:exact_branch_identity}
+Under the hypotheses of Theorem \ref{thm:SL2_square_closure}, define
+\begin{equation}
+C_f(M;I)=\sum_{m\in I}f(L_1(m))f(L_2(m)).
+\label{eq:Cf_definition}
+\end{equation}
+For each admissible pair $(d_1,d_2)$ let $c(d_1,d_2)$ be the CRT class in \eqref{eq:CRT_class}, let $M_{d_1,d_2}$ be the determinant-one matrix in \eqref{eq:renormalized_determinant}, and define
+\begin{equation}
+I_{d_1,d_2}
+=\{t\in\Z:c(d_1,d_2)+d_1^2d_2^2t\in I\}.
+\label{eq:branch_interval}
+\end{equation}
+Then the finite identity
+\begin{equation}
+C_{\mob}(M;I)
+=
+\sum_{\substack{d_1,d_2\ge1\\(d_1,d_2)=1\\(d_1,q)=1\\(d_2,r)=1}}
+\mob(d_1)\mob(d_2)
+C_{\liou}(M_{d_1,d_2};I_{d_1,d_2})
+\label{eq:exact_mu_lambda_branch_identity}
+\end{equation}
+holds, where only finitely many pairs contribute.
+\end{theorem}
+
+\begin{proof}
+For positive integers, combine \eqref{eq:mu_lambda_squarefree} and \eqref{eq:mobius_squarefree_identity}:
+\begin{equation}
+\mob(L_i(m))
+=\liou(L_i(m))\sum_{d_i^2\mid L_i(m)}\mob(d_i).
+\label{eq:mu_square_expansion_form}
+\end{equation}
+Because $I$ is finite and both forms are positive there, every sum is finite.  Multiplying the two expansions and interchanging finite sums gives a sum over branches \eqref{eq:square_branch_conditions}.  Theorem \ref{thm:SL2_square_closure} supplies the coprimality conditions and the CRT parameterization.  Since $\liou(d_i^2)=1$,
+\begin{equation}
+\liou(L_1(m))\liou(L_2(m))
+=\liou(\widetilde L_1(t))\liou(\widetilde L_2(t))
+\label{eq:lambda_square_removal}
+\end{equation}
+on each branch.  Substitution yields \eqref{eq:exact_mu_lambda_branch_identity}.
+\end{proof}
+
+\begin{remark}[What is classical and what is structural]
+\label{rem:ramare_transfer}
+The use of square divisors to transfer between Liouville and Möbius formulations of Chowla is classical; see Ramaré \cite{Ramare2018}.  The additional structure isolated in Theorems \ref{thm:SL2_square_closure}--\ref{thm:exact_branch_identity} is the exact branchwise preservation of determinant one together with the explicit CRT scale and branch interval.
+\end{remark}
+
+\section{Conjugated additive shifts and the natural metric}
+\label{sec:conjugated_shift}
+
+For $1\le h\le N-2$, define the truncated shift on $\mathcal H_N$ by
+\begin{equation}
+(S_hf)(n)=
+\begin{cases}
+f(n+h),&n+h\le N,\\0,&n+h>N.
+\end{cases}
+\label{eq:shift_definition}
+\end{equation}
+Define
+\begin{equation}
+T_{N,h}=B_N^{-1}S_hB_N
+\label{eq:conjugated_shift_definition}
+\end{equation}
+and
+\begin{equation}
+G_N=B_N^*B_N.
+\label{eq:GN_definition}
+\end{equation}
+
+\begin{proposition}[Exact structure of the conjugated shift, unconditional]
+\label{prop:conjugated_shift}
+For $1\le h\le N-2$,
+\begin{equation}
+T_{N,h}(r,q)
+=
+\sum_{n=2}^{N-h}
+\bigl(\one_{n\mid r+1}-\one_{n\mid r}\bigr)\Fsurf(n+h,q).
+\label{eq:T_entries}
+\end{equation}
+Moreover,
+\begin{equation}
+T_{N,h}(r,q)=0
+\qquad\text{if }q>r+h,
+\label{eq:T_Hessenberg}
+\end{equation}
+so $T_{N,h}$ is $h$-Hessenberg.  Its rank and nullity are
+\begin{equation}
+\rank T_{N,h}=N-1-h,
+\qquad
+\dim\ker T_{N,h}=h,
+\label{eq:T_rank_kernel}
+\end{equation}
+and
+\begin{equation}
+T_{N,h}^{\lceil(N-1)/h\rceil}=0.
+\label{eq:T_nilpotence}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:T_entries} follows by multiplying $B_N^{-1}S_hB_N$ and using \eqref{eq:BN_inverse}.  If a summand is nonzero, divisibility in the inverse matrix implies $n\le r+1$.  Also $F(n+h,q)=0$ when $q\ge n+h$.  Thus $q>r+h$ kills every summand, proving \eqref{eq:T_Hessenberg}.
+
+The remaining statements are inherited by similarity from the ordinary shift $S_h$.  On the $(N-1)$-dimensional coordinate set $2,\ldots,N$, $S_h$ has rank $N-1-h$, kernel dimension $h$, and its $k$th power is zero exactly once $kh>N-2$.  The exponent in \eqref{eq:T_nilpotence} is the least such integer.
+\end{proof}
+
+\begin{proposition}[Isometric bridge, unconditional]
+\label{prop:isometric_bridge}
+Equip $\mathcal R_N$ with
+\begin{equation}
+\langle u,v\rangle_{G_N}=u^*G_Nv.
+\label{eq:GN_inner_product}
+\end{equation}
+Then $B_N:(\mathcal R_N,G_N)\to(\mathcal H_N,\ell^2)$ is an isometry.  For every operator $A$ on $\mathcal H_N$ and $\widetilde A=B_N^{-1}AB_N$,
+\begin{equation}
+\|\widetilde A\|_{G_N\to G_N}=\|A\|_{2\to2},
+\qquad
+\spec(\widetilde A)=\spec(A).
+\label{eq:isometric_similarity}
+\end{equation}
+If $A=A^*$, then
+\begin{equation}
+\widetilde A^*G_N=G_N\widetilde A.
+\label{eq:G_selfadjoint}
+\end{equation}
+In particular,
+\begin{equation}
+\|T_{N,h}\|_{G_N\to G_N}=1.
+\label{eq:T_norm_one}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:GN_inner_product} gives
+\begin{equation}
+\langle u,v\rangle_{G_N}=\langle B_Nu,B_Nv\rangle_{\ell^2}.
+\label{eq:isometry_identity}
+\end{equation}
+The norm and spectrum identities follow from this isometry and finite-dimensional similarity.  The adjoint identity follows by multiplying $\widetilde A=B_N^{-1}AB_N$ and its adjoint.  A nonzero unilateral finite shift has Euclidean operator norm one, so \eqref{eq:T_norm_one} follows.
+\end{proof}
+
+\begin{remark}[No spectral gain from a change of coordinates]
+\label{rem:no_spectral_gain}
+Equation \eqref{eq:T_norm_one} prevents a false route: conjugating the additive shift by $B_N$ does not create a contraction.  Any future gain must come from a centered, averaged, or compressed operator that uses arithmetic information beyond similarity.
+\end{remark}
+
+\section{A unified coefficient dictionary}
+\label{sec:dictionary}
+
+For real $\alpha$ define the weight vector on $2,\ldots,N$ by
+\begin{equation}
+w_\alpha(n)=n^{-\alpha}
+\label{eq:w_alpha}
+\end{equation}
+and set
+\begin{equation}
+x_\alpha=B_N^{-1}w_\alpha.
+\label{eq:x_alpha_definition}
+\end{equation}
+
+\begin{proposition}[Special coefficient vectors, unconditional]
+\label{prop:coefficient_dictionary}
+For $1\le r\le N-1$,
+\begin{equation}
+x_\alpha(r)=\sigma_{-\alpha}(r+1)-\sigma_{-\alpha}(r),
+\qquad
+\sigma_{-\alpha}(m)=\sum_{d\mid m}d^{-\alpha}.
+\label{eq:x_alpha_formula}
+\end{equation}
+Moreover,
+\begin{align}
+\sum_{n\le N}\frac{\mob(n)}{n^\alpha}
+&=1-x_\alpha^*G_Ne_1,
+\label{eq:mu_weighted_dictionary}\\
+\sum_{n\le N}\frac{\liou(n)}{n^\alpha}
+&=1+x_\alpha^*G_Ns_N.
+\label{eq:lambda_weighted_dictionary}
+\end{align}
+For $1\le h\le N-2$,
+\begin{align}
+\sum_{n\le N-h}\mob(n)\mob(n+h)
+&=\mob(h+1)+e_1^*G_NT_{N,h}e_1,
+\label{eq:mu_correlation_dictionary}\\
+\sum_{n\le N-h}\liou(n)\liou(n+h)
+&=\liou(h+1)+s_N^*G_NT_{N,h}s_N,
+\label{eq:lambda_correlation_dictionary}\\
+\sum_{n\le N-h}\mob(n)\liou(n+h)
+&=\liou(h+1)-e_1^*G_NT_{N,h}s_N.
+\label{eq:mixed_correlation_dictionary}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:x_alpha_formula} is Proposition \ref{prop:coordinate_formula} applied to $f(n)=n^{-\alpha}$.  Since $w_\alpha=B_Nx_\alpha$, $\mob_N=-B_Ne_1$, and $\liou_N=B_Ns_N$, the weighted identities follow by taking Euclidean inner products and adding the $n=1$ term.
+
+For correlations, use $S_hB_N=B_NT_{N,h}$.  For example,
+\begin{equation}
+e_1^*G_NT_{N,h}e_1
+=(B_Ne_1)^*S_h(B_Ne_1)
+=\sum_{n=2}^{N-h}\mob(n)\mob(n+h),
+\label{eq:mu_correlation_proof}
+\end{equation}
+and adding the $n=1$ term gives \eqref{eq:mu_correlation_dictionary}.  The other two identities are identical calculations with $B_Ns_N=\liou_N$ and $B_Ne_1=-\mob_N$.
+\end{proof}
+
+\begin{remark}[Sparsity is not small energy]
+\label{rem:sparsity_not_energy}
+Although $s_N$ has only $O(\sqrt N)$ nonzero coordinates,
+\begin{equation}
+s_N^*G_Ns_N=\|\liou_N\|_2^2=N-1.
+\label{eq:sN_energy}
+\end{equation}
+Also
+\begin{equation}
+e_1^*G_Ne_1=\sum_{n=2}^{N}\mob(n)^2,
+\qquad
+e_1^*G_Ns_N=-\sum_{n=2}^{N}\mob(n)^2.
+\label{eq:mu_lambda_G_overlap}
+\end{equation}
+Therefore coordinate sparsity by itself gives neither orthogonality nor a small norm.
+\end{remark}
+
+\section{Logarithmically averaged two-point Möbius correlation}
+\label{sec:log_mobius}
+
+This section gives the strongest global cancellation theorem used in the paper.  It is unconditional: the only deep analytic input is Tao's proved logarithmic two-point theorem for Liouville \cite{Tao2016}.  The transfer from Liouville to Möbius is proved here in full detail rather than asserted as a routine replacement.
+
+\begin{theorem}[Tao's logarithmic two-point Liouville theorem, external input]
+\label{thm:Tao_external}
+Fix $a_1,a_2\in\N$ and $b_1,b_2\in\Z_{\ge0}$ with
+\begin{equation}
+a_1b_2-a_2b_1\ne0.
+\label{eq:Tao_nondegeneracy}
+\end{equation}
+Let $1\le\omega(Y)\le Y$ and $\omega(Y)\to\infty$.  Then
+\begin{equation}
+\sum_{Y/\omega(Y)<m\le Y}
+\frac{\liou(a_1m+b_1)\liou(a_2m+b_2)}{m}
+=o(\log\omega(Y)).
+\label{eq:Tao_liouville}
+\end{equation}
+\end{theorem}
+
+\begin{remark}[Status of Theorem \ref{thm:Tao_external}]
+\label{rem:Tao_status}
+Theorem \ref{thm:Tao_external} is not proved in this paper; it is the published theorem of Tao \cite{Tao2016}.  Everything from Lemma \ref{lem:truncated_squarefree_tail} through Theorem \ref{thm:log_mobius} is a self-contained deduction from this external theorem and elementary squarefree/CRT identities.
+\end{remark}
+
+\begin{definition}[Finite-prime squarefree truncation]
+\label{def:mu_z}
+For $z\ge2$, let
+\begin{equation}
+P_z(n)=\prod_{p\le z}\bigl(1-\one_{p^2\mid n}\bigr)
+\label{eq:Pz_definition}
+\end{equation}
+and
+\begin{equation}
+\mob_z(n)=\liou(n)P_z(n).
+\label{eq:mu_z_definition}
+\end{equation}
+Then $|\mob_z(n)|\le1$ and $\mob_z(n)=\mob(n)$ unless $n$ is divisible by $p^2$ for some prime $p>z$.
+\end{definition}
+
+\begin{lemma}[Large-square tail in a logarithmic window, unconditional]
+\label{lem:truncated_squarefree_tail}
+Fix $h\ge1$.  Let $1\le\what(X)\le X$ with $\what(X)\to\infty$.  Uniformly in $z\ge2$,
+\begin{align}
+\sum_{X/\what(X)<n\le X}
+\frac{|\mob(n)-\mob_z(n)|}{n}
+&\ll
+\bigl(\log\what(X)+1\bigr)
+\sum_{p>z}\frac1{p^2},
+\label{eq:mu_tail_unshifted}\\
+\sum_{X/\what(X)<n\le X}
+\frac{|\mob(n+h)-\mob_z(n+h)|}{n}
+&\ll
+\bigl(\log\what(X)+1\bigr)
+\sum_{p>z}\frac1{p^2}+O_h(1).
+\label{eq:mu_tail_shifted}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+By Definition \ref{def:mu_z},
+\begin{equation}
+|\mob(n)-\mob_z(n)|
+\le\sum_{\substack{p>z\\p^2\mid n}}1.
+\label{eq:mu_tail_indicator}
+\end{equation}
+Hence, using $n=p^2m$ and allowing a harmless enlargement of the interval,
+\begin{align}
+\sum_{X/\what<n\le X}\frac{|\mob(n)-\mob_z(n)|}{n}
+&\le\sum_{p>z}\frac1{p^2}
+\sum_{X/(\what p^2)<m\le X/p^2}\frac1m
+\label{eq:mu_tail_swap}\\
+&\ll\bigl(\log\what+1\bigr)\sum_{p>z}\frac1{p^2}.
+\label{eq:mu_tail_harmonic}
+\end{align}
+For each contributing prime $p$ put
+\begin{equation}
+A=\frac{X}{\what(X)p^2},
+\qquad
+B=\frac{X}{p^2}.
+\label{eq:unshifted_tail_AB}
+\end{equation}
+If $A\ge1$, then
+\begin{equation}
+\sum_{A<m\le B}\frac1m\le\log(B/A)+1=\log\what(X)+1.
+\label{eq:harmonic_interval_bound}
+\end{equation}
+If $A<1$, then $B=\what(X)A<\what(X)$, and therefore
+\begin{equation}
+\sum_{m\le B}\frac1m\le\log B+1\le\log\what(X)+1.
+\label{eq:harmonic_small_lower_endpoint}
+\end{equation}
+Thus the same bound holds in both cases, with no hidden assumption on $X/\what(X)$.
+
+For the shifted term, separate the finitely many $n<2h$, whose contribution is $O_h(1)$.  For $n\ge2h$,
+\begin{equation}
+\frac1n\le\frac2{n+h}.
+\label{eq:shifted_weight_comparison}
+\end{equation}
+If $p^2\mid n+h$, write $n+h=p^2m$ and set
+\begin{equation}
+A_h=\frac{X/\what(X)+h}{p^2},
+\qquad
+B_h=\frac{X+h}{p^2}.
+\label{eq:shifted_tail_AB}
+\end{equation}
+Because $\what(X)\ge1$,
+\begin{equation}
+\frac{B_h}{A_h}=\frac{X+h}{X/\what(X)+h}\le\what(X).
+\label{eq:shifted_tail_ratio}
+\end{equation}
+If $A_h\ge1$, the harmonic sum over $A_h<m\le B_h$ is at most $\log\what(X)+1$.  If $A_h<1$, then \eqref{eq:shifted_tail_ratio} gives $B_h<\what(X)$, and the harmonic sum from $1$ to $B_h$ has the same bound.  Hence
+\begin{equation}
+\sum_{\substack{X/\what(X)<n\le X\\n\ge2h\\p^2\mid n+h}}\frac1n
+\le\frac{2(\log\what(X)+1)}{p^2}.
+\label{eq:shifted_tail_single_prime}
+\end{equation}
+Summation over $p>z$, together with the $O_h(1)$ contribution of $n<2h$, proves \eqref{eq:mu_tail_shifted}.
+\end{proof}
+
+\begin{lemma}[Finite squarefree expansion and CRT branches, unconditional]
+\label{lem:finite_squarefree_CRT}
+Fix $z$ and let
+\begin{equation}
+P(z)=\prod_{p\le z}p.
+\label{eq:primorial_z}
+\end{equation}
+Then
+\begin{equation}
+P_z(n)=\sum_{\substack{d\mid P(z)\\d^2\mid n}}\mob(d).
+\label{eq:Pz_inclusion_exclusion}
+\end{equation}
+Consequently
+\begin{equation}
+\mob_z(n)\mob_z(n+h)
+=
+\sum_{d,e\mid P(z)}
+\mob(d)\mob(e)\liou(n)\liou(n+h)
+\one_{d^2\mid n}\one_{e^2\mid n+h}.
+\label{eq:mu_z_product_expansion}
+\end{equation}
+For a fixed pair $(d,e)$, put $g=(d,e)$.  The congruences
+\begin{equation}
+n\equiv0\pmod{d^2},
+\qquad
+n\equiv-h\pmod{e^2}
+\label{eq:de_congruences}
+\end{equation}
+are compatible if and only if
+\begin{equation}
+g^2\mid h.
+\label{eq:de_compatibility}
+\end{equation}
+When compatible, there is a unique class
+\begin{equation}
+n\equiv c\pmod Q,
+\qquad
+Q=\lcm(d,e)^2,
+\label{eq:de_CRT_class}
+\end{equation}
+and with $n=c+Qm$,
+\begin{equation}
+\liou(n)\liou(n+h)
+=\liou(a_1m+b_1)\liou(a_2m+b_2),
+\label{eq:de_liouville_forms}
+\end{equation}
+where
+\begin{equation}
+a_1=\frac Q{d^2},\quad b_1=\frac c{d^2},
+\qquad
+a_2=\frac Q{e^2},\quad b_2=\frac{c+h}{e^2}.
+\label{eq:de_affine_coefficients}
+\end{equation}
+These coefficients satisfy
+\begin{equation}
+a_1b_2-a_2b_1=\frac{h}{g^2}\ne0.
+\label{eq:de_determinant}
+\end{equation}
+For $h=1$, compatibility forces $g=1$ and the determinant is exactly one.
+\end{lemma}
+
+\begin{proof}
+Equation \eqref{eq:Pz_inclusion_exclusion} is the finite expansion of the product in \eqref{eq:Pz_definition}; hence \eqref{eq:mu_z_product_expansion} follows by multiplication.  Because the expansion has only $2^{\pi(z)}$ possible divisors in each variable, all rearrangements are finite.
+
+The two congruences in \eqref{eq:de_congruences} are compatible precisely when their residues agree modulo $\gcd(d^2,e^2)=g^2$, which is \eqref{eq:de_compatibility}.  CRT then gives the unique class \eqref{eq:de_CRT_class}.  Since $d^2\mid c$, $e^2\mid c+h$, and both $d^2,e^2$ divide $Q$, the quantities in \eqref{eq:de_affine_coefficients} are nonnegative integers with $a_1,a_2\ge1$.  Complete multiplicativity and $\liou(d^2)=\liou(e^2)=1$ give \eqref{eq:de_liouville_forms}.  Finally,
+\begin{align}
+a_1b_2-a_2b_1
+&=\frac{Q(c+h)}{d^2e^2}-\frac{Qc}{d^2e^2}
+\label{eq:de_det_first}\\
+&=\frac{Qh}{d^2e^2}
+\label{eq:de_det_second}\\
+&=\frac{h}{g^2},
+\label{eq:de_det_final}
+\end{align}
+because $Q=(de/g)^2$.
+\end{proof}
+
+\begin{lemma}[Fixed affine rescaling of a logarithmic window, unconditional]
+\label{lem:affine_log_window}
+Fix integers $Q\ge1$ and $0\le c<Q$.  Let $a(m)$ be any bounded sequence for which Tao's conclusion \eqref{eq:Tao_liouville} holds in every logarithmic window.  Then
+\begin{equation}
+\sum_{X/\what(X)<c+Qm\le X}\frac{a(m)}{c+Qm}
+=o(\log\what(X))
+\label{eq:affine_window_conclusion}
+\end{equation}
+as $X\to\infty$.
+\end{lemma}
+
+\begin{proof}
+The term $m=0$, if present, contributes at most $O_{c,Q}(1)$; when $c=0$, positivity of $c+Qm$ excludes $m=0$.  For $m\ge1$,
+\begin{equation}
+\frac1{c+Qm}=\frac1Q\frac1m+O_{c,Q}(m^{-2}),
+\label{eq:weight_affine_expansion}
+\end{equation}
+and the total error is absolutely convergent:
+\begin{equation}
+\sum_{m\ge1}\left|\frac1{c+Qm}-\frac1{Qm}\right|<\infty.
+\label{eq:weight_affine_error_sum}
+\end{equation}
+It therefore suffices to treat the $1/m$ weight.
+
+Consider an arbitrary sequence $X_j\to\infty$.  Passing to a subsequence, either $X_j/\what(X_j)$ remains bounded or it tends to infinity.  In the first case, the lower endpoint in $m$ is bounded.  Tao's theorem with the maximal window $\omega(Y)=Y$ gives $o(\log Y)$ up to the upper endpoint $Y\asymp X_j/Q$; the omission or addition of finitely many initial terms is $O(1)$.  Since $X_j/\what(X_j)$ is bounded, $\log\what(X_j)=\log X_j+O(1)=\log Y+O(1)$.
+
+In the second case, put
+\begin{equation}
+Y_j=\frac{X_j-c}{Q},
+\qquad
+L_j=\frac{X_j/\what(X_j)-c}{Q}.
+\label{eq:Y_L_affine_window}
+\end{equation}
+Then $L_j\to\infty$.  Replacing the real endpoints by adjacent integers changes the sum by $o(1)$.  Define
+\begin{equation}
+\omega_j'=\frac{Y_j}{L_j}.
+\label{eq:omega_prime}
+\end{equation}
+Since $X_j/\what(X_j)\to\infty$, we have $\what(X_j)/X_j\to0$, and therefore
+\begin{equation}
+\frac{\omega_j'}{\what(X_j)}
+=\frac{1-c/X_j}{1-c\what(X_j)/X_j}
+\longrightarrow1.
+\label{eq:omega_prime_asymptotic}
+\end{equation}
+Thus $\omega_j'\to\infty$ and
+\begin{equation}
+\log\omega_j'=\log\what(X_j)+o(1).
+\label{eq:log_omega_prime}
+\end{equation}
+Tao's theorem applied to the window $L_j<m\le Y_j$ gives the required $o(\log\what(X_j))$ estimate.
+
+Every sequence $X_j\to\infty$ has a subsequence of one of the two types and every such subsequence satisfies \eqref{eq:affine_window_conclusion}; the sequential criterion for limits proves the full assertion.
+\end{proof}
+
+\begin{theorem}[Logarithmically averaged two-point Möbius correlation, unconditional]
+\label{thm:log_mobius}
+Fix an integer $h\ge1$.  Let $\what(X)$ satisfy
+\begin{equation}
+1\le\what(X)\le X,
+\qquad
+\what(X)\longrightarrow\infty.
+\label{eq:omega_conditions}
+\end{equation}
+Then
+\begin{equation}
+\boxed{
+\sum_{X/\what(X)<n\le X}
+\frac{\mob(n)\mob(n+h)}{n}
+=o(\log\what(X)).}
+\label{eq:log_mobius_theorem}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Fix $z$.  Expand $\mob_z(n)\mob_z(n+h)$ by Lemma \ref{lem:finite_squarefree_CRT}.  There are finitely many pairs $d,e\mid P(z)$.  Incompatible pairs contribute exactly zero.  For every compatible pair, the substitution $n=c+Qm$ gives two fixed affine Liouville forms with nonzero determinant $h/g^2$ by \eqref{eq:de_determinant}.  Lemma \ref{lem:affine_log_window}, with Theorem \ref{thm:Tao_external} as input, therefore gives
+\begin{equation}
+\sum_{X/\what(X)<n\le X}
+\frac{\mob_z(n)\mob_z(n+h)}{n}
+=o_z(\log\what(X)).
+\label{eq:mu_z_log_cancellation}
+\end{equation}
+No uniformity in $z$ is claimed or needed because $z$ is fixed at this stage.
+
+Since all four functions $\mob,\mob_z$ are bounded by one,
+\begin{align}
+|\mob(n)\mob(n+h)-\mob_z(n)\mob_z(n+h)|
+&\le |\mob(n)-\mob_z(n)|
+\label{eq:product_difference_first}\\
+&\quad+|\mob(n+h)-\mob_z(n+h)|.
+\label{eq:product_difference_second}
+\end{align}
+Lemma \ref{lem:truncated_squarefree_tail} implies
+\begin{equation}
+\limsup_{X\to\infty}
+\frac1{\log\what(X)}
+\left|
+\sum_{X/\what(X)<n\le X}
+\frac{\mob(n)\mob(n+h)}n
+\right|
+\ll_h
+\sum_{p>z}\frac1{p^2}.
+\label{eq:log_mobius_limsup}
+\end{equation}
+Here the $o_z(\log\what)$ term from \eqref{eq:mu_z_log_cancellation} vanishes after taking the limsup for fixed $z$, and the $O_h(1)$ tail term vanishes because $\log\what(X)\to\infty$.
+
+Finally,
+\begin{equation}
+\sum_p\frac1{p^2}<\infty,
+\label{eq:prime_square_convergence}
+\end{equation}
+so the right-hand side of \eqref{eq:log_mobius_limsup} tends to zero as $z\to\infty$.  This proves \eqref{eq:log_mobius_theorem}.
+\end{proof}
+
+\begin{corollary}[Adjacent determinant-one logarithmic decomposition, unconditional]
+\label{cor:adjacent_SL2_log}
+For $h=1$, every compatible branch in the proof of Theorem \ref{thm:log_mobius} has $g=1$ and therefore
+\begin{equation}
+a_1b_2-a_2b_1=1.
+\label{eq:adjacent_branch_SL2}
+\end{equation}
+Thus the complete finite-prime transfer underlying the adjacent logarithmic Möbius theorem remains branchwise inside $SL_2(\Z)$.
+\end{corollary}
+
+\begin{proof}
+Compatibility is $g^2\mid1$, hence $g=1$.  Apply \eqref{eq:de_determinant}.
+\end{proof}
+
+\section{Ordinary Cesàro correlation and the remaining Chowla problem}
+\label{sec:cesaro_chowla}
+
+For fixed $h\ne0$, define
+\begin{equation}
+C_\mob(X;h)=\sum_{n\le X}\mob(n)\mob(n+h).
+\label{eq:mu_cesaro_correlation}
+\end{equation}
+The ordinary two-point Möbius Chowla assertion, in the two-point form originating with Chowla \cite{Chowla1965}, is
+\begin{equation}
+C_\mob(X;h)=o(X).
+\label{eq:mu_chowla_target}
+\end{equation}
+For a fixed nonzero shift this remains open.  Averaged versions in the shift variables are known for Liouville and more general multiplicative functions; see Matomäki--Radziwiłł--Tao \cite{MRT2015}.  Matomäki and Radziwiłł also proved strong short-interval results and a nontrivial bound away from one for the adjacent Liouville mean \cite{MatomakiRadziwill2016}.
+
+\begin{proposition}[Exact matrix form of fixed-shift Chowla, unconditional]
+\label{prop:matrix_chowla}
+For $1\le h\le N-2$,
+\begin{equation}
+\sum_{n\le N-h}\mob(n)\mob(n+h)
+=\mob(h+1)+e_1^*G_NT_{N,h}e_1.
+\label{eq:matrix_chowla_exact}
+\end{equation}
+Consequently, proving
+\begin{equation}
+e_1^*G_NT_{N,h}e_1=o(N)
+\label{eq:matrix_chowla_needed}
+\end{equation}
+would prove fixed-shift Möbius Chowla, but \eqref{eq:matrix_chowla_needed} is a reformulation unless it is deduced from an independent estimate on a centered or compressed operator.
+\end{proposition}
+
+\begin{proof}
+Equation \eqref{eq:matrix_chowla_exact} is \eqref{eq:mu_correlation_dictionary}.  The final statement follows because the omitted term $\mob(h+1)$ is $O_h(1)$.
+\end{proof}
+
+\begin{remark}[Why the local shells do not finish Cesàro Chowla]
+\label{rem:local_not_global}
+The $p$-adic shell decomposition is exact and the determinant-one sector forbids local collisions between the two affine values.  Nevertheless, completing the valuation-parity product over all primes reproduces the original Liouville sign.  Hence local exactness alone does not supply the global cancellation in \eqref{eq:mu_chowla_target}.  A new estimate must control the dependence between many prime branches, for example through dispersion, a high-trace/non-backtracking mechanism, or a centered compression that is not merely similar to the original shift.
+\end{remark}
+
+\section{One-point Möbius means, the Mertens scale, and RH}
+\label{sec:mertens_rh}
+
+Define the Mertens function
+\begin{equation}
+M(X)=\sum_{n\le X}\mob(n).
+\label{eq:Mertens_definition}
+\end{equation}
+The prime number theorem is equivalent to
+\begin{equation}
+M(X)=o(X),
+\label{eq:PNT_Mertens}
+\end{equation}
+so the one-point Cesàro mean $X^{-1}M(X)$ is already known to tend to zero.  By partial summation this also implies the classical one-point logarithmic cancellation
+\begin{equation}
+\sum_{n\le X}\frac{\mob(n)}n\longrightarrow0.
+\label{eq:one_point_log_mu}
+\end{equation}
+These statements are distinct from the two-point logarithmic theorem proved in Section \ref{sec:log_mobius}.
+
+\begin{proposition}[Critical weighted coefficient, unconditional equivalence]
+\label{prop:critical_weight_RH}
+The following two assertions are equivalent:
+\begin{align}
+M(X)&=O_\eps(X^{1/2+\eps})\quad\text{for every }\eps>0,
+\label{eq:Mertens_RH_scale}\\
+\sum_{n\le X}\frac{\mob(n)}{\sqrt n}
+&=O_\eps(X^\eps)\quad\text{for every }\eps>0.
+\label{eq:critical_weight_bound}
+\end{align}
+In the surface coordinates, \eqref{eq:critical_weight_bound} is
+\begin{equation}
+1-x_{1/2}^*G_Ne_1=O_\eps(N^\eps),
+\label{eq:critical_matrix_coefficient}
+\end{equation}
+where
+\begin{equation}
+x_{1/2}(r)=\sigma_{-1/2}(r+1)-\sigma_{-1/2}(r).
+\label{eq:x_half}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Assume \eqref{eq:Mertens_RH_scale}.  Abel summation gives
+\begin{equation}
+\sum_{n\le X}\frac{\mob(n)}{\sqrt n}
+=\frac{M(X)}{\sqrt X}
++\frac12\int_1^X\frac{M(t)}{t^{3/2}}\,dt.
+\label{eq:partial_summation_forward}
+\end{equation}
+Using \eqref{eq:Mertens_RH_scale} with a slightly smaller exponent than the desired one proves \eqref{eq:critical_weight_bound}.
+
+Conversely, put
+\begin{equation}
+A(X)=\sum_{n\le X}\frac{\mob(n)}{\sqrt n}.
+\label{eq:Acritical}
+\end{equation}
+A second Abel summation gives
+\begin{equation}
+M(X)=\sqrt X\,A(X)-\frac12\int_1^X\frac{A(t)}{\sqrt t}\,dt.
+\label{eq:partial_summation_reverse}
+\end{equation}
+The bound \eqref{eq:critical_weight_bound} therefore yields \eqref{eq:Mertens_RH_scale}.  Equation \eqref{eq:critical_matrix_coefficient} is \eqref{eq:mu_weighted_dictionary} at $\alpha=1/2$.
+\end{proof}
+
+\begin{corollary}[RH criterion, classical]
+\label{cor:RH_criterion}
+The Riemann hypothesis is equivalent to \eqref{eq:Mertens_RH_scale}, and therefore to \eqref{eq:critical_weight_bound} and \eqref{eq:critical_matrix_coefficient} for every $\eps>0$.
+\end{corollary}
+
+\begin{proof}
+The equivalence of RH and \eqref{eq:Mertens_RH_scale} is classical; see Titchmarsh--Heath-Brown \cite[Theorem 14.25(c)]{Titchmarsh1986}.  Proposition \ref{prop:critical_weight_RH} supplies the remaining equivalences.
+\end{proof}
+
+\begin{remark}[No hidden RH proof]
+\label{rem:no_hidden_RH}
+Equation \eqref{eq:critical_matrix_coefficient} is an exact coordinate form of an RH-equivalent bound.  It is not progress toward RH unless it follows from a separate theorem about $B_N$, $G_N$, squarefree projections, or centered shift compressions whose proof does not already contain the Mertens bound.
+\end{remark}
+
+\section{Finite-prime operators and the next non-tautological estimate}
+\label{sec:next_operator}
+
+The pointwise squarefree projection expands into the commuting family $\widetilde E_d$ of Proposition \ref{prop:squarefree_coordinate_projection}.  The shift is $T_{N,h}$.  Their interaction is measured by commutators and compressed correlations such as
+\begin{equation}
+[\Pi_N,T_{N,h}]=\Pi_NT_{N,h}-T_{N,h}\Pi_N
+\label{eq:squarefree_shift_commutator}
+\end{equation}
+and
+\begin{equation}
+P_U\bigl(T_{N,h}-\mathcal E_{N,h}\bigr)P_U,
+\label{eq:centered_compression_template}
+\end{equation}
+where $P_U$ projects onto a structured subspace generated by squarefree branches, $s_N$, and divisor-difference vectors, and $\mathcal E_{N,h}$ denotes a deterministic local main term when one is available.
+
+\begin{remark}[Connection with expansion methods]
+\label{rem:expansion_methods}
+Helfgott--Radziwiłł construct centered divisibility-by-primes operators with strong expansion on a high-density set and derive quantitative logarithmic Chowla estimates for Liouville \cite{HelfgottRadziwill2021}.  Pilatte obtains a stronger logarithmic bound using non-backtracking/high-trace ideas \cite{Pilatte2026}.  The exact similarity $A\mapsto B_N^{-1}AB_N$ provides an algebraic bridge to the surface coordinates, but Proposition \ref{prop:isometric_bridge} shows that similarity alone preserves the norm.  A useful transfer would therefore have to preserve the centering, exceptional-set control, and high-trace estimates, not merely conjugate the underlying matrix.
+\end{remark}
+
+\begin{conjecture}[Compressed squarefree-shift cancellation]
+\label{conj:compressed_cancellation}
+There should exist structured subspaces $U_N$ and deterministic local main terms $\mathcal E_{N,h}$, defined without reference to $M(N)$ or zeta zeros, for which a quantitative estimate of the form
+\begin{equation}
+\left\|P_{U_N}\bigl(T_{N,h}-\mathcal E_{N,h}\bigr)P_{U_N}\right\|_{G_N\to G_N}
+\le 1-\delta_N
+\label{eq:compressed_gap_conjecture}
+\end{equation}
+holds with enough cumulative gain across scales to force new Cesàro cancellation.  No such estimate is proved here.
+\end{conjecture}
+
+\section{Figures}
+\label{sec:figures}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{mobius_heatmap_N80_en.png}
+\caption{Heat map of $F(n,r)$ for $1\le n,r\le80$.  The horizontal coordinate is the threshold $r$ and the vertical coordinate is the integer $n$.  Colors are clipped to $[-1,1]$ only for visualization; the arithmetic values themselves are not truncated.}
+\label{fig:mobius_heatmap}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{mobius_surface_3d_N200_en.png}
+\caption{Three-dimensional view of $F(n,r)$ for $1\le n\le200$ and $0\le r\le200$.  The flat region for $r\ge n$ is the exact zero region of the thresholded divisor sum.}
+\label{fig:mobius_surface_3d}
+\end{figure}
+
+\section{De quién viene esta idea}
+\label{sec:provenance}
+
+The ingredients must be separated by provenance.
+
+The Möbius function, divisor-poset inversion, Dirichlet convolution, the identity $\mob^2(n)=\sum_{d^2\mid n}\mob(d)$, the relations between Möbius and Liouville through square divisors, CRT, Haar measure on $\Z_p$, and $L^2$ martingale convergence are standard.  The transfer between Liouville and Möbius formulations of Chowla through square divisors is classical and is discussed explicitly by Ramaré \cite{Ramare2018}.  The logarithmically averaged two-point Liouville theorem used in Section \ref{sec:log_mobius} is Tao's theorem \cite{Tao2016}.  The RH-equivalent Mertens estimate is classical \cite{Titchmarsh1986}.
+
+The following structures are proved directly in the present paper: the use of the finite surface matrix $B_N$ as a common coordinate system for $\mob$, $\liou$, squarefree projections, and additive shifts; the exact coordinate identity $B_N^{-1}\liou_N=\Delta\one_{\square}$; the commuting semilattice of square-divisibility projections after conjugation by $B_N$; the explicit $p$-adic valuation-parity shells and their energy closure; the exact dyadic--triadic gauge conjugacy and its relative-sign obstruction; the determinant-one local noncollision formulation; and the branchwise closure
+\begin{equation}
+M\in SL_2(\Z)\longmapsto M_{d_1,d_2}\in SL_2(\Z)
+\label{eq:provenance_SL2_map}
+\end{equation}
+under simultaneous square extraction.  These results are established here by complete proofs and are not cited to unpublished prior manuscripts.
+
+The operator program in Section \ref{sec:next_operator} is conjectural.  In particular, no spectral gap for a centered squarefree-shift compression and no new Cesàro Chowla or RH estimate is asserted.
+
+\section{Conclusion: proved results and remaining targets}
+\label{sec:conclusion}
+
+The proved content can be summarized as follows.
+
+\begin{enumerate}[label=(\roman*)]
+\item The surface matrix $B_N$ is unimodular and has the explicit inverse \eqref{eq:BN_inverse}; the Frobenius identity \eqref{eq:frobenius_identity} and the difference--convolution intertwining \eqref{eq:intertwining} are exact finite statements.
+
+\item In surface coordinates,
+\begin{equation}
+B_N^{-1}\mob_N=-e_1,
+\qquad
+B_N^{-1}\liou_N=\Delta\one_{\square},
+\label{eq:conclusion_mu_lambda_coords}
+\end{equation}
+and the Liouville coordinate vector has $O(\sqrt N)$ support.  The pointwise squarefree projection and the invertible square-extraction convolution are distinct and are both represented exactly.
+
+\item The local valuation-parity function has the exact martingale shells \eqref{eq:shell_child_values}--\eqref{eq:shell_tail_energy}.  The adjacent triadic factor is uniquely centered; the dyadic factor has nonzero constant mode and zero first shell.  The exact dyadic--triadic gauge conjugacy in Proposition \ref{prop:dyadic_triadic_conjugacy} is also proved, together with the obstruction in Proposition \ref{prop:relative_not_absolute}.
+
+\item For determinant-one affine pairs, simultaneous division by admissible squares followed by CRT remains exactly in $SL_2(\Z)$, Theorem \ref{thm:SL2_square_closure}.  The finite signed Möbius--Liouville branch identity \eqref{eq:exact_mu_lambda_branch_identity} follows.
+
+\item For every fixed $h\ge1$, the two-point logarithmically averaged Möbius correlation
+\begin{equation}
+\sum_{X/\what(X)<n\le X}\frac{\mob(n)\mob(n+h)}n
+=o(\log\what(X))
+\label{eq:conclusion_log_mu}
+\end{equation}
+is proved in Section \ref{sec:log_mobius} as a complete deduction from Tao's published Liouville theorem.  The proof includes all squarefree tails, finite branch expansions, CRT compatibility, determinant computation, weight conversion, and limiting steps.  In the adjacent case every branch has determinant exactly one.
+\end{enumerate}
+
+The remaining global targets are different in strength and should not be conflated.
+
+\begin{enumerate}[label=(\alph*)]
+\item The one-point Möbius Cesàro mean $M(X)/X\to0$ and the one-point logarithmic mean are classical consequences of the prime number theorem; they are not new results of the surface construction.
+
+\item Fixed-shift ordinary Cesàro Chowla for Möbius,
+\begin{equation}
+\sum_{n\le X}\mob(n)\mob(n+h)=o(X),
+\label{eq:conclusion_cesaro_chowla}
+\end{equation}
+remains open.  The exact matrix and $p$-adic structures identify the support and local collision geometry, but no uniform global cancellation estimate sufficient for \eqref{eq:conclusion_cesaro_chowla} is proved here.
+
+\item The critical Mertens estimate
+\begin{equation}
+M(X)=O_\eps(X^{1/2+\eps})
+\label{eq:conclusion_Mertens_RH}
+\end{equation}
+for every $\eps>0$ remains open and is equivalent to RH.  Its matrix form \eqref{eq:critical_matrix_coefficient} is exact but is only a reformulation until an independent bound for the relevant coefficient is obtained.
+
+\item A plausible next theorem is therefore not $\|T_{N,h}\|_{G_N}<1$, which is false by \eqref{eq:T_norm_one}, but a quantitative estimate for a genuinely centered or compressed operator such as \eqref{eq:centered_compression_template}, retaining the signed squarefree branches before absolute values are introduced.  For a route to the RH scale, the cumulative gain would have to be strong enough to produce a power-scale cancellation, not merely an $o(1)$ logarithmic improvement.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+
+\bibitem{Apostol1976}
+T. M. Apostol,
+\emph{Introduction to Analytic Number Theory},
+Undergraduate Texts in Mathematics, Springer, New York, 1976.
+
+\bibitem{Chowla1965}
+S. Chowla,
+\emph{The Riemann Hypothesis and Hilbert's Tenth Problem},
+Mathematics and Its Applications, Vol. 4, Gordon and Breach, New York, 1965.
+
+\bibitem{HelfgottRadziwill2021}
+H. A. Helfgott and M. Radziwi{\l}{\l},
+Expansion, divisibility and parity,
+arXiv:2103.06853.
+
+\bibitem{MRT2015}
+K. Matomäki, M. Radziwi{\l}{\l}, and T. Tao,
+An averaged form of Chowla's conjecture,
+\emph{Algebra \& Number Theory} 9 (2015), no. 9, 2167--2196,
+doi:10.2140/ant.2015.9.2167; arXiv:1503.05121.
+
+\bibitem{MatomakiRadziwill2016}
+K. Matomäki and M. Radziwi{\l}{\l},
+Multiplicative functions in short intervals,
+\emph{Annals of Mathematics} 183 (2016), no. 3, 1015--1056,
+doi:10.4007/annals.2016.183.3.6.
+
+\bibitem{Mobius1832}
+A. F. Möbius,
+Über eine besondere Art von Umkehrung der Reihen,
+\emph{Journal für die reine und angewandte Mathematik} 9 (1832), 105--123,
+doi:10.1515/CRLL.1832.9.105.
+
+\bibitem{Pilatte2026}
+C. Pilatte,
+Improved bounds for the two-point logarithmic Chowla conjecture,
+\emph{Journal of the American Mathematical Society}, published electronically 2026,
+doi:10.1090/jams/1084; arXiv:2310.19357.
+
+\bibitem{Ramare2018}
+O. Ramaré,
+Chowla's Conjecture: From the Liouville Function to the Moebius Function,
+in S. Ferenczi, J. Kułaga-Przymus, and M. Lemańczyk (eds.),
+\emph{Ergodic Theory and Dynamical Systems in their Interactions with Arithmetics and Combinatorics},
+Lecture Notes in Mathematics 2213, Springer, Cham, 2018, 317--323,
+doi:10.1007/978-3-319-74908-2\_16.
+
+\bibitem{Rota1964}
+G.-C. Rota,
+On the foundations of combinatorial theory I. Theory of Möbius functions,
+\emph{Z. Wahrscheinlichkeitstheorie und Verw. Gebiete} 2 (1964), 340--368,
+doi:10.1007/BF00531932.
+
+\bibitem{Stanley2012}
+R. P. Stanley,
+\emph{Enumerative Combinatorics, Volume 1},
+2nd ed., Cambridge Studies in Advanced Mathematics 49,
+Cambridge University Press, Cambridge, 2012.
+
+\bibitem{Tao2016}
+T. Tao,
+The logarithmically averaged Chowla and Elliott conjectures for two-point correlations,
+\emph{Forum of Mathematics, Pi} 4 (2016), e8, 36 pp.,
+doi:10.1017/fmp.2016.6; arXiv:1509.05422.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D. R. Heath-Brown,
+Clarendon Press, Oxford, 1986, ISBN 0-19-853369-1.
+
+\end{thebibliography}
+
+\appendix
+
+\section{Python code generating the figures}
+\label{app:python}
+
+The following script generates Figures \ref{fig:mobius_heatmap} and \ref{fig:mobius_surface_3d}.  The array convention is stated explicitly in the code so that the $n$ and $r$ axes are not interchanged.
+
+\lstinputlisting{generate_mobius_surface_figures.py}
+
+\end{document}

@@ -1,0 +1,438 @@
+% Replacement introduction for rvm_zeta_pi_mertens_v3.txt
+% Insert after \tableofcontents and before the current section
+% ``Purpose, separation of objects, and status''.
+%
+% Additional bibliography keys used here and not yet present in v3:
+% Riemann1859, vonMangoldt1895, Beurling1937, BatemanDiamond1969,
+% Diamond1977, DiamondMontgomeryVorhauer2006, BrouckeDebruyneVindas2020,
+% Perelli2016, BenedettoPowellYilmaz2006, GunturkThao1995,
+% DaubechiesDeVore2003, OdlyzkoTeRiele1985.
+
+\section{Introduction}
+\label{sec:introduction}
+
+The classical theory of the Riemann zeta function joins four structures that
+are usually introduced in different languages.  On the spectral side one has
+the nontrivial zeros and their Riemann--von Mangoldt counting law; on the
+analytic side one has the completed zeta function, its functional equation and
+Hadamard product; on the prime side one has the prime-power measure and the
+explicit formula; and on the inverse side one has the reciprocal Dirichlet
+series and the Mertens summatory function.  Riemann's memoir made the first
+three structures inseparable, and the later work of von Mangoldt, Hadamard and
+Hamburger supplied, respectively, the rigorous zero-counting and explicit
+formula, the entire-product factorization, and a converse characterization of
+$\zeta$ from its Dirichlet-series and functional-equation data
+\cite{Riemann1859,vonMangoldt1895,Hadamard1896,Hamburger1921,Titchmarsh1986,Edwards1974}.
+The present paper asks what remains of that architecture when the fluctuating
+zero staircase is replaced, at the outset, by the exact midpoint inverse of
+its smooth Riemann--von Mangoldt clock.
+
+The resulting construction is called the midpoint RVM system.  Its point of
+departure is the smooth counting function
+\begin{equation}
+ \mathcal N_{\RVM}(T)
+ :=\frac{T}{2\pi}\log\frac{T}{2\pi e}+\frac78,
+ \label{eq:intro-clock}
+\end{equation}
+and the real ordinates $\gamma_k^{\RVM}$ determined by
+\begin{equation}
+ \mathcal N_{\RVM}(\gamma_k^{\RVM})=k-\frac12.
+ \label{eq:intro-midpoint}
+\end{equation}
+The half-integer convention is not cosmetic.  It is the midpoint convention
+for a staircase and leads to the exact Lambert inversion
+\begin{equation}
+ \gamma_k^{\RVM}
+ =\frac{2\pi(k-11/8)}{W_0((k-11/8)/e)}.
+ \label{eq:intro-lambert}
+\end{equation}
+Lambert-$W$ approximations to individual zero ordinates and smooth inversions
+of the Riemann--von Mangoldt law occur in the literature, including explicit
+equations and spectral approximations to the zeta zeros
+\cite{DLMF-W,FrancaLeClair2014}.  What is used here is more specific: the
+midpoint inverse in \eqref{eq:intro-midpoint} is treated as the exact spectrum
+of a new deterministic system and is propagated, without inserting the
+fluctuating term $S(T)$, through canonical products, explicit prime counting,
+Mertens inversion and a continuous transport to the genuine ordinates.
+
+The first RVM-space object is the canonical product
+\begin{equation}
+ P_{\RVM}^{\crit}(s)
+ :=\prod_{k\ge1}
+ \left(1+\frac{s(s-1)}{1/4+(\gamma_k^{\RVM})^2}\right),
+ \qquad
+ \zeta_{\RVM}(s):=\frac{P_{\RVM}^{\crit}(s)}{G(s)},
+ \label{eq:intro-zeta-rvm}
+\end{equation}
+where
+\begin{equation}
+ G(s):=s(s-1)\Gamma(s/2)\pi^{-s/2}.
+\end{equation}
+Because $\gamma_k^{\RVM}\asymp k/\log k$, the paired factors form a normally
+convergent genus-zero product in the symmetric variable $s(s-1)$.  Thus
+$P_{\RVM}^{\crit}$ is entire and invariant under $s\mapsto1-s$, while
+$\zeta_{\RVM}$ has a residue-one pole at $1$, the usual trivial zeros and the
+prescribed simple nontrivial zeros
+\begin{equation}
+ \rho_k^{\RVM}=\frac12+i\gamma_k^{\RVM}.
+\end{equation}
+The location $\Re\rho_k^{\RVM}=1/2$ is an input of the synthetic model.  It is
+not evidence that the genuine zero $\rho_k=\beta_k+i\gamma_k$ has
+$\beta_k=1/2$.  Maintaining this distinction is essential: the paper constructs
+an RVM analogue of the zeta--prime--Mertens triangle, not a relabelling of the
+classical triangle.
+
+There is a substantial surrounding literature on generalized prime systems.
+In Beurling's theory the generalized primes may be arbitrary real numbers
+$1<p_1\le p_2\le\cdots\to\infty$; their multiplicative semigroup defines
+generalized integers and a zeta function by a Dirichlet series, an Euler
+product or a Mellin--Stieltjes transform.  That framework shows both the power
+and the flexibility of separating prime distribution from the ordinary
+additive structure of the integers
+\cite{Beurling1937,BatemanDiamond1969,Diamond1977}.  Later work exhibits
+Beurling systems with prescribed analytic behaviour, critical zeros and large
+oscillation, demonstrating that zeta-like zero data do not by themselves force
+the classical arithmetic realization
+\cite{DiamondMontgomeryVorhauer2006,BrouckeDebruyneVindas2020}.  The RVM system
+is related to this tradition but is not introduced as an arbitrary Beurling
+Euler product.  It starts from a prescribed zero clock, constructs an entire
+completed product first, obtains a continuous prime-power count from its
+explicit formula, and only afterwards asks whether that continuous object has
+an atomic or integer-supported realization.
+
+This reversal of direction is central.  From the RVM zeros we define the
+prime-power counting function
+\begin{equation}
+ J_{\RVM}(x)
+ :=\li(x)
+ -2\Re\sum_{k\ge1}
+ \Ei\!\left(\left(\frac12+i\gamma_k^{\RVM}\right)\log x\right)
+ -\log2
+ +\int_x^\infty\frac{dt}{t(t^2-1)\log t},
+ \qquad x>1,
+ \label{eq:intro-J}
+\end{equation}
+with the zero sum taken in midpoint-clock order.  The classical relation
+between Riemann's prime-power count and the ordinary prime-counting function is
+finite M\"obius inversion in the exponent variable
+\cite{Riemann1859,Titchmarsh1986,Edwards1974}.  Applying precisely that
+operation to \eqref{eq:intro-J} gives
+\begin{equation}
+ \pi_{\RVM}(x)
+ :=\sum_{1\le m\le\log_2x}
+ \frac{\mu(m)}{m}J_{\RVM}^{*}(x^{1/m}),
+ \qquad x\ge2,
+ \label{eq:intro-pi}
+\end{equation}
+and the exact inverse identity
+\begin{equation}
+ J_{\RVM}^{*}(x)
+ =\sum_{1\le m\le\log_2x}\frac1m
+ \pi_{\RVM}(x^{1/m}).
+ \label{eq:intro-pi-inverse}
+\end{equation}
+The novelty intended here is not M\"obius inversion itself, which is classical,
+but its use as the definition of the prime-counting coordinate in a spectral
+system whose zeros were fixed before any prime atoms were supplied.
+
+The function $\pi_{\RVM}$ is initially a continuous real-valued counting
+coordinate, not a staircase.  It therefore supports two related notions of
+``RVM prime''.  The first is measure-theoretic: the Stieltjes object
+$d\pi_{\RVM}$ is the continuous prime measure generated by the RVM explicit
+formula.  The second is a real level-crossing spectrum.  On every region where
+$\pi_{\RVM}$ is continuous and strictly increasing we may define
+\begin{equation}
+ p_j^{\RVM}:=\pi_{\RVM}^{-1}(j),
+ \label{eq:intro-real-primes}
+\end{equation}
+so that $\pi_{\RVM}(p_j^{\RVM})=j$.  These $p_j^{\RVM}$ are generally real and
+need not be integers.  If global monotonicity is not available, the invariant
+object is $d\pi_{\RVM}$ and the level-crossing notation is used only on
+monotone branches.  This distinction prevents a continuous signed fluctuation
+from being silently converted into a positive atomic prime system.
+
+Sampling the real prime coordinate on unit cells produces
+\begin{equation}
+ c_n^{\RVM}
+ :=\pi_{\RVM}(n)-\pi_{\RVM}(n-1),
+ \qquad n\ge2.
+ \label{eq:intro-cellweights}
+\end{equation}
+The number $c_n^{\RVM}$ is the RVM prime mass assigned to the cell $(n-1,n]$.
+It is not assumed to be $0$ or $1$, and it need not initially be positive.
+Consequently
+\begin{equation}
+ \zeta_{\mathbb Z,\RVM}(s)
+ :=\prod_{n\ge2}(1-n^{-s})^{-c_n^{\RVM}}
+ \label{eq:intro-weighted-euler}
+\end{equation}
+is a weighted analytic Euler object rather than the Euler product of an
+ordinary set of integer primes.  This is the first continuous-to-atomic problem
+of the paper: determine conditions under which the continuous real-prime
+measure, its unit-cell masses, and an integer-supported weighted Euler product
+represent the same analytic divisor up to a nonvanishing holomorphic factor.
+The unit-periodic first harmonic predicted by the midpoint clock has exact
+zero integral on every integer cell; the remaining question is therefore the
+uniform size of the cell remainder.  Under the stated cell hypothesis one
+obtains $c_n^{\RVM}\sim1/\log n$, but a positive $0/1$ realization is deliberately
+not asserted without a separate selection mechanism.
+
+The Mertens coordinate of RVM space is introduced independently of that
+integer realization.  Analytically it is the symmetric inverse Mellin object
+associated with
+\begin{equation}
+ \widehat M_{\RVM}^{\crit}(s)
+ :=\frac1{\zeta_{\RVM}(s)}.
+ \label{eq:intro-Mhat}
+\end{equation}
+A transition evaluation of the clock product, based on a smooth/sawtooth
+Stieltjes decomposition and Abel regularization of the sawtooth Fourier series,
+gives on fixed bands to the right of $1/2$
+\begin{equation}
+ \zeta_{\RVM}(s)
+ =Z_{\RVM}(1+w(s))(1+O(1/|t|)),
+ \qquad
+ w(s)=\exp\{-2\pi i\mathcal N_{\RVM}(-i(s-1/2))\},
+ \label{eq:intro-transition}
+\end{equation}
+and, on closed substrips of $1/2<\Re s<1$, the comparison
+\begin{equation}
+ \zeta_{\RVM}(s)
+ =Z_{\RVM}(1+\chi(s))(1+O(1/|t|)).
+ \label{eq:intro-transition-chi}
+\end{equation}
+It follows that $1/\zeta_{\RVM}(\sigma+it)$ tends to
+$L=1/Z_{\RVM}$ for every fixed $\sigma>1/2$.  This vertical constant limit has
+a consequence that sharply separates the RVM object from a classical Euler
+system: neither $\zeta_{\RVM}$ nor its reciprocal is an absolutely convergent
+ordinary Dirichlet series in any right half-plane.  Nevertheless, after
+subtracting the constant vertical limit, the symmetric Perron inverse is
+absolutely convergent and satisfies
+\begin{equation}
+ M_{\RVM}^{\crit}(x)
+ =L+O_\varepsilon(x^{1/2+\varepsilon}).
+ \label{eq:intro-Mbound}
+\end{equation}
+Thus the RVM Mertens function exists naturally as a continuous spectral inverse
+even though no ordinary coefficient sequence for $1/\zeta_{\RVM}$ exists.
+This point rules out a naive Dirichlet-convolution interpretation of the RVM
+reciprocal and motivates a separate discretization.
+
+The numerical and combinatorial companion to $M_{\RVM}^{\crit}$ is an
+integer-valued walk obtained by first sampling a smooth target
+$T(n)\approx M_{\RVM}^{\crit}(n)$.  In the implementation the leading
+unit-periodic harmonic is removed before interpolation; it vanishes exactly at
+integer arguments and therefore does not alter the prescribed integer samples.
+The alphabet is restricted to $\{-1,0,+1\}$ on the squarefree support:
+\begin{equation}
+ \mu_h(n)=\mu(n)^2\varepsilon_n,
+ \qquad \varepsilon_n\in\{-1,+1\},
+ \qquad
+ M_h(n):=\sum_{m\le n}\mu_h(m).
+ \label{eq:intro-muh}
+\end{equation}
+The sign is assigned by the first-order feedback rule
+\begin{equation}
+ \varepsilon_n=
+ \begin{cases}
+  +1,&M_h(n-1)<T(n),\\
+  -1,&M_h(n-1)\ge T(n),
+ \end{cases}
+ \qquad (\mu(n)^2=1),
+ \label{eq:intro-quantizer}
+\end{equation}
+with $\mu_h(n)=0$ off the squarefree support.  This is a greedy
+sigma--delta-type quantization: the next admissible increment is chosen from
+$\{-1,+1\}$ according to the current tracking error.  Feedback quantization,
+stable state variables and noise shaping are classical themes in sigma--delta
+theory \cite{GunturkThao1995,DaubechiesDeVore2003,BenedettoPowellYilmaz2006};
+the specific use made here is different.  The target is a zero-generated
+Mertens inverse, the admissible times are selected arithmetically by
+squarefreeness, and the output is studied as a Catalan excursion walk.  The
+construction does not claim that $\mu_h$ is multiplicative or equal to the
+classical M\"obius function.  Its purpose is to provide a controlled atomic
+representative of the continuous RVM Mertens coordinate and to expose which
+features survive discretization: tracking error, sign densities, correlation,
+energy, spectral second moments and excursion geometry.
+
+The squarefree support is natural but also restrictive.  Classically,
+$\mu(n)=0$ exactly when $n$ is divisible by the square of a prime, while its
+nonzero signs record the parity of the number of distinct prime factors.
+Results on squarefree numbers in short intervals and on gaps between them show
+that the support has rich and nontrivial local geometry; in the present paper
+that geometry controls the admissible update times of the quantizer rather
+than the location of the continuous real RVM primes.  The two discretizations
+must therefore not be conflated: the cell masses $c_n^{\RVM}$ come from
+$\pi_{\RVM}$, whereas the signs $\mu_h(n)$ are chosen dynamically to track
+$M_{\RVM}^{\crit}$ on a prescribed support.
+
+A further theme is comparison with the genuine arithmetic system.  At the
+transform level the defect is exact:
+\begin{equation}
+ \mathcal Q_{\RVM}(s)
+ :=\frac{\zeta(s)}{\zeta_{\RVM}(s)},
+ \qquad
+ \frac1{\zeta_{\RVM}(s)}
+ =\mathcal Q_{\RVM}(s)\frac1{\zeta(s)}.
+ \label{eq:intro-defect}
+\end{equation}
+No boundedness, invertibility or coefficient expansion of
+$\mathcal Q_{\RVM}$ is built into this identity.  In particular,
+\eqref{eq:intro-Mbound} is a theorem about the synthetic inverse and does not,
+by itself, imply
+$M(x)=O_\varepsilon(x^{1/2+\varepsilon})$.  The latter is a classical
+equivalent formulation of the Riemann hypothesis, and the disproof of the
+strong Mertens conjecture shows why the exponent and quantifiers must be stated
+with care \cite{Titchmarsh1986,OdlyzkoTeRiele1985}.
+
+To locate the exact endpoint obstruction, the midpoint ordinates are joined to
+the genuine ordinates by
+\begin{equation}
+ \delta_k:=\gamma_k-\gamma_k^{\RVM},
+ \qquad
+ \gamma_{k,\kappa}:=\gamma_k^{\RVM}+\kappa\delta_k,
+ \qquad 0\le\kappa\le1.
+ \label{eq:intro-transport}
+\end{equation}
+The Riemann--von Mangoldt formula gives $\delta_k=O(1)$, so the associated
+products
+\begin{equation}
+ P_\kappa(s)
+ :=\prod_{k\ge1}
+ \left(1+\frac{s(s-1)}{1/4+\gamma_{k,\kappa}^2}\right),
+ \qquad
+ \zeta_\kappa(s):=\frac{P_\kappa(s)}{G(s)}
+ \label{eq:intro-path}
+\end{equation}
+converge jointly and normally.  Their moving divisor remains on the critical
+line, and their logarithmic generator is an absolutely summable mode-by-mode
+velocity.  The endpoint
+\begin{equation}
+ \zeta_{Z1}(s):=\zeta_1(s)
+\end{equation}
+has the genuine ordinates $\gamma_k$ but retains the imposed real part $1/2$.
+It therefore exists unconditionally and must not be identified with $\zeta$
+merely because its ordinates agree with those of the genuine zeros.
+
+The analytic class of $\zeta_{Z1}$ makes the missing identification precise.
+Its completed function has the zeta functional equation, residue one at
+$s=1$, the usual trivial zeros and finite order.  Hamburger's converse theorem
+belongs to the classical family of converse theorems that recover arithmetic
+Dirichlet-series objects from analytic continuation, functional equations and
+growth conditions \cite{Hamburger1921,Perelli2016}.  Applied here, it shows
+that the remaining endpoint condition
+\begin{equation}
+ \tag{D}
+ \zeta_{Z1}(s)=\sum_{n\ge1}\frac{a_n}{n^s}
+ \quad\text{absolutely for }\Re s>1
+ \label{eq:intro-D}
+\end{equation}
+is equivalent to
+\begin{equation}
+ \zeta_{Z1}\equiv\zeta
+ \quad\Longleftrightarrow\quad
+ \mathrm{RH}.
+ \label{eq:intro-endpoint}
+\end{equation}
+Thus the transport does not prove RH; it isolates the continuous-to-atomic
+closure that would do so.  In RVM language, the open endpoint question is
+whether the zero-generated $Z1$ analytic object enters the ordinary discrete
+Dirichlet category.  If it does, Hamburger uniqueness forces the classical
+zeta function, and the associated prime and Mertens coordinates become the
+classical ones.
+
+The relationship among the principal RVM objects can therefore be summarized
+as
+\begin{equation}
+ \{\gamma_k^{\RVM}\}
+ \longrightarrow
+ \zeta_{\RVM}
+ \longrightarrow
+ J_{\RVM}
+ \longleftrightarrow
+ \pi_{\RVM}
+ \longrightarrow
+ \bigl(d\pi_{\RVM},\,p_j^{\RVM},\,c_n^{\RVM}\bigr),
+ \label{eq:intro-prime-chain}
+\end{equation}
+\begin{equation}
+ \zeta_{\RVM}^{-1}
+ \longrightarrow
+ M_{\RVM}^{\crit}
+ \longrightarrow
+ (T,\mu_h,M_h),
+ \label{eq:intro-M-chain}
+\end{equation}
+and
+\begin{equation}
+ \zeta_{\RVM}
+ \longrightarrow
+ \zeta_\kappa
+ \longrightarrow
+ \zeta_{Z1},
+ \qquad
+ \zeta_{Z1}=\zeta
+ \Longleftrightarrow \mathrm{RH}.
+ \label{eq:intro-transport-chain}
+\end{equation}
+The first chain is the prime coordinate, the second is the Mertens coordinate,
+and the third is the ordinate-transport coordinate.  They share the same
+midpoint spectrum but solve different realization problems.
+
+\paragraph{Originality and scope.}
+The ingredients surrounding the construction are classical or belong to
+established neighbouring theories: the Riemann--von Mangoldt law, Lambert
+inversion, Hadamard products, explicit formulas, M\"obius inversion, Perron
+inversion, Beurling generalized primes, sigma--delta feedback and Hamburger
+converse theorems.  The contribution claimed by this paper is their assembly
+into a single midpoint RVM space with four coordinated levels:
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item an exact midpoint zero clock and its canonical zeta-like product;
+ \item a continuous prime-power and prime coordinate, including real RVM
+       prime levels and nonintegral unit-cell masses;
+ \item a continuous synthetic Mertens inverse together with a squarefree,
+       ternary, feedback discretization and its Catalan excursion geometry;
+ \item a normal product transport from the midpoint spectrum to the genuine
+       ordinates, ending in a single Dirichlet-series closure condition
+       equivalent to RH.
+\end{enumerate}
+To the author's knowledge, the literature cited above contains the individual
+background mechanisms but not this complete chain
+\[
+ \text{midpoint clock}
+ \to \zeta_{\RVM}
+ \to (J_{\RVM},\pi_{\RVM},p_j^{\RVM})
+ \to (M_{\RVM}^{\crit},M_h)
+ \to \zeta_{Z1}.
+\]
+This statement of originality is deliberately structural.  It does not claim
+that every lemma or transform used in the chain is new, and it does not treat
+numerical tracking as a proof of the endpoint condition.
+
+\paragraph{Status of the results.}
+The paper separates four logical levels.  The midpoint clock, canonical
+product, exact divisor, logarithmic exponential-sum estimate, compact-uniform
+explicit formula, finite M\"obius inversion, transition formula, vertical
+limit, symmetric synthetic Mertens inverse, product transport and endpoint
+analytic class are presented as theorems.  Square-root estimates for the RVM
+prime coordinate and the local unit-cell remainder are stated with their
+uniformity obligations visible.  The real-prime levels are defined on monotone
+branches of $\pi_{\RVM}$, whereas a global positive real-prime sequence needs
+global monotonicity.  The weighted Euler realization is conditional on
+Mellin--Stieltjes and cell control.  The ternary walk $M_h$ is a discretization
+and comparison object, not an Euler product and not the genuine Mertens
+function.  Finally, condition \eqref{eq:intro-D} is the unresolved endpoint
+criterion; proving it would identify the transported endpoint with the
+classical zeta function and hence prove RH.
+
+\paragraph{Organization.}
+The paper begins with the midpoint Riemann--von Mangoldt clock, its Lambert
+inversion and its bounded displacement from the genuine ordinates.  It then
+constructs $\zeta_{\RVM}$ and proves the canonical-product and exponential-sum
+results.  The following sections develop $J_{\RVM}$, $\pi_{\RVM}$, the real and
+unit-cell prime coordinates, and the conditional weighted Euler realization.
+The RVM Mertens transform and its transition asymptotics are treated next,
+followed by the continuous-to-ternary discretization and its numerical and
+excursion diagnostics where included.  The final analytic part transports the
+midpoint ordinates to the genuine ordinates, proves the endpoint analytic
+class, and formulates Hamburger condition (D) as the exact remaining closure.

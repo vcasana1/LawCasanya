@@ -1,0 +1,3077 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Qp}{\mathbb{Q}_{>0}}
+\newcommand{\Hil}{\mathcal{H}}
+\newcommand{\Sch}{\mathcal{S}}
+\newcommand{\Four}{\mathcal{F}}
+\newcommand{\Dom}{\mathcal{D}}
+\newcommand{\Bop}{\mathcal{B}}
+\newcommand{\id}{\mathrm{Id}}
+\newcommand{\ad}{\operatorname{ad}}
+\newcommand{\Reop}{\operatorname{Re}}
+\newcommand{\Om}{\Omega}
+\newcommand{\twconv}{\star_{\vartheta}}
+\newcommand{\deltaone}{\delta_{1}}
+\newcommand{\ellft}{\lambda}
+
+% hyperref must be loaded last
+\usepackage[hidelinks]{hyperref}
+
+\title[Heisenberg Uncertainty and M\"obius Dynamics VI]{
+Heisenberg Uncertainty and Twisted M\"obius Dynamics VI:\
+Cohomological Curvature, Prime--Zeta Branching,\\
+and the Positivity Barrier
+}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\begin{remark}[Version 6]
+\label{rem:status}
+The canonical pair, Weyl calculus, Robertson inequality, and general twisted
+algebra are standard. The arithmetic specialization
+\(n\mapsto(\ell\log n,\kappa\Omega(n))\) produces the specific cocycle studied
+here. Version 6 retains the exact Version 4 curvature results and adds: a structural obstruction showing
+that every expectation value of a linearly M\"obius-weighted state is
+necessarily quadratic in the M\"obius coefficients; a closed formula for the
+second \(\vartheta\)-curvature of the twisted inverse \(z_\vartheta(n)\); and
+an exact Dirichlet-series summation of that curvature; a precise identification of the prime-zeta logarithm as the source of its branch points; a two-variable Euler-product/Hessian representation of the curvature determinant; a proof that coefficient positivity and complete monotonicity alone cannot remove the logarithmic singularities; an exact local monodromy formula with Jordan-totient weight; a correction of the distributional transpose formulas; and multiplicative superadditivity, divisor monotonicity, and power-growth laws for the curvature.
+\end{remark}
+
+\section{Introduction: the Version 6 structure}
+\label{sec:introduction}
+
+Version 1 placed a standard Heisenberg pair next to a zeta multiplier but did
+not couple the two structures.  Version 2 corrected that defect: the exact
+canonical commutation relation deformed the arithmetic product itself through
+a nontrivial cocycle.  The Version 2 audit nevertheless identified two
+remaining weaknesses.  First, the actual uncertainty principle was not stated
+prominently.  Second, several domain, inverse, and convergence claims required
+repair.
+
+Version 6 starts from the self-adjoint position and momentum operators
+\begin{equation}
+(Q\psi)(q)=q\psi(q),
+\qquad
+(P\psi)(q)=-i\hbar\psi'(q),
+\label{eq:intro_QP}
+\end{equation}
+with the canonical commutation relation
+\begin{equation}
+[Q,P]=i\hbar I
+\label{eq:intro_CCR}
+\end{equation}
+on the Schwartz core.  For every normalized Schwartz state, the Heisenberg--Robertson uncertainty inequality is \cite{Robertson1929}
+\begin{equation}
+\boxed{\Delta_\psi Q\,\Delta_\psi P\ge\frac{\hbar}{2}.}
+\label{eq:intro_heisenberg_uncertainty}
+\end{equation}
+Here the uncertainty is a mathematical spread intrinsic to the state, not an
+experimental error.
+
+The arithmetic specialization assigns to an integer \(n\) the phase-space
+increments
+\begin{equation}
+x_n=\ell\log n,
+\qquad
+y_n=\kappa\Omega(n),
+\label{eq:intro_phase_space_coordinates}
+\end{equation}
+and the self-adjoint generator
+\begin{equation}
+G_n=y_nQ-x_nP.
+\label{eq:intro_Gn}
+\end{equation}
+The arithmetic specialization of the standard Robertson inequality gives, for two integers,
+\begin{equation}
+\boxed{
+\Delta_\psi G_m\,\Delta_\psi G_n
+\ge
+\frac{\hbar\ell\kappa}{2}
+\left|\Omega(m)\log n-\log m\,\Omega(n)\right|.}
+\label{eq:intro_arithmetic_uncertainty}
+\end{equation}
+For distinct primes \(p,q\), this becomes
+\begin{equation}
+\boxed{
+\Delta_\psi G_p\,\Delta_\psi G_q
+\ge
+\frac{\hbar\ell\kappa}{2}
+\left|\log\frac{q}{p}\right|.}
+\label{eq:intro_prime_uncertainty}
+\end{equation}
+Thus the same arithmetic symplectic area that later appears in the twisted
+M\"obius product already appears as a lower bound forced directly by the
+Heisenberg uncertainty principle.
+
+The associated Weyl operators are
+\begin{equation}
+W_n=\exp\left(\frac{i}{\hbar}G_n\right),
+\label{eq:intro_Wn}
+\end{equation}
+and satisfy
+\begin{equation}
+W_mW_n
+=
+\chi_\vartheta(m,n)W_{mn},
+\label{eq:intro_twisted_product}
+\end{equation}
+where
+\begin{equation}
+\chi_\vartheta(m,n)
+=
+\exp\left[
+\frac{i\vartheta}{2}
+\bigl(\Omega(m)\log n-\log m\,\Omega(n)\bigr)
+\right],
+\qquad
+\vartheta=\frac{\ell\kappa}{\hbar}.
+\label{eq:intro_cocycle}
+\end{equation}
+The cocycle is proved below to be cohomologically nontrivial for every
+\(\vartheta\ne0\).  It induces an associative noncommutative Dirichlet
+product.  M\"obius inversion in that product defines coefficients
+\(z_\vartheta(n)\).  For prime powers and distinct prime pairs one obtains
+\begin{align}
+z_\vartheta(p^r)&=1,
+\label{eq:intro_prime_power_formula}\\
+z_\vartheta(pq)
+&=2\cos\left(\frac{\vartheta}{2}\log\frac{q}{p}\right)-1.
+\label{eq:intro_prime_pair_formula}
+\end{align}
+The same determinant-like arithmetic quantity therefore controls both the
+uncertainty lower bound \eqref{eq:intro_arithmetic_uncertainty} and the phase
+responsible for the deformed inverse.
+
+
+Version 5 also differentiates the twisted inverse itself at the commuting
+point. For
+\begin{equation}
+n=\prod_{j=1}^{r}p_j^{a_j},
+\qquad
+T(a)=\frac{a(a+1)}2,
+\label{eq:intro_factorization_T}
+\end{equation}
+one obtains
+\begin{equation}
+\boxed{
+-z_0''(n)=\frac12\sum_{1\le i<j\le r}
+T(a_i)T(a_j)\log^2\!\frac{p_j}{p_i}.}
+\label{eq:intro_curvature_formula}
+\end{equation}
+For square-free \(n=p_1\cdots p_r\),
+\begin{equation}
+\boxed{
+-z_0''(n)=\frac12\left[r\sum_{p\mid n}(\log p)^2-(\log n)^2\right]
+=\frac{r^2}{2}\operatorname{Var}_{p\mid n}(\log p).}
+\label{eq:intro_variance_formula}
+\end{equation}
+Summing this curvature does not return a two-variable M\"obius correlation.
+For \(\Re s>1\),
+\begin{equation}
+\mathcal K(s)=-\sum_{n\ge1}\frac{z_0''(n)}{n^s}
+=\frac{\zeta(s)}2\bigl(S_0(s)S_2(s)-S_1(s)^2\bigr),
+\label{eq:intro_curvature_determinant}
+\end{equation}
+where
+\begin{equation}
+S_j(s)=\sum_p\frac{p^{-s}}{(1-p^{-s})^2}(\log p)^j.
+\label{eq:intro_Sj}
+\end{equation}
+Section~\ref{sec:curvature_dirichlet_series} rewrites these functions through
+\(\log\zeta(rs)\) and \(\zeta'(rs)/\zeta(rs)\), producing a local
+continuation to \(\Re s>1/2\) and an exact singularity criterion for
+nontrivial zeta zeros to the right of the critical line.
+
+Finally, a bounded self-adjoint M\"obius Hamiltonian is defined for
+\(\sigma>1\).  Its Schr\"odinger evolution and the exact Heisenberg equations
+for \(Q(t)\) and \(P(t)\) are derived with domains stated explicitly.  The
+paper does not claim a connection to RH; analytic continuation, functional
+equations, and spectral information remain open.
+
+\begin{remark}[Scope of Version 6]
+\label{rem:v3_scope}
+The operator deformation is developed in the half-planes stated for each
+operator. Version 6 additionally develops a direct local relation between the
+second deformation curvature and the classical zero set in
+Section~\ref{sec:curvature_zero_detection}.
+\end{remark}
+
+\section{Exact canonical kinematics}
+\label{sec:kinematics}
+
+\subsection{Hilbert space, position, and momentum}
+\label{subsec:QP_definitions}
+
+\begin{definition}[Hilbert space]
+\label{def:hilbert_space}
+Fix $\hbar>0$ and set
+\begin{equation}
+\Hil=L^2(\R,dq)
+\label{eq:hilbert_space}
+\end{equation}
+with its standard complex Hilbert-space inner product.
+\end{definition}
+
+\begin{definition}[Position]
+\label{def:position}
+The position operator $Q$ is
+\begin{equation}
+(Q\psi)(q)=q\psi(q)
+\label{eq:Q_action}
+\end{equation}
+with maximal domain
+\begin{equation}
+\Dom(Q)=\{\psi\in L^2(\R):q\psi(q)\in L^2(\R)\}.
+\label{eq:Q_domain}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Momentum]
+\label{def:momentum}
+The momentum operator $P$ is
+\begin{equation}
+(P\psi)(q)=-i\hbar\,\psi'(q)
+\label{eq:P_action}
+\end{equation}
+with domain
+\begin{equation}
+\Dom(P)=H^1(\R).
+\label{eq:P_domain}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Self-adjointness and common core]
+\label{prop:self_adjoint_QP}
+The operators $Q$ and $P$ are self-adjoint.  The Schwartz space
+$\Sch(\R)$ is a common invariant core for both.
+\end{proposition}
+
+\begin{proof}
+$Q$ is the maximal multiplication operator by the real function $q$.  Under
+the unitary Fourier transform with convention
+\begin{equation}
+(\Four\psi)(p)
+=
+\frac{1}{\sqrt{2\pi\hbar}}
+\int_{\R}e^{-ipq/\hbar}\psi(q)\,dq,
+\label{eq:fourier_transform}
+\end{equation}
+$P$ is unitarily equivalent to multiplication by the real variable $p$.
+The core statement follows by standard cutoff and mollification arguments.
+See, for example, \cite{ReedSimon1980}.
+\end{proof}
+
+\begin{proposition}[Exact canonical commutation relation]
+\label{prop:CCR}
+For every $\psi\in\Sch(\R)$,
+\begin{equation}
+[Q,P]\psi=i\hbar\psi.
+\label{eq:CCR}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Direct differentiation gives
+\begin{align}
+(QP\psi)(q)
+&=-i\hbar q\psi'(q),
+\label{eq:QP}\\
+(PQ\psi)(q)
+&=-i\hbar\psi(q)-i\hbar q\psi'(q).
+\label{eq:PQ}
+\end{align}
+Subtracting \eqref{eq:PQ} from \eqref{eq:QP} proves \eqref{eq:CCR}.
+\end{proof}
+
+\subsection{The Heisenberg uncertainty principle and exact incompatibility}
+\label{subsec:heisenberg_uncertainty}
+
+\begin{definition}[Expectation and uncertainty]
+\label{def:uncertainty}
+Let \(A\) be self-adjoint and let \(\psi\in\Dom(A)\) be normalized.  Define
+\begin{align}
+\langle A\rangle_\psi
+&=\langle\psi,A\psi\rangle,
+\label{eq:expectation_definition}\\
+(\Delta_\psi A)^2
+&=\|(A-\langle A\rangle_\psi)\psi\|^2.
+\label{eq:variance_definition}
+\end{align}
+\end{definition}
+
+\begin{theorem}[Heisenberg uncertainty principle]
+\label{thm:heisenberg_uncertainty}
+For every normalized \(\psi\in\Sch(\R)\),
+\begin{equation}
+\boxed{
+\Delta_\psi Q\,\Delta_\psi P
+\ge
+\frac{\hbar}{2}.}
+\label{eq:heisenberg_uncertainty}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Set
+\begin{equation}
+\widetilde Q=Q-\langle Q\rangle_\psi I,
+\qquad
+\widetilde P=P-\langle P\rangle_\psi I.
+\label{eq:centered_QP}
+\end{equation}
+By Cauchy--Schwarz,
+\begin{equation}
+\Delta_\psi Q\,\Delta_\psi P
+\ge
+\left|\langle\widetilde Q\psi,\widetilde P\psi\rangle\right|.
+\label{eq:CS_uncertainty}
+\end{equation}
+The modulus dominates the absolute value of the imaginary part, and on
+\(\Sch(\R)\)
+\begin{align}
+2i\,\operatorname{Im}
+\langle\widetilde Q\psi,\widetilde P\psi\rangle
+&=
+\langle\psi,[Q,P]\psi\rangle
+\label{eq:imaginary_commutator}\\
+&=i\hbar.
+\label{eq:imaginary_CCR}
+\end{align}
+Combining \eqref{eq:CS_uncertainty}--\eqref{eq:imaginary_CCR} proves
+\eqref{eq:heisenberg_uncertainty}.
+\end{proof}
+
+\begin{remark}[Meaning of the inequality]
+\label{rem:uncertainty_meaning}
+Equation~\eqref{eq:heisenberg_uncertainty} is the Heisenberg uncertainty
+principle used in this paper.  The quantities \(\Delta_\psi Q\) and
+\(\Delta_\psi P\) are intrinsic standard deviations of a state.  They are
+not measurement errors.  Exact simultaneous localization would require both
+to vanish, which is prohibited by \eqref{eq:heisenberg_uncertainty}.
+\end{remark}
+
+\begin{theorem}[No simultaneous exact position and momentum]
+\label{thm:no_joint_eigenstate}
+There is no nonzero state with simultaneous exact position and exact momentum.
+More precisely, both of the following are impossible for real \(q_0,p_0\):
+\begin{enumerate}[leftmargin=*]
+\item a nonzero vector \(\psi\) in a common invariant domain satisfying
+\begin{equation}
+Q\psi=q_0\psi,
+\qquad
+P\psi=p_0\psi;
+\label{eq:joint_eigenstate_assumption}
+\end{equation}
+\item a nonzero tempered distribution \(T\in\Sch'(\R)\) satisfying
+\begin{equation}
+qT=q_0T,
+\qquad
+-i\hbar T'=p_0T.
+\label{eq:joint_distribution_assumption}
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For vectors, \eqref{eq:joint_eigenstate_assumption} gives
+\([Q,P]\psi=0\), whereas the CCR gives \([Q,P]\psi=i\hbar\psi\); hence
+\(\psi=0\).  For distributions define directly
+\begin{equation}
+QT=qT,
+\qquad
+PT=-i\hbar T'.
+\label{eq:distribution_QP_definition}
+\end{equation}
+The distributional Leibniz rule gives
+\begin{equation}
+[Q,P]T=i\hbar T.
+\label{eq:distribution_CCR}
+\end{equation}
+The simultaneous eigenvalue equations would make the left-hand side zero,
+so \(T=0\).
+\end{proof}
+
+\section{Weyl displacements and the arithmetic phase space}
+\label{sec:weyl_arithmetic}
+
+\subsection{Weyl operators}
+\label{subsec:weyl_operators}
+
+\begin{definition}[Weyl displacement]
+\label{def:weyl_operator}
+For $(x,y)\in\R^2$, define
+\begin{equation}
+W(x,y)
+=
+\exp\!\left(\frac{i}{\hbar}(yQ-xP)\right).
+\label{eq:weyl_definition}
+\end{equation}
+This is a unitary operator on all of $\Hil$.
+\end{definition}
+
+\begin{proposition}[Coordinate action]
+\label{prop:weyl_coordinate_action}
+For $\psi\in L^2(\R)$,
+\begin{equation}
+(W(x,y)\psi)(q)
+=
+\exp\!\left(\frac{i}{\hbar}y\left(q-\frac{x}{2}\right)\right)
+\psi(q-x)
+\label{eq:weyl_coordinate_action}
+\end{equation}
+almost everywhere.
+\end{proposition}
+
+\begin{proof}
+Since $[iyQ/\hbar,-ixP/\hbar]$ is scalar, the Baker--Campbell--Hausdorff
+formula gives
+\begin{equation}
+W(x,y)
+=
+e^{-ixy/(2\hbar)}e^{iyQ/\hbar}e^{-ixP/\hbar}.
+\label{eq:weyl_BCH_factorization}
+\end{equation}
+The last factor translates by $x$ and the middle factor multiplies by
+$e^{iyq/\hbar}$, yielding \eqref{eq:weyl_coordinate_action}.
+\end{proof}
+
+\begin{proposition}[Weyl form of the CCR]
+\label{prop:weyl_relation}
+Let $z=(x,y)$ and $z'=(x',y')$.  Define
+\begin{equation}
+\omega(z,z')=yx'-xy'.
+\label{eq:symplectic_form}
+\end{equation}
+Then
+\begin{equation}
+W(z)W(z')
+=
+\exp\!\left(\frac{i}{2\hbar}\omega(z,z')\right)
+W(z+z').
+\label{eq:weyl_product}
+\end{equation}
+Consequently,
+\begin{equation}
+[W(z),W(z')]
+=
+2i\sin\!\left(\frac{\omega(z,z')}{2\hbar}\right)W(z+z').
+\label{eq:weyl_commutator}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For
+\begin{equation}
+A_z=\frac{i}{\hbar}(yQ-xP),
+\label{eq:Az_definition}
+\end{equation}
+the CCR gives
+\begin{equation}
+[A_z,A_{z'}]
+=
+\frac{i}{\hbar}\omega(z,z')I.
+\label{eq:Az_commutator}
+\end{equation}
+This commutator is central, so the Baker--Campbell--Hausdorff series stops
+after the commutator term and gives \eqref{eq:weyl_product}.  Reversing $z$
+and $z'$ changes the sign of $\omega$, giving \eqref{eq:weyl_commutator}.
+The Weyl relations are standard; see \cite{Folland1989}.
+\end{proof}
+
+\begin{proposition}[Position and momentum displacement equations]
+\label{prop:weyl_QP_commutators}
+On $\Sch(\R)$,
+\begin{align}
+[Q,W(x,y)]
+&=xW(x,y),
+\label{eq:Q_W_commutator}\\
+[P,W(x,y)]
+&=yW(x,y).
+\label{eq:P_W_commutator}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Both identities follow by differentiating \eqref{eq:weyl_coordinate_action},
+or directly from \eqref{eq:CCR} because the relevant commutators with the
+exponent are scalar.
+\end{proof}
+
+\subsection{Arithmetic embedding}
+\label{subsec:arithmetic_embedding}
+
+\begin{definition}[The additive prime-factor counter]
+\label{def:Omega}
+For
+\begin{equation}
+n=\prod_p p^{v_p(n)},
+\label{eq:prime_factorization}
+\end{equation}
+define
+\begin{equation}
+\Om(n)=\sum_p v_p(n).
+\label{eq:Omega_definition}
+\end{equation}
+Then
+\begin{equation}
+\Om(mn)=\Om(m)+\Om(n).
+\label{eq:Omega_additivity}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Arithmetic phase-space map]
+\label{def:arithmetic_phase_space_map}
+Fix two positive scales $\ell>0$ and $\kappa>0$.  For $n\in\N$, put
+\begin{align}
+x_n
+&=\ell\log n,
+\label{eq:xn_definition}\\
+y_n
+&=\kappa\Om(n),
+\label{eq:yn_definition}\\
+z_n
+&=(x_n,y_n).
+\label{eq:zn_definition}
+\end{align}
+Define the dimensionless Heisenberg area parameter
+\begin{equation}
+\vartheta=\frac{\ell\kappa}{\hbar}.
+\label{eq:theta_definition}
+\end{equation}
+\end{definition}
+
+\begin{remark}[Why these two coordinates]
+\label{rem:why_coordinates}
+The first coordinate is forced by multiplicative size because
+$\log(mn)=\log m+\log n$.  The second coordinate is chosen as the simplest
+integer-valued completely additive function that directly controls the
+M\"obius sign on square-free integers:
+\begin{equation}
+\mu(n)\neq0
+\quad\Longrightarrow\quad
+\mu(n)=(-1)^{\Om(n)}.
+\label{eq:mobius_Omega_relation}
+\end{equation}
+The construction can be generalized by replacing $\Om$ with another
+completely additive arithmetic function, but the present notebook fixes $\Om$ throughout.
+\end{remark}
+
+\begin{definition}[Arithmetic Weyl operators]
+\label{def:arithmetic_weyl_operator}
+For $n\in\N$, define
+\begin{equation}
+W_n=W(x_n,y_n).
+\label{eq:Wn_definition}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Exact Heisenberg cocycle on the integers]
+\label{thm:integer_weyl_cocycle}
+For $m,n\in\N$,
+\begin{equation}
+W_mW_n
+=
+\chi_{\vartheta}(m,n)W_{mn},
+\label{eq:integer_weyl_product}
+\end{equation}
+where
+\begin{equation}
+\chi_{\vartheta}(m,n)
+=
+\exp\!\left[
+\frac{i\vartheta}{2}
+\bigl(\Om(m)\log n-\log m\,\Om(n)\bigr)
+\right].
+\label{eq:chi_definition}
+\end{equation}
+Moreover,
+\begin{equation}
+[W_m,W_n]
+=
+2i\sin\!\left[
+\frac{\vartheta}{2}
+\bigl(\Om(m)\log n-\log m\,\Om(n)\bigr)
+\right]W_{mn}.
+\label{eq:integer_weyl_commutator}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Complete additivity gives
+\begin{equation}
+z_{mn}=z_m+z_n.
+\label{eq:phase_space_additivity}
+\end{equation}
+Substitution of \eqref{eq:xn_definition}--\eqref{eq:theta_definition} into
+\eqref{eq:weyl_product} gives \eqref{eq:integer_weyl_product};
+\eqref{eq:integer_weyl_commutator} follows from
+\eqref{eq:weyl_commutator}.
+\end{proof}
+
+\begin{corollary}[Prime commutator]
+\label{cor:prime_commutator}
+For distinct primes $p,q$,
+\begin{equation}
+[W_p,W_q]
+=
+2i\sin\!\left(\frac{\vartheta}{2}\log\frac{q}{p}\right)W_{pq}.
+\label{eq:prime_commutator}
+\end{equation}
+Thus the prime operators commute only at the resonant values
+\begin{equation}
+\vartheta\log\frac{q}{p}\in2\pi\mathbb Z.
+\label{eq:prime_commutation_resonance}
+\end{equation}
+\end{corollary}
+
+\begin{remark}[Where Heisenberg enters nontrivially]
+\label{rem:where_heisenberg_enters}
+Equation~\eqref{eq:integer_weyl_product} is the first point where Version 2
+ceases to be ordinary Dirichlet algebra in operator notation.  If the
+canonical pair were commuting, the Weyl cocycle would be $1$ and the
+arithmetic product below would reduce to ordinary Dirichlet convolution.
+For nonzero $\vartheta$, the CCR creates order-dependent phases between
+different arithmetic factors.
+\end{remark}
+
+\begin{theorem}[The arithmetic cocycle is not gauge-trivial]
+\label{thm:cocycle_nontrivial}
+Extend \(\log\) and \(\Omega\) additively to
+\(\mathbb Q_{>0}^{\times}\).  For every real \(\vartheta\ne0\), the
+cocycle \(\chi_\vartheta\) is not a scalar coboundary on
+\(\mathbb N^{\times}\), and its extension is not a scalar coboundary on
+\(\mathbb Q_{>0}^{\times}\).
+\end{theorem}
+
+\begin{proof}
+On a commutative semigroup, every scalar coboundary
+\begin{equation}
+(\delta a)(m,n)=a(m)a(n)a(mn)^{-1}
+\label{eq:scalar_coboundary}
+\end{equation}
+is symmetric in \(m,n\).  Hence a necessary condition for
+\(\chi_\vartheta\) to be a coboundary is
+\begin{equation}
+\frac{\chi_\vartheta(m,n)}{\chi_\vartheta(n,m)}=1
+\label{eq:cocycle_commutator_trivial}
+\end{equation}
+for all \(m,n\).  For distinct primes,
+\begin{equation}
+\frac{\chi_\vartheta(p,q)}{\chi_\vartheta(q,p)}
+=
+\exp\left(i\vartheta\log\frac{q}{p}\right).
+\label{eq:prime_cocycle_commutator}
+\end{equation}
+If this were one simultaneously for \((p,q)=(2,3)\) and \((2,5)\), then
+there would be nonzero integers \(k,l\) such that
+\begin{equation}
+\vartheta\log(3/2)=2\pi k,
+\qquad
+\vartheta\log(5/2)=2\pi l.
+\label{eq:two_prime_phase_integrality}
+\end{equation}
+Thus \(\log(3/2)/\log(5/2)=k/l\in\mathbb Q\).  Exponentiating a
+reduced rational relation would produce an equality between incompatible
+prime factorizations, contradicting unique factorization.  Therefore
+\eqref{eq:cocycle_commutator_trivial} cannot hold for all primes.
+\end{proof}
+
+
+\section{Structural filter: linear M\"obius states cannot escape second order}
+\label{sec:linear_state_filter}
+
+Let \(v_n\in\Hil\) be arbitrary vectors and define
+\begin{equation}
+\Psi_x=\sum_{n\le x}\mu(n)v_n.
+\label{eq:linear_mobius_state}
+\end{equation}
+
+\begin{theorem}[Quadratic obstruction for all expectation-value routes]
+\label{thm:linear_state_quadratic_obstruction}
+For every linear operator \(A\) for which the expression is defined,
+\begin{equation}
+\langle\Psi_x,A\Psi_x\rangle
+=\sum_{m,n\le x}\mu(m)\mu(n)\langle v_m,Av_n\rangle.
+\label{eq:expectation_bilinear_mobius}
+\end{equation}
+Hence every norm, expectation value, covariance, variance, or Robertson bound
+obtained from a state constructed linearly with coefficients \(\mu(n)\) is a
+quadratic M\"obius form.
+\end{theorem}
+
+\begin{proof}
+Expand the inner product sesquilinearly and use that \(\mu(n)\) is real.
+\end{proof}
+
+\begin{corollary}[State-superposition route closed]
+\label{cor:linear_state_route_closed}
+Changing the reference vector, the vectors \(v_n\), or the observable \(A\)
+does not alter the quadratic dependence in
+\eqref{eq:expectation_bilinear_mobius}. A non-quadratic consequence must
+therefore be extracted from the algebraic deformation itself.
+\end{corollary}
+
+\section{Arithmetic uncertainty generated by the CCR}
+\label{sec:arithmetic_uncertainty}
+
+\begin{definition}[Integer generator]
+\label{def:integer_generator}
+For \(n\ge1\), define on \(\Sch(\R)\) the symmetric operator
+\begin{equation}
+G_n^{(0)}=y_nQ-x_nP
+=\kappa\Omega(n)Q-\ell\log n\,P.
+\label{eq:Gn_definition}
+\end{equation}
+It is essentially self-adjoint on \(\Sch(\R)\); denote its self-adjoint
+closure by \(G_n\).  The corresponding unitary displacement is
+\begin{equation}
+W_n=\exp(iG_n/\hbar).
+\label{eq:Wn_from_Gn}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Arithmetic commutator]
+\label{prop:arithmetic_generator_commutator}
+For all \(m,n\ge1\), the restrictions of \(G_m\) and \(G_n\) to \(\Sch(\R)\) satisfy
+\begin{align}
+[G_m,G_n]
+&=i\hbar(x_my_n-y_mx_n)I
+\label{eq:GmGn_commutator_xy}\\
+&=i\hbar\ell\kappa
+\bigl(\log m\,\Omega(n)-\Omega(m)\log n\bigr)I.
+\label{eq:GmGn_commutator_arithmetic}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Expand the commutator and use \([Q,P]=i\hbar I\).  Terms involving
+\([Q,Q]\) and \([P,P]\) vanish.
+\end{proof}
+
+\begin{theorem}[Arithmetic Heisenberg uncertainty law]
+\label{thm:arithmetic_uncertainty}
+For every normalized \(\psi\in\Sch(\R)\) and all \(m,n\ge1\),
+\begin{equation}
+\boxed{
+\Delta_\psi G_m\,\Delta_\psi G_n
+\ge
+\frac{\hbar\ell\kappa}{2}
+\left|\Omega(m)\log n-\log m\,\Omega(n)\right|.}
+\label{eq:arithmetic_uncertainty}
+\end{equation}
+For distinct primes \(p,q\),
+\begin{equation}
+\boxed{
+\Delta_\psi G_p\,\Delta_\psi G_q
+\ge
+\frac{\hbar\ell\kappa}{2}
+\left|\log\frac{q}{p}\right|.}
+\label{eq:prime_pair_uncertainty}
+\end{equation}
+For two powers of the same prime the lower bound is zero.
+\end{theorem}
+
+\begin{proof}
+Apply the Robertson inequality to the self-adjoint pair \(G_m,G_n\):
+\begin{equation}
+\Delta_\psi G_m\,\Delta_\psi G_n
+\ge
+\frac12
+\left|\langle\psi,[G_m,G_n]\psi\rangle\right|.
+\label{eq:Robertson_GmGn}
+\end{equation}
+Substitution of \eqref{eq:GmGn_commutator_arithmetic} gives
+\eqref{eq:arithmetic_uncertainty}.  If \(p,q\) are distinct primes then
+\(\Omega(p)=\Omega(q)=1\), which gives \eqref{eq:prime_pair_uncertainty}.
+If \(m=p^a,n=p^b\), the determinant
+\(\Omega(m)\log n-\log m\,\Omega(n)\) vanishes.
+\end{proof}
+
+\begin{remark}[The common invariant]
+\label{rem:common_symplectic_invariant}
+Define the arithmetic symplectic area
+\begin{equation}
+\mathcal A(m,n)
+=
+\Omega(m)\log n-\log m\,\Omega(n).
+\label{eq:arithmetic_symplectic_area}
+\end{equation}
+The uncertainty lower bound is proportional to \( |\mathcal A(m,n)| \),
+while the twisted product below carries the phase
+\(\exp(i\vartheta\mathcal A(m,n)/2)\).  Thus uncertainty and twisted
+M\"obius inversion are controlled by the same arithmetic invariant, although
+they are distinct consequences of the CCR.
+\end{remark}
+
+\subsection{The semiclassical and arithmetic-commutative limits are distinct}
+\label{subsec:two_limits}
+
+The parameter controlling the Weyl cocycle is
+\begin{equation}
+\vartheta(\hbar,\ell,\kappa)
+=
+\frac{\ell\kappa}{\hbar}.
+\label{eq:vartheta_scaling}
+\end{equation}
+The uncertainty scale and the deformation scale therefore depend on the same
+three parameters in different ways.
+
+\begin{proposition}[Opposite fixed-scale limits]
+\label{prop:opposite_limits}
+Fix \(\ell>0\) and \(\kappa>0\).  For every fixed pair \(m,n\),
+\begin{equation}
+\frac{\hbar\ell\kappa}{2}|\mathcal A(m,n)|
+\longrightarrow0
+\qquad(\hbar\to0^+),
+\label{eq:uncertainty_classical_limit}
+\end{equation}
+whereas
+\begin{equation}
+|\vartheta|
+=
+\frac{\ell\kappa}{\hbar}
+\longrightarrow\infty.
+\label{eq:twist_fixed_scale_limit}
+\end{equation}
+Consequently the ordinary semiclassical limit \(\hbar\to0^+\) with
+\(\ell,\kappa\) fixed does not approach the untwisted Dirichlet product.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:uncertainty_classical_limit} follows directly from
+Theorem~\ref{thm:arithmetic_uncertainty}, while
+\eqref{eq:twist_fixed_scale_limit} follows from
+\eqref{eq:vartheta_scaling}.
+\end{proof}
+
+\begin{proposition}[Joint semiclassical--commutative scaling]
+\label{prop:joint_scaling}
+Let \(\ell=\ell(\hbar)>0\) and
+\(\kappa=\kappa(\hbar)>0\).  Then
+\begin{equation}
+\vartheta(\hbar)\longrightarrow0
+\qquad(\hbar\to0^+)
+\label{eq:theta_to_zero_condition}
+\end{equation}
+if and only if
+\begin{equation}
+\ell(\hbar)\kappa(\hbar)=o(\hbar).
+\label{eq:joint_scaling_condition}
+\end{equation}
+Under this scaling the twisted product converges coefficientwise to the
+ordinary Dirichlet product, and the arithmetic uncertainty lower bound obeys
+\begin{equation}
+\frac{\hbar\ell(\hbar)\kappa(\hbar)}{2}
+|\mathcal A(m,n)|
+=o(\hbar^2)
+\label{eq:joint_uncertainty_decay}
+\end{equation}
+for every fixed \(m,n\).
+\end{proposition}
+
+\begin{proof}
+The equivalence of \eqref{eq:theta_to_zero_condition} and
+\eqref{eq:joint_scaling_condition} is immediate from
+\eqref{eq:vartheta_scaling}.  For fixed \(m,n\),
+\(\chi_{\vartheta}(m,n)\to1\) as \(\vartheta\to0\), so the
+finite divisor sum defining \(f\star_{\vartheta}g\) converges to ordinary
+Dirichlet convolution coefficientwise.  Multiplying
+\(\ell(\hbar)\kappa(\hbar)=o(\hbar)\) by \(\hbar/2\) gives
+\eqref{eq:joint_uncertainty_decay}.
+\end{proof}
+
+\begin{remark}[Two independent notions of classicality]
+\label{rem:two_classicalities}
+The limit \(\hbar\to0^+\) suppresses the Robertson--Heisenberg lower
+bound, whereas \(\vartheta\to0\) removes the arithmetic twist.  They are
+not the same operation.  With fixed \(\ell,\kappa\) they move in opposite
+directions; simultaneous suppression requires the joint scaling
+\eqref{eq:joint_scaling_condition}.
+\end{remark}
+
+\section{The Heisenberg-twisted Dirichlet algebra}
+\label{sec:twisted_dirichlet_algebra}
+
+\subsection{Definition and associativity}
+\label{subsec:twisted_convolution_definition}
+
+\begin{definition}[Heisenberg-twisted Dirichlet convolution]
+\label{def:twisted_convolution}
+For arithmetic functions $f,g:\N\to\C$, define
+\begin{equation}
+(f\twconv g)(k)
+=
+\sum_{d\mid k}
+f(d)g(k/d)\chi_{\vartheta}(d,k/d).
+\label{eq:twisted_convolution}
+\end{equation}
+The sum is finite for every $k$.
+\end{definition}
+
+\begin{lemma}[Cocycle identity]
+\label{lem:cocycle_identity}
+For all $a,b,c\in\N$,
+\begin{equation}
+\chi_{\vartheta}(a,b)\chi_{\vartheta}(ab,c)
+=
+\chi_{\vartheta}(b,c)\chi_{\vartheta}(a,bc).
+\label{eq:cocycle_identity}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The exponent in \eqref{eq:chi_definition} is the alternating bilinear form
+obtained from the additive map $n\mapsto z_n$.  Expanding both sides using
+$\log(ab)=\log a+\log b$ and
+$\Om(ab)=\Om(a)+\Om(b)$ gives the same exponent.
+\end{proof}
+
+\begin{proposition}[Associative noncommutative arithmetic algebra]
+\label{prop:twisted_associative}
+The product $\twconv$ is associative and has identity $\deltaone$, where
+\begin{equation}
+\deltaone(1)=1,
+\qquad
+\deltaone(n)=0\quad(n>1).
+\label{eq:delta_one_definition}
+\end{equation}
+For $\vartheta\neq0$ it is generally noncommutative.
+\end{proposition}
+
+\begin{proof}
+Associativity follows from Lemma~\ref{lem:cocycle_identity} after grouping
+the finite divisor sums by triples $abc=k$.  The identity property follows
+from $\chi_{\vartheta}(1,n)=\chi_{\vartheta}(n,1)=1$.  Noncommutativity
+follows from Corollary~\ref{cor:prime_commutator}; equivalently,
+\begin{equation}
+(\delta_p\twconv\delta_q)(pq)
+=
+\chi_{\vartheta}(p,q)
+\label{eq:delta_pq_forward}
+\end{equation}
+whereas
+\begin{equation}
+(\delta_q\twconv\delta_p)(pq)
+=
+\chi_{\vartheta}(q,p)
+=
+\overline{\chi_{\vartheta}(p,q)}.
+\label{eq:delta_pq_reverse}
+\end{equation}
+\end{proof}
+
+\subsection{Weighted Banach algebra and operator representation}
+\label{subsec:weighted_banach_algebra}
+
+\begin{definition}[Weighted arithmetic Banach space]
+\label{def:weighted_banach_algebra}
+For $\sigma>0$, set
+\begin{equation}
+\mathcal A_{\sigma}
+=
+\left\{f:\N\to\C:
+\|f\|_{\sigma}:=
+\sum_{n\ge1}\frac{|f(n)|}{n^{\sigma}}<\infty
+\right\}.
+\label{eq:A_sigma_definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Banach-algebra estimate]
+\label{prop:banach_algebra_estimate}
+For $f,g\in\mathcal A_{\sigma}$,
+\begin{equation}
+\|f\twconv g\|_{\sigma}
+\le
+\|f\|_{\sigma}\|g\|_{\sigma}.
+\label{eq:banach_algebra_estimate}
+\end{equation}
+Hence $(\mathcal A_{\sigma},\twconv)$ is a unital Banach algebra.
+\end{proposition}
+
+\begin{proof}
+Since $|\chi_{\vartheta}|=1$,
+\begin{align}
+\|f\twconv g\|_{\sigma}
+&\le
+\sum_{k\ge1}\frac{1}{k^{\sigma}}
+\sum_{d\mid k}|f(d)||g(k/d)|
+\label{eq:banach_estimate_step1}\\
+&=
+\sum_{d,e\ge1}
+\frac{|f(d)|}{d^{\sigma}}
+\frac{|g(e)|}{e^{\sigma}}
+\label{eq:banach_estimate_step2}\\
+&=
+\|f\|_{\sigma}\|g\|_{\sigma}.
+\label{eq:banach_estimate_step3}
+\end{align}
+Completeness is the completeness of weighted $\ell^1$.
+\end{proof}
+
+\begin{definition}[Weyl--Dirichlet representation]
+\label{def:Weyl_Dirichlet_representation}
+For $f\in\mathcal A_{\sigma}$, define
+\begin{equation}
+\Pi_{\sigma,\vartheta}(f)
+=
+\sum_{n\ge1}\frac{f(n)}{n^{\sigma}}W_n,
+\label{eq:Pi_definition}
+\end{equation}
+where the series converges absolutely in operator norm.
+\end{definition}
+
+\begin{proposition}[Representation theorem]
+\label{prop:representation_theorem}
+For $f,g\in\mathcal A_{\sigma}$,
+\begin{align}
+\|\Pi_{\sigma,\vartheta}(f)\|
+&\le\|f\|_{\sigma},
+\label{eq:Pi_norm_bound}\\
+\Pi_{\sigma,\vartheta}(f)
+\Pi_{\sigma,\vartheta}(g)
+&=
+\Pi_{\sigma,\vartheta}(f\twconv g).
+\label{eq:Pi_homomorphism}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The norm bound follows from $\|W_n\|=1$.  Absolute norm convergence permits
+multiplication and regrouping of the double series.  The coefficient of
+$W_k$ is exactly \eqref{eq:twisted_convolution} by
+Theorem~\ref{thm:integer_weyl_cocycle}.
+\end{proof}
+
+\section{M\"obius inversion deformed by the CCR}
+\label{sec:mobius_inversion}
+
+\subsection{The M\"obius operator}
+\label{subsec:mobius_operator}
+
+\begin{definition}[M\"obius operator]
+\label{def:mobius_operator}
+For $\sigma>1$, define
+\begin{equation}
+\mathcal M_{\sigma,\vartheta}
+=
+\Pi_{\sigma,\vartheta}(\mu)
+=
+\sum_{n\ge1}
+\frac{\mu(n)}{n^{\sigma}}W_n.
+\label{eq:mobius_operator}
+\end{equation}
+The series converges absolutely in operator norm, so
+$\mathcal M_{\sigma,\vartheta}\in\Bop(\Hil)$ and
+\begin{equation}
+\Dom(\mathcal M_{\sigma,\vartheta})=\Hil.
+\label{eq:mobius_operator_domain}
+\end{equation}
+\end{definition}
+
+\begin{remark}[Concrete coordinate action]
+\label{rem:mobius_coordinate_action}
+For $\psi\in L^2(\R)$,
+\begin{equation}
+(\mathcal M_{\sigma,\vartheta}\psi)(q)
+=
+\sum_{n\ge1}
+\frac{\mu(n)}{n^{\sigma}}
+\exp\!\left[
+\frac{i}{\hbar}y_n\left(q-\frac{x_n}{2}\right)
+\right]
+\psi(q-x_n),
+\label{eq:mobius_coordinate_action}
+\end{equation}
+with convergence in $L^2$.  Thus the operator is a M\"obius-weighted
+superposition of simultaneous translations in position and momentum; it is
+not a Fourier multiplier when $\kappa\neq0$.
+\end{remark}
+
+\subsection{Formal twisted inverse}
+\label{subsec:formal_twisted_inverse}
+
+\begin{proposition}[Existence and uniqueness of arithmetic inverses]
+\label{prop:formal_inverse}
+Let $f:\N\to\C$ satisfy $f(1)\neq0$.  Then there exists a unique arithmetic
+function $g$ such that
+\begin{equation}
+f\twconv g=g\twconv f=\deltaone.
+\label{eq:two_sided_inverse}
+\end{equation}
+Its coefficients are determined recursively from $g(1)=f(1)^{-1}$.
+\end{proposition}
+
+\begin{proof}
+For $n>1$, the equation $(f\twconv r)(n)=0$ contains the term
+$f(1)r(n)$ and otherwise only values $r(d)$ with $d<n$.  It therefore
+constructs a unique right inverse $r$ satisfying $f\twconv r=\deltaone$.
+Separately, the equations $(\ellft\twconv f)(n)=0$ construct a unique left
+inverse $\ellft$ satisfying $\ellft\twconv f=\deltaone$.  Associativity
+then gives
+\begin{equation}
+\ellft
+=\ellft\twconv(f\twconv r)
+=(\ellft\twconv f)\twconv r
+=r,
+\label{eq:left_right_inverse_coincide}
+\end{equation}
+so the inverse is bilateral and unique.
+\end{proof}
+
+\begin{definition}[Heisenberg-zeta coefficients]
+\label{def:heisenberg_zeta_coefficients}
+Let $z_{\vartheta}:\N\to\C$ be the unique two-sided inverse of $\mu$ for
+$\twconv$:
+\begin{equation}
+\mu\twconv z_{\vartheta}
+=
+z_{\vartheta}\twconv\mu
+=
+\deltaone.
+\label{eq:ztheta_inverse_definition}
+\end{equation}
+Thus
+\begin{equation}
+z_{\vartheta}(1)=1,
+\label{eq:ztheta_one}
+\end{equation}
+and for $n>1$,
+\begin{equation}
+z_{\vartheta}(n)
+=
+-\sum_{\substack{d\mid n\\ d>1}}
+\mu(d)z_{\vartheta}(n/d)
+\chi_{\vartheta}(d,n/d).
+\label{eq:ztheta_recursion}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Commuting boundary]
+\label{prop:commuting_boundary}
+At $\vartheta=0$,
+\begin{equation}
+z_0(n)=1
+\label{eq:z0_constant_one}
+\end{equation}
+for every $n\ge1$.
+\end{proposition}
+
+\begin{proof}
+When $\vartheta=0$, $\chi_0\equiv1$ and $\twconv$ is ordinary Dirichlet
+convolution.  Equation~\eqref{eq:ztheta_inverse_definition} becomes
+$\mu*z_0=\deltaone$.  Classical M\"obius inversion gives $z_0=\mathbf1$.
+See \cite{Apostol1976}.
+\end{proof}
+
+\begin{proposition}[Ordered-factorization formula]
+\label{prop:ordered_factorization_formula}
+For \(n>1\), the twisted inverse has the finite coefficient expansion
+\begin{align}
+z_\vartheta(n)
+=
+\sum_{r\ge1}(-1)^r
+\sum_{\substack{n_1\cdots n_r=n\\ n_j>1}}
+&\left(\prod_{j=1}^r\mu(n_j)\right)
+\notag\\
+&\times
+\exp\left[
+\frac{i\vartheta}{2}
+\sum_{1\le i<j\le r}
+\bigl(
+\Omega(n_i)\log n_j-
+\log n_i\,\Omega(n_j)
+\bigr)
+\right].
+\label{eq:ordered_factorization_formula}
+\end{align}
+Only finitely many \(r\) and ordered factorizations contribute for fixed
+\(n\).
+\end{proposition}
+
+\begin{proof}
+Write \(\mu=\deltaone+h\) with \(h(1)=0\).  Coefficientwise the formal
+Neumann expansion is
+\begin{equation}
+z_\vartheta
+=
+\sum_{r\ge0}(-h)^{\star_\vartheta r}.
+\label{eq:formal_neumann_coefficientwise}
+\end{equation}
+For fixed \(n\), a product of more than \(\log_2 n\) factors exceeding
+one cannot equal \(n\), so the coefficient sum is finite.  Iterating the
+bicharacter cocycle yields the pairwise phase in
+\eqref{eq:ordered_factorization_formula}.
+\end{proof}
+
+\subsection{A bounded inverse in a rigorous half-plane}
+\label{subsec:bounded_inverse}
+
+\begin{definition}[Uniform Neumann threshold]
+\label{def:neumann_threshold}
+Let \(\sigma_*\) be the unique real number \(>1\) satisfying
+\begin{equation}
+\frac{\zeta(\sigma_*)}{\zeta(2\sigma_*)}=2.
+\label{eq:neumann_threshold_equation}
+\end{equation}
+Numerically,
+\begin{equation}
+\sigma_*=1.578017063034\ldots.
+\label{eq:neumann_threshold_numeric}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Uniform Neumann region]
+\label{thm:neumann_region}
+For every real \(\vartheta\) and every \(\sigma>\sigma_*\),
+\begin{equation}
+z_\vartheta\in\mathcal A_\sigma.
+\label{eq:ztheta_in_Asigma}
+\end{equation}
+Consequently
+\begin{equation}
+\mathcal Z_{\sigma,\vartheta}
+=
+\Pi_{\sigma,\vartheta}(z_\vartheta)
+=
+\sum_{n\ge1}
+\frac{z_\vartheta(n)}{n^\sigma}W_n
+\label{eq:zeta_operator_deformed}
+\end{equation}
+converges absolutely in operator norm and satisfies
+\begin{equation}
+\mathcal M_{\sigma,\vartheta}
+\mathcal Z_{\sigma,\vartheta}
+=
+\mathcal Z_{\sigma,\vartheta}
+\mathcal M_{\sigma,\vartheta}
+=I.
+\label{eq:operator_inverse_identity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write \(\mu=\deltaone+h\), where \(h(1)=0\).  For \(\sigma>1\),
+\begin{align}
+\|h\|_\sigma
+&=
+\sum_{n\ge2}\frac{\mu(n)^2}{n^\sigma}
+\label{eq:h_norm_sigma_step1}\\
+&=
+\frac{\zeta(\sigma)}{\zeta(2\sigma)}-1.
+\label{eq:h_norm_sigma_step2}
+\end{align}
+The right-hand side is continuous and strictly decreasing from \(+\infty\)
+to \(0\) as \(\sigma\) runs from \(1^+\) to \(+\infty\), so
+\(\sigma_*\) is unique and \(\|h\|_\sigma<1\) exactly when
+\(\sigma>\sigma_*\).  The Banach-algebra Neumann series
+\begin{equation}
+(\deltaone+h)^{-1}
+=
+\sum_{r=0}^{\infty}(-h)^{\star_\vartheta r}
+\label{eq:neumann_inverse}
+\end{equation}
+then converges in \(\mathcal A_\sigma\).  Uniqueness identifies it with
+\(z_\vartheta\), and the representation theorem gives
+\eqref{eq:operator_inverse_identity}.
+\end{proof}
+
+\begin{warning}[Exact border of the proved inverse]
+\label{warn:inverse_border}
+The M\"obius operator exists as a bounded operator for every \(\sigma>1\).
+The argument above proves a bounded inverse only for
+\(\sigma>\sigma_*\).  At \(\sigma=\sigma_*\) the Neumann norm equals
+one and this argument is inconclusive.  No claim is made here for
+\(1<\sigma\le\sigma_*\).
+\end{warning}
+
+\section{The first Heisenberg arithmetic law}
+\label{sec:prime_pair_interference}
+
+\begin{theorem}[Prime rays are rigid; distinct primes interfere]
+\label{thm:prime_pair_interference}
+Let $p,q$ be distinct primes and let $r\ge1$.  Then
+\begin{align}
+z_{\vartheta}(p^r)
+&=1,
+\label{eq:ztheta_prime_power}\\
+z_{\vartheta}(pq)
+&=
+2\cos\!\left(\frac{\vartheta}{2}\log\frac{q}{p}\right)-1,
+\label{eq:ztheta_semiprime_cos}\\
+z_{\vartheta}(pq)-1
+&=
+-4\sin^2\!\left(\frac{\vartheta}{4}\log\frac{q}{p}\right).
+\label{eq:ztheta_semiprime_defect}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+For $p^r$, only the divisors $1$ and $p$ contribute to the recursion because
+$\mu(p^j)=0$ for $j\ge2$.  Moreover,
+\begin{equation}
+\Om(p)\log(p^{r-1})
+-
+\log p\,\Om(p^{r-1})
+=0,
+\label{eq:prime_power_symplectic_zero}
+\end{equation}
+so $\chi_{\vartheta}(p,p^{r-1})=1$.  Equation
+\eqref{eq:ztheta_recursion} gives
+\begin{equation}
+z_{\vartheta}(p^r)=z_{\vartheta}(p^{r-1}),
+\label{eq:prime_power_recursion}
+\end{equation}
+and \eqref{eq:ztheta_prime_power} follows from $z_{\vartheta}(1)=1$.
+
+For $pq$, the four divisors $1,p,q,pq$ give
+\begin{equation}
+0
+=
+z_{\vartheta}(pq)
+-
+\chi_{\vartheta}(p,q)
+-
+\chi_{\vartheta}(q,p)
++1.
+\label{eq:pq_inverse_equation}
+\end{equation}
+Since
+\begin{equation}
+\chi_{\vartheta}(p,q)
+=
+\exp\!\left(\frac{i\vartheta}{2}\log\frac{q}{p}\right),
+\label{eq:chi_pq}
+\end{equation}
+and $\chi_{\vartheta}(q,p)$ is its complex conjugate,
+\eqref{eq:ztheta_semiprime_cos} follows.  The identity
+\eqref{eq:ztheta_semiprime_defect} is the elementary formula
+$2(\cos u-1)=-4\sin^2(u/2)$.
+\end{proof}
+
+\begin{corollary}[Loss of ordinary multiplicativity]
+\label{cor:loss_of_multiplicativity}
+Generically,
+\begin{equation}
+z_{\vartheta}(pq)
+\neq
+z_{\vartheta}(p)z_{\vartheta}(q)=1.
+\label{eq:loss_of_multiplicativity}
+\end{equation}
+Thus the Heisenberg deformation preserves every one-prime ray but destroys
+ordinary multiplicativity through cross-prime interference.
+\end{corollary}
+
+\begin{corollary}[Small-area expansion]
+\label{cor:small_area_expansion}
+For fixed distinct primes $p,q$,
+\begin{equation}
+z_{\vartheta}(pq)
+=
+1-
+\frac{\vartheta^2}{4}
+\left(\log\frac{q}{p}\right)^2
++O(\vartheta^4)
+\qquad(\vartheta\to0).
+\label{eq:small_theta_pq}
+\end{equation}
+There is no linear correction.
+\end{corollary}
+
+\begin{proposition}[Two-prime lattice recurrence]
+\label{prop:two_prime_recurrence}
+Let \(p\ne q\) be primes, set
+\begin{equation}
+Z_{a,b}=z_\vartheta(p^aq^b),
+\qquad
+\lambda=\frac{\vartheta}{2}\log\frac{q}{p}.
+\label{eq:Zab_lambda}
+\end{equation}
+Then for \(a,b\ge1\),
+\begin{equation}
+Z_{a,b}
+=
+e^{ib\lambda}Z_{a-1,b}
++e^{-ia\lambda}Z_{a,b-1}
+-e^{i(b-a)\lambda}Z_{a-1,b-1},
+\label{eq:two_prime_recurrence}
+\end{equation}
+with boundary values
+\begin{equation}
+Z_{a,0}=Z_{0,b}=1.
+\label{eq:two_prime_boundary}
+\end{equation}
+In particular,
+\begin{equation}
+z_\vartheta(p^2q)
+=1+2\cos(2\lambda)-2\cos\lambda.
+\label{eq:p2q_formula}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Apply the right-inverse recursion \eqref{eq:ztheta_recursion} to
+\(p^aq^b\).  Since \(\mu(d)\neq0\) only when the exponents of \(p,q\)
+in \(d\) are at most one, only \(d=p,q,pq\) contribute.  Evaluation of
+the three cocycle factors gives \eqref{eq:two_prime_recurrence}; the boundary
+values are Theorem~\ref{thm:prime_pair_interference} on prime rays.
+\end{proof}
+
+\begin{proposition}[Evenness of the full inverse]
+\label{prop:theta_evenness}
+For every $n\ge1$,
+\begin{equation}
+z_{-\vartheta}(n)=z_{\vartheta}(n).
+\label{eq:ztheta_evenness}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Changing $\vartheta$ to $-\vartheta$ reverses the cocycle:
+\begin{equation}
+(f\star_{-\vartheta}g)(n)
+=
+(g\star_{\vartheta}f)(n).
+\label{eq:opposite_algebra_identity}
+\end{equation}
+Since $z_{\vartheta}$ is a two-sided inverse of $\mu$ for
+$\star_{\vartheta}$, it is a two-sided inverse of $\mu$ for the opposite
+product $\star_{-\vartheta}$.  Uniqueness of the inverse gives
+\eqref{eq:ztheta_evenness}.
+\end{proof}
+
+\begin{proposition}[Reality for real deformation]
+\label{prop:ztheta_real}
+For real \(\vartheta\) and every \(n\ge1\),
+\begin{equation}
+z_\vartheta(n)\in\mathbb R.
+\label{eq:ztheta_real}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Complex conjugation changes \(\chi_\vartheta\) to
+\(\chi_{-\vartheta}\).  Since \(\mu\) is real, conjugating the inverse
+equation shows that \(\overline{z_\vartheta}\) is the inverse for the
+\(-\vartheta\) product.  Proposition~\ref{prop:theta_evenness} therefore
+gives \(\overline{z_\vartheta}=z_{-\vartheta}=z_\vartheta\).
+\end{proof}
+
+\begin{remark}[Why this is the non-tautological step]
+\label{rem:non_tautological_step}
+At $\vartheta=0$ the inverse coefficients are identically $1$.  At nonzero
+$\vartheta$, equation~\eqref{eq:ztheta_semiprime_defect} creates a new
+arithmetic coefficient depending on the logarithmic separation of two
+primes.  This dependence is forced by the symplectic area in the Weyl
+product and disappears if the CCR is removed.  It is therefore the first
+result in the notebook where Heisenberg noncommutativity changes the
+arithmetic inverse itself rather than merely constraining an unrelated
+state space.
+\end{remark}
+
+\section{Cohomological curvature of the twisted M\"obius inverse}
+\label{sec:cohomological_curvature}
+
+Set
+\begin{equation}
+\mathcal A(d,e)=\Omega(d)\log e-\log d\,\Omega(e),
+\label{eq:arith_symplectic_area_curv}
+\end{equation}
+so that
+\begin{equation}
+\chi_\vartheta(d,e)=\exp\!\left(\frac{i\vartheta}{2}\mathcal A(d,e)\right).
+\label{eq:chi_area_curv}
+\end{equation}
+
+\begin{proposition}[Coefficientwise entire dependence]
+\label{prop:ztheta_entire_coefficientwise}
+For each fixed \(n\ge1\), the map \(\vartheta\mapsto z_\vartheta(n)\) is
+entire. It is even, and it is real-valued on the real axis.
+\end{proposition}
+
+\begin{proof}
+Formula~\eqref{eq:ordered_factorization_formula} is a finite sum for fixed
+\(n\), each term being an exponential \(e^{ic\vartheta}\). Evenness and
+reality follow from Propositions~\ref{prop:theta_evenness} and
+\ref{prop:ztheta_real}.
+\end{proof}
+
+\begin{proposition}[Second derivative of the inverse]
+\label{prop:second_derivative_inverse}
+Define
+\begin{equation}
+g(k)=\frac14\sum_{d\mid k}\mu(d)\mathcal A(d,k/d)^2.
+\label{eq:gk_definition}
+\end{equation}
+Then
+\begin{equation}
+\boxed{z_0''(n)=\sum_{k\mid n}g(k).}
+\label{eq:zsecond_divisor_sum}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Differentiate the inverse equation
+\begin{equation}
+0=\sum_{d\mid n}\mu(d)z_\vartheta(n/d)
+\exp\!\left(\frac{i\vartheta}{2}\mathcal A(d,n/d)\right)
+\label{eq:inverse_equation_theta}
+\end{equation}
+twice at \(\vartheta=0\). Since \(z_0\equiv1\) and \(z'_0\equiv0\),
+\begin{equation}
+(\mu*z_0'')(n)=\frac14\sum_{d\mid n}\mu(d)\mathcal A(d,n/d)^2=g(n).
+\label{eq:mu_convolution_zsecond}
+\end{equation}
+Convolving with \(\mathbf1=\mu^{-1}\) gives
+\eqref{eq:zsecond_divisor_sum}.
+\end{proof}
+
+\begin{lemma}[Support collapse]
+\label{lem:gk_support_collapse}
+Let \(k=\prod_{j=1}^{r}p_j^{a_j}\) with distinct primes \(p_j\). Then
+\begin{equation}
+g(k)=0\qquad\text{for }r=0,\ r=1,\text{ or }r\ge3.
+\label{eq:gk_support_zero}
+\end{equation}
+For two distinct primes,
+\begin{equation}
+\boxed{g(p^\alpha q^\beta)
+=-\frac{\alpha\beta}{2}\log^2\!\frac qp.}
+\label{eq:g_two_prime_exact}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+A contributing divisor is square-free and therefore corresponds to a subset
+\(S\subseteq\{1,\ldots,r\}\). Put
+\begin{equation}
+R=\Omega(k)=\sum_j a_j,\qquad L=\log k,
+\qquad X_S=\sum_{j\in S}\log p_j.
+\label{eq:R_L_XS}
+\end{equation}
+Then
+\begin{equation}
+\mathcal A(d,k/d)=|S|L-RX_S.
+\label{eq:A_subset_linear}
+\end{equation}
+Its square has Boolean degree at most two, so its full alternating difference
+vanishes when \(r\ge3\). For \(r=1\) the area is zero. For \(r=2\), direct
+evaluation of the four subsets gives
+\begin{equation}
+\sum_{d\mid p^\alpha q^\beta}\mu(d)
+\mathcal A(d,p^\alpha q^\beta/d)^2
+=-2\alpha\beta\log^2(q/p),
+\label{eq:four_term_two_prime_sum}
+\end{equation}
+which yields \eqref{eq:g_two_prime_exact}.
+\end{proof}
+
+\begin{theorem}[Exact cohomological curvature]
+\label{thm:exact_curvature_formula}
+If
+\begin{equation}
+n=\prod_{j=1}^{r}p_j^{a_j},\qquad T(a)=\frac{a(a+1)}2,
+\label{eq:n_factorization_triangular}
+\end{equation}
+then
+\begin{equation}
+\boxed{
+z_0''(n)=-\frac12\sum_{1\le i<j\le r}
+T(a_i)T(a_j)\log^2\!\frac{p_j}{p_i}.}
+\label{eq:zsecond_general_formula}
+\end{equation}
+Thus \(-z_0''(n)\ge0\), with equality exactly for \(n=1\) or a prime
+power.
+\end{theorem}
+
+\begin{proof}
+Only divisors supported on exactly two primes survive by
+Lemma~\ref{lem:gk_support_collapse}. Summing
+\eqref{eq:g_two_prime_exact} over
+\(1\le\alpha\le a_i\), \(1\le\beta\le a_j\) gives the factor
+\(T(a_i)T(a_j)\).
+\end{proof}
+
+\begin{corollary}[Square-free prime-log variance]
+\label{cor:squarefree_prime_variance}
+If \(n=p_1\cdots p_r\) is square-free, then
+\begin{align}
+-z_0''(n)
+&=\frac12\sum_{i<j}(\log p_j-\log p_i)^2
+\label{eq:squarefree_pair_variance}\\
+&=\frac12\left[r\sum_{p\mid n}(\log p)^2-(\log n)^2\right]
+\label{eq:squarefree_variance_identity}\\
+&=\frac{r^2}{2}\operatorname{Var}_{p\mid n}(\log p).
+\label{eq:squarefree_variance_stat}
+\end{align}
+\end{corollary}
+
+\begin{corollary}[Infinitesimal cohomological size]
+\label{cor:cohomological_singular_value}
+For square-free \(n=p_1\cdots p_r\), let
+\begin{equation}
+B_{ij}=\log p_j-\log p_i.
+\label{eq:B_matrix_logs}
+\end{equation}
+Then \(B\) has rank at most two. If \(r\ge2\), its two nonzero singular
+values are both
+\begin{equation}
+s(n)=\sqrt{r\sum_{p\mid n}(\log p)^2-(\log n)^2},
+\label{eq:singular_value_s}
+\end{equation}
+and
+\begin{equation}
+\boxed{-z_0''(n)=\frac12s(n)^2.}
+\label{eq:curvature_singular_value}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Write \(B=\mathbf1a^T-a\mathbf1^T\), \(a_i=\log p_i\). The two nonzero
+singular values of \(uv^T-vu^T\) equal
+\begin{equation}
+\sqrt{\|u\|^2\|v\|^2-(u\cdot v)^2}.
+\label{eq:wedge_singular_value}
+\end{equation}
+Apply this with \(u=\mathbf1\), \(v=a\), and then use
+Corollary~\ref{cor:squarefree_prime_variance}.
+\end{proof}
+
+\begin{corollary}[Exact Taylor law for each integer]
+\label{cor:coefficient_taylor_exact}
+For every fixed \(n\),
+\begin{equation}
+z_\vartheta(n)=1+\frac{\vartheta^2}{2}z_0''(n)+O_n(\vartheta^4),
+\label{eq:ztheta_general_taylor}
+\end{equation}
+and the Taylor series has infinite radius of convergence. For square-free
+\(n\),
+\begin{equation}
+\boxed{
+z_\vartheta(n)=1-\frac{\vartheta^2}{4}
+\left[\omega(n)\sum_{p\mid n}(\log p)^2-(\log n)^2\right]
++O_n(\vartheta^4).}
+\label{eq:ztheta_squarefree_taylor}
+\end{equation}
+\end{corollary}
+
+\section{Multiplicative geometry of the curvature}
+\label{sec:curvature_multiplicative_geometry}
+
+Define
+\begin{equation}
+\mathcal C(n):=-z_0''(n)
+=\frac12\sum_{p<q}T(v_p(n))T(v_q(n))\log^2\frac qp.
+\label{eq:Cn_definition_curvature}
+\end{equation}
+This section studies \(\mathcal C\) before any summation over \(n\).
+
+\begin{proposition}[Prime-ray rigidity]
+\label{prop:curvature_prime_ray_rigidity}
+\begin{equation}
+\boxed{\mathcal C(n)=0\iff n=1\ \text{or}\ n=p^a.}
+\label{eq:curvature_zero_prime_ray}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Every summand in \eqref{eq:Cn_definition_curvature} is nonnegative.  It is
+strictly positive exactly when two distinct primes occur with positive
+valuation.
+\end{proof}
+
+\begin{theorem}[Multiplicative superadditivity]
+\label{thm:curvature_superadditivity}
+For all positive integers \(m,n\),
+\begin{equation}
+\boxed{\mathcal C(mn)\ge \mathcal C(m)+\mathcal C(n).}
+\label{eq:curvature_superadditivity}
+\end{equation}
+If \(m,n>1\), equality holds exactly when \(m=p^a\) and \(n=p^b\) for the
+same prime \(p\).
+\end{theorem}
+
+\begin{proof}
+Put \(a_p=v_p(m)\), \(b_p=v_p(n)\),
+\(A_p=T(a_p)\), \(B_p=T(b_p)\).  Since
+\(T(a+b)=T(a)+T(b)+ab\), subtraction of
+\(\mathcal C(m)+\mathcal C(n)\) from \(\mathcal C(mn)\) gives
+\begin{equation}
+\mathcal C(mn)-\mathcal C(m)-\mathcal C(n)
+=\frac12\sum_{p<q}\Xi_{p,q}(m,n)\log^2\frac qp,
+\label{eq:curvature_superadditivity_expansion}
+\end{equation}
+where
+\begin{align}
+\Xi_{p,q}(m,n)={}&A_pB_q+B_pA_q
+ +(A_p+B_p)a_qb_q +(A_q+B_q)a_pb_p
+ +a_pb_p a_qb_q.
+\label{eq:Xi_pq_definition}
+\end{align}
+All terms are nonnegative.  If \(m,n>1\), all cross terms vanish exactly
+when both supports consist of the same single prime.
+\end{proof}
+
+\begin{corollary}[Monotonicity on the divisibility poset]
+\label{cor:curvature_divisibility_monotonicity}
+If \(m\mid n\), then
+\begin{equation}
+\boxed{\mathcal C(m)\le\mathcal C(n).}
+\label{eq:curvature_divisibility_monotonicity}
+\end{equation}
+\end{corollary}
+
+\begin{proposition}[Exact power law]
+\label{prop:curvature_power_law}
+If \(n=\prod_p p^{a_p}\), then for every integer \(k\ge1\),
+\begin{equation}
+\boxed{
+\mathcal C(n^k)=\frac18\sum_{p<q}
+\left[k^4a_p^2a_q^2+k^3(a_p^2a_q+a_pa_q^2)+k^2a_pa_q\right]
+\log^2\frac qp.}
+\label{eq:curvature_power_exact}
+\end{equation}
+Hence, if \(n\) contains at least two distinct primes,
+\begin{equation}
+\boxed{
+\lim_{k\to\infty}\frac{\mathcal C(n^k)}{k^4}
+=\frac18\sum_{p<q}a_p^2a_q^2\log^2\frac qp>0.}
+\label{eq:curvature_power_asymptotic}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Use \(T(ka)=(k^2a^2+ka)/2\) in
+\eqref{eq:Cn_definition_curvature} and expand.
+\end{proof}
+
+\begin{proposition}[Coprime block decomposition]
+\label{prop:curvature_coprime_decomposition}
+Assume \((m,n)=1\).  Define
+\begin{align}
+W(m)&=\sum_{p\mid m}T(v_p(m)),\\
+\overline L(m)&=\frac1{W(m)}\sum_{p\mid m}T(v_p(m))\log p,\\
+V(m)&=\frac1{W(m)}\sum_{p\mid m}T(v_p(m))
+(\log p-\overline L(m))^2,
+\end{align}
+with the analogous definitions for \(n\).  Then
+\begin{equation}
+\boxed{
+\mathcal C(mn)=\mathcal C(m)+\mathcal C(n)
++\frac12W(m)W(n)\left[V(m)+V(n)+(\overline L(m)-\overline L(n))^2\right].}
+\label{eq:curvature_coprime_ANOVA}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The cross-prime contribution is
+\(\frac12\sum_{p\mid m,q\mid n}A_pB_q(\log q-\log p)^2\).
+Expanding around the two weighted means gives
+\eqref{eq:curvature_coprime_ANOVA}.  Abstractly this last algebraic identity
+is the standard weighted within/between variance decomposition; its use here
+is only to expose the multiplicative geometry of \(\mathcal C\).
+\end{proof}
+
+\section{Dirichlet summation of the curvature}
+\label{sec:curvature_dirichlet_series}
+
+Define
+\begin{equation}
+c(n)=-z_0''(n)\ge0.
+\label{eq:cn_curvature}
+\end{equation}
+
+\begin{theorem}[Exact curvature Dirichlet series]
+\label{thm:curvature_dirichlet_series}
+For \(\Re s>1\),
+\begin{equation}
+\mathcal K(s)=\sum_{n\ge1}\frac{c(n)}{n^s}
+\label{eq:K_dirichlet_definition}
+\end{equation}
+converges absolutely and
+\begin{equation}
+\boxed{
+\mathcal K(s)=\frac{\zeta(s)}2\left[S_0(s)S_2(s)-S_1(s)^2\right],}
+\label{eq:K_variance_determinant}
+\end{equation}
+where
+\begin{equation}
+S_j(s)=\sum_p\frac{p^{-s}}{(1-p^{-s})^2}(\log p)^j,
+\qquad j=0,1,2.
+\label{eq:Sj_prime_sum}
+\end{equation}
+Equivalently,
+\begin{equation}
+S_0S_2-S_1^2
+=\sum_{p<q}
+\frac{p^{-s}q^{-s}}{(1-p^{-s})^2(1-q^{-s})^2}
+\log^2\!\frac qp.
+\label{eq:weighted_prime_variance}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Use Theorem~\ref{thm:exact_curvature_formula} and
+\begin{equation}
+\sum_{a\ge1}T(a)x^a=\frac{x}{(1-x)^3}.
+\label{eq:triangular_generating_function}
+\end{equation}
+Factoring the unrestricted Euler factors gives \(\zeta(s)\), while a selected
+prime contributes
+\begin{equation}
+\frac{p^{-s}}{(1-p^{-s})^2}.
+\label{eq:selected_prime_weight}
+\end{equation}
+The pair sum is exactly the weighted variance determinant
+\(S_0S_2-S_1^2\). Absolute convergence follows for \(\Re s>1\).
+\end{proof}
+
+\begin{corollary}[Prime-zeta reduction]
+\label{cor:prime_zeta_representation}
+Let \(P(s)=\sum_p p^{-s}\) for \(\Re s>1\). Then
+\begin{align}
+S_0(s)&=\sum_{m\ge1}mP(ms),
+\label{eq:S0_prime_zeta}\\
+S_1(s)&=-\sum_{m\ge1}mP'(ms),
+\label{eq:S1_prime_zeta}\\
+S_2(s)&=\sum_{m\ge1}mP''(ms).
+\label{eq:S2_prime_zeta}
+\end{align}
+Using
+\begin{equation}
+P(s)=\sum_{k\ge1}\frac{\mu(k)}{k}\log\zeta(ks),
+\label{eq:prime_zeta_mobius_inversion}
+\end{equation}
+gives
+\begin{align}
+S_0(s)&=\sum_{r\ge1}\frac{J_2(r)}{r}\log\zeta(rs),
+\label{eq:S0_logzeta}\\
+S_1(s)&=-\sum_{r\ge1}\varphi(r)\frac{\zeta'(rs)}{\zeta(rs)},
+\label{eq:S1_logderivative}\\
+S_2(s)&=\left(\frac{\zeta'}{\zeta}\right)'(s),
+\label{eq:S2_logderivative_exact}
+\end{align}
+where \(J_2(r)=r^2\prod_{p\mid r}(1-p^{-2})\).
+\end{corollary}
+
+\begin{proof}
+Expand \(x/(1-x)^2=\sum_{m\ge1}mx^m\), substitute
+\eqref{eq:prime_zeta_mobius_inversion}, and group by \(r=mk\). The needed
+divisor identities are
+\begin{align}
+r\sum_{k\mid r}\frac{\mu(k)}{k^2}&=\frac{J_2(r)}r,
+\label{eq:J2_divisor_identity}\\
+r\sum_{k\mid r}\frac{\mu(k)}k&=\varphi(r),
+\label{eq:phi_divisor_identity}\\
+r\sum_{k\mid r}\mu(k)&=\begin{cases}1,&r=1,\\0,&r>1.\end{cases}
+\label{eq:mobius_divisor_delta}
+\end{align}
+The last identity collapses \(S_2\) to
+\eqref{eq:S2_logderivative_exact}.
+\end{proof}
+
+\begin{proposition}[Singularity at \(s=1\)]
+\label{prop:K_near_one}
+As \(s\to1^+\),
+\begin{equation}
+\boxed{
+\mathcal K(s)\sim\frac1{2(s-1)^3}\log\frac1{s-1}.}
+\label{eq:K_near_one_asymptotic}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+From \eqref{eq:prime_zeta_mobius_inversion},
+\begin{equation}
+P(s)=\log\frac1{s-1}+O(1).
+\label{eq:P_near_one}
+\end{equation}
+Hence
+\begin{equation}
+S_0(s)=\log\frac1{s-1}+O(1),\quad
+S_1(s)=\frac1{s-1}+O(1),\quad
+S_2(s)=\frac1{(s-1)^2}+O(1).
+\label{eq:S012_near_one}
+\end{equation}
+Combine with \(\zeta(s)\sim(s-1)^{-1}\).
+\end{proof}
+
+\section{Continuation of the curvature and detection of zeta zeros}
+\label{sec:curvature_zero_detection}
+
+\begin{theorem}[Local continuation to \(\Re s>1/2\)]
+\label{thm:K_local_continuation}
+Let \(U\subset\{\Re s>1/2\}\) be simply connected and contain no zero or pole
+of \(\zeta(s)\). Choose a branch of \(\log\zeta(s)\) on \(U\). Then
+\eqref{eq:S0_logzeta}--\eqref{eq:S2_logderivative_exact}, substituted into
+\eqref{eq:K_variance_determinant}, continue \(\mathcal K\) holomorphically to
+\(U\).
+\end{theorem}
+
+\begin{proof}
+For \(r\ge2\), \(\Re(rs)>1\), so the corresponding terms are holomorphic and
+converge normally on compact subsets. The \(r=1\) terms are holomorphic by the
+hypothesis on \(U\).
+\end{proof}
+
+\begin{theorem}[Zeta zeros are logarithmic curvature singularities]
+\label{thm:zero_curvature_singularity}
+Let \(\rho\) be a zero of multiplicity \(m\ge1\) with
+\(1/2<\Re\rho<1\), and write
+\begin{equation}
+\zeta(s)=c_\rho(s-\rho)^m(1+O(s-\rho)),\qquad c_\rho\ne0.
+\label{eq:zeta_local_zero_m}
+\end{equation}
+Then
+\begin{equation}
+\boxed{
+\mathcal K(s)=-\frac{c_\rho m^2}{2}
+(s-\rho)^{m-2}\log(s-\rho)
++O\!\left((s-\rho)^{m-2}\right).}
+\label{eq:K_zero_local_form}
+\end{equation}
+For a simple zero,
+\begin{equation}
+\boxed{
+\mathcal K(s)=-\frac{\zeta'(\rho)}2
+\frac{\log(s-\rho)}{s-\rho}
++O\!\left(\frac1{s-\rho}\right).}
+\label{eq:K_simple_zero_form}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For \(r\ge2\), the terms in
+\eqref{eq:S0_logzeta}--\eqref{eq:S1_logderivative} are holomorphic near
+\(\rho\). With \(t=s-\rho\), the singular pieces are
+\begin{equation}
+S_0=m\log t+O(1),\qquad
+S_1=-\frac mt+O(1),\qquad
+S_2=-\frac m{t^2}+O(1).
+\label{eq:S012_near_zero}
+\end{equation}
+Thus
+\begin{equation}
+S_0S_2-S_1^2=-\frac{m^2\log t}{t^2}+O(t^{-2}).
+\label{eq:det_near_zero}
+\end{equation}
+Multiply by \(\zeta(s)/2\).
+\end{proof}
+
+\begin{corollary}[Curvature criterion equivalent to RH]
+\label{cor:curvature_RH_criterion}
+RH is equivalent to the absence of logarithmic branch singularities of
+\(\mathcal K\) in
+\begin{equation}
+\boxed{\frac12<\Re s<1.}
+\label{eq:RH_curvature_halfstrip}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:zero_curvature_singularity} detects every zero in the right
+half of the critical strip, while Theorem~\ref{thm:K_local_continuation}
+gives holomorphy on zero-free neighbourhoods. The functional equation makes
+the absence of zeros in this half-strip equivalent to RH.
+\end{proof}
+
+
+\section{Where the logarithmic branching comes from}
+\label{sec:prime_zeta_branching}
+
+The logarithmic singularity in Theorem~\ref{thm:zero_curvature_singularity}
+does not come from a meromorphic function such as \(\zeta\), \(\zeta'\), or
+\(\zeta''\).  It comes from the prime-zeta component of \(S_0\).
+
+\begin{proposition}[Exact source of the logarithm]
+\label{prop:source_of_logarithm}
+For \(\Re s>1\),
+\begin{equation}
+S_0(s)=\sum_{m\ge1}mP(ms),
+\qquad
+P(s)=\sum_{r\ge1}\frac{\mu(r)}{r}\log\zeta(rs).
+\label{eq:S0_prime_zeta_source}
+\end{equation}
+Consequently
+\begin{equation}
+S_0(s)=\sum_{k\ge1}\frac{J_2(k)}{k}\log\zeta(ks).
+\label{eq:S0_branch_expansion}
+\end{equation}
+If \(\rho\) is a zero of \(\zeta\) of multiplicity \(m\) and
+\(1/2<\Re\rho<1\), then in a punctured simply connected neighbourhood of
+\(\rho\),
+\begin{equation}
+S_0(s)=m\log(s-\rho)+O(1).
+\label{eq:S0_local_log_source}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The first identity follows by expanding
+\(p^{-s}(1-p^{-s})^{-2}=\sum_{m\ge1}m p^{-ms}\) and summing over primes.
+The second follows from M\"obius inversion for the prime zeta function and
+collecting the coefficient of \(\log\zeta(ks)\), exactly as in
+Corollary~\ref{cor:prime_zeta_representation}.  If
+\(1/2<\Re\rho<1\), every term with \(k\ge2\) is holomorphic near \(\rho\),
+because \(\Re(k\rho)>1\).  The \(k=1\) term is
+\(\log\zeta(s)=m\log(s-\rho)+O(1)\).
+\end{proof}
+
+\begin{remark}[Global branch structure]
+\label{rem:global_branch_structure}
+The classical prime-zeta continuation generated by
+\begin{equation}
+P(s)=\sum_{r\ge1}\frac{\mu(r)}r\log\zeta(rs)
+\label{eq:prime_zeta_global_branches}
+\end{equation}
+has logarithmic branch points at scaled poles and zeros, including points
+\(1/r\) and \(\rho/r\), and the line \(\Re s=0\) is a natural boundary for
+\(P\); see Fr\"oberg~\cite{Froberg1968}.  This global phenomenon does not
+invalidate Corollary~\ref{cor:curvature_RH_criterion}: in the open half-strip
+\(1/2<\Re s<1\), scaled points \(\rho/r\) with \(r\ge2\) cannot occur,
+because \(\Re(\rho/r)\le1/2\).  Hence the only logarithmic branches there
+are the unscaled \(r=1\) branches attached to zeros of \(\zeta\) itself.
+\end{remark}
+
+\section{Local monodromy and the Jordan-totient weight}
+\label{sec:local_monodromy}
+
+The branch structure is used here only locally.  No globally reordered double
+sum over zeta zeros is asserted.
+
+\begin{proposition}[Local monodromy at an isolated scaled zero]
+\label{prop:local_monodromy}
+Let \(\rho\) be a zero of \(\zeta\) of multiplicity \(m_\rho\), let
+\(r\ge1\), and set \(s_0=\rho/r\).  Suppose a sufficiently small punctured
+neighbourhood of \(s_0\) contains no other branch point contributing to
+\eqref{eq:S0_branch_expansion}.  Analytic continuation once positively around
+\(s_0\) changes \(S_0\) by
+\begin{equation}
+\boxed{
+\Delta_{\rho/r} S_0
+=2\pi i\,m_\rho\frac{J_2(r)}{r}.}
+\label{eq:S0_local_monodromy}
+\end{equation}
+Since \(S_1\) and \(S_2\) are meromorphic and hence single-valued, the
+corresponding monodromy of \(\mathcal K\) is
+\begin{equation}
+\boxed{
+\Delta_{\rho/r}\mathcal K(s)
+=\pi i\,m_\rho\frac{J_2(r)}{r}\,
+\zeta(s)\left(\frac{\zeta'}{\zeta}\right)'(s).}
+\label{eq:K_local_monodromy}
+\end{equation}
+If several scaled singularities collide at the same point, their local
+monodromy contributions are added before applying this formula.
+\end{proposition}
+
+\begin{proof}
+In \eqref{eq:S0_branch_expansion}, the branch of
+\(\log\zeta(rs)\) changes by \(2\pi i m_\rho\) around
+\(s_0=\rho/r\).  Multiplication by its coefficient \(J_2(r)/r\) gives
+\eqref{eq:S0_local_monodromy}.  The functions \(S_1\) and \(S_2\) are
+built from logarithmic derivatives of \(\zeta\), so they are meromorphic and
+carry no logarithmic monodromy.  Substitution in
+\(\mathcal K=\zeta(S_0S_2-S_1^2)/2\) gives
+\eqref{eq:K_local_monodromy}.
+\end{proof}
+
+\begin{proposition}[Growth of the local branch weight]
+\label{prop:J2_weight_growth}
+For every \(r\ge1\),
+\begin{equation}
+\frac{r}{\zeta(2)}\le \frac{J_2(r)}{r}
+=r\prod_{p\mid r}\left(1-\frac1{p^2}\right)\le r.
+\label{eq:J2_weight_bounds}
+\end{equation}
+Consequently the individual local weight is of linear size in \(r\).  In
+particular, the unregularized cumulative weight cannot be finite; more
+precisely,
+\begin{equation}
+\sum_{r\le R}\frac{J_2(r)}r
+=\frac{R^2}{2\zeta(3)}+O(R\log R).
+\label{eq:J2_weight_average}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The product in \eqref{eq:J2_weight_bounds} is bounded below by
+\(\prod_p(1-p^{-2})=1/\zeta(2)\).  For the average, use
+\(J_2(r)/r=r\sum_{d\mid r}\mu(d)d^{-2}\), interchange the finite sums, and
+sum \(m\) up to \(R/d\).  The main term is
+\(R^2\sum_{d\ge1}\mu(d)d^{-3}/2=R^2/(2\zeta(3))\); elementary estimation of
+the remaining terms gives the displayed error.
+\end{proof}
+
+\begin{remark}[Why \(S_0\) nevertheless converges away from its branches]
+\label{rem:J2_decay_compensation}
+For fixed \(s\) with \(\Re s>0\), once \(r\Re s>1\),
+\(\log\zeta(rs)=O(2^{-r\Re s})\).  This exponential decay dominates the
+linear factor \(J_2(r)/r\).  Thus the growth of the local monodromy weight
+is compatible with convergence of \eqref{eq:S0_branch_expansion} away from
+its singular points.
+\end{remark}
+
+\begin{warning}[No global zero-kernel identity is claimed]
+\label{warn:no_global_zero_kernel}
+A formal substitution of a Hadamard expansion for \(\log\zeta\) into
+\eqref{eq:S0_branch_expansion} produces nested sums over \(r\) and zeta
+zeros.  Those sums require prescribed symmetric ordering in the zero
+variable and separate convergence control in \(r\).  Version 6 does not
+interchange them and does not claim a globally convergent identity of the
+form \(\sum_{\rho,\rho'}\mathcal K_s(\rho,\rho')\).  The local monodromy
+Proposition~\ref{prop:local_monodromy} does not require such a rearrangement.
+\end{warning}
+
+\section{A two-variable Euler product and the covariance determinant}
+\label{sec:hessian_covariance}
+
+The determinant in \eqref{eq:K_variance_determinant} has an intrinsic
+interpretation that does not involve a linearly M\"obius-weighted quantum
+state.  For \(\Re s>1\) and \(u\) in a neighbourhood of zero define
+\begin{equation}
+\mathfrak Z(s,u)=\prod_p\left(1-e^u p^{-s}\right)^{-1},
+\qquad
+F(s,u)=\log\mathfrak Z(s,u).
+\label{eq:two_variable_euler_product}
+\end{equation}
+Then \(\mathfrak Z(s,0)=\zeta(s)\).
+
+\begin{theorem}[Hessian form of the curvature]
+\label{thm:hessian_curvature}
+For \(\Re s>1\),
+\begin{align}
+F_{uu}(s,0)&=S_0(s),
+\label{eq:Fuu_S0}\\
+-F_{su}(s,0)&=S_1(s),
+\label{eq:Fsu_S1}\\
+F_{ss}(s,0)&=S_2(s).
+\label{eq:Fss_S2}
+\end{align}
+Consequently
+\begin{equation}
+\boxed{
+\frac{2\mathcal K(s)}{\zeta(s)}
+=\det\!\begin{pmatrix}
+F_{uu}(s,0)&F_{us}(s,0)\\
+F_{su}(s,0)&F_{ss}(s,0)
+\end{pmatrix}.}
+\label{eq:K_hessian_determinant}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Differentiate
+\begin{equation}
+F(s,u)=-\sum_p\log(1-e^u p^{-s})
+\label{eq:F_log_euler}
+\end{equation}
+termwise in a neighbourhood of \(u=0\), justified by normal convergence for
+\(\Re s>1\).  The three derivatives are exactly
+\eqref{eq:Sj_prime_sum}.  Equation~\eqref{eq:K_hessian_determinant} is then
+Theorem~\ref{thm:curvature_dirichlet_series}.
+\end{proof}
+
+\begin{theorem}[Zeta-distribution covariance identity]
+\label{thm:zeta_covariance_identity}
+Let \(\sigma>1\) be real and let \(N_\sigma\) be the zeta-distributed integer
+\begin{equation}
+\mathbb P_\sigma(N_\sigma=n)=\frac{n^{-\sigma}}{\zeta(\sigma)}.
+\label{eq:zeta_distribution}
+\end{equation}
+Then
+\begin{align}
+\operatorname{Var}_\sigma\!\bigl(\Omega(N_\sigma)\bigr)&=S_0(\sigma),
+\label{eq:var_Omega_S0}\\
+\operatorname{Cov}_\sigma\!\bigl(\Omega(N_\sigma),\log N_\sigma\bigr)&=S_1(\sigma),
+\label{eq:cov_Omega_log_S1}\\
+\operatorname{Var}_\sigma\!\bigl(\log N_\sigma\bigr)&=S_2(\sigma).
+\label{eq:var_log_S2}
+\end{align}
+Therefore
+\begin{equation}
+\boxed{
+\frac{2\mathcal K(\sigma)}{\zeta(\sigma)}
+=\det\operatorname{Cov}_\sigma\!\begin{pmatrix}
+\Omega(N_\sigma)\\ \log N_\sigma
+\end{pmatrix}>0.}
+\label{eq:K_covariance_determinant}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Under \eqref{eq:zeta_distribution}, the prime valuations \(v_p(N_\sigma)\)
+are independent geometric random variables with
+\begin{equation}
+\operatorname{Var}(v_p)=\frac{p^{-\sigma}}{(1-p^{-\sigma})^2}.
+\label{eq:geometric_prime_variance}
+\end{equation}
+Since
+\begin{equation}
+\Omega(N_\sigma)=\sum_p v_p(N_\sigma),
+\qquad
+\log N_\sigma=\sum_p v_p(N_\sigma)\log p,
+\label{eq:Omega_log_prime_valuations}
+\end{equation}
+independence gives \eqref{eq:var_Omega_S0}--\eqref{eq:var_log_S2}.
+Strict positivity follows from
+\begin{equation}
+S_0S_2-S_1^2
+=\sum_{p<q}w_p w_q\log^2(q/p),
+\qquad
+w_p=\frac{p^{-\sigma}}{(1-p^{-\sigma})^2}>0.
+\label{eq:strict_covariance_determinant}
+\end{equation}
+\end{proof}
+
+\section{The positivity route and its exact obstruction}
+\label{sec:positivity_barrier}
+
+The coefficients \(c(n)=-z_0''(n)\) are nonnegative.  It is therefore
+natural to ask whether positivity itself forces the absence of the logarithmic
+branches in \(1/2<\Re s<1\).  It does not.
+
+\begin{proposition}[Complete monotonicity on the real axis]
+\label{prop:K_complete_monotone}
+For every real \(\sigma>1\) and every integer \(r\ge0\),
+\begin{equation}
+\boxed{
+(-1)^r\mathcal K^{(r)}(\sigma)
+=\sum_{n\ge1}\frac{c(n)(\log n)^r}{n^\sigma}\ge0.}
+\label{eq:K_complete_monotonicity}
+\end{equation}
+In particular \(\mathcal K\) is completely monotone on \((1,\infty)\).
+\end{proposition}
+
+\begin{proof}
+Differentiate the absolutely convergent Dirichlet series termwise.
+\end{proof}
+
+\begin{proposition}[Positivity does not remove complex logarithmic branches]
+\label{prop:positivity_not_enough}
+Nonnegative Dirichlet coefficients, complete monotonicity on the real axis,
+and the strict covariance inequality
+\eqref{eq:K_covariance_determinant} do not imply a branch-free continuation
+of \(\mathcal K\) to \(1/2<\Re s<1\).
+\end{proposition}
+
+\begin{proof}
+The source term \(P(s)=\sum_p p^{-s}\) itself has nonnegative Dirichlet
+coefficients for \(\Re s>1\), yet its continuation is expressed through
+\(\log\zeta(rs)\) and has logarithmic branch points at scaled zeros of
+\(\zeta\); see \eqref{eq:prime_zeta_global_branches}.  More directly, the
+positive-coefficient function \(S_0\) in
+\eqref{eq:S0_branch_expansion} is exactly the factor that contributes
+\(m\log(s-\rho)\) at a hypothetical zero \(\rho\) with
+\(1/2<\Re\rho<1\).  Thus real-axis positivity and complete monotonicity do not
+control the monodromy of the analytic continuation.
+\end{proof}
+
+\begin{corollary}[What would still be needed to prove RH]
+\label{cor:needed_for_RH}
+To deduce Corollary~\ref{cor:curvature_RH_criterion} from the curvature side,
+one needs an additional property that controls the complex continuation of
+\(\mathcal K\), not merely the signs of its Dirichlet coefficients or the
+positive-semidefiniteness of the real covariance matrix in
+\eqref{eq:K_covariance_determinant}.
+\end{corollary}
+
+\begin{remark}[Status of the attempted step]
+\label{rem:status_attempted_step}
+The expected coefficient-positivity step has therefore been carried out and
+closed: \(c(n)\ge0\) gives complete monotonicity and a positive covariance
+Hessian, but those properties do not forbid the logarithmic branches whose
+absence is equivalent to RH.  The obstruction is visible inside the same
+formula: \(S_0\) has positive coefficients and is simultaneously the carrier
+of the prime-zeta logarithmic monodromy.
+\end{remark}
+
+\section{The Heisenberg-deformed zeta series}
+\label{sec:deformed_zeta_series}
+
+\begin{definition}[Heisenberg-deformed zeta series]
+\label{def:deformed_zeta_series}
+For $\Re s>\sigma_*$, define
+\begin{equation}
+\zeta_{\mathrm H}(s;\vartheta)
+=
+\sum_{n\ge1}\frac{z_{\vartheta}(n)}{n^s}.
+\label{eq:deformed_zeta_series}
+\end{equation}
+Theorem~\ref{thm:neumann_region} guarantees absolute convergence for every $\Re s>\sigma_*$.
+\end{definition}
+
+\begin{proposition}[Classical boundary]
+\label{prop:zeta_classical_boundary}
+For $\Re s>1$,
+\begin{equation}
+\zeta_{\mathrm H}(s;0)=\zeta(s).
+\label{eq:zeta_classical_boundary}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:commuting_boundary}, $z_0(n)=1$ for all $n$.
+Substitution into \eqref{eq:deformed_zeta_series} gives the ordinary
+Dirichlet series for $\zeta(s)$.
+\end{proof}
+
+\begin{proposition}[Even Heisenberg deformation]
+\label{prop:zeta_theta_even}
+For $\Re s>\sigma_*$,
+\begin{equation}
+\zeta_{\mathrm H}(s;-\vartheta)
+=
+\zeta_{\mathrm H}(s;\vartheta).
+\label{eq:zeta_theta_even}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This follows termwise from Proposition~\ref{prop:theta_evenness} and absolute
+convergence.
+\end{proof}
+
+\begin{warning}[No analytic continuation is asserted]
+\label{warn:no_continuation}
+The series \eqref{eq:deformed_zeta_series} is absolutely convergent and holomorphic on the open half-plane $\Re s>\sigma_*$.  No meromorphic continuation, functional equation, scalar Euler product, or critical-strip theory
+for $\zeta_{\mathrm H}(s;\vartheta)$ is asserted here.
+\end{warning}
+
+\begin{proposition}[Conditional first-order rigidity of simple zeros]
+\label{prop:conditional_zero_rigidity}
+Assume that, for some simple zero $\rho$ of the ordinary zeta function,
+there exists a function $F(s,\vartheta)$ analytic in a neighbourhood of
+$(\rho,0)$ such that
+\begin{align}
+F(s,0)
+&=\zeta(s),
+\label{eq:F_classical_boundary}\\
+F(s,-\vartheta)
+&=F(s,\vartheta),
+\label{eq:F_evenness}
+\end{align}
+and that $F$ agrees with $\zeta_{\mathrm H}$ wherever both are defined.
+Then the local zero branch $\rho(\vartheta)$ through $\rho$ satisfies
+\begin{equation}
+\rho'(0)=0.
+\label{eq:zero_first_derivative_zero}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The implicit-function theorem applies because $\zeta'(\rho)\neq0$.
+Evenness \eqref{eq:F_evenness} makes the unique local zero branch even, so
+its first derivative at the origin vanishes.
+\end{proof}
+
+\begin{warning}
+\label{warn:conditional_zero_result}
+Proposition~\ref{prop:conditional_zero_rigidity} is conditional on an analytic
+continuation in both variables and does not supply such a continuation.  It
+is included because it identifies a precise way in which the exact
+$\vartheta\mapsto-\vartheta$ symmetry would constrain the motion of classical
+Riemann zeros under the Heisenberg deformation if that continuation exists.
+\end{warning}
+
+\section{A genuine M\"obius Hamiltonian}
+\label{sec:dynamics}
+
+\subsection{Definition and domain}
+\label{subsec:hamiltonian_definition}
+
+\begin{definition}[Cosine and sine Weyl quadratures]
+\label{def:Weyl_quadratures}
+For $n\ge1$, set
+\begin{align}
+C_n
+&=\frac{W_n+W_n^*}{2},
+\label{eq:Cn_definition}\\
+J_n
+&=\frac{W_n-W_n^*}{2i}.
+\label{eq:Jn_definition}
+\end{align}
+Both are bounded self-adjoint operators with norm at most $1$.
+\end{definition}
+
+\begin{definition}[M\"obius Hamiltonian]
+\label{def:mobius_hamiltonian}
+Fix an energy scale $E_0>0$ and $\sigma>1$.  Define
+\begin{equation}
+H_{\mu,\sigma,\vartheta}
+=
+E_0\left(\Reop\mathcal M_{\sigma,\vartheta}-I\right)
+=
+E_0\sum_{n\ge2}
+\frac{\mu(n)}{n^{\sigma}}C_n.
+\label{eq:mobius_hamiltonian}
+\end{equation}
+The series converges absolutely in operator norm.
+\end{definition}
+
+\begin{proposition}[Self-adjoint bounded dynamics]
+\label{prop:hamiltonian_selfadjoint}
+For $\sigma>1$, $H_{\mu,\sigma,\vartheta}$ is bounded and self-adjoint on
+all of $\Hil$:
+\begin{equation}
+\Dom(H_{\mu,\sigma,\vartheta})=\Hil.
+\label{eq:hamiltonian_domain}
+\end{equation}
+It therefore generates the unitary group
+\begin{equation}
+U(t)=\exp\!\left(-\frac{i}{\hbar}tH_{\mu,\sigma,\vartheta}\right).
+\label{eq:time_evolution_unitary}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The norm series in \eqref{eq:mobius_hamiltonian} is dominated by
+$E_0\sum_{n\ge2}|\mu(n)|n^{-\sigma}$, which converges for $\sigma>1$.
+Every $C_n$ is self-adjoint, hence so is the norm limit.  The spectral theorem
+then defines \eqref{eq:time_evolution_unitary}.
+\end{proof}
+
+\begin{proposition}[Explicit Schr\"odinger equation]
+\label{prop:schrodinger_equation}
+For $\psi_0\in\Hil$, the evolution $\psi(t)=U(t)\psi_0$ satisfies
+\begin{equation}
+i\hbar\,\partial_t\psi(t,q)
+=
+(H_{\mu,\sigma,\vartheta}\psi(t))(q)
+\label{eq:schrodinger_equation}
+\end{equation}
+in the strong $L^2$ sense, where
+\begin{align}
+(H_{\mu,\sigma,\vartheta}\psi)(q)
+=
+\frac{E_0}{2}
+\sum_{n\ge2}
+\frac{\mu(n)}{n^{\sigma}}
+\Bigg[
+& e^{\frac{i}{\hbar}y_n(q-x_n/2)}\psi(q-x_n)
+\notag\\
++{}&e^{-\frac{i}{\hbar}y_n(q+x_n/2)}\psi(q+x_n)
+\Bigg].
+\label{eq:hamiltonian_coordinate_action}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:hamiltonian_coordinate_action} follows from
+Proposition~\ref{prop:weyl_coordinate_action} applied to $W_n$ and $W_n^*$.
+The series converges in operator norm, so the bounded Hamiltonian gives a
+strong Schr\"odinger evolution for every initial vector.
+\end{proof}
+
+\subsection{Exact equations of motion for position and momentum}
+\label{subsec:equations_of_motion}
+
+\begin{lemma}[Bounded first commutators]
+\label{lem:bounded_first_commutators}
+For $\sigma>1$, the series
+\begin{align}
+\sum_{n\ge2}
+\frac{|\mu(n)|x_n}{n^{\sigma}},
+\label{eq:x_commutator_sum}\\
+\sum_{n\ge2}
+\frac{|\mu(n)|y_n}{n^{\sigma}}
+\label{eq:y_commutator_sum}
+\end{align}
+converge.  Hence $[H_{\mu,\sigma,\vartheta},Q]$ and
+$[H_{\mu,\sigma,\vartheta},P]$, initially defined on $\Sch(\R)$, extend to
+bounded operators.
+\end{lemma}
+
+\begin{proof}
+The first series is bounded by a constant multiple of
+$\sum n^{-\sigma}\log n$.  Since
+\begin{equation}
+\Om(n)\le\frac{\log n}{\log2},
+\label{eq:Omega_log_bound}
+\end{equation}
+the second is bounded by another constant multiple of the same convergent
+series.
+\end{proof}
+
+\begin{theorem}[Exact Heisenberg equations of motion]
+\label{thm:equations_of_motion}
+Let
+\begin{align}
+Q(t)
+&=U(t)^*QU(t),
+\label{eq:Qt_definition}\\
+P(t)
+&=U(t)^*PU(t).
+\label{eq:Pt_definition}
+\end{align}
+The bounded commutators in Lemma~\ref{lem:bounded_first_commutators} imply invariance of $\Dom(Q)$ and $\Dom(P)$ under $U(t)$.  Indeed, for $A=Q$ or $P$ and $\psi\in\Dom(A)$, Duhamel's formula first on a core and then by graph-norm closure gives
+\[
+A U(t)\psi=U(t)A\psi+\frac{i}{\hbar}\int_0^t U(t-\tau)[H,A]U(\tau)\psi\,d\tau,
+\]
+whose right-hand side lies in $L^2$ because $[H,A]$ is bounded.  On these domains, and equivalently as quadratic-form identities, the Heisenberg equations are
+\begin{align}
+\dot Q(t)
+&=
+\frac{E_0}{\hbar}
+U(t)^*
+\left[
+\sum_{n\ge2}
+\frac{\mu(n)x_n}{n^{\sigma}}J_n
+\right]
+U(t),
+\label{eq:Q_equation_motion}\\
+\dot P(t)
+&=
+\frac{E_0}{\hbar}
+U(t)^*
+\left[
+\sum_{n\ge2}
+\frac{\mu(n)y_n}{n^{\sigma}}J_n
+\right]
+U(t).
+\label{eq:P_equation_motion}
+\end{align}
+At $t=0$ this becomes
+\begin{align}
+\dot Q(0)
+&=
+\frac{E_0\ell}{\hbar}
+\sum_{n\ge2}
+\frac{\mu(n)\log n}{n^{\sigma}}J_n,
+\label{eq:Qdot_zero}\\
+\dot P(0)
+&=
+\frac{E_0\kappa}{\hbar}
+\sum_{n\ge2}
+\frac{\mu(n)\Om(n)}{n^{\sigma}}J_n.
+\label{eq:Pdot_zero}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+For $A=Q$ or $P$, the bounded-commutator theorem for unitary dynamics gives
+\begin{equation}
+\dot A(t)
+=
+\frac{i}{\hbar}U(t)^*[H_{\mu,\sigma,\vartheta},A]U(t).
+\label{eq:general_heisenberg_equation}
+\end{equation}
+From Proposition~\ref{prop:weyl_QP_commutators},
+\begin{align}
+[Q,C_n]
+&=ix_nJ_n,
+\label{eq:Q_Cn_commutator}\\
+[P,C_n]
+&=iy_nJ_n.
+\label{eq:P_Cn_commutator}
+\end{align}
+Therefore
+\begin{align}
+[H_{\mu,\sigma,\vartheta},Q]
+&=
+-iE_0\sum_{n\ge2}
+\frac{\mu(n)x_n}{n^{\sigma}}J_n,
+\label{eq:H_Q_commutator}\\
+[H_{\mu,\sigma,\vartheta},P]
+&=
+-iE_0\sum_{n\ge2}
+\frac{\mu(n)y_n}{n^{\sigma}}J_n.
+\label{eq:H_P_commutator}
+\end{align}
+Lemma~\ref{lem:bounded_first_commutators} justifies the sums as bounded
+operators.  Substitution into \eqref{eq:general_heisenberg_equation} gives
+\eqref{eq:Q_equation_motion} and \eqref{eq:P_equation_motion}.
+\end{proof}
+
+\begin{remark}[Physical and arithmetic meaning of the two equations]
+\label{rem:meaning_equations_motion}
+The position variable is $Q$, the logarithmic-scale coordinate.  The
+momentum variable is $P=-i\hbar\partial_q$, the generator conjugate to that
+coordinate.  Multiplication by an integer $n$ is represented by a phase-space
+displacement of size $\ell\log n$ in $Q$ and $\kappa\Om(n)$ in $P$.
+Equations~\eqref{eq:Qdot_zero} and \eqref{eq:Pdot_zero} therefore say that
+the M\"obius Hamiltonian drives position by logarithmic size and momentum by
+prime-factor count, with the same quantum current operators $J_n$.
+\end{remark}
+
+\subsection{The CCR is visible in the dynamics}
+\label{subsec:CCR_in_dynamics}
+
+\begin{proposition}[Pairwise dynamical noncommutativity]
+\label{prop:CJ_commutator}
+Extend $\log$ and $\Om$ additively to positive rationals and define $W_r$ by
+\eqref{eq:Wn_definition} for $r\in\Qp$.  For $m,n\in\N$, put
+\begin{equation}
+\Phi_{m,n}
+=
+\vartheta\bigl(\Om(m)\log n-\log m\,\Om(n)\bigr).
+\label{eq:Phi_mn}
+\end{equation}
+Then
+\begin{align}
+[C_m,J_n]
+=
+\frac12\sin\!\left(\frac{\Phi_{m,n}}{2}\right)
+\Bigl(
+W_{mn}+W_{m/n}-W_{n/m}-W_{1/(mn)}
+\Bigr).
+\label{eq:Cm_Jn_commutator}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Expand $C_m$ and $J_n$ using
+\eqref{eq:Cn_definition}--\eqref{eq:Jn_definition}.  Apply
+\eqref{eq:weyl_commutator} to the four pairs
+$(z_m,z_n)$, $(z_m,-z_n)$, $(-z_m,z_n)$, and $(-z_m,-z_n)$.
+\end{proof}
+
+\begin{corollary}[Second-order arithmetic commutator]
+\label{cor:second_order_force}
+At $t=0$,
+\begin{align}
+\ddot Q(0)
+=
+\frac{iE_0^2}{2\hbar^2}
+\sum_{m,n\ge2}
+&\frac{\mu(m)\mu(n)x_n}{(mn)^{\sigma}}
+\sin\!\left(\frac{\Phi_{m,n}}{2}\right)
+\notag\\
+&\times
+\Bigl(
+W_{mn}+W_{m/n}-W_{n/m}-W_{1/(mn)}
+\Bigr),
+\label{eq:Q_second_derivative}
+\end{align}
+and the analogous momentum equation is
+\begin{align}
+\ddot P(0)
+=
+\frac{iE_0^2}{2\hbar^2}
+\sum_{m,n\ge2}
+&\frac{\mu(m)\mu(n)y_n}{(mn)^{\sigma}}
+\sin\!\left(\frac{\Phi_{m,n}}{2}\right)
+\notag\\
+&\times
+\Bigl(
+W_{mn}+W_{m/n}-W_{n/m}-W_{1/(mn)}
+\Bigr).
+\label{eq:P_second_derivative}
+\end{align}
+The double sums converge in operator norm for $\sigma>1$.
+\end{corollary}
+
+\begin{proof}
+Differentiate \eqref{eq:Q_equation_motion} and
+\eqref{eq:P_equation_motion} once more and use
+Proposition~\ref{prop:CJ_commutator}.  Polynomial logarithmic weights are
+summable against $(mn)^{-\sigma}$ for $\sigma>1$.
+\end{proof}
+
+\begin{corollary}[The interaction disappears with the Weyl cocycle]
+\label{cor:interaction_disappears}
+If $\vartheta=0$, then
+\begin{equation}
+\Phi_{m,n}=0
+\label{eq:Phi_zero}
+\end{equation}
+for all $m,n$, and all pairwise terms in
+\eqref{eq:Q_second_derivative}--\eqref{eq:P_second_derivative} vanish.
+Thus the second-order cross-arithmetic second-order term displayed above is generated
+entirely by the exact Heisenberg cocycle.
+\end{corollary}
+
+\section{Exact non-localization inside the arithmetic dynamics}
+\label{sec:nonlocalization}
+
+\begin{proposition}[Schwartz action and distributional transpose]
+\label{prop:schwartz_distribution_extension}
+For \(\sigma>1\), the Hamiltonian
+\(H_{\mu,\sigma,\vartheta}\) maps \(\Sch(\R)\) continuously into
+itself.  Its continuous transpose
+\(H^{\times}:\Sch'(\R)\to\Sch'(\R)\) is defined by
+\begin{equation}
+\langle H^{\times}T,\phi\rangle
+=
+\langle T,H_{\mu,\sigma,\vartheta}\phi\rangle,
+\qquad
+T\in\Sch'(\R),\quad\phi\in\Sch(\R).
+\label{eq:distributional_transpose_definition}
+\end{equation}
+Then \(H^{\times}\) is continuous on \(\Sch'(\R)\).
+\end{proposition}
+
+\begin{proof}
+For every Schwartz seminorm
+\(p_{a,b}(\phi)=\sup_q|q^a\phi^{(b)}(q)|\), the coordinate action of a
+Weyl operator gives
+\begin{equation}
+p_{a,b}(W_n\phi)
+\le
+C_{a,b}(1+|x_n|+|y_n|)^{N_{a,b}}
+\sum_{j\le b}p_{a+j,b-j}(\phi)
+\label{eq:weyl_schwartz_bound}
+\end{equation}
+for suitable constants.  Since \(x_n,y_n=O(\log n)\) and
+\begin{equation}
+\sum_{n\ge2}n^{-\sigma}(1+\log n)^N<\infty
+\qquad(\sigma>1)
+\label{eq:log_weight_summability}
+\end{equation}
+for every fixed \(N\), the Hamiltonian series converges in every Schwartz
+seminorm and defines a continuous map \(\Sch\to\Sch\).  Therefore
+\eqref{eq:distributional_transpose_definition} defines the standard
+continuous dual action on \(\Sch'\).  No termwise extension to all tempered
+distributions is assumed without this transpose construction.
+\end{proof}
+
+\begin{proposition}[No exact position point is a stationary generalized mode]
+\label{prop:no_delta_eigenstate}
+Let \(\sigma>1\), \(\ell>0\), and \(E_0>0\).  For no
+\(q_0\in\R\) and no scalar \(E\in\C\) does
+\(\delta_{q_0}\in\Sch'(\R)\) satisfy
+\begin{equation}
+H^{\times}_{\mu,\sigma,\vartheta}\delta_{q_0}
+=E\delta_{q_0}.
+\label{eq:delta_eigenstate_impossible}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The transpose action of a Weyl displacement on a point mass is
+\begin{align}
+W(x,y)^{\times}\delta_{q_0}
+&=
+\exp\left(\frac{i}{\hbar}y(q_0-x/2)\right)
+\delta_{q_0-x},
+\label{eq:W_delta_action}\\
+(W(x,y)^*)^{\times}\delta_{q_0}
+&=
+\exp\left(-\frac{i}{\hbar}y(q_0+x/2)\right)
+\delta_{q_0+x}.
+\label{eq:Wstar_delta_action}
+\end{align}
+The \(n=2\) term therefore contributes nonzero masses at
+\(q_0\pm\ell\log2\).  No other term produces the same support point as the unique \(n=2\) contribution at either \(q_0-\ell\log2\) or \(q_0+\ell\log2\).
+Since \(\mu(2)=-1\), the corresponding coefficient cannot cancel.  Hence
+the support of the left side of \eqref{eq:delta_eigenstate_impossible}
+contains a point distinct from \(q_0\), while the right side is supported
+only at \(q_0\).
+\end{proof}
+
+\begin{remark}[Relation to exact Heisenberg impossibility]
+\label{rem:nonlocalization_relation}
+Theorem~\ref{thm:no_joint_eigenstate} is a universal consequence of the CCR.
+Proposition~\ref{prop:no_delta_eigenstate} is more specific: the M\"obius
+Hamiltonian itself does not admit an exactly position-localized stationary
+mode.  The reason is not a measurement uncertainty but the exact translation
+content of the arithmetic Weyl operators.
+\end{remark}
+
+\section{Literature boundary and novelty status in Version 6}
+\label{sec:status_classification}
+
+The literature boundary is stated component by component rather than by
+assigning novelty to the entire package.
+
+\subsection{Known framework}
+The following are classical or direct specializations of classical theory:
+\begin{enumerate}[leftmargin=*]
+\item the Schr\"odinger pair, CCR, Weyl operators, and the Robertson
+inequality for arbitrary observables \cite{Robertson1929,Folland1989};
+\item projective representations and multipliers of abelian groups, including
+classification through alternating commutator bicharacters
+\cite{Kleppner1965,BaggettKleppner1973};
+\item twisted group and semigroup algebras
+\cite{PackerRaeburn1992,RigalZadunaisky2015};
+\item classical M\"obius inversion, Jordan totients, and additive functions
+such as \(\Omega\) \cite{Apostol1976};
+\item the prime-zeta identity
+\(P(s)=\sum_{r\ge1}\mu(r)\log\zeta(rs)/r\), its scaled logarithmic
+singularities, and its natural boundary at \(\Re s=0\)
+\cite{Froberg1968};
+\item the weighted variance decomposition used in
+\eqref{eq:curvature_coprime_ANOVA}.
+\end{enumerate}
+In particular, Theorem~\ref{thm:arithmetic_uncertainty} is not a new
+uncertainty principle: it is Robertson's inequality applied to the specific
+quadratures \(G_m,G_n\).
+
+\subsection{Notebook-specific formulas not located in the targeted search}
+The targeted literature search carried out for Version 6 did not locate the
+following exact formulas as previously published results:
+\begin{enumerate}[leftmargin=*]
+\item the arithmetic embedding
+\(n\mapsto(\ell\log n,\kappa\Omega(n))\) combined with twisted M\"obius
+inversion;
+\item the resulting coefficients \(z_\vartheta(n)\), including the
+prime-pair and two-prime recurrences;
+\item the exact curvature formula
+\eqref{eq:zsecond_general_formula} and its prime-log variance form;
+\item the curvature Dirichlet determinant
+\(\mathcal K=\zeta(S_0S_2-S_1^2)/2\);
+\item the local monodromy formula
+\eqref{eq:K_local_monodromy} with weight \(m_\rho J_2(r)/r\);
+\item the multiplicative superadditivity, prime-ray rigidity, and power laws
+\eqref{eq:curvature_superadditivity}--\eqref{eq:curvature_power_asymptotic}.
+\end{enumerate}
+This is a priority statement only in the limited sense ``not located in the
+search performed''; it is not a proof of bibliographic novelty.
+
+\subsection{What is specifically new mathematics inside this manuscript}
+Independently of priority, the deductions that are new relative to the
+standard ingredients listed above are the exact consequences proved here for
+the chosen arithmetic cocycle: the twisted inverse, its coefficientwise
+curvature, the closed prime-pair geometry, the determinant Dirichlet series,
+its local branch weight, and the multiplicative laws of
+\(\mathcal C(n)\).  By contrast, the ambient Weyl/cohomology machinery and
+the abstract variance identities are not new.
+
+\section{Corrections and extensions carried into Version 6}
+\label{sec:v2_audit_corrections}
+
+\begin{remark}
+\label{rem:v2_audit_corrections}
+Version 6 incorporates the following mathematical corrections and
+clarifications: the cocycle is proved nontrivial rather than merely described
+as noncommutative; no faithfulness of \(\Pi_{\sigma,\vartheta}\) is
+claimed; left and right inverses are constructed separately before being
+identified; the uniform Neumann half-plane is sharpened to
+\(\sigma>\sigma_*\); the ordered-factorization formula and a two-prime
+recurrence are included; real-valuedness of \(z_\vartheta(n)\) for real
+\(\vartheta\) is proved; the deformed Dirichlet series is asserted
+holomorphic only on its proved open half-plane; the unitary evolution is not
+claimed to preserve Schwartz space; and the action on tempered distributions
+is defined by continuous transposition; the signs and supports of the two point-mass transpose formulas are corrected explicitly; and no global rearrangement of conditionally convergent sums over zeta zeros is asserted.
+\end{remark}
+
+\section{Open problems}
+\label{sec:open_problems}
+
+\begin{question}[Analytic continuation]
+\label{q:analytic_continuation}
+Does $\zeta_{\mathrm H}(s;\vartheta)$ admit a natural meromorphic continuation
+from $\Re s\ge2$ to a larger domain for fixed nonzero $\vartheta$?
+\end{question}
+
+\begin{question}[Functional symmetry]
+\label{q:functional_symmetry}
+Is there a completion of $\zeta_{\mathrm H}(s;\vartheta)$ with a symmetry
+that reduces at $\vartheta=0$ to the classical reflection $s\mapsto1-s$?
+A nontrivial answer would be required before using the deformation to say
+anything substantive about the critical line.
+\end{question}
+
+\begin{question}[Spectral zeros]
+\label{q:spectral_zeros}
+Can the zero set of a continued $\zeta_{\mathrm H}$ be realized as a spectral
+or resonance set of an operator built intrinsically from
+$H_{\mu,\sigma,\vartheta}$, rather than as zeros inserted into a multiplier?
+\end{question}
+
+\begin{question}[Classical-zero rigidity]
+\label{q:classical_zero_rigidity}
+If an analytic two-variable continuation through $\vartheta=0$ exists, does
+the exact evenness in $\vartheta$ impose any second-order constraint on the
+motion of the classical Riemann zeros beyond
+Proposition~\ref{prop:conditional_zero_rigidity}?
+\end{question}
+
+\begin{question}[Choice of the second additive coordinate]
+\label{q:additive_coordinate}
+Which completely additive arithmetic functions $A(n)$, replacing $\Om(n)$
+in $y_n=\kappa A(n)$, produce inequivalent deformations?  The choice
+$A=\Om$ is distinguished here by its direct relation to the sign of $\mu$ on
+square-free integers, but a classification is open.
+\end{question}
+
+
+\begin{question}[Higher cohomological curvatures]
+\label{q:higher_curvatures}
+Determine closed formulas for
+\begin{equation}
+\frac{d^{2k}}{d\vartheta^{2k}}z_\vartheta(n)\Big|_{\vartheta=0},
+\qquad k\ge2,
+\label{eq:higher_curvature_derivatives}
+\end{equation}
+and for their Dirichlet generating series. The fourth-order case is the first
+test of whether the collapse to finitely many one-prime moments persists or
+irreducible higher prime geometry appears.
+\end{question}
+
+\section{Notebook history}
+\label{sec:notebook_history}
+
+\begin{remark}
+\label{rem:history_v1}
+Version 1 used M\"obius-weighted logarithmic translations, Fourier
+multipliers, an eta multiplier in the critical strip, generalized plane-wave
+null modes, and a standard CCR non-localization statement.  Its main defect
+was that the arithmetic multiplier and the Heisenberg pair were juxtaposed
+rather than coupled.
+\end{remark}
+
+\begin{remark}
+\label{rem:history_v2}
+Version 2 removes the critical-strip multiplier as the central mechanism and
+replaces ordinary Dirichlet convolution by the Weyl-cocycle product
+\eqref{eq:twisted_convolution}.  Heisenberg noncommutativity now changes the
+M\"obius inverse coefficients themselves and enters the exact equations of
+motion of the M\"obius Hamiltonian.
+\end{remark}
+
+
+
+\section{Literature status of the Version 4/5 formulas}
+\label{sec:literature_status_v5}
+
+The general ingredients are established mathematics.  Twisted products by
+2-cocycles and projective representations belong to the standard theory of
+twisted group algebras; see, for example, Packer--Raeburn~\cite{PackerRaeburn1992}.
+The prime-zeta identity
+\begin{equation}
+P(s)=\sum_{r\ge1}\frac{\mu(r)}r\log\zeta(rs)
+\label{eq:literature_prime_zeta_identity}
+\end{equation}
+and the associated logarithmic branch structure and natural boundary are
+classical; see Fr\"oberg~\cite{Froberg1968}.
+
+The specific chain developed here---the Heisenberg arithmetic cocycle based on
+\((\log n,\Omega(n))\), its twisted M\"obius inverse \(z_\vartheta(n)\), the
+closed coefficient curvature
+\eqref{eq:zsecond_general_formula}, and its Dirichlet summation
+\eqref{eq:K_variance_determinant}---is not identified here with a prior theorem.
+The classical prime-zeta formulas explain the continuation of the resulting
+\(S_j\), but they do not by themselves produce the curvature formula or the
+Hessian identity \eqref{eq:K_hessian_determinant}.
+
+\begin{remark}
+\label{rem:history_v5}
+Version 6 retains the closure of the linear-state route and adds the exact prime-zeta branching source, Hessian/covariance representation, and positivity obstruction and moves the analysis to
+the cocycle itself. Differentiating the twisted M\"obius inverse at
+\(\vartheta=0\) produces the prime-factor curvature
+\eqref{eq:zsecond_general_formula}. Summing it yields
+\eqref{eq:K_variance_determinant}, whose local continuation detects every
+zeta zero in \(\Re s>1/2\) through \eqref{eq:K_zero_local_form}.
+\end{remark}
+
+\begin{thebibliography}{99}
+
+\bibitem{Robertson1929}
+H.~P.~Robertson,
+\emph{The uncertainty principle},
+Physical Review \textbf{34} (1929), 163--164.
+doi:10.1103/PhysRev.34.163.
+
+\bibitem{Kleppner1965}
+A.~Kleppner,
+\emph{Multipliers on Abelian groups},
+Mathematische Annalen \textbf{158} (1965), 11--34.
+
+\bibitem{BaggettKleppner1973}
+L.~Baggett and A.~Kleppner,
+\emph{Multiplier representations of Abelian groups},
+Journal of Functional Analysis \textbf{14} (1973), 299--324.
+doi:10.1016/0022-1236(73)90075-X.
+
+\bibitem{RigalZadunaisky2015}
+L.~Rigal and P.~Zadunaisky,
+\emph{Twisted semigroup algebras},
+Algebras and Representation Theory \textbf{18} (2015).
+doi:10.1007/s10468-015-9525-z.
+
+\bibitem{Heisenberg1927}
+W.~Heisenberg,
+\emph{\"Uber den anschaulichen Inhalt der quantentheoretischen Kinematik und
+Mechanik},
+Zeitschrift f\"ur Physik \textbf{43} (1927), 172--198.
+doi:10.1007/BF01397280.
+
+\bibitem{Folland1989}
+G.~B.~Folland,
+\emph{Harmonic Analysis in Phase Space},
+Annals of Mathematics Studies 122,
+Princeton University Press, Princeton, 1989.
+
+\bibitem{ReedSimon1980}
+M.~Reed and B.~Simon,
+\emph{Methods of Modern Mathematical Physics, Vol.~I: Functional Analysis},
+revised and enlarged ed., Academic Press, 1980.
+
+
+\bibitem{Froberg1968}
+C.-E.~Fr\"oberg,
+\emph{On the prime zeta function},
+BIT Numerical Mathematics \textbf{8} (1968), 187--202.
+doi:10.1007/BF01933420.
+
+\bibitem{PackerRaeburn1992}
+J.~A.~Packer and I.~Raeburn,
+\emph{On the structure of twisted group $C^*$-algebras},
+Transactions of the American Mathematical Society \textbf{334} (1992), 685--718.
+doi:10.2307/2154478.
+
+\bibitem{Apostol1976}
+T.~M.~Apostol,
+\emph{Introduction to Analytic Number Theory},
+Springer, New York, 1976.
+doi:10.1007/978-1-4757-5579-4.
+
+\end{thebibliography}
+
+\end{document}

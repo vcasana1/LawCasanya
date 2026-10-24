@@ -1,0 +1,55 @@
+{
+  "input": "/Users/vcasana/Documents/\u00b7.\u00b7 MATLAB/\u00b7.\u00b7 bin_unicos/moebius.bin",
+  "N": 455052511,
+  "compressed_steps": 276638778,
+  "M_N": -5414,
+  "returns_to_zero": 53078,
+  "last_zero_compressed": 255365638,
+  "open_tail_compressed": 21273140,
+  "max_abs_M": 6695,
+  "moments": [
+    {
+      "k": 1,
+      "B_k": 1419445509601781.0,
+      "Lambda_k": "3508610761581396",
+      "B_k_over_Lambda_k": 0.4045605528958734,
+      "B_k_over_iid_leading": 0.03709561759150166
+    },
+    {
+      "k": 2,
+      "B_k": 1.889366424878569e+22,
+      "Lambda_k": "75219479642004304185432",
+      "B_k_over_Lambda_k": 0.2511804699887212,
+      "B_k_over_iid_leading": 0.000892435876473027
+    },
+    {
+      "k": 3,
+      "B_k": 3.618891698082819e+29,
+      "Lambda_k": "1924416356918280585592023630480",
+      "B_k_over_Lambda_k": 0.18805138945493247,
+      "B_k_over_iid_leading": 1.6477529143611745e-05
+    },
+    {
+      "k": 4,
+      "B_k": 8.448902396211846e+36,
+      "Lambda_k": "54533316125701662032294770921166522208",
+      "B_k_over_Lambda_k": 0.15493102192312602,
+      "B_k_over_iid_leading": 2.483222935003593e-07
+    },
+    {
+      "k": 5,
+      "B_k": 2.236086816096162e+44,
+      "Lambda_k": "1646024598276737895186435582150525127683494976",
+      "B_k_over_Lambda_k": 0.13584771566823328,
+      "B_k_over_iid_leading": 3.167595795156337e-09
+    },
+    {
+      "k": 6,
+      "B_k": 6.461072249210097e+51,
+      "Lambda_k": "51647584734076396509702268631816786409407031937180032",
+      "B_k_over_Lambda_k": 0.12509921388341644,
+      "B_k_over_iid_leading": 3.5090272527186775e-11
+    }
+  ],
+  "interpretation": "finite computation only; no asymptotic inference"
+}

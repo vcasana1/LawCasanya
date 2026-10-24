@@ -1,0 +1,646 @@
+function catalan_mrvm_comparison
+%CATALAN_MRVM_COMPARISON  M (genuine), M_RVM^crit (synthetic, continuous) and
+%   Mh (the {-1,0,1} Catalan-family discretization of M_RVM^crit):
+%   explicit formulas from zeros, quantization, energy tests and excursion
+%   census in the conventions of excursion_area_section_v56 and of the
+%   Catalan-Mertens papers.  All figures are saved as PNG and left open.
+%
+%   Required in the current folder: zeross.bin (genuine ordinates gamma_k)
+%   and zLamb.bin (midpoint RVM ordinates tau_k, N_RVM(tau_k) = k - 1/2),
+%   both little-endian float64.
+%
+%   Objects:
+%     M(n)        exact Mertens function, n <= Xmax (sieve)
+%     Mzeta(x)    explicit formula  -2 + sum_rho x^rho/(rho zeta'(rho)) + trivial
+%     Mcrit(x)    explicit formula  -2 + sum_k x^rho_k/(rho_k zeta_RVM'(rho_k)) + trivial,
+%                 rho_k = 1/2 + i tau_k  (inverse Mellin of 1/zeta_RVM)
+%     T(n)        integer-sampled smooth part of Mcrit (first harmonic
+%                 sin(2 pi x) removed exactly; it vanishes at integers)
+%     Mh(n)       sigma-delta quantization of T on the squarefree support:
+%                 mu_h(n) = mu(n)^2 * (+1 if Mh(n-1) < T(n), else -1)
+
+clc; clear;
+
+%% ------------------------------------------------------------------ parameters
+P.Xmax       = 1e7;        % integer range for M, T, Mh (raise to 1e8 if RAM allows)
+P.Nz         = Inf;        % zeros used (Inf = all in the files, about 2e6)
+P.NgridLog   = 1500;       % log-grid points for the continuous explicit formulas
+P.xminPlot   = 2;
+P.K0exact    = 800;        % zeta_RVM'(rho_k) computed exactly for k <= K0exact
+P.C1         = 2.0;        % taper for T: full weight for tau <= C1*2*pi*sqrt(x)
+P.C2         = 4.0;        %              zero weight for tau >= C2*2*pi*sqrt(x)
+P.gridDiv    = 24;         % T grid step = max(1, sqrt(x)/gridDiv)
+P.rsStep     = 1e-5;       % central-difference step for Z'(gamma)
+P.nTrivial   = 6;          % trivial-zero terms
+P.kMoments   = 1:6;        % compressed-time moments B_k
+P.outDir     = 'CATALAN_MRVM_RESULTS';
+P.zipName    = 'CATALAN_MRVM_RESULTS.zip';
+P.fileZeta   = 'zeross.bin';
+P.fileRVM    = 'zLamb.bin';
+
+if ~exist(P.outDir,'dir'), mkdir(P.outDir); end
+logf = fopen(fullfile(P.outDir,'catalan_mrvm_report.txt'),'w');
+say = @(varargin) report(logf, varargin{:});
+tAll = tic;
+say('CATALAN / M_RVM COMPARISON   Xmax = %g\n', P.Xmax);
+
+%% ------------------------------------------------------------------ zeros
+gam = readbin(P.fileZeta);
+tau = readbin(P.fileRVM);
+Nz  = min([numel(gam), numel(tau), P.Nz]);
+gam = gam(1:Nz);  tau = tau(1:Nz);
+say('zeros: Nz = %d, gamma_N = %.6f, tau_N = %.6f\n', Nz, gam(end), tau(end));
+if any(diff(gam) < 0) || any(diff(tau) <= 0)
+    error('ordinates not sorted');
+end
+kk = (1:Nz).';
+clockErr = max(abs(Nrvm(tau) - (kk - 0.5)));
+say('clock check max|N_RVM(tau_k)-(k-1/2)| = %.3e\n', clockErr);
+
+%% ------------------------------------------------------------------ genuine residues 1/(rho zeta'(rho))
+t0 = tic;
+Zp   = rsZprime(gam, P.rsStep);                       % Z'(gamma_k)
+zp   = -1i * exp(-1i * thetaRS(gam)) .* Zp;           % zeta'(1/2+i gamma)
+rhoG = 0.5 + 1i*gam;
+aG   = 1 ./ (rhoG .* zp);
+say('genuine residues: %.1f s, median |zeta''(rho)| = %.4f\n', toc(t0), median(abs(zp)));
+
+%% ------------------------------------------------------------------ RVM residues 1/(rho zeta_RVM'(rho))
+t0 = tic;
+[Ztail, Uend, LU] = tailSetup(Nz);                    % midpoint tail of the product
+Zfar = zetaRVMconstant(tau, Ztail);                   % Z_RVM from zeta_RVM(2+iT)/(1+chi)
+K0   = min(P.K0exact, Nz);
+zpR_exact = zetaRVMprimeExact(tau, K0, Ztail);        % exact for k <= K0
+ratio = zpR_exact ./ log(tau(1:K0)/(2*pi));           % should tend to Z_RVM
+sel = (ceil(K0/2):K0).';
+Zfit = real(Zfar);                                    % Z_RVM is real (conjugation symmetry)
+cfit = mean((ratio(sel)/Zfit - 1).*tau(sel));         % ratio ~ Z (1 + c/tau), c complex
+say('Z_RVM from zeta_RVM(2+iT)/(1+chi(2+iT)) (Richardson): %.10f %+.3ei\n', real(Zfar), imag(Zfar));
+say('check: zeta_RVM''(rho_k)/log(tau_k/2pi) at k = %d: %.10f %+.3ei;  fitted c = %.4f %+.4fi\n', ...
+    K0, real(ratio(K0)), imag(ratio(K0)), real(cfit), imag(cfit));
+zpR = Zfit * log(tau/(2*pi)) .* (1 + cfit./tau);
+zpR(1:K0) = zpR_exact;
+rhoR = 0.5 + 1i*tau;
+aR   = 1 ./ (rhoR .* zpR);
+LRVM = 1/real(Zfit);
+say('L_RVM = 1/Z_RVM = %.10f;  RVM residues: %.1f s\n', LRVM, toc(t0));
+S2G = 2*sum(abs(aG).^2);  S2R = 2*sum(abs(aR).^2);
+say('spectral S2 = 2 sum |a|^2 :  genuine %.6f   RVM %.6f\n', S2G, S2R);
+
+%% ------------------------------------------------------------------ continuous explicit formulas on a log grid
+t0 = tic;
+xg = exp(linspace(log(P.xminPlot), log(P.Xmax), P.NgridLog)).';
+MzetaG = -2 + 2*real(expsum(xg, gam, aG)) + trivialZeta(xg, P.nTrivial);
+McritG = -2 + 2*real(expsum(xg, tau, aR)) + trivialRVM(xg, tau, Ztail, P.nTrivial);
+say('explicit formulas on %d log-grid points: %.1f s\n', P.NgridLog, toc(t0));
+
+%% ------------------------------------------------------------------ exact M by sieve
+t0 = tic;
+mu = mobiusSieve(P.Xmax);
+M  = cumsum(double(mu));
+sqf = (mu ~= 0);
+Q  = cumsum(double(sqf));
+tmp = 0; %#ok<NASGU>
+say('Mobius sieve to %g: %.1f s;  M(Xmax) = %d;  Q(Xmax)/Xmax = %.6f (6/pi^2 = %.6f)\n', ...
+    P.Xmax, toc(t0), M(end), Q(end)/P.Xmax, 6/pi^2);
+
+okg = xg >= 100;
+say('explicit formula check on log grid (x>=100): rms(Mzeta - M(floor x)) = %.4f, max = %.4f\n', ...
+    sqrt(mean((MzetaG(okg) - M(floor(xg(okg)))).^2)), max(abs(MzetaG(okg) - M(floor(xg(okg))))));
+
+%% ------------------------------------------------------------------ smooth integer-sampled target T(n)
+t0 = tic;
+xT = targetGrid(P.Xmax, P.gridDiv);
+TT = -2 + 2*real(taperedSum(xT, tau, aR, P.C1, P.C2)) + trivialRVM(xT, tau, Ztail, P.nTrivial);
+nn = (1:P.Xmax).';
+T  = interp1(xT, TT, nn, 'pchip');
+say('target T: %d grid points, %.1f s\n', numel(xT), toc(t0));
+% check: at small integers the full Mcrit (first harmonic resolved) vs T
+nchk = (1000:997:min(1e5, P.Xmax)).';
+McritChk = -2 + 2*real(expsum(nchk, tau, aR)) + trivialRVM(nchk, tau, Ztail, P.nTrivial);
+say('check at %d integers <= 1e5: max |Mcrit_full(n) - T(n)| = %.4f, rms = %.4f\n', ...
+    numel(nchk), max(abs(McritChk - T(nchk))), sqrt(mean((McritChk - T(nchk)).^2)));
+
+%% ------------------------------------------------------------------ quantizer: Mh
+t0 = tic;
+[muh, Mh] = quantize(T, sqf);
+err = Mh - T;
+nTail = max(1, floor(P.Xmax/100));
+say('quantizer: %.1f s;  max|Mh-T| (n>=%d) = %.4f;  max|Mh-T| overall = %.4f\n', ...
+    toc(t0), nTail, max(abs(err(nTail:end))), max(abs(err)));
+dens = @(v) [mean(v==-1), mean(v==0), mean(v==1)];
+dM = dens(mu);  dH = dens(muh);
+say('densities (-1,0,+1):  mu  %.6f %.6f %.6f\n', dM);
+say('                      muh %.6f %.6f %.6f   (3/pi^2 = %.6f, 1-6/pi^2 = %.6f)\n', dH, 3/pi^2, 1-6/pi^2);
+agree = mean(muh(sqf) == mu(sqf));
+corrMu = sum(double(muh).*double(mu)) / sum(sqf);
+say('sign agreement on squarefrees: %.6f;  normalized correlation sum(mu*muh)/Q = %.6f\n', agree, corrMu);
+multDef = multiplicativityDefect(muh, P.Xmax, 2e5);
+say('multiplicativity defect of muh (random coprime pairs, mn<=X): %.4f  (mu: 0)\n', multDef);
+
+%% ------------------------------------------------------------------ energy tests
+Ns = 10.^(4:floor(log10(P.Xmax))).';
+Ns = Ns(Ns <= P.Xmax);
+EN  = zeros(numel(Ns),3);  ratioNull = zeros(numel(Ns),2);
+for i = 1:numel(Ns)
+    N = Ns(i);
+    EN(i,1) = mean(M(1:N).^2);
+    EN(i,2) = mean(Mh(1:N).^2);
+    EN(i,3) = mean(T(1:N).^2);
+    ratioNull(i,1) = EN(i,1) / (N/pi^2 + M(N)^2/3);
+    ratioNull(i,2) = EN(i,2) / (N/pi^2 + Mh(N)^2/3);
+end
+say('\nENERGY  E_N = (1/N) sum M(n)^2  and ratio to the exact permutation null N/pi^2 + M(N)^2/3\n');
+say('%10s %14s %14s %14s %10s %10s\n','N','E_N(M)','E_N(Mh)','E_N(T)','ratio M','ratio Mh');
+for i = 1:numel(Ns)
+    say('%10d %14.4f %14.4f %14.4f %10.5f %10.5f\n', Ns(i), EN(i,:), ratioNull(i,:));
+end
+decA = 10.^(2:floor(log10(P.Xmax))-1).';
+S2hat = zeros(numel(decA),3);
+for i = 1:numel(decA)
+    a = decA(i); b = min(10*a, P.Xmax); idx = (a+1:b).';
+    w = 1./(idx.^2) / log(b/a);
+    S2hat(i,:) = [sum(M(idx).^2.*w), sum(Mh(idx).^2.*w), sum(T(idx).^2.*w)];
+end
+say('\nLOG-SLOPE ESTIMATOR  S2hat(A,10A) = (1/log 10) sum_{A<n<=10A} M(n)^2/n^2\n');
+say('%10s %12s %12s %12s\n','A','M','Mh','T');
+for i = 1:numel(decA), say('%10d %12.6f %12.6f %12.6f\n', decA(i), S2hat(i,:)); end
+say('spectral predictions 2 sum|a|^2:  genuine %.6f   RVM %.6f\n', S2G, S2R);
+
+%% ------------------------------------------------------------------ compressed-time moments (Catalan paper)
+[excM, openM]  = excursionCensus(M,  Q);
+[excH, openH]  = excursionCensus(Mh, Q);
+XcM = M(sqf);  XcH = Mh(sqf);  Y = numel(XcM);
+say('\nCOMPRESSED MOMENTS  B_k#(Y) = sum_{m<=Y} X_m^{2k},  Y = %d\n', Y);
+say('%3s %16s %16s %16s %16s\n','k','M: /simple walk','M: /Lambda_k','Mh: /simple walk','Mh: /Lambda_k');
+momTab = zeros(numel(P.kMoments),4);
+for i = 1:numel(P.kMoments)
+    k = P.kMoments(i);
+    sw = dfact(2*k-1)/(k+1) * Y^(k+1);
+    LamM = sum(excM.Lc.^(k+1)) + openM.Lc^(k+1);
+    LamH = sum(excH.Lc.^(k+1)) + openH.Lc^(k+1);
+    BM = sum(XcM.^(2*k));  BH = sum(XcH.^(2*k));
+    momTab(i,:) = [BM/sw, BM/LamM, BH/sw, BH/LamH];
+    say('%3d %16.6e %16.6f %16.6e %16.6f\n', k, momTab(i,:));
+end
+
+%% ------------------------------------------------------------------ excursion census (v56)
+say('\nEXCURSION CENSUS (v56 definitions) up to Xmax\n');
+census(say, 'M ', excM, openM);
+census(say, 'Mh', excH, openH);
+
+%% ------------------------------------------------------------------ records
+[recM, recH] = deal(max(abs(M(10:end))./sqrt((10:P.Xmax).')), max(abs(Mh(10:end))./sqrt((10:P.Xmax).')));
+say('\nmax_{10<=n<=X} |M(n)|/sqrt(n) = %.4f   |Mh(n)|/sqrt(n) = %.4f\n', recM, recH);
+
+%% ------------------------------------------------------------------ figures
+dec = unique(round(exp(linspace(0, log(P.Xmax), 20000)))).';   % decimation for plots
+
+% ---- linear-axis figures: min/max envelope over blocks of consecutive integers
+nb = 4000;                                            % number of blocks on the linear axis
+[xb, Mlo, Mhi] = envelope(M,  nb);
+[~,  Tlo, Thi] = envelope(T,  nb);
+[~,  Hlo, Hhi] = envelope(Mh, nb);
+sq = sqrt(xb);
+
+f1 = figure('Name','M and M_RVM (linear)','Color','w');
+subplot(3,1,1);
+hT = plot(xb, Tlo, 'r-', xb, Thi, 'r-'); hold on;
+hM = plot(xb, Mlo, 'k-', xb, Mhi, 'k-'); hold off;
+grid on; xlabel('n'); ylabel('value');
+legend([hT(1) hM(1)], 'M_{RVM}^{crit}(n) (min/max per block)', 'M(n) exact (min/max per block)', 'Location','best');
+title(sprintf('M and M_{RVM}^{crit} on [1, %g], linear axis, blocks of %d integers', P.Xmax, ceil(P.Xmax/nb)));
+subplot(3,1,2);
+plot(xb, Tlo./sq, 'r-', xb, Thi./sq, 'r-'); hold on;
+plot(xb, Mlo./sq, 'k-', xb, Mhi./sq, 'k-'); hold off;
+grid on; xlabel('n'); ylabel('value / sqrt(n)');
+subplot(3,1,3);
+w1 = (1:min(1e5, P.Xmax)).';
+plot(w1, T(w1), 'r-', w1, M(w1), 'k-');
+grid on; xlabel('n'); ylabel('value'); legend('M_{RVM}^{crit}(n)','M(n)','Location','best');
+title('Every integer on [1, 1e5]');
+savePNG(f1, P.outDir, 'fig01_M_Mcrit_linear.png');
+
+Mfl = M(max(1,floor(xg)));                                   % exact M at the grid points
+f1b = figure('Name','Explicit formula check','Color','w');
+subplot(2,1,1);
+plot(xg, Mfl, 'k-', xg, MzetaG, 'b--');
+grid on; xlabel('x'); ylabel('value');
+legend('M exact', sprintf('M from %d zeta zeros', Nz), 'Location','best');
+title('Explicit formula for M (check), linear axis');
+subplot(2,1,2);
+plot(xg, Mfl - MzetaG, 'k.'); grid on; xlabel('x'); ylabel('M - M_\zeta');
+savePNG(f1b, P.outDir, 'fig01b_explicit_formula_check.png');
+
+f2 = figure('Name','Mh tracks T (linear)','Color','w');
+subplot(2,1,1);
+hT = plot(xb, Tlo, 'r-', xb, Thi, 'r-'); hold on; hH = plot(xb, Hlo, 'g-', xb, Hhi, 'g-'); hold off;
+grid on; xlabel('n'); legend([hT(1) hH(1)], 'M_{RVM}^{crit}(n)', 'M_h(n)', 'Location','best');
+title('Sigma-delta discretization on the squarefree support (min/max per block)');
+subplot(2,1,2);
+[~, elo, ehi] = envelope(err, nb);
+plot(xb, elo, 'm-', xb, ehi, 'm-'); grid on; xlabel('n'); ylabel('M_h(n) - M_{RVM}^{crit}(n)');
+savePNG(f2, P.outDir, 'fig02_Mh_tracking.png');
+
+f3 = figure('Name','M vs Mh (linear)','Color','w');
+subplot(3,1,1);
+hH = plot(xb, Hlo./sq, 'g-', xb, Hhi./sq, 'g-'); hold on; hM = plot(xb, Mlo./sq, 'k-', xb, Mhi./sq, 'k-'); hold off;
+grid on; xlabel('n'); ylabel('/ sqrt(n)'); legend([hH(1) hM(1)], 'M_h', 'M', 'Location','best');
+title('Normalized walks, linear axis (min/max per block)');
+subplot(3,1,2);
+w2 = (1:min(1e6, P.Xmax)).';
+plot(w2, Mh(w2), 'g-', w2, M(w2), 'k-'); grid on; xlabel('n'); legend('M_h','M','Location','best');
+title('Every integer on [1, 1e6]');
+subplot(3,1,3);
+lin = (1:min(2e4,P.Xmax)).';
+plot(lin, Mh(lin), 'g-', lin, T(lin), 'r-', lin, M(lin), 'k-');
+grid on; xlabel('n'); legend('M_h','M_{RVM}^{crit}','M','Location','best'); title('Every integer on [1, 2e4]');
+savePNG(f3, P.outDir, 'fig03_M_vs_Mh.png');
+
+f4 = figure('Name','Excursion geometry','Color','w');
+subplot(1,2,1);
+loglog(excM.ell, excM.H, 'k.', excH.ell, excH.H, 'g.'); hold on;
+lx = logspace(0, log10(P.Xmax), 50); loglog(lx, sqrt(lx), 'r--'); hold off;
+grid on; xlabel('length l_\nu'); ylabel('H_\nu'); legend('M','M_h','sqrt(l)','Location','best');
+title('Height vs length');
+subplot(1,2,2);
+semilogx(excM.ell, excM.H./sqrt(excM.ell), 'k.', excH.ell, excH.H./sqrt(excH.ell), 'g.');
+grid on; xlabel('length l_\nu'); ylabel('H_\nu / sqrt(l_\nu)'); title('Normalized height');
+savePNG(f4, P.outDir, 'fig04_excursion_geometry.png');
+
+f5 = figure('Name','Energy tests','Color','w');
+subplot(1,2,1);
+semilogx(Ns, ratioNull(:,1), 'ko-', Ns, ratioNull(:,2), 'gs-'); grid on;
+xlabel('N'); ylabel('E_N / null mean'); legend('M','M_h','Location','best');
+title('Energy relative to the permutation null');
+subplot(1,2,2);
+semilogx(decA, S2hat(:,1), 'ko-', decA, S2hat(:,2), 'gs-', decA, S2hat(:,3), 'r^-'); hold on;
+plot([decA(1) decA(end)], [S2G S2G], 'k--', [decA(1) decA(end)], [S2R S2R], 'r--'); hold off;
+grid on; xlabel('A'); ylabel('S_2(A,10A)'); legend('M','M_h','T','2\Sigma|a_\rho|^2','2\Sigma|a_k^{RVM}|^2','Location','best');
+title('Log-slope energy estimator');
+savePNG(f5, P.outDir, 'fig05_energy_tests.png');
+
+f6 = figure('Name','Compressed moments','Color','w');
+subplot(1,2,1);
+semilogy(P.kMoments, momTab(:,1), 'ko-', P.kMoments, momTab(:,3), 'gs-'); grid on;
+xlabel('k'); ylabel('B_k (compressed) / simple walk'); legend('M','M_h','Location','best');
+subplot(1,2,2);
+plot(P.kMoments, momTab(:,2), 'ko-', P.kMoments, momTab(:,4), 'gs-'); grid on;
+xlabel('k'); ylabel('B_k (compressed) / \Lambda_k'); legend('M','M_h','Location','best');
+savePNG(f6, P.outDir, 'fig06_compressed_moments.png');
+
+f7 = figure('Name','Distributions','Color','w');
+edges = linspace(-1.5, 1.5, 121);
+cM = histc(M(dec)./sqrt(dec), edges); cH = histc(Mh(dec)./sqrt(dec), edges);
+plot(edges, cM/sum(cM), 'k-', edges, cH/sum(cH), 'g-'); grid on;
+xlabel('value / sqrt(n)  (log-uniform sample)'); legend('M','M_h','Location','best');
+title('Distribution of normalized values on a log-uniform sample');
+savePNG(f7, P.outDir, 'fig07_distributions.png');
+
+f8 = figure('Name','Spectral weights','Color','w');
+ds = unique(round(exp(linspace(0, log(Nz), 5000)))).';
+loglog(gam(ds), abs(aG(ds)), 'b.', tau(ds), abs(aR(ds)), 'r.'); grid on;
+xlabel('ordinate'); ylabel('|residue weight|');
+legend('|1/(\rho\zeta''(\rho))|','|1/(\rho_k\zeta_{RVM}''(\rho_k))|','Location','best');
+title('Erratic genuine weights versus deterministic RVM weights');
+savePNG(f8, P.outDir, 'fig08_spectral_weights.png');
+
+f9 = figure('Name','Catalan selection energy','Color','w');
+semilogx(excM.x1, excM.Icat, 'k.', excH.x1, excH.Icat, 'g.'); hold on;
+lx = logspace(1, log10(P.Xmax), 50); semilogx(lx, log(lx), 'r--'); hold off;
+grid on; xlabel('end of excursion x_{1,\nu}'); ylabel('I_{Cat}'); legend('M','M_h','log x','Location','best');
+title('Completed-excursion Catalan selection energy');
+savePNG(f9, P.outDir, 'fig09_selection_energy.png');
+
+f10 = figure('Name','RVM constant','Color','w');
+plot(1./tau(1:K0), real(ratio), 'r.', [0 max(1./tau(sel))], real(Zfit)*(1+real(cfit)*[0 max(1./tau(sel))]), 'k-');
+grid on; xlabel('1/\tau_k'); ylabel('\zeta_{RVM}''(\rho_k)/log(\tau_k/2\pi)');
+title(sprintf('Exact derivative ratio and fit, Z_{RVM} = %.6f', real(Zfit)));
+savePNG(f10, P.outDir, 'fig10_Zrvm_calibration.png');
+
+%% ------------------------------------------------------------------ data outputs
+writeCSV(fullfile(P.outDir,'log_grid_explicit.csv'), {'x','M_exact_floor','Mzeta','Mcrit'}, ...
+    [xg, M(max(1,floor(xg))), MzetaG, McritG]);
+writeCSV(fullfile(P.outDir,'decimated_walks.csv'), {'n','M','Mh','T'}, [dec, M(dec), Mh(dec), T(dec)]);
+writeCSV(fullfile(P.outDir,'energy_EN.csv'), {'N','EN_M','EN_Mh','EN_T','ratioNull_M','ratioNull_Mh'}, [Ns, EN, ratioNull]);
+writeCSV(fullfile(P.outDir,'S2hat.csv'), {'A','M','Mh','T'}, [decA, S2hat]);
+writeCSV(fullfile(P.outDir,'compressed_moments.csv'), {'k','M_simple','M_Lambda','Mh_simple','Mh_Lambda'}, [P.kMoments(:), momTab]);
+writeCSV(fullfile(P.outDir,'excursions_M.csv'),  {'x0','x1','ell','H','sigma','b','Lc','Icat'}, excTable(excM));
+writeCSV(fullfile(P.outDir,'excursions_Mh.csv'), {'x0','x1','ell','H','sigma','b','Lc','Icat'}, excTable(excH));
+writeCSV(fullfile(P.outDir,'residues.csv'), {'k','gamma','re_aG','im_aG','tau','re_aR','im_aR'}, ...
+    [ds, gam(ds), real(aG(ds)), imag(aG(ds)), tau(ds), real(aR(ds)), imag(aR(ds))]);
+muh_file = fullfile(P.outDir,'muh_int8.bin');
+fid = fopen(muh_file,'w','ieee-le'); fwrite(fid, muh, 'int8'); fclose(fid);
+save(fullfile(P.outDir,'catalan_mrvm_summary.mat'), 'P','Nz','Zfar','Zfit','cfit','LRVM','S2G','S2R', ...
+    'Ns','EN','ratioNull','decA','S2hat','momTab','dM','dH','agree','corrMu','multDef','recM','recH');
+say('\ntotal run time %.1f s\n', toc(tAll));
+fclose(logf);
+
+me = [mfilename('fullpath') '.m'];
+if exist(me,'file')
+    copyfile(me, P.outDir);
+    copyfile(me, fullfile(P.outDir, [mfilename '.txt']));
+end
+fl = dir(P.outDir); fl = {fl(~[fl.isdir]).name};
+zip(P.zipName, fl, P.outDir);
+fprintf('results in %s and %s\n', P.outDir, P.zipName);
+end
+
+%% ======================================================================= helpers
+function report(fid, varargin)
+fprintf(varargin{:}); fprintf(fid, varargin{:});
+end
+
+function v = readbin(fname)
+fid = fopen(fname,'r','ieee-le');
+if fid < 0, error('cannot open %s', fname); end
+v = fread(fid, inf, 'double'); fclose(fid); v = v(:);
+end
+
+function y = Nrvm(t)
+y = t/(2*pi).*log(t/(2*pi*exp(1))) + 7/8;
+end
+
+function th = thetaRS(t)
+th = t/2.*log(t/(2*pi)) - t/2 - pi/8 + 1./(48*t) + 7./(5760*t.^3) + 31./(80640*t.^5);
+end
+
+function Zp = rsZprime(g, h)
+% Z'(g) by central differences of the Riemann-Siegel formula with the C0 term
+Zp = zeros(size(g));
+nmaxAll = floor(sqrt(max(g)/(2*pi))) + 1;
+blk = max(200, floor(3e6/nmaxAll));
+for i0 = 1:blk:numel(g)
+    i1 = min(numel(g), i0+blk-1);
+    t = g(i0:i1);
+    Zp(i0:i1) = (rsZ(t+h) - rsZ(t-h)) / (2*h);
+end
+end
+
+function Z = rsZ(t)
+a = sqrt(t/(2*pi)); N = floor(a); p = a - N;
+nmax = max(N); n = 1:nmax;
+ph = thetaRS(t) - t*log(n);                 % (#t) x nmax
+mask = bsxfun(@le, n, N);
+Z = 2*sum(cos(ph).*mask.*repmat(n.^(-0.5), numel(t), 1), 2);
+c = cos(2*pi*p);
+bad = abs(c) < 1e-7; p(bad) = p(bad) + 1e-7; c = cos(2*pi*p);
+C0 = cos(2*pi*(p.^2 - p - 1/16))./c;
+Z = Z + (-1).^(N-1).*(t/(2*pi)).^(-0.25).*C0;
+end
+
+function [tail, U, LU] = tailSetup(Nz)
+% midpoint-rule tail of sum_{k>Nz} log(1 + w/(u_k^2+1/4)), w = z^2-1/4
+U = 2*pi*Nz/log(Nz);                         % Newton on N_RVM(U) = Nz
+for it = 1:60
+    U = U - (Nrvm(U) - Nz)/(log(U/(2*pi))/(2*pi));
+end
+LU = log(U/(2*pi));
+tail = @(w) ( w*(LU+1)/U - (w.^2/2)*(3*LU+1)/(9*U^3) + (w.^3/3)*(5*LU+1)/(25*U^5) ) / (2*pi);
+end
+
+function lg = clgamma(z)
+% complex log-gamma (any branch consistent with exp)
+m = 12; zz = z + m; s = zeros(size(z));
+for j = 0:m-1, s = s + log(z + j); end
+lg = (zz - 0.5).*log(zz) - zz + 0.5*log(2*pi) + 1./(12*zz) - 1./(360*zz.^3) ...
+     + 1./(1260*zz.^5) - 1./(1680*zz.^7) + 1./(1188*zz.^9) - s;
+end
+
+function lG = logG(s)
+lG = log(s) + log(s-1) + clgamma(s/2) - (s/2)*log(pi);
+end
+
+function chi = chiF(s)
+chi = exp((s-0.5)*log(pi) + clgamma((1-s)/2) - clgamma(s/2));
+end
+
+function lp = logPcrit(s, tau, tail)
+z = s - 0.5; w = z.^2 - 0.25;
+lp = zeros(size(s));
+for i = 1:numel(s)
+    lp(i) = sum(log((tau.^2 + z(i)^2)./(tau.^2 + 0.25))) + tail(w(i));
+end
+end
+
+function Z = zetaRVMconstant(tau, tail)
+% Z_RVM = lim zeta_RVM(s)/(1+chi(s)), s = 2+iT; T kept <= tau_N/100 so that the
+% three-term tail expansion of the truncated product is accurate
+Tmax = min(1e4, tau(end)/100);
+Ts = Tmax*[1/4 1/2 1];
+v = zeros(size(Ts));
+for i = 1:numel(Ts)
+    s = 2 + 1i*Ts(i);
+    zr = exp(logPcrit(s, tau, tail) - logG(s));
+    v(i) = zr/(1 + chiF(s));
+end
+A = [ones(numel(Ts),1), 1./Ts(:), 1./Ts(:).^2];
+c = A \ v(:);
+Z = c(1);
+end
+
+function zp = zetaRVMprimeExact(tau, K0, tail)
+zp = zeros(K0,1);
+t2 = tau.^2;
+for k = 1:K0
+    tk = tau(k);
+    fac = (t2 - tk^2)./(t2 + 0.25); fac(k) = [];
+    lmod = sum(log(abs(fac))) + real(tail(-tk^2 - 0.25));
+    sgn = (-1)^(k-1);
+    rho = 0.5 + 1i*tk;
+    lP = log(2i*tk/(0.25 + tk^2)) + lmod;
+    zp(k) = sgn*exp(lP - logG(rho));
+end
+end
+
+function S = expsum(x, ord, a)
+% sum_k a_k x^(1/2 + i ord_k) for column x
+S = zeros(size(x));
+lx = log(x);
+blk = max(1, floor(4e6/numel(ord)));
+for i0 = 1:blk:numel(x)
+    i1 = min(numel(x), i0+blk-1);
+    E = exp(1i*lx(i0:i1)*ord.');
+    S(i0:i1) = sqrt(x(i0:i1)).*(E*a);
+end
+end
+
+function S = taperedSum(x, ord, a, C1, C2)
+% sum_k w(ord_k/(2 pi sqrt x)) a_k x^(1/2+i ord_k), smooth taper between C1 and C2
+S = zeros(size(x));
+lx = log(x);
+i0 = 1;
+while i0 <= numel(x)
+    xmaxc = x(min(numel(x), i0+399));
+    K = find(ord <= C2*2*pi*sqrt(xmaxc), 1, 'last');
+    if isempty(K), K = 1; end
+    blk = max(1, min(400, floor(4e6/K)));
+    i1 = min(numel(x), i0+blk-1);
+    u = bsxfun(@rdivide, ord(1:K).', 2*pi*sqrt(x(i0:i1)));
+    w = ones(size(u));
+    mid = u > C1 & u < C2;
+    w(mid) = cos(pi/2*(u(mid)-C1)/(C2-C1)).^2;
+    w(u >= C2) = 0;
+    E = exp(1i*lx(i0:i1)*ord(1:K).');
+    S(i0:i1) = sqrt(x(i0:i1)).*sum(E.*w.*repmat(a(1:K).', i1-i0+1, 1), 2);
+    i0 = i1 + 1;
+end
+end
+
+function v = trivialZeta(x, n)
+v = zeros(size(x));
+for k = 1:n
+    z = zetaOdd(2*k+1);
+    v = v + (-1)^(k-1)*(2*pi./x).^(2*k)/(factorial(2*k)*k*z);
+end
+end
+
+function z = zetaOdd(s)
+j = (1:2e5)'; z = sum(j.^(-s)) + (2e5)^(1-s)/(s-1);
+end
+
+function v = trivialRVM(x, tau, tail, n)
+v = zeros(size(x));
+for k = 1:n
+    s = -2*k;
+    lP = sum(log(1 + s*(s-1)./(0.25 + tau.^2))) + real(tail(s*(s-1)));
+    v = v - x.^(-2*k)*(2*k+1)*pi^k*2*(-1)^k/(factorial(k)*exp(lP));
+end
+end
+
+function mu = mobiusSieve(X)
+mu = ones(X,1,'int8');
+isc = false(X,1);
+for p = 2:X
+    if ~isc(p)
+        isc(2*p:p:X) = true;
+        mu(p:p:X) = -mu(p:p:X);
+        if p <= floor(sqrt(X)), mu(p*p:p*p:X) = 0; end
+    end
+end
+end
+
+function x = targetGrid(X, div)
+n = ceil(4*div*sqrt(X)) + 2*ceil(min(X,(div)^2));
+x = zeros(n,1); x(1) = 1; i = 1;
+while x(i) < X
+    i = i + 1;
+    x(i) = min(X, x(i-1) + max(1, floor(sqrt(x(i-1))/div)));
+end
+x = x(1:i);
+end
+
+function [mu_h, Mh] = quantize(T, sqf)
+X = numel(T);
+mu_h = zeros(X,1,'int8'); Mh = zeros(X,1);
+cur = 0;
+for n = 1:X
+    if sqf(n)
+        if cur < T(n), cur = cur + 1; mu_h(n) = 1; else cur = cur - 1; mu_h(n) = -1; end
+    end
+    Mh(n) = cur;
+end
+end
+
+function d = multiplicativityDefect(muh, X, nsamp)
+rng(1);
+m = randi(floor(sqrt(X)), nsamp, 1);
+n = floor(1 + rand(nsamp,1).*(floor(X./m) - 1));
+ok = gcd(m, n) == 1 & m.*n <= X & m > 1 & n > 1;
+m = m(ok); n = n(ok);
+d = mean(double(muh(m.*n)) ~= double(muh(m)).*double(muh(n)));
+end
+
+function [E, open] = excursionCensus(W, Q)
+% v56 excursions of the integer walk W (W(0)=0), with compressed lengths
+X = numel(W);
+Wz = [0; W];
+z = find(Wz == 0) - 1;                      % zero positions n (0-based)
+g = diff(z);
+st = z(g >= 2); en = z([false; g >= 2]);
+ne = numel(st);
+E.x0 = st; E.x1 = en; E.ell = en - st;
+E.H = zeros(ne,1); E.sigma = zeros(ne,1); E.b = zeros(ne,1);
+for i = 1:ne
+    seg = W(st(i)+1:en(i)-1);
+    [E.H(i), ~] = max(abs(seg));
+    E.sigma(i) = sign(seg(1));
+    E.b(i) = sum(abs(seg));
+end
+Q0 = [0; Q];
+E.Lc = Q0(en+1) - Q0(st+1);
+E.Icat = zeros(ne,1);
+for i = 1:ne
+    E.Icat(i) = catalanEnergy(E.Lc(i), E.H(i));
+end
+open.x0 = z(end); open.Lc = Q0(X+1) - Q0(z(end)+1);
+end
+
+function I = catalanEnergy(Lc, H)
+% -log P_{pCat,Lc}{H_max >= H}: strict excursion = U + Dyck(n) + D, n = (Lc-2)/2
+n = (Lc - 2)/2; h = H - 1;
+if h <= 0 || n < 0, I = 0; return; end
+if h > n, I = Inf; return; end
+lC = gammaln(2*n+1) - 2*gammaln(n+1) - log(n+1);   % log Catalan(n)
+terms = []; k = 1;
+while true
+    a = k*(h+1);
+    if a > n + 1, break; end
+    if a == n + 1
+        terms(end+1) = 0 - lC; %#ok<AGROW>   % boundary contribution +1
+        sgnv(numel(terms)) = 1; %#ok<AGROW>
+    else
+        lB = gammaln(2*n+1) - gammaln(n+a+1) - gammaln(n-a+1);
+        f = (4*a^2 - 2*(n+1))/((n+1)^2 - a^2);
+        terms(end+1) = lB + log(abs(f)) - lC; %#ok<AGROW>
+        sgnv(numel(terms)) = sign(f); %#ok<AGROW>
+    end
+    if k > 1 && terms(end) < max(terms) - 60, break; end
+    k = k + 1;
+end
+mx = max(terms);
+Pv = sum(sgnv.*exp(terms - mx));
+if Pv <= 0, I = 0; return; end
+I = max(0, -(log(Pv) + mx));
+end
+
+function census(say, name, E, open)
+pos = E.sigma > 0;
+Ap = sum(0.5*sqrt(E.H(pos)).*E.ell(pos));
+Am = -sum(0.5*sqrt(E.H(~pos)).*E.ell(~pos));
+say('%s: excursions %d, open-part compressed length %d\n', name, numel(E.x0), open.Lc);
+say('    max H/sqrt(ell) = %.4f   max b/ell^{3/2} = %.4f\n', max(E.H./sqrt(E.ell)), max(E.b./E.ell.^1.5));
+say('    skeleton areas  A+ = %.4e  A- = %.4e  Anet = %.4e\n', Ap, Am, Ap + Am);
+say('    max I_Cat = %.3f   max I_Cat/log(x1) = %.4f   mean I_Cat = %.4f\n', ...
+    max(E.Icat), max(E.Icat./log(max(E.x1,3))), mean(E.Icat));
+end
+
+function M = excTable(E)
+M = [E.x0, E.x1, E.ell, E.H, E.sigma, E.b, E.Lc, E.Icat];
+end
+
+function d = dfact(m)
+d = prod(m:-2:1);
+end
+
+function [xc, lo, hi] = envelope(Y, nb)
+% min and max of Y over nb blocks of consecutive integers; xc = block centres
+X = numel(Y); bw = ceil(X/nb); nb = ceil(X/bw);
+Z = nan(bw*nb, 1); Z(1:X) = Y(:);
+Z = reshape(Z, bw, nb);
+lo = min(Z, [], 1).'; hi = max(Z, [], 1).';
+xc = ((1:nb).' - 0.5)*bw;
+end
+
+function savePNG(f, dirn, name)
+figure(f); drawnow;
+print(f, '-dpng', '-r150', fullfile(dirn, name));
+end
+
+function writeCSV(fname, hdr, A)
+fid = fopen(fname,'w');
+fprintf(fid, '%s', hdr{1}); fprintf(fid, ',%s', hdr{2:end}); fprintf(fid, '\n');
+fmt = [repmat('%.12g,', 1, size(A,2)-1) '%.12g\n'];
+fprintf(fid, fmt, A.');
+fclose(fid);
+end

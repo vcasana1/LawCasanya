@@ -1,0 +1,385 @@
+\documentclass[11pt]{amsart}
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+\usepackage[hidelinks]{hyperref}
+
+\title{Leslie--Mertens Spectral Experiments:\\Exact Positive Families, Free-Frequency Prediction,\\and the Failure of the Rigid Comb}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\bigskip
+
+\begin{remark}
+\label{rem:exploratory_nature}
+This document is a research notebook.  It separates algebraic statements that are proved here from numerical observations obtained from the reported MATLAB runs.  No numerical result below proves a bound for the Mertens function, the Riemann hypothesis, or an arithmetic intertwining relation.  The purpose is to record what survived the experiments, what failed, and what remains mathematically open.
+\end{remark}
+
+\section{Objects and scope}
+\label{sec:objects_scope}
+
+\begin{definition}
+\label{def:mobius_mertens}
+The M\"obius function is denoted by $\mu$, and its summatory function is
+\begin{equation}
+M(x)=\sum_{n\leq x}\mu(n).
+\label{eq:mertens_definition}
+\end{equation}
+The computations use the normalized geometric sample
+\begin{equation}
+y_b(n)=\frac{M(\lfloor b^n\rceil)}{b^{n/2}},
+\label{eq:normalized_geometric_sample}
+\end{equation}
+where $\lfloor\cdot\rceil$ denotes the integer rounding used by the MATLAB implementation.
+\end{definition}
+
+The classical relevance of $M(x)$ is that the family of estimates $M(x)=O(x^{1/2+\varepsilon})$ for every $\varepsilon>0$ is equivalent to the Riemann hypothesis; this background is standard and is not reproved here.  The stronger historical Mertens conjecture was disproved by Odlyzko and te Riele \cite{OdlyzkoTeRiele1985}.
+
+\begin{warning}
+\label{warn:gonek_status}
+The factor $(\log\log\log x)^{5/4}$ used in the motivating profile belongs to a conjectural growth picture.  In the present investigation the profile was imposed as a design target, not derived from the matrix and not recovered as an empirical law.  Consequently, the profile-fitting stage supplies a compatibility test only.
+\end{warning}
+
+\section{The exact Leslie family}
+\label{sec:exact_leslie_family}
+
+Let $K\geq1$, put $m=2K+1$, let $r>1$, and set $b=r^2$.  For the rigid angles
+\begin{equation}
+\theta_k=\frac{2\pi k}{m},\qquad 1\leq k\leq K,
+\label{eq:root_unity_angles}
+\end{equation}
+consider the monic polynomial
+\begin{equation}
+P(z)=(z-b)\prod_{k=1}^{K}
+\left(z^2-2r\cos(\theta_k)z+r^2\right).
+\label{eq:leslie_characteristic_polynomial}
+\end{equation}
+
+\begin{proposition}
+\label{prop:closed_form_family}
+The polynomial in \eqref{eq:leslie_characteristic_polynomial} satisfies
+\begin{equation}
+P(z)=(z-r^2)\frac{z^m-r^m}{z-r}.
+\label{eq:closed_form_polynomial}
+\end{equation}
+If
+\begin{equation}
+P(z)=z^m-\sum_{\ell=1}^{m}a_\ell z^{m-\ell},
+\label{eq:leslie_coefficient_convention}
+\end{equation}
+then
+\begin{align}
+a_\ell&=r^\ell(r-1), &&1\leq\ell<m,
+\label{eq:closed_form_interior_coefficients}\\
+a_m&=r^{m+1}.
+\label{eq:closed_form_last_coefficient}
+\end{align}
+In particular, every $a_\ell$ is strictly positive.
+\end{proposition}
+
+\begin{proof}
+The roots of unity give
+\begin{equation}
+\prod_{k=1}^{K}
+\left(z^2-2r\cos(\theta_k)z+r^2\right)
+=\frac{z^m-r^m}{z-r}.
+\label{eq:roots_unity_product}
+\end{equation}
+Moreover,
+\begin{equation}
+\frac{z^m-r^m}{z-r}=\sum_{i=0}^{m-1}z^i r^{m-1-i}.
+\label{eq:geometric_polynomial_sum}
+\end{equation}
+Multiplication by $z-r^2$ shows that the coefficient of $z^i$, for $1\leq i\leq m-1$, is $r^{m-1-i}(r-r^2)$.  With $\ell=m-i$, changing sign according to \eqref{eq:leslie_coefficient_convention} gives \eqref{eq:closed_form_interior_coefficients}; the constant term gives \eqref{eq:closed_form_last_coefficient}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:exact_spectrum}
+The Leslie companion matrix with first row $(a_1,\ldots,a_m)$ and unit subdiagonal is nonnegative and has spectrum
+\begin{equation}
+\operatorname{spec}(L)=\{b\}\cup
+\left\{r e^{\pm 2\pi i k/m}:1\leq k\leq K\right\}.
+\label{eq:exact_leslie_spectrum}
+\end{equation}
+Thus the Perron eigenvalue is $b$ and all $2K$ non-Perron eigenvalues have modulus $\sqrt b$.
+\end{corollary}
+
+\begin{remark}
+\label{rem:numerical_validation_exact_family}
+The earlier numerical audit recovered the spectrum by two independent routes, direct eigensolution and polynomial evaluation, through dimension $257$.  At $K=128$ the reported maximum modulus error was $3.7\times10^{-12}$, the Perron error was $4.2\times10^{-15}$, and the independent relative polynomial residual was of order $10^{-13}$.  These computations validate the implementation, while Proposition~\ref{prop:closed_form_family} and Corollary~\ref{cor:exact_spectrum} provide the exact algebraic result.
+\end{remark}
+
+\begin{remark}
+\label{rem:convolution_failure}
+Direct repeated convolution is not a reliable large-$K$ verification method.  A discrepancy of $4.44\times10^{16}$ was observed at $K=64$ between convolution and the closed form, while the closed form retained the required positivity.  This is interpreted as catastrophic cancellation in the convolution, not as a failure of \eqref{eq:closed_form_polynomial}.
+\end{remark}
+
+\section{What the diagonal deformation does not establish}
+\label{sec:diagonal_deformation}
+
+For a positive diagonal matrix $D$, the similarity transform $L=DCD^{-1}$ preserves the spectrum.  In the modal coordinates used in the experiments, the coefficient vector has the form
+\begin{equation}
+c=W^{-1}z,
+\qquad z=e^{-d}.
+\label{eq:modal_coefficients_observable}
+\end{equation}
+
+\begin{experiment}
+\label{exp:profile_flexibility}
+With the full $2K$ degrees of freedom in $d$ and the box constraint $|d_j|\leq4$, the same exact angular family was fitted against the Gonek target, $1/j$, a constant profile, the increasing profile $j^{1/2}$, an oscillatory profile, and other decoys.  The reported objective reached numerical zero for the Gonek, $1/j$, constant, increasing, and oscillatory targets.  Only more irregular targets retained visible residuals.
+\end{experiment}
+
+\begin{proposition}
+\label{prop:profile_not_intrinsic}
+The preceding experiment does not identify the imposed amplitude profile as an intrinsic invariant of the Leslie operator.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:modal_coefficients_observable} shows that varying $d$ varies the positive vector $z$, and the invertibility of $W$ transfers this freedom to the modal coefficients.  The numerical ability to fit mutually incompatible target profiles confirms that the optimization measures the freedom of the chosen observable rather than a unique matrix-generated profile.
+\end{proof}
+
+\begin{remark}
+\label{rem:tau_path_failure}
+The path $d(\tau)=\tau d_{\mathrm{opt}}$ is a coordinate segment, not an intrinsic dynamical path.  The reported profile error was monotone for some $K$ and strongly nonmonotone for others, despite identical endpoints and zero final objective.  Consequently, the intermediate $\tau$-trace should not be interpreted as a geometric transition of the Leslie family.
+\end{remark}
+
+\section{The rigid comb and the free-frequency alternative}
+\label{sec:comb_free_frequencies}
+
+For the root-of-unity family, every real modal combination satisfies
+\begin{equation}
+\widehat y(n+m)=\widehat y(n).
+\label{eq:comb_periodicity}
+\end{equation}
+Thus the rigid comb repeats with exact period $m=2K+1$ in the logarithmic index $n$.
+
+\begin{proposition}
+\label{prop:comb_no_extrapolation}
+The rigid root-of-unity comb cannot provide genuinely nonperiodic extrapolation in $n$.
+\end{proposition}
+
+\begin{proof}
+Each basis function $\cos(n\theta_k)$ and $\sin(n\theta_k)$ with \eqref{eq:root_unity_angles} is $m$-periodic.  Every finite linear combination is therefore $m$-periodic, giving \eqref{eq:comb_periodicity}.
+\end{proof}
+
+\begin{experiment}
+\label{exp:megamat_runs}
+The final reported computation used $N=455{,}052{,}511$ values of $\mu$, five sampling bases $b_0\in\{1.03,1.05,1.08,1.10,1.15\}$, training fractions $0.70$ and $0.80$, and four requested mode counts, for a total of $40$ runs.  A low-frequency candidate was removed after selecting the dominant periodogram peaks and was not replaced, so the effective mode count could be smaller than the requested count.
+\end{experiment}
+
+The reported aggregate facts are:
+\begin{itemize}[leftmargin=2em]
+\item the free-frequency out-of-sample $R^2$ was positive in all $40$ runs;
+\item the free-frequency model outperformed the rigid comb in all $40$ runs;
+\item the free-frequency $R^2$ ranged from $0.4125$ to $0.8258$, with mean approximately $0.6476$;
+\item the comb $R^2$ ranged from $-0.5604$ to $0.4345$, with mean approximately $-0.0766$ and only $9$ positive values;
+\item the chosen configuration, selected without using the test block, was $b_0=1.05$, training fraction $0.80$, and effective $K=7$; its test statistics were
+\begin{equation}
+R^2_{\mathrm{free}}=0.6983,
+\qquad
+R^2_{\mathrm{comb}}=-0.1540,
+\label{eq:selected_r2_values}
+\end{equation}
+and
+\begin{equation}
+\operatorname{RMSE}_{\mathrm{free}}=0.075824,
+\qquad
+\operatorname{RMSE}_{0}=0.13816.
+\label{eq:selected_rmse_values}
+\end{equation}
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\IfFileExists{leslie_mobius_megamat_final_figuras.png}{%
+\includegraphics[width=0.98\textwidth]{leslie_mobius_megamat_final_figuras.png}%
+}{%
+\fbox{\parbox{0.92\textwidth}{Place the supplied four-panel MATLAB image in the same directory and name it \texttt{leslie\_mobius\_megamat\_final\_figuras.png}.}}%
+}
+\caption{Reported final experiment.  Upper left: normalized Mertens data, selected free-frequency predictor, and rigid comb.  Upper right: test $R^2$ of the free model against the comb across runs, coloured by $b_0$.  Lower left: free-model RMSE against the zero predictor, coloured by effective mode count.  Lower right: multiplicity of clustered fixed-point roots across runs.}
+\label{fig:megamat_summary}
+\end{figure}
+
+\begin{remark}
+\label{rem:interpretation_free_prediction}
+Figure~\ref{fig:megamat_summary} and \eqref{eq:selected_r2_values} support a specific numerical conclusion: a small free-frequency model captures reproducible out-of-sample structure in the sampled sequence $M(b_0^n)/\sqrt{b_0^n}$ over the tested finite range.  The result is not merely an in-sample interpolation, because the reported scores are calculated on a later block.  It does not follow that the fitted frequencies converge as the data range grows or that they correspond to zeta zeros.
+\end{remark}
+
+\section{Positivity away from the comb}
+\label{sec:positivity_away_comb}
+
+For arbitrary angles, write
+\begin{equation}
+p(w)=\prod_{j=1}^{K}\left(w^2-2\cos(\theta_j)w+1\right)
+=\sum_{i=0}^{2K}p_i w^{2K-i}.
+\label{eq:unit_circle_polynomial}
+\end{equation}
+Then
+\begin{equation}
+Q(w)=(w-r)p(w)
+\label{eq:scaled_characteristic_polynomial}
+\end{equation}
+has nonleading coefficients
+\begin{equation}
+q_i=p_i-rp_{i-1},
+\label{eq:linear_r_coefficients}
+\end{equation}
+with the endpoint convention inherited from the product.  Hence the Leslie sign condition is a finite system of inequalities affine in the single scalar $r$.
+
+\begin{proposition}
+\label{prop:positivity_interval}
+For fixed angles, the set of $r>1$ for which all nonleading coefficients of $Q$ are nonpositive is an interval, possibly empty or unbounded.
+\end{proposition}
+
+\begin{proof}
+Every inequality $q_i(r)\leq0$ is a half-line or the empty set because of the affine dependence in \eqref{eq:linear_r_coefficients}.  Their finite intersection is an interval of the stated type.
+\end{proof}
+
+\begin{experiment}
+\label{exp:fixed_point_roots}
+For frequencies estimated at an initial base, the experiments froze $\gamma_k=\omega_k/\log b_0$, folded the angles according to
+\begin{equation}
+\theta_k(b)=\arccos\!\left(\cos(\gamma_k\log b)\right),
+\label{eq:folded_angles}
+\end{equation}
+and searched for solutions of
+\begin{equation}
+F(b)=\log\!\left(\frac{r_{\min}(\theta(b))^2}{b}\right)=0.
+\label{eq:fixed_point_function}
+\end{equation}
+The earlier single-run search produced $21$ admissible roots.  In the final $40$-run experiment every run produced between $21$ and $41$ certified roots, for $1269$ roots in total before clustering.  The clustering plot contains roots represented in as many as $33$ runs.
+\end{experiment}
+
+\begin{warning}
+\label{warn:fixed_point_interpretation}
+The multiplicity of roots is not convergence.  Equation~\eqref{eq:folded_angles} is oscillatory in $\log b$, while $r_{\min}$ is the maximum of several rational coefficient bounds and can change active constraint.  Numerous intersections of \eqref{eq:fixed_point_function} are therefore expected.  Moreover, each root is defined by $r=r_{\min}$, so at least one Leslie coefficient lies on the boundary and the recurrent observation $\min a_j=0$ is built into the construction.
+\end{warning}
+
+\begin{remark}
+\label{rem:persistence_is_not_arithmetic}
+The reported statement that a root cluster occurs in at least three runs, and the stronger visual persistence of some clusters, establishes numerical persistence under the tested parameter changes.  It does not by itself establish arithmetic significance.  Cluster persistence must be compared with controls in which the estimated frequencies are perturbed or obtained from null sequences.
+\end{remark}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+\begin{proposition}
+\label{prop:rigorous_survivor}
+The exact nonnegative Leslie family in Proposition~\ref{prop:closed_form_family} is the principal rigorous result that survives independently of all fitting choices.
+\end{proposition}
+
+\begin{experiment}
+\label{exp:numerical_survivor}
+The principal numerical result is that the free-frequency predictor achieved positive out-of-sample $R^2$ in all $40$ reported runs and outperformed the rigid comb in every run.  For the preselected base protocol $b_0=1.05$ and training fraction $0.80$, the validation-selected effective model had the values in \eqref{eq:selected_r2_values} and \eqref{eq:selected_rmse_values}.
+\end{experiment}
+
+\begin{remark}
+\label{rem:final_negative_result}
+The final automated verdict, \texttt{PREDICTOR\_ARMONICO\_SIN\_LESLIE}, is mathematically appropriate.  The frequencies that predicted the sampled Mertens data did not themselves define a nonnegative Leslie companion matrix at the sampling base.  Consequently, the experiment found a predictive harmonic model and separately found many positive Leslie matrices after changing $b$ through the fixed-point construction, but it did not identify a single operator that simultaneously carries the predictive frequencies, the original sampling scale, and Leslie nonnegativity.
+\end{remark}
+
+\begin{remark}
+\label{rem:what_has_failed}
+The following interpretations are superseded by the experiments:
+\begin{enumerate}[leftmargin=2em]
+\item the imposed Gonek profile is not evidence of an intrinsic modal law;
+\item the diagonal path does not reveal a dimension transition;
+\item the rigid root-of-unity comb is not an adequate extrapolator;
+\item the mere existence of fixed-point roots does not select a canonical $b$;
+\item spectral validation of a Leslie matrix does not connect its observable to $\mu$.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}
+\label{rem:what_remains_open}
+The unresolved mathematical problem is an arithmetic coupling problem.  One needs either an observable derived before fitting from divisibility and square-free support, or an approximate intertwining relation between a signed multiplicative generator and a positive Leslie-type operator.  Without such a construction, the matrix and the predictor remain two compatible numerical objects rather than one arithmetic representation.
+\end{remark}
+
+\section{Next decisive tests}
+\label{sec:next_tests}
+
+\begin{question}
+\label{ques:frequency_stability}
+Do the free frequencies stabilize when the endpoint $N$, the sampling base $b_0$, and the chronological training window vary, after frequencies are matched in the continuous $\gamma$ variable rather than after angular folding?
+\end{question}
+
+\begin{question}
+\label{ques:null_persistence}
+Do null sequences with the same square-free support produce comparable positive $R^2$ distributions and comparable fixed-point cluster multiplicities under the identical selection pipeline?
+\end{question}
+
+\begin{question}
+\label{ques:intertwining}
+Can one construct maps $T_K$ and signed arithmetic generators $G_K$ for which
+\begin{equation}
+\left\|T_KG_K-L_KT_K\right\|
+\label{eq:intertwining_error}
+\end{equation}
+is controlled in a norm that retains sign information and whose observable recovers a specified Mertens quantity?
+\end{question}
+
+\begin{conjecture}
+\label{conj:minimal_coupling}
+A Leslie-based model can acquire arithmetic content only after its observable or its angular data are fixed by a rule derived from the multiplicative structure of $\mu$, rather than selected solely by regression against $M$.
+\end{conjecture}
+
+\section*{Notebook History}
+Version 0.1: exact root-of-unity Leslie family and closed-form coefficients.\\
+Version 0.2: diagonal modal shaping and trace experiments.\\
+Version 0.3: decoy profiles show that the observable can fit incompatible targets.\\
+Version 0.4: rigid-comb extrapolation test and free-frequency comparison.\\
+Version 0.5: positivity interval in $r$ and folded fixed-point experiments.\\
+Version 1.0: forty-run stability experiment and final separation between harmonic prediction and Leslie nonnegativity.
+
+\begin{thebibliography}{99}
+
+\bibitem{MacCluer2000}
+C.~R. MacCluer,
+\emph{The many proofs and applications of Perron's theorem},
+SIAM Review \textbf{42} (2000), no.~3, 487--498.
+DOI: \href{https://doi.org/10.1137/S0036144599359449}{10.1137/S0036144599359449}.
+
+\bibitem{OdlyzkoTeRiele1985}
+A.~M. Odlyzko and H.~J.~J. te Riele,
+\emph{Disproof of the Mertens conjecture},
+Journal f\"ur die reine und angewandte Mathematik \textbf{357} (1985), 138--160.
+DOI: \href{https://doi.org/10.1515/crll.1985.357.138}{10.1515/crll.1985.357.138}.
+
+\end{thebibliography}
+
+\end{document}

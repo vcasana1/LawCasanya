@@ -1,0 +1,1485 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% ---------------------------------------------------------
+% Notation
+% ---------------------------------------------------------
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\li}{li}
+\newcommand{\Ms}{M_{\mathrm{s}}}
+\newcommand{\Msk}{M_{\mathrm{sk}}}
+\newcommand{\Ap}{\mathcal{A}_{+}}
+\newcommand{\Am}{\mathcal{A}_{-}}
+\newcommand{\Anet}{\mathcal{A}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Pp}{P^{+}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\Sq}{\mathcal{S}}
+\newcommand{\En}{\mathcal{E}}
+\newcommand{\mt}{\widetilde{m}}
+
+\title{The area function of the Mertens excursion skeleton\\
+(research notebook, version 6)}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\begin{remark}
+\label{rem:exploratory_nature}
+This notebook is exploratory. Its purpose is to study the Mertens function
+through its excursions between consecutive zeros, and to separate what is
+forced by the local geometry of those excursions from what requires
+arithmetic input. It contains exact identities, conditional statements,
+heuristics and archived statements from earlier versions. Every statement
+carries an explicit status; statements from version 5 that are incorrect or
+superseded are kept and marked as such.
+\end{remark}
+
+\section{Introduction and conventions}
+\label{sec:introduction}
+
+The main object is the Mertens function $M$, decomposed into excursions
+between consecutive zeros, together with three area curves built from a
+regularized skeleton of those excursions
+(Section~\ref{sec:definitions}). Sections~\ref{sec:formulas}
+to~\ref{sec:criteria} record exact formulas, bounds and criteria equivalent
+to the Riemann hypothesis. Sections~\ref{sec:prime_horizon}
+to~\ref{sec:local_large_prime} examine how prime factors above a threshold
+enter $M$ and, in Section~\ref{sec:local_large_prime}, how they enter a
+single excursion.
+
+\medskip
+\noindent\textbf{Convention on RH.} Every statement carries one of the labels
+\emph{[unconditional]}, \emph{[under RH]} (the Riemann hypothesis is assumed;
+simple zeros are stated explicitly when also needed), or \emph{[heuristic]}
+(not proved; a model). An \emph{[unconditional]} equivalence with RH does
+not assume RH.
+
+\medskip
+\noindent\textbf{Status lines.} Each section opens with a status line that
+separates standard material, literature-based material, original
+observations, heuristics and conjectures, as required by the authoring rules
+of this notebook.
+
+\medskip
+\noindent\textbf{Notation changes with respect to version 5.} The symbol
+$m(x)$ of version 5 is replaced by $M(x)$. The unregularized skeleton, called
+$L$ in version 5, is denoted $\Msk$. The squarefree counting function, called
+$Q(y)$ in version 5, is denoted $\Sq(y)$, since $Q_\nu$ denotes the quadratic
+energy of an excursion. The Dirichlet energy, called $E(x)$ in version 5, is
+denoted $\En(x)$. The coefficient called $A(R)$ in version 5 is denoted
+$\Theta(R)$, since $\Anet$ denotes the black curve. The ratio $t/u^2$ keeps
+the name $R$; the residual $M-\Msk$ of version 5, also called $R$ there, is
+written out explicitly. The defect parameter of
+Remark~\ref{rem:conditioning} is denoted $d_\nu$.
+
+\section{Excursions and the regularized skeleton}
+\label{sec:definitions}
+
+\noindent\emph{Status.} Definitions and elementary facts, original to this
+notebook, with complete proofs. The existence of infinitely many sign changes
+of $M$ is standard; it follows for instance from the oscillation theorem of
+Odlyzko and te Riele~\cite{OdlyzkoTeRiele1985}.
+
+\medskip
+
+Let $\mu$ be the Möbius function and
+\begin{equation}
+\label{eq:mertens_def}
+  M(x)=\sum_{n\le x}\mu(n),\qquad x\ge 0,
+\end{equation}
+the Mertens function, which is piecewise constant, right-continuous, with
+jumps at the integers. Let $0=z_0<z_1<z_2<\dots$ be the integers $n\ge0$ with
+$M(n)=0$. Since the jumps of $M$ are $0$ or $\pm1$, every sign change of $M$
+passes through a zero, and $M$ changes sign infinitely often
+\emph{[unconditional]}. The $\nu$-th \emph{excursion} is
+\begin{equation}
+\label{eq:excursion_def}
+  I_\nu=(u_\nu,v_\nu],\qquad u_\nu=z_{\nu-1},\quad v_\nu=z_\nu,
+  \qquad \ell_\nu=v_\nu-u_\nu ,
+\end{equation}
+so that $M$ does not vanish at the integers of $(u_\nu,v_\nu)$. Inside
+$I_\nu$ set
+\begin{equation}
+\label{eq:peak_def}
+  H_\nu=\max_{u_\nu<n\le v_\nu}|M(n)|,\qquad
+  \tau_\nu=\min\{n\in I_\nu:\ |M(n)|=H_\nu\},\qquad
+  \sigma_\nu=\sgn M(\tau_\nu)\in\{-1,0,1\},
+\end{equation}
+and $a_\nu=\tau_\nu-u_\nu$, $b_\nu=v_\nu-\tau_\nu$, so that
+$\ell_\nu=a_\nu+b_\nu$.
+
+\begin{definition}[Null excursions]
+\label{def:null}
+An excursion is \emph{null} if $H_\nu=0$. This happens exactly when
+$\ell_\nu=1$, that is, when $z_{\nu-1}$ and $z_\nu$ are consecutive integers
+(equivalently $\mu(v_\nu)=0$); then $\tau_\nu=v_\nu$, $b_\nu=0$ and
+$\sigma_\nu=0$. A non-null excursion has $H_\nu\ge1$ and $\ell_\nu\ge2$.
+Version 5 did not distinguish null excursions; its formula for the skeleton
+divides by $b_\nu$ and is undefined for them.
+\end{definition}
+
+\begin{lemma}[Height and step count]
+\label{lem:height_steps}
+\emph{[unconditional]} For every non-null excursion,
+\begin{equation}
+\label{eq:height_steps}
+  H_\nu\le\min(a_\nu,b_\nu)\le \frac{\ell_\nu}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The steps of $M$ are $0$ or $\pm1$, so $M$ needs at least $H_\nu$ steps to
+go from $M(u_\nu)=0$ to $|M(\tau_\nu)|=H_\nu$, and at least $H_\nu$ steps to
+return to $M(v_\nu)=0$.
+\end{proof}
+
+\begin{definition}[Crossing and touching zeros]
+\label{def:crossing_touching}
+Let $z_j<z_{j+1}<\dots<z_{j+r}$ ($r\ge0$, $j\ge1$) be a maximal run of zeros
+of $M$ at consecutive integers, and let $\nu_-$ and $\nu_+$ be the non-null
+excursions ending at $z_j$ and starting at $z_{j+r}$. The run is a
+\emph{crossing} if $\sigma_{\nu_-}\sigma_{\nu_+}=-1$ and a \emph{touching}
+run if $\sigma_{\nu_-}\sigma_{\nu_+}=+1$. At a touching run $M$ vanishes
+without changing sign.
+\end{definition}
+
+\begin{definition}[Regularized skeleton]
+\label{def:Ms}
+The \emph{skeleton} $\Ms$ is the continuous, piecewise linear function
+defined on each non-null excursion by
+\begin{equation}
+\label{eq:Ms_def}
+  \Ms(t)=
+  \begin{cases}
+    \sigma_\nu\sqrt{H_\nu}\,\dfrac{t-u_\nu}{a_\nu}, & u_\nu\le t\le \tau_\nu,\\[2ex]
+    \sigma_\nu\sqrt{H_\nu}\,\dfrac{v_\nu-t}{b_\nu}, & \tau_\nu\le t\le v_\nu ,
+  \end{cases}
+\end{equation}
+and by $\Ms\equiv0$ on null excursions. On the terminal block $(u,N]$ of a
+finite computation, if $M(N)\neq0$, the descent ends at
+$\sigma\sqrt{|M(N)|}$ instead of at $0$. The \emph{unregularized skeleton}
+$\Msk$ is defined in the same way with peak $\sigma_\nu H_\nu$ instead of
+$\sigma_\nu\sqrt{H_\nu}$.
+\end{definition}
+
+\begin{definition}[The three curves]
+\label{def:areas}
+With $\Ms^{\pm}=\max(\pm \Ms,0)$,
+\begin{equation}
+\label{eq:areas_def}
+  \Ap(x)=\int_0^x \Ms^{+}(t)\,dt,\qquad
+  \Am(x)=-\int_0^x \Ms^{-}(t)\,dt,\qquad
+  \Anet(x)=\Ap(x)+\Am(x)=\int_0^x \Ms(t)\,dt .
+\end{equation}
+In the figure of version 5, $\Ap$ is the blue curve, $\Am$ the red one and
+$\Anet$ the black one. $\Ap$ is nondecreasing, $\Am$ is nonincreasing, and
+each is constant on the excursions of the opposite sign and on null
+excursions; this produces the plateaus.
+\end{definition}
+
+\section{Exact formulas}
+\label{sec:formulas}
+
+\noindent\emph{Status.} Original observations with complete proofs.
+Lemma~\ref{lem:critical} corrects the corresponding lemma of version 5.
+
+\begin{lemma}[Increment per excursion]
+\label{lem:jump}
+\emph{[unconditional]} For every complete excursion,
+\begin{equation}
+\label{eq:jump}
+  \Anet(v_\nu)-\Anet(u_\nu)=\sigma_\nu\,\frac{\sqrt{H_\nu}\,\ell_\nu}{2}.
+\end{equation}
+The discrete version agrees:
+\begin{equation}
+\label{eq:jump_discrete}
+  \sum_{n\in I_\nu}\Ms(n)
+  =\sigma_\nu\sqrt{H_\nu}\,\frac{(a_\nu+1)+(b_\nu-1)}{2}
+  =\sigma_\nu\sqrt{H_\nu}\,\frac{\ell_\nu}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For null excursions both sides vanish. Otherwise the two pieces of $\Ms$ are
+triangles of height $\sqrt{H_\nu}$ with bases $a_\nu$ and $b_\nu$. In the
+discrete sum the ascent contributes
+$\sqrt{H_\nu}\sum_{j=1}^{a_\nu}j/a_\nu=\sqrt{H_\nu}(a_\nu+1)/2$ and the
+descent $\sqrt{H_\nu}\sum_{j=0}^{b_\nu-1}j/b_\nu=\sqrt{H_\nu}(b_\nu-1)/2$.
+\end{proof}
+
+\begin{proposition}[Explicit form of the three curves]
+\label{prop:explicit}
+\emph{[unconditional]} Let $x\in I_\nu$ with $I_\nu$ non-null. Then
+\begin{equation}
+\label{eq:explicit_A}
+  \Anet(x)=
+  \begin{cases}
+    \Anet(u_\nu)+\sigma_\nu\sqrt{H_\nu}\dfrac{(x-u_\nu)^2}{2a_\nu},
+      & u_\nu\le x\le\tau_\nu,\\[2.4ex]
+    \Anet(u_\nu)+\sigma_\nu\sqrt{H_\nu}
+      \left(\dfrac{a_\nu}{2}+(x-\tau_\nu)-\dfrac{(x-\tau_\nu)^2}{2b_\nu}\right),
+      & \tau_\nu\le x\le v_\nu,
+  \end{cases}
+\end{equation}
+and, at the zeros of $M$,
+\begin{align}
+  \Anet(v_k)&=\sum_{\nu\le k}\sigma_\nu\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+  \label{eq:explicit_net}\\
+  \Ap(v_k)&=\sum_{\substack{\nu\le k\\ \sigma_\nu=+1}}\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+  \label{eq:explicit_plus}\\
+  \Am(v_k)&=-\sum_{\substack{\nu\le k\\ \sigma_\nu=-1}}\frac{\sqrt{H_\nu}\,\ell_\nu}{2}.
+  \label{eq:explicit_minus}
+\end{align}
+The three curves are piecewise quadratic, of class $C^1$, and determined by
+the data $(u_\nu,\tau_\nu,v_\nu,H_\nu,\sigma_\nu)$.
+\end{proposition}
+
+\begin{proof}
+Integrate \eqref{eq:Ms_def}; for the descent use $v_\nu-t=b_\nu-(t-\tau_\nu)$.
+The formulas at the zeros follow from Lemma~\ref{lem:jump}. The derivative
+$\Anet'=\Ms$ is continuous.
+\end{proof}
+
+\begin{lemma}[Critical points and inflections]
+\label{lem:critical}
+\emph{[unconditional]}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Anet'=\Ms$; $\Anet$ is strictly monotone on each non-null excursion
+and constant on each null excursion.
+\item $\Anet$ has a local extremum at a run of zeros of $M$ if and only if the
+run is a crossing (Definition~\ref{def:crossing_touching}). At a touching run
+$\Anet$ is monotone through the run.
+\item $\Anet''$ is piecewise constant. It changes sign at $\tau_\nu$ for every
+non-null excursion and at every touching run, and nowhere else.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) and (ii) follow from $\Anet'=\Ms$ and the sign of $\Ms$ on each
+excursion. For (iii), on the ascent of $I_\nu$ one has
+$\Anet''=\sigma_\nu\sqrt{H_\nu}/a_\nu$ and on the descent
+$\Anet''=-\sigma_\nu\sqrt{H_\nu}/b_\nu$, which have opposite signs. Across a
+run of zeros $\Anet''$ passes from $-\sigma_{\nu_-}\sqrt{H_{\nu_-}}/b_{\nu_-}$
+to $\sigma_{\nu_+}\sqrt{H_{\nu_+}}/a_{\nu_+}$ (with value $0$ on intermediate
+null excursions); the sign changes if and only if
+$\sigma_{\nu_+}=\sigma_{\nu_-}$.
+\end{proof}
+
+\begin{remark}[Status of the version 5 statement]
+\label{rem:critical_v5}
+Version 5 stated that the local extrema of $\Anet$ are exactly the zeros of
+$M$ and that the inflection points are exactly the first argmaxima $\tau_\nu$.
+Both statements are \emph{incorrect} in the presence of touching runs: a
+touching zero is a critical point that is not an extremum, and it is an
+inflection point.
+\end{remark}
+
+\section{Internal correlations of an excursion}
+\label{sec:internal_corr}
+
+\noindent\emph{Status.} Elementary identities, original to this notebook,
+with complete proofs. The inequality \eqref{eq:Q_upper} is new in version 6.
+
+\medskip
+
+The excursion decomposition reorganizes the quadratic form of $M$. Consider
+first an arbitrary finite block $x_1,\dots,x_L\in\{-1,0,1\}$ with partial sums
+and internal correlations
+\begin{equation}
+\label{eq:block_def}
+  S_t=\sum_{j=1}^t x_j\quad(1\le t\le L),\qquad
+  C_h=\sum_{j=1}^{L-h}x_jx_{j+h}\quad(1\le h<L).
+\end{equation}
+
+\begin{lemma}[Triangular correlation identity]
+\label{lem:triangular-corr}
+\emph{[unconditional]} For every finite block,
+\begin{equation}
+\label{eq:general-triangular}
+  \sum_{t=1}^{L}S_t^2
+  =S_L^2+S_L\sum_{t=1}^{L-1}S_t-\sum_{h=1}^{L-1}hC_h.
+\end{equation}
+In particular, for a bridge $S_L=0$,
+\begin{equation}
+\label{eq:bridge-triangular}
+  \sum_{t=1}^{L-1}S_t^2=-\sum_{h=1}^{L-1}hC_h.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+One has
+\begin{equation}
+\label{eq:proof_triangular_max}
+  \sum_{t=1}^{L}S_t^2
+  =\sum_{i,j=1}^{L}x_ix_j\bigl(L+1-\max(i,j)\bigr).
+\end{equation}
+With $\max(i,j)=\tfrac12(i+j+|i-j|)$, the $|i-j|$ term gives
+$-\sum_{h<L}hC_h$, and the $i+j$ term gives $-S_L\sum_i ix_i$, which is
+reduced by
+\begin{equation}
+\label{eq:proof_triangular_abel}
+  \sum_{i=1}^{L} i x_i
+  =LS_L-\sum_{t=1}^{L-1}S_t.
+\end{equation}
+Collecting the terms $(L+1)S_L^2-L S_L^2$ yields
+\eqref{eq:general-triangular}.
+\end{proof}
+
+For a complete non-null excursion $I_\nu=(u_\nu,v_\nu]$ put $L=\ell_\nu$ and
+orient its increments by
+\begin{equation}
+\label{eq:orientation}
+  x_j=\sigma_\nu\mu(u_\nu+j),\qquad
+  S_t=\sum_{j=1}^{t}x_j=|M(u_\nu+t)|.
+\end{equation}
+Then $S_t>0$ for $1\le t<\ell_\nu$ and $S_{\ell_\nu}=0$. Write
+\begin{equation}
+\label{eq:Q_def}
+  Q_\nu:=\sum_{t=1}^{\ell_\nu-1}S_t^2,
+  \qquad
+  C_h^{(\nu)}:=\sum_{j=1}^{\ell_\nu-h}x_jx_{j+h},
+\end{equation}
+with $Q_\nu=0$ for null excursions. Equation \eqref{eq:bridge-triangular}
+gives the exact local identity
+\begin{equation}
+\label{eq:Qcorr}
+  Q_\nu=-\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}\ge0.
+\end{equation}
+
+\begin{lemma}[Zeroth moment of the internal correlations]
+\label{lem:zeroth-corr}
+\emph{[unconditional]} If $q_\nu=\sum_{j=1}^{\ell_\nu}x_j^2$ is the number
+of non-zero steps in the excursion, then
+\begin{equation}
+\label{eq:zeroth-corr}
+  \sum_{h=1}^{\ell_\nu-1}C_h^{(\nu)}=-\frac{q_\nu}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $\sum_jx_j=0$,
+\begin{equation}
+\label{eq:proof_zeroth}
+  0=\Bigl(\sum_jx_j\Bigr)^2
+   =\sum_jx_j^2+2\sum_{h=1}^{\ell_\nu-1}C_h^{(\nu)}.
+\end{equation}
+\end{proof}
+
+\begin{proposition}[Quadratic decomposition by excursions]
+\label{prop:quadratic-decomp}
+\emph{[unconditional]} If $x$ is a zero of $M$, then
+\begin{equation}
+\label{eq:quadratic-decomp-zero}
+  \sum_{n\le x}M(n)^2
+   =\sum_{v_\nu\le x}Q_\nu
+   =-\sum_{v_\nu\le x}\ \sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}.
+\end{equation}
+For general $x$, with $u$ the last zero of $M$ not exceeding $x$,
+\begin{equation}
+\label{eq:quadratic-decomp-general}
+  \sum_{n\le x}M(n)^2=\sum_{v_\nu\le x}Q_\nu+Q_{\rm term}(x),
+  \qquad
+  Q_{\rm term}(x):=\sum_{u<n\le x}M(n)^2,
+\end{equation}
+and $Q_{\rm term}(x)$ is given by \eqref{eq:general-triangular} applied to
+the terminal block.
+\end{proposition}
+
+\begin{remark}[Blindness to pairs crossing excursion boundaries]
+\label{rem:blindness-quadratic}
+Globally, for integer $x$,
+\begin{equation}
+\label{eq:global_quadratic}
+  \sum_{n\le x}M(n)^2
+  =\sum_{a,b\le x}\mu(a)\mu(b)\bigl(x+1-\max(a,b)\bigr),
+\end{equation}
+which contains all pairs $a,b\le x$. For $a\in I_\nu$ and $b\in I_\kappa$
+with $\nu<\kappa$ the weight depends only on $b$, and
+$\sum_{a\in I_\nu}\mu(a)=0$; hence all pairs crossing a zero cancel exactly,
+and Proposition~\ref{prop:quadratic-decomp} retains only pairs inside one
+excursion (plus the terminal block).
+\end{remark}
+
+Let
+\begin{equation}
+\label{eq:beta_def}
+  \beta_\nu:=\sum_{t=1}^{\ell_\nu-1}S_t
+             =\sum_{n\in I_\nu}|M(n)|.
+\end{equation}
+By Cauchy--Schwarz,
+\begin{equation}
+\label{eq:beta-Q}
+  \beta_\nu^2\le \ell_\nu Q_\nu
+  =-\ell_\nu\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}.
+\end{equation}
+Thus the first weighted moment of the internal correlations controls the area
+of the excursion. The converse needs information on the flatness of the
+profile.
+
+To separate the support from the sign geometry, let
+$P_h^{(\nu)}:=\#\{1\le j\le \ell_\nu-h:\ x_jx_{j+h}\ne0\}$ and let
+$D_h^{(\nu)}$ be the number of those pairs with opposite signs. Then
+\begin{equation}
+\label{eq:C-P-D}
+  C_h^{(\nu)}=P_h^{(\nu)}-2D_h^{(\nu)},
+\end{equation}
+and hence
+\begin{equation}
+\label{eq:Q-P-D}
+  Q_\nu=\sum_{h=1}^{\ell_\nu-1}
+  h\bigl(2D_h^{(\nu)}-P_h^{(\nu)}\bigr).
+\end{equation}
+
+\begin{remark}[Height versus quadratic energy]
+\label{rem:height-Q}
+\emph{[unconditional]} If a non-null excursion reaches height $H_\nu$, the
+least possible value of $Q_\nu$ is obtained by climbing and descending at
+maximal speed with no zero steps, so that
+\begin{equation}
+\label{eq:height_Q_min}
+  Q_\nu\ge 2\sum_{r=1}^{H_\nu-1}r^2+H_\nu^2
+  =\frac{2H_\nu^3+H_\nu}{3}.
+\end{equation}
+In the other direction, $S_t\le\min(t,\ell_\nu-t)\le\ell_\nu/2$ gives
+\begin{equation}
+\label{eq:Q_upper}
+  Q_\nu\le\frac{(\ell_\nu-1)\ell_\nu^2}{4}\le\frac{\ell_\nu^3}{4}.
+\end{equation}
+A local bound $Q_\nu\ll \ell_\nu^{2+o(1)}$ therefore gives only
+$H_\nu\ll \ell_\nu^{2/3+o(1)}$, and the natural primary object is the area
+normalization $\beta_\nu/\ell_\nu^{3/2}$ rather than the height
+normalization $H_\nu/\sqrt{\ell_\nu}$.
+\end{remark}
+
+\section{Where \texorpdfstring{$\zeta$}{zeta} enters}
+\label{sec:zeta}
+
+\noindent\emph{Status.} \eqref{eq:explicitM} is standard
+\cite[\S14.27]{Titchmarsh1986}. \eqref{eq:explicitA} is obtained formally
+by the same contour method; its residues are checked, the contour details
+are not written out. Proposition~\ref{prop:dipoles} is original, with proof.
+
+\medskip
+
+The black curve depends on $M$ nonlinearly, through $\sqrt{H_\nu}$ and
+through the selection of $u_\nu,\tau_\nu,v_\nu$. No closed expression of its
+Mellin transform in terms of $\zeta$ is known to the author (version 5
+asserted that none exists; that assertion is unproved and is withdrawn). The
+nodes $u_\nu,v_\nu$ are zeros of $M$, and \emph{[under RH and simple zeros]}
+\begin{equation}
+\label{eq:explicitM}
+  M(x)=\sum_{\rho}\frac{x^\rho}{\rho\,\zeta'(\rho)}-2
+  +\sum_{n\ge1}\frac{(-1)^{n-1}(2\pi/x)^{2n}}{(2n)!\,n\,\zeta(2n+1)},
+\end{equation}
+for non-integer $x$, the sum over $\rho$ taken along a suitable sequence
+$|\gamma|<T_k\to\infty$ \cite[\S14.27]{Titchmarsh1986}. For
+$\widetilde{A}(x):=\int_0^xM(t)\,dt$ one has, for $\operatorname{Re}s>1$,
+\begin{equation}
+\label{eq:mellin_A}
+  \int_1^\infty \widetilde{A}(x)x^{-s-2}\,dx=\frac{1}{s(s+1)\zeta(s)}.
+\end{equation}
+Shifting the contour as in \cite[\S14.27]{Titchmarsh1986} and collecting the
+residues at $\rho$, at $s=0$ ($\zeta(0)=-\tfrac12$) and at $s=-1$
+($\zeta(-1)=-\tfrac1{12}$), one formally arrives at \emph{[under RH and
+simple zeros]}
+\begin{equation}
+\label{eq:explicitA}
+  \widetilde{A}(x)=\sum_\rho\frac{x^{\rho+1}}{\rho(\rho+1)\zeta'(\rho)}
+  -2x+12+O(x^{-1}).
+\end{equation}
+The factor $(\rho+1)^{-1}$ improves convergence subject to the size of
+$1/\zeta'(\rho)$; hypotheses of Gonek--Hejhal type controlling this are
+discussed in \cite{Ng2004}. The area of $\Msk$ differs from
+$\widetilde{A}$ by explicit local terms:
+
+\begin{proposition}[Dipole identity]
+\label{prop:dipoles}
+\emph{[unconditional]} For each excursion let its \emph{legs} be the integer
+sets $\lambda=(u_\nu,\tau_\nu]\cap\mathbb{Z}$ and $(\tau_\nu,v_\nu]\cap\mathbb{Z}$,
+with midpoints $c_\lambda=(u_\nu+\tau_\nu)/2$ and $(\tau_\nu+v_\nu)/2$. Then
+for every zero $v_k$,
+\begin{equation}
+\label{eq:dipoles}
+  \int_0^{v_k}\Msk(t)\,dt=\widetilde{A}(v_k)
+  +\sum_{\lambda\subset(0,v_k]}\ \sum_{m\in\lambda}\mu(m)\,(m-c_\lambda).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On an ascent leg, $\int_{u}^{\tau}\Msk=\sigma H a/2$ and
+$\int_u^\tau M=\sum_{m=u+1}^{\tau}\mu(m)(\tau-m)$, while
+$\sigma H=\sum_{m=u+1}^{\tau}\mu(m)$; the difference is
+$\sum_m\mu(m)(a/2-\tau+m)=\sum_m\mu(m)(m-c_\lambda)$. On a descent leg,
+$\int_\tau^v\Msk=\sigma Hb/2$ and
+$\int_\tau^vM=b\,\sigma H+\sum_{m=\tau+1}^{v}\mu(m)(v-m)$ with
+$\sum_{m=\tau+1}^{v}\mu(m)=-\sigma H$; the difference is
+$\sum_m\mu(m)(m-(v-b/2))$. Sum over legs.
+\end{proof}
+
+\section{Bounds}
+\label{sec:bounds}
+
+\noindent\emph{Status.} Original, elementary; the input bounds for $M$ are
+standard \cite{Walfisz1963,OdlyzkoTeRiele1985,KotnikTeRiele2006}.
+Lemma~\ref{lem:transfer} corrects the hypothesis of version 5;
+Remarks~\ref{rem:onedirection} and~\ref{rem:omega} correct overstatements.
+
+\begin{lemma}[Transfer]
+\label{lem:transfer}
+\emph{[unconditional]} Let $x\ge1$ and let $x^*\ge x$ be the first zero of
+$M$ not smaller than $x$ (or $N$ in the terminal block). If
+$|M(n)|\le c\,n^{1/2}$ for all $1\le n\le x^*$ (so necessarily $c\ge1$),
+then
+\begin{equation}
+\label{eq:transfer_bound}
+  |\Ms(t)|\le c^{1/2}t^{1/4}\quad(0\le t\le x),\qquad
+  \Ap(x)+|\Am(x)|\le\tfrac45\,c^{1/2}x^{5/4}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $t\ge\tau_\nu$, $|\Ms(t)|\le\sqrt{H_\nu}\le c^{1/2}\tau_\nu^{1/4}\le
+c^{1/2}t^{1/4}$. For $u_\nu\le t\le\tau_\nu$ the chord from $(u_\nu,0)$ to
+$(\tau_\nu,\sqrt{H_\nu})$ lies below the concave function $c^{1/2}t^{1/4}$,
+which is $\ge0$ at $u_\nu$ and $\ge\sqrt{H_\nu}$ at $\tau_\nu\le x^*$.
+Integrate.
+\end{proof}
+
+\begin{corollary}
+\label{cor:uncond}
+\emph{[unconditional]} From the Vinogradov--Korobov bound
+\cite{Walfisz1963}
+\begin{equation}
+\label{eq:VK_M}
+  M(x)\ll x\exp\bigl(-c(\log x)^{3/5}(\log\log x)^{-1/5}\bigr)
+\end{equation}
+one obtains
+\begin{equation}
+\label{eq:uncond_area}
+  \Ap(x)+|\Am(x)|\ll x^{3/2}\exp\bigl(-\tfrac c2(\log x)^{3/5}(\log\log x)^{-1/5}\bigr).
+\end{equation}
+\end{corollary}
+
+\begin{corollary}
+\label{cor:rh}
+\emph{[unconditional implication]} If RH holds, then
+\begin{equation}
+\label{eq:rh_area}
+  \Ap(x)+|\Am(x)|\ll x^{5/4+\eps}.
+\end{equation}
+Consequently, if $\Ap(x)+|\Am(x)|\gg x^{5/4+\eps}$ along a sequence, RH is
+false.
+\end{corollary}
+
+\begin{remark}[One direction only, as far as known]
+\label{rem:onedirection}
+Since $\ell_\nu\ge2H_\nu$, a bound $\sqrt{H_\nu}\ell_\nu\ll x^{5/4+\eps}$
+yields only $H_\nu\ll x^{5/6+\eps}$, hence only the zero-free half-plane
+$\operatorname{Re}s>5/6$. Version 5 called the black curve ``a refutation
+test, not a criterion''. Whether \eqref{eq:rh_area} is equivalent to RH is
+\emph{unresolved}; the direct route fails, which is all that is shown.
+\end{remark}
+
+\begin{remark}[Oscillation of the heights]
+\label{rem:omega}
+Since $\limsup M(x)x^{-1/2}>1.06$ and $\liminf M(x)x^{-1/2}<-1.009$
+\cite{OdlyzkoTeRiele1985} (improved in \cite{KotnikTeRiele2006}), there are
+infinitely many $n$ with $M(n)>1.06\sqrt n$; the excursion containing $n$
+has $u_\nu<n$, so $H_\nu>1.06\,u_\nu^{1/2}$ for infinitely many positive
+excursions, and similarly for negative ones. Version 5 claimed
+$H_\nu\gg v_\nu^{1/2-\eps}$; this is \emph{not justified}, since $v_\nu$
+may be much larger than $n$.
+\end{remark}
+
+\section{Criteria equivalent to RH}
+\label{sec:criteria}
+
+\noindent\emph{Status.} The Mellin identity \eqref{eq:mellin_M} is standard
+\cite{MontgomeryVaughan2007}; the equivalences, pruning results and
+Corollary~\ref{cor:pruned_local} are original, with proofs.
+Heuristics~\ref{heu:renewal} and~\ref{heu:local_fails} are heuristic.
+
+\medskip
+
+For $\operatorname{Re}s>1$,
+\begin{equation}
+\label{eq:mellin_M}
+  \int_1^\infty M(x)x^{-s-1}\,dx=\frac{1}{s\,\zeta(s)} .
+\end{equation}
+If $\int_1^\infty|M(x)|x^{-\sigma-1}dx<\infty$ for every $\sigma>1/2$, the
+left side continues analytically to $\operatorname{Re}s>1/2$, so $\zeta$ has
+no zeros there.
+
+\begin{proposition}[$L^1$ criterion]
+\label{prop:L1}
+\emph{[unconditional]} RH holds if and only if, for every $\eps>0$,
+\begin{equation}
+\label{eq:L1_criterion}
+  \sum_{v_\nu\le x}\beta_\nu+\beta_{\rm term}(x)=\sum_{n\le x}|M(n)|
+  \ll x^{3/2+\eps}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+RH gives $M(x)\ll x^{1/2+\eps}$ \cite[\S14.25]{Titchmarsh1986}. Conversely,
+by partial summation \eqref{eq:L1_criterion} gives
+$\sum_n|M(n)|n^{-\sigma-1}<\infty$ for $\sigma>1/2+\eps$, and $M$ is
+constant on $[n,n+1)$; apply the remark after \eqref{eq:mellin_M}.
+\end{proof}
+
+\begin{lemma}[Pruning]
+\label{lem:pruning}
+\emph{[unconditional]} $\beta_\nu\le H_\nu\ell_\nu\le\ell_\nu^2/2$, hence
+\begin{equation}
+\label{eq:pruning}
+  \sum_{v_\nu\le x,\ \ell_\nu\le L_0}\beta_\nu\le\frac{xL_0}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{corollary}[Reduction to long excursions]
+\label{cor:long}
+\emph{[unconditional]} For fixed $\delta\ge0$ and $L_0=x^{1/2-\delta}$, RH
+holds if and only if
+\begin{equation}
+\label{eq:long_reduction}
+  \sum_{v_\nu\le x,\ \ell_\nu>L_0}\beta_\nu+\beta_{\rm term}(x)\ll x^{3/2+\eps}
+  \quad\text{for every }\eps>0,
+\end{equation}
+where the terminal block is included when its length exceeds $L_0$. At most
+$x/L_0$ excursions are involved.
+\end{corollary}
+
+\begin{remark}[The $\sqrt{x}$ frontier]
+\label{rem:sqrt_frontier}
+The cut may even depend on $\eps$: with $L_0=x^{1/2+\eps/2}$ the discarded
+part is $\le x^{3/2+\eps/2}/2$. The frontier is therefore $x^{1/2+o(1)}$;
+what requires new information is a cut $x^{\theta}$ with a fixed
+$\theta>1/2$ (version 5 stated the frontier as $x^{1/2}$).
+\end{remark}
+
+\begin{heuristic}[Renewal tail]
+\label{heu:renewal}
+This is a heuristic argument. If excursion lengths behave like those of a
+recurrent random walk,
+\begin{equation}
+\label{eq:renewal_tail}
+  \#\{v_\nu\le x:\ \ell_\nu>L\}\asymp\sqrt{x}\,L^{-1/2},
+\end{equation}
+and with $\beta_\nu\asymp c_\beta\ell_\nu^{3/2}$ the dyadic range
+$[L,2L]$ contributes $\asymp\sqrt{x}\,L$ to \eqref{eq:L1_criterion}, so the
+terminal scales dominate.
+\end{heuristic}
+
+\begin{remark}[Limit of pruning]
+\label{rem:pruning_limit}
+For $\ell_\nu\asymp x$ the trivial bound gives $\beta_\nu\ll x^2$ against a
+budget $x^{3/2+\eps}$: a factor $x^{1/2}$ is missing, and there are only
+$O(1)$ such excursions.
+\end{remark}
+
+\begin{theorem}[Correlation criterion]
+\label{thm:corr-criterion}
+\emph{[unconditional]} RH holds if and only if, for every $\eps>0$,
+\begin{equation}
+\label{eq:RH-corr}
+  \sum_{n\le x}M(n)^2=\sum_{v_\nu\le x}Q_\nu+Q_{\rm term}(x)
+  =-\sum_{v_\nu\le x}\sum_{h}hC^{(\nu)}_h+Q_{\rm term}(x)\ll x^{2+\eps}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+RH gives $M\ll x^{1/2+\eps}$. Conversely Cauchy--Schwarz gives
+$\sum_{n\le x}|M(n)|\le x^{1/2}(\sum M^2)^{1/2}\ll x^{3/2+\eps/2}$; apply
+Proposition~\ref{prop:L1}.
+\end{proof}
+
+\begin{corollary}[Local sufficient condition, version 5]
+\label{cor:local-corr-sufficient}
+\emph{[unconditional implication]} If for every $\eps>0$ there is
+$C_\eps$ with
+\begin{equation}
+\label{eq:local_Q}
+  Q_\nu\le C_\eps\,\ell_\nu^{2+\eps}\quad\text{for every excursion
+  (including the terminal block)},
+\end{equation}
+then RH holds.
+\end{corollary}
+
+\begin{heuristic}[The hypothesis of Corollary~\ref{cor:local-corr-sufficient} fails]
+\label{heu:local_fails}
+This is a heuristic argument. In a model where, after a zero of $M$, the next
+values of $\mu$ behave locally at random with squarefree density $6/\pi^2$,
+the pattern ``$k$ non-zero steps of one sign followed by $k$ of the other''
+follows a given zero with probability $\ge c_0^{-k}$. Since $M$ has
+infinitely many zeros, excursions with $H_\nu=k$ and $\ell_\nu\asymp k$
+should occur with $k\to\infty$. By \eqref{eq:height_Q_min}
+$Q_\nu/\ell_\nu^{2+\eps}\gg k^{1-\eps}\to\infty$, so \eqref{eq:local_Q}
+fails for every $\eps\in(0,1)$; for $\eps\ge1$ it is trivially true by
+\eqref{eq:Q_upper}. Version 5 called the condition ``sufficient but not
+weak''; heuristically it is never satisfied.
+\end{heuristic}
+
+\begin{corollary}[Pruned local condition]
+\label{cor:pruned_local}
+\emph{[unconditional implication]} If for every $\eps>0$ there is $C_\eps$
+with
+\begin{equation}
+\label{eq:pruned_Q}
+  Q_\nu\le C_\eps\,\ell_\nu^{2+\eps}\quad\text{whenever }\ell_\nu>v_\nu^{1/2}
+\end{equation}
+(and likewise for the terminal block when its length exceeds $x^{1/2}$),
+then RH holds.
+\end{corollary}
+
+\begin{proof}
+By \eqref{eq:Q_upper}, excursions with $\ell_\nu\le v_\nu^{1/2}\le x^{1/2}$
+satisfy $Q_\nu\le\ell_\nu^3/4\le\ell_\nu x/4$, and these sum to at most
+$x^2/4$. The others contribute $\le C_\eps\sum\ell_\nu^{2+\eps}\le
+C_\eps x^{2+\eps}$. Apply Theorem~\ref{thm:corr-criterion}.
+\end{proof}
+
+\noindent The ballistic excursions of Heuristic~\ref{heu:local_fails} have
+$\ell_\nu\asymp k\ll v_\nu^{1/2}$ and do not contradict \eqref{eq:pruned_Q}.
+
+\begin{remark}[Scale of the correlation sums]
+\label{rem:chowla-scale}
+Under the crude model in which ``$j$ squarefree'' and ``$j+h$ squarefree''
+are independent with probability $6/\pi^2$ each,
+$P_h\approx(6/\pi^2)^2(L-h)$ and
+\begin{equation}
+\label{eq:chowla_crude}
+  \sum_{h<L}hP_h\approx\Bigl(\frac{6}{\pi^2}\Bigr)^2\sum_{h<L}h(L-h)
+  \approx\frac{6}{\pi^4}L^3\approx0.0616\,L^3 .
+\end{equation}
+Version 5 gave $\tfrac12(6/\pi^2)^2L^3\approx0.18L^3$, omitting the factor
+$L-h$; that constant is \emph{incorrect}, the order $L^3$ stands. For
+$|\sum_hhC_h|$ of size $B(\sum_hh^2)^{1/2}\asymp BL^{3/2}$ to be $O(L^2)$ one
+needs $B=O(\sqrt L)$ (a calibration, not a proof).
+\end{remark}
+
+\begin{remark}[Conditioning on the bridge]
+\label{rem:conditioning}
+Inside an excursion the correlations are constrained by
+\eqref{eq:Qcorr}, \eqref{eq:zeroth-corr} and by the geometry of the bridge;
+with the defect $d_\nu:=\ell_\nu/2-H_\nu\ge0$, a third constraint of this
+type is a research direction, not a result.
+\end{remark}
+
+\begin{theorem}[Energy criterion]
+\label{thm:energy}
+\emph{[unconditional]} Define, with $u$ the last zero $\le x$ and
+$H_{\rm run}(x)=\max_{u<n\le x}|M(n)|$,
+\begin{equation}
+\label{eq:energy_def}
+  \En(x):=\frac14\Bigl(\sum_{v_\nu\le x}H_\nu\ell_\nu+(x-u)H_{\rm run}(x)\Bigr).
+\end{equation}
+For a complete excursion $\tfrac14H_\nu\ell_\nu=\int_{I_\nu}(J')^2$, where
+$J$ interpolates $\Anet$ linearly between consecutive zeros; for the
+terminal block this interpretation does not hold and \eqref{eq:energy_def} is
+a definition. Then
+\begin{equation}
+\label{eq:energy_sandwich}
+  \sum_{n\le x}|M(n)|\le4\En(x)\le x\max_{n\le x}|M(n)|,
+\end{equation}
+and RH holds if and only if $\En(x)\ll x^{3/2+\eps}$ for every $\eps>0$.
+\end{theorem}
+
+\begin{proof}
+$\beta_\nu\le H_\nu\ell_\nu$ and $\sum\ell_\nu\le x$; apply
+Proposition~\ref{prop:L1}.
+\end{proof}
+
+\section{Trial-division horizon of an excursion}
+\label{sec:prime_horizon}
+
+\noindent\emph{Status.} Lemma~\ref{lem:square-horizon} is standard (trial
+division). Warning~\ref{warn:information_language},
+Lemma~\ref{lem:rough_part} and Proposition~\ref{prop:double-exp} are
+original and elementary. Question~\ref{q:finiteness_expanding} is open.
+
+\begin{lemma}[Square horizon]
+\label{lem:square-horizon}
+\emph{[unconditional]} Let $u\ge2$. Trial division by the primes $p\le u$
+alone determines $\mu(n)$ for every $n\le u^2$.
+\end{lemma}
+
+\begin{proof}
+Remove the prime factors $p\le u$ of $n$; if one occurs twice, $\mu(n)=0$.
+The cofactor $q\le n\le u^2$ has all prime factors $>u$, so it is $1$ or a
+single prime (two such factors would give $q>u^2$).
+\end{proof}
+
+\begin{warning}[On the word ``information'']
+\label{warn:information_language}
+Version 5 described primes $>u$ as information not available at the start
+$u$ of an excursion. In the logical sense this is \emph{incorrect}: the
+primes $\le u$ determine, by the sieve of Eratosthenes, all primes $\le u^2$,
+and by iteration all primes. What Lemma~\ref{lem:square-horizon} measures is
+\emph{sieve depth}. In Sections~\ref{sec:prime_horizon}
+to~\ref{sec:local_large_prime} the words ``known'', ``new'' and
+``information'' are used only in this sense.
+\end{warning}
+
+\begin{definition}[Smooth and rough parts]
+\label{def:smooth_rough}
+For $y\ge1$ write $n=s_y(n)\,r_y(n)$, where every prime factor of $s_y(n)$
+is $\le y$ and every prime factor of $r_y(n)$ is $>y$. Let $\Pp(n)$ be the
+largest prime factor of $n$, with $\Pp(1)=1$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:rough_part}
+\emph{[unconditional]}
+\begin{equation}
+\label{eq:mu_split}
+  \mu(n)=\mu\bigl(s_y(n)\bigr)\,\mu\bigl(r_y(n)\bigr);
+\end{equation}
+if $n<y^k$ then $\Omega(r_y(n))\le k-1$, and if $n\le y^2$ then $r_y(n)$ is
+$1$ or a prime.
+\end{lemma}
+
+\begin{proof}
+The two parts are coprime. If $\Omega(r)\ge1$ then $y^{\Omega(r)}<r\le n$.
+\end{proof}
+
+\begin{definition}[Self-contained and expanding excursions]
+\label{def:info-excursion}
+An excursion is \emph{information-self-contained} if $v_\nu\le u_\nu^2$ and
+\emph{information-expanding} if $v_\nu>u_\nu^2$ (names kept from version 5,
+read in the sense of Warning~\ref{warn:information_language}). The fraction
+of $I_\nu$ below $u_\nu^2$ is
+\begin{equation}
+\label{eq:known-fraction}
+  \vartheta_\nu=\min\Bigl\{1,\frac{u_\nu^2-u_\nu}{\ell_\nu}\Bigr\}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Double-exponential separation]
+\label{prop:double-exp}
+\emph{[unconditional]} Let $a_1<a_2<\dots$ be the starting points $\ge2$ of
+information-expanding excursions. Then
+\begin{equation}
+\label{eq:double-exp-separation}
+  a_{j+1}>a_j^2,\qquad a_j\ge a_1^{2^{j-1}}\ (j\ge1),
+\end{equation}
+with strict inequality in the second relation for $j\ge2$ (version 5 stated
+it strictly for all $j$, which fails at $j=1$). Hence
+\begin{equation}
+\label{eq:loglog-exception-count}
+  N_{\rm new}(X):=\#\{j:\ a_j\le X\}\le1+\log_2\frac{\log X}{\log2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+An expanding excursion starting at $a_j$ ends beyond $a_j^2$, and the next
+one starts at or after that end.
+\end{proof}
+
+\begin{question}
+\label{q:finiteness_expanding}
+Are there only finitely many information-expanding excursions?
+Equivalently: does $M$ vanish in $(x,x^2]$ for every sufficiently large $x$?
+(If the zeros $u\ge x_0$ all have a zero in $(u,u^2]$, apply this to the
+last zero $\le x$; the converse is immediate.) No unconditional result of
+this form has been located; results counting sign changes of arithmetic
+error terms and lower bounds for the mean of $|M|$ do not give it.
+\end{question}
+
+\begin{remark}[The horizon $u^2$ is not the multiplicative threshold of an excursion]
+\label{rem:horizon_inactive}
+For a self-contained excursion $\sqrt{v_\nu}\le u_\nu$. Every $n\le v_\nu$
+has at most one prime factor $>\sqrt{v_\nu}$, so the threshold that governs
+the multiplicative structure inside $I_\nu$ is $\sqrt{v_\nu}$, which lies
+below $u_\nu$. The split ``known/new'' at $u_\nu$ does not match it, and for
+a self-contained excursion the regime $t>u_\nu^2$ of
+Section~\ref{sec:prime_copy_propagation} lies beyond $v_\nu$. That section
+is therefore about $M(t)$, not about a single excursion;
+Section~\ref{sec:local_large_prime} gives the local version.
+\end{remark}
+
+\section{Large-prime decomposition at level \texorpdfstring{$u^2$}{u^2}}
+\label{sec:prime_copy_propagation}
+
+\noindent\emph{Status.} All identities are original and elementary. The
+asymptotic statements use only the prime number theorem with classical error
+term and the Vinogradov--Korobov bound
+\cite{MontgomeryVaughan2007,Walfisz1963}, and are proved here. Several
+statements of version 5 are corrected; see
+Warnings~\ref{warn:v5_Ny}, \ref{warn:v5_main_term},
+\ref{warn:margin_vacuous} and~\ref{warn:v5_calibration}.
+
+\begin{definition}[Baseline and large-prime part]
+\label{def:baseline_channel}
+For $u\ge2$ and $t\ge1$ put
+\begin{equation}
+\label{eq:baseline_channel_def}
+  B_u(t):=\sum_{\substack{n\le t\\ \Pp(n)\le u^2}}\mu(n),\qquad
+  E_u(t):=\sum_{\substack{n\le t\\ \Pp(n)>u^2}}\mu(n),\qquad
+  M(t)=B_u(t)+E_u(t).
+\end{equation}
+Version 5 used an undefined ``baseline'' $B_u(t)$; \eqref{eq:baseline_channel_def}
+is the definition adopted here. In the window $u^2<t<u^4$, $E_u$ is the
+quantity $E_u^{(1)}$ of version 5.
+\end{definition}
+
+\begin{proposition}[Single-prime copy]
+\label{prop:single_prime_copy}
+\emph{[unconditional]} For a prime $p$ and $t<p^2$,
+\begin{equation}
+\label{eq:single-prime-copy}
+  \Delta_p(t):=\sum_{a\le t/p}\mu(ap)=-M(t/p).
+\end{equation}
+Only $p>\sqrt t$ is used; the condition $p>u^2$ of version 5 plays no role.
+\end{proposition}
+
+\begin{proof}
+$a\le t/p<p$, so $p\nmid a$ and $\mu(ap)=-\mu(a)$.
+\end{proof}
+
+\begin{proposition}[Sign content of one prime cone]
+\label{prop:prime-cone-signs}
+\emph{[unconditional]} Let $\Sq(y)=\sum_{a\le y}\mu(a)^2$. Among $ap$,
+$a\le y<p$, the numbers of values $+1,-1,0$ of $\mu$ are
+\begin{equation}
+\label{eq:cone_counts}
+  N_+=\frac{\Sq(y)-M(y)}{2},\qquad N_-=\frac{\Sq(y)+M(y)}{2},\qquad
+  N_0=\lfloor y\rfloor-\Sq(y),
+\end{equation}
+with limiting proportions $3/\pi^2,\ 3/\pi^2,\ 1-6/\pi^2$.
+\end{proposition}
+
+\begin{proposition}[Linear window]
+\label{prop:linear-new-primes}
+\emph{[unconditional]} If $u^2<t<u^4$, no $n\le t$ has two prime factors
+$>u^2$ (counted with multiplicity), and
+\begin{equation}
+\label{eq:first-order-total}
+  E_u(t)=-\sum_{u^2<p\le t}M(t/p).
+\end{equation}
+\end{proposition}
+
+\begin{proposition}[Prime-count form]
+\label{prop:prime_count_form}
+\emph{[unconditional]} For $u^2<t<u^4$ and $R:=t/u^2$,
+\begin{equation}
+\label{eq:prime_count_form}
+  E_u(t)=-\sum_{a\le R}\mu(a)\bigl(\pi(t/a)-\pi(u^2)\bigr),
+  \qquad
+  M(t)=B_u(t)-\sum_{a\le R}\mu(a)\pi(t/a)+M(R)\pi(u^2).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expand \eqref{eq:first-order-total} as
+$-\sum_{p}\sum_{a\le t/p}\mu(a)$ and interchange: for fixed $a$ the prime
+runs over $u^2<p\le t/a$, which is non-empty only if $a<R$.
+\end{proof}
+
+\begin{remark}[How the primes above $u^2$ enter]
+\label{rem:unknown_primes_enter}
+The only input from primes $>u^2$ is the value of $\pi$ at the points $t/a$,
+$a\le R$, weighted by $\mu(a)$ at the small scale $R<u^2$. Individual
+positions of those primes matter only through these counts.
+\end{remark}
+
+\begin{definition}[Copy multiplicities]
+\label{def:copy-multiplicity}
+For $u^2<t<u^4$, $R=t/u^2$ and $1\le y\le\lfloor R\rfloor$ put
+\begin{equation}
+\label{eq:Ny-exact}
+  N_y(t,u)=\#\Bigl\{p:\ \max\bigl(u^2,\tfrac{t}{y+1}\bigr)<p\le\tfrac ty\Bigr\},
+  \qquad
+  E_u(t)=-\sum_{1\le y\le R}N_y(t,u)M(y).
+\end{equation}
+\end{definition}
+
+\begin{remark}[Asymptotics of the multiplicities, corrected]
+\label{rem:copy-count-asymptotic}
+For fixed $R>1$ and $u\to\infty$,
+\begin{equation}
+\label{eq:Ny-fixed-R}
+  N_y\sim\frac{Ru^2}{2\log u}\cdot\frac1{y(y+1)}\quad(1\le y\le R-1),
+  \qquad
+  N_{\lfloor R\rfloor}\sim\frac{u^2}{2\log u}\Bigl(\frac R{\lfloor R\rfloor}-1\Bigr)
+  \quad(R\notin\mathbb{Z}),
+\end{equation}
+and $N_R=0$ if $R\in\mathbb{Z}$.
+\end{remark}
+
+\begin{warning}
+\label{warn:v5_Ny}
+Version 5 stated the first relation of \eqref{eq:Ny-fixed-R} for all $y<R$.
+This is \emph{incorrect} for $y=\lfloor R\rfloor$ when $R\notin\mathbb{Z}$,
+since then $t/(y+1)<u^2$.
+\end{warning}
+
+\begin{definition}[Coherent coefficient]
+\label{def:coherent_coefficient}
+\begin{equation}
+\label{eq:C_def}
+  \Cc(R):=\int_1^R\frac{M(w)}{w^2}\,dw
+  =\sum_{a\le R}\mu(a)\Bigl(\frac1a-\frac1R\Bigr)
+  =\sum_{a\le R}\frac{\mu(a)}a-\frac{M(R)}R .
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Fixed $R$, corrected]
+\label{prop:fixed_R_corrected}
+\emph{[unconditional]} For fixed $R>1$, as $u\to\infty$,
+\begin{equation}
+\label{eq:E_fixed_R}
+  E_u(Ru^2)=-\frac{Ru^2}{2\log u}\bigl(\Cc(R)+o(1)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+In \eqref{eq:prime_count_form} the sum is finite; for $a<R$ the prime number
+theorem gives $\pi(Ru^2/a)-\pi(u^2)\sim(R/a-1)u^2/(2\log u)$, and
+$\sum_{a\le R}\mu(a)(R/a-1)=R\,\Cc(R)$.
+\end{proof}
+
+\begin{lemma}[The coefficient of version 5]
+\label{lem:copy-weight-coefficient}
+\emph{[unconditional]} The coefficient $A(R)$ of version 5, here
+\begin{equation}
+\label{eq:Theta_def}
+  \Theta(R):=\sum_{1\le y\le R}\frac{M(y)}{y(y+1)}
+  =\sum_{n\le R}\frac{\mu(n)}n-\frac{M(R)}{\lfloor R\rfloor+1},
+\end{equation}
+satisfies
+\begin{equation}
+\label{eq:Theta_C}
+  \Theta(R)=\Cc\bigl(\lfloor R\rfloor+1\bigr),\qquad
+  \Cc(R)=\Theta(R)-M(R)\Bigl(\frac1R-\frac1{\lfloor R\rfloor+1}\Bigr),
+\end{equation}
+and
+\begin{equation}
+\label{eq:C_tail}
+  \Cc(R)=-\int_R^\infty\frac{M(w)}{w^2}\,dw,\qquad
+  \Theta(R)=-\sum_{n>R}\frac{M(n)}{n(n+1)}.
+\end{equation}
+Version 5 wrote $M(R)/(R+1)$ in \eqref{eq:Theta_def}; this is correct only
+for integer $R$.
+\end{lemma}
+
+\begin{proof}
+$M$ is constant on $[y,y+1)$ and $\int_y^{y+1}w^{-2}dw=1/(y(y+1))$. By
+\eqref{eq:mellin_M} and dominated convergence as $s\downarrow1$ (using
+$M(w)\ll we^{-c\sqrt{\log w}}$), $\int_1^\infty M(w)w^{-2}dw=0$.
+\end{proof}
+
+\begin{warning}[Main term of version 5]
+\label{warn:v5_main_term}
+Version 5 asserted $E_u^{(1)}(Ru^2)\sim-\frac{Ru^2}{2\log u}\Theta(R)$. By
+\eqref{eq:E_fixed_R} and \eqref{eq:Theta_C} this is \emph{correct only when
+$M(\lfloor R\rfloor)=0$}. For $1<R<2$ one has
+$E_u=-(\pi(t)-\pi(u^2))\sim-(R-1)\frac{u^2}{2\log u}$, whereas version 5
+gives $-\frac R2\cdot\frac{u^2}{2\log u}$.
+\end{warning}
+
+\begin{corollary}[Decay of the coefficients]
+\label{cor:AR-VK}
+\emph{[unconditional]} By \eqref{eq:C_tail} and \eqref{eq:VK_M},
+\begin{equation}
+\label{eq:AR-VK}
+  \Cc(R),\ \Theta(R)\ll\exp\bigl(-c_1(\log R)^{3/5}(\log\log R)^{-1/5}\bigr).
+\end{equation}
+\end{corollary}
+
+\begin{proposition}[Both parts are large]
+\label{prop:both_parts_large}
+\emph{[unconditional]}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For fixed $R>1$ with $\Cc(R)\ne0$,
+\begin{equation}
+\label{eq:E_fixed_R_size}
+  E_u(Ru^2)\sim-\frac{Ru^2}{2\log u}\Cc(R),\qquad
+  B_u(Ru^2)\sim+\frac{Ru^2}{2\log u}\Cc(R);
+\end{equation}
+for $1<R<2$, $\Cc(R)=1-1/R>0$.
+\item There is $C>0$ such that, as $t\to\infty$, uniformly for $u^2<t<u^4$
+with $R=t/u^2\ge\exp(C(\log\log t)^2)$,
+\begin{equation}
+\label{eq:E_log2}
+  E_u(t)=(1+o(1))\frac{t}{(\log t)^2},\qquad
+  B_u(t)=-(1+o(1))\frac{t}{(\log t)^2}.
+\end{equation}
+\end{enumerate}
+In both regimes $|E_u(t)|$ and $|B_u(t)|$ exceed $t^{1/2+\eps}$ for every
+fixed $\eps<1/2$ and all large $t$.
+\end{proposition}
+
+\begin{proof}
+We use \cite{MontgomeryVaughan2007}: for some $c>0$,
+\begin{equation}
+\label{eq:pnt_inputs}
+  \pi(y)=\li(y)+O\bigl(ye^{-c\sqrt{\log y}}\bigr),\quad
+  M(y)\ll ye^{-c\sqrt{\log y}},\quad
+  \mt(y):=\sum_{a\le y}\frac{\mu(a)}a\ll e^{-c\sqrt{\log y}},
+\end{equation}
+and $\sum_{n\ge1}\mu(n)\log n/n=-1$ (the value at $s=1$ of
+$\zeta'(s)/\zeta(s)^2$). Hence
+\begin{equation}
+\label{eq:mtilde_integral}
+  \int_1^\infty\mt(w)\frac{dw}w
+  =\lim_{Y\to\infty}\Bigl(\mt(Y)\log Y-\sum_{a\le Y}\frac{\mu(a)\log a}a\Bigr)=1,
+\end{equation}
+with absolute convergence.
+
+(i) Proposition~\ref{prop:fixed_R_corrected}, and $M(t)=o(t/\log t)$. For
+$1<R<2$, $M=1$ on $[1,2)$.
+
+(ii) Since $t<u^4$, $R<\sqrt t$, so $\log(t/a)\ge\frac12\log t$ for
+$a\le R$. By \eqref{eq:prime_count_form},
+\begin{equation}
+\label{eq:E_three_terms}
+  E_u(t)=-\sum_{a\le R}\mu(a)\li(t/a)
+  -\sum_{a\le R}\mu(a)\bigl(\pi(t/a)-\li(t/a)\bigr)+M(R)\pi(u^2).
+\end{equation}
+The second term is $\ll t(1+\log R)e^{-c\sqrt{\log t/2}}=o(t/\log^2t)$. The
+third is $\ll Re^{-c\sqrt{\log R}}\cdot u^2/\log u\ll e^{-c\sqrt{\log R}}\,
+t/\log t$, which is $o(t/\log^2t)$ once $c\sqrt C>1$. For the first, with
+$F(w)=w\li(t/w)$,
+\begin{equation}
+\label{eq:partial_summation_li}
+  \sum_{a\le R}\mu(a)\li(t/a)=\mt(R)F(R)-\int_1^R\mt(w)F'(w)\,dw,
+  \qquad
+  F'(w)=\li(t/w)-\frac{t/w}{\log(t/w)}=\frac{t/w}{\log^2(t/w)}\Bigl(1+O\Bigl(\frac1{\log t}\Bigr)\Bigr).
+\end{equation}
+The boundary term is $\ll e^{-c\sqrt{\log R}}t/\log t=o(t/\log^2t)$. The
+integral equals
+$\frac t{\log^2t}\bigl(\int_1^R\mt(w)g_t(w)\frac{dw}w+O(1/\log t)\bigr)$ with
+$g_t(w)=\log^2t/\log^2(t/w)\in[1,4]$ and $g_t\to1$ pointwise; by dominated
+convergence and \eqref{eq:mtilde_integral} it is $(1+o(1))t/\log^2t$. Hence
+$E_u(t)=(1+o(1))t/\log^2t$, and $B_u=M-E_u$ with $M(t)=o(t/\log^2t)$.
+\end{proof}
+
+\begin{remark}[Why $t/\log^2t$]
+\label{rem:why_log2}
+$\Cc(R)$ captures only the $1/\log t$ term, which tends to zero. The
+$1/\log^2t$ term comes from $\zeta'(s)/\zeta(s)^2\to-1$, that is, from the
+pole of $\zeta$ at $s=1$, and it does not decay in $R$. The version 5 claim
+that the ``coherent fraction tends to zero'' is true for the first term and
+does not describe the size of $E_u$.
+\end{remark}
+
+\begin{definition}[Remaining margin, version 5]
+\label{def:remaining-margin}
+For a target $T(t)=t^{1/2+\eps}$ put
+\begin{equation}
+\label{eq:margin-def}
+  G_{u,\eps}(t)=\max\bigl(0,\ T(t)-|B_u(t)|\bigr),
+\end{equation}
+and call the large-prime part \emph{causally responsible} for a crossing of
+$T$ if $|E_u(t)|\ge G_{u,\eps}(t)$ at the crossing.
+\end{definition}
+
+\begin{warning}[The margin is vacuous]
+\label{warn:margin_vacuous}
+With $B_u$ as in \eqref{eq:baseline_channel_def},
+Proposition~\ref{prop:both_parts_large} gives $|B_u(t)|>T(t)$, hence
+$G_{u,\eps}(t)=0$, for all large $t$ in both regimes. The test is always
+passed and does not discriminate. ``Causal responsibility'' of one of two
+cancelling terms of size $t/\log^kt$ for the value of their sum is not well
+defined.
+\end{warning}
+
+\begin{warning}[Calibration remarks of version 5]
+\label{warn:v5_calibration}
+Version 5 required $|A(R)|\ll t^{-1/2+\eps}\log t$ for the large-prime part
+to stay at the RH scale, and for $t=u^\alpha$ derived
+$|A(R)|\ll R^{-\eta(\alpha,\eps)}$ with
+$\eta=\alpha(1/2-\eps)/(\alpha-2)$ ($\eta=3/2,1,3/4,5/8$ at
+$\alpha=3,4,6,10$). These remarks are \emph{superseded}: the coefficient is
+$\Cc$, not $\Theta$ (Warning~\ref{warn:v5_main_term}); for $\alpha>4$ the
+point $t$ lies outside the window of
+Proposition~\ref{prop:linear-new-primes}, where
+\eqref{eq:single-prime-copy} fails for $u^2<p\le\sqrt t$; and by
+Proposition~\ref{prop:both_parts_large}, $E_u$ alone is never at the RH
+scale, so only $B_u+E_u=M$ can be compared with $T$.
+\end{warning}
+
+\begin{remark}[First copy transitions]
+\label{rem:first-copy-transitions}
+For $1<R<2$ every copy has length $1$ and
+$E_u(t)=-(\pi(t)-\pi(u^2))$, consistent with $\Cc(R)=1-1/R$. For $2<R<3$
+copies of length $2$ appear but $M(2)=0$ ($\Cc=1/2$). For $3<R<4$ copies of
+length $3$ enter with $M(3)=-1$, of opposite net sign.
+\end{remark}
+
+\section{Local large-prime decomposition of an excursion}
+\label{sec:local_large_prime}
+
+\noindent\emph{Status.} Proposition~\ref{prop:local_large_prime} and
+Lemma~\ref{lem:inverse_log_sum} are original, with proofs; the input on
+primes in short intervals is from the literature \cite{Huxley1972};
+Heuristic~\ref{heu:local_drift} is heuristic.
+
+\begin{proposition}[Local decomposition]
+\label{prop:local_large_prime}
+\emph{[unconditional]} Let $I_\nu=(u,v]$ be a complete excursion and
+$y=\sqrt v$. For $u<t\le v$,
+\begin{equation}
+\label{eq:local_split}
+  M(t)=\sum_{\substack{u<n\le t\\ \Pp(n)\le y}}\mu(n)
+  -\sum_{a<y}\mu(a)\,\Pi_a(t),\qquad
+  \Pi_a(t):=\#\Bigl\{p:\ \max\bigl(y,\tfrac ua\bigr)<p\le\tfrac ta\Bigr\},
+\end{equation}
+and in particular the bridge condition $M(v)=0$ reads
+\begin{equation}
+\label{eq:local_bridge}
+  \sum_{\substack{u<n\le v\\ \Pp(n)\le\sqrt v}}\mu(n)
+  =\sum_{a<\sqrt v}\mu(a)\,\Pi_a(v).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$M(u)=0$. An $n\le v=y^2$ has at most one prime factor $p>y$; then
+$n=ap$ with $a<v/y=y<p$, so $\mu(n)=-\mu(a)$, and $(a,p)\mapsto ap$ is a
+bijection onto these $n$.
+\end{proof}
+
+\begin{remark}[What the large primes do inside an excursion]
+\label{rem:local_meaning}
+The decomposition holds for every excursion, with threshold $\sqrt{v_\nu}$
+and no horizon $u_\nu^2$. The large-prime input consists of prime counts in
+the intervals $(u/a,t/a]$, of length at most $\ell_\nu/a$ at height about
+$v_\nu/a$. The asymptotic $\pi(x)-\pi(x-h)\sim h/\log x$ is known for
+$x^\theta\le h\le x$ with fixed $\theta>7/12$ \cite{Huxley1972}, and not for
+shorter intervals. Already for $a=1$, excursions with
+$\ell_\nu<v_\nu^{7/12}$ have large-prime input without an unconditional
+asymptotic.
+\end{remark}
+
+\begin{lemma}[Möbius-weighted inverse logarithms]
+\label{lem:inverse_log_sum}
+\emph{[unconditional]} With $C$ as in
+Proposition~\ref{prop:both_parts_large}, uniformly for
+$\exp(C(\log\log x)^2)\le z\le\sqrt x$,
+\begin{equation}
+\label{eq:inverse_log_sum}
+  \sum_{a\le z}\frac{\mu(a)}{a\log(x/a)}=-\frac{1+o(1)}{(\log x)^2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Partial summation gives
+$\mt(z)/\log(x/z)-\int_1^z\mt(w)\,dw/(w\log^2(x/w))$; argue as in the proof
+of Proposition~\ref{prop:both_parts_large}.
+\end{proof}
+
+\begin{heuristic}[Opposite drifts]
+\label{heu:local_drift}
+This is a heuristic argument. Let $u\ge\sqrt v\exp(C(\log\log v)^2)$. Near
+$t\in I_\nu$ the counts $\Pi_a$ grow for $a<t/\sqrt v$, at rate
+$1/(a\log(t/a))$ if primes near $t/a$ have their expected local density
+uniformly in $a$ (beyond what is known). Ignoring these difficulties, over
+$(t,t+h]$ the large-prime part changes by about
+$-h\sum_{a<t/\sqrt v}\mu(a)/(a\log(t/a))=(1+o(1))h/\log^2t$ by
+Lemma~\ref{lem:inverse_log_sum}. Since $M(v)-M(u)=0$, the
+$\sqrt v$-smooth part drifts at rate about $-1/\log^2v$. The drift does not
+depend on $\sigma_\nu$. For $\ell_\nu\gg(\log v_\nu)^4$ both parts exceed
+$\sqrt{\ell_\nu}$, and \eqref{eq:local_bridge} is a balance between two
+opposite drifts: the local analogue of
+Proposition~\ref{prop:both_parts_large}.
+\end{heuristic}
+
+\section{A model for the black curve}
+\label{sec:model}
+
+\noindent\emph{Status.} Heuristic throughout.
+
+\begin{heuristic}[Scale and period]
+\label{heu:model}
+This is a heuristic argument. Motivated by \eqref{eq:explicitM}, one is led
+to model $M(x)\approx\sqrt x\,F(\log x)$ with $F$ almost periodic, dominated
+at low frequency by $\gamma_1=14.1347\ldots$. Within an excursion of length
+$\asymp x$ this suggests $H_\nu\asymp\sqrt x$ and
+$\sqrt{H_\nu}\ell_\nu\asymp x^{5/4}$, so the black curve should oscillate at
+scale
+\begin{equation}
+\label{eq:model_scale}
+  |\Anet(x)|\asymp x^{5/4},
+\end{equation}
+with a period $2\pi/\gamma_1$ in $\log x$, that is, a factor
+$e^{2\pi/\gamma_1}\approx1.56$ in $x$.
+\end{heuristic}
+
+\section{Numerical data}
+\label{sec:data}
+
+\noindent\emph{Status.} Observations recorded in version 5; no new
+computation was carried out for version 6.
+
+\begin{experiment}[Excursion census]
+\label{exp:census}
+\emph{Object:} the excursion data $(u_\nu,\tau_\nu,v_\nu,H_\nu,\sigma_\nu)$
+and the curves $\Ap,\Am,\Anet$.
+\emph{Range:} $n\le N=455\,052\,511$, with $Z(N)=87\,385$ excursions.
+\emph{Expected outcome:} the bound \eqref{eq:transfer_bound}; the prediction
+$Z(N)N^{-1/4}\approx6.0\times10^2$ excursions longer than
+$\sqrt N\approx2.13\times10^4$ from Heuristic~\ref{heu:renewal}.
+\emph{Observed outcome (version 5):}
+\begin{equation}
+\label{eq:census_values}
+  \Ap(N)=6.3449\times10^9,\quad \Am(N)=-7.0877\times10^9,\quad
+  \Anet(N)=-7.4279\times10^8,
+\end{equation}
+\begin{equation}
+\label{eq:census_max}
+  \max_\nu\frac{H_\nu}{\sqrt{\ell_\nu}}=2.0743,\qquad
+  \max_\nu\frac{\beta_\nu}{\ell_\nu^{3/2}}=1.0214 .
+\end{equation}
+The count of excursions longer than $\sqrt N$ and the maxima restricted to
+$\ell_\nu>\sqrt N$ were not recorded. At this range $N^{0.05}\approx2.7$, so
+factors $x^\eps$ are not separable from constants.
+\end{experiment}
+
+\begin{warning}[Constant in the transfer bound]
+\label{warn:census_c}
+Version 5 compared $|\Anet(N)|$ with \eqref{eq:transfer_bound} using
+$c=\max_{10^3\le n\le N}|M(n)|n^{-1/2}$, reporting a bound about $30$ times
+larger than $|\Anet(N)|$. That $c$ does not satisfy the hypothesis of
+Lemma~\ref{lem:transfer}, which requires all $n\le x^*$; since $M(1)=1$, any
+admissible $c$ is $\ge1$. The comparison must either use the full maximum or
+split off the range below $10^3$.
+\end{warning}
+
+\section{Open questions and future work}
+\label{sec:open_questions}
+
+\noindent\emph{Status.} Open problems and proposed experiments; none has
+been carried out.
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Question~\ref{q:finiteness_expanding}: finiteness of
+information-expanding excursions.
+\item Whether \eqref{eq:rh_area} is equivalent to RH
+(Remark~\ref{rem:onedirection}).
+\item Whether the pruned local condition \eqref{eq:pruned_Q} holds, and a
+third bridge constraint (Remark~\ref{rem:conditioning}).
+\item Experiment: the number of excursions with $\ell_\nu>\sqrt N$ against the
+prediction $\approx600$, and the maxima of $H_\nu/\sqrt{\ell_\nu}$ and
+$\beta_\nu/\ell_\nu^{3/2}$ over those excursions.
+\item Experiment: split each excursion by \eqref{eq:local_split} and test
+Heuristic~\ref{heu:local_drift}, in particular the independence of the drift
+from $\sigma_\nu$.
+\item Experiment: frequency of touching runs (Definition~\ref{def:crossing_touching})
+and of ballistic excursions (Heuristic~\ref{heu:local_fails}).
+\end{enumerate}
+
+\section*{Notebook History}
+\label{sec:history}
+
+\noindent\textbf{Version 5.} Single section: definitions, exact formulas,
+internal correlations, bounds, criteria, prime horizon, copy propagation,
+model, census data.
+
+\medskip
+\noindent\textbf{Version 6.} Restructured into labelled sections following
+the authoring rules. Corrections: null excursions and touching zeros
+(Definitions~\ref{def:null}, \ref{def:crossing_touching},
+Lemma~\ref{lem:critical}); Remark~\ref{rem:omega};
+Remark~\ref{rem:onedirection}; hypothesis of Lemma~\ref{lem:transfer};
+constant in Remark~\ref{rem:chowla-scale}; $j=1$ in
+Proposition~\ref{prop:double-exp}; \eqref{eq:Ny-fixed-R}; main term
+(Proposition~\ref{prop:fixed_R_corrected}, Warning~\ref{warn:v5_main_term}).
+New: Warning~\ref{warn:information_language}, Lemma~\ref{lem:rough_part},
+Proposition~\ref{prop:prime_count_form},
+Proposition~\ref{prop:both_parts_large},
+Section~\ref{sec:local_large_prime}, Heuristic~\ref{heu:local_fails},
+Corollary~\ref{cor:pruned_local}, proofs of
+Propositions~\ref{prop:L1} and~\ref{prop:dipoles}. Archived as superseded:
+the calibration remarks (Warning~\ref{warn:v5_calibration}) and the margin
+test (Warning~\ref{warn:margin_vacuous}).
+
+\begin{thebibliography}{99}
+
+\bibitem{Huxley1972}
+M.~N. Huxley, On the difference between consecutive primes,
+\emph{Invent. Math.} \textbf{15} (1972), 164--170.
+doi:10.1007/BF01418933.
+
+\bibitem{KotnikTeRiele2006}
+T.~Kotnik and H.~te Riele, The Mertens conjecture revisited, in
+\emph{Algorithmic Number Theory (ANTS VII)}, Lecture Notes in Comput. Sci.
+\textbf{4076}, Springer, Berlin, 2006. doi:10.1007/11792086\_12.
+
+\bibitem{MontgomeryVaughan2007}
+H.~L. Montgomery and R.~C. Vaughan, \emph{Multiplicative Number Theory I:
+Classical Theory}, Cambridge Stud. Adv. Math. \textbf{97}, Cambridge
+University Press, 2007. ISBN 978-0-521-84903-6.
+
+\bibitem{Ng2004}
+N.~Ng, The distribution of the summatory function of the Möbius function,
+\emph{Proc. London Math. Soc. (3)} \textbf{89} (2004), no.~2, 361--389.
+doi:10.1112/S0024611504014741. arXiv:math/0310381.
+
+\bibitem{OdlyzkoTeRiele1985}
+A.~M. Odlyzko and H.~J.~J. te Riele, Disproof of the Mertens conjecture,
+\emph{J. Reine Angew. Math.} \textbf{357} (1985), 138--160. MR0783538.
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+revised by D.~R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\bibitem{Walfisz1963}
+A.~Walfisz, \emph{Weylsche Exponentialsummen in der neueren Zahlentheorie},
+VEB Deutscher Verlag der Wissenschaften, Berlin, 1963.
+
+\end{thebibliography}
+
+\end{document}

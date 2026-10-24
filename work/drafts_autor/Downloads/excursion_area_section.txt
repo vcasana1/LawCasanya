@@ -1,0 +1,370 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{heuristic}[theorem]{Heuristic}
+
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\Ms}{M_{\mathrm{s}}}
+\newcommand{\Ap}{\mathcal{A}_{+}}
+\newcommand{\Am}{\mathcal{A}_{-}}
+\newcommand{\Anet}{\mathcal{A}}
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+\title{The area function of the Mertens excursion skeleton}
+\author{}
+\date{}
+\maketitle
+
+\section{The area function of the excursion skeleton}
+\label{sec:excursion-area}
+
+\noindent\textbf{Convention on RH.} Every statement carries one of three
+labels: \emph{[unconditional]}, \emph{[under RH]} (the Riemann hypothesis is
+assumed; simple zeros are stated explicitly when also needed), or
+\emph{[heuristic]} (not proved; a model). The definitions and the exact
+identities of \S\ref{subsec:def}--\S\ref{subsec:formulas} are
+unconditional: they use no hypothesis on the zeros of $\zeta$.
+
+\subsection{Definitions}
+\label{subsec:def}
+
+Let $\mu$ be the Möbius function and
+\[
+  M(x)=\sum_{n\le x}\mu(n),\qquad x\ge 0,
+\]
+the Mertens function, piecewise constant with jumps at the integers. Let
+$0=z_0<z_1<z_2<\dots$ be the points where $M$ vanishes. Since the jumps of
+$M$ are $0$ or $\pm1$, every sign change passes through a zero, and $M$
+changes sign infinitely often \emph{[unconditional]}. The $\nu$-th
+\emph{excursion} is the interval
+\[
+  I_\nu=(u_\nu,v_\nu],\qquad u_\nu=z_{\nu-1},\quad v_\nu=z_\nu,
+  \qquad \ell_\nu=v_\nu-u_\nu ,
+\]
+in whose interior $M$ does not vanish. Inside $I_\nu$ we set
+\[
+  H_\nu=\max_{u_\nu<n\le v_\nu}|M(n)|,\qquad
+  \tau_\nu=\min\{n\in I_\nu:\ |M(n)|=H_\nu\},\qquad
+  \sigma_\nu=\sgn M(\tau_\nu)\in\{\pm1\},
+\]
+and we write $a_\nu=\tau_\nu-u_\nu$, $b_\nu=v_\nu-\tau_\nu$, so that
+$\ell_\nu=a_\nu+b_\nu$. Since $M$ needs at least $H_\nu$ steps to climb from
+$0$ to $H_\nu$ and as many to return, one has
+$H_\nu\le\min(a_\nu,b_\nu)$ \emph{[unconditional]}.
+
+\begin{definition}[Regularized skeleton]
+\label{def:Ms}
+The \emph{skeleton} $\Ms$ is the continuous, piecewise linear function
+defined on each excursion by
+\[
+  \Ms(t)=
+  \begin{cases}
+    \sigma_\nu\sqrt{H_\nu}\,\dfrac{t-u_\nu}{a_\nu}, & u_\nu\le t\le \tau_\nu,\\[2ex]
+    \sigma_\nu\sqrt{H_\nu}\,\dfrac{v_\nu-t}{b_\nu}, & \tau_\nu\le t\le v_\nu .
+  \end{cases}
+\]
+On the terminal block $(u,N]$, if $M(N)\neq0$, the descent ends at
+$\sigma\sqrt{|M(N)|}$ instead of at $0$. We also write $L$ for the
+\emph{unregularized} skeleton, defined in the same way but with peak
+$\sigma_\nu H_\nu$ instead of $\sigma_\nu\sqrt{H_\nu}$.
+\end{definition}
+
+\begin{definition}[The three curves]
+\label{def:areas}
+\[
+  \Ap(x)=\int_0^x \Ms^{+}(t)\,dt,\qquad
+  \Am(x)=-\int_0^x \Ms^{-}(t)\,dt,\qquad
+  \Anet(x)=\Ap(x)+\Am(x)=\int_0^x \Ms(t)\,dt,
+\]
+where $\Ms^{\pm}=\max(\pm \Ms,0)$. In the figure, $\Ap$ is the blue curve,
+$\Am$ the red one and $\Anet$ the black one. $\Ap$ is nondecreasing, $\Am$ is
+nonincreasing, and both are constant on the excursions of the opposite sign:
+this is what produces the plateaus.
+\end{definition}
+
+\subsection{Exact formulas}
+\label{subsec:formulas}
+
+\begin{lemma}[Increment per excursion]
+\label{lem:jump}
+\emph{[unconditional]} For every complete excursion,
+\[
+  \Anet(v_\nu)-\Anet(u_\nu)=\sigma_\nu\,\frac{\sqrt{H_\nu}\,\ell_\nu}{2}.
+\]
+The discrete version agrees: $\sum_{n\in I_\nu}\Ms(n)
+=\sigma_\nu\sqrt{H_\nu}\bigl((a_\nu+1)+(b_\nu-1)\bigr)/2
+=\sigma_\nu\sqrt{H_\nu}\,\ell_\nu/2$.
+\end{lemma}
+
+\begin{proof}
+The two pieces of $\Ms$ are triangles of height $\sqrt{H_\nu}$ with bases
+$a_\nu$ and $b_\nu$; their areas are $\sqrt{H_\nu}a_\nu/2$ and
+$\sqrt{H_\nu}b_\nu/2$. In the discrete sum, the ascent contributes
+$\sqrt{H_\nu}\sum_{j=1}^{a_\nu}j/a_\nu=\sqrt{H_\nu}(a_\nu+1)/2$ and the
+descent $\sqrt{H_\nu}\sum_{j=0}^{b_\nu-1}j/b_\nu=\sqrt{H_\nu}(b_\nu-1)/2$.
+\end{proof}
+
+\begin{proposition}[Explicit form of the three curves]
+\label{prop:explicit}
+\emph{[unconditional]} Let $x\in I_\nu$. Then
+\[
+  \Anet(x)=
+  \begin{cases}
+    \Anet(u_\nu)+\sigma_\nu\sqrt{H_\nu}\dfrac{(x-u_\nu)^2}{2a_\nu},
+      & u_\nu\le x\le\tau_\nu,\\[2.4ex]
+    \Anet(u_\nu)+\sigma_\nu\sqrt{H_\nu}
+      \left(\dfrac{a_\nu}{2}+(x-\tau_\nu)-\dfrac{(x-\tau_\nu)^2}{2b_\nu}\right),
+      & \tau_\nu\le x\le v_\nu,
+  \end{cases}
+\]
+and, at the zeros of $M$,
+\[
+  \Anet(v_k)=\sum_{\nu\le k}\sigma_\nu\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+  \qquad
+  \Ap(v_k)=\sum_{\substack{\nu\le k\\ \sigma_\nu=+1}}\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+  \qquad
+  \Am(v_k)=-\sum_{\substack{\nu\le k\\ \sigma_\nu=-1}}\frac{\sqrt{H_\nu}\,\ell_\nu}{2}.
+\]
+Thus the three curves are piecewise quadratic, of class $C^1$, and are
+determined by the data $(u_\nu,\tau_\nu,v_\nu,H_\nu,\sigma_\nu)$.
+\end{proposition}
+
+\begin{lemma}[Critical points and inflections]
+\label{lem:critical}
+\emph{[unconditional]} One has $\Anet'=\Ms$, so the local extrema of
+$\Anet$ are exactly the zeros of $M$, and $\Anet$ is monotone on each
+excursion. Since $\Ms$ is piecewise linear, $\Anet''$ is piecewise constant
+and changes sign at $\tau_\nu$: the inflection points of $\Anet$ are the
+first argmaxima of $|M|$.
+\end{lemma}
+
+\subsection{Where $\zeta$ enters}
+\label{subsec:zeta}
+
+The black curve depends on $M$ nonlinearly, through the square root of the
+peak, so $\Anet$ has no Mellin transform algebraic in $\zeta$. Its
+dependence on $\zeta$ is that of the data in
+Proposition~\ref{prop:explicit}: the nodes $u_\nu,v_\nu$ are the zeros of
+$M$, the signs $\sigma_\nu$ are those of $M$ on each excursion, and
+$H_\nu=\max_{I_\nu}|M|$. With the explicit formula of
+Titchmarsh~\cite[\S14.27]{Titchmarsh}, valid \emph{[under RH and simple
+zeros]}, the limit being taken along a suitable sequence $T_k\to\infty$ and
+$x$ not an integer,
+\begin{equation}
+\label{eq:explicitM}
+  M(x)=\sum_{\rho}\frac{x^{\rho}}{\rho\,\zeta'(\rho)}-2
+   +\sum_{n\ge1}\frac{(-1)^{n-1}(2\pi/x)^{2n}}{n\,(2n)!\,\zeta(2n+1)} ,
+\end{equation}
+the three ingredients above are written in terms of the zeros of $\zeta$.
+
+For the unregularized skeleton $L$, by contrast, the dependence is linear.
+If $\widetilde{A}(x)=\int_0^x M(t)\,dt$, then
+$\int_0^\infty \widetilde{A}(x)x^{-s-2}\,dx=\dfrac{1}{s(s+1)\zeta(s)}$ for
+$\Re s>1$, and by Mellin inversion, computing the residues at $\rho$, at
+$s=0$ (with $\zeta(0)=-\tfrac12$) and at $s=-1$ (with
+$\zeta(-1)=-\tfrac1{12}$),
+\begin{equation}
+\label{eq:explicitA}
+  \widetilde{A}(x)=\sum_{\rho}\frac{x^{\rho+1}}{\rho(\rho+1)\zeta'(\rho)}
+  -2x+12+O(1/x)
+  \qquad\text{\emph{[under RH and simple zeros]}},
+\end{equation}
+a series that converges better than \eqref{eq:explicitM} thanks to the
+factor $|\rho|^{-2}$. Moreover, with $R=M-L$ one has the unconditional
+identity
+\begin{equation}
+\label{eq:dipoles}
+  \int_0^{v_k}L
+  =\widetilde{A}(v_k)+\sum_{\text{legs}\ \subseteq (0,v_k]}\ \sum_{m\in\text{leg}}\mu(m)\,(m-m_{\text{leg}}),
+\end{equation}
+where each leg is an ascent or a descent and $m_{\text{leg}}$ is its
+midpoint: the area of the residual on each leg is exactly a dipole of $\mu$.
+
+\subsection{Bounds}
+\label{subsec:bounds}
+
+\begin{lemma}[Pointwise transfer]
+\label{lem:transfer}
+\emph{[unconditional]} If $|M(t)|\le c\,t^{1/2}$ for all $t\le x$, then
+$|\Ms(t)|\le c^{1/2}t^{1/4}$ for all $t\le x$, and therefore
+\[
+  \Ap(x)+|\Am(x)|\le \tfrac45\,c^{1/2}\,x^{5/4},
+  \qquad |\Anet(x)|\le \tfrac45\,c^{1/2}\,x^{5/4}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $t\in I_\nu$. If $t\ge\tau_\nu$, then
+$|\Ms(t)|\le\sqrt{H_\nu}\le c^{1/2}\tau_\nu^{1/4}\le c^{1/2}t^{1/4}$. If
+$t\le\tau_\nu$, then $|\Ms(t)|$ is the line joining $(u_\nu,0)$ to
+$(\tau_\nu,\sqrt{H_\nu})$, and $\sqrt{H_\nu}\le c^{1/2}\tau_\nu^{1/4}$;
+since $t\mapsto c^{1/2}t^{1/4}$ is concave and nonnegative at $u_\nu$, it
+lies above that chord. Integrating,
+$\int_0^x c^{1/2}t^{1/4}dt=\tfrac45 c^{1/2}x^{5/4}$.
+\end{proof}
+
+\begin{corollary}[Unconditional bound]
+\label{cor:uncond}
+\emph{[unconditional]} By the Vinogradov--Korobov zero-free region,
+$M(x)\ll x\exp\bigl(-c(\log x)^{3/5}(\log\log x)^{-1/5}\bigr)$, whence
+\[
+  \Ap(x)+|\Am(x)|\ll x^{3/2}\exp\Bigl(-\tfrac{c}{2}(\log x)^{3/5}(\log\log x)^{-1/5}\Bigr).
+\]
+\end{corollary}
+
+\begin{corollary}[Bound under RH]
+\label{cor:rh}
+\emph{[under RH]} $M(x)\ll_\eps x^{1/2+\eps}$ implies
+$\Ap(x)+|\Am(x)|\ll_\eps x^{5/4+\eps}$. Conversely, if
+$\Ap(x)+|\Am(x)|\gg x^{5/4+\eps}$ along a sequence $x\to\infty$ for some
+fixed $\eps>0$, then RH is false.
+\end{corollary}
+
+\begin{remark}
+\label{rem:onedirection}
+The converse goes only in that direction. Since $\ell_\nu\ge 2H_\nu$, a
+bound $\sqrt{H_\nu}\ell_\nu\ll x^{5/4+\eps}$ yields only
+$H_\nu\ll x^{5/6+\eps}$, far from RH. The black curve is a refutation test,
+not a criterion.
+\end{remark}
+
+\begin{remark}[Oscillation]
+\label{rem:omega}
+\emph{[unconditional]} $M(x)=\Omega_{\pm}(x^{1/2-\eps})$ for every
+$\eps>0$, because $\zeta$ has zeros with $\Re\rho=1/2$. Moreover the Mertens
+conjecture is false: $\limsup M(x)x^{-1/2}>1$ and
+$\liminf M(x)x^{-1/2}<-1$ (Odlyzko--te Riele~\cite{OtR}, with later
+improvements). Hence $H_\nu\gg v_\nu^{1/2-\eps}$ for infinitely many
+excursions, and neither $\Ap$ nor $\Am$ stabilizes.
+\end{remark}
+
+\subsection{Criteria equivalent to RH}
+\label{subsec:criteria}
+
+The two equivalences below concern the area of $M$ and the energy of the
+black curve; in both, the only analytic ingredient is the $L^1$ Mellin
+criterion: if $\int_1^\infty|M(x)|x^{-\sigma-1}dx<\infty$ for every
+$\sigma>1/2$, then $1/(s\zeta(s))=\int_1^\infty M(x)x^{-s-1}dx$ is analytic
+in $\Re s>1/2$, so $\zeta$ has no zeros there.
+
+\begin{proposition}[Excursionwise $L^1$ criterion]
+\label{prop:L1}
+\emph{[unconditional: an equivalence, RH is not assumed]} Let
+$\beta_\nu=\int_{I_\nu}|M|$. Then
+\[
+  \mathrm{RH}\iff \sum_{v_\nu\le x}\beta_\nu\ \ll_\eps\ x^{3/2+\eps}
+  \quad\text{for every }\eps>0,
+\]
+the excursion in progress included. The sum does not depend on the signs
+$\sigma_\nu$: RH is a statement about the profile $|M|$.
+\end{proposition}
+
+\begin{theorem}[Dirichlet energy of the black curve]
+\label{thm:energy}
+\emph{[unconditional: an equivalence, RH is not assumed]} Let $\mathcal{J}$
+be the linear interpolation of $\Anet$ between consecutive critical points
+and
+\[
+  E(x)=\int_0^x(\mathcal{J}')^2
+  =\sum_{v_\nu\le x}\frac{\bigl(\Anet(v_\nu)-\Anet(u_\nu)\bigr)^2}{\ell_\nu}
+  +\frac{(x-u)\max_{u<n\le x}|M(n)|}{4},
+\]
+where $(u,x]$ is the leg in progress. By Lemma~\ref{lem:jump},
+$\bigl(\Anet(v_\nu)-\Anet(u_\nu)\bigr)^2/\ell_\nu=H_\nu\ell_\nu/4$, so that
+$E(x)=\tfrac14\bigl(\sum_{v_\nu\le x}H_\nu\ell_\nu+(x-u)H_{\mathrm{run}}\bigr)$.
+Then
+\[
+  \sum_{n\le x}|M(n)|\ \le\ 4E(x)\ \le\ x\max_{n\le x}|M(n)|,
+\]
+and
+\[
+  \mathrm{RH}\iff E(x)\ll_\eps x^{3/2+\eps}\quad\text{for every }\eps>0 .
+\]
+\end{theorem}
+
+\begin{proof}
+The lower bound is $|M(n)|\le H_\nu$ summed over each excursion, and the
+upper one is $H_\nu\le\max_{n\le x}|M(n)|$ together with
+$\sum\ell_\nu\le x$. If RH holds, $\max_{n\le x}|M(n)|\ll_\eps x^{1/2+\eps}$
+and the upper bound gives $E(x)\ll x^{3/2+\eps}$. Conversely, if
+$E(x)\ll x^{3/2+\eps}$, the lower bound gives
+$\sum_{n\le x}|M(n)|\ll x^{3/2+\eps}$; by partial summation,
+$\int_1^\infty|M(x)|x^{-\sigma-1}dx<\infty$ for $\sigma>1/2$, and the Mellin
+criterion concludes.
+\end{proof}
+
+\begin{remark}
+\label{rem:average}
+$E$ is an average: $4E(x)=\sum H_\nu\ell_\nu$ is the excursion height
+weighted by $\ell_\nu$. It allows isolated excursions with
+$H_\nu\gg v_\nu^{1/2}$ provided they are short or rare, and only forbids the
+weighted mass from exceeding $x^{3/2+\eps}$. It is moreover a sum of
+nonnegative local terms, with no sign cancellation.
+\end{remark}
+
+\subsection{Model of the black curve}
+\label{subsec:model}
+
+\begin{heuristic}[Shape of $\Anet$]
+\label{heu:model}
+\emph{[heuristic; assumes RH, simple zeros, convergence of the
+Fourier--Bohr expansion and a constant fill factor]} Writing
+$M(t)=t^{1/2}F(\log t)$ with
+$F(u)=2\Re\sum_{\gamma>0}e^{i\gamma u}/(\rho\zeta'(\rho))$, and
+approximating $\Ms\approx\kappa\,\sgn(M)|M|^{1/2}$ with $\kappa$ constant,
+one gets $\Ms(t)\approx\kappa\,t^{1/4}G(\log t)$ with
+$G=\sgn(F)|F|^{1/2}$. If $G(u)=\sum_\lambda g_\lambda e^{i\lambda u}$, then
+\[
+  \Anet(x)\approx\kappa\,x^{5/4}\sum_\lambda \frac{g_\lambda\,x^{i\lambda}}{5/4+i\lambda}.
+\]
+This reproduces the exponent $5/4$, the smoothness of the waves (the factor
+$|5/4+i\lambda|^{-1}$ damps the high frequencies) and the quasi-periodicity
+in $\log x$: with dominant frequency $\gamma_1=14.1347$, the period is
+$2\pi/\gamma_1$ in $\log x$, a factor $\approx1.56$ in $x$.
+\end{heuristic}
+
+\subsection{Numerical data}
+\label{subsec:data}
+
+With $N=455\,052\,511$ and $Z(N)=87\,385$ excursions:
+\[
+  \Ap(N)=6.3449\cdot10^{9},\qquad
+  \Am(N)=-7.0877\cdot10^{9},\qquad
+  \Anet(N)=-7.4279\cdot10^{8},
+\]
+\[
+  \max_\nu \frac{H_\nu}{\sqrt{\ell_\nu}}=2.0743,\qquad
+  \max_\nu \frac{\beta_\nu}{\ell_\nu^{3/2}}=1.0214 .
+\]
+The bound of Lemma~\ref{lem:transfer} with
+$c=\max_{10^3\le n\le N}|M(n)|n^{-1/2}$ lies about $30$ times above
+$|\Anet(N)|$. In this range $|M(x)|\lesssim 0.5\sqrt{x}$, well inside any
+bound at the RH scale, so the data do not separate $x^{1/2}$ from
+$x^{1/2+\eps}$: the factor $x^{\eps}$ with $\eps=0.05$ equals
+$\approx 2.7$ here.
+
+\begin{thebibliography}{9}
+\bibitem{Titchmarsh} E.~C. Titchmarsh, \emph{The Theory of the Riemann
+Zeta-function}, 2nd ed., revised by D.~R. Heath-Brown, Oxford Univ. Press,
+1986, \S14.27.
+\bibitem{OtR} A.~M. Odlyzko and H.~J.~J. te Riele, \emph{Disproof of the
+Mertens conjecture}, J. Reine Angew. Math. \textbf{357} (1985), 138--160.
+\bibitem{Ng} N.~Ng, \emph{The distribution of the summatory function of the
+Möbius function}, Proc. London Math. Soc. (3) \textbf{89} (2004), 361--389.
+\end{thebibliography}
+
+\end{document}

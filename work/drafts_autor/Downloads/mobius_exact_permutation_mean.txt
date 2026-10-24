@@ -1,0 +1,360 @@
+function mobius_exact_permutation_mean
+clc; clear;
+% EXACT PERMUTATION-MEAN ENERGY COMPARISON FOR THE MOBIUS WORD
+%
+% Produces the one result that was "viable": an exact, deterministic
+% comparison, with IDENTICAL conventions on both sides, between
+%
+%   E_real(Nc) = (1/L) * sum_{N0<n<=Nc} M(n)^2 / n^2
+%   E_perm(Nc) = (1/L) * sum_{N0<n<=Nc} E_pi[ T_{Q(n)}^2 ] / n^2
+%
+% with L = log(Nc/N0), Q(n) = #{k<=n : mu(k) ~= 0}, m = Q(Nc), S = M(Nc),
+% and the expectation taken over the uniform sign permutation class
+% Omega^(1) (fixed zero mask, fixed counts of +1 and -1).
+%
+% No Monte Carlo. No randomness. Two finite sums and a comparison.
+%
+% -------------------------------------------------------------------------
+% CONVENTION BUG THIS SCRIPT FIXES
+%   The manuscript defines the measured energy on (N0,N] with normaliser
+%   log(N/N0) (Definition "logarithmic energy"), but states the exact
+%   permutation mean with normaliser log(N) over the full range
+%   (Theorem "exact energy mean"). Those two are NOT comparable. The ratio
+%   rho_E is meaningless unless both sides use the same N0 and the same
+%   normaliser. Everything below uses (N0,N] and log(N/N0) on BOTH sides.
+% -------------------------------------------------------------------------
+%
+% THE REDUCTION THAT MAKES ALL CUTOFFS COST ONE PASS
+%   With alpha = 1 - S^2/m^2 and beta = S^2/m^2,
+%
+%     E[T_j^2] = j(m-j)/(m-1)*alpha + j^2*beta
+%              = A*j + B*j^2,
+%     A = alpha*m/(m-1),   B = beta - alpha/(m-1).
+%
+%   E[T_j^2] is therefore a quadratic in j with coefficients depending only
+%   on the cutoff. Hence
+%
+%     sum_n E[T_{Q(n)}^2]/n^2 = A*Sigma1 + B*Sigma2,
+%     Sigma1 = sum_n Q(n)/n^2,   Sigma2 = sum_n Q(n)^2/n^2,
+%
+%   and Sigma1, Sigma2, and sum_n M(n)^2/n^2 are all cumulative in n. One
+%   streaming pass therefore yields the exact permutation mean at EVERY
+%   cutoff simultaneously, in O(N) total, for a file of any length.
+%
+% -------------------------------------------------------------------------
+% ANALYTIC SANITY CHECK (predicted BEFORE running, so a gross bug is visible)
+%   Using Q(n) ~ d*n with d = 6/pi^2 and the measured S = -709, m = 3039633
+%   at Nc = 5e6:  A ~ 1,  Sigma1 ~ 5.1775,  B ~ -2.746e-7,  Sigma2 ~ 1.847e6,
+%   giving E_perm ~ (5.1775 - 0.5073)/8.5172 ~ 0.5483, hence
+%   rho_E ~ 0.029515/0.5483 ~ 0.0539.
+%   If the run prints E_perm far from ~0.55 at Nc = 5e6, stop and debug.
+%   Note beta is NOT negligible: it sits next to alpha/(m-1) ~ 3.29e-7 in B,
+%   which it cancels by about 16%. It is negligible only inside alpha.
+% -------------------------------------------------------------------------
+%
+% CROSS-CHECK AGAINST THE MANUSCRIPT'S OWN CENSUS TABLE
+%   The printed m and S at each cutoff must reproduce the recorded nonzero
+%   counts and M(N) of the large-scale census (e.g. at N = 5e7: 30,396,344
+%   nonzero, M = -908). If they do not, the streaming accumulators are wrong
+%   and nothing below should be quoted.
+%
+% OUTPUT: a table, a ready-to-paste LaTeX fragment, and a .txt copy of it.
+
+%% CONFIGURATION
+fileName   = 'moebius.bin';
+N0         = 1000;
+cutoffs    = [5e6 5e7 1e8 1.5e8 2e8 2.5e8 3e8 3.5e8];
+chunkSize  = 2^22;
+savePrefix = 'mobius_exact_permutation_mean';
+runClock   = tic;
+
+%% FILE LENGTH AND CUTOFF VALIDATION
+info = dir(fileName);
+if isempty(info), error('%s was not found.', fileName); end
+fileEntries = info.bytes;                      % one int8 per entry
+cutoffs = unique(round(cutoffs(:).'));
+cutoffs = cutoffs(cutoffs > N0 & cutoffs <= fileEntries);
+if isempty(cutoffs)
+    error('No requested cutoff lies in (%d, %d].', N0, fileEntries);
+end
+Nmax = max(cutoffs);
+
+fprintf('File entries: %d\n', fileEntries);
+fprintf('N0 = %d; cutoffs: %s\n', N0, mat2str(cutoffs));
+fprintf('Monte Carlo used: FALSE\n');
+fprintf('Primes or zeta data used: FALSE\n\n');
+
+%% STREAMING PASS
+fid = fopen(fileName, 'rb');
+if fid < 0, error('Could not open %s.', fileName); end
+cleaner = onCleanup(@() fclose(fid));
+
+nCut = numel(cutoffs);
+resM  = zeros(1,nCut); res1 = zeros(1,nCut); res2 = zeros(1,nCut);
+resm  = zeros(1,nCut); resS = zeros(1,nCut);
+resNaiveM = zeros(1,nCut);                      % uncompensated, error probe
+
+% Kahan accumulators for the three cumulative sums.
+sM = 0; cM = 0;      % sum M(n)^2/n^2
+s1 = 0; c1 = 0;      % sum Q(n)/n^2
+s2 = 0; c2 = 0;      % sum Q(n)^2/n^2
+naiveM = 0;          % same as sM but with plain accumulation
+
+runningM = 0; runningQ = 0; offset = 0; k = 1;
+
+while offset < Nmax
+    stop  = min([offset + chunkSize, cutoffs(k), Nmax]);
+    count = stop - offset;
+    chunk = fread(fid, count, '*int8');
+    if numel(chunk) < count
+        error('Unexpected end of file at entry %d.', offset + numel(chunk));
+    end
+    if any(chunk < -1 | chunk > 1)
+        error('Entry outside {-1,0,+1} in chunk ending at %d.', stop);
+    end
+
+    a = double(chunk(:));
+    Mloc = runningM + cumsum(a);
+    Qloc = runningQ + cumsum(a ~= 0);
+    runningM = Mloc(end);
+    runningQ = Qloc(end);
+
+    n = (offset+1 : stop).';
+    keep = n > N0;
+    if any(keep)
+        nn = n(keep); inv2 = 1 ./ (nn .* nn);
+        Mk = Mloc(keep); Qk = Qloc(keep);
+
+        tM = sum((Mk .* Mk) .* inv2);
+        t1 = sum(Qk .* inv2);
+        t2 = sum((Qk .* Qk) .* inv2);
+
+        [sM, cM] = kahan(sM, cM, tM);
+        [s1, c1] = kahan(s1, c1, t1);
+        [s2, c2] = kahan(s2, c2, t2);
+        naiveM = naiveM + tM;
+    end
+
+    offset = stop;
+
+    while k <= nCut && cutoffs(k) == offset
+        resM(k)  = sM;  res1(k) = s1;  res2(k) = s2;
+        resm(k)  = runningQ;  resS(k) = runningM;
+        resNaiveM(k) = naiveM;
+        k = k + 1;
+    end
+
+    if mod(offset, 50*chunkSize) < chunkSize || offset == Nmax
+        fprintf('  n = %d / %d   (%.1f s)\n', offset, Nmax, toc(runClock));
+    end
+end
+clear cleaner;
+
+%% EXACT EVALUATION AT EACH CUTOFF
+Cutoff      = cutoffs(:);
+NonzeroAnts = resm(:);
+Endpoint    = resS(:);
+Density     = resm(:) ./ cutoffs(:);
+Ereal       = zeros(nCut,1);
+Eperm       = zeros(nCut,1);
+EpermS0     = zeros(nCut,1);
+Rho         = zeros(nCut,1);
+RhoOldRef   = zeros(nCut,1);
+SumErrProbe = abs(resM(:) - resNaiveM(:));
+
+for i = 1:nCut
+    m = resm(i); S = resS(i);
+    L = log(cutoffs(i) / N0);
+    if m < 2, error('Fewer than two nonzero entries at cutoff %d.', cutoffs(i)); end
+
+    beta  = (S/m)^2;
+    alpha = 1 - beta;
+    A = alpha * m / (m-1);
+    B = beta - alpha / (m-1);
+
+    % Same coefficients with the endpoint constraint switched off (S = 0),
+    % to expose exactly how much the p-q imbalance contributes.
+    A0 = m / (m-1);
+    B0 = -1 / (m-1);
+
+    Ereal(i)   = resM(i) / L;
+    Eperm(i)   = (A  * res1(i) + B  * res2(i)) / L;
+    EpermS0(i) = (A0 * res1(i) + B0 * res2(i)) / L;
+    Rho(i)       = Ereal(i) / Eperm(i);
+    RhoOldRef(i) = Ereal(i) / (6/pi^2);
+end
+
+resultTable = table(Cutoff, NonzeroAnts, Endpoint, Density, Ereal, Eperm, ...
+    EpermS0, Rho, RhoOldRef, SumErrProbe);
+
+%% REPORT
+fprintf('\nEXACT COMPARISON: OBSERVED ENERGY VS EXACT PERMUTATION MEAN\n');
+fprintf('Both sides on (N0, Nc] with normaliser log(Nc/N0). N0 = %d.\n\n', N0);
+disp(resultTable);
+fprintf(['Ereal   : observed logarithmic energy of the Mertens path.\n' ...
+         'Eperm   : exact mean over ALL fixed-mask sign permutations.\n' ...
+         'EpermS0 : same with the endpoint constraint S set to 0 ' ...
+         '(isolates the p-q imbalance).\n' ...
+         'Rho     : Ereal/Eperm, the class-correct ratio.\n' ...
+         'RhoOldRef: Ereal/(6/pi^2), the superseded heuristic reference.\n' ...
+         'SumErrProbe: |Kahan - plain| on the observed-energy sum; digits ' ...
+         'beyond this are not real.\n\n']);
+
+fprintf('CROSS-CHECK against the manuscript census table:\n');
+for i = 1:nCut
+    fprintf('  Nc = %11d :  nonzero = %d,  M(Nc) = %d\n', ...
+        cutoffs(i), resm(i), resS(i));
+end
+fprintf(['These must match the recorded nonzero counts and M(N) exactly. ' ...
+         'If any row disagrees, discard everything above.\n\n']);
+
+fprintf('HEADLINE AT Nc = %d:\n', cutoffs(1));
+fprintf('  E_real  = %.12g\n', Ereal(1));
+fprintf('  E_perm  = %.12g   (exact class mean, not 6/pi^2 = %.12g)\n', ...
+    Eperm(1), 6/pi^2);
+fprintf('  rho_E   = %.12g   (supersedes the heuristic %.12g)\n', ...
+    Rho(1), RhoOldRef(1));
+fprintf('  endpoint-constraint contribution to E_perm: %.6g (%.3f%%)\n\n', ...
+    Eperm(1)-EpermS0(1), 100*(Eperm(1)-EpermS0(1))/Eperm(1));
+
+%% LATEX FRAGMENT (plus the mandatory .txt copy)
+tex = build_tex(N0, cutoffs, resm, resS, Ereal, Eperm, EpermS0, Rho, ...
+    RhoOldRef, SumErrProbe);
+write_lines([savePrefix '_insert.tex'], tex);
+write_lines([savePrefix '_insert.txt'], tex);
+writetable(resultTable, [savePrefix '_result.csv']);
+save([savePrefix '.mat'], 'resultTable', 'cutoffs', 'N0', 'resM', 'res1', ...
+    'res2', 'resm', 'resS', '-v7.3');
+
+fprintf('FINISHED in %.1f s.\n', toc(runClock));
+fprintf('Wrote %s_insert.tex, %s_insert.txt, %s_result.csv, %s.mat\n', ...
+    savePrefix, savePrefix, savePrefix, savePrefix);
+end
+
+%% ========================================================================
+function [s, c] = kahan(s, c, x)
+y = x - c;
+t = s + y;
+c = (t - s) - y;
+s = t;
+end
+
+%% ========================================================================
+function write_lines(name, lines)
+fid = fopen(name, 'w');
+if fid < 0, error('Could not write %s.', name); end
+for i = 1:numel(lines)
+    fprintf(fid, '%s\n', lines{i});
+end
+fclose(fid);
+end
+
+%% ========================================================================
+function L = build_tex(N0, cutoffs, m, S, Ereal, Eperm, EpermS0, Rho, ...
+    RhoOld, errProbe)
+% Emits a drop-in replacement for the manuscript's Theorem "exact energy
+% mean" plus the evaluated result. Uses the manuscript's own macros
+% (\cE, \E, \Om, \Var) and theorem environments.
+L = {};
+L{end+1} = '% ---- drop-in replacement for Section "All fixed-mask permutations" ----';
+L{end+1} = '';
+L{end+1} = '\begin{theorem}[Exact energy mean over all fixed-mask permutations]';
+L{end+1} = '\label{thm:exact-energy-mean}';
+L{end+1} = 'Let $Q(n)=\#\{k\leq n:\mu(k)\neq0\}$, and fix the cutoffs';
+L{end+1} = '$1\leq N_0<N$ of Definition \ref{def:logarithmic-energy}. Write';
+L{end+1} = '$m=Q(N)$ and $S=M(N)$. Then';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E_{\pi\in\Om_N^{(1)}}\cE_{N_0,N}(\pi)';
+L{end+1} = '=\frac{1}{\log(N/N_0)}\sum_{N_0<n\leq N}\frac{\E T_{Q(n)}^2}{n^2}.';
+L{end+1} = '\label{eq:exact-energy-mean}';
+L{end+1} = '\end{equation}';
+L{end+1} = '\end{theorem}';
+L{end+1} = '\begin{proof}';
+L{end+1} = 'For $r_j\leq n<r_{j+1}$ the path of $\pi$ equals $T_j$ with $j=Q(n)$.';
+L{end+1} = 'Apply linearity of expectation to \eqref{eq:logarithmic-energy} and';
+L{end+1} = 'insert \eqref{eq:permutation-second-moment}.';
+L{end+1} = '\end{proof}';
+L{end+1} = '';
+L{end+1} = '\begin{remark}[Normalisation]';
+L{end+1} = '\label{rem:mean-normalisation}';
+L{end+1} = 'Both sides of \eqref{eq:energy-to-mean-ratio} must use the same';
+L{end+1} = 'cutoff $N_0$ and the same normaliser $\log(N/N_0)$. An earlier';
+L{end+1} = 'version stated the mean with $1/\log N$ over the full range, which';
+L{end+1} = 'is not comparable with \eqref{eq:measured-log-energy}.';
+L{end+1} = '\end{remark}';
+L{end+1} = '';
+L{end+1} = '\begin{lemma}[Quadratic reduction and one-pass evaluation]';
+L{end+1} = '\label{lem:quadratic-reduction}';
+L{end+1} = 'With $\alpha=1-S^2/m^2$ and $\beta=S^2/m^2$,';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E T_j^2=Aj+Bj^2,\qquad';
+L{end+1} = 'A=\frac{\alpha m}{m-1},\qquad B=\beta-\frac{\alpha}{m-1}.';
+L{end+1} = '\label{eq:quadratic-reduction}';
+L{end+1} = '\end{equation}';
+L{end+1} = 'Consequently, with';
+L{end+1} = '$\Sigma_1=\sum_{N_0<n\leq N}Q(n)/n^2$ and';
+L{end+1} = '$\Sigma_2=\sum_{N_0<n\leq N}Q(n)^2/n^2$,';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E_{\pi\in\Om_N^{(1)}}\cE_{N_0,N}(\pi)';
+L{end+1} = '=\frac{A\Sigma_1+B\Sigma_2}{\log(N/N_0)}.';
+L{end+1} = '\label{eq:one-pass-mean}';
+L{end+1} = '\end{equation}';
+L{end+1} = 'Since $\Sigma_1,\Sigma_2$ are cumulative in $n$ and $A,B$ depend only';
+L{end+1} = 'on the cutoff, a single streaming pass evaluates';
+L{end+1} = '\eqref{eq:one-pass-mean} at every cutoff in $O(N)$ total time.';
+L{end+1} = '\end{lemma}';
+L{end+1} = '\begin{proof}';
+L{end+1} = 'Expand $j(m-j)/(m-1)\cdot\alpha+j^2\beta$ and collect powers of $j$.';
+L{end+1} = '\end{proof}';
+L{end+1} = '';
+L{end+1} = '\begin{experiment}[Evaluated class-correct ratio]';
+L{end+1} = '\label{exp:evaluated-rho}';
+L{end+1} = sprintf('With $N_0=%d$, \\eqref{eq:one-pass-mean} was evaluated exactly.', N0);
+L{end+1} = '\begin{table}[htbp]';
+L{end+1} = '\centering';
+L{end+1} = '\caption{Observed energy against the exact fixed-mask permutation';
+L{end+1} = 'mean. $\rho_E$ is the class-correct ratio';
+L{end+1} = '\eqref{eq:energy-to-mean-ratio}; the last column is the superseded';
+L{end+1} = 'heuristic reference \eqref{eq:global-c-calibration}.}';
+L{end+1} = '\label{tab:evaluated-rho}';
+L{end+1} = '\begin{tabular}{rrrcccc}';
+L{end+1} = '\toprule';
+L{end+1} = '$N$&$m$&$S$&$\cE_{N_0,N}(M)$&$\E_\pi\cE_{N_0,N}$&$\rho_E$&$\cE/(6/\pi^2)$\\';
+L{end+1} = '\midrule';
+for i = 1:numel(cutoffs)
+    L{end+1} = sprintf('%s&%s&%d&%.9f&%.9f&%.6f&%.6f\\\\', ...
+        commafy(cutoffs(i)), commafy(m(i)), S(i), ...
+        Ereal(i), Eperm(i), Rho(i), RhoOld(i)); %#ok<AGROW>
+end
+L{end+1} = '\bottomrule';
+L{end+1} = '\end{tabular}';
+L{end+1} = '\end{table}';
+L{end+1} = sprintf(['The endpoint constraint $T_m=S$ contributes ' ...
+    '$%.6g$ to the mean at $N=%s$ (with $S$ set to zero the mean is ' ...
+    '$%.9f$); it is not negligible, because $\\beta=S^2/m^2$ sits beside ' ...
+    '$\\alpha/(m-1)$ in $B$. Accumulation error on the observed-energy sum ' ...
+    'was below $%.1e$, so digits beyond the ninth are not claimed.'], ...
+    Eperm(1)-EpermS0(1), commafy(cutoffs(1)), EpermS0(1), max(errProbe));
+L{end+1} = '\end{experiment}';
+L{end+1} = '';
+L{end+1} = '\begin{remark}[What this does and does not establish]';
+L{end+1} = '\label{rem:rho-scope}';
+L{end+1} = 'Table \ref{tab:evaluated-rho} is a comparison of two exactly';
+L{end+1} = 'computed finite sums: it is deterministic and involves no sampling.';
+L{end+1} = 'It replaces the heuristic calibration';
+L{end+1} = '\eqref{eq:global-c-calibration}, whose reference $6/\pi^2$ ignores';
+L{end+1} = 'both the endpoint constraint and the finite-population correction.';
+L{end+1} = 'It does \emph{not} establish low energy in the sense of Definition';
+L{end+1} = '\ref{def:relative-low-energy}: by Warning';
+L{end+1} = '\ref{warn:no-complete-enumeration} the mean is not the distribution,';
+L{end+1} = 'and $P_E(N)$ in \eqref{eq:exact-energy-percentile} remains uncomputed.';
+L{end+1} = '\end{remark}';
+end
+
+%% ========================================================================
+function s = commafy(x)
+s = sprintf('%d', round(x));
+for i = numel(s)-3 : -3 : 1
+    s = [s(1:i) ',' s(i+1:end)];
+end
+end

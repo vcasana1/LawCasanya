@@ -1,0 +1,1213 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{heuristic}[theorem]{Heuristic}
+
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\Ms}{M_{\mathrm{s}}}
+\newcommand{\Ap}{\mathcal{A}_{+}}
+\newcommand{\Am}{\mathcal{A}_{-}}
+\newcommand{\Anet}{\mathcal{A}}
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+\title{The area function of the Mertens excursion skeleton}
+\author{}
+\date{}
+\maketitle
+
+\section{The area function of the excursion skeleton}
+\label{sec:excursion-area}
+
+\noindent\textbf{Convention on RH.} Every statement carries one of three
+labels: \emph{[unconditional]}, \emph{[under RH]} (the Riemann hypothesis is
+assumed; simple zeros are stated explicitly when also needed), or
+\emph{[heuristic]} (not proved; a model). The definitions and the exact
+identities of \S\ref{subsec:def}--\S\ref{subsec:formulas} are
+unconditional: they use no hypothesis on the zeros of $\zeta$.
+
+\subsection{Definitions}
+\label{subsec:def}
+
+Let $\mu$ be the Möbius function and
+\[
+  M(x)=\sum_{n\le x}\mu(n),\qquad x\ge 0,
+\]
+the Mertens function, piecewise constant with jumps at the integers. Let
+$0=z_0<z_1<z_2<\dots$ be the points where $M$ vanishes. Since the jumps of
+$M$ are $0$ or $\pm1$, every sign change passes through a zero, and $M$
+changes sign infinitely often \emph{[unconditional]}. The $\nu$-th
+\emph{excursion} is the interval
+\[
+  I_\nu=(u_\nu,v_\nu],\qquad u_\nu=z_{\nu-1},\quad v_\nu=z_\nu,
+  \qquad \ell_\nu=v_\nu-u_\nu ,
+\]
+in whose interior $M$ does not vanish. Inside $I_\nu$ we set
+\[
+  H_\nu=\max_{u_\nu<n\le v_\nu}|M(n)|,\qquad
+  \tau_\nu=\min\{n\in I_\nu:\ |M(n)|=H_\nu\},\qquad
+  \sigma_\nu=\sgn M(\tau_\nu)\in\{\pm1\},
+\]
+and we write $a_\nu=\tau_\nu-u_\nu$, $b_\nu=v_\nu-\tau_\nu$, so that
+$\ell_\nu=a_\nu+b_\nu$. Since $M$ needs at least $H_\nu$ steps to climb from
+$0$ to $H_\nu$ and as many to return, one has
+$H_\nu\le\min(a_\nu,b_\nu)$ \emph{[unconditional]}.
+
+\begin{definition}[Regularized skeleton]
+\label{def:Ms}
+The \emph{skeleton} $\Ms$ is the continuous, piecewise linear function
+defined on each excursion by
+\[
+  \Ms(t)=
+  \begin{cases}
+    \sigma_\nu\sqrt{H_\nu}\,\dfrac{t-u_\nu}{a_\nu}, & u_\nu\le t\le \tau_\nu,\\[2ex]
+    \sigma_\nu\sqrt{H_\nu}\,\dfrac{v_\nu-t}{b_\nu}, & \tau_\nu\le t\le v_\nu .
+  \end{cases}
+\]
+On the terminal block $(u,N]$, if $M(N)\neq0$, the descent ends at
+$\sigma\sqrt{|M(N)|}$ instead of at $0$. We also write $L$ for the
+\emph{unregularized} skeleton, defined in the same way but with peak
+$\sigma_\nu H_\nu$ instead of $\sigma_\nu\sqrt{H_\nu}$.
+\end{definition}
+
+\begin{definition}[The three curves]
+\label{def:areas}
+\[
+  \Ap(x)=\int_0^x \Ms^{+}(t)\,dt,\qquad
+  \Am(x)=-\int_0^x \Ms^{-}(t)\,dt,\qquad
+  \Anet(x)=\Ap(x)+\Am(x)=\int_0^x \Ms(t)\,dt,
+\]
+where $\Ms^{\pm}=\max(\pm \Ms,0)$. In the figure, $\Ap$ is the blue curve,
+$\Am$ the red one and $\Anet$ the black one. $\Ap$ is nondecreasing, $\Am$ is
+nonincreasing, and both are constant on the excursions of the opposite sign:
+this is what produces the plateaus.
+\end{definition}
+
+\subsection{Exact formulas}
+\label{subsec:formulas}
+
+\begin{lemma}[Increment per excursion]
+\label{lem:jump}
+\emph{[unconditional]} For every complete excursion,
+\[
+  \Anet(v_\nu)-\Anet(u_\nu)=\sigma_\nu\,\frac{\sqrt{H_\nu}\,\ell_\nu}{2}.
+\]
+The discrete version agrees: $\sum_{n\in I_\nu}\Ms(n)
+=\sigma_\nu\sqrt{H_\nu}\bigl((a_\nu+1)+(b_\nu-1)\bigr)/2
+=\sigma_\nu\sqrt{H_\nu}\,\ell_\nu/2$.
+\end{lemma}
+
+\begin{proof}
+The two pieces of $\Ms$ are triangles of height $\sqrt{H_\nu}$ with bases
+$a_\nu$ and $b_\nu$; their areas are $\sqrt{H_\nu}a_\nu/2$ and
+$\sqrt{H_\nu}b_\nu/2$. In the discrete sum, the ascent contributes
+$\sqrt{H_\nu}\sum_{j=1}^{a_\nu}j/a_\nu=\sqrt{H_\nu}(a_\nu+1)/2$ and the
+descent $\sqrt{H_\nu}\sum_{j=0}^{b_\nu-1}j/b_\nu=\sqrt{H_\nu}(b_\nu-1)/2$.
+\end{proof}
+
+\begin{proposition}[Explicit form of the three curves]
+\label{prop:explicit}
+\emph{[unconditional]} Let $x\in I_\nu$. Then
+\[
+  \Anet(x)=
+  \begin{cases}
+    \Anet(u_\nu)+\sigma_\nu\sqrt{H_\nu}\dfrac{(x-u_\nu)^2}{2a_\nu},
+      & u_\nu\le x\le\tau_\nu,\\[2.4ex]
+    \Anet(u_\nu)+\sigma_\nu\sqrt{H_\nu}
+      \left(\dfrac{a_\nu}{2}+(x-\tau_\nu)-\dfrac{(x-\tau_\nu)^2}{2b_\nu}\right),
+      & \tau_\nu\le x\le v_\nu,
+  \end{cases}
+\]
+and, at the zeros of $M$,
+\[
+  \Anet(v_k)=\sum_{\nu\le k}\sigma_\nu\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+  \qquad
+  \Ap(v_k)=\sum_{\substack{\nu\le k\\ \sigma_\nu=+1}}\frac{\sqrt{H_\nu}\,\ell_\nu}{2},
+  \qquad
+  \Am(v_k)=-\sum_{\substack{\nu\le k\\ \sigma_\nu=-1}}\frac{\sqrt{H_\nu}\,\ell_\nu}{2}.
+\]
+Thus the three curves are piecewise quadratic, of class $C^1$, and are
+determined by the data $(u_\nu,\tau_\nu,v_\nu,H_\nu,\sigma_\nu)$.
+\end{proposition}
+
+\begin{lemma}[Critical points and inflections]
+\label{lem:critical}
+\emph{[unconditional]} One has $\Anet'=\Ms$, so the local extrema of
+$\Anet$ are exactly the zeros of $M$, and $\Anet$ is monotone on each
+excursion. Since $\Ms$ is piecewise linear, $\Anet''$ is piecewise constant
+and changes sign at $\tau_\nu$: the inflection points of $\Anet$ are the
+first argmaxima of $|M|$.
+\end{lemma}
+
+
+
+\subsection{Internal correlations of an excursion}
+\label{subsec:internal-corr}
+
+The excursion decomposition also reorganizes the quadratic form of the
+Mertens function.  This is the local correlation structure that will be used
+below.  Consider first an arbitrary finite block $x_1,\dots,x_L\in\{-1,0,1\}$
+and its partial sums
+\[
+  S_t=\sum_{j=1}^t x_j,\qquad 1\le t\le L,
+\]
+and define the internal correlations
+\[
+  C_h=\sum_{j=1}^{L-h}x_jx_{j+h},\qquad 1\le h<L.
+\]
+
+\begin{lemma}[Triangular correlation identity]
+\label{lem:triangular-corr}
+\emph{[unconditional]} For every finite block,
+\begin{equation}
+\label{eq:general-triangular}
+  \sum_{t=1}^{L}S_t^2
+  =S_L^2+S_L\sum_{t=1}^{L-1}S_t-\sum_{h=1}^{L-1}hC_h.
+\end{equation}
+In particular, for a bridge $S_L=0$,
+\begin{equation}
+\label{eq:bridge-triangular}
+  \sum_{t=1}^{L-1}S_t^2=-\sum_{h=1}^{L-1}hC_h.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+One has
+\[
+  \sum_{t=1}^{L}S_t^2
+  =\sum_{i,j=1}^{L}x_ix_j\bigl(L+1-\max(i,j)\bigr).
+\]
+Using $\max(i,j)=\tfrac12(i+j+|i-j|)$, the $|i-j|$ term gives
+$-\sum_{h<L}hC_h$, whereas the $i+j$ term is reduced using
+\[
+  \sum_{i=1}^{L} i x_i
+  =LS_L-\sum_{t=1}^{L-1}S_t.
+\]
+Collecting terms yields \eqref{eq:general-triangular}; the bridge case is
+immediate.
+\end{proof}
+
+For a complete excursion $I_\nu=(u_\nu,v_\nu]$, put $L=\ell_\nu$ and orient
+its increments by
+\[
+  x_j=\sigma_\nu\mu(u_\nu+j),\qquad
+  S_t=\sum_{j=1}^{t}x_j=|M(u_\nu+t)|.
+\]
+Then $S_t>0$ for $1\le t<L$ and $S_L=0$.  Write
+\[
+  Q_\nu:=\sum_{t=1}^{\ell_\nu-1}S_t^2,
+  \qquad
+  C_h^{(\nu)}:=\sum_{j=1}^{\ell_\nu-h}x_jx_{j+h}.
+\]
+Equation \eqref{eq:bridge-triangular} gives the exact local identity
+\begin{equation}
+\label{eq:Qcorr}
+  Q_\nu=-\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}\ge0.
+\end{equation}
+
+\begin{lemma}[Zeroth moment of the internal correlations]
+\label{lem:zeroth-corr}
+\emph{[unconditional]} If
+$q_\nu=\sum_{j=1}^{\ell_\nu}x_j^2$ is the number of non-zero steps in the
+excursion, then
+\begin{equation}
+\label{eq:zeroth-corr}
+  \sum_{h=1}^{\ell_\nu-1}C_h^{(\nu)}=-\frac{q_\nu}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $\sum_jx_j=0$,
+\[
+  0=\left(\sum_jx_j\right)^2
+   =\sum_jx_j^2+2\sum_{h=1}^{\ell_\nu-1}C_h^{(\nu)}.
+\]
+\end{proof}
+
+\begin{proposition}[Quadratic decomposition by excursions]
+\label{prop:quadratic-decomp}
+\emph{[unconditional]} If $x$ is a zero of $M$, then
+\begin{equation}
+\label{eq:quadratic-decomp-zero}
+  \sum_{n\le x}M(n)^2
+   =\sum_{v_\nu\le x}Q_\nu
+   =-\sum_{v_\nu\le x}\ \sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}.
+\end{equation}
+For general $x$, the same formula holds with the terminal block added, and
+its contribution is given by \eqref{eq:general-triangular}.
+\end{proposition}
+
+\begin{remark}[Blindness to pairs crossing excursion boundaries]
+\label{rem:blindness-quadratic}
+Globally,
+\[
+  \sum_{n\le x}M(n)^2
+  =\sum_{a,b\le x}\mu(a)\mu(b)\bigl(x+1-\max(a,b)\bigr),
+\]
+which contains all pairs $a,b\le x$.  After partitioning at the zeros of
+$M$, Proposition~\ref{prop:quadratic-decomp} rewrites the same form using
+only pairs lying in the same excursion.  Pairs crossing zeros are therefore
+reorganized away by the bridge identities.  This is a quadratic analogue
+of an excursion-boundary blindness phenomenon: the triangular form is
+completely determined by the internal blocks plus the terminal block.
+\end{remark}
+
+Let
+\[
+  \beta_\nu:=\sum_{t=1}^{\ell_\nu-1}S_t
+             =\sum_{n\in I_\nu}|M(n)|.
+\]
+By Cauchy--Schwarz,
+\begin{equation}
+\label{eq:beta-Q}
+  \beta_\nu^2\le \ell_\nu Q_\nu
+  =-\ell_\nu\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}.
+\end{equation}
+Thus the first weighted moment of the internal correlations controls the
+area of the excursion.  The converse need not hold without additional
+information on the flatness of the profile.
+
+To separate the support from the sign geometry, define
+\[
+  P_h^{(\nu)}:=\#\{1\le j\le \ell_\nu-h:\ x_jx_{j+h}\ne0\},
+\]
+and let $D_h^{(\nu)}$ be the number of those pairs with opposite signs.
+Then
+\begin{equation}
+\label{eq:C-P-D}
+  C_h^{(\nu)}=P_h^{(\nu)}-2D_h^{(\nu)},
+\end{equation}
+and hence
+\begin{equation}
+\label{eq:Q-P-D}
+  Q_\nu=\sum_{h=1}^{\ell_\nu-1}
+  h\bigl(2D_h^{(\nu)}-P_h^{(\nu)}\bigr).
+\end{equation}
+This decomposition isolates the squarefree support $P_h^{(\nu)}$ from the
+ordering of signs encoded by $D_h^{(\nu)}$.
+
+\begin{remark}[Height versus quadratic energy]
+\label{rem:height-Q}
+If an excursion reaches height $H_\nu$, then the least possible value of
+$Q_\nu$ is obtained, up to the zero steps, by climbing and descending at
+maximal speed.  Consequently
+\[
+  Q_\nu\ge 2\sum_{r=1}^{H_\nu-1}r^2+H_\nu^2
+  =\frac{2}{3}H_\nu^3+O(H_\nu^2).
+\]
+Therefore a local bound $Q_\nu\ll \ell_\nu^{2+o(1)}$ gives only
+$H_\nu\ll \ell_\nu^{2/3+o(1)}$.  The natural primary object is thus the
+area normalization $\beta_\nu/\ell_\nu^{3/2}$ rather than the stronger
+height normalization $H_\nu/\sqrt{\ell_\nu}$.
+\end{remark}
+
+\subsection{Where $\zeta$ enters}
+\label{subsec:zeta}
+
+The black curve depends on $M$ nonlinearly, through the square root of the
+peak, so $\Anet$ has no Mellin transform algebraic in $\zeta$. Its
+dependence on $\zeta$ is that of the data in
+Proposition~\ref{prop:explicit}: the nodes $u_\nu,v_\nu$ are the zeros of
+$M$, the signs $\sigma_\nu$ are those of $M$ on each excursion, and
+$H_\nu=\max_{I_\nu}|M|$. With the explicit formula of
+Titchmarsh~\cite[\S14.27]{Titchmarsh}, valid \emph{[under RH and simple
+zeros]}, the limit being taken along a suitable sequence $T_k\to\infty$ and
+$x$ not an integer,
+\begin{equation}
+\label{eq:explicitM}
+  M(x)=\sum_{\rho}\frac{x^{\rho}}{\rho\,\zeta'(\rho)}-2
+   +\sum_{n\ge1}\frac{(-1)^{n-1}(2\pi/x)^{2n}}{n\,(2n)!\,\zeta(2n+1)} ,
+\end{equation}
+the three ingredients above are written in terms of the zeros of $\zeta$.
+
+For the unregularized skeleton $L$, by contrast, the dependence is linear.
+If $\widetilde{A}(x)=\int_0^x M(t)\,dt$, then
+$\int_0^\infty \widetilde{A}(x)x^{-s-2}\,dx=\dfrac{1}{s(s+1)\zeta(s)}$ for
+$\Re s>1$, and by Mellin inversion, computing the residues at $\rho$, at
+$s=0$ (with $\zeta(0)=-\tfrac12$) and at $s=-1$ (with
+$\zeta(-1)=-\tfrac1{12}$),
+\begin{equation}
+\label{eq:explicitA}
+  \widetilde{A}(x)=\sum_{\rho}\frac{x^{\rho+1}}{\rho(\rho+1)\zeta'(\rho)}
+  -2x+12+O(1/x)
+  \qquad\text{\emph{[under RH and simple zeros]}},
+\end{equation}
+a series that converges better than \eqref{eq:explicitM} thanks to the
+factor $|\rho|^{-2}$. Moreover, with $R=M-L$ one has the unconditional
+identity
+\begin{equation}
+\label{eq:dipoles}
+  \int_0^{v_k}L
+  =\widetilde{A}(v_k)+\sum_{\text{legs}\ \subseteq (0,v_k]}\ \sum_{m\in\text{leg}}\mu(m)\,(m-m_{\text{leg}}),
+\end{equation}
+where each leg is an ascent or a descent and $m_{\text{leg}}$ is its
+midpoint: the area of the residual on each leg is exactly a dipole of $\mu$.
+
+\subsection{Bounds}
+\label{subsec:bounds}
+
+\begin{lemma}[Pointwise transfer]
+\label{lem:transfer}
+\emph{[unconditional]} If $|M(t)|\le c\,t^{1/2}$ for all $t\le x$, then
+$|\Ms(t)|\le c^{1/2}t^{1/4}$ for all $t\le x$, and therefore
+\[
+  \Ap(x)+|\Am(x)|\le \tfrac45\,c^{1/2}\,x^{5/4},
+  \qquad |\Anet(x)|\le \tfrac45\,c^{1/2}\,x^{5/4}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $t\in I_\nu$. If $t\ge\tau_\nu$, then
+$|\Ms(t)|\le\sqrt{H_\nu}\le c^{1/2}\tau_\nu^{1/4}\le c^{1/2}t^{1/4}$. If
+$t\le\tau_\nu$, then $|\Ms(t)|$ is the line joining $(u_\nu,0)$ to
+$(\tau_\nu,\sqrt{H_\nu})$, and $\sqrt{H_\nu}\le c^{1/2}\tau_\nu^{1/4}$;
+since $t\mapsto c^{1/2}t^{1/4}$ is concave and nonnegative at $u_\nu$, it
+lies above that chord. Integrating,
+$\int_0^x c^{1/2}t^{1/4}dt=\tfrac45 c^{1/2}x^{5/4}$.
+\end{proof}
+
+\begin{corollary}[Unconditional bound]
+\label{cor:uncond}
+\emph{[unconditional]} By the Vinogradov--Korobov zero-free region,
+$M(x)\ll x\exp\bigl(-c(\log x)^{3/5}(\log\log x)^{-1/5}\bigr)$, whence
+\[
+  \Ap(x)+|\Am(x)|\ll x^{3/2}\exp\Bigl(-\tfrac{c}{2}(\log x)^{3/5}(\log\log x)^{-1/5}\Bigr).
+\]
+\end{corollary}
+
+\begin{corollary}[Bound under RH]
+\label{cor:rh}
+\emph{[under RH]} $M(x)\ll_\eps x^{1/2+\eps}$ implies
+$\Ap(x)+|\Am(x)|\ll_\eps x^{5/4+\eps}$. Conversely, if
+$\Ap(x)+|\Am(x)|\gg x^{5/4+\eps}$ along a sequence $x\to\infty$ for some
+fixed $\eps>0$, then RH is false.
+\end{corollary}
+
+\begin{remark}
+\label{rem:onedirection}
+The converse goes only in that direction. Since $\ell_\nu\ge 2H_\nu$, a
+bound $\sqrt{H_\nu}\ell_\nu\ll x^{5/4+\eps}$ yields only
+$H_\nu\ll x^{5/6+\eps}$, far from RH. The black curve is a refutation test,
+not a criterion.
+\end{remark}
+
+\begin{remark}[Oscillation]
+\label{rem:omega}
+\emph{[unconditional]} $M(x)=\Omega_{\pm}(x^{1/2-\eps})$ for every
+$\eps>0$, because $\zeta$ has zeros with $\Re\rho=1/2$. Moreover the Mertens
+conjecture is false: $\limsup M(x)x^{-1/2}>1$ and
+$\liminf M(x)x^{-1/2}<-1$ (Odlyzko--te Riele~\cite{OtR}, with later
+improvements). Hence $H_\nu\gg v_\nu^{1/2-\eps}$ for infinitely many
+excursions, and neither $\Ap$ nor $\Am$ stabilizes.
+\end{remark}
+
+\subsection{Criteria equivalent to RH}
+\label{subsec:criteria}
+
+The equivalences below concern three increasingly local objects: the area of
+$M$, the quadratic energy inside the excursion blocks, and the energy of the
+black curve.  The analytic ingredient used for the converses is the $L^1$
+Mellin criterion: if $\int_1^\infty|M(x)|x^{-\sigma-1}dx<\infty$ for every
+$\sigma>1/2$, then $1/(s\zeta(s))=\int_1^\infty M(x)x^{-s-1}dx$ is analytic
+in $\Re s>1/2$, so $\zeta$ has no zeros there.
+
+\begin{proposition}[Excursionwise $L^1$ criterion]
+\label{prop:L1}
+\emph{[unconditional: an equivalence, RH is not assumed]} Let
+$\beta_\nu=\sum_{n\in I_\nu}|M(n)|$. Then
+\[
+  \mathrm{RH}\iff \sum_{v_\nu\le x}\beta_\nu\ \ll_\eps\ x^{3/2+\eps}
+  \quad\text{for every }\eps>0,
+\]
+the excursion in progress included. The sum does not depend on the signs
+$\sigma_\nu$: RH is a statement about the profile $|M|$.
+\end{proposition}
+
+\begin{lemma}[Pruning of short excursions]
+\label{lem:pruning}
+\emph{[unconditional]} For every complete excursion,
+\begin{equation}
+\label{eq:trivial-beta}
+  \beta_\nu\le H_\nu\ell_\nu\le \frac{\ell_\nu^2}{2}.
+\end{equation}
+Consequently, for every threshold $L_0\ge1$,
+\begin{equation}
+\label{eq:pruning}
+  \sum_{\substack{v_\nu\le x\\ \ell_\nu\le L_0}}\beta_\nu
+  \le \frac{L_0}{2}\sum_{\substack{v_\nu\le x\\ \ell_\nu\le L_0}}\ell_\nu
+  \le \frac{xL_0}{2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since an excursion must climb from $0$ to $H_\nu$ and return to $0$,
+$H_\nu\le\min(a_\nu,b_\nu)\le\ell_\nu/2$. Also
+$|M(n)|\le H_\nu$ throughout the excursion, which gives
+$\beta_\nu\le H_\nu\ell_\nu$. If $\ell_\nu\le L_0$, then
+$\ell_\nu^2\le L_0\ell_\nu$; summing and using the disjointness of
+complete excursions proves \eqref{eq:pruning}.
+\end{proof}
+
+\begin{corollary}[Long-excursion reduction]
+\label{cor:long-reduction}
+\emph{[unconditional: an equivalence, RH is not assumed]} Fix any
+$\delta>0$ and put $L_0=x^{1/2-\delta}$. Then
+\begin{equation}
+\label{eq:long-reduction}
+  \mathrm{RH}
+  \iff
+  \sum_{\substack{v_\nu\le x\\
+                      \ell_\nu>x^{1/2-\delta}}}\beta_\nu
+  +\beta_{\rm term}(x)
+  \ll_\eps x^{3/2+\eps}
+  \qquad\text{for every }\eps>0,
+\end{equation}
+where the terminal block is included only when it crosses the same length
+threshold. In particular the number of complete excursions surviving the
+cut is at most
+\begin{equation}
+\label{eq:number-long}
+  \#\{\nu:v_\nu\le x,\ \ell_\nu>L_0\}\le \frac{x}{L_0}
+  =x^{1/2+\delta}.
+\end{equation}
+More generally, the number with $L<\ell_\nu\le2L$ is at most $x/L$.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:pruning}, the deleted excursions contribute at most
+$\tfrac12x^{3/2-\delta}$, which is below the $x^{3/2+\eps}$ budget in
+Proposition~\ref{prop:L1}. Thus deleting them does not change the
+criterion. The counting bounds follow from disjointness and
+$\sum\ell_\nu\le x$.
+\end{proof}
+
+\begin{remark}[The square-root frontier]
+\label{rem:sqrt-frontier}
+Taking $L_0=\sqrt{x}$ in \eqref{eq:pruning} gives exactly
+$x^{3/2}/2$. Thus $\sqrt{x}$ is the frontier at which the completely
+trivial excursion bound already matches the RH-scale area budget. A cut
+strictly below $\sqrt{x}$ makes the discarded contribution lower order.
+Pushing the useful cut substantially above this frontier, or obtaining a
+smaller contribution from the retained side by the same argument, requires
+additional information such as a nontrivial height bound.
+\end{remark}
+
+\begin{heuristic}[Renewal-tail concentration of the area]
+\label{heu:renewal-tail}
+\emph{[heuristic]} Suppose the excursion-length tail has the renewal form
+\begin{equation}
+\label{eq:renewal-tail}
+  \#\{\nu:v_\nu\le x,\ \ell_\nu>L\}
+  \asymp c\sqrt{x}L^{-1/2},
+\end{equation}
+and suppose a typical excursion at scale $\ell\asymp L$ has
+$\beta\asymp\sigma L^{3/2}$. Then a dyadic scale $[L,2L]$ contains
+$\asymp c\sqrt{x}L^{-1/2}$ excursions and contributes
+\begin{equation}
+\label{eq:renewal-scale-area}
+  \asymp c\sigma\sqrt{x}L
+\end{equation}
+to the total area. Hence the dyadic contributions grow linearly with the
+length scale and are dominated by the longest excursions. Scales up to
+$L$ contribute only order $L/x$ of the contribution at the terminal scale
+$L\asymp x$.
+
+For $N=455\,052\,511$, $\sqrt N\approx2.13\times10^4$ and
+$Z(N)=87\,385$. Normalizing \eqref{eq:renewal-tail} by the observed
+excursion count gives an order-of-magnitude prediction of roughly
+$Z(N)N^{-1/4}\approx6.0\times10^2$ excursions longer than $\sqrt N$,
+compared with all $87\,385$ excursions. This numerical count is a model
+prediction, not a consequence of the pruning lemma.
+\end{heuristic}
+
+\begin{remark}[Spectral interpretation after pruning]
+\label{rem:spectral-pruning}
+The pruning lemma removes the short-excursion cloud without using any
+information about the zeros of $\zeta$. What remains is precisely the
+long-length regime in which a low-frequency approximation to the explicit
+formula is potentially informative. In the spectral-resolution heuristic,
+a truncation at ordinate $T$ resolves structures on length scales roughly
+$\gtrsim x/T$. Thus the pruning step and the low-zero description act in
+complementary regimes: the former removes a provably harmless short-scale
+part, while the latter is relevant only to the retained long excursions.
+This is a heuristic interpretation, not an unconditional transfer theorem
+for excursion-selected intervals.
+\end{remark}
+
+\begin{remark}[What pruning does not solve]
+\label{rem:pruning-limit}
+The reduction changes where the difficulty lies, not its size on the
+largest blocks. If $\ell_\nu\asymp x$, the trivial estimate
+$\beta_\nu\le\ell_\nu^2/2$ is of order $x^2$, while the RH-scale
+budget is $x^{3/2+\eps}$. A factor of essentially $x^{1/2}$ is still
+missing, and there are only $O(1)$ such terminal-scale excursions, so no
+averaging over many blocks is available. This is the regime in which the
+local profile, the correlation moment $Q_\nu$, and the bridge geometry
+must supply genuinely new information.
+\end{remark}
+
+\begin{theorem}[Aggregated internal-correlation criterion]
+\label{thm:corr-criterion}
+\emph{[unconditional: an equivalence, RH is not assumed]} With $Q_\nu$ and
+$C_h^{(\nu)}$ as in \S\ref{subsec:internal-corr}, and with the terminal
+block included through \eqref{eq:general-triangular},
+\begin{equation}
+\label{eq:RH-Q}
+  \mathrm{RH}
+  \iff
+  \sum_{v_\nu\le x}Q_\nu+Q_{\rm term}(x)
+  \ll_\eps x^{2+\eps}
+  \qquad\text{for every }\eps>0.
+\end{equation}
+Equivalently,
+\begin{equation}
+\label{eq:RH-corr}
+  \mathrm{RH}
+  \iff
+  -\sum_{v_\nu\le x}\ \sum_{h=1}^{\ell_\nu-1}
+  hC_h^{(\nu)}+Q_{\rm term}(x)
+  \ll_\eps x^{2+\eps}
+  \qquad\text{for every }\eps>0.
+\end{equation}
+Thus RH is equivalent to an averaged bound for the first weighted moment of
+the correlations internal to the excursions; no excursionwise bound
+$Q_\nu\ll\ell_\nu^{2+\eps}$ is required.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:quadratic-decomp}, the left side of
+\eqref{eq:RH-Q} is exactly $\sum_{n\le x}M(n)^2$.  Under RH,
+$M(n)\ll_\eps n^{1/2+\eps}$, hence
+$\sum_{n\le x}M(n)^2\ll_\eps x^{2+\eps}$ after renaming $\eps$.
+Conversely, if the latter bound holds for every $\eps>0$, then
+Cauchy--Schwarz gives
+\[
+  \sum_{n\le x}|M(n)|
+  \le x^{1/2}\left(\sum_{n\le x}M(n)^2\right)^{1/2}
+  \ll_\eps x^{3/2+\eps}.
+\]
+Partial summation gives the $L^1$ Mellin criterion for every
+$\sigma>1/2$, and therefore RH.  Equation \eqref{eq:RH-corr} follows from
+\eqref{eq:Qcorr} and the terminal-block identity.
+\end{proof}
+
+\begin{corollary}[A local sufficient condition]
+\label{cor:local-corr-sufficient}
+\emph{[unconditional implication]} If, for every $\eps>0$, every complete
+excursion satisfies
+\[
+  Q_\nu=-\sum_{h=1}^{\ell_\nu-1}hC_h^{(\nu)}
+  \ll_\eps \ell_\nu^{2+\eps},
+\]
+and the terminal block satisfies the analogous bound, then RH holds.
+Equivalently, it is enough to have
+\[
+  \sum_{h<\ell_\nu}h\bigl(2D_h^{(\nu)}-P_h^{(\nu)}\bigr)
+  \ll_\eps \ell_\nu^{2+\eps}
+\]
+for every excursion.
+\end{corollary}
+
+\begin{remark}[Calibration: a Chowla-scale condition]
+\label{rem:chowla-scale}
+The local condition is sufficient but not weak.  If the correlations
+$C_h^{(\nu)}$ had a typical size $B$ with essentially uncorrelated signs,
+then
+\[
+  \left|\sum_{h<L}hC_h^{(\nu)}\right|
+  \asymp B\left(\sum_{h<L}h^2\right)^{1/2}
+  \asymp B L^{3/2}.
+\]
+The target $O(L^2)$ therefore corresponds, in such a generic regime, to
+$B=O(\sqrt L)$: square-root cancellation in the pair correlations averaged
+over the lag variable.  Its advantage over pointwise Chowla is not a lower
+cancellation scale, but the freedom to tolerate individual bad lags if they
+compensate in the weighted aggregate.
+
+At the unconditioned density level one expects
+$\sum_{h<L}hP_h$ to be of order $L^3$ (the crude independent-squarefree
+scale gives $\tfrac12(6/\pi^2)^2L^3\approx0.18L^3$).  Hence
+\eqref{eq:Q-P-D} asks for cancellation of the two order-$L^3$ contributions
+down to order $L^2$.  This is a calibration of the required strength, not a
+claim that Mirsky estimates on fixed intervals apply directly to the
+excursion-selected intervals.
+\end{remark}
+
+\begin{remark}[The conditioning obstruction and the missing third constraint]
+\label{rem:conditioning}
+The interval $I_\nu=(u_\nu,v_\nu]$ is not fixed independently of $\mu$:
+its endpoints are selected by the condition that the partial sum vanishes,
+and, after orientation, the whole block obeys
+\[
+  S_t>0\quad(1\le t<\ell_\nu),\qquad S_{\ell_\nu}=0.
+\]
+Thus estimates for $\sum_j\mu(j)\mu(j+h)$ on fixed intervals, or even on
+average over fixed intervals, cannot be transferred to $I_\nu$ without
+controlling this selection bias.  The conditioning itself forces
+\[
+  -\sum_hhC_h^{(\nu)}=Q_\nu\ge \frac{\beta_\nu^2}{\ell_\nu},
+\]
+so a local correlation-energy bound implies the local area bound, but not
+conversely unless the profile is known to be sufficiently flat.
+
+Equations \eqref{eq:zeroth-corr} and \eqref{eq:Qcorr} give two exact
+constraints on the zeroth and first weighted moments of the internal
+correlations.  The remaining structural problem is to find a third
+constraint that prevents the negative correlation mass from moving too far
+towards lags $h\asymp\ell_\nu$.  A natural place to seek it is in the bridge
+geometry---for example through the climb/descent asymmetry and through a
+defect parameter of the form $\delta=\ell/2-H$ (or its version using the
+number of non-zero steps).  Large transport of negative mass to long lags
+corresponds precisely to a more ballistic excursion profile.
+\end{remark}
+
+\begin{theorem}[Dirichlet energy of the black curve]
+\label{thm:energy}
+\emph{[unconditional: an equivalence, RH is not assumed]} Let $\mathcal{J}$
+be the linear interpolation of $\Anet$ between consecutive critical points
+and
+\[
+  E(x)=\int_0^x(\mathcal{J}')^2
+  =\sum_{v_\nu\le x}\frac{\bigl(\Anet(v_\nu)-\Anet(u_\nu)\bigr)^2}{\ell_\nu}
+  +\frac{(x-u)\max_{u<n\le x}|M(n)|}{4},
+\]
+where $(u,x]$ is the leg in progress. By Lemma~\ref{lem:jump},
+$\bigl(\Anet(v_\nu)-\Anet(u_\nu)\bigr)^2/\ell_\nu=H_\nu\ell_\nu/4$, so that
+$E(x)=\tfrac14\bigl(\sum_{v_\nu\le x}H_\nu\ell_\nu+(x-u)H_{\mathrm{run}}\bigr)$.
+Then
+\[
+  \sum_{n\le x}|M(n)|\ \le\ 4E(x)\ \le\ x\max_{n\le x}|M(n)|,
+\]
+and
+\[
+  \mathrm{RH}\iff E(x)\ll_\eps x^{3/2+\eps}\quad\text{for every }\eps>0 .
+\]
+\end{theorem}
+
+\begin{proof}
+The lower bound is $|M(n)|\le H_\nu$ summed over each excursion, and the
+upper one is $H_\nu\le\max_{n\le x}|M(n)|$ together with
+$\sum\ell_\nu\le x$. If RH holds, $\max_{n\le x}|M(n)|\ll_\eps x^{1/2+\eps}$
+and the upper bound gives $E(x)\ll x^{3/2+\eps}$. Conversely, if
+$E(x)\ll x^{3/2+\eps}$, the lower bound gives
+$\sum_{n\le x}|M(n)|\ll x^{3/2+\eps}$; by partial summation,
+$\int_1^\infty|M(x)|x^{-\sigma-1}dx<\infty$ for $\sigma>1/2$, and the Mellin
+criterion concludes.
+\end{proof}
+
+\begin{remark}
+\label{rem:average}
+$E$ is an average: $4E(x)=\sum H_\nu\ell_\nu$ is the excursion height
+weighted by $\ell_\nu$. It allows isolated excursions with
+$H_\nu\gg v_\nu^{1/2}$ provided they are short or rare, and only forbids the
+weighted mass from exceeding $x^{3/2+\eps}$. It is moreover a sum of
+nonnegative local terms, with no sign cancellation.
+\end{remark}
+
+
+\subsection{Prime-information horizon of an excursion}
+\label{subsec:prime-horizon}
+
+This subsection isolates an elementary but useful information boundary.  It
+separates what is forced by the prime data already available at the beginning
+of an excursion from what would genuinely require new prime information after
+the excursion has started.
+
+\begin{lemma}[Square horizon from the primes known at the start]
+\label{lem:square-horizon}
+\emph{[unconditional]} Let $u\ge2$.  Knowledge of the complete set of primes
+$p\le u$ determines $\mu(n)$ for every integer $n\le u^2$.
+\end{lemma}
+
+\begin{proof}
+Remove from $n$ all prime factors $p\le u$, keeping track of their
+multiplicities.  If a known prime occurs twice then $\mu(n)=0$.  Otherwise the
+remaining factor $q$ is either $1$ or a single prime $>u$: it cannot be a
+product of two integers $>u$, because then $q>u^2\ge n$.  Thus the parity of
+the number of distinct prime factors, and hence $\mu(n)$, is determined using
+no prime information beyond $u$.
+\end{proof}
+
+\begin{definition}[Information-self-contained and information-expanding excursions]
+\label{def:information-excursion}
+For a complete excursion $I_\nu=(u_\nu,v_\nu]$, call $I_\nu$
+\emph{information-self-contained at its start} if
+\[
+  v_\nu\le u_\nu^2,
+\]
+and \emph{information-expanding} if
+\[
+  v_\nu>u_\nu^2.
+\]
+Equivalently, writing $L_\nu=v_\nu-u_\nu$, the exceptional condition is
+$L_\nu>u_\nu^2-u_\nu$.  By Lemma~\ref{lem:square-horizon}, every
+information-self-contained excursion is completely determined by the primes
+already known at its starting point $u_\nu$; no prime discovered after
+$u_\nu$ is needed as new input to determine the values of $\mu$ throughout
+that excursion.
+\end{definition}
+
+For a general excursion, the fraction of its integer time interval that is
+unconditionally determined from the prime data available at its start is at
+least
+\begin{equation}
+\label{eq:known-fraction}
+  \vartheta_\nu
+  =\min\!\left\{1,
+  \frac{u_\nu^2-u_\nu}{v_\nu-u_\nu}\right\}.
+\end{equation}
+Thus the only excursions for which the known-prime horizon fails to cover the
+whole block are precisely the information-expanding excursions.
+
+\begin{proposition}[Double-exponential separation of information-expanding excursions]
+\label{prop:double-exp-separation}
+\emph{[unconditional]} Let
+\[
+  a_1<a_2<a_3<\cdots
+\]
+be the starting points, restricted to $a_j\ge2$, of the information-expanding
+excursions.  Then
+\begin{equation}
+\label{eq:double-exp-separation}
+  a_{j+1}>a_j^2.
+\end{equation}
+Consequently
+\begin{equation}
+\label{eq:double-exp-growth}
+  a_j>a_1^{\,2^{j-1}},
+\end{equation}
+and the number
+\[
+  N_{\rm new}(X)
+  :=\#\{\nu:u_\nu\le X,\ v_\nu>u_\nu^2\}
+\]
+satisfies
+\begin{equation}
+\label{eq:loglog-exception-count}
+  N_{\rm new}(X)=O(\log\log X).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If an information-expanding excursion starts at $a_j$, it ends at a point
+$v>a_j^2$.  Every later excursion starts at that endpoint or later.  Hence the
+next information-expanding excursion, if one exists, has
+$a_{j+1}>a_j^2$.  Iteration gives \eqref{eq:double-exp-growth}, and solving
+$a_1^{2^{j-1}}\le X$ for $j$ gives \eqref{eq:loglog-exception-count}.
+\end{proof}
+
+\begin{remark}[What the unconditional separation does and does not imply]
+\label{rem:unconditional-information-separation}
+The bound $N_{\rm new}(X)=O(\log\log X)$ is unconditional, but it does not imply
+that only finitely many information-expanding excursions exist.  An infinite
+sequence is still logically possible, provided its starting points satisfy the
+double-exponential separation $a_{j+1}>a_j^2$.  No eventual-zero statement is
+used below.
+\end{remark}
+
+\subsection{Propagation of prime information beyond the square horizon}
+\label{subsec:prime-copy-propagation}
+
+The square horizon identifies where information not already certified at the
+starting point can first become relevant.  The next question is quantitative:
+how much can genuinely new prime information change the height of an excursion,
+once it is combined with the part of the trajectory already determined at the
+start?  In this subsection it is convenient to write
+\[
+  m(x):=M(x)=\sum_{n\le x}\mu(n)
+\]
+for the scalar Mertens sum.
+
+\begin{definition}[First-order new-prime channel]
+\label{def:first-order-channel}
+Fix a starting point $u\ge2$.  For a prime $p>u^2$ and a point $t<p^2$, define
+\[
+  \Delta_p(t):=\sum_{a\le t/p}\mu(ap).
+\]
+Since $a<t/p<p$, one has $(a,p)=1$, and therefore
+\begin{equation}
+\label{eq:single-prime-copy}
+  \boxed{\qquad
+  \Delta_p(t)=-m\!\left(\left\lfloor\frac{t}{p}\right\rfloor\right).
+  \qquad}
+\end{equation}
+Thus a new prime does not contribute an arbitrary string of equal signs: it
+reproduces, with reversed sign, a prefix of the Mertens walk that is already
+known at the smaller scale $t/p$.
+\end{definition}
+
+\begin{proposition}[Forced $+1,-1,0$ content of one prime cone]
+\label{prop:prime-cone-signs}
+\emph{[unconditional]} Put $y=\lfloor t/p\rfloor<p$ and
+\[
+  Q(y):=\sum_{a\le y}\mu(a)^2.
+\]
+Among the values $\mu(ap)$, $1\le a\le y$, the exact numbers of $+1,-1$ and
+$0$ are
+\begin{equation}
+\label{eq:prime-cone-counts}
+  N_+(y)=\frac{Q(y)-m(y)}2,\qquad
+  N_-(y)=\frac{Q(y)+m(y)}2,\qquad
+  N_0(y)=y-Q(y).
+\end{equation}
+Consequently
+\[
+  N_+(y)-N_-(y)=-m(y)=\Delta_p(t).
+\]
+In particular, using the squarefree density and the prime number theorem,
+\[
+  \frac{N_+(y)}y\to\frac3{\pi^2},\qquad
+  \frac{N_-(y)}y\to\frac3{\pi^2},\qquad
+  \frac{N_0(y)}y\to1-\frac6{\pi^2},
+\]
+and
+\begin{equation}
+\label{eq:relative-prime-cone-bias}
+  \frac{|\Delta_p(t)|}{y}=\frac{|m(y)|}{y}\longrightarrow0.
+\end{equation}
+The cancellation in \eqref{eq:relative-prime-cone-bias} is only relative to
+the full cone size $y$; it is not a square-root bound.
+\end{proposition}
+
+\begin{proof}
+For $a<p$, multiplicativity gives $\mu(ap)=-\mu(a)$.  The identities in
+\eqref{eq:prime-cone-counts} follow from
+$N_+(\mu)+N_-(\mu)=Q(y)$ and
+$N_+(\mu)-N_-(\mu)=m(y)$ before the sign reversal.  The asymptotic
+proportions use $Q(y)=6y/\pi^2+O(\sqrt y)$ and $m(y)=o(y)$.
+\end{proof}
+
+\begin{proposition}[Linear first-order regime]
+\label{prop:linear-new-primes}
+\emph{[unconditional]} Suppose
+\begin{equation}
+\label{eq:linear-window}
+  u^2<t<u^4.
+\end{equation}
+Then two distinct primes $p,q>u^2$ cannot divide the same integer $n\le t$,
+and no square $p^2$ with $p>u^2$ can occur below $t$.  Hence the first-order
+new-prime channels are disjoint and their total contribution is exactly
+\begin{equation}
+\label{eq:first-order-total}
+  \boxed{\qquad
+  E_u^{(1)}(t)
+  =-\sum_{u^2<p\le t}
+  m\!\left(\left\lfloor\frac{t}{p}\right\rfloor\right).
+  \qquad}
+\end{equation}
+This formula concerns the first-order channels generated by primes $p>u^2$;
+it is not asserted here to be a complete parametrization of every possible
+residual-information mechanism beyond the square horizon.
+\end{proposition}
+
+\begin{proof}
+If $p,q>u^2$, then $pq>u^4>t$, and likewise $p^2>u^4>t$.
+Thus the sets of multiples of the different $p$ occurring below $t$ are
+disjoint.  Equation \eqref{eq:first-order-total} follows by summing
+\eqref{eq:single-prime-copy}.
+\end{proof}
+
+\begin{definition}[Copy length and multiplicity]
+\label{def:copy-multiplicity}
+Set
+\[
+  R=R(t,u):=\frac{t}{u^2}.
+\]
+For an integer $1\le y\le\lfloor R\rfloor$, let
+\[
+  N_y(t,u)
+  :=\#\left\{p>u^2:\ p\le t,\
+       \left\lfloor\frac{t}{p}\right\rfloor=y\right\}.
+\]
+Equivalently,
+\begin{equation}
+\label{eq:Ny-exact}
+  N_y(t,u)
+  =\#\left\{p:\
+      \max\!\left(u^2,\frac{t}{y+1}\right)<p\le\frac{t}{y}
+    \right\}.
+\end{equation}
+Therefore the first-order contribution has the exact grouped form
+\begin{equation}
+\label{eq:first-order-grouped}
+  \boxed{\qquad
+  E_u^{(1)}(t)=-\sum_{1\le y\le R}N_y(t,u)m(y).
+  \qquad}
+\end{equation}
+The total number of copies is
+\begin{equation}
+\label{eq:copy-total}
+  K(t,u)=\sum_yN_y(t,u)=\pi(t)-\pi(u^2).
+\end{equation}
+\end{definition}
+
+\begin{remark}[How many copies and how long they are]
+\label{rem:copy-count-asymptotic}
+The following are unconditional PNT asymptotics, not probabilistic
+assumptions.  If $t=Ru^2$ with fixed $R>1$ and $u\to\infty$, then
+\begin{equation}
+\label{eq:K-fixed-R}
+  K(t,u)\sim \frac{(R-1)u^2}{2\log u}.
+\end{equation}
+For each fixed $y<R$,
+\begin{equation}
+\label{eq:Ny-fixed-R}
+  N_y(t,u)
+  \sim
+  \frac{Ru^2}{2\log u}\frac1{y(y+1)}.
+\end{equation}
+No uniformity in growing $R$ is claimed in \eqref{eq:Ny-fixed-R}.  The exact
+formula to use outside the fixed-$R$ regime is \eqref{eq:Ny-exact}.
+\end{remark}
+
+\begin{remark}[The first copy-length transitions]
+\label{rem:first-copy-transitions}
+The parameter $R=t/u^2$ measures how far the excursion has travelled beyond
+the square information horizon.  If $1<R<2$, every new-prime copy has length
+$1$, so $m(1)=1$ and
+\[
+  E_u^{(1)}(t)=-\bigl(\pi(t)-\pi(u^2)\bigr).
+\]
+If $2<R<3$, copies of length $2$ appear, but $m(2)=0$, so that channel is
+exactly neutral.  At $3<R<4$, copies of length $3$ enter and
+$m(3)=-1$, creating channels of the opposite net sign.  Thus the forced
+$+1,-1,0$ structure begins to screen the first-order contribution as the
+available copy lengths diversify.  This statement is exact at each fixed
+$t$ through \eqref{eq:first-order-grouped}; it does not assert an RH-scale
+bound.
+\end{remark}
+
+\begin{lemma}[Ideal copy-weight cancellation coefficient]
+\label{lem:copy-weight-coefficient}
+\emph{[unconditional]} Define
+\begin{equation}
+\label{eq:AR-def}
+  A(R):=\sum_{1\le y\le R}\frac{m(y)}{y(y+1)}.
+\end{equation}
+Then
+\begin{equation}
+\label{eq:AR-exact}
+  \boxed{\qquad
+  A(R)=\sum_{n\le R}\frac{\mu(n)}n-\frac{m(R)}{R+1}.
+  \qquad}
+\end{equation}
+Moreover
+\begin{equation}
+\label{eq:AR-tail}
+  A(R)=-\sum_{n>R}\frac{m(n)}{n(n+1)},
+\end{equation}
+where the convergent identity uses
+$\sum_{n\ge1}\mu(n)/n=0$, equivalently the prime number theorem.  Hence
+\begin{equation}
+\label{eq:AR-zero}
+  A(R)\longrightarrow0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Reverse the order of summation:
+\[
+  A(R)
+  =\sum_{n\le R}\mu(n)
+    \sum_{y=n}^{R}\frac1{y(y+1)}
+  =\sum_{n\le R}\mu(n)
+    \left(\frac1n-\frac1{R+1}\right),
+\]
+which gives \eqref{eq:AR-exact}.  Letting $R\to\infty$ and using the prime
+number theorem gives the infinite sum $0$; subtracting the finite partial
+sum gives \eqref{eq:AR-tail}.
+\end{proof}
+
+\begin{corollary}[Unconditional decay available for the ideal coefficient]
+\label{cor:AR-VK}
+Using the Vinogradov--Korobov zero-free-region bound
+\[
+  m(x)\ll
+  x\exp\!\left[-c(\log x)^{3/5}(\log\log x)^{-1/5}\right],
+\]
+there is $c_1>0$ such that
+\begin{equation}
+\label{eq:AR-VK}
+  A(R)\ll
+  \exp\!\left[-c_1(\log R)^{3/5}(\log\log R)^{-1/5}\right].
+\end{equation}
+Thus the idealized coherent fraction of increasingly long copies tends to
+zero unconditionally, but only at a sub-power rate.
+\end{corollary}
+
+\begin{remark}[Main-term interpretation and its limitation]
+\label{rem:AR-main-term}
+For fixed $R$, substituting the PNT approximation
+\eqref{eq:Ny-fixed-R} into the exact grouped sum
+\eqref{eq:first-order-grouped} gives the first-order main term
+\begin{equation}
+\label{eq:E-main-fixed-R}
+  E_u^{(1)}(Ru^2)
+  \sim -\frac{Ru^2}{2\log u}\,A(R)
+  \qquad(u\to\infty,\ R\ \text{fixed}).
+\end{equation}
+The coefficient $A(R)$ therefore measures the signed cancellation forced by
+the ensemble of copy lengths in this fixed-$R$ asymptotic.  When $R$ grows
+with $u$, \eqref{eq:first-order-grouped} remains exact but
+\eqref{eq:E-main-fixed-R} must not be used without a uniform prime-counting
+estimate for the weights $N_y(t,u)$.
+\end{remark}
+
+\begin{definition}[Remaining margin to a dangerous height]
+\label{def:remaining-margin}
+Let $B_u(t)$ denote any baseline trajectory contribution already fixed by the
+information retained at the start $u$, before adding the first-order channels
+\eqref{eq:first-order-total}.  For a target
+$T_\eps(t)=t^{1/2+\eps}$ define the remaining margin
+\begin{equation}
+\label{eq:margin-def}
+  G_{u,\eps}(t):=
+  \max\bigl\{0,T_\eps(t)-|B_u(t)|\bigr\}.
+\end{equation}
+The first-order new-prime information can be causally responsible for crossing
+the target at $t$ only if its signed contribution has magnitude at least this
+margin.  A sign-free sufficient test excluding such responsibility is
+\begin{equation}
+\label{eq:causal-capacity}
+  C_u^{(1)}(t):=
+  \sum_{y\le R}N_y(t,u)|m(y)|<G_{u,\eps}(t),
+\end{equation}
+whereas the exact first-order signed test is
+\begin{equation}
+\label{eq:causal-signed}
+  \left|\sum_{y\le R}N_y(t,u)m(y)\right|
+  <G_{u,\eps}(t).
+\end{equation}
+If \eqref{eq:causal-signed} holds, the first-order channels cannot supply the
+missing height at that point.  No claim is made that the baseline/new-channel
+decomposition by itself controls all higher-order residual information.
+\end{definition}
+
+\begin{remark}[Why long-copy cancellation does not prove RH]
+\label{rem:copy-cancellation-not-RH}
+The limit $A(R)\to0$ is only a statement of \emph{relative} cancellation.
+An $o(1)$ coherent fraction multiplying a quantity of order $t/\log t$ can
+still be vastly larger than $t^{1/2+\eps}$.  To see the required scale,
+formally compare the ideal first-order size
+\[
+  \frac{t}{\log t}|A(R)|
+\]
+with $t^{1/2+\eps}$.  A sufficient inequality would be
+\begin{equation}
+\label{eq:AR-required-t}
+  |A(R)|\ll t^{-1/2+\eps}\log t.
+\end{equation}
+The unconditional decay \eqref{eq:AR-VK} is much weaker than any fixed
+negative power of $R$.  Thus the known cancellation does not bound the
+``deterministic randomness'' at the RH scale.
+\end{remark}
+
+\begin{remark}[Power-law calibration of the missing decay]
+\label{rem:power-calibration-copy}
+Write $t=u^\alpha$ with $\alpha>2$.  Then
+$R=t/u^2=u^{\alpha-2}$.  The formal requirement
+\eqref{eq:AR-required-t} becomes, up to logarithmic factors,
+\begin{equation}
+\label{eq:AR-required-R}
+  |A(R)|\lesssim R^{-\delta(\alpha,\eps)},
+  \qquad
+  \delta(\alpha,\eps)
+  =\frac{\alpha(1/2-\eps)}{\alpha-2}.
+\end{equation}
+For $\eps$ near $0$ this asks, respectively, for exponents $3/2$ at
+$t=u^3$, $1$ at $t=u^4$, $3/4$ at $t=u^6$, and $5/8$ at $t=u^{10}$;
+as $\alpha\to\infty$ the required exponent decreases only to $1/2$.
+Thus increasing the excursion length relaxes the needed cancellation, but
+never below the square-root barrier.  This is a calibration of the ideal
+first-order mechanism, not an independent proof of an RH-scale bound.
+\end{remark}
+
+\begin{remark}[Hierarchy of interaction scales]
+\label{rem:new-prime-hierarchy}
+The square horizon $u^2$ is the first scale at which first-order prime
+information outside the starting data can enter.  Two primes $>u^2$ cannot
+occur together below $u^4$; three cannot occur together below $u^6$, and in
+general a product of $k$ such primes lies above $u^{2k}$.  Hence
+\[
+  u^2,\ u^4,\ u^6,\ldots
+\]
+form natural thresholds for successive orders of interaction among these
+new-prime channels.  The interval $u^2<t<u^4$ is distinguished because the
+first-order superposition \eqref{eq:first-order-total} is exactly linear.
+\end{remark}
+
+
+\subsection{Model of the black curve}
+\label{subsec:model}
+
+\begin{heuristic}[Shape of $\Anet$]
+\label{heu:model}
+\emph{[heuristic; assumes RH, simple zeros, convergence of the
+Fourier--Bohr expansion and a constant fill factor]} Writing
+$M(t)=t^{1/2}F(\log t)$ with
+$F(u)=2\Re\sum_{\gamma>0}e^{i\gamma u}/(\rho\zeta'(\rho))$, and
+approximating $\Ms\approx\kappa\,\sgn(M)|M|^{1/2}$ with $\kappa$ constant,
+one gets $\Ms(t)\approx\kappa\,t^{1/4}G(\log t)$ with
+$G=\sgn(F)|F|^{1/2}$. If $G(u)=\sum_\lambda g_\lambda e^{i\lambda u}$, then
+\[
+  \Anet(x)\approx\kappa\,x^{5/4}\sum_\lambda \frac{g_\lambda\,x^{i\lambda}}{5/4+i\lambda}.
+\]
+This reproduces the exponent $5/4$, the smoothness of the waves (the factor
+$|5/4+i\lambda|^{-1}$ damps the high frequencies) and the quasi-periodicity
+in $\log x$: with dominant frequency $\gamma_1=14.1347$, the period is
+$2\pi/\gamma_1$ in $\log x$, a factor $\approx1.56$ in $x$.
+\end{heuristic}
+
+\subsection{Numerical data}
+\label{subsec:data}
+
+With $N=455\,052\,511$ and $Z(N)=87\,385$ excursions:
+\[
+  \Ap(N)=6.3449\cdot10^{9},\qquad
+  \Am(N)=-7.0877\cdot10^{9},\qquad
+  \Anet(N)=-7.4279\cdot10^{8},
+\]
+\[
+  \max_\nu \frac{H_\nu}{\sqrt{\ell_\nu}}=2.0743,\qquad
+  \max_\nu \frac{\beta_\nu}{\ell_\nu^{3/2}}=1.0214 .
+\]
+For the pruned program the more relevant diagnostic is the same maximum
+restricted to $\ell_\nu>\sqrt N$ (or, more generally, to
+$\ell_\nu>N^{1/2-\delta}$). The value of that filtered maximum is not
+reported here and should be recomputed from the excursion census rather
+than inferred from the unfiltered maximum.
+The second normalization is the one singled out by
+\eqref{eq:beta-Q}: a local $Q_\nu=O(\ell_\nu^2)$ law gives exactly
+$\beta_\nu=O(\ell_\nu^{3/2})$, whereas the same quadratic-energy control
+only yields the weaker height law $H_\nu=O(\ell_\nu^{2/3})$.
+The bound of Lemma~\ref{lem:transfer} with
+$c=\max_{10^3\le n\le N}|M(n)|n^{-1/2}$ lies about $30$ times above
+$|\Anet(N)|$. In this range $|M(x)|\lesssim 0.5\sqrt{x}$, well inside any
+bound at the RH scale, so the data do not separate $x^{1/2}$ from
+$x^{1/2+\eps}$: the factor $x^{\eps}$ with $\eps=0.05$ equals
+$\approx 2.7$ here.
+
+\begin{thebibliography}{9}
+\bibitem{Titchmarsh} E.~C. Titchmarsh, \emph{The Theory of the Riemann
+Zeta-function}, 2nd ed., revised by D.~R. Heath-Brown, Oxford Univ. Press,
+1986, \S14.27.
+\bibitem{OtR} A.~M. Odlyzko and H.~J.~J. te Riele, \emph{Disproof of the
+Mertens conjecture}, J. Reine Angew. Math. \textbf{357} (1985), 138--160.
+\bibitem{Ng} N.~Ng, \emph{The distribution of the summatory function of the
+Möbius function}, Proc. London Math. Soc. (3) \textbf{89} (2004), 361--389.
+\end{thebibliography}
+
+\end{document}

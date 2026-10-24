@@ -1,0 +1,9 @@
+=== exact antisymmetric gap identity ===
+random n tested            : 4000
+mismatches                 : 0
+max absolute error         : 0.000e+00
+
+=== weight-norm formula  sum w^2 ===
+sum w^2 = h(h^2-1)/12  (h odd),  h(h-1)(h-2)/12  (h even) : True
+check   : h=7 -> 28.0 (closed 28.0) ; h=8 -> 28.0 (closed 28.0)
+asymptotics: sum w^2 / (h^3/12) at h=370 : 0.991907

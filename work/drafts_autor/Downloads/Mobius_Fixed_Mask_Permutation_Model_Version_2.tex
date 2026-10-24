@@ -1,0 +1,2512 @@
+\documentclass[11pt,reqno]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Corr}{\operatorname{Corr}}
+\newcommand{\Om}{\Omega}
+\newcommand{\QF}{\mathcal Q}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\cA}{\mathcal A}
+
+\title[Fixed-Mask Permutations of the M\"obius Path]{A Fixed-Mask Permutation Model for the M\"obius Summatory Path\\
+Exact Finite Moments, Quadratic Path Mass, and Computational Placement}
+\author{}
+\date{Version 2}
+
+\begin{document}
+\raggedbottom
+
+\begin{abstract}
+For a fixed cutoff \(N\), the nonzero values of the M\"obius function form a
+finite sign word on the squarefree support.  We study the uniform orbit
+obtained by permuting those signs while preserving the support and the two
+sign counts.  This is an exchangeable hypergeometric bridge with the same
+endpoint \(M(N)\) as the observed word.  For the normalized logarithmic
+quadratic path mass
+\begin{equation}
+\QF_{N_0,N}(w)=\frac{1}{\log(N/N_0)}
+\sum_{N_0<n\leq N}\frac{R_w(n)^2}{n^2},
+\qquad R_w(n)=\sum_{k\leq n}w(k),
+\label{eq:abstract-quadratic-mass}
+\end{equation}
+we derive exact finite-class formulae for the mean, the covariance kernel of
+squared partial sums, and the variance.  We also give an exact bilinear
+decomposition, an opposite-sign transposition calculus, the reflection
+degeneracy of completed excursions, and the exact first moment of the number
+of returns to zero.
+
+For the identified M\"obius data file through \(N=455{,}052{,}511\), the
+reported full-cutoff values are
+\begin{equation}
+\QF_{1000,N}(\mu)=0.029334,\qquad
+\E_{\pi}\QF_{1000,N}(\pi)=0.56628,\qquad
+\rho_Q(N)=0.0518.
+\label{eq:abstract-full-cutoff}
+\end{equation}
+The inequality between the first two quantities is a finite, data-dependent
+computer-assisted statement with a declared forward-error audit; it is not an
+asymptotic theorem.  The approximate five-percent scale is largely explained,
+under standard additional hypotheses, by the classical spectral second
+moment of the Mertens function.  Thus the class-relative finite comparison is
+the contribution of the model, whereas the small absolute quadratic scale is
+not claimed as a new phenomenon of analytic number theory.  Reported
+excursion, conditional-choice, and blind spectral experiments are included
+with their null results and selection corrections.  No result in the paper
+proves the Riemann Hypothesis or the weak Mertens conjecture.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\section{Purpose, claims, and novelty boundary}
+\label{sec:introduction}
+
+Let \(\mu\) denote the M\"obius function and
+\begin{equation}
+M(x)=\sum_{n\leq x}\mu(n),\qquad
+Q(x)=\sum_{n\leq x}\mu(n)^2.
+\label{eq:mertens-and-squarefree-count}
+\end{equation}
+The model asks a finite conditional question: after retaining the exact
+squarefree support and the exact numbers of positive and negative values, how
+does the order of the M\"obius signs compare with all other admissible orders?
+It does not replace multiplicative number theory by a random-sign hypothesis.
+It supplies a null class in which the information removed and the information
+retained are explicit.
+
+\subsection{What is established}
+\label{subsec:established-summary}
+
+The mathematical core consists of identities valid for every finite
+fixed-support sign orbit:
+\begin{enumerate}[label=(\roman*)]
+\item the exact mean of \eqref{eq:abstract-quadratic-mass};
+\item a factorization of
+\(\Cov(T_j^2,T_k^2)\) and an \(O(m)\) formula for the exact variance;
+\item an exact decomposition into a class-invariant diagonal term and an
+order-dependent bilinear term;
+\item an exact formula for the change under one opposite-sign transposition;
+\item the reflection orbit of completed excursions and an exact formula for
+the mean number of zero returns;
+\item the diffusive, Brownian-bridge critical scale of the null class.
+\end{enumerate}
+The numerical component places the observed finite M\"obius word in this
+class at fourteen cutoffs.  The strongest data statement is the finite ratio
+in \eqref{eq:abstract-full-cutoff}, not a limit as \(N\to\infty\).
+
+\subsection{What is new, and what is classical}
+\label{subsec:novelty-boundary}
+
+The finite-population bridge, its concentration inequalities, and its
+Brownian-bridge limit belong to standard probability theory
+\cite{Hoeffding1963,Serfling1974,Sen1972,BardenetMaillard2015}.  The weak
+Mertens conjecture, the conditional spectral second moment, and negative
+moments of \(\zeta'\) are classical analytic number theory
+\cite{Titchmarsh1986,Ng2004,Gonek1989}.  No priority is claimed for a general
+finite-population identity in isolation.
+
+The contribution asserted here is narrower: the particular fixed-mask,
+fixed-count orbit for the M\"obius word; the integrated exact formulae and
+local ordering calculus for the logarithmically weighted quadratic
+functional; and the finite placement of the observed word against that
+exactly specified class.  A literature search has not been used to claim that
+no equivalent finite-population formula exists elsewhere.  Accordingly, the
+paper states what is derived and measured, rather than claiming a universal
+new law.
+
+\begin{remark}[The meaning of the five-percent observation]
+\label{rem:five-percent-status}
+The finite value \(0.0518\) is not merely a check that a known conjecture
+holds on a finite interval.  It compares two different objects: the observed
+M\"obius path and the exact mean of its own fixed-mask, fixed-endpoint orbit.
+That particular comparison appears to be specific to the present model.
+However, the numerator's scale near \(0.029\) is conditionally explained by
+the classical spectral constant in Section \ref{sec:analytic-meaning}.
+Consequently, the class-relative normalization is the distinctive part; the
+small absolute second moment is not presented as an independent discovery.
+\end{remark}
+
+\begin{warning}[No uniqueness claim]
+\label{warn:no-uniqueness-from-quadratic-mass}
+A single quadratic functional cannot select the M\"obius word uniquely.  It
+is constant on an exponentially large excursion-reflection orbit and many
+other words have smaller values.  Section \ref{sec:selection-route} gives the
+exact arithmetic functional that does select \(\mu\), explains why that
+selection is tautological from M\"obius inversion, and states what additional
+inequality would be needed to connect selection to RH-scale growth.
+\end{warning}
+
+\subsection{Statistical status}
+\label{subsec:statistical-status}
+
+The permutation ladder, excursion samples, conditional-choice analyses, and
+blind spectral fit are reported computations.  Exact zero-hit bounds use the
+one-sided Clopper--Pearson construction \cite{ClopperPearson1934}.  The
+conditional-choice \(p\)-values and the blind frequency matches remain
+exploratory until their raw outputs and complete selection pipelines are
+rerun independently.  Appendix \ref{app:reproducibility} specifies the
+required reproducibility package without executing it.
+
+\section{The fixed-mask permutation class}
+\label{sec:fixed-mask-class}
+
+\subsection{Support, signs, and class hierarchy}
+\label{subsec:support-class}
+
+Fix \(N\geq1\) and write
+\begin{equation}
+A_N=\{n\leq N:\mu(n)\neq0\}
+=\{a_1<a_2<\cdots<a_m\},\qquad m=Q(N).
+\label{eq:squarefree-support}
+\end{equation}
+Let \(p\) and \(q\) be the numbers of \(+1\) and \(-1\) values on \(A_N\).
+Then
+\begin{equation}
+p+q=m,\qquad p-q=S=M(N),\qquad
+p=\frac{m+S}{2},\quad q=\frac{m-S}{2}.
+\label{eq:sign-counts-endpoint}
+\end{equation}
+
+\begin{definition}[Fixed-mask and fixed-count classes]
+\label{def:permutation-classes}
+Define
+\begin{align}
+\Om_N^{(0)}
+&=\{w\in\{-1,0,1\}^N:\supp(w)=A_N\},
+\label{eq:omega-zero}\\
+\Om_N^{(1)}
+&=\left\{w\in\Om_N^{(0)}:
+\#\{n:w(n)=+1\}=p\right\}.
+\label{eq:omega-one}\\
+\Om_N^{(2)}
+&=\left\{w\in\Om_N^{(1)}:
+\left|\sum_{k\leq n}w(k)\right|=|M(n)|
+\text{ for every }n\leq N\right\}.
+\label{eq:omega-two}
+\end{align}
+Equivalently, \(\Om_N^{(1)}\) is the orbit of
+\((\mu(1),\ldots,\mu(N))\) under the symmetric group acting on the values at
+the ordered support positions.
+\end{definition}
+
+The two defining constraints are the zero mask and the sign multiset.  The
+endpoint follows from them; it is not a third constraint.  The first two
+cardinalities are
+\begin{equation}
+|\Om_N^{(0)}|=2^m,\qquad
+|\Om_N^{(1)}|=\binom{m}{p}.
+\label{eq:class-cardinalities}
+\end{equation}
+The entire function \(Q(n)\), \(n\leq N\), and the quantities \(p,q,S\) are
+class invariants.  The intermediate summatory path is not.
+
+For \(w\in\Om_N^{(1)}\), let
+\begin{equation}
+\xi_j=w(a_j),\qquad
+T_j=\sum_{i=1}^{j}\xi_i,\qquad T_0=0.
+\label{eq:support-time-path}
+\end{equation}
+Then
+\begin{equation}
+R_w(n)=T_{Q(n)},\qquad R_w(N)=T_m=S.
+\label{eq:integer-support-path-link}
+\end{equation}
+If
+\begin{equation}
+K_N=\#\{1\leq j\leq m:T_j(\mu)=0\},
+\label{eq:number-completed-excursions}
+\end{equation}
+then Proposition \ref{prop:reflection-orbit} proves
+\begin{equation}
+\Om_N^{(0)}\supseteq\Om_N^{(1)}\supseteq\Om_N^{(2)},
+\qquad
+2^m\geq\binom{m}{p}\geq2^{K_N},
+\qquad |\Om_N^{(2)}|=2^{K_N}.
+\label{eq:class-hierarchy}
+\end{equation}
+Both inequalities are strict for the reported data at \(N=5\cdot10^6\),
+where the base-ten logarithms of the middle and final cardinalities are
+\(915017.333\ldots\) and \(1810.996\ldots\), respectively.  At each level,
+the uniformization discards the divisor relations except for the invariants
+explicitly frozen by that level.
+The uniform measure on \(\Om_N^{(1)}\) is sampling without replacement from
+a population containing \(p\) values \(+1\) and \(q\) values \(-1\).  Hence
+\((T_j)_{0\leq j\leq m}\) is an exchangeable hypergeometric bridge; the
+finite-population moment framework is standard \cite{Cochran1977}.
+
+\subsection{Exact exchangeable moments}
+\label{subsec:exchangeable-moments}
+
+Assume first that \(m\geq4\).  For distinct indices define
+\begin{align}
+\mu_1&=\E\xi_a=\frac{S}{m},
+\label{eq:first-sign-moment}\\
+\mu_2&=\E(\xi_a\xi_b)
+=\frac{S^2-m}{m(m-1)},
+\label{eq:second-sign-moment}\\
+\mu_4&=\E(\xi_a\xi_b\xi_c\xi_d)
+=\frac{S^4-6mS^2+8S^2+3m^2-6m}
+{m(m-1)(m-2)(m-3)}.
+\label{eq:fourth-sign-moment}
+\end{align}
+The identities follow by expanding powers of
+\(\sum_{j=1}^m\xi_j=S\), using \(\xi_j^2=1\), and exploiting
+exchangeability.  In particular,
+\begin{equation}
+\E T_j^2=j+j(j-1)\mu_2.
+\label{eq:partial-square-mean}
+\end{equation}
+For \(m<2\), the second mixed moment is unnecessary and the class is
+enumerated directly.  For \(2\leq m<4\), formula
+\eqref{eq:second-sign-moment} remains available but fourth-order quantities
+are evaluated by direct finite enumeration; no undefined quotient is used.
+
+\begin{theorem}[Factored covariance of squared partial sums]
+\label{thm:factored-covariance}
+For \(m\geq4\) and \(1\leq j\leq k\leq m\),
+\begin{equation}
+\Cov(T_j^2,T_k^2)=\phi(j)\psi(k),
+\qquad \phi(j)=j(j-1),
+\label{eq:factored-covariance}
+\end{equation}
+where
+\begin{equation}
+\psi(k)=2+4\mu_2(k-2)+\mu_4(k-2)(k-3)
+-\mu_2^2k(k-1).
+\label{eq:psi-kernel}
+\end{equation}
+In particular, \(\psi(m)=0\), as required by the deterministic endpoint
+\(T_m=S\).
+\end{theorem}
+
+\begin{proof}
+Write \(T_k=T_j+U_{j,k}\), expand \(T_j^2T_k^2\), and group monomials by the
+number of distinct indices.  Exchangeability replaces all products with two
+distinct indices by \(\mu_2\) and all products with four distinct indices by
+\(\mu_4\).  Subtracting
+\(\E T_j^2\E T_k^2\) and collecting the coefficients gives
+\eqref{eq:factored-covariance}--\eqref{eq:psi-kernel}.  The complete
+enumeration audit specified in Appendix \ref{app:reproducibility} checks all
+pairs for every sign class with \(m\leq8\).
+\end{proof}
+
+\subsection{The critical square-root scale}
+\label{subsec:critical-scale}
+
+Put
+\begin{equation}
+U_j=T_j-\frac{jS}{m},\qquad
+\sigma_m^2=1-\frac{S^2}{m^2}.
+\label{eq:centered-bridge}
+\end{equation}
+For each fixed \(j\), Hoeffding's comparison theorem for sampling without
+replacement gives
+\begin{equation}
+\Prob\left(\left|U_j\right|\geq\lambda\right)
+\leq2\exp\left(-\frac{\lambda^2}{2j}\right).
+\label{eq:pointwise-hoeffding}
+\end{equation}
+Applying a union bound, rather than claiming a sharp maximal inequality,
+yields
+\begin{equation}
+\Prob\left(\max_{1\leq j\leq m}|U_j|>\lambda\right)
+\leq2m\exp\left(-\frac{\lambda^2}{2m}\right).
+\label{eq:union-maximal-bound}
+\end{equation}
+Thus, for every fixed \(\eps>0\),
+\begin{equation}
+\Prob\left(\max_{j\leq m}|U_j|>m^{1/2+\eps}\right)
+\leq2m\exp\left(-\frac{m^{2\eps}}{2}\right).
+\label{eq:superpolynomial-critical-bound}
+\end{equation}
+
+\begin{proposition}[Finite-population bridge limit]
+\label{prop:finite-population-fclt}
+Suppose \(m\to\infty\) and \(|S|/m\to s_0<1\).  The polygonal interpolation
+of
+\begin{equation}
+\mathbb T_m(t)=\frac{T_{\lfloor mt\rfloor}
+-(\lfloor mt\rfloor/m)S}{\sigma_m\sqrt m},
+\qquad 0\leq t\leq1,
+\label{eq:bridge-process-normalization}
+\end{equation}
+converges weakly to a standard Brownian bridge \(B^{\circ}\).  Consequently,
+\begin{equation}
+\frac{1}{\sigma_m\sqrt m}\max_{j\leq m}|U_j|
+\Longrightarrow\sup_{0\leq t\leq1}|B^{\circ}(t)|.
+\label{eq:maximum-bridge-limit}
+\end{equation}
+Under the uniform-integrability supplied by finite-population exponential
+bounds,
+\begin{equation}
+\E\max_{j\leq m}|U_j|
+\sim\sigma_m\sqrt{\frac{\pi}{2}}\log2\,\sqrt m.
+\label{eq:expected-bridge-maximum}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This is the finite-population functional central limit theorem; see
+\cite{Sen1972}.  The limit distribution and its first moment use
+\begin{align}
+\Prob\left(\sup_t|B^{\circ}(t)|\leq x\right)
+&=\sum_{r\in\mathbb Z}(-1)^r e^{-2r^2x^2},
+\label{eq:kolmogorov-distribution}\\
+\E\sup_t|B^{\circ}(t)|
+&=\sqrt{\frac{\pi}{2}}\log2
+=0.868731\ldots,
+\label{eq:kolmogorov-mean}
+\end{align}
+as recorded, for example, in \cite{Feller1968}.
+\end{proof}
+
+At \(j=\lfloor m/2\rfloor\), the hypergeometric local central limit theorem
+gives, for every fixed \(c>0\),
+\begin{equation}
+\Prob\left(|U_{\lfloor m/2\rfloor}|>c\sigma_m\sqrt m\right)
+\longrightarrow2\overline\Phi(2c)>0.
+\label{eq:critical-lower-bound}
+\end{equation}
+Equations \eqref{eq:superpolynomial-critical-bound} and
+\eqref{eq:critical-lower-bound} show that \(m^{1/2}\) is the critical finite
+scale of the centered class.  This is the same exponent that occurs in the
+classical RH criterion, but the logical statements are different.
+
+\begin{warning}[Endpoint and coupling]
+\label{warn:endpoint-and-coupling}
+The deterministic endpoint satisfies
+\begin{equation}
+\left|\max_j|T_j|-\max_j|U_j|\right|\leq|S|,
+\qquad \max_j|T_j|\geq|S|.
+\label{eq:endpoint-obstruction}
+\end{equation}
+A concentration statement for \(U_j\) does not control \(S=M(N)\).
+Moreover, the finite classes at different values of \(N\) are not a single
+canonically coupled random sequence.  The law of the iterated logarithm is
+therefore not a prediction for one draw from \(\Om_N^{(1)}\); it concerns an
+almost-sure envelope along a coupled infinite sequence
+\cite{HartmanWintner1941}.
+\end{warning}
+
+\begin{warning}[Why typicality does not imply RH]
+\label{warn:typicality-not-rh}
+At \(N=5\cdot10^6\), a designated member has uniform mass
+\begin{equation}
+|\Om_N^{(1)}|^{-1}=10^{-915017.333\ldots}.
+\label{eq:single-word-class-mass}
+\end{equation}
+An event containing a \(1-o(1)\) fraction of a finite class need not contain
+that designated member.  In addition, the class deliberately discards the
+divisor relations that define \(\mu\).  No concentration inequality over the
+class transfers by itself to the M\"obius word.
+\end{warning}
+
+\section{Normalized logarithmic quadratic path mass}
+\label{sec:quadratic-mass}
+
+\subsection{Definition and plateau representation}
+\label{subsec:quadratic-mass-definition}
+
+Fix \(1\leq N_0<N\) and put
+\begin{equation}
+L_N=\log(N/N_0).
+\label{eq:logarithmic-span}
+\end{equation}
+
+\begin{definition}[Normalized logarithmic quadratic path mass]
+\label{def:quadratic-path-mass}
+For a finite word \(w\) and its partial sums \(R_w(n)\), define
+\begin{equation}
+\QF_{N_0,N}(w)
+=\frac{1}{L_N}\sum_{N_0<n\leq N}\frac{R_w(n)^2}{n^2}.
+\label{eq:quadratic-path-mass}
+\end{equation}
+This is a positive logarithmically weighted second moment of the summatory
+path.  No physical interpretation is assumed.
+\end{definition}
+
+For the fixed mask, define the plateau weights
+\begin{equation}
+w_j=w_j^{(N_0,N)}
+=\sum_{\substack{N_0<n\leq N\\Q(n)=j}}\frac{1}{n^2},
+\qquad 1\leq j\leq m.
+\label{eq:plateau-weights}
+\end{equation}
+Then the path functional is the quadratic form
+\begin{equation}
+L_N\QF_{N_0,N}(w)=\sum_{j=1}^{m}w_jT_j^2.
+\label{eq:plateau-quadratic-form}
+\end{equation}
+The weights depend only on the squarefree mask; all order dependence is in
+the bridge coordinates \(T_j\).
+
+\subsection{Exact finite-class mean and variance}
+\label{subsec:exact-mean-variance}
+
+Define two mask sums
+\begin{align}
+\Sigma_1(N_0,N)
+&=\sum_{N_0<n\leq N}\frac{Q(n)}{n^2}
+=\sum_{j=1}^m j w_j,
+\label{eq:sigma-one}\\
+\Sigma_2(N_0,N)
+&=\sum_{N_0<n\leq N}\frac{Q(n)^2}{n^2}
+=\sum_{j=1}^m j^2w_j.
+\label{eq:sigma-two}
+\end{align}
+For \(m\geq2\), let
+\begin{equation}
+A=\frac{m^2-S^2}{m(m-1)}=1-\mu_2,\qquad
+B=\frac{S^2-m}{m(m-1)}=\mu_2.
+\label{eq:quadratic-reduction-coefficients}
+\end{equation}
+
+\begin{theorem}[Exact mean over the complete class]
+\label{thm:exact-class-mean}
+For the uniform measure on \(\Om_N^{(1)}\),
+\begin{align}
+\overline{\QF}_N
+:=\E_{\pi}\QF_{N_0,N}(\pi)
+&=\frac{A\Sigma_1+B\Sigma_2}{L_N}
+\label{eq:exact-class-mean}\\
+&=\frac{1}{L_N}\sum_{j=1}^m
+w_j\{j+\mu_2j(j-1)\}.
+\label{eq:exact-class-mean-alternative}
+\end{align}
+Thus all cutoffs can be evaluated in one streaming pass, because
+\(\Sigma_1\) and \(\Sigma_2\) are cumulative while \(A\) and \(B\) depend
+only on the terminal values \(m\) and \(S\).
+\end{theorem}
+
+\begin{proof}
+Substitute \eqref{eq:partial-square-mean} into
+\eqref{eq:plateau-quadratic-form}.  The identity
+\(\E T_j^2=Aj+Bj^2\) then gives \eqref{eq:exact-class-mean}; expanding
+\(A=1-\mu_2\) gives \eqref{eq:exact-class-mean-alternative}.
+\end{proof}
+
+\begin{theorem}[Exact variance in one prefix pass]
+\label{thm:exact-class-variance}
+Assume \(m\geq4\), and define
+\begin{equation}
+P_k=\sum_{j<k}w_j\phi(j).
+\label{eq:variance-prefix}
+\end{equation}
+Then
+\begin{equation}
+\Var_{\pi}\!\left(\QF_{N_0,N}(\pi)\right)
+=\frac{1}{L_N^2}\sum_{k=1}^{m}
+w_k\psi(k)\{w_k\phi(k)+2P_k\}.
+\label{eq:exact-class-variance}
+\end{equation}
+The formula uses \(O(m)\) operations and \(O(1)\) running state once the
+weights are streamed.
+\end{theorem}
+
+\begin{proof}
+Expand the variance of \(\sum_jw_jT_j^2\), use symmetry of covariance, and
+apply Theorem \ref{thm:factored-covariance}:
+\begin{align}
+L_N^2\Var(\QF)
+&=\sum_{k=1}^m w_k^2\phi(k)\psi(k)
++2\sum_{1\leq j<k\leq m}w_jw_k\phi(j)\psi(k)
+\label{eq:variance-triangular-sum}\\
+&=\sum_{k=1}^{m}w_k\psi(k)
+\left\{w_k\phi(k)+2\sum_{j<k}w_j\phi(j)\right\}.
+\label{eq:variance-prefix-collapse}
+\end{align}
+This is \eqref{eq:exact-class-variance}.
+\end{proof}
+
+\begin{remark}[Exact formula versus numerical evaluation]
+\label{rem:exact-versus-binary64}
+Equations \eqref{eq:exact-class-mean} and
+\eqref{eq:exact-class-variance} are exact finite identities.  Decimal values
+reported later are binary64 evaluations with explicit forward-error bounds;
+they are not directed-rounding interval evaluations.
+\end{remark}
+
+\subsection{The exact order-dependent term}
+\label{subsec:order-dependent-term}
+
+The elementary square increment is
+\begin{equation}
+T_j^2-T_{j-1}^2=1+2\xi_jT_{j-1}.
+\label{eq:support-square-increment}
+\end{equation}
+Define the future plateau weight
+\begin{equation}
+W_b=\sum_{j=b}^{m}w_j.
+\label{eq:future-plateau-weight}
+\end{equation}
+
+\begin{proposition}[Diagonal term plus signed restoration]
+\label{prop:diagonal-restoration}
+Every member of \(\Om_N^{(1)}\) satisfies
+\begin{align}
+L_N\QF_{N_0,N}(w)
+&=\Sigma_1(N_0,N)+2\mathcal J_N(w),
+\label{eq:diagonal-restoration}\\
+\mathcal J_N(w)
+&=\sum_{b=2}^{m}W_b\xi_bT_{b-1}.
+\label{eq:restoration-functional}
+\end{align}
+The first term is a mask invariant.  Consequently the complete class is
+ordered by the single scalar \(\mathcal J_N\).
+\end{proposition}
+
+\begin{proof}
+Insert \eqref{eq:support-square-increment} into
+\(T_j^2=\sum_{b\leq j}(T_b^2-T_{b-1}^2)\), multiply by \(w_j\), and interchange
+the two finite sums.  The diagonal contribution is
+\(\sum_jjw_j=\Sigma_1\).
+\end{proof}
+
+Exchangeability also gives
+\begin{equation}
+\E_{\pi}(\xi_bT_{b-1})=(b-1)\mu_2,
+\label{eq:expected-restoration-step}
+\end{equation}
+and hence
+\begin{equation}
+\E_{\pi}\mathcal J_N
+=\mu_2\sum_{b=2}^{m}(b-1)W_b.
+\label{eq:expected-restoration-functional}
+\end{equation}
+For the nearly balanced classes in the data, \(\mu_2\) is close to
+\(-1/(m-1)\).  The much smaller observed value of \(\QF\) therefore means
+that the ordered products \(\xi_bT_{b-1}\), with their future weights, are
+substantially more negative than their exchangeable-class average.
+
+\subsection{Exact change under a transposition}
+\label{subsec:transposition-calculus}
+
+Let \(a<b\) be support indices carrying opposite signs.  Swapping them
+preserves the mask, sign counts, and endpoint.
+
+\begin{proposition}[Opposite-sign transposition formula]
+\label{prop:transposition-formula}
+If \(\xi_a=+1\) and \(\xi_b=-1\), then
+\begin{equation}
+L_N\{\QF(\pi\circ\tau_{a,b})-\QF(\pi)\}
+=4\sum_{j=a}^{b-1}w_j(1-T_j).
+\label{eq:plus-minus-transposition}
+\end{equation}
+If \(\xi_a=-1\) and \(\xi_b=+1\), then
+\begin{equation}
+L_N\{\QF(\pi\circ\tau_{a,b})-\QF(\pi)\}
+=4\sum_{j=a}^{b-1}w_j(1+T_j).
+\label{eq:minus-plus-transposition}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+In the first case the path decreases by \(2\) on \(a\leq j<b\) and is
+unchanged elsewhere, so
+\((T_j-2)^2-T_j^2=4(1-T_j)\).  The second case is analogous.
+\end{proof}
+
+With
+\begin{equation}
+\overline T_w[a,b)
+=\frac{\sum_{j=a}^{b-1}w_jT_j}
+{\sum_{j=a}^{b-1}w_j},
+\label{eq:weighted-interval-mean}
+\end{equation}
+a \(+,-\) transposition decreases the quadratic mass exactly when
+\(\overline T_w[a,b)>1\), and a \(-,+\) transposition decreases it exactly
+when \(\overline T_w[a,b)<-1\).  Thus a local minimum under all admissible
+transpositions is characterized by these two orientation-sensitive families
+of inequalities.  They are not equivalent to a single condition
+\(|\overline T_w[a,b)|\leq1\) over every interval, because not every interval
+has both endpoint orientations.
+
+The lower set determined by the observed word is therefore
+\begin{equation}
+\cA_N
+=\{\pi\in\Om_N^{(1)}:\QF_{N_0,N}(\pi)
+\leq\QF_{N_0,N}(\mu)\}
+=\{\pi:\mathcal J_N(\pi)\leq\mathcal J_N(\mu)\}.
+\label{eq:lower-mass-set}
+\end{equation}
+Finding the best single transposition takes \(O(m)\) time using running
+extrema of weighted prefixes.  Counting every improving pair is a different
+problem and generally requires more than that single pass.
+
+\subsection{Occupation interpretation}
+\label{subsec:occupation-interpretation}
+
+Put \(d=1/\zeta(2)=6/\pi^2\), the standard squarefree density
+\cite{MontgomeryVaughan2007}.  Since the \(j\)-th support plateau is centered
+near \(n=j/d\) and has average integer length \(1/d\), one expects
+\begin{equation}
+w_j\sim\frac{d}{j^2}.
+\label{eq:plateau-weight-asymptotic}
+\end{equation}
+This gives the useful approximation
+\begin{equation}
+\QF_{N_0,N}(w)
+\approx d\left\langle\frac{T_j^2}{j}\right\rangle_{\log j}.
+\label{eq:logarithmic-occupation-approximation}
+\end{equation}
+The exact probability measure behind this statement is
+\begin{equation}
+\nu_N(\{j\})=\frac{jw_j}{D_N},\qquad
+D_N=\sum_{j=1}^m jw_j=\Sigma_1(N_0,N).
+\label{eq:occupation-measure}
+\end{equation}
+Its normalized quadratic occupation level is
+\begin{equation}
+A_N^{\mathrm{occ}}
+=\int\frac{T_j^2}{j}\,d\nu_N(j)
+=\frac{L_N\QF_{N_0,N}(w)}{\Sigma_1(N_0,N)}.
+\label{eq:exact-occupation-level}
+\end{equation}
+For every \(\lambda>0\), Markov's inequality gives the exact consequence
+\begin{equation}
+\nu_N\left\{j:\frac{T_j^2}{j}>\lambda\right\}
+\leq\frac{A_N^{\mathrm{occ}}}{\lambda}.
+\label{eq:occupation-markov}
+\end{equation}
+At the full cutoff, the density-normalized approximation
+\(a_N=\zeta(2)\QF(\mu)=0.048252\) implies, at the descriptive level, that the
+path lies below \(\sqrt j\) for at least \(95.2\) percent of logarithmic
+support time and below \(2\sqrt j\) for at least \(98.8\) percent.  The exact
+percentages use \(A_N^{\mathrm{occ}}\) rather than \(a_N\); the difference is
+the finite mask correction in \eqref{eq:occupation-measure}.
+
+\subsection{Support-time coefficients and a feedback heuristic}
+\label{subsec:support-time-coefficients}
+
+For an interval \(u<j\leq v\), define
+\begin{equation}
+c_{u,v}=\frac{1}{v-u}\sum_{j=u+1}^{v}\frac{T_j^2}{j}.
+\label{eq:local-support-coefficient}
+\end{equation}
+Under an explicitly specified ensemble, one may also define
+\begin{equation}
+c(K)=\frac{\Var(T_K)}{K}.
+\label{eq:variance-scale-coefficient}
+\end{equation}
+These are distinct quantities.  The algebraic normalization
+\begin{equation}
+a_N=\zeta(2)\QF_{N_0,N}(\mu)
+\label{eq:density-normalized-quadratic-mass}
+\end{equation}
+is not an independent measurement of either coefficient.
+
+\begin{heuristic}[Critical restoring drift]
+\label{heur:critical-restoring-drift}
+This is a heuristic argument.  Suppose a process obeys
+\begin{equation}
+\E(\xi_{j+1}\mid T_j)\approx-\frac{2a}{j}T_j.
+\label{eq:critical-restoring-drift}
+\end{equation}
+Writing \(V_j=\E T_j^2\) gives
+\begin{equation}
+V_{j+1}-V_j\approx1-\frac{4a}{j}V_j.
+\label{eq:variance-feedback-recursion}
+\end{equation}
+A solution \(V_j\sim cj\) then satisfies
+\begin{equation}
+c=\frac{1}{1+4a},\qquad a=\frac{c^{-1}-1}{4}.
+\label{eq:feedback-coefficient-relation}
+\end{equation}
+The power \(j^{-1}\) is critical: a drift \(j^{-\gamma}\) formally gives
+\(V_j/j\to1\) for \(\gamma>1\), \(V_j/j\to0\) for \(\gamma<1\), and permits a
+strict constant in \((0,1)\) only for \(\gamma=1\).  This model can explain
+how a cumulative suppression coexists with a null nearest-neighbour
+persistence statistic, but \eqref{eq:feedback-coefficient-relation} is not an
+identity for the M\"obius word.
+\end{heuristic}
+
+The scale measurements in Table \ref{tab:support-coefficients} fluctuate
+between approximately \(0.036\) and \(0.068\), without monotone convergence.
+A sinusoidal fit in \(\log_2K\) is reported in Appendix
+\ref{app:numerical-results}; its out-of-sample performance does not establish
+a predictive law.
+
+\section{Excursion degeneracy and exact return counts}
+\label{sec:excursion-geometry}
+
+\subsection{Reflection orbit}
+\label{subsec:reflection-orbit}
+
+Let
+\begin{equation}
+0=\tau_0<\tau_1<\cdots<\tau_K
+\label{eq:completed-return-times}
+\end{equation}
+be the successive completed zero-to-zero excursions of the support-time path.
+Write the \(r\)-th completed excursion as
+\begin{equation}
+T|_{[\tau_{r-1},\tau_r]}=\varepsilon_rH_r,\qquad
+\varepsilon_r\in\{-1,+1\},\qquad H_r\geq0.
+\label{eq:excursion-decomposition}
+\end{equation}
+
+\begin{proposition}[Pointwise absolute-path orbit]
+\label{prop:reflection-orbit}
+Reflecting any subset of the \(K\) completed excursions preserves the zero
+mask, the two sign counts, the endpoint, and every value \(R_w(n)^2\).
+Consequently the resulting orbit \(\cO_N(\mu)\) satisfies
+\begin{equation}
+|\cO_N(\mu)|=2^K,\qquad
+\QF_{N_0,N}(w)=\QF_{N_0,N}(\mu)
+\quad(w\in\cO_N(\mu)).
+\label{eq:reflection-orbit-size}
+\end{equation}
+If \(M(N)\neq0\), the terminal incomplete excursion after the last return is
+not reflected, because its reflection would change the fixed endpoint.
+\end{proposition}
+
+\begin{proof}
+A completed excursion contains equally many positive and negative steps.
+Reflection changes every sign in that segment, preserves those counts, and
+replaces the path by its negative only within the segment.  Independent
+choices give \(2^K\) words.  The terminal statement follows from its nonzero
+endpoint.
+\end{proof}
+
+\begin{remark}[Consequence for selection]
+\label{rem:reflection-selection-limit}
+The reflection orbit describes degeneracy after the absolute path has already
+been fixed.  It does not explain why the observed absolute path has small
+quadratic mass.  It proves instead that no functional depending only on
+\(R_w(n)^2\) can select a unique orientation.
+\end{remark}
+
+\subsection{Expected number of returns}
+\label{subsec:expected-return-count}
+
+For \(w\in\Om_N^{(1)}\), define
+\begin{equation}
+Z_N(w)=\#\{1\leq j\leq m:T_j(w)=0\}.
+\label{eq:return-count}
+\end{equation}
+
+\begin{proposition}[Exact first moment of the return count]
+\label{prop:exact-return-mean}
+Under the uniform fixed-count measure,
+\begin{equation}
+\E_{\pi}Z_N
+=\sum_{k=1}^{\min(p,q)}
+\frac{\binom pk\binom qk}{\binom m{2k}}.
+\label{eq:exact-return-mean}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+A return is possible only at time \(2k\).  Among the
+\(\binom m{2k}\) equally likely subsets of sampled signs, precisely
+\(\binom pk\binom qk\) contain \(k\) signs of each type.  Sum the indicators
+of the return events.
+\end{proof}
+
+At \(N=5\cdot10^6\), the exact and observed values reported in Appendix
+\ref{app:numerical-results} are
+\begin{equation}
+\E_{\pi}Z_N=1623.0496,\qquad
+Z_N(\mu)=6016,\qquad
+\frac{Z_N(\mu)}{\E_{\pi}Z_N}=3.7066.
+\label{eq:five-million-return-excess}
+\end{equation}
+The same path has longest completed-excursion fraction \(0.11737\), compared
+with a reported bridge-sample mean \(0.5301\).  These are related
+descriptions of a path spending unusually little logarithmic mass far from
+zero; they are not independent events whose probabilities may be
+multiplied.
+
+\section{Finite placement of the M\"obius word}
+\label{sec:finite-placement}
+
+Define the class-relative ratio and standardized displacement
+\begin{equation}
+\rho_Q(N)=\frac{\QF_{N_0,N}(\mu)}{\overline{\QF}_N},
+\qquad
+Z_Q(N)=\frac{\QF_{N_0,N}(\mu)-\overline{\QF}_N}
+{\sqrt{\Var_{\pi}(\QF_{N_0,N})}}.
+\label{eq:ratio-and-standardized-displacement}
+\end{equation}
+
+\begin{proposition}[Finite separation]
+\label{prop:finite-separation}
+Let the input be the signed-byte file with 455,052,511 entries and SHA-256
+digest
+\begin{equation}
+\texttt{0e551f47d924ef6f3e348e131fdf53e0c677ad5e5471ef9d6249b3fd662e2ea4}.
+\label{eq:data-sha256}
+\end{equation}
+Under the binary64 and execution assumptions specified in Appendix
+\ref{app:reproducibility}, the fourteen cutoffs in Table
+\ref{tab:full-fixed-class-table} satisfy
+\begin{equation}
+\QF_{1000,N}(\mu)<\overline{\QF}_N.
+\label{eq:finite-separation-inequality}
+\end{equation}
+At the complete cutoff,
+\begin{equation}
+\QF_{1000,455052511}(\mu)=0.029334,\quad
+\overline{\QF}_{455052511}=0.56628,\quad
+\rho_Q(455052511)=0.0518.
+\label{eq:complete-cutoff-values}
+\end{equation}
+At \(N=5\cdot10^6\), the higher-precision reported values are
+\begin{equation}
+\QF_{1000,N}(\mu)=0.0295150019629,\quad
+\overline{\QF}_N=0.548481916755,\quad
+\rho_Q(N)=0.0538121696655.
+\label{eq:five-million-values}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The class mean is evaluated from Theorem \ref{thm:exact-class-mean}; the
+observed value is a positive weighted sum.  The streaming implementation uses
+blocked summation, compensation between blocks, and an a-priori forward-error
+propagation under the assumptions in Appendix \ref{app:reproducibility}.
+For each cutoff the upper endpoint of the propagated interval for
+\(\QF(\mu)-\overline{\QF}_N\) is negative.  The smallest ratio of the
+absolute separation to the propagated bound is \(5.75\cdot10^{10}\).
+Division gives \eqref{eq:complete-cutoff-values} and
+\eqref{eq:five-million-values}.  The proposition is conditional on the
+identified file and execution model; the exact symbolic identities do not
+depend on either.
+\end{proof}
+
+\begin{remark}[What has been proved]
+\label{rem:finite-not-asymptotic}
+Proposition \ref{prop:finite-separation} proves comparison with the exact
+class mean at fourteen finite cutoffs.  It does not prove that
+\(\rho_Q(N)\) is always near \(0.05\), that the ratio is monotone, or that it
+has a limit.  Indeed the first tabulated value is \(0.082224\), and the later
+values exhibit small nonmonotone fluctuations.
+\end{remark}
+
+At the complete cutoff,
+\begin{equation}
+m=276{,}638{,}778,\qquad S=-5414,\qquad
+\max_{n\leq N}|M(n)|=6695.
+\label{eq:complete-cutoff-path-data}
+\end{equation}
+Since \(\sqrt m=16632\) to the displayed precision, the observed maximum is
+\begin{equation}
+\frac{6695}{\sqrt m}=0.402,\qquad
+\frac{6695}{0.868731\sqrt m}=0.463.
+\label{eq:observed-maximum-relative-scale}
+\end{equation}
+The second denominator is the limiting mean maximum of a nearly balanced
+finite bridge.  This is a finite comparison; it is not a law-of-the-iterated-
+logarithm statement.
+
+\subsection{Lower-tail sampling}
+\label{subsec:lower-tail-sampling}
+
+The exact lower-tail fraction is
+\begin{equation}
+P_Q(N)=\frac{\#\{\pi\in\Om_N^{(1)}:
+\QF_{N_0,N}(\pi)\leq\QF_{N_0,N}(\mu)\}}
+{|\Om_N^{(1)}|}.
+\label{eq:exact-lower-tail-fraction}
+\end{equation}
+No closed form for \eqref{eq:exact-lower-tail-fraction} is established here.
+Uniform fixed-count sampling reported 412 hits in 300,000 draws at
+\(N=10^4\), 15 hits in 150,000 draws at \(N=3\cdot10^4\), and zero hits at
+each of the four larger sampled cutoffs.  Full results and exact zero-hit
+bounds appear in Table \ref{tab:monte-carlo-ladder}.
+
+\begin{experiment}[Failure of a two-moment tail approximation]
+\label{exp:two-moment-rejection}
+A scaled chi-square law fitted to the exact mean and variance predicts,
+across the six cutoffs, expected hit counts
+\begin{equation}
+(20772,\ 6113.7,\ 2218.2,\ 477.88,\ 61.85,\ 23.242),
+\label{eq:chi-square-expected-hits}
+\end{equation}
+whereas the observed counts are
+\begin{equation}
+(412,\ 15,\ 0,\ 0,\ 0,\ 0).
+\label{eq:observed-hit-counts}
+\end{equation}
+At \(N=5\cdot10^6\), the approximation gives
+\begin{equation}
+P_Q^{(\chi^2)}=0.0023242189,\qquad
+\Prob_{\chi^2}(H=0)=7.8397\cdot10^{-11}.
+\label{eq:chi-square-zero-probability}
+\end{equation}
+The binomial probability of an outcome at least this extreme is below
+\(7.84\cdot10^{-11}\) in every row.  Thus exact mean and variance do not
+determine the lower tail of this quadratic form.
+\end{experiment}
+
+\begin{warning}[Mean separation is not a percentile]
+\label{warn:mean-not-percentile}
+The ratio \(\rho_Q\) compares the observed value with the exact mean; it is
+not \(P_Q\).  Likewise, zero hits in \(R\) draws yield the exact one-sided
+95-percent bound \(P_Q<1-0.05^{1/R}\), not an estimate of a probability of
+order \(10^{-9}\).  At \(N=5\cdot10^6\), the class size is approximately
+\(10^{915017.333}\), so exhaustive enumeration is impossible.
+\end{warning}
+
+\subsection{Continuum diagnostics}
+\label{subsec:continuum-diagnostics}
+
+Put
+\begin{equation}
+d=\frac{1}{\zeta(2)},\qquad
+y_N^2=\frac{S^2}{m},\qquad x_0=e^{-L_N}.
+\label{eq:continuum-parameters}
+\end{equation}
+
+\begin{heuristic}[Finite-span Gaussian bridge]
+\label{heur:finite-span-gaussian-bridge}
+This is a heuristic continuum replacement.  Replacing the squarefree mask by
+density \(d\) and the hypergeometric bridge by a Gaussian bridge gives
+\begin{align}
+\overline{\QF}_N^{\mathrm{cont}}
+&=d\left[1-(1-y_N^2)\frac{1-e^{-L_N}}{L_N}\right],
+\label{eq:continuum-mean}\\
+(\sigma_N^{\mathrm{cont}})^2
+&=\frac{d^2}{L_N^2}\left[
+4L_N-10+8(L_N+1)e^{-L_N}+2e^{-2L_N}\right.
+\notag\\
+&\hspace{35mm}\left.
++4y_N^2\{1-e^{-2L_N}-2L_Ne^{-L_N}\}\right].
+\label{eq:continuum-variance}
+\end{align}
+Dropping only the exponentially small term in the mean gives
+\begin{equation}
+\overline{\QF}_N^{\mathrm{principal}}
+=d\left[1-\frac{1-y_N^2}{L_N}\right].
+\label{eq:principal-continuum-mean}
+\end{equation}
+When \(y_N^2=o(1)\),
+\begin{equation}
+\overline{\QF}_N^{\mathrm{cont}}
+=d\left(1-\frac1{L_N}\right)+o(L_N^{-1}),\qquad
+(\sigma_N^{\mathrm{cont}})^2
+=\frac{4d^2(L_N-5/2)}{L_N^2}+o(L_N^{-2}).
+\label{eq:continuum-asymptotics}
+\end{equation}
+\end{heuristic}
+
+At the complete cutoff, \eqref{eq:principal-continuum-mean} gives
+\(0.5662087354\), while \eqref{eq:continuum-mean} gives
+\(0.5662088271\).  The exact finite-class mean is \(0.56628\).  The exact and
+continuum standard deviations are \(0.30436\) and \(0.30433\), respectively.
+These close numerical agreements validate the approximation at the measured
+scale but do not prove its asymptotic error term.
+
+\begin{heuristic}[Ornstein--Uhlenbeck lower-tail rate]
+\label{heur:ou-rate}
+The Lamperti transform
+\begin{equation}
+V(t)=e^{t/2}W(e^{-t}),\qquad
+\Cov(V(s),V(t))=e^{-|t-s|/2}
+\label{eq:lamperti-transform}
+\end{equation}
+is a stationary Ornstein--Uhlenbeck process with unit variance.  The
+Feynman--Kac calculation within the Donsker--Varadhan framework
+\cite{DonskerVaradhan1975} gives
+\begin{align}
+\Lambda(\lambda)
+&=\frac12\left(\frac12-\sqrt{\frac14-2\lambda}\right),
+\qquad\lambda<\frac18,
+\label{eq:ou-cumulant}\\
+I(a)
+&=\sup_{\lambda<1/8}\{\lambda a-\Lambda(\lambda)\}
+=\frac{(a-1)^2}{8a}.
+\label{eq:ou-rate-function}
+\end{align}
+Transferring this rate to the finite fixed-mask bridges requires an unproved
+large-deviation invariance principle and a boundary correction.  The
+resulting prediction is
+\begin{equation}
+\log P_Q(N)\approx-L_NI(a_N)+\log\kappa(a_N,L_N),
+\qquad a_N=\zeta(2)\QF_{N_0,N}(\mu),
+\label{eq:ou-lower-tail-prediction}
+\end{equation}
+where the prefactor \(\kappa\) is not determined.
+\end{heuristic}
+
+At \(N=5\cdot10^6\), the leading rate gives
+\begin{equation}
+a_N=0.0485502,\qquad I(a_N)=2.3307,\qquad
+\exp\{-L_NI(a_N)\}=2.39\cdot10^{-9}.
+\label{eq:ou-five-million-prediction}
+\end{equation}
+At the complete cutoff the corresponding values are
+\begin{equation}
+a_N=0.048252,\qquad I(a_N)=2.3466,\qquad
+\exp\{-L_NI(a_N)\}=5.28\cdot10^{-14}.
+\label{eq:ou-complete-prediction}
+\end{equation}
+These are heuristic extrapolations far below the resolution of the uniform
+sampler.  The straight line through the two cutoffs having positive hit
+counts has slope \(-2.38467\); with only two points it carries no residual
+regression degrees of freedom.  A descriptive six-cutoff binomial likelihood
+fit gives exponent \(2.45306\) and profile interval
+\([2.04052,2.94753]\).
+
+\section{Classical analytic meaning of the quadratic scale}
+\label{sec:analytic-meaning}
+
+\subsection{Full-prefix and truncated normalizations}
+\label{subsec:normalization-comparison}
+
+The classical full-prefix quantity is
+\begin{equation}
+\mathfrak Q(N)
+=\frac{1}{\log N}\sum_{n\leq N}\frac{M(n)^2}{n^2}.
+\label{eq:full-prefix-quadratic-mass}
+\end{equation}
+For fixed \(N_0\), set
+\begin{equation}
+K_{N_0}=\sum_{n\leq N_0}\frac{M(n)^2}{n^2}.
+\label{eq:prefix-constant}
+\end{equation}
+Then the exact conversion is
+\begin{equation}
+\mathfrak Q(N)
+=\frac{K_{N_0}+L_N\QF_{N_0,N}(\mu)}{\log N}.
+\label{eq:normalization-conversion}
+\end{equation}
+The two normalizations have the same limit whenever either limit exists, but
+they can be far apart at finite \(N\).  With \(N_0=1000\),
+\begin{equation}
+K_{1000}=2.068991,\qquad
+\mathfrak Q(455052511)=0.122952,
+\label{eq:prefix-numerical-values}
+\end{equation}
+whereas the truncated value is \(0.029334\).  Thus the observed flatness of
+the latter is a property of the fixed lower cutoff, not evidence that the
+full-prefix normalization has numerically converged.
+
+\subsection{Weak Mertens and RH}
+\label{subsec:weak-mertens-rh}
+
+For integer \(N\),
+\begin{equation}
+\int_1^{N+1}\left(\frac{M(x)}{x}\right)^2\,dx
+=\sum_{n=1}^{N}\frac{M(n)^2}{n(n+1)}
+=\sum_{n=1}^{N}\frac{n}{n+1}\frac{M(n)^2}{n^2},
+\qquad \frac12\leq\frac{n}{n+1}<1.
+\label{eq:discrete-continuous-comparison}
+\end{equation}
+Hence boundedness of \(\mathfrak Q(N)\) is equivalent, up to absolute
+comparison constants, to the weak Mertens conjecture
+\begin{equation}
+\int_1^X\left(\frac{M(x)}{x}\right)^2\,dx\ll\log X.
+\label{eq:weak-mertens-conjecture}
+\end{equation}
+This conjecture implies RH and simplicity of all nontrivial zeros; see
+\cite{Titchmarsh1986,OdlyzkoTeRiele1985,Ng2004}.  RH alone is not known to
+imply \eqref{eq:weak-mertens-conjecture}.
+
+There is also a direct positive reformulation.  Define
+\begin{align}
+D(N)&=\sum_{k\leq N}\frac{\mu(k)^2}{k},
+\label{eq:diagonal-bilinear-sum}\\
+C(N)&=\sum_{k\leq N}\frac{\mu(k)M(k-1)}{k},
+\label{eq:cross-bilinear-sum}\\
+B(N)&=D(N)+2C(N).
+\label{eq:positive-bilinear-functional}
+\end{align}
+Discrete summation by parts gives
+\begin{equation}
+B(N)=\frac{M(N)^2}{N}
++\sum_{k<N}\frac{M(k)^2}{k(k+1)}\geq0.
+\label{eq:positive-bilinear-representation}
+\end{equation}
+It follows directly from the classical Mertens criterion that
+\begin{equation}
+\mathrm{RH}\quad\Longleftrightarrow\quad
+B(N)\ll_{\eps}N^{\eps}\quad\text{for every }\eps>0.
+\label{eq:positive-rh-criterion}
+\end{equation}
+This is a reformulation, not a new criterion for RH.
+
+\begin{proposition}[Conditional meaning of a bounded class ratio]
+\label{prop:conditional-ratio-meaning}
+Assume
+\begin{equation}
+\frac{M(N)^2}{Q(N)\log(N/N_0)}\longrightarrow0,
+\label{eq:endpoint-negligibility}
+\end{equation}
+equivalently \(M(N)=o(\sqrt{N\log N})\).  Then
+\begin{equation}
+\overline{\QF}_N\longrightarrow d=\frac1{\zeta(2)}
+\label{eq:null-mean-limit}
+\end{equation}
+and
+\begin{equation}
+\sup_N\rho_Q(N)<\infty
+\quad\Longleftrightarrow\quad
+\QF_{N_0,N}(\mu)=O(1)
+\quad\Longleftrightarrow\quad
+\mathfrak Q(N)=O(1).
+\label{eq:ratio-weak-mertens-equivalence}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The elementary estimate \(Q(n)=dn+O(\sqrt n)\) gives
+\(\Sigma_1=dL_N+O(1)\).  In
+\eqref{eq:exact-class-mean-alternative}, the bridge correction is
+\(O(L_N^{-1})\), while the endpoint contribution is
+\(O(M(N)^2/[Q(N)L_N])\).  Equation \eqref{eq:endpoint-negligibility} proves
+\eqref{eq:null-mean-limit}.  The first equivalence in
+\eqref{eq:ratio-weak-mertens-equivalence} follows because the mean is then
+bounded above and away from zero; the second follows from
+\eqref{eq:normalization-conversion}.
+\end{proof}
+
+\begin{warning}[The endpoint hypothesis is not an RH consequence]
+\label{warn:endpoint-hypothesis}
+The standard consequence of RH,
+\(M(N)=O_{\eps}(N^{1/2+\eps})\), does not imply
+\(M(N)=o(\sqrt{N\log N})\).  Assuming the stronger
+\(M(N)=O(\sqrt N)\) would make boundedness of the quadratic mass immediate.
+Thus Proposition \ref{prop:conditional-ratio-meaning} cannot be invoked from
+RH alone.
+\end{warning}
+
+\begin{remark}[The status of an asymptotic five-percent claim]
+\label{rem:always-five-percent}
+A statement such as
+\begin{equation}
+\rho_Q(N)\leq0.05+o(1)
+\label{eq:five-percent-asymptotic-claim}
+\end{equation}
+would be a quantitative strengthening of bounded logarithmic second moment,
+not an elementary consequence of the finite model.  Even the weaker
+assertion \(\sup_N\rho_Q(N)<\infty\) requires, under
+\eqref{eq:endpoint-negligibility}, the weak Mertens conjecture.  The finite
+data do not prove \eqref{eq:five-percent-asymptotic-claim}; they only show
+ratios near five percent over the stated cutoffs.
+\end{remark}
+
+\subsection{Conditional spectral constant}
+\label{subsec:spectral-constant}
+
+Under RH together with the negative-moment hypothesis
+\(J_{-1}(T)\ll T\), Ng proves the logarithmic second-moment limit
+\cite{Ng2004}
+\begin{align}
+\frac1Y\int_0^Y e^{-y}M(e^y)^2\,dy
+&\longrightarrow\beta_M,
+\label{eq:ng-second-moment}\\
+\beta_M
+&=2\sum_{\gamma>0}\frac1{|\rho\zeta'(\rho)|^2}.
+\label{eq:ng-spectral-constant}
+\end{align}
+A separate reported computation gives
+\begin{align}
+2\sum_{k=1}^{400}\frac1{|\rho_k\zeta'(\rho_k)|^2}
+&=0.0287674,
+\label{eq:four-hundred-zero-sum}\\
+\widehat R_{400}
+=\frac{2\widehat c}{T_{400}}
+&=0.0002715,\qquad
+\widehat c=0.0923,\quad T_{400}=679.74,
+\label{eq:estimated-spectral-tail}\\
+\widehat\beta_M
+&=0.0290389.
+\label{eq:tail-corrected-spectral-constant}
+\end{align}
+The second term is a tail ansatz, not a computed sum.  It estimates the
+positive-ordinate density of \(|\zeta'(\rho)|^{-2}\) from the last quarter of
+the 400 ordinates.
+
+Gonek's conjecture is
+\begin{equation}
+J_{-1}(T)
+:=\sum_{0<\gamma\leq T}\frac1{|\zeta'(\rho)|^2}
+\sim\frac{3}{\pi^3}T,
+\label{eq:gonek-conjecture}
+\end{equation}
+where \(3/\pi^3\), not \(6/\pi^3\), is the constant for positive ordinates
+\cite{Gonek1989,Ng2004}.  Substitution into the same tail ansatz gives
+\begin{equation}
+\frac{2(3/\pi^3)}{T_{400}}=0.0002847,\qquad
+0.0287674+\frac{2(3/\pi^3)}{T_{400}}=0.0290521.
+\label{eq:gonek-tail-comparison}
+\end{equation}
+The empirical \(\widehat c=0.0923\) is \(4.6\) percent below
+\(3/\pi^3=0.0967546\ldots\), so there is no factor-two discrepancy.
+
+Under the hypotheses needed for \eqref{eq:ng-second-moment} and for the null
+mean limit,
+\begin{equation}
+\rho_Q(N)\longrightarrow
+\rho_{\infty}=\zeta(2)\beta_M.
+\label{eq:conditional-ratio-limit}
+\end{equation}
+The tail-corrected 400-zero value gives
+\begin{equation}
+\widehat\rho_{\infty}=0.0477671,\qquad
+I(\widehat\rho_{\infty})=2.37284.
+\label{eq:conditional-spectral-ratio}
+\end{equation}
+This explains why a ratio near five percent is plausible.  It also answers
+the novelty question sharply: the approximate asymptotic percentage is a
+direct conditional combination of a classical spectral constant with the
+fixed-class mean \(d\); the finite exact denominator and its comparison with
+the observed word are the model-specific contribution.
+
+The reported spectral mass is concentrated at low ordinates:
+\begin{equation}
+\text{first zero: }54.7\%,\qquad
+\text{first five: }80.3\%,\qquad
+\text{first one hundred: }97.4\%.
+\label{eq:low-zero-concentration}
+\end{equation}
+Thus the small quadratic scale is principally a low-frequency property.
+The same separate computation reports a zero-parameter reconstruction of the
+fourteen truncated values with RMS error \(1.5\cdot10^{-6}\).  These spectral
+numbers require the separate reproducibility package specified in Appendix
+\ref{app:reproducibility}; they are not inputs to Proposition
+\ref{prop:finite-separation}.
+
+\begin{warning}[Quadratic mass does not control remote maxima]
+\label{warn:quadratic-mass-not-maximum}
+The constant in \eqref{eq:ng-spectral-constant} is an \(\ell^2\)-type norm of
+zero coefficients.  It does not bound their \(\ell^1\)-norm, force phase
+alignment, or control \(\sup_x|M(x)|/\sqrt x\).  Finite flatness of
+\(\QF_{1000,N}\) therefore gives no evidence that the normalized Mertens
+maximum remains globally bounded.
+\end{warning}
+
+\section{Structural experiments beyond quadratic mass}
+\label{sec:structural-experiments}
+
+The tests in this section ask whether the observed order contains information
+not already summarized by the quadratic functional.  Their status is
+experimental, and their numerical specifications are recorded in Appendices
+\ref{app:numerical-results} and \ref{app:reproducibility}.
+
+\subsection{Excursion orientation and shape}
+\label{subsec:orientation-shape-tests}
+
+For each completed excursion, let \(\varepsilon_r\) be its orientation,
+\(\ell_r\) its support-time length, and
+\begin{equation}
+s_r=\sum_{n\ \mathrm{in\ excursion}\ r}\frac1n
+\label{eq:excursion-log-duration}
+\end{equation}
+its logarithmic integer duration.  The tested orientation statistics were
+\begin{align}
+\Theta&=\frac{\sum_rs_r\varepsilon_r}{\sum_rs_r},
+\label{eq:orientation-bias-statistic}\\
+P_1&=\frac1{K-1}\sum_{r<K}\varepsilon_r\varepsilon_{r+1},
+\label{eq:orientation-persistence-statistic}\\
+A_{\ell}&=\Corr(\varepsilon_r,\log\ell_r).
+\label{eq:orientation-length-statistic}
+\end{align}
+Conditional randomization with the unsigned excursion skeleton fixed gave
+\begin{equation}
+p_{\Theta}=0.574,\qquad
+p_{P_1}=0.271,\qquad
+p_{A_{\ell}}=0.479.
+\label{eq:orientation-test-results}
+\end{equation}
+No orientation bias, nearest-neighbour persistence, or sign--length
+association was detected.
+
+For unsigned excursion shapes, the tested coordinates were
+\begin{align}
+A_r^{\mathrm{sh}}
+&=\frac1{\ell_r^2}\sum_tH_r(t)^2,
+\label{eq:shape-area-statistic}\\
+H_r^{\max}
+&=\frac{\max_tH_r(t)}{\sqrt{\ell_r}},
+\label{eq:shape-height-statistic}\\
+\operatorname{HS}_r
+&=\text{Horton--Strahler order}.
+\label{eq:shape-tree-statistic}
+\end{align}
+Five hundred observed excursions and 100 conditioned Catalan replicates gave
+\begin{equation}
+p_A=0.505,\qquad p_H=0.743,\qquad p_{\mathrm{HS}}=0.485.
+\label{eq:catalan-shape-results}
+\end{equation}
+The tested shape statistics therefore do not distinguish the observed sample
+from the conditioned Catalan reference.  Catalan enumeration and uniform
+Dyck paths are standard; see \cite{Stanley1999,FlajoletSedgewick2009}.
+
+\subsection{Scale partition and slow-envelope controls}
+\label{subsec:scale-controls}
+
+The partition audit in Table \ref{tab:partition-audit} compares an unweighted
+bin standard deviation with a Pearson-normalized statistic.  The former has a
+two-sided value \(p=0.0066\) at 24 bins but not at 12 or 48 bins; the latter
+is nonsignificant at all three resolutions.  There is therefore no
+partition-robust result.
+
+For sliding windows, the short-scale statistics at window sizes 256 and 512
+have correlations
+\begin{equation}
+r_{256}=0.931,\qquad r_{512}=0.914,\qquad p<10^{-4}
+\quad\text{in both cases}
+\label{eq:slow-envelope-correlations}
+\end{equation}
+with the local trend \(M(x)/\sqrt x\).  At window size 1024, the reported
+split-half variance ratios are
+\begin{equation}
+(0.248,\ p=0.111)\quad\text{and}\quad
+(0.706,\ p=0.687).
+\label{eq:split-half-results}
+\end{equation}
+The familywise result over seven scales from 256 through 2978 is
+\begin{equation}
+p_{\mathrm{global}}=0.0645.
+\label{eq:scale-family-result}
+\end{equation}
+These controls identify the smaller-scale feature with the known slow
+Mertens envelope and show that the larger-scale feature does not replicate
+between halves.
+
+\subsection{Conditional-choice analysis}
+\label{subsec:conditional-choice-analysis}
+
+For blocks of \(q\) nonzero entries, the feature set included second- and
+third-order R\'enyi entropies, zero local time, self-intersection count, path
+width, turn rate, the quadratic functional, transposition stability, and
+their prescribed interactions.  Given a choice set \(\mathcal S_r\), the
+conditional-logit model was
+\begin{equation}
+\Prob(\pi_j\mid\mathcal S_r)
+=\frac{\exp(\beta^{\mathsf T}X_{rj})}
+{\sum_{\ell}\exp(\beta^{\mathsf T}X_{r\ell})}.
+\label{eq:conditional-logit-model}
+\end{equation}
+See \cite{McFadden1974} for conditional logit and
+\cite{BenjaminiHochberg1995} for false-discovery control.
+
+At \(q=256,512,1024\), the quadratic-only deviance tests gave
+\begin{equation}
+p_{\mathrm{ANOVA}}=(0.550,\ 0.904,\ 0.661),
+\label{eq:local-anova-results}
+\end{equation}
+with held-out gains per set
+\begin{equation}
+(1.0\cdot10^{-6},\ -4.16\cdot10^{-4},\ 0.00245).
+\label{eq:local-anova-test-gains}
+\end{equation}
+The complete feature hierarchy did not produce a robust held-out selector.
+These results are distinct from the blind spectral experiment below.
+
+\subsection{Blind recovery of logarithmic frequencies}
+\label{subsec:blind-spectral-recovery}
+
+Define the log-time signal
+\begin{equation}
+Y_{\theta}(t)=e^{-\theta t}M(\lfloor e^t\rfloor).
+\label{eq:blind-log-signal}
+\end{equation}
+A hierarchical spectral procedure chose \(\theta\) and frequencies from the
+Mertens path without reading zeta zeros or their derivatives.  The external
+reference audit was performed only after fitting.  Before the permutation
+null filter, the procedure matched 10 of the first 14 reference ordinates.
+For the first four it reported
+\begin{equation}
+\begin{array}{c|rrrr}
+\text{reference ordinate}&14.1347&21.0220&25.0109&30.4249\\ \hline
+\text{blind estimate}&14.138&21.017&25.011&30.430
+\end{array}.
+\label{eq:first-four-blind-frequencies}
+\end{equation}
+The full fourteen-mode audit appears in Table
+\ref{tab:blind-frequency-audit}.
+
+The complete discovery, validation, and test pipeline was then rerun on 100
+uniform fixed-mask permutations.  A mode-by-mode filter at
+\(q=0.010\) retained
+\begin{equation}
+0\ \text{of the 11 pre-null candidate modes}.
+\label{eq:blind-null-filter-result}
+\end{equation}
+The empirical resolution was \(1/(100+1)=0.009901\).
+
+\begin{remark}[Interpretation of the blind spectrum]
+\label{rem:blind-spectrum-interpretation}
+The pre-null frequency recovery is real and should not be omitted, but it is
+not a discovery of previously unknown zeros.  Classical explicit formulae
+place zero ordinates in the log-frequency content of \(M(x)/\sqrt x\); a
+successful blind fit is therefore an algorithmic recovery of known spectral
+structure.  Because no candidate survived the fully selected permutation
+filter, the present output does not establish a new fixed-class spectral
+effect.  It is also not the ANOVA in
+\eqref{eq:local-anova-results}: the two procedures answer different
+questions.
+\end{remark}
+
+\section{A route toward genuine arithmetic selection}
+\label{sec:selection-route}
+
+\subsection{The exact selector already known}
+\label{subsec:exact-arithmetic-selector}
+
+The fixed-mask class discards the arithmetic relation that uniquely defines
+the M\"obius function.  That relation can be restored explicitly.  For a word
+\(w\) with \(w(1)=1\), define the divisor-convolution defect
+\begin{equation}
+\Delta_N(w)
+=\sum_{n=2}^{N}\omega_n
+\left|\sum_{d\mid n}w(d)\right|^2,
+\qquad \omega_n>0.
+\label{eq:divisor-convolution-defect}
+\end{equation}
+
+\begin{proposition}[Unique finite arithmetic selector]
+\label{prop:unique-arithmetic-selector}
+For every \(N\geq2\),
+\begin{equation}
+\Delta_N(w)=0
+\quad\Longleftrightarrow\quad
+w(n)=\mu(n)\ \text{for all }n\leq N.
+\label{eq:unique-arithmetic-selection}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The left side is equivalent to
+\(\sum_{d\mid n}w(d)=0\) for every \(2\leq n\leq N\), together with
+\(w(1)=1\).  These are the finite equations
+\((w*\mathbf 1)(n)=\delta_{n1}\).  The Dirichlet inverse of the constant-one
+function is unique and equals \(\mu\).  Equivalently, induction uses
+\begin{equation}
+w(n)=-\sum_{\substack{d\mid n\\d<n}}w(d)
+\label{eq:mobius-recursion}
+\end{equation}
+to determine each value.
+\end{proof}
+
+This proposition gives a unique position to \(M\) in the strongest possible
+sense, but it merely restates M\"obius inversion.  It contains no cancellation
+estimate and therefore supplies no progress toward RH.
+
+\subsection{Why the finite class cannot classify RH behavior}
+\label{subsec:finite-class-rh-classification}
+
+RH is a statement about one projectively consistent infinite arithmetic
+sequence.  A member of \(\Om_N^{(1)}\) is only a finite word, and the uniform
+classes for successive \(N\) do not define a canonical infinite extension.
+It is therefore not mathematically meaningful to partition one finite class
+into words that satisfy or violate RH without first prescribing an extension
+law.
+
+For an infinite sequence \(w\), one may define its growth exponent
+\begin{equation}
+h(w)=\limsup_{x\to\infty}
+\frac{\log(1+|R_w(x)|)}{\log x}.
+\label{eq:path-growth-exponent}
+\end{equation}
+For the M\"obius function, RH is equivalent to \(h(\mu)\leq1/2\).  The
+stronger weak-Mertens property is
+\begin{equation}
+\sup_{N\geq2}\frac1{\log N}
+\sum_{n\leq N}\frac{R_w(n)^2}{n^2}<\infty.
+\label{eq:abstract-weak-second-moment}
+\end{equation}
+For arbitrary paths, \eqref{eq:abstract-weak-second-moment} does not control
+the supremum because sparse spikes can be hidden in an average.  Its
+implication for RH is specifically arithmetic and uses the Mellin transform
+of \(M\) and \(1/\zeta\).
+
+\subsection{The missing inequality}
+\label{subsec:missing-coercive-inequality}
+
+A nontrivial selection theorem would need more than
+\(\Delta_N(\mu)=0\).  One viable target is a scale-consistent inequality that
+links a relaxed divisor defect to a positive path functional, schematically
+\begin{equation}
+B_w(N)=\frac{R_w(N)^2}{N}
++\sum_{k<N}\frac{R_w(k)^2}{k(k+1)}
+\label{eq:general-positive-path-functional}
+\end{equation}
+and
+\begin{equation}
+B_w(N)
+\leq C_{\eps}N^{\eps}
++\mathcal R_N\!\left(\Delta_{\leq N}(w)\right),
+\qquad
+\mathcal R_N(0)=0,
+\label{eq:desired-coercive-inequality}
+\end{equation}
+where \(B_w\) is the positive quantity analogous to
+\eqref{eq:positive-bilinear-representation}.  Applied to \(w=\mu\), such a
+bound would imply the RH criterion \eqref{eq:positive-rh-criterion}.  No
+inequality of the required strength is proved here; obtaining it would be at
+least as difficult as the target analytic estimate.
+
+A statistically meaningful intermediate programme has three parts:
+\begin{enumerate}[label=(\roman*)]
+\item condition simultaneously on the mask, endpoint, and quadratic-mass
+profile over many nested cutoffs, rather than on one scalar value;
+\item test coordinates orthogonal to the absolute path, such as orientation
+bits and cross-level nesting, under exact conditional nulls;
+\item require projective consistency in \(N\) and a deterministic link from
+any surviving coordinate to the divisor-convolution defect or to
+\eqref{eq:positive-bilinear-representation}.
+\end{enumerate}
+The orientation and shape tests in Section \ref{sec:structural-experiments}
+are null on the available interval.  The blind spectrum recovers known
+analytic structure but does not provide an independent combinatorial
+selector.  Thus no current statistic uniquely distinguishes the M\"obius
+path from all RH-compatible paths, let alone from paths satisfying a stronger
+mean-square property.
+
+\begin{question}[Projectively consistent residual selector]
+\label{ques:projective-selector}
+Does there exist a statistic \(\mathcal S_N(w)\), not determined by the mask,
+endpoint, or multiscale quadratic-mass profile, whose conditional null is
+explicit, whose value is consistent under increasing cutoffs, and for which a
+deterministic inequality links \(\mathcal S_N(\mu)\) to
+\eqref{eq:positive-rh-criterion}?
+\end{question}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The model has a rigorous finite core and a limited analytic interpretation.
+The fixed-mask, fixed-count orbit is exactly specified; its support-time path
+is a hypergeometric bridge at the square-root critical scale.  The normalized
+logarithmic quadratic path mass has exact finite mean and variance, an exact
+order-dependent bilinear term, and an exact transposition calculus.  On the
+identified data, the M\"obius word has \(5.18\) percent of its class mean at
+the largest cutoff, with the inequality separated from zero by a large
+forward-error margin.
+
+For an expert in analytic number theory, the five-percent magnitude is not a
+new asymptotic law: under Ng's hypotheses it is explained by
+\(\zeta(2)\beta_M\), and the first few zeros dominate \(\beta_M\).  What the
+model adds is a finite conditional baseline and a set of exact combinatorial
+coordinates for asking how the sign order differs from that baseline.  The
+reported lower tail is much thinner than a two-moment approximation, but its
+exact probability remains unknown.
+
+No tested excursion orientation, Catalan shape, scale partition, or local
+conditional-choice statistic supplies a surviving selector beyond the
+quadratic scale.  The blind spectral procedure recovers several known zero
+frequencies without using them in the fit, but its permutation-corrected
+mode filter retains none.  The only exact unique selector presently available
+is the divisor-convolution identity, and connecting that identity to
+square-root cancellation is the unresolved arithmetic problem rather than a
+consequence of the finite permutation model.
+
+\appendix
+
+\section{Numerical tables}
+\label{app:numerical-results}
+
+This appendix collects the numerical outputs used in the text.  Exact
+finite-class formulae are distinguished from sampled statistics in every
+caption.
+
+\subsection{Fixed-class quadratic comparison}
+\label{subsec:numerical-fixed-class}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\caption{Observed quadratic path mass and exact fixed-mask, fixed-count class
+moments, with \(N_0=1000\).  Decimal entries are binary64 evaluations of the
+exact formulae.}
+\label{tab:full-fixed-class-table}
+\begin{tabular}{r r r r r r r}
+\toprule
+\(N\)&\(M(N)\)&\(\QF(\mu)\)&\(\overline{\QF}_N\)&\(\sigma_N\)&\(\rho_Q\)&\(Z_Q\)\\
+\midrule
+10,000&\(-23\)&0.032174&0.39129&0.37891&0.082224&\(-0.9478\)\\
+30,000&18&0.030803&0.43847&0.39324&0.070251&\(-1.0367\)\\
+100,000&\(-48\)&0.031084&0.48239&0.39632&0.064437&\(-1.1387\)\\
+300,000&220&0.029369&0.53006&0.39912&0.055407&\(-1.2545\)\\
+1,000,000&212&0.030100&0.52665&0.37332&0.057154&\(-1.3301\)\\
+5,000,000&\(-709\)&0.029515&0.54848&0.35510&0.053812&\(-1.4614\)\\
+50,000,000&\(-908\)&0.029733&0.55336&0.32471&0.053732&\(-1.6126\)\\
+100,000,000&1,928&0.029641&0.55844&0.31817&0.053079&\(-1.6620\)\\
+150,000,000&1,089&0.029536&0.55767&0.31333&0.052963&\(-1.6855\)\\
+200,000,000&320&0.029772&0.55824&0.31038&0.053332&\(-1.7027\)\\
+250,000,000&\(-982\)&0.029944&0.55941&0.30838&0.053529&\(-1.7169\)\\
+300,000,000&\(-592\)&0.029662&0.55989&0.30663&0.052977&\(-1.7292\)\\
+350,000,000&2,896&0.029508&0.56226&0.30578&0.052482&\(-1.7423\)\\
+455,052,511&\(-5,414\)&0.029334&0.56628&0.30436&0.051800&\(-1.7642\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The complete-cutoff support contains \(276{,}638{,}778\) nonzero entries.
+The corresponding squarefree density is \(0.60793\) to the displayed
+precision.  All fourteen parity checks
+\begin{equation}
+M(N)\equiv Q(N)\pmod2
+\label{eq:reported-parity-checks}
+\end{equation}
+passed.
+
+\subsection{Uniform-permutation ladder}
+\label{subsec:numerical-permutation-ladder}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Uniform fixed-count sampling.  Positive-hit intervals are Wilson
+intervals \cite{Wilson1927}; zero-hit entries are exact one-sided 95-percent
+Clopper--Pearson bounds.}
+\label{tab:monte-carlo-ladder}
+\begin{tabular}{r r r r c r}
+\toprule
+\(N\)&draws&hits&\(\widehat P_Q\)&95-percent interval or bound&\(Z_s\)\\
+\midrule
+10,000&300,000&412&0.0013733&[0.0012470,0.0015124]&1.3216\\
+30,000&150,000&15&0.0001000&[0.0000606,0.0001650]&0.9930\\
+100,000&100,000&0&0&\(<2.9957\cdot10^{-5}\)&\(-1.6256\)\\
+300,000&50,000&0&0&\(<5.9913\cdot10^{-5}\)&\(-0.7217\)\\
+1,000,000&10,000&0&0&\(<2.9953\cdot10^{-4}\)&\(-1.9583\)\\
+5,000,000&10,000&0&0&\(<2.9953\cdot10^{-4}\)&\(-1.2327\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Here \(Z_s=(s-\sigma_N)/\operatorname{SE}(s)\), with
+\(\operatorname{SE}(s)\) estimated from the sample fourth moment.  The first
+8,200 draws at \(N=5\cdot10^6\) have
+\begin{equation}
+\overline{\QF}_{\mathrm{sample}}=0.544194764161,\qquad
+s_{\mathrm{sample}}=0.350499677391.
+\label{eq:sample-mean-standard-deviation}
+\end{equation}
+These are compatible with the exact mean \(0.548481916755\) and exact
+standard deviation \(0.35510\).  The value \(0.350195\) is the leading
+\(L_N-5/2\) asymptotic standard deviation, not the exact finite-class value.
+
+\subsection{Support-time coefficients}
+\label{subsec:numerical-support-coefficients}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Recorded scale coefficients.  The second and third comparison
+columns arise from the feedback model and its scale adjustment; they are not
+independent estimates of \(\zeta(2)\QF\).}
+\label{tab:support-coefficients}
+\begin{tabular}{r c c c}
+\toprule
+\(K\)&\(c_{\mathrm{observed}}\)&\(c_{a=4.8161}\)&\(c_{a,\mathrm{adjusted}}\)\\
+\midrule
+256&0.048729&0.047858&0.064982\\
+512&0.067637&0.054504&0.066281\\
+1024&0.036207&0.048046&0.065380\\
+2048&0.049998&0.053648&0.037300\\
+4096&0.054833&0.043456&0.050333\\
+8192&0.044089&0.045434&0.046309\\
+16,384&0.049748&0.050261&0.040051\\
+32,768&0.038838&0.043234&0.044990\\
+65,536&0.061641&0.050747&0.034831\\
+131,072&0.039820&0.047357&0.062011\\
+262,144&0.036670&0.047253&0.036656\\
+524,288&0.058102&0.046882&0.035871\\
+\bottomrule
+\end{tabular}
+\end{table}
+The chosen reference
+\begin{equation}
+c_0=\frac{0.0300}{6/\pi^2}=\frac{\pi^2}{200}
+=0.049348022005\ldots
+\label{eq:chosen-feedback-reference}
+\end{equation}
+was fixed by the rounded target \(0.0300\), not estimated independently.
+The first fitted log-scale mode was
+\begin{equation}
+g_1(t)=-0.000774584
+-0.009187853\cos(2.541179t)
+-0.006146902\sin(2.541179t),
+\qquad t=\log_2K.
+\label{eq:first-feedback-mode}
+\end{equation}
+Its period is \(2.47255\) octaves, amplitude \(0.011054\), and in-sample
+\(R^2=0.643529\).  The complete causal forecast did not consistently improve
+on a constant predictor.
+
+The separate spectral coefficient estimates are
+\begin{equation}
+\begin{array}{c|cc}
+K&\text{direct}&\text{cross-fitted}\\ \hline
+14&0.11802&0.11793\\
+50&0.10508&0.10508\\
+100&0.10250&0.10270\\
+102&0.10211&0.10231
+\end{array}.
+\label{eq:spectral-coefficient-table}
+\end{equation}
+No equality between these spectral coefficients and
+\eqref{eq:density-normalized-quadratic-mass} is asserted.
+
+\subsection{Excursion diagnostics}
+\label{subsec:numerical-excursions}
+
+At \(N=5\cdot10^6\),
+\begin{equation}
+m=3{,}039{,}633,\qquad
+p=1{,}519{,}462,\qquad q=1{,}520{,}171.
+\label{eq:five-million-sign-counts}
+\end{equation}
+There are 6,016 completed excursions in the full support-time path, so
+\begin{equation}
+\log_{10}|\cO_N(\mu)|
+=6016\log_{10}2=1810.996\ldots.
+\label{eq:reflection-orbit-decimal-size}
+\end{equation}
+A windowed analysis excluding excursions meeting \(n\leq1000\) contains
+5,956 completed excursions.
+
+A reported sample of 300 uniform bridges gave
+\begin{equation}
+\overline Z=1679.8,\qquad s_Z=1102.4,\qquad
+\min Z=7,\qquad\max Z=5544,
+\label{eq:return-sample-summary}
+\end{equation}
+so none reached the observed value 6,016.  The corresponding exact one-sided
+95-percent zero-exceedance bound is
+\begin{equation}
+1-0.05^{1/300}=0.00994.
+\label{eq:three-hundred-zero-bound}
+\end{equation}
+For the longest completed-excursion fraction, the same sample had mean
+\(0.5301\), median \(0.4806\), and minimum \(0.1219\), compared with the
+observed \(0.11737\).
+
+\begin{table}[htbp]
+\centering
+\caption{Observed excursion-length tails and the unconditioned first-return
+benchmark \(6016\sqrt{2/\pi}\,c^{-1/2}\).}
+\label{tab:excursion-tail}
+\begin{tabular}{r r r r}
+\toprule
+threshold \(c\)&observed&benchmark&ratio\\
+\midrule
+10&1474&1517.9&0.971\\
+100&454&480.0&0.946\\
+1000&140&151.8&0.922\\
+10,000&40&48.0&0.833\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Large-cutoff support and return census.  The complete-cutoff return
+count was not recorded in the cited census.}
+\label{tab:large-cutoff-census}
+\begin{tabular}{r r r r}
+\toprule
+\(N\)&nonzero entries&returns to zero&\(M(N)\)\\
+\midrule
+50,000,000&30,396,344&15,756&\(-908\)\\
+100,000,000&60,792,694&25,525&1,928\\
+150,000,000&91,189,087&34,232&1,089\\
+200,000,000&121,585,426&36,069&320\\
+250,000,000&151,981,736&36,755&\(-982\)\\
+300,000,000&182,378,126&42,505&\(-592\)\\
+350,000,000&212,774,472&47,215&2,896\\
+455,052,511&276,638,778&not recorded&\(-5,414\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+Large computations of the Mertens function provide numerical context for
+these finite ranges \cite{DelegliseRivat1996,KotnikLune2004,Hurst2018}.
+
+\subsection{Partition and conditional-choice diagnostics}
+\label{subsec:numerical-partition-anova}
+
+\begin{table}[htbp]
+\centering
+\caption{Partition audit.  Each \(p\)-value is two-sided; the Pearson
+statistic has approximately one fewer degree of freedom than the number of
+bins.}
+\label{tab:partition-audit}
+\begin{tabular}{r c c c c}
+\toprule
+bins&unweighted: observed/null&\(p\)&Pearson: observed/null&\(p\)\\
+\midrule
+12&0.252/0.352&0.135&6.07/11.06&0.188\\
+24&0.351/0.512&0.0066&15.65/23.24&0.103\\
+48&0.706/0.710&0.837&45.89/47.56&0.739\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Held-out audit of the local quadratic-only conditional-choice
+model.  Each scale used 1,000 choice sets with 13 paths.}
+\label{tab:local-anova}
+\begin{tabular}{r c c c}
+\toprule
+\(q\)&deviance \(p\)&test gain per set&test top--1\\
+\midrule
+256&0.550&\(1.0\cdot10^{-6}\)&0.120\\
+512&0.904&\(-4.16\cdot10^{-4}\)&0.040\\
+1024&0.661&0.00245&0.120\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Blind frequency audit}
+\label{subsec:numerical-blind-frequencies}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{External audit of the first fourteen zero ordinates against the
+pre-null blind spectral candidates.  Reference values were not used during
+fitting.  A dash denotes no matched candidate.}
+\label{tab:blind-frequency-audit}
+\begin{tabular}{r r r r}
+\toprule
+mode&reference&blind estimate&error\\
+\midrule
+1&14.135&14.138&0.00347\\
+2&21.022&21.017&\(-0.00461\)\\
+3&25.011&25.011&0.00048\\
+4&30.425&30.430&0.00471\\
+5&32.935&32.931&\(-0.00422\)\\
+6&37.586&37.559&\(-0.02737\)\\
+7&40.919&--&--\\
+8&43.327&--&--\\
+9&48.005&48.015&0.00970\\
+10&49.774&49.837&0.06298\\
+11&52.970&--&--\\
+12&56.446&--&--\\
+13&59.347&59.377&0.03029\\
+14&60.832&60.810&\(-0.02195\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Reproducibility specification}
+\label{app:reproducibility}
+
+This appendix specifies the complete deposit required to reproduce every
+computational statement in the paper.  It is a protocol, not a claim that an
+independent rerun was performed while preparing this version.  The exact
+finite identities can be checked without the data; the decimal tables require
+the identified inputs and the declared software environment.
+
+\subsection{Required archive structure}
+\label{subsec:archive-structure}
+
+The reproducibility archive shall contain the following top-level items:
+\begin{enumerate}[label=(\roman*)]
+\item \texttt{README.md}, with the single-command instructions, expected wall
+time, memory requirement, and a map from each table and equation in the paper
+to its raw output;
+\item \texttt{MANIFEST.sha256}, containing a SHA-256 digest for every input,
+source file, raw output, and generated table;
+\item \texttt{environment.txt}, recording operating system, processor,
+available memory, MATLAB release and update, BLAS library, thread count, and
+locale;
+\item \texttt{data/moebius.bin}, the signed-byte M\"obius word;
+\item \texttt{data/zeta\_zeros\_400.csv} and
+\texttt{data/zeta\_derivatives\_400.csv}, used only by the separate spectral
+branch;
+\item \texttt{src/}, containing the canonical source files listed below;
+\item \texttt{raw/}, containing unmodified console logs, CSV files, and MAT
+files from every run;
+\item \texttt{tables/}, containing only deterministic transformations of the
+raw files into manuscript tables;
+\item \texttt{tests/}, containing the finite exhaustive tests and their
+expected outputs.
+\end{enumerate}
+No source file may download data during a run.  The exact/permutation branch
+and the spectral branch must have separate entry points, and the former must
+abort if a spectral input is opened.
+
+\subsection{Canonical source inventory}
+\label{subsec:source-inventory}
+
+The archive shall use mathematical names and contain, at minimum,
+\begin{description}[leftmargin=4.3cm,style=nextline]
+\item[\texttt{run\_all\_reproductions.m}]
+Top-level orchestrator; runs tests, exact calculations, sampling experiments,
+and table generation in a fixed order.
+\item[\texttt{fixed\_mask\_moments.m}]
+Streaming observed sum, exact class mean, exact variance, forward-error
+audit, continuum diagnostics, and all fourteen cutoffs.
+\item[\texttt{uniform\_bridge\_ladder.m}]
+Uniform fixed-count sampler at the six Monte Carlo cutoffs.
+\item[\texttt{excursion\_statistics.m}]
+Completed-excursion decomposition, reflection count, exact return mean,
+orientation randomization, Catalan controls, and length diagnostics.
+\item[\texttt{partition\_and\_scale\_tests.m}]
+Audits with 12, 24, and 48 bins.  Sliding scales, slow-envelope
+correlations, split halves, and familywise calibration.
+\item[\texttt{conditional\_choice\_analysis.m}]
+Feature construction, conditional-logit models, chronological splits, and
+deviance tables.
+\item[\texttt{blind\_log\_spectrum.m}]
+Blind discovery/validation/test spectral pipeline and the 100 complete
+fixed-mask placebo reruns.
+\item[\texttt{spectral\_second\_moment.m}]
+Four-hundred-zero direct sum, tail alternatives, fourteen-cutoff
+reconstruction, and residual decomposition.
+\item[\texttt{make\_manuscript\_tables.m}]
+Reads raw outputs and writes tables without recomputing any statistic.
+\end{description}
+Every function used by these entry points must be included as source rather
+than supplied through an unrecorded local path.  The archive must also state
+the license under which the sources and derived tables are released.
+
+\subsection{Input definition and integrity checks}
+\label{subsec:input-integrity}
+
+The main data file has the immutable specification
+\begin{equation}
+\begin{split}
+\text{format}&=\texttt{int8},\\
+\text{allowed values}&=\{-1,0,1\},\\
+\text{number of bytes}&=455{,}052{,}511,\\
+\text{SHA-256}&=
+\texttt{0e551f47d924ef6f3e348e131fdf53e0c677ad5e5471ef9d6249b3fd662e2ea4}.
+\end{split}
+\label{eq:main-input-specification}
+\end{equation}
+Before any statistic is evaluated, the program must:
+\begin{enumerate}[label=(\alph*)]
+\item verify the byte count, allowed alphabet, and SHA-256 digest;
+\item independently sieve \(\mu(n)\) for \(1\leq n\leq10^6\) and compare
+every entry;
+\item verify at each cutoff the nonzero count and endpoint recorded in the
+raw reference table;
+\item abort unless
+\begin{equation}
+M(N)\equiv Q(N)\pmod2
+\label{eq:reproducibility-parity-test}
+\end{equation}
+at every cutoff;
+\item verify \(p=(m+S)/2\), \(q=(m-S)/2\), and \(T_m=S\).
+\end{enumerate}
+
+The spectral CSV files must contain one row per positive ordinate with columns
+\texttt{index}, \texttt{gamma}, \texttt{ReZetaPrime},
+\texttt{ImZetaPrime}, \texttt{AbsZetaPrime}, working precision, software
+used, and an independent residual or interval check for
+\(\zeta(1/2+i\gamma)\).  Their hashes must be listed in
+\texttt{MANIFEST.sha256}.  The code must recompute
+\(|\zeta'(\rho)|\) from its real and imaginary parts and abort if it disagrees
+with the stored absolute value beyond the declared tolerance.
+
+\subsection{Exact-layer configuration}
+\label{subsec:exact-layer-configuration}
+
+The main run uses
+\begin{align}
+N_0&=1000,
+\label{eq:reproducibility-n-zero}\\
+\mathcal N_{\mathrm{exact}}
+&=\{10^4,3\cdot10^4,10^5,3\cdot10^5,10^6,5\cdot10^6,
+\notag\\
+&\hspace{8mm}5\cdot10^7,10^8,1.5\cdot10^8,2\cdot10^8,
+2.5\cdot10^8,3\cdot10^8,3.5\cdot10^8,455052511\}.
+\label{eq:reproducibility-exact-cutoffs}
+\end{align}
+The streaming read block is \(2^{22}\) bytes and the positive-sum audit
+block is \(2^{16}\) terms.  Products that can exceed
+\(2^{53}\) must not be formed.  In particular, the implementation shall use
+\begin{equation}
+\left(\frac{M(n)}n\right)^2,\qquad
+\frac{Q(n)}n\frac{Q(n)-1}{n},\qquad
+\frac{Q(n)}n\frac1n
+\label{eq:safe-division-forms}
+\end{equation}
+rather than forming \(M(n)^2\), \(Q(n)^2\), or \(n^2\) first at the largest
+cutoffs.
+
+The mean must be computed independently in two ways:
+\begin{enumerate}[label=(\alph*)]
+\item from the streaming sums \(\Sigma_1,\Sigma_2\) in
+\eqref{eq:sigma-one}--\eqref{eq:sigma-two};
+\item from the explicit plateau weights and
+\eqref{eq:exact-class-mean-alternative}.
+\end{enumerate}
+The variance must likewise be evaluated by the prefix formula
+\eqref{eq:exact-class-variance} and, at \(N=10^4\), by the literal triangular
+\(O(m^2)\) sum \eqref{eq:variance-triangular-sum}.
+
+\subsection{Floating-point audit}
+\label{subsec:floating-point-audit}
+
+The recorded main environment is MATLAB
+24.2.0.2740171 (R2024b Update 1).  The forward-error argument assumes
+IEEE-754 binary64, round-to-nearest ties-to-even, no extended precision, no
+fused-operation contraction, and no reassociation.  If the execution
+environment does not satisfy these conditions, the program must label the
+audit inapplicable or replace it with directed-rounding interval arithmetic.
+
+Within each block of \(r\) positive summands, ordinary summation is bounded
+using
+\begin{equation}
+\gamma_r=\frac{ru}{1-ru},\qquad u=2^{-53},
+\label{eq:higham-gamma}
+\end{equation}
+and block totals are accumulated with compensated summation.  Bounds are
+propagated through the algebra for \(\overline{\QF}_N\) and
+\(\Delta_N=\QF(\mu)-\overline{\QF}_N\).  The run must abort unless
+\begin{equation}
+0\notin[\Delta_N^{-},\Delta_N^{+}]
+\quad\text{and}\quad \Delta_N^{+}<0
+\label{eq:separation-abort-condition}
+\end{equation}
+at every cutoff.  This procedure is an a-priori forward-error audit in the
+sense of \cite{Higham2002}; it is not interval arithmetic with directed
+rounding.
+
+\subsection{Mandatory exact self-tests}
+\label{subsec:mandatory-self-tests}
+
+The test suite must run before the data file is processed and must abort on
+any failure.  It includes:
+\begin{enumerate}[label=(\roman*)]
+\item complete enumeration of every fixed-count sign class with
+\(1\leq m\leq8\), covering 56 classes and 1,890 covariance pairs;
+\item comparison of every enumerated value
+\(\Cov(T_j^2,T_k^2)\) with
+\eqref{eq:factored-covariance}; the recorded maximum absolute error is
+\(3.2\cdot10^{-13}\);
+\item explicit enumeration of the 20 words with \(m=6,p=q=3\), including
+\(\mu_2=-1/5\), \(\mu_4=1/5\), and
+\begin{equation}
+\Var(T_2^2)=3.84;
+\label{eq:m-six-variance-test}
+\end{equation}
+\item checks that \(\psi(m)=0\) and
+\(\E T_m^2=S^2\) identically;
+\item equality of the \(O(m)\) and \(O(m^2)\) variance implementations at
+\(N=10^4\), with recorded relative discrepancy \(3.05\cdot10^{-16}\);
+\item equality of the streaming and plateau-weight mean and variance routes,
+with recorded mismatches between \(7\cdot10^{-18}\) and \(10^{-16}\);
+\item exhaustive checks of Proposition \ref{prop:exact-return-mean} for at
+least \((p,q)=(3,3),(4,3),(5,4),(6,4)\);
+\item a SHA-256 unit test against a published standard test vector;
+\item a symbolic or high-precision numerical self-test of the Legendre
+transform in \eqref{eq:ou-rate-function}, explicitly labelled as a transform
+test rather than a proof of the OU transfer.
+\end{enumerate}
+
+The reference arithmetic printed by the test suite is
+\begin{align}
+1-0.05^{1/2800}&=0.00106933223978,
+\label{eq:reference-upper-2800}\\
+(1-0.00428)^{2800}&=6.08478495942\cdot10^{-6},
+\label{eq:reference-zero-2800}\\
+1-0.05^{1/9500}&=0.000315290524814,
+\label{eq:reference-upper-9500}\\
+9500(0.00428)&=40.66.
+\label{eq:reference-expected-9500}
+\end{align}
+
+\subsection{Uniform sampling protocol}
+\label{subsec:uniform-sampling-protocol}
+
+The Monte Carlo configuration is
+\begin{equation}
+\begin{array}{c|rrrrrr}
+N&10^4&3\cdot10^4&10^5&3\cdot10^5&10^6&5\cdot10^6\\ \hline
+R&300000&150000&100000&50000&10000&10000\\
+\text{seed}&19092021&19092022&19092023&19092024&19092025&19092026
+\end{array}.
+\label{eq:monte-carlo-configuration}
+\end{equation}
+The generator is MT19937, invoked as
+\texttt{rng(seed,'twister')} separately at each cutoff.  A draw is produced
+by a uniform random permutation of the \(p\) positive and \(q\) negative
+signs, followed by placement on the fixed support.  The program must check
+\(T_m=S\) on every draw and test the marginal positive-sign frequency at
+fixed support indices.
+
+For a positive hit count, the archive reports the Wilson interval and the
+exact binomial likelihood.  For zero hits, it reports the one-sided exact
+bound
+\begin{equation}
+p_{\mathrm{upper}}=1-\alpha^{1/R},\qquad \alpha=0.05.
+\label{eq:clopper-pearson-zero-bound}
+\end{equation}
+The sample standard-deviation check uses
+\begin{equation}
+\operatorname{SE}(s)
+=\frac{s}{2}\sqrt{\frac{\widehat\kappa-1}{R}},
+\qquad
+\widehat\kappa=\frac{\widehat m_4}{s^4}.
+\label{eq:sample-standard-deviation-se}
+\end{equation}
+The program must print
+\((s-\sigma_N)/\operatorname{SE}(s)\) and require its absolute value to be
+below the declared calibration threshold.
+
+The two-moment comparison uses
+\begin{equation}
+\nu=\frac{2\overline{\QF}_N^2}{\sigma_N^2},\qquad
+\QF_{\chi^2}=\frac{\overline{\QF}_N}{\nu}\chi_{\nu}^2.
+\label{eq:two-moment-chi-square-model}
+\end{equation}
+It is a deliberately falsifiable approximation, not the sampling law.
+Every sampled quadratic value, not only summary statistics, must be written
+to a per-cutoff CSV file.
+
+MT19937 has 19,937 state bits and cannot visit every member of the largest
+class.  The archive shall state this limitation.  The exact mean and variance
+are unaffected; the Monte Carlo results concern the implemented uniform
+finite-permutation algorithm and require an independent generator as a
+robustness check before publication.
+
+\subsection{Excursion and conditional-choice protocols}
+\label{subsec:secondary-protocols}
+
+The excursion archive must include:
+\begin{enumerate}[label=(\alph*)]
+\item the complete ordered list of return times and completed-excursion
+lengths;
+\item a flag showing whether the terminal segment is incomplete and excluded
+from reflection;
+\item 100,000 orientation-null realizations with the unsigned skeleton fixed;
+\item the 500 observed excursions and all 100 Catalan replicates used for the
+shape tests;
+\item all 300 uniform bridges used for the return-count and longest-excursion
+summaries;
+\item the exact seed and generator state for each component.
+\end{enumerate}
+
+The conditional-choice archive must include all 1,000 choice sets with 13
+paths at each \(q=256,512,1024\), the feature matrix before and after
+standardization, the chronological split indices, coefficient estimates,
+standard errors, log likelihoods, deviance increments, degrees of freedom,
+held-out log scores, and false-discovery adjustment.  Expected cell counts
+must be reported for every chi-square diagnostic; where they are too small,
+an exact or permutation calibration is required.
+
+\subsection{Blind spectral protocol}
+\label{subsec:blind-spectral-protocol}
+
+The blind log-spectrum run uses \(N=5\cdot10^6\), 1,321 logarithmic samples,
+frequency ceiling \(216.275\), four hierarchical levels, and growing capacity
+\begin{equation}
+J(n)=\lfloor n^{0.38}\rfloor,\qquad J_{\max}=15.
+\label{eq:blind-spectrum-capacity}
+\end{equation}
+The chronological discovery, validation, and test endpoints are
+\(0.45N,0.65N,N\).  Reference ordinates must not be loaded until the blind
+fit and all 100 placebo fits are complete.  Each placebo must rerun the
+entire selection pipeline, including exponent choice, peak selection,
+frequency refinement, and validation.  The archive must preserve:
+\begin{enumerate}[label=(\alph*)]
+\item all 1,321 sampled log-time values and observed signals;
+\item every candidate peak before and after hierarchical selection;
+\item all 100 placebo candidate sets and test gains;
+\item the mode-by-mode multiple-testing table;
+\item the external reference audit generated only after selection;
+\item warnings, ranks, and condition numbers from every linear solve.
+\end{enumerate}
+The acceptance statement is fixed in advance: the pre-null match table is an
+algorithmic recovery result, while a fixed-class discovery requires at least
+one mode to survive the complete placebo filter at the declared
+\(q=0.010\).  The reported run has zero surviving modes.
+
+\subsection{Separate spectral-second-moment protocol}
+\label{subsec:spectral-second-moment-protocol}
+
+The spectral run must use arbitrary precision high enough that rounding in
+each term of \eqref{eq:four-hundred-zero-sum} is negligible at the printed
+precision.  It must output:
+\begin{enumerate}[label=(\alph*)]
+\item all 400 individual values
+\(2/|\rho_k\zeta'(\rho_k)|^2\) and their cumulative sums;
+\item the contributions of the first, first five, and first one hundred
+zeros;
+\item the precise last-quarter estimator defining \(\widehat c=0.0923\);
+\item both tail alternatives \(\widehat c\) and \(3/\pi^3\);
+\item the fourteen reconstructed quadratic-mass values, their residuals, and
+the zero-parameter RMS;
+\item the fit \(R_N=A+B/L_N\), its covariance matrix, and the discrete
+sum--integral correction;
+\item all working-precision and zero-validation diagnostics.
+\end{enumerate}
+No output from this branch may be merged with the no-zero exact run before
+both raw manifests have been written.
+
+\subsection{Raw output inventory and acceptance criteria}
+\label{subsec:raw-output-inventory}
+
+At minimum, the archive shall preserve
+\begin{equation}
+\begin{gathered}
+\texttt{exact\_layer.csv},\quad
+\texttt{permutation\_ladder.csv},\quad
+\texttt{sampled\_quadratic\_values.csv},\\
+\texttt{continuum\_diagnostics.csv},\quad
+\texttt{ou\_quantiles.csv},\quad
+\texttt{excursions.csv},\\
+\texttt{partition\_audit.csv},\quad
+\texttt{conditional\_choice.csv},\quad
+\texttt{blind\_modes.csv},\\
+\texttt{blind\_placebos.csv},\quad
+\texttt{spectral\_terms.csv}.
+\end{gathered}
+\label{eq:required-output-files}
+\end{equation}
+The MAT files must retain every accumulator and configuration object needed
+to audit the CSV files.  Console output must be captured verbatim.
+
+A reproduction is accepted only if:
+\begin{enumerate}[label=(\roman*)]
+\item every input and source hash matches the manifest;
+\item all exhaustive and integrity tests pass;
+\item the fourteen observed values, exact means, and exact variances reproduce
+within the stated forward-error bounds;
+\item the sign of every separation interval is negative;
+\item raw Monte Carlo summaries reproduce from the declared seeds, and an
+independent generator gives compatible confidence intervals;
+\item the numerical tables are generated only from raw files;
+\item every table cell in the manuscript is traceable to one raw column and
+row;
+\item a fresh LaTeX build completes without undefined references, missing
+citations, or overfull material that obscures data.
+\end{enumerate}
+
+The intended single command is
+\begin{equation}
+\texttt{matlab -batch "run\_all\_reproductions"}
+\label{eq:single-reproduction-command}
+\end{equation}
+from the archive root.  The recorded full exact and Monte Carlo run required
+2,133.7 seconds in the stated environment.  The command and all programs in
+this appendix are specified for an independent rerun; they were not executed
+as part of the editorial production of Version 2.
+
+\begin{thebibliography}{99}
+\raggedright
+
+\bibitem{BardenetMaillard2015}
+R. Bardenet and O.-A. Maillard,
+\newblock Concentration inequalities for sampling without replacement,
+\newblock \emph{Bernoulli} \textbf{21} (2015), 1361--1385,
+\newblock \href{https://doi.org/10.3150/14-BEJ605}
+{doi:10.3150/14-BEJ605}, arXiv:1309.4029.
+
+\bibitem{BenjaminiHochberg1995}
+Y. Benjamini and Y. Hochberg,
+\newblock Controlling the false discovery rate: a practical and powerful
+approach to multiple testing,
+\newblock \emph{Journal of the Royal Statistical Society B} \textbf{57}
+(1995), 289--300,
+\newblock \href{https://doi.org/10.1111/j.2517-6161.1995.tb02031.x}
+{doi:10.1111/j.2517-6161.1995.tb02031.x}.
+
+\bibitem{ClopperPearson1934}
+C. J. Clopper and E. S. Pearson,
+\newblock The use of confidence or fiducial limits illustrated in the case
+of the binomial,
+\newblock \emph{Biometrika} \textbf{26} (1934), 404--413,
+\newblock \href{https://doi.org/10.1093/biomet/26.4.404}
+{doi:10.1093/biomet/26.4.404}.
+
+\bibitem{Cochran1977}
+W. G. Cochran,
+\newblock \emph{Sampling Techniques}, 3rd ed.,
+\newblock Wiley, New York, 1977.
+
+\bibitem{DelegliseRivat1996}
+M. Del\'eglise and J. Rivat,
+\newblock Computing the summation of the M\"obius function,
+\newblock \emph{Experimental Mathematics} \textbf{5} (1996), 291--295,
+\newblock \href{https://doi.org/10.1080/10586458.1996.10504365}
+{doi:10.1080/10586458.1996.10504365}.
+
+\bibitem{DonskerVaradhan1975}
+M. D. Donsker and S. R. S. Varadhan,
+\newblock Asymptotic evaluation of certain Markov process expectations for
+large time, I,
+\newblock \emph{Communications on Pure and Applied Mathematics} \textbf{28}
+(1975), 1--47,
+\newblock \href{https://doi.org/10.1002/cpa.3160280102}
+{doi:10.1002/cpa.3160280102}.
+
+\bibitem{Feller1968}
+W. Feller,
+\newblock \emph{An Introduction to Probability Theory and Its Applications},
+Vol.~I, 3rd ed.,
+\newblock Wiley, New York, 1968.
+
+\bibitem{FlajoletSedgewick2009}
+P. Flajolet and R. Sedgewick,
+\newblock \emph{Analytic Combinatorics},
+\newblock Cambridge University Press, Cambridge, 2009,
+\newblock \href{https://doi.org/10.1017/CBO9780511801655}
+{doi:10.1017/CBO9780511801655}.
+
+\bibitem{Gonek1989}
+S. M. Gonek,
+\newblock On negative moments of the Riemann zeta-function,
+\newblock \emph{Mathematika} \textbf{36} (1989), 71--88,
+\newblock \href{https://doi.org/10.1112/S0025579300013589}
+{doi:10.1112/S0025579300013589}.
+
+\bibitem{HartmanWintner1941}
+P. Hartman and A. Wintner,
+\newblock On the law of the iterated logarithm,
+\newblock \emph{American Journal of Mathematics} \textbf{63} (1941),
+169--176,
+\newblock \href{https://doi.org/10.2307/2371287}
+{doi:10.2307/2371287}.
+
+\bibitem{Higham2002}
+N. J. Higham,
+\newblock \emph{Accuracy and Stability of Numerical Algorithms}, 2nd ed.,
+\newblock SIAM, Philadelphia, 2002,
+\newblock \href{https://doi.org/10.1137/1.9780898718027}
+{doi:10.1137/1.9780898718027}.
+
+\bibitem{Hoeffding1963}
+W. Hoeffding,
+\newblock Probability inequalities for sums of bounded random variables,
+\newblock \emph{Journal of the American Statistical Association}
+\textbf{58} (1963), 13--30,
+\newblock \href{https://doi.org/10.1080/01621459.1963.10500830}
+{doi:10.1080/01621459.1963.10500830}.
+
+\bibitem{Hurst2018}
+G. Hurst,
+\newblock Computations of the Mertens function and improved bounds on the
+Mertens conjecture,
+\newblock \emph{Mathematics of Computation} \textbf{87} (2018), 1013--1028,
+\newblock \href{https://doi.org/10.1090/mcom/3277}
+{doi:10.1090/mcom/3277}, arXiv:1610.08551.
+
+\bibitem{KotnikLune2004}
+T. Kotnik and J. van de Lune,
+\newblock Further systematic computations on the summatory function of the
+M\"obius function,
+\newblock \emph{Experimental Mathematics} \textbf{13} (2004), 449--453,
+\newblock \href{https://doi.org/10.1080/10586458.2004.10504549}
+{doi:10.1080/10586458.2004.10504549}.
+
+\bibitem{McFadden1974}
+D. McFadden,
+\newblock Conditional logit analysis of qualitative choice behavior,
+\newblock in P. Zarembka (ed.), \emph{Frontiers in Econometrics},
+Academic Press, New York, 1974, pp.~105--142.
+
+\bibitem{MontgomeryVaughan2007}
+H. L. Montgomery and R. C. Vaughan,
+\newblock \emph{Multiplicative Number Theory I: Classical Theory},
+\newblock Cambridge University Press, Cambridge, 2007,
+\newblock \href{https://doi.org/10.1017/CBO9780511618314}
+{doi:10.1017/CBO9780511618314}.
+
+\bibitem{Ng2004}
+N. Ng,
+\newblock The distribution of the summatory function of the M\"obius
+function,
+\newblock \emph{Proceedings of the London Mathematical Society}
+\textbf{89} (2004), 361--389,
+\newblock \href{https://doi.org/10.1112/S0024611504014741}
+{doi:10.1112/S0024611504014741}, arXiv:math/0310381.
+
+\bibitem{OdlyzkoTeRiele1985}
+A. M. Odlyzko and H. J. J. te Riele,
+\newblock Disproof of the Mertens conjecture,
+\newblock \emph{Journal f\"ur die reine und angewandte Mathematik}
+\textbf{357} (1985), 138--160,
+\newblock \href{https://doi.org/10.1515/crll.1985.357.138}
+{doi:10.1515/crll.1985.357.138}.
+
+\bibitem{Sen1972}
+P. K. Sen,
+\newblock Finite population sampling and weak convergence to a Brownian
+bridge,
+\newblock \emph{Sankhy\=a, Series A} \textbf{34} (1972), 85--90,
+\newblock MR0345270, JSTOR 25049775.
+
+\bibitem{Serfling1974}
+R. J. Serfling,
+\newblock Probability inequalities for the sum in sampling without
+replacement,
+\newblock \emph{The Annals of Statistics} \textbf{2} (1974), 39--48,
+\newblock \href{https://doi.org/10.1214/aos/1176342611}
+{doi:10.1214/aos/1176342611}.
+
+\bibitem{Stanley1999}
+R. P. Stanley,
+\newblock \emph{Enumerative Combinatorics}, Vol.~2,
+\newblock Cambridge University Press, Cambridge, 1999,
+\newblock \href{https://doi.org/10.1017/CBO9780511609589}
+{doi:10.1017/CBO9780511609589}.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\newblock \emph{The Theory of the Riemann Zeta-Function}, 2nd ed.,
+\newblock revised by D. R. Heath-Brown,
+\newblock Oxford University Press, Oxford, 1986.
+
+\bibitem{Wilson1927}
+E. B. Wilson,
+\newblock Probable inference, the law of succession, and statistical
+inference,
+\newblock \emph{Journal of the American Statistical Association}
+\textbf{22} (1927), 209--212,
+\newblock \href{https://doi.org/10.1080/01621459.1927.10502953}
+{doi:10.1080/01621459.1927.10502953}.
+
+\end{thebibliography}
+
+\end{document}

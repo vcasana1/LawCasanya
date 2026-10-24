@@ -1,0 +1,973 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{microtype}
+\usepackage{bm}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% ---------------------------------------------------------
+% Notation
+% ---------------------------------------------------------
+\newcommand{\mob}{\mu}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\IPR}{\operatorname{IPR}}
+\newcommand{\GOE}{\mathrm{GOE}}
+\newcommand{\GUE}{\mathrm{GUE}}
+\newcommand{\Poisson}{\mathrm{Poisson}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\supp}{\operatorname{supp}}
+
+\title{GOE Bulk Universality for the Gram Matrix of the M\"obius Divisor Surface:\\
+Definitions, Numerical Evidence, Literature Context, and an Arithmetic Trace Mechanism}
+\author{V\'ictor Casa\~na-Giner}
+\date{Version 1 --- August 2026}
+
+\begin{document}
+
+\begin{abstract}
+We record an independent formulation of a spectral universality conjecture for a deterministic arithmetic Gram matrix.  For
+\begin{equation}
+F(n,r)=\sum_{\substack{a\mid n\\ a>r}}\mob(n/a),
+\label{eq:abstract_surface}
+\end{equation}
+with $2\le n\le N$ and $1\le r\le N-1$, let $B_N=(F(n,r))$ and $G_N=B_N^TB_N$.  The central conjecture is that the locally unfolded bulk spectrum of $G_N$ belongs to the Dyson class $\beta=1$.  The present note separates this conjecture from the established algebraic structure of $B_N$, from finite-$N$ numerical observations, and from heuristic attempts to identify a mechanism.  Direct diagonalization gives, on the central $25\%$--$75\%$ spectral window,
+\begin{equation}
+\overline r=0.5391491230\quad(N=2000),
+\qquad
+\overline r=0.5376551534\quad(N=4000),
+\label{eq:abstract_gap_ratios}
+\end{equation}
+compared with the large-matrix GOE benchmark $\overline r\approx0.5307$ and the Poisson value $2\log 2-1\approx0.386294$.  On the same window,
+\begin{equation}
+N\,\overline{\IPR}=3.48631797\quad(N=2000),
+\qquad
+N\,\overline{\IPR}=3.51017535\quad(N=4000),
+\label{eq:abstract_ipr}
+\end{equation}
+which is consistent with $N^{-1}$ delocalization.  The note also records a negative structural fact: connectivity or expansion of the support graph of a deterministic real symmetric matrix cannot by itself force GOE statistics.  The remaining mechanism suggested by the arithmetic structure is instead sought in exact trace sums over closed divisibility cycles.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\section{Introduction}
+\label{sec:introduction}
+
+The purpose of this note is to isolate one question about the M\"obius divisor surface from all other uses of the construction.  The object is a deterministic real matrix $B_N$ built from partial divisor sums of the M\"obius function, and the observable of interest is its positive Gram matrix $G_N=B_N^TB_N$.  The numerical question is whether the local eigenvalue process in the interior of the spectrum approaches the Gaussian Orthogonal Ensemble (GOE) bulk process.
+
+Three logically different statements must be kept separate.
+
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Local eigenvalue universality}: after local unfolding, the $k$-point correlations of the bulk spectrum converge to the Dyson $\beta=1$ process.
+\item \emph{Finite diagnostic consequences}: nearest-neighbor spacings, spacing ratios, number variance, and related statistics approach their GOE values.
+\item \emph{Eigenvector delocalization}: bulk eigenvectors satisfy $\IPR(v)=O(N^{-1})$, or stronger asymptotic Haar-type statements.
+\end{enumerate}
+
+The first is the main conjecture.  The second gives tests of the first but is not equivalent to full $k$-point universality when only finitely many tests are checked.  The third is a separate conjectural property.
+
+The random-matrix benchmark is natural because $G_N$ is a real Gram matrix.  Real sample-covariance matrices $X^TX$ belong locally in the bulk to the $\beta=1$ universality class under broad random hypotheses \cite{TaoVu2012,PillaiYin2014}.  The difficulty here is precisely that $B_N$ is not random: every entry is fixed by divisibility and $\mob$.
+
+\section{The M\"obius divisor surface}
+\label{sec:mobius_surface}
+
+\begin{definition}[Surface function]
+\label{def:surface_function}
+For $n>1$ and $r\ge1$, define
+\begin{equation}
+F(n,r)=\sum_{\substack{a\mid n\\a>r}}\mob(n/a).
+\label{eq:surface_definition}
+\end{equation}
+\end{definition}
+
+Since
+\begin{equation}
+\sum_{a\mid n}\mob(n/a)=0
+\qquad(n>1),
+\label{eq:mobius_divisor_zero}
+\end{equation}
+one may equivalently write
+\begin{equation}
+F(n,r)=-\sum_{\substack{a\mid n\\a\le r}}\mob(n/a).
+\label{eq:surface_prefix_form}
+\end{equation}
+The vertical jump is
+\begin{equation}
+F(n,r-1)-F(n,r)=\mathbf 1_{r\mid n}\,\mob(n/r).
+\label{eq:vertical_jump}
+\end{equation}
+
+\begin{definition}[Surface matrix and Gram matrix]
+\label{def:surface_gram}
+For $N\ge2$, define
+\begin{equation}
+B_N=\bigl(F(n,r)\bigr)_{2\le n\le N,\,1\le r\le N-1}
+\in M_{N-1}(\mathbb R),
+\label{eq:BN_definition}
+\end{equation}
+and
+\begin{equation}
+G_N=B_N^TB_N.
+\label{eq:GN_definition}
+\end{equation}
+\end{definition}
+
+The construction is deterministic.  No randomization, smoothing, or external spectral data enter \eqref{eq:BN_definition} or \eqref{eq:GN_definition}.
+
+\subsection{Exact algebraic structure}
+\label{subsec:exact_structure}
+
+The matrix has an explicit inverse:
+\begin{equation}
+(B_N^{-1})_{r,n}
+=
+\mathbf 1_{n\mid r+1}-\mathbf 1_{n\mid r},
+\qquad 1\le r\le N-1,\quad 2\le n\le N.
+\label{eq:BN_inverse}
+\end{equation}
+Consequently $B_N$ is invertible and $G_N$ is positive definite.
+
+The inverse Gram matrix is the arithmetic kernel
+\begin{align}
+(G_N^{-1})_{r,q}
+={}&\tau(\gcd(r+1,q+1))-\tau(\gcd(r+1,q))
+\label{eq:GN_inverse_first}\\
+&-\tau(\gcd(r,q+1))+\tau(\gcd(r,q)),
+\label{eq:GN_inverse_second}
+\end{align}
+where $\tau$ is the divisor-counting function.  Equations \eqref{eq:BN_inverse}--\eqref{eq:GN_inverse_second} are useful in the present context because they show that a GOE-like bulk, if asymptotically valid, would coexist with a highly rigid arithmetic formula at the matrix level.
+
+\subsection{The M\"obius column}
+\label{subsec:mobius_column}
+
+At $r=1$, equation \eqref{eq:surface_definition} gives
+\begin{equation}
+B_N(n,1)=F(n,1)=-\mob(n),
+\qquad 2\le n\le N.
+\label{eq:first_column_mobius}
+\end{equation}
+Thus the M\"obius sequence itself is a distinguished column of the surface.  This fact is relevant to other correlation questions, but the GOE conjecture studied here concerns the full spectrum of $G_N$, not a single matrix entry or column.
+
+\section{Spectral variables and bulk windows}
+\label{sec:spectral_variables}
+
+Write the eigenvalues in increasing order,
+\begin{equation}
+0<\lambda_1^{(N)}\le\lambda_2^{(N)}\le\cdots\le\lambda_{N-1}^{(N)}.
+\label{eq:eigenvalue_order}
+\end{equation}
+The oscillator frequencies associated with $G_N$ are
+\begin{equation}
+\omega_j^{(N)}=\sqrt{\lambda_j^{(N)}}.
+\label{eq:oscillator_frequency}
+\end{equation}
+Both parameterizations contain the same ordered spectrum, but finite-size spacing statistics should not be mixed without recording the transformation.  The conjecture below is formulated directly for $\lambda_j(G_N)$.
+
+\begin{definition}[Macroscopic bulk window]
+\label{def:bulk_window}
+For fixed $0<\alpha<\beta<1$, define
+\begin{equation}
+I_N(\alpha,\beta)
+=
+\left\{j:\left\lceil\alpha(N-1)\right\rceil
+\le j\le
+\left\lfloor\beta(N-1)\right\rfloor\right\}.
+\label{eq:bulk_window}
+\end{equation}
+The central window used in the direct numerical audit is $I_N(1/4,3/4)$.
+\end{definition}
+
+\begin{remark}[Separation of bulk and upper edge]
+\label{rem:edge_bulk_separation}
+Numerically, fixed-rank eigenvalues counted from the upper edge grow on the scale $N^2$, whereas central quantiles remain on an $O(1)$ scale.  Therefore a single global power normalization is inappropriate for the local bulk problem, and a global unfolding can be contaminated by the upper edge.
+\end{remark}
+
+\section{GOE observables}
+\label{sec:goe_observables}
+
+\subsection{Local unfolding}
+\label{subsec:unfolding}
+
+Let $\mathcal N_N(E)$ denote a locally smoothed spectral counting function in an interior window.  A local unfolding maps
+\begin{equation}
+\lambda_j^{(N)}\longmapsto
+\xi_j^{(N)}=\mathcal N_N\!\left(\lambda_j^{(N)}\right),
+\label{eq:local_unfolding}
+\end{equation}
+so that the unfolded process has local mean density one.  The exact smoothing prescription is part of a numerical protocol and must be varied in robustness checks.
+
+\subsection{Nearest-neighbor spacings}
+\label{subsec:nearest_neighbor}
+
+The unfolded gaps are
+\begin{equation}
+s_j^{(N)}=\xi_{j+1}^{(N)}-\xi_j^{(N)}.
+\label{eq:unfolded_gap}
+\end{equation}
+GOE bulk universality predicts convergence to the exact infinite-dimensional GOE gap law.  The frequently used Wigner surmise is
+\begin{equation}
+P_{\mathrm W}(s)
+=
+\frac{\pi}{2}s\exp\!\left(-\frac{\pi s^2}{4}\right).
+\label{eq:wigner_surmise}
+\end{equation}
+It is an accurate low-dimensional approximation and must not be identified with the exact GOE nearest-neighbor distribution.
+
+\subsection{Gap ratio}
+\label{subsec:gap_ratio}
+
+For the raw ordered eigenvalues define
+\begin{equation}
+\delta_j^{(N)}=\lambda_{j+1}^{(N)}-\lambda_j^{(N)}
+\label{eq:raw_gap}
+\end{equation}
+and
+\begin{equation}
+\widetilde r_j^{(N)}
+=
+\frac{\min\{\delta_j^{(N)},\delta_{j+1}^{(N)}\}}
+{\max\{\delta_j^{(N)},\delta_{j+1}^{(N)}\}}.
+\label{eq:ratio_statistic}
+\end{equation}
+This statistic avoids explicit unfolding and was introduced into many-body spectral analysis by Oganesyan and Huse \cite{OganesyanHuse2007}; analytic surmises for the classical ensembles were developed by Atas et al.\ \cite{Atas2013}.
+
+For independent Poisson levels,
+\begin{equation}
+\langle\widetilde r\rangle_{\Poisson}
+=2\log 2-1
+=0.3862943611\ldots.
+\label{eq:poisson_gap_ratio}
+\end{equation}
+For large GOE matrices a standard numerical benchmark is
+\begin{equation}
+\langle\widetilde r\rangle_{\GOE}\approx0.5307.
+\label{eq:goe_gap_ratio}
+\end{equation}
+The $3\times3$ Wigner-like surmise of Atas et al. gives instead
+\begin{equation}
+4-2\sqrt3=0.5358983849\ldots,
+\label{eq:atas_gap_ratio}
+\end{equation}
+which is close to but distinct from the large-matrix mean.
+
+\subsection{Number variance}
+\label{subsec:number_variance}
+
+For an unfolded unit-density process, let $N_L(x)$ be the number of levels in $[x,x+L]$.  The number variance is
+\begin{equation}
+\Sigma_N^2(L)=\Var_x N_L(x).
+\label{eq:number_variance_definition}
+\end{equation}
+For GOE, it is useful to express the exact fixed-$L$ function through the GUE number variance \cite{Mehta2004,BGS1984}.  With $\operatorname{Si}$ and $\operatorname{Ci}$ denoting the sine and cosine integrals,
+\begin{align}
+\Sigma_{\GUE}^2(L)
+={}&\frac{1}{\pi^2}
+\left[
+\log(2\pi L)+\gamma+1-\cos(2\pi L)-\operatorname{Ci}(2\pi L)
+\right]
+\label{eq:gue_number_variance_first}\\
+&+L\left[1-\frac{2}{\pi}\operatorname{Si}(2\pi L)\right],
+\label{eq:gue_number_variance_second}
+\end{align}
+and
+\begin{equation}
+\Sigma_{\GOE}^2(L)
+=
+2\Sigma_{\GUE}^2(L)
++
+\frac{\operatorname{Si}^2(\pi L)}{\pi^2}
+-
+\frac{\operatorname{Si}(\pi L)}{\pi}.
+\label{eq:goe_number_variance_exact}
+\end{equation}
+For large $L$ this becomes
+\begin{equation}
+\Sigma_{\GOE}^2(L)
+=
+\frac{2}{\pi^2}
+\left[
+\log(2\pi L)+\gamma+1-\frac{\pi^2}{8}
+\right]
++O(L^{-1}).
+\label{eq:goe_number_variance_asymptotic}
+\end{equation}
+Equation \eqref{eq:goe_number_variance_asymptotic} is an $L\to\infty$ asymptotic, not the exact fixed-$L$ law.  For Poisson statistics,
+\begin{equation}
+\Sigma_{\Poisson}^2(L)=L.
+\label{eq:poisson_number_variance}
+\end{equation}
+
+\subsection{Inverse participation ratio}
+\label{subsec:ipr}
+
+For a normalized real eigenvector $v\in\mathbb R^{N-1}$ define
+\begin{equation}
+\IPR(v)=\sum_{r=1}^{N-1}|v(r)|^4.
+\label{eq:ipr_definition}
+\end{equation}
+A vector supported on $O(1)$ coordinates can have $\IPR=O(1)$, while a vector spread over $O(N)$ coordinates has $\IPR=O(N^{-1})$.  If $v$ is Haar distributed on the real unit sphere in dimension $d=N-1$, then
+\begin{equation}
+\mathbb E\,\IPR(v)=\frac{3}{d+2}=\frac{3}{N+1}.
+\label{eq:haar_ipr}
+\end{equation}
+The coefficient $3$ is therefore a useful Haar benchmark, but the weaker statement $\IPR=O(N^{-1})$ is the natural first delocalization conjecture.
+
+\section{The GOE conjecture}
+\label{sec:goe_conjecture}
+
+\begin{conjecture}[GOE bulk universality for the M\"obius Gram matrix]
+\label{conj:goe_bulk_universality}
+Let $G_N$ be defined by \eqref{eq:GN_definition}.  Fix a macroscopic window $0<\alpha<\beta<1$ contained in a regular part of the limiting bulk.  After local unfolding to unit mean density, the $k$-point correlation functions of the eigenvalues with indices in $I_N(\alpha,\beta)$ converge, for every fixed $k\ge1$, to those of the Dyson $\beta=1$ bulk process as $N\to\infty$.
+\end{conjecture}
+
+\begin{corollary}[Predictions of Conjecture \ref{conj:goe_bulk_universality}]
+\label{cor:goe_predictions}
+Conjecture \ref{conj:goe_bulk_universality} predicts, under the usual regularity needed to pass from correlation functions to these observables,
+\begin{align}
+P_N(s)&\Longrightarrow P_{\GOE}(s),
+\label{eq:predicted_spacing}\\
+\Sigma_N^2(L)&\longrightarrow\Sigma_{\GOE}^2(L)
+\qquad(L>0\text{ fixed}),
+\label{eq:predicted_number_variance}\\
+\overline{\widetilde r}_N&\longrightarrow0.5307\ldots
+\label{eq:predicted_gap_ratio}
+\end{align}
+for interior bulk windows.
+\end{corollary}
+
+\begin{conjecture}[Bulk eigenvector delocalization]
+\label{conj:bulk_delocalization}
+For a proportion $1-o(1)$ of normalized eigenvectors $v_j^{(N)}$ with $j\in I_N(\alpha,\beta)$,
+\begin{equation}
+\IPR\!\left(v_j^{(N)}\right)=O(N^{-1}).
+\label{eq:ipr_conjecture}
+\end{equation}
+A stronger possible limit, not included in the present conjecture, would be asymptotic Haar statistics of the rescaled components $\sqrt N\,v_j(r)$.
+\end{conjecture}
+
+\begin{remark}[Logical status]
+\label{rem:not_equivalent_diagnostics}
+The finitely many diagnostics \eqref{eq:predicted_spacing}--\eqref{eq:predicted_gap_ratio} do not by themselves imply convergence of all $k$-point correlations.  Conjecture \ref{conj:bulk_delocalization} is also not logically equivalent to Conjecture \ref{conj:goe_bulk_universality}.  The conjectures are stated separately to avoid identifying empirical GOE signatures with a proof of universality.
+\end{remark}
+
+\section{Numerical evidence}
+\label{sec:numerical_evidence}
+
+All values in this section are from direct construction of the M\"obius surface matrix followed by dense diagonalization of $G_N=B_N^TB_N$.  The values in Tables \ref{tab:bulk_quantiles}, \ref{tab:bulk_ratio}, and \ref{tab:bulk_ipr} were independently recomputed for this note using the exact jump identity \eqref{eq:vertical_jump}.
+
+\subsection{Macroscopic bulk quantiles}
+\label{subsec:bulk_quantiles}
+
+\begin{experiment}[Unscaled bulk quantiles]
+\label{exp:bulk_quantiles}
+The object measured is the raw spectrum of $G_N$ for $N\in\{250,500,1000,1500,2000,4000\}$.  The diagnostic is the empirical $25\%$, $50\%$, $75\%$, and $90\%$ quantiles.  If the bulk lives on an $O(1)$ scale, central quantiles should remain bounded and relatively stable with $N$.
+
+\begin{table}[htbp]
+\centering
+\caption{Unscaled empirical quantiles of the eigenvalues of $G_N$.}
+\label{tab:bulk_quantiles}
+\begin{tabular}{rcccc}
+\toprule
+$N$ & $Q_{25}$ & $Q_{50}$ & $Q_{75}$ & $Q_{90}$\\
+\midrule
+250  & 0.177810 & 0.745665 & 3.799364 & 23.246873\\
+500  & 0.178985 & 0.762101 & 3.791153 & 24.572616\\
+1000 & 0.177832 & 0.761060 & 3.898696 & 24.923424\\
+1500 & 0.178292 & 0.762145 & 3.876423 & 24.974156\\
+2000 & 0.177393 & 0.764150 & 3.895654 & 25.043074\\
+4000 & 0.177265 & 0.761991 & 3.886677 & 25.342597\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The central quantiles are numerically stable.  This observation supports the use of an unscaled bulk window for local statistics and simultaneously warns against using the $N^2$ upper-edge scale globally.
+\end{experiment}
+
+\subsection{Upper edge}
+\label{subsec:upper_edge}
+
+\begin{experiment}[Fixed-rank upper edge]
+\label{exp:upper_edge}
+For $N=4000$, the ten largest eigenvalues divided by $N^2$ are
+\begin{align}
+&0.1795866497,\ 0.0798094007,\ 0.0358991100,\ 0.0188721990,\ 0.0110967495,
+\label{eq:edge_top_five}\\
+&0.0072825541,\ 0.0051774892,\ 0.0041052727,\ 0.0033776344,\ 0.0029213177.
+\label{eq:edge_next_five}
+\end{align}
+The largest oscillator frequency satisfies
+\begin{equation}
+\omega_{\max}(4000)=1695.10660\ldots,
+\label{eq:omega_max_4000}
+\end{equation}
+consistent with $\lambda_{\max}$ of order $N^2$.  These edge data are not used to define the GOE bulk conjecture.
+\end{experiment}
+
+\subsection{Frequency-variable diagnostic}
+\label{subsec:original_oscillator}
+
+\begin{experiment}[Original $\omega=\sqrt\lambda$ diagnostic]
+\label{exp:original_oscillator}
+The original computation diagonalized $G_N$, transformed to $\omega_j=\sqrt{\lambda_j}$, normalized raw frequency gaps by a moving local mean of width $41$, and computed the ratio statistic.  It also averaged IPR over the full eigenbasis.  The output is summarized in Table \ref{tab:original_oscillator}.
+
+\begin{table}[htbp]
+\centering
+\caption{Original whole-spectrum oscillator diagnostic.}
+\label{tab:original_oscillator}
+\begin{tabular}{rccccc}
+\toprule
+$N$ & $\omega_{\min}$ & $\omega_{\max}$ & mean IPR & $N\,$mean IPR & mean $\widetilde r$\\
+\midrule
+2000 & 0.0162114 & 847.80697  & $2.15952\times10^{-3}$ & 4.31905 & 0.532099\\
+4000 & 0.0114335 & 1695.10660 & $1.13038\times10^{-3}$ & 4.52152 & 0.537288\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No exact degeneracies were found at either size.  Because this experiment uses $\omega$ and nearly the full spectrum, it is reported as a separate finite-size diagnostic but is not the preferred finite-$N$ formulation of the conjecture.
+\end{experiment}
+
+\subsection{Direct gap ratio on the central bulk of $\lambda(G_N)$}
+\label{subsec:direct_bulk_ratio}
+
+\begin{experiment}[Unfolding-free bulk gap ratio]
+\label{exp:bulk_gap_ratio}
+The eigenvalues themselves were used, with no unfolding, and the ratio \eqref{eq:ratio_statistic} was averaged over the central $25\%$--$75\%$ window.  The result is Table \ref{tab:bulk_ratio}.
+
+\begin{table}[htbp]
+\centering
+\caption{Mean consecutive-gap ratio on the central $25\%$--$75\%$ window of $\lambda(G_N)$.}
+\label{tab:bulk_ratio}
+\begin{tabular}{rcc}
+\toprule
+$N$ & $\overline{\widetilde r}_{25\%-75\%}$ & $\overline{\widetilde r}-0.5307$\\
+\midrule
+250  & 0.52059191 & $-0.01010809$\\
+500  & 0.53715389 & $+0.00645389$\\
+1000 & 0.50833376 & $-0.02236624$\\
+1500 & 0.54547846 & $+0.01477846$\\
+2000 & 0.53914912 & $+0.00844912$\\
+4000 & 0.53765515 & $+0.00695515$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The finite-size sequence is not monotone.  In particular, $N=1000$ and $N=1500$ show visible excursions on opposite sides of the GOE benchmark.  The two largest sizes lie near the GOE region and remain far from the Poisson value \eqref{eq:poisson_gap_ratio}.  This supports Conjecture \ref{conj:goe_bulk_universality} but does not establish convergence.
+\end{experiment}
+
+\subsection{Bulk IPR}
+\label{subsec:bulk_ipr_data}
+
+\begin{experiment}[Bulk eigenvector delocalization]
+\label{exp:bulk_ipr}
+For each $N$, IPR was averaged only over eigenvectors whose eigenvalues lie in the central $25\%$--$75\%$ index window.  Table \ref{tab:bulk_ipr} reports $N\overline{\IPR}$.
+
+\begin{table}[htbp]
+\centering
+\caption{Scaled mean IPR in the central bulk.}
+\label{tab:bulk_ipr}
+\begin{tabular}{rc}
+\toprule
+$N$ & $N\,\overline{\IPR}_{25\%-75\%}$\\
+\midrule
+250  & 3.27989108\\
+500  & 3.39029430\\
+1000 & 3.45095356\\
+1500 & 3.47149765\\
+2000 & 3.48631797\\
+4000 & 3.51017535\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The values are consistent with $\IPR=O(N^{-1})$.  They are closer to the real-Haar benchmark $3$ than the full-spectrum means in Table \ref{tab:original_oscillator}, but the drift in Table \ref{tab:bulk_ipr} does not support a claim that the coefficient itself converges to $3$.
+\end{experiment}
+
+\section{Literature classification}
+\label{sec:literature_classification}
+
+The literature surrounding $G_N$ divides into two different notions of proximity: arithmetic structure and local spectral universality.  The closest arithmetic matrix families do not currently supply a known GOE/Poisson classification of their bulk, whereas the strongest GOE theorems concern random ensembles rather than deterministic arithmetic matrices.
+
+\subsection{Real covariance matrices}
+\label{subsec:covariance_literature}
+
+For a real random rectangular matrix $X$, the sample-covariance matrix
+\begin{equation}
+W=X^TX
+\label{eq:wishart_matrix}
+\end{equation}
+is positive semidefinite and belongs, in the Gaussian case, to the Laguerre Orthogonal Ensemble.  Its global density is not the GOE semicircle law, but its regular bulk belongs to the same local $\beta=1$ symmetry class.  Local universality for broad classes of real covariance matrices is rigorous \cite{TaoVu2012,PillaiYin2014}.  This is the most direct probabilistic benchmark for $G_N$, but independence and randomness are absent from \eqref{eq:GN_definition}.
+
+\subsection{Bohigas--Giannoni--Schmit and deterministic chaos}
+\label{subsec:bgs_literature}
+
+Bohigas, Giannoni, and Schmit proposed that quantum systems whose classical counterparts are chaotic exhibit random-matrix spectral fluctuations, with GOE in the time-reversal-invariant case \cite{BGS1984}.  This establishes a broad conceptual precedent for deterministic spectra with GOE statistics, but it does not produce a theorem for a deterministic arithmetic matrix without an underlying classical flow.
+
+\subsection{Arithmetic quantum chaos as a contrasting case}
+\label{subsec:arithmetic_quantum_chaos}
+
+Arithmetic hyperbolic systems are a central warning against the slogan that deterministic complexity alone forces GOE.  Bogomolny, Georgeot, Giannoni, and Schmit identified exponentially large degeneracies of periodic-orbit lengths as the source of non-generic, Poisson-like fluctuations in arithmetic hyperbolic billiards \cite{BogomolnyEtAl1992}.  Luo and Sarnak proved that the number variance for arithmetic hyperbolic surfaces is highly non-rigid in part of the universal range and close to Poisson behavior \cite{LuoSarnak1994}.  Thus the relevant contrast for $G_N$ is not simply ``arithmetic versus random'': arithmetic structure can support either non-generic or apparently GOE-like local behavior, depending on the mechanism that controls spectral correlations.
+
+\subsection{Redheffer, GCD, and related divisor matrices}
+\label{subsec:redheffer_gcd}
+
+The Redheffer matrix is a deterministic divisibility matrix whose determinant is the Mertens function.  Its spectral structure and extreme eigenvalues have been studied in detail \cite{BarrettJarvis1992}.  A recent analysis of its largest singular vector emphasizes the arithmetic information encoded by the Gram geometry \cite{ClementSteinerberger2025}.  GCD and power-GCD matrices likewise have a substantial literature on positivity, determinants, and extreme eigenvalues; for example Hong and Loewy study asymptotic extreme eigenvalues \cite{HongLoewy2004}.
+
+The literature search underlying this note did not locate a peer-reviewed study classifying the locally unfolded bulk of the Redheffer Gram matrix, GCD matrices, or comparable meet/join matrices as Poisson, GOE, or GUE.  Accordingly, these objects are recorded as structurally close but locally unclassified, rather than assigned a random-matrix class by analogy.
+
+\subsection{Mertens matrices}
+\label{subsec:mertens_matrices}
+
+Cardinal introduced symmetric matrices related to the Mertens function and formulated norm-growth conjectures connected with the Riemann hypothesis \cite{Cardinal2010}.  Kline later constructed sparser Mertens representations and studied their eigenstructure and dominant eigenvalues \cite{Kline2019,Kline2020}.  These works provide additional arithmetic-matrix context but do not, in the literature found for this note, give a local unfolded bulk classification.
+
+\subsection{Summary table}
+\label{subsec:literature_table}
+
+\begin{table}[htbp]
+\centering
+\caption{Spectral-statistics status of nearby families.  ``Open'' means that no peer-reviewed local bulk classification was located in the literature survey used for this note.}
+\label{tab:literature_status}
+\begin{tabular}{p{0.29\textwidth}p{0.20\textwidth}p{0.41\textwidth}}
+\toprule
+Object & Local class & Status relevant here\\
+\midrule
+Real Wishart/covariance $X^TX$ & $\beta=1$ in regular bulk & Rigorous universality under random hypotheses \cite{TaoVu2012,PillaiYin2014}\\
+Generic time-reversal-invariant chaotic spectra & GOE expected & BGS conjecture and extensive numerical evidence \cite{BGS1984}\\
+Arithmetic hyperbolic spectra & Poisson-like & Numerical/semiclassical evidence and rigorous number-variance results \cite{BogomolnyEtAl1992,LuoSarnak1994}\\
+Redheffer matrix & not a standard GOE problem globally & Non-symmetric arithmetic spectrum studied; local GOE/Poisson bulk classification not located \cite{BarrettJarvis1992}\\
+Redheffer Gram & Open & Real positive arithmetic Gram; closest structural analogue located \cite{ClementSteinerberger2025}\\
+GCD/power-GCD matrices & Open & Strong algebraic/extreme-eigenvalue theory, local spacing class not located \cite{HongLoewy2004}\\
+Cardinal/Kline Mertens matrices & Open & Norms, eigenstructure, and RH-related questions; local spacing class not located \cite{Cardinal2010,Kline2019,Kline2020}\\
+M\"obius surface Gram $G_N$ & GOE conjectural & Present numerical evidence; no theorem\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{A rigorous negative result about support-graph expansion}
+\label{sec:negative_expansion_result}
+
+A tempting explanation for GOE-like statistics is that the support graph of $G_N$ might be highly connected or expanding.  Expansion can be useful in random graph models, but it cannot by itself determine the local spectral statistics of an arbitrary deterministic symmetric matrix.
+
+\begin{proposition}[Support-graph expansion does not force GOE]
+\label{prop:expansion_not_sufficient}
+Let $d_1,\ldots,d_N$ be any distinct real numbers.  There exists a real symmetric matrix $H_N$ with
+\begin{equation}
+\Spec(H_N)=\{d_1,\ldots,d_N\}
+\label{eq:arbitrary_spectrum}
+\end{equation}
+and with every off-diagonal entry nonzero.  Consequently its support graph is the complete graph $K_N$, although the unfolded local spectrum can have any prescribed spacing pattern compatible with the chosen $d_j$.
+\end{proposition}
+
+\begin{proof}
+Let
+\begin{equation}
+D_N=\diag(d_1,\ldots,d_N)
+\label{eq:diagonal_prescribed_spectrum}
+\end{equation}
+and choose $Q\in O(N)$.  Define
+\begin{equation}
+H_N=QD_NQ^T.
+\label{eq:orthogonal_conjugate}
+\end{equation}
+Orthogonal conjugation preserves \eqref{eq:arbitrary_spectrum}.  For fixed $i\ne j$, the condition $(QD_NQ^T)_{ij}=0$ is a proper algebraic condition on $O(N)$ when the $d_j$ are distinct.  The union of these finitely many zero sets has Haar measure zero.  Hence a generic $Q$ makes every off-diagonal entry nonzero.  The support graph is then $K_N$.
+\end{proof}
+
+\begin{corollary}[Picket-fence counterexample]
+\label{cor:picket_fence}
+Taking $d_j=j$ in Proposition \ref{prop:expansion_not_sufficient} gives a sequence with complete support graph but unfolded spacings
+\begin{equation}
+s_j\equiv1,
+\label{eq:picket_fence_spacing}
+\end{equation}
+which is neither Poisson nor GOE.
+\end{corollary}
+
+\begin{remark}[Consequence for the M\"obius Gram problem]
+\label{rem:expansion_consequence}
+A proof that the support graph of $G_N$ is connected or expanding would be an arithmetic structural result, but it would not explain GOE universality by itself.  Any successful deterministic mechanism must use more than the zero/nonzero pattern of matrix entries.
+\end{remark}
+
+\section{A rigorous Poisson mechanism: superposition}
+\label{sec:poisson_superposition}
+
+The opposite direction has a classical theorem: many independent, individually negligible point processes can superpose to a Poisson process.  This provides a precise mathematical model for why an unresolved decomposition into many statistically independent spectral subsequences can destroy level repulsion.
+
+\begin{theorem}[Grigelionis Poisson-superposition criterion]
+\label{thm:grigelionis}
+Let $\{\Xi_{N,a}\}_a$ be, for each $N$, independent point processes on $\mathbb R$, and let
+\begin{equation}
+\Xi_N=\sum_a\Xi_{N,a}.
+\label{eq:point_superposition}
+\end{equation}
+Assume that for every bounded Borel set $I$,
+\begin{equation}
+\sup_a\mathbb P\{\Xi_{N,a}(I)\ge1\}\longrightarrow0,
+\label{eq:grigelionis_null}
+\end{equation}
+that
+\begin{equation}
+\sum_a\mathbb P\{\Xi_{N,a}(I)\ge1\}\longrightarrow |I|,
+\label{eq:grigelionis_intensity}
+\end{equation}
+and that
+\begin{equation}
+\sum_a\mathbb P\{\Xi_{N,a}(I)\ge2\}\longrightarrow0.
+\label{eq:grigelionis_double}
+\end{equation}
+Then $\Xi_N$ converges in distribution to the unit-intensity Poisson point process.  This is a standard form of the Grigelionis theorem \cite{Grigelionis1963}.
+\end{theorem}
+
+\begin{warning}[Invariant blocks are not enough]
+\label{warn:blocks_not_enough}
+A deterministic block decomposition of a matrix does not imply the hypotheses of Theorem \ref{thm:grigelionis}.  Independence or an adequate asymptotic substitute must be established.  Identical deterministic blocks, for example, produce exact degeneracies rather than a Poisson process.
+\end{warning}
+
+\section{Exact trace cycles of the M\"obius surface}
+\label{sec:trace_cycles}
+
+The support graph is too coarse to determine local statistics.  A more intrinsic deterministic object is the exact family of spectral moments $\Tr(G_N^k)$ and the closed arithmetic cycles that they enumerate.
+
+\subsection{Row Gram kernel}
+\label{subsec:row_gram_kernel}
+
+Define the row Gram matrix
+\begin{equation}
+K_N=B_NB_N^T.
+\label{eq:row_gram}
+\end{equation}
+Since $B_N$ is square and invertible, $K_N$ and $G_N$ have the same eigenvalues.  For $2\le n,m\le N$, define
+\begin{equation}
+\mathcal K(n,m)=\sum_{r=1}^{N-1}F(n,r)F(m,r).
+\label{eq:row_kernel_definition}
+\end{equation}
+Because $F(n,r)=0$ for $r\ge n$, the upper limit $N-1$ introduces no ambiguity.  Expanding the divisor sums gives
+\begin{align}
+\mathcal K(n,m)
+&=
+\sum_{d\mid n}\sum_{e\mid m}
+\mob(d)\mob(e)
+\left(\min\left\{\frac nd,\frac me\right\}-1\right)
+\label{eq:row_kernel_with_constant}\\
+&=
+\sum_{d\mid n}\sum_{e\mid m}
+\mob(d)\mob(e)
+\min\left\{\frac nd,\frac me\right\},
+\label{eq:row_kernel_exact}
+\end{align}
+where the constant term vanishes by \eqref{eq:mobius_divisor_zero} for $n,m>1$.
+
+\subsection{Closed-cycle trace identity}
+\label{subsec:closed_cycle_trace}
+
+For every integer $k\ge1$,
+\begin{align}
+\Tr(G_N^k)
+&=\Tr(K_N^k)
+\label{eq:trace_gram_equality}\\
+&=
+\sum_{n_1,\ldots,n_k=2}^{N}
+\prod_{j=1}^{k}
+\mathcal K(n_j,n_{j+1}),
+\qquad n_{k+1}=n_1.
+\label{eq:trace_cycle_identity}
+\end{align}
+Equation \eqref{eq:trace_cycle_identity} is an exact weighted sum over closed cycles of integer labels, with each edge weight given by the divisor kernel \eqref{eq:row_kernel_exact}.  Expanding each edge further produces a finite sum entirely in M\"obius values and divisor relations.
+
+\begin{heuristic}[Arithmetic analogue of periodic-orbit nondegeneracy]
+\label{heur:cycle_nondegeneracy}
+This is a heuristic argument.  In arithmetic quantum chaos, anomalous degeneracies in periodic-orbit lengths are associated with Poisson-like spectral fluctuations \cite{BogomolnyEtAl1992,LuoSarnak1994}.  Equation \eqref{eq:trace_cycle_identity} suggests a matrix-intrinsic analogue: the local statistics of $G_N$ may depend on the multiplicity and correlation structure of the weighted divisibility cycles contributing to its traces.  A mechanism for GOE would require more than counting cycles; it would require showing that the relevant families do not organize into the systematic coherent degeneracies that produce non-generic statistics in arithmetic hyperbolic systems.
+\end{heuristic}
+
+\begin{remark}[Status of the mechanism]
+\label{rem:cycle_mechanism_status}
+No theorem currently connects the cycle sum \eqref{eq:trace_cycle_identity} to GOE universality for $G_N$.  The identity is rigorous; the proposed analogy with periodic-orbit correlations is heuristic.  This distinction is essential.
+\end{remark}
+
+\section{What the conjecture does and does not claim}
+\label{sec:scope}
+
+\begin{proposition}[Current rigorous content]
+\label{prop:current_rigorous_content}
+The following statements are independent of the GOE conjecture:
+\begin{enumerate}[label=(\roman*)]
+\item $B_N$ and $G_N$ are explicitly defined by \eqref{eq:BN_definition} and \eqref{eq:GN_definition};
+\item $B_N^{-1}$ is given by \eqref{eq:BN_inverse};
+\item $G_N^{-1}$ is given by \eqref{eq:GN_inverse_first}--\eqref{eq:GN_inverse_second};
+\item the trace-cycle identities \eqref{eq:trace_gram_equality}--\eqref{eq:trace_cycle_identity} are exact;
+\item support-graph expansion alone cannot imply GOE, by Proposition \ref{prop:expansion_not_sufficient}.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Current numerical content]
+\label{rem:current_numerical_content}
+Tables \ref{tab:bulk_quantiles}, \ref{tab:original_oscillator}, \ref{tab:bulk_ratio}, and \ref{tab:bulk_ipr} are finite-$N$ observations.  They are consistent with GOE-type level repulsion and $N^{-1}$ eigenvector delocalization, but they are not asymptotic results.
+\end{remark}
+
+\begin{remark}[Current conjectural content]
+\label{rem:current_conjectural_content}
+Conjecture \ref{conj:goe_bulk_universality} and Conjecture \ref{conj:bulk_delocalization} are open.  In particular, the present note does not assert a deterministic-universality theorem of the form ``expansion plus absence of symmetries implies GOE.''
+\end{remark}
+
+\section{Numerical protocol for a dedicated GOE paper}
+\label{sec:numerical_protocol}
+
+A publishable numerical study should test a hierarchy of observables and explicitly separate unfolding-free from unfolding-dependent quantities.
+
+\subsection{Window stability}
+\label{subsec:window_stability}
+
+At minimum, repeat the ratio analysis on
+\begin{equation}
+[0.20,0.40],\quad
+[0.30,0.50],\quad
+[0.40,0.60],\quad
+[0.50,0.70],\quad
+[0.60,0.80],\quad
+[0.25,0.75]
+\label{eq:recommended_windows}
+\end{equation}
+of the ordered spectrum.  A genuine bulk law should not be a peculiarity of one quantile window.
+
+\subsection{Full ratio distribution}
+\label{subsec:full_ratio_distribution}
+
+The mean $\overline{\widetilde r}$ compresses substantial information.  The empirical distribution of $\widetilde r$ should be compared with GOE and Poisson using the cumulative distribution function and quantitative distances such as Kolmogorov--Smirnov or Cram\'er--von Mises statistics.  The Atas et al. surmise \cite{Atas2013} supplies a convenient analytic benchmark.
+
+\subsection{Unfolded spacings and number variance}
+\label{subsec:spacing_number_protocol}
+
+Nearest-neighbor spacing tests should be repeated under several local unfolding procedures.  Number variance should be compared with the exact fixed-$L$ formula \eqref{eq:goe_number_variance_exact}; the logarithmic form \eqref{eq:goe_number_variance_asymptotic} should be used only in its large-$L$ regime.
+
+\subsection{Longer-range statistics}
+\label{subsec:long_range_protocol}
+
+A stronger numerical case should include at least one statistic probing correlations beyond neighboring levels, for example number variance, Dyson--Mehta $\Delta_3$, or a suitably normalized spectral form factor.  Agreement of several independent diagnostics is more informative than a single mean gap ratio.
+
+\subsection{Eigenvector statistics}
+\label{subsec:eigenvector_protocol}
+
+Beyond IPR, compare the component distribution of
+\begin{equation}
+\sqrt N\,v_j(r)
+\label{eq:scaled_eigenvector_component}
+\end{equation}
+with a standard real Gaussian in interior spectral windows, and record
+\begin{equation}
+\max_r |v_j(r)|^2.
+\label{eq:eigenvector_sup_norm}
+\end{equation}
+This distinguishes the weak statement $\IPR=O(N^{-1})$ from a stronger Haar-like eigenvector law.
+
+\subsection{Null models}
+\label{subsec:null_models}
+
+Useful controls include:
+\begin{enumerate}[label=(\roman*)]
+\item a diagonal matrix with the same one-point density, which destroys level repulsion;
+\item a randomized real Gram matrix with comparable aspect ratio, providing a $\beta=1$ positive-matrix benchmark;
+\item structurally nearby divisor matrices such as the Redheffer Gram or selected GCD matrices, whose local statistics should be measured rather than assumed;
+\item permutations or sign modifications that preserve selected one-point arithmetic data while disrupting divisibility correlations.
+\end{enumerate}
+These controls can help determine whether GOE-like behavior is tied to the full M\"obius/divisibility geometry rather than to positivity or density alone.
+
+\section{Novelty statement and literature boundary}
+\label{sec:novelty_boundary}
+
+\begin{remark}[Literature boundary]
+\label{rem:literature_boundary}
+The literature search used for this note found extensive work on Redheffer, GCD/meet/join, and Mertens-related matrices, but no peer-reviewed study that defines the surface \eqref{eq:surface_definition}, forms the Gram matrix \eqref{eq:GN_definition}, and conjectures GOE local bulk universality for this specific family.  The closest structural benchmark located is the Redheffer Gram/GCD family; the closest rigorous universality benchmark is real random covariance theory.  This is a statement about the literature located for the present survey, not a theorem of mathematical uniqueness or priority.
+\end{remark}
+
+The scientifically substantive question is therefore not whether deterministic systems can ever have GOE spectra---BGS already supplies that paradigm \cite{BGS1984}.  The specific question is whether the M\"obius/divisibility Gram structure \eqref{eq:GN_definition} generates a $\beta=1$ local bulk process, and if so, which arithmetic mechanism replaces the randomness used in covariance-matrix universality proofs.
+
+\section{De qui\'en viene esta idea}
+\label{sec:provenance}
+
+The provenance separates into four layers.
+
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Classical random-matrix theory.}  GOE, Dyson index $\beta=1$, local spacing statistics, number variance, and Wigner-type approximations are standard random-matrix objects; see Mehta \cite{Mehta2004}.  Gap ratios are standard diagnostics in modern spectral statistics \cite{OganesyanHuse2007,Atas2013}.
+
+\item \textbf{Random Gram universality.}  The fact that real sample-covariance matrices have $\beta=1$ bulk universality under broad random hypotheses is literature-derived \cite{TaoVu2012,PillaiYin2014}.
+
+\item \textbf{Deterministic and arithmetic spectral precedents.}  BGS supplies the general deterministic-chaos/GOE paradigm \cite{BGS1984}; arithmetic hyperbolic systems supply the contrasting Poisson-like phenomenon associated with arithmetic periodic-orbit degeneracies \cite{BogomolnyEtAl1992,LuoSarnak1994}.  Redheffer, GCD, and Mertens matrices supply the closest arithmetic-matrix context \cite{BarrettJarvis1992,HongLoewy2004,Cardinal2010,ClementSteinerberger2025,Kline2019,Kline2020}.
+
+\item \textbf{Specific construction investigated here.}  The surface $F(n,r)$, the matrix $B_N$, the Gram $G_N$, the numerical GOE conjecture for its bulk, and the use of the exact cycle expansion \eqref{eq:trace_cycle_identity} as a candidate arithmetic mechanism are specific to this construction.  The cycle-to-GOE interpretation is explicitly heuristic; the matrix identities themselves are exact.
+\end{enumerate}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The numerical evidence currently supports a precise but limited statement: the central bulk of the deterministic arithmetic Gram matrix $G_N$ has consecutive-gap ratios near the GOE benchmark at the largest tested sizes and eigenvectors delocalized on the $N^{-1}$ IPR scale.  The strongest direct values are
+\begin{equation}
+\overline r_{25\%-75\%}
+=0.5391491230\quad(N=2000),
+\qquad
+0.5376551534\quad(N=4000),
+\label{eq:conclusion_gap_ratio}
+\end{equation}
+and
+\begin{equation}
+N\,\overline{\IPR}_{25\%-75\%}
+=3.48631797\quad(N=2000),
+\qquad
+3.51017535\quad(N=4000).
+\label{eq:conclusion_ipr}
+\end{equation}
+These values are evidence, not a limit theorem.
+
+The appropriate conjecture is the full local $\beta=1$ statement in Conjecture \ref{conj:goe_bulk_universality}.  A support-graph expansion criterion cannot explain it in general, by Proposition \ref{prop:expansion_not_sufficient}.  The structurally specific analytic direction is instead to understand the closed divisor-cycle sums in \eqref{eq:trace_cycle_identity} and determine whether their correlations possess an arithmetic nondegeneracy mechanism capable of producing GOE local statistics.
+
+\begin{thebibliography}{99}
+
+\bibitem{Atas2013}
+Y.~Y. Atas, E. Bogomolny, O. Giraud, and G. Roux,
+\emph{Distribution of the ratio of consecutive level spacings in random matrix ensembles},
+Phys. Rev. Lett. \textbf{110} (2013), 084101.
+DOI: \href{https://doi.org/10.1103/PhysRevLett.110.084101}{10.1103/PhysRevLett.110.084101}.
+
+\bibitem{BarrettJarvis1992}
+W.~W. Barrett and T.~J. Jarvis,
+\emph{Spectral properties of a matrix of Redheffer},
+Linear Algebra Appl. \textbf{162--164} (1992), 673--683.
+DOI: \href{https://doi.org/10.1016/0024-3795(92)90401-U}{10.1016/0024-3795(92)90401-U}.
+
+\bibitem{BGS1984}
+O. Bohigas, M.-J. Giannoni, and C. Schmit,
+\emph{Characterization of chaotic quantum spectra and universality of level fluctuation laws},
+Phys. Rev. Lett. \textbf{52} (1984), 1--4.
+DOI: \href{https://doi.org/10.1103/PhysRevLett.52.1}{10.1103/PhysRevLett.52.1}.
+
+\bibitem{BogomolnyEtAl1992}
+E.~B. Bogomolny, B. Georgeot, M.-J. Giannoni, and C. Schmit,
+\emph{Chaotic billiards generated by arithmetic groups},
+Phys. Rev. Lett. \textbf{69} (1992), 1477--1480.
+DOI: \href{https://doi.org/10.1103/PhysRevLett.69.1477}{10.1103/PhysRevLett.69.1477}.
+
+\bibitem{Cardinal2010}
+J.-P. Cardinal,
+\emph{Symmetric matrices related to the Mertens function},
+Linear Algebra Appl. \textbf{432} (2010), 161--172.
+DOI: \href{https://doi.org/10.1016/j.laa.2009.07.035}{10.1016/j.laa.2009.07.035}.
+
+\bibitem{ClementSteinerberger2025}
+F. Cl\'ement and S. Steinerberger,
+\emph{On the largest singular vector of the Redheffer matrix},
+Linear Algebra Appl. \textbf{725} (2025), 96--114.
+DOI: \href{https://doi.org/10.1016/j.laa.2025.07.003}{10.1016/j.laa.2025.07.003}.
+Preprint: arXiv:2502.09489.
+
+\bibitem{ErdosEtAl2012}
+L. Erd\H{o}s, A. Knowles, H.-T. Yau, and J. Yin,
+\emph{Spectral statistics of Erd\H{o}s--R\'enyi graphs II: Eigenvalue spacing and the extreme eigenvalues},
+Comm. Math. Phys. \textbf{314} (2012), 587--640.
+DOI: \href{https://doi.org/10.1007/s00220-012-1527-7}{10.1007/s00220-012-1527-7}.
+Preprint: arXiv:1103.3869.
+
+\bibitem{Grigelionis1963}
+B. Grigelionis,
+\emph{On the convergence of sums of random step processes to a Poisson process},
+Theory Probab. Appl. \textbf{8} (1963), 177--182.
+DOI: \href{https://doi.org/10.1137/1108017}{10.1137/1108017}.
+
+\bibitem{HongLoewy2004}
+S. Hong and R. Loewy,
+\emph{Asymptotic behavior of eigenvalues of greatest common divisor matrices},
+Glasgow Math. J. \textbf{46} (2004), 551--569.
+DOI: \href{https://doi.org/10.1017/S0017089504001995}{10.1017/S0017089504001995}.
+
+\bibitem{Kline2019}
+J. Kline,
+\emph{A sparser matrix representation of the Mertens function},
+Linear Algebra Appl. \textbf{581} (2019), 354--366.
+DOI: \href{https://doi.org/10.1016/j.laa.2019.07.021}{10.1016/j.laa.2019.07.021}.
+
+\bibitem{Kline2020}
+J. Kline,
+\emph{On the eigenstructure of sparse matrices related to the prime number theorem},
+Linear Algebra Appl. \textbf{584} (2020), 409--430.
+DOI: \href{https://doi.org/10.1016/j.laa.2019.09.022}{10.1016/j.laa.2019.09.022}.
+
+\bibitem{LuoSarnak1994}
+W. Luo and P. Sarnak,
+\emph{Number variance for arithmetic hyperbolic surfaces},
+Comm. Math. Phys. \textbf{161} (1994), 419--432.
+DOI: \href{https://doi.org/10.1007/BF02099785}{10.1007/BF02099785}.
+
+\bibitem{Mehta2004}
+M.~L. Mehta,
+\emph{Random Matrices}, 3rd ed.,
+Pure and Applied Mathematics, Vol.~142,
+Elsevier/Academic Press, 2004.
+
+\bibitem{OganesyanHuse2007}
+V. Oganesyan and D.~A. Huse,
+\emph{Localization of interacting fermions at high temperature},
+Phys. Rev. B \textbf{75} (2007), 155111.
+DOI: \href{https://doi.org/10.1103/PhysRevB.75.155111}{10.1103/PhysRevB.75.155111}.
+
+\bibitem{PillaiYin2014}
+N.~S. Pillai and J. Yin,
+\emph{Universality of covariance matrices},
+Ann. Appl. Probab. \textbf{24} (2014), 935--1001.
+DOI: \href{https://doi.org/10.1214/13-AAP939}{10.1214/13-AAP939}.
+Preprint: arXiv:1110.2501.
+
+\bibitem{TaoVu2012}
+T. Tao and V. Vu,
+\emph{Random covariance matrices: Universality of local statistics of eigenvalues},
+Ann. Probab. \textbf{40} (2012), 1285--1315.
+DOI: \href{https://doi.org/10.1214/11-AOP648}{10.1214/11-AOP648}.
+
+\end{thebibliography}
+
+\end{document}

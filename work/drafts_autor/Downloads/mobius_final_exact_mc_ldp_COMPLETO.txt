@@ -1,0 +1,1521 @@
+function mobius_final_exact_mc_ldp
+clc; clear;
+% FINAL RESEARCH PROGRAM: EXACT FINITE MODEL + VARIANCE + MC + OU AUDIT
+%
+% This program keeps three logically separate layers:
+%   (I)   exact finite fixed-mask, fixed-endpoint permutation formulae;
+%   (II)  reproducible uniform Monte Carlo measurements;
+%   (III) an explicitly labelled OU large-deviation heuristic.
+%
+% No prime table and no zeta-zero data are read.  The analytic constant
+% d=6/pi^2 is used only in the asymptotic/OU comparison.
+%
+% FIXES IN THIS REVISION
+%  [F1]  Phi in-chunk cumsum error bounded by gamma_n, not 8u.
+%  [F2]  Negative exact variance is a hard error, not a silent clamp.
+%  [F3]  Delta certification uses max(accumulated, recomputed) bound.
+%  [F5]  SDAsym25 = NaN where the asymptotic is undefined (L <= 2.5).
+%  [F6]  SD guarded to be strictly positive.
+%  [F7]  ou_rate_self_test scope stated: Legendre step only.
+%  [F9]  Archived binomial arithmetic asserted, not merely printed.
+%  [F10] chunkSize 2^21.
+%  [F12] T6 recomputes from the COMPUTED census with relative tolerances
+%        and prints every quantity before erroring.  The previous version
+%        compared against a hand-copied literal 0.1059512 while the true
+%        value is 5414^2/276638778 = 0.10595548538751859; the difference
+%        4.285e-6 exceeded its 2e-6 tolerance and killed the run.
+%  [F13] assert_reference_arithmetic no longer compares against hand-copied
+%        literals.  Each quantity is checked against an INDEPENDENT
+%        formulation of itself at a relative tolerance.  The literal
+%        6.0836e-6 for (1-0.00428)^2800 was wrong by 1.185e-9 against a 1e-9
+%        absolute tolerance and aborted the run in its first second.
+%  [F14] Rate fits made unbreakable.  (a) With zero hits at every cutoff the
+%        binomial profile is flat and beta is UNIDENTIFIED: the fit is now
+%        skipped and said so, instead of printing the optimiser's stopping
+%        artefact as a slope.  (b) log(p) is never formed from p: with H=0
+%        and p underflowing, H.*log(p) was 0*(-Inf)=NaN, every profile value
+%        inherited it and fzero died with "not a valid initial bracketing"
+%        AFTER the whole Monte Carlo had been paid for and BEFORE any output
+%        file was written.  eta is log p; the profile now rejects non-finite
+%        values, verifies the sign change, and can return NaN but never throw.
+%
+% VERIFIED BEFORE DELIVERY, not asserted: this file was parsed by a real
+% parser and then executed end to end on a synthetic 2e6-entry mu file with
+% reduced cutoffs.  F13 and F14 were found by that execution, not by reading.
+%
+% NEW TESTS
+%  [A] Linear sieve of mu(n) to 1e6 compared entry by entry to the file,
+%      plus the hand control mu(1..10) and sum_{d<=K} M(floor(K/d)) = 1.
+%  [B] Q(N) at every cutoff by Q(N) = sum_{d<=sqrt N} mu(d) floor(N/d^2).
+%      sqrt(455052511) = 21332 < 1e6, so A and B compose into a complete
+%      validation of the Q column, including the tail past 3.5e8.
+%  [C] Naive O(N) recomputation at N = 1e4, sharing no code path.
+%  [D] psi(k) = c0 + c1 k + c2 k^2 pointwise, including k = m.
+%  [E] Monotonicity of every accumulated quantity across cutoffs.
+%  [F] Exact SD vs bridge asymptotic, soft, for L > 5 only.
+%  [H] Sampler invariants: T_m = S every draw, marginal sign frequency,
+%      seed independence by a two-proportion test.
+%% CONFIGURATION
+fileName = 'moebius.bin';
+N0 = 1000;
+largeCutoffs = [5e6 5e7 1e8 1.5e8 2e8 2.5e8 3e8 3.5e8];
+mcCutoffs = [1e4 3e4 1e5 3e5 1e6 5e6];
+mcSamples = [300000 150000 100000 50000 10000 10000];
+chunkSize = 2^21;                                                    % [F10]
+certBlockSize = 2^16;
+masterSeed = 19092026;
+mcSeeds = [19092021 19092022 19092023 19092024 19092025 19092026];
+confidence = 0.95;
+progressParts = 20;
+computeFileSHA256 = true;
+mcUseTimeBudget = false;
+mcTimeBudgets = [60 60 90 120 240 1200];
+sieveLimit = 1e6;
+savePrefix = 'mobius_final_exact_mc_ldp';
+u = eps/2;
+runClock = tic;
+%% SELF-TESTS: COMPLETE ENUMERATION OF SMALL CLASSES
+fprintf('RUNNING EXHAUSTIVE FINITE-CLASS SELF-TESTS...\n');
+selfHashTest=sha256_self_test;
+selfOUTest=ou_rate_self_test;
+selfTest = exhaustive_self_tests;
+fprintf('  classes tested = %d; covariance pairs = %d; maximum error = %.3g\n', ...
+    selfTest.classes,selfTest.covariancePairs,selfTest.maxError);
+% Recomputed reference arithmetic from the completed 8200-path run.
+referenceArithmetic=table( ...
+    1-0.05^(1/2800), ...
+    (1-0.00428)^2800, ...
+    1-0.05^(1/9500), ...
+    9500*0.00428, ...
+'VariableNames',{'ZeroUpper2800','PZeroChi2800', ...
+'ZeroUpper9500','ExpectedHits9500'});
+fprintf(['  arithmetic checks: upper(2800)=%.12g, Pzero(2800)=%.12g, ' ...
+'upper(9500)=%.12g, expected(9500)=%.6g\n'], ...
+    referenceArithmetic.ZeroUpper2800,referenceArithmetic.PZeroChi2800, ...
+    referenceArithmetic.ZeroUpper9500,referenceArithmetic.ExpectedHits9500);
+assert_reference_arithmetic(referenceArithmetic);                    % [F9]
+%% FILE AND CUTOFF VALIDATION
+info = dir(fileName);
+if isempty(info), error('%s was not found.',fileName); end
+fileEntries = info.bytes;
+if computeFileSHA256
+    fprintf('Computing SHA-256 of %s...\n',fileName);
+    fileSHA256=sha256_file(fileName);
+else
+    fileSHA256='NOT_COMPUTED';
+end
+testA = test_file_is_moebius(fileName,sieveLimit);                   % [A]
+cutoffs = unique(round([mcCutoffs largeCutoffs fileEntries]));
+cutoffs = cutoffs(cutoffs>N0 & cutoffs<=fileEntries);
+if isempty(cutoffs), error('No valid cutoff in (%d,%d].',N0,fileEntries); end
+Nmax = max(cutoffs);
+nCut = numel(cutoffs);
+fprintf('File entries: %d\n',fileEntries);
+fprintf('SHA-256: %s\n',fileSHA256);
+fprintf('N0 = %d; exact cutoffs: %s\n',N0,mat2str(cutoffs));
+fprintf('External prime or zeta data used: FALSE\n');
+fprintf('Analytic density d=6/pi^2 used in OU diagnostics: TRUE\n\n');
+reproducibility=struct;
+reproducibility.matlabVersion=version;
+reproducibility.rngGenerator='twister (MT19937)';
+reproducibility.masterSeed=masterSeed;
+reproducibility.mcSeeds=mcSeeds;
+reproducibility.fileSHA256=fileSHA256;
+reproducibility.fileBytes=fileEntries;
+reproducibility.N0=N0;
+reproducibility.cutoffs=cutoffs;
+reproducibility.chunkSize=chunkSize;
+reproducibility.certBlockSize=certBlockSize;
+reproducibility.mcUseTimeBudget=mcUseTimeBudget;
+reproducibility.mcTimeBudgets=mcTimeBudgets;
+reproducibility.mcSamples=mcSamples;
+reproducibility.sieveLimit=sieveLimit;
+%% STREAMING ACCUMULATORS
+% Mean basis:
+%   E[T_j^2] = j + mu2*j*(j-1).
+% Hence only sum j/n^2 and sum j(j-1)/n^2 are required.
+fid = fopen(fileName,'rb');
+if fid<0, error('Could not open %s.',fileName); end
+cleaner = onCleanup(@() fclose(fid));
+resM=zeros(1,nCut); resJ=zeros(1,nCut); resPhi=zeros(1,nCut);
+errM=zeros(1,nCut); errJ=zeros(1,nCut); errPhi=zeros(1,nCut);
+resm=zeros(1,nCut); resS=zeros(1,nCut);
+resMaxAbsM=zeros(1,nCut);
+resG=zeros(nCut,3); resH=zeros(nCut,3);
+errG=zeros(nCut,3); errH=zeros(nCut,3);
+sM=0; cM=0; eM=0;
+sJ=0; cJ=0; eJ=0;
+sPhi=0; cPhi=0; ePhi=0;
+sPrefix=0; cPrefix=0; ePrefix=0;
+sG=zeros(1,3); cG=zeros(1,3); eG=zeros(1,3);
+sH=zeros(1,3); cH=zeros(1,3); eH=zeros(1,3);
+runningM=0; runningQ=0; runningMaxAbsM=0; offset=0; kCut=1;
+while offset<Nmax
+    stop=min([offset+chunkSize,cutoffs(kCut),Nmax]);
+    count=stop-offset;
+    mu=fread(fid,count,'*int8');
+if numel(mu)~=count
+        error('Unexpected end of file at entry %d.',offset+numel(mu));
+end
+if any(mu < -1 | mu > 1)
+        error('Value outside {-1,0,+1} in block ending at %d.',stop);
+end
+    a=double(mu(:));
+    Mloc=runningM+cumsum(a);
+    Qloc=runningQ+cumsum(a~=0);
+    runningM=Mloc(end); runningQ=Qloc(end);
+    runningMaxAbsM=max(runningMaxAbsM,max(abs(Mloc)));
+    n=(offset+1:stop).';
+if max(abs(Mloc))>=2^53 || max(Qloc)>=2^53 || n(end)>=2^53
+        error('Exact-integer precondition failed in block ending at %d.',stop);
+end
+    keep=n>N0;
+if any(keep)
+        nn=n(keep); Mk=Mloc(keep); Qk=Qloc(keep);
+% Division first: no integer-sized square above 2^53 is formed.
+        qn=Qk./nn;
+        termM=(Mk./nn).^2;
+        termJ=qn./nn;
+        termPhi=qn.^2-qn./nn;
+        inv2=(1./nn)./nn;
+% [F1] bound for the in-chunk cumsum of termPhi, valid for any order.
+        nPhi=numel(termPhi);
+        gammaChunk=(nPhi*u)/(1-nPhi*u);
+        [tM,bM]=bounded_positive_sum(termM,certBlockSize,u);
+        [tJ,bJ]=bounded_positive_sum(termJ,certBlockSize,u);
+        [tPhi,bPhi]=bounded_positive_sum(termPhi,certBlockSize,u);
+% Account conservatively for forming each term before summation.
+        formGamma=(8*u)/(1-8*u);
+        bM=bM+formGamma*abs(tM);
+        bJ=bJ+formGamma*abs(tJ);
+        bPhi=bPhi+formGamma*abs(tPhi);
+        old=sM; [sM,cM]=kahan_add(sM,cM,tM);
+        eM=eM+bM+4*u*(abs(old)+abs(tM));
+        old=sJ; [sJ,cJ]=kahan_add(sJ,cJ,tJ);
+        eJ=eJ+bJ+4*u*(abs(old)+abs(tJ));
+        old=sPhi; [sPhi,cPhi]=kahan_add(sPhi,cPhi,tPhi);
+        ePhi=ePhi+bPhi+4*u*(abs(old)+abs(tPhi));
+% Six n-indexed cutoff-independent variance accumulators.  Every
+% term is formed from scaled ratios; no Q^2 or n^2 is formed.
+        prefixBefore=sPrefix+[0;cumsum(termPhi(1:end-1))];
+        phiErrHere=ePrefix+gammaChunk*(abs(sPrefix)+sum(termPhi));   % [F1]
+for rr=1:3
+if rr==1
+                gBase=inv2;
+                hTerm=(termPhi./nn)./nn;
+elseif rr==2
+                gBase=termJ;
+                hTerm=termPhi.*termJ;
+else
+                gBase=qn.^2;
+                hTerm=termPhi.*gBase;
+end
+            gTerm=gBase.*prefixBefore;
+            [tg,bg]=bounded_positive_sum(gTerm,certBlockSize,u);
+            [th,bh]=bounded_positive_sum(hTerm,certBlockSize,u);
+            old=sG(rr); [sG(rr),cG(rr)]=kahan_add(sG(rr),cG(rr),tg);
+            eG(rr)=eG(rr)+bg+8*u*(abs(old)+abs(tg))+ ...
+                2*phiErrHere*sum(abs(gBase));
+            old=sH(rr); [sH(rr),cH(rr)]=kahan_add(sH(rr),cH(rr),th);
+            eH(rr)=eH(rr)+bh+8*u*(abs(old)+abs(th));
+end
+        old=sPrefix; [sPrefix,cPrefix]=kahan_add(sPrefix,cPrefix,tPhi);
+        ePrefix=ePrefix+bPhi+4*u*(abs(old)+abs(tPhi));
+end
+    offset=stop;
+while kCut<=nCut && cutoffs(kCut)==offset
+if mod(runningQ-runningM,2)~=0
+            error(['Parity check failed at cutoff %d: Q=%d, M=%d, ' ...
+'Q-M=%d is odd.'],offset,runningQ,runningM,runningQ-runningM);
+end
+        resM(kCut)=sM; resJ(kCut)=sJ; resPhi(kCut)=sPhi;
+        errM(kCut)=eM; errJ(kCut)=eJ; errPhi(kCut)=ePhi;
+        resm(kCut)=runningQ; resS(kCut)=runningM;
+        resMaxAbsM(kCut)=runningMaxAbsM;
+        resG(kCut,:)=sG; resH(kCut,:)=sH;
+        errG(kCut,:)=eG; errH(kCut,:)=eH;
+        kCut=kCut+1;
+end
+if mod(offset,50*chunkSize)<chunkSize || offset==Nmax
+        fprintf('  n = %d / %d (%.1f s)\n',offset,Nmax,toc(runClock));
+end
+end
+clear cleaner;
+%% EXACT FINITE EVALUATION AND OU DIAGNOSTICS
+Cutoff=cutoffs(:); NonzeroAnts=resm(:); Endpoint=resS(:); MaxAbsM=resMaxAbsM(:);
+Density=NonzeroAnts./Cutoff; L=log(Cutoff/N0);
+Ereal=zeros(nCut,1); ErealBound=zeros(nCut,1);
+Eperm=zeros(nCut,1); EpermBound=zeros(nCut,1);
+VarPerm=zeros(nCut,1); VarPermBound=zeros(nCut,1); SDPerm=zeros(nCut,1);
+BalancedEndpoint=zeros(nCut,1); EpermBalanced=zeros(nCut,1);
+Rho=zeros(nCut,1); ZFinite=zeros(nCut,1);
+Delta=zeros(nCut,1); DeltaBound=zeros(nCut,1);
+DeltaLow=zeros(nCut,1); DeltaHigh=zeros(nCut,1); DeltaMargin=zeros(nCut,1);
+RhoAsym=zeros(nCut,1); OUrate=zeros(nCut,1); OUpred=zeros(nCut,1);
+OUmeanFixed=zeros(nCut,1); OUmeanLeading=zeros(nCut,1);
+RelMeanDiscrepancy=zeros(nCut,1); EndpointTerm=zeros(nCut,1);
+EndpointScale=zeros(nCut,1);
+SDAsym25=zeros(nCut,1);
+OUvarFixed=zeros(nCut,1); OUsdFixed=zeros(nCut,1);
+OUvarEndpointAveraged=zeros(nCut,1);
+d=6/pi^2;
+for i=1:nCut
+    m=resm(i); S=resS(i); Li=L(i);
+if m<4, error('Need m>=4 at cutoff %d (m=%d).',cutoffs(i),m); end
+    [mu2,mu4,tEndpoint]=exchangeable_moments(m,S);
+    coeff=psi_coefficients(mu2,mu4);
+    endpointSecondScaled=1/m+mu2*(m-1)/m;
+if abs(endpointSecondScaled-(S/m)^2)>1e-14*max(1,(S/m)^2)+1e-18
+        error(['Endpoint second-moment identity failed at cutoff %d: ' ...
+'lhs=%.17g, rhs=%.17g.'],cutoffs(i),endpointSecondScaled,(S/m)^2);
+end
+    Ereal(i)=resM(i)/Li;
+    ErealBound(i)=errM(i)/Li+8*u*abs(Ereal(i));
+    meanNum=resJ(i)+mu2*resPhi(i);
+    Eperm(i)=meanNum/Li;
+    EpermBound(i)=(errJ(i)+abs(mu2)*errPhi(i)+ ...
+        32*u*(abs(resJ(i))+abs(mu2*resPhi(i))))/Li;
+    varNum=2*sum(coeff.*resG(i,:))+sum(coeff.*resH(i,:));
+    varNumBound=2*sum(abs(coeff).*errG(i,:))+sum(abs(coeff).*errH(i,:))+ ...
+        128*u*(2*sum(abs(coeff.*resG(i,:)))+sum(abs(coeff.*resH(i,:))));
+if varNum<0                                                          % [F2]
+        fprintf('  coeff=[%.17g %.17g %.17g]\n',coeff);
+        fprintf('  G=[%.17g %.17g %.17g]\n',resG(i,:));
+        fprintf('  H=[%.17g %.17g %.17g]\n',resH(i,:));
+        error(['Exact variance numerator is negative at cutoff %d ' ...
+'(varNum=%.17g). Do not clamp.'],cutoffs(i),varNum);
+end
+    VarPerm(i)=varNum/Li^2;
+    VarPermBound(i)=varNumBound/Li^2+16*u*abs(VarPerm(i));
+    SDPerm(i)=sqrt(VarPerm(i));
+if ~(SDPerm(i)>0)                                                    % [F6]
+        error('Exact SD is not positive at cutoff %d (SD=%.17g).', ...
+            cutoffs(i),SDPerm(i));
+end
+    Sbal=mod(m,2); BalancedEndpoint(i)=Sbal;
+    [mu2bal,~,~]=exchangeable_moments(m,Sbal);
+    EpermBalanced(i)=(resJ(i)+mu2bal*resPhi(i))/Li;
+    Rho(i)=Ereal(i)/Eperm(i);
+    ZFinite(i)=(Ereal(i)-Eperm(i))/SDPerm(i);
+% Certified sign of Delta=Ereal-Eperm, following the declared Higham
+% a-priori bound.  Certification is claimed only for this sign.
+    deltaL=resM(i)-meanNum;
+    Delta(i)=deltaL/Li;
+    gamma=(certBlockSize*u)/(1-certBlockSize*u);
+    epsSigmaM=max(errM(i),  (5*u+gamma)*resM(i));                    % [F3]
+    epsSigma1=max(errJ(i),  (5*u+gamma)*resJ(i));                    % [F3]
+    epsSigma2=max(errPhi(i),(5*u+gamma)*resPhi(i));                  % [F3]
+    epsMu2=3*u*abs(mu2);
+    epsMuL=epsSigma1+abs(mu2)*epsSigma2+resPhi(i)*epsMu2+ ...
+        2*u*abs(meanNum);
+    epsDeltaL=epsSigmaM+epsMuL+u*abs(deltaL);
+    DeltaBound(i)=(epsDeltaL+3*u*abs(deltaL))/Li+u*abs(Delta(i));
+    DeltaLow(i)=Delta(i)-DeltaBound(i);
+    DeltaHigh(i)=Delta(i)+DeltaBound(i);
+    DeltaMargin(i)=abs(Delta(i))/DeltaBound(i);
+if DeltaLow(i)<=0 && DeltaHigh(i)>=0
+        error(['Energy separation is not certified at cutoff %d: ' ...
+'Delta=%.17g, bound=%.3g.'],cutoffs(i),Delta(i),DeltaBound(i));
+end
+    y2=tEndpoint;
+    eL=exp(-Li);
+    OUmeanFixed(i)=d*(1-(1-y2)*(1-eL)/Li);
+    OUmeanLeading(i)=d*(1-(1-y2)/Li);
+    RelMeanDiscrepancy(i)=(OUmeanLeading(i)-Eperm(i))/Eperm(i);
+    EndpointScale(i)=y2;
+    EndpointTerm(i)=y2/Li;
+if Li>2.5                                                            % [F5]
+        SDAsym25(i)=sqrt(4*d^2*(Li-2.5)/Li^2);
+else
+        SDAsym25(i)=NaN;
+end
+    RhoAsym(i)=Ereal(i)/d;
+if RhoAsym(i)>=1
+        error('Lower-tail orientation failed at cutoff %d: a_N=%.17g >= 1.', ...
+            cutoffs(i),RhoAsym(i));
+end
+    OUrate(i)=(RhoAsym(i)-1)^2/(8*RhoAsym(i));
+    OUpred(i)=exp(-OUrate(i)*Li);
+% Fixed-endpoint bridge correction.  The formerly quoted
+% 4*d^2*(L-1.5)/L^2 averages over a random endpoint with E[y^2]=1;
+% it is not the variance of the fixed-S permutation class.
+% The finite-L terms below are UNVERIFIED; only the limits were checked:
+%   y2=0 -> 4 d^2 (L-2.5)/L^2,   y2=1 -> 4 d^2 (L-1.5)/L^2.
+    base=4*Li-10+8*(Li+1)*eL+2*eL^2;
+    endpoint=4*y2*(1-eL^2-2*Li*eL);
+    OUvarFixed(i)=d^2*(base+endpoint)/Li^2;
+    OUsdFixed(i)=sqrt(max(0,OUvarFixed(i)));
+    OUvarEndpointAveraged(i)=d^2*(4*Li-6+8*eL-2*eL^2)/Li^2;
+end
+exactTable=table(Cutoff,NonzeroAnts,Endpoint,MaxAbsM,Density,L,Ereal,ErealBound, ...
+    Eperm,EpermBound,VarPerm,VarPermBound,SDPerm,BalancedEndpoint, ...
+    EpermBalanced,Rho,ZFinite,Delta,DeltaBound,DeltaLow,DeltaHigh,DeltaMargin, ...
+    RhoAsym,OUmeanFixed,OUmeanLeading,RelMeanDiscrepancy,EndpointScale, ...
+    EndpointTerm,SDAsym25, ...
+    OUvarFixed,OUsdFixed,OUvarEndpointAveraged,OUrate,OUpred);
+fprintf('\n============================================================\n');
+fprintf('LAYER I — EXACT FINITE FIXED-MASK, FIXED-ENDPOINT THEOREMS\n');
+fprintf('============================================================\n');
+disp(exactTable);
+fprintf(['Eperm and VarPerm are exact finite-class formulae evaluated in double.\n' ...
+'DeltaBound is an a-priori propagated bound. VarPermBound is indicative ' ...
+'only and is NOT claimed as certified.\n']);
+fprintf('All parity checks M(N) == Q(N) (mod 2) passed.\n\n');
+fprintf(['Certification assumptions: IEEE-754 binary64, no extended precision, ' ...
+'no FMA contraction and no reassociation. The Delta bound is a-priori ' ...
+'propagation, not directed-rounding interval arithmetic.\n\n']);
+regressionCheck=regression_checks(exactTable);
+testB = test_squarefree_identity(fileName,exactTable);               % [B]
+testC = test_direct_small_energy(fileName,N0,1e4,exactTable);        % [C]
+testD = test_psi_expansion(exactTable);                              % [D]
+testE = test_accumulator_monotonicity(exactTable);                   % [E]
+testF = test_asymptotic_variance_soft(exactTable);                   % [F]
+%% BUILD WEIGHTS ONCE FOR ALL MONTE CARLO CUTOFFS
+fprintf('BUILDING DISCRETE WEIGHTS FOR THE MONTE CARLO LADDER...\n');
+maxMC=max(mcCutoffs);
+fid=fopen(fileName,'rb');
+if fid<0, error('Could not reopen %s.',fileName); end
+muMC=fread(fid,maxMC,'*int8'); fclose(fid);
+if numel(muMC)~=maxMC, error('Unexpected end of file in MC preparation.'); end
+if any(muMC < -1 | muMC > 1), error('Invalid entry in MC prefix.'); end
+QMC=cumsum(muMC~=0);
+testH = test_sampler_invariants(QMC,N0,1e4,exactTable);              % [H]
+mcRows=cell(numel(mcCutoffs),1);
+quantileRows=cell(numel(mcCutoffs),1);
+sampledRows=cell(numel(mcCutoffs),1);
+fprintf('\n============================================================\n');
+fprintf('LAYER II — UNIFORM MONTE CARLO MEASUREMENT\n');
+fprintf('============================================================\n');
+for h=1:numel(mcCutoffs)
+    N=mcCutoffs(h); Rtarget=mcSamples(h);
+    idxExact=find(cutoffs==N,1);
+if isempty(idxExact), error('MC cutoff %d missing from exact table.',N); end
+    m=resm(idxExact); S=resS(idxExact); Li=L(idxExact);
+    p=(m+S)/2; q=(m-S)/2;
+if p~=round(p) || q~=round(q) || p<0 || q<0
+        error('Invalid sign counts at N=%d: p=%.17g, q=%.17g.',N,p,q);
+end
+    p=round(p); q=round(q);
+    nn=(N0+1:N).'; qIndex=QMC(N0+1:N);
+    valid=qIndex>0;
+    vals=(1./nn(valid))./nn(valid);
+    weights=accumarray(qIndex(valid),vals,[m 1],[],0);
+    wantTotal=sum((1./nn)./nn);
+if abs(sum(weights)-wantTotal)>1e-12*wantTotal
+        error('Plateau weights sum %.17g, expected %.17g at N=%d.', ...
+            sum(weights),wantTotal,N);
+end
+    realSigns=muMC(muMC~=0); realPath=cumsum(double(realSigns));
+    ErealWeights=dot(weights,realPath(1:m).^2)/Li;
+if m>=sqrt(2^53)
+        error('MC plateau index square would exceed 2^53 at N=%d.',N);
+end
+    j=(1:m).'; phi=j.*(j-1);
+    [mu2,mu4,~]=exchangeable_moments(m,S);
+    EmeanWeights=dot(weights,j+mu2*phi)/Li;
+    Gweights=six_from_weights(weights);
+    Vweights=sum(psi_coefficients(mu2,mu4).*Gweights)/Li^2;
+if N==min(mcCutoffs)
+% Independent O(m^2) implementation: no prefix collapse.  This is
+% deliberately used only at the smallest cutoff.
+        Vbrute=brute_force_double_variance(weights,mu2,mu4)/Li^2;
+        mismatchBrute=abs(Vbrute-Vweights);
+if mismatchBrute>1e-11*max(abs(Vweights),realmin)
+            error(['O(m^2) variance audit failed at N=%d: brute %.17g, ' ...
+'collapsed %.17g, diff %.3g.'],N,Vbrute,Vweights,mismatchBrute);
+end
+else
+        Vbrute=NaN; mismatchBrute=NaN;
+end
+    mismatchReal=abs(ErealWeights-Ereal(idxExact));
+    mismatchMean=abs(EmeanWeights-Eperm(idxExact));
+    mismatchVar=abs(Vweights-VarPerm(idxExact));
+if mismatchReal>5e-11 || mismatchMean>5e-11 || mismatchVar>5e-10
+        fprintf('  weights real %.17g vs streaming %.17g\n',ErealWeights,Ereal(idxExact));
+        fprintf('  weights mean %.17g vs streaming %.17g\n',EmeanWeights,Eperm(idxExact));
+        fprintf('  weights var  %.17g vs streaming %.17g\n',Vweights,VarPerm(idxExact));
+        error('Weight audit failed at N=%d.',N);
+end
+    log10Class=(gammaln(m+1)-gammaln(p+1)-gammaln(q+1))/log(10);
+    log2Class=log10Class*log2(10);
+    seed=mcSeeds(h);
+    rng(seed,'twister');
+    baseSigns=[ones(p,1,'int8');-ones(q,1,'int8')];
+    energies=zeros(Rtarget,1);
+    mcClock=tic;
+    reportEvery=max(1,ceil(Rtarget/progressParts));
+    fprintf('\nMC N=%d, m=%d, R=%d, seed=%d, log10|class|=%.3f\n', ...
+        N,m,Rtarget,seed,log10Class);
+    r=0;
+while r<Rtarget
+        r=r+1;
+        order=randperm(m).';
+        T=cumsum(double(baseSigns(order)));
+        energies(r)=dot(weights,T.*T)/Li;
+if mod(r,reportEvery)==0 || r==Rtarget
+            fprintf('  r=%d/%d, hits=%d, elapsed=%.1f s\n',r,Rtarget, ...
+                sum(energies(1:r)<=Ereal(idxExact)),toc(mcClock));
+end
+if mcUseTimeBudget && toc(mcClock)>=mcTimeBudgets(h)
+break;
+end
+end
+    energies=energies(1:r); Ractual=r;
+if N==5e6 && Ractual>=8200
+        referenceMean8200=mean(energies(1:8200));
+        referenceSD8200=std(energies(1:8200),0);
+if abs(referenceMean8200-0.544194764161)>5e-10 || ...
+                abs(referenceSD8200-0.350499677391)>5e-10
+            error(['T4 Monte Carlo reference sequence changed at N=5e6: ' ...
+'mean %.12g, SD %.12g. Downgrade bit-exact regression claims.'], ...
+                referenceMean8200,referenceSD8200);
+end
+        refCentred=energies(1:8200)-referenceMean8200;
+        refKurtosis=mean(refCentred.^4)/var(energies(1:8200),0)^2;
+        refSESD=(referenceSD8200/2)*sqrt((refKurtosis-1)/8200);
+        refZSD=(referenceSD8200-SDPerm(idxExact))/refSESD;
+        fprintf(['  T5 legacy R=8200: mean=%.12g, SD=%.12g, ' ...
+'SE(SD)=%.6g, Zsd(exact)=%.4f\n'],referenceMean8200, ...
+            referenceSD8200,refSESD,refZSD);
+if abs(refZSD)>4
+            error('T5 legacy exact-variance calibration failed: |Zsd|=%.4f.',abs(refZSD));
+end
+end
+    hits=sum(energies<=Ereal(idxExact));
+    pHat=hits/Ractual;
+    [wLo,wHi]=wilson_interval(hits,Ractual,confidence);
+if hits==0, zeroUpper=1-(1-confidence)^(1/Ractual); else, zeroUpper=NaN; end
+    sampleMean=mean(energies); sampleVar=var(energies,0); sampleSD=sqrt(sampleVar);
+    zMean=(sampleMean-Eperm(idxExact))/(SDPerm(idxExact)/sqrt(Ractual));
+    centred=energies-sampleMean;
+    fourth=mean(centred.^4);
+    sampleKurtosis=fourth/sampleVar^2;
+    seSampleSD=(sampleSD/2)*sqrt(max(0,sampleKurtosis-1)/Ractual);
+if seSampleSD>0
+        zSD=(sampleSD-SDPerm(idxExact))/seSampleSD;
+else
+        zSD=NaN;
+end
+    varVarSE=sqrt(max(0,(fourth-sampleVar^2)/Ractual));
+if varVarSE>0
+        zVariance=(sampleVar-VarPerm(idxExact))/varVarSE;
+else
+        zVariance=NaN;
+end
+    sorted=sort(energies);
+    minEnergy=sorted(1);
+    q01=sample_quantile_sorted(sorted,.01);
+    q05=sample_quantile_sorted(sorted,.05);
+    medianEnergy=sample_quantile_sorted(sorted,.50);
+    quantileEnergy=[medianEnergy;q05;q01;minEnergy];
+    quantileObserved=[.50;.05;.01;1/Ractual];
+    quantileA=quantileEnergy/d;
+    quantileRate=(quantileA-1).^2./(8*quantileA);
+    quantileOUPred=exp(-Li*quantileRate);
+    quantileRows{h}=table(repmat(N,4,1),{'median';'q05';'q01';'minimum'}, ...
+        quantileEnergy,quantileA,quantileRate,quantileOUPred,quantileObserved, ...
+'VariableNames',{'Cutoff','Point','Energy','A','Rate','POULDP','ObservedCDF'});
+    nu=2*Eperm(idxExact)^2/VarPerm(idxExact);
+    chiArg=nu*Ereal(idxExact)/(2*Eperm(idxExact));
+    pChi=gammainc(chiArg,nu/2,'lower');
+    zeroChi=(1-pChi)^Ractual;
+    expectedChi=Ractual*pChi;
+    pOU=OUpred(idxExact); expectedOU=Ractual*pOU;
+    fprintf('  sample mean / exact mean = %.12g / %.12g; Zmean=%.4f\n', ...
+        sampleMean,Eperm(idxExact),zMean);
+    fprintf('  sample SD / exact SD / OU fixed-S SD = %.12g / %.12g / %.12g\n', ...
+        sampleSD,SDPerm(idxExact),OUsdFixed(idxExact));
+    fprintf('  sample kurtosis=%.6g, SE(sample SD)=%.6g, Zsd=%.4f\n', ...
+        sampleKurtosis,seSampleSD,zSD);
+if abs(zSD)>4
+        error(['T5 exact-variance calibration failed at N=%d: sample SD ' ...
+'%.17g, exact SD %.17g, SE %.3g, |Zsd|=%.4f.'], ...
+            N,sampleSD,SDPerm(idxExact),seSampleSD,abs(zSD));
+end
+    fprintf('  hits=%d, pHat=%.8g, Wilson=[%.8g,%.8g]\n',hits,pHat,wLo,wHi);
+if hits==0
+        fprintf('  exact one-sided %.1f%% zero-hit upper bound = %.12g\n', ...
+            100*confidence,zeroUpper);
+end
+    fprintf('  chi-square p=%.8g, expected hits=%.4g, P(zero)=%.4g\n', ...
+        pChi,expectedChi,zeroChi);
+    fprintf('  OU-LDP heuristic p=%.8g, expected hits=%.4g\n',pOU,expectedOU);
+    mcRows{h}=table(N,m,S,Ractual,hits,pHat,wLo,wHi,zeroUpper, ...
+        sampleMean,sampleVar,sampleSD,zMean,zVariance,sampleKurtosis, ...
+        seSampleSD,zSD,minEnergy,q01,q05, ...
+        medianEnergy,Eperm(idxExact),VarPerm(idxExact),SDPerm(idxExact), ...
+        OUsdFixed(idxExact),nu,pChi,expectedChi,zeroChi,pOU,expectedOU, ...
+        log10Class,log2Class,seed,mismatchReal,mismatchMean,mismatchVar,Vbrute,mismatchBrute, ...
+'VariableNames',{'Cutoff','NonzeroAnts','Endpoint','Samples','Hits', ...
+'PHat','WilsonLow','WilsonHigh','ZeroHitUpper','SampleMean', ...
+'SampleVariance','SampleSD','ZMean','ZVariance','SampleKurtosis', ...
+'SESampleSD','ZSD','Minimum','Q01', ...
+'Q05','Median','ExactMean','ExactVariance','ExactSD','OUFixedSD', ...
+'NuChiSquare','PChiSquare','ExpectedHitsChiSquare','PZeroChiSquare', ...
+'POULDP','ExpectedHitsOULDP','Log10ClassSize','Log2ClassSize','Seed', ...
+'MismatchReal','MismatchMean','MismatchVariance','BruteVariance', ...
+'MismatchBruteVariance'});
+    permutationTable=table(repmat(N,Ractual,1),(1:Ractual).',energies, ...
+        energies/Eperm(idxExact), ...
+'VariableNames',{'Cutoff','Permutation','Energy','RatioToExactMean'});
+    sampledRows{h}=permutationTable;
+    writetable(permutationTable,sprintf('%s_permutations_N%d.csv',savePrefix,N));
+    clear energies sorted order T weights permutationTable;
+end
+mcTable=vertcat(mcRows{:});
+quantileTable=vertcat(quantileRows{:});
+sampledEnergyTable=vertcat(sampledRows{:});
+%% RATE FITS
+positive=mcTable.Hits>0;
+fit=struct('olsAvailable',false,'binomialAvailable',false);
+if sum(positive)>=2
+    X=[ones(sum(positive),1),mcTable.Cutoff(positive)*0];
+    X(:,2)=log(mcTable.Cutoff(positive)/N0);
+    b=X\log(mcTable.PHat(positive));
+    fit.olsAvailable=true; fit.olsIntercept=b(1); fit.olsSlope=b(2);
+end
+% [F14] With zero hits at EVERY cutoff the binomial likelihood is maximised
+% by p->0 at any beta: the profile is flat, beta is not identified, and the
+% "fit" the optimiser returns is an artefact of its stopping rule.  Report
+% that, do not print a number.
+if height(mcTable)>=2 && ~any(mcTable.Hits>0)
+    fit.binomialAvailable=false;
+    fit.binomialUnidentified=true;
+    fprintf(['All-point binomial fit NOT performed: every cutoff produced ' ...
+'zero hits, so beta is unidentified (flat profile, interval (0,Inf)). ' ...
+'The zero-hit upper bounds in the ladder are the informative statement.\n']);
+elseif height(mcTable)>=2
+% beta=exp(theta(2)) imposes beta>0 by construction; the profile interval
+% can therefore never contain beta<=0.  This is a modelling choice.
+    Lmc=log(mcTable.Cutoff/N0);
+    theta=fminsearch(@(th) binomial_power_nll(th,Lmc,mcTable.Samples,mcTable.Hits), ...
+        [0 log(2.34)],optimset('Display','off'));
+    fit.binomialAvailable=true;
+    fit.binomialIntercept=theta(1);
+    fit.binomialBeta=exp(theta(2));
+    [fit.betaProfileLow,fit.betaProfileHigh,fit.profileThreshold]= ...
+        profile_beta_interval(Lmc,mcTable.Samples,mcTable.Hits,theta,confidence);
+end
+fprintf('\nMONTE CARLO LADDER\n'); disp(mcTable);
+ix5=find(mcTable.Cutoff==5e6,1);
+if ~isempty(ix5)
+    fprintf(['NEGATIVE RESULT AT N=5e6: the exact-two-moment chi-square model ' ...
+'predicts %.6g hits and P(H=0)=%.6g; observed H=%d.\n'], ...
+        mcTable.ExpectedHitsChiSquare(ix5),mcTable.PZeroChiSquare(ix5), ...
+        mcTable.Hits(ix5));
+end
+fprintf(['RNG caveat: MT19937 has 19937 state bits and cannot reach the entire ' ...
+'largest permutation class; claims concern the sampled marginal law.\n']);
+fprintf('\nOU-LDP QUANTILE DIAGNOSTIC (HEURISTIC, NOT A BOUND)\n');
+disp(quantileTable);
+if fit.olsAvailable
+    fprintf('Positive-hit OLS: log(P)=%.6g %+.6g L\n', ...
+        fit.olsIntercept,fit.olsSlope);
+end
+if fit.binomialAvailable
+    fprintf('All-point binomial fit: log(P)=%.6g - %.6g L\n', ...
+        fit.binomialIntercept,fit.binomialBeta);
+    fprintf('Profile-likelihood %.1f%% interval for beta: [%.6g, %.6g]\n', ...
+        100*confidence,fit.betaProfileLow,fit.betaProfileHigh);
+end
+% Primary OU diagnostic: residual, not fitted slope.  The heuristic table
+% covers every exact cutoff; residuals exist only where Monte Carlo ran.
+nHeuristic=height(exactTable);
+HeuristicCutoff=exactTable.Cutoff; HeuristicL=exactTable.L;
+HeuristicA=exactTable.RhoAsym; HeuristicI=exactTable.OUrate;
+HeuristicPOU=exactTable.OUpred;
+HeuristicSamples=zeros(nHeuristic,1); HeuristicHits=nan(nHeuristic,1);
+Residual=nan(nHeuristic,1); ResidualUpper=nan(nHeuristic,1);
+for i=1:nHeuristic
+    im=find(mcTable.Cutoff==HeuristicCutoff(i),1);
+if isempty(im), continue; end
+    HeuristicSamples(i)=mcTable.Samples(im); HeuristicHits(i)=mcTable.Hits(im);
+if mcTable.Hits(im)>0
+        Residual(i)=log(mcTable.PHat(im))+HeuristicI(i)*HeuristicL(i);
+else
+        ResidualUpper(i)=log(mcTable.ZeroHitUpper(im))+HeuristicI(i)*HeuristicL(i);
+end
+end
+heuristicTable=table(HeuristicCutoff,HeuristicL,HeuristicA,HeuristicI, ...
+    HeuristicPOU,HeuristicSamples,HeuristicHits,Residual,ResidualUpper);
+fprintf('\n============================================================\n');
+fprintf('OU_LDP_HEURISTIC — NOT A FINITE-N THEOREM\n');
+fprintf('============================================================\n');
+disp(heuristicTable);
+fprintf(['Primary diagnostic: residual log(Phat)+I(a_N)L_N. For zero-hit rows, ' ...
+'ResidualUpper uses the exact one-sided binomial upper bound.\n']);
+fprintf(['The Legendre self-test verifies the transform step only, not the OU ' ...
+'large-deviation theorem itself.\n']);
+fprintf(['Honest limitation: the LDP is asymptotic in L, while direct Monte Carlo ' ...
+'has power only at small L. The ladder tests the form, not the constant.\n']);
+fprintf(['Cumulative entropy heuristic: Sigma_N^<=(E_N(M))-log|Omega_N^(1)| ' ...
+'=log P_E(N) approximately -I(a_N)log(N/N0).\n\n']);
+%% OUTPUT FILES
+writetable(exactTable,'exact_layer.csv');
+writetable(mcTable,'montecarlo_ladder.csv');
+writetable(sampledEnergyTable,'sampled_energies.csv');
+writetable(heuristicTable,'heuristic.csv');
+writetable(quantileTable,'ou_quantiles.csv');
+reproducibility.wallClockSeconds=toc(runClock);
+tex=build_tex_fragment(N0,exactTable,mcTable,heuristicTable,fit,selfTest, ...
+    confidence,reproducibility);
+write_lines([savePrefix '_insert.tex'],tex);
+write_lines([savePrefix '_insert.txt'],tex);
+save([savePrefix '.mat'],'exactTable','mcTable','sampledEnergyTable', ...
+'heuristicTable','quantileTable','fit','selfTest','regressionCheck', ...
+'referenceArithmetic','selfHashTest','selfOUTest','reproducibility', ...
+'fileSHA256','N0','cutoffs','mcCutoffs','mcSamples','confidence', ...
+'testA','testB','testC','testD','testE','testF','testH','-v7.3');
+fprintf('\nFINISHED in %.1f s.\n',toc(runClock));
+fprintf('Reproducibility: MATLAB %s; RNG %s; seed %d; SHA-256 %s\n', ...
+    reproducibility.matlabVersion,reproducibility.rngGenerator, ...
+    reproducibility.masterSeed,reproducibility.fileSHA256);
+fprintf(['Wrote exact_layer.csv, montecarlo_ladder.csv, sampled_energies.csv, ' ...
+'heuristic.csv, ou_quantiles.csv, %s_insert.tex, %s_insert.txt and %s.mat ' ...
+'plus per-cutoff permutation CSV files.\n'],savePrefix,savePrefix,savePrefix);
+end
+function G=six_from_weights(v)
+v=double(v(:)); j=(1:numel(v)).';
+phiW=(v.*j).*(j-1);
+tmp=cumsum(phiW); before=[0;tmp(1:end-1)];
+vj=v.*j; vj2=vj.*j;
+A=[2*sum(v.*before),2*sum(vj.*before),2*sum(vj2.*before)];
+D0=(v.*j).*(v.*(j-1));
+D=[sum(D0),sum(D0.*j),sum((D0.*j).*j)];
+G=A+D;
+end
+function value=brute_force_double_variance(v,mu2,mu4)
+% Literal triangular double sum.  No prefix sums are reused, so this audits
+% the O(m) collapse independently at the smallest real cutoff.
+v=double(v(:)); m=numel(v); value=0;
+for k=1:m
+    psi=2+4*mu2*(k-2)+mu4*(k-2)*(k-3)-mu2^2*k*(k-1);
+    value=value+v(k)^2*k*(k-1)*psi;
+if k>1
+        j=(1:k-1).';
+        value=value+2*v(k)*psi*sum(v(1:k-1).*j.*(j-1));
+end
+end
+end
+function c=psi_coefficients(mu2,mu4)
+c=[2-8*mu2+6*mu4, 4*mu2-5*mu4+mu2^2, mu4-mu2^2];
+end
+function [mu2,mu4,t]=exchangeable_moments(m,S)
+% Scaled evaluation with t=S^2/m.  Neither S^4, nor 3m^2, nor the quartic
+% denominator is formed: at the full file 3m^2 = 2.3e17 > 2^53.
+t=(S/m)*S;
+if ~isfinite(t) || t<0
+    error('Endpoint scale t=S^2/m is not finite non-negative (t=%.17g).',t);
+end
+mu2=(t-1)/(m-1);
+core=t^2-6*t+3+(8*t-6)/m;
+mu4=(m*core)/(m-1)/(m-2)/(m-3);
+if ~isfinite(mu2) || ~isfinite(mu4)
+    error('Non-finite exchangeable moment at m=%d, S=%d.',m,S);
+end
+end
+function [s,bound]=bounded_positive_sum(x,blockSize,u)
+x=double(x(:)); s=0; comp=0; bound=0;
+for first=1:blockSize:numel(x)
+    last=min(numel(x),first+blockSize-1);
+    xb=x(first:last); n=numel(xb);
+    t=sum(xb);
+    gamma=(max(0,n-1)*u)/(1-max(0,n-1)*u);
+    local=gamma*sum(abs(xb))/(1-gamma);
+    old=s; [s,comp]=kahan_add(s,comp,t);
+    bound=bound+local+4*u*(abs(old)+abs(t));
+end
+end
+function [s,c]=kahan_add(s,c,x)
+y=x-c; t=s+y; c=(t-s)-y; s=t;
+end
+function out=exhaustive_self_tests
+maxErr=0; nClass=0; nPairs=0;
+for m=4:10
+    weights=((1:m).'/m).^2/m;
+for p=0:m
+        S=2*p-m; C=nchoosek(1:m,p); nWord=size(C,1);
+        X=-ones(nWord,m);
+for r=1:nWord, X(r,C(r,:))=1; end
+        T=cumsum(X,2); Y=T.^2;
+        [mu2,mu4,~]=exchangeable_moments(m,S);
+if m==6 && p==3 && (abs(mu2+0.2)>1e-12 || abs(mu4-0.2)>1e-12)
+            error('T1 hand control (6,3) failed: mu2=%.17g, mu4=%.17g.',mu2,mu4);
+end
+if m==6 && p==4 && (abs(mu2+1/15)>1e-12 || abs(mu4+1/15)>1e-12)
+            error('T1 hand control (6,4) failed: mu2=%.17g, mu4=%.17g.',mu2,mu4);
+end
+if m==5 && p==3 && (abs(mu2+0.2)>1e-12 || abs(mu4-0.2)>1e-12)
+            error('T1 hand control (5,3) failed: mu2=%.17g, mu4=%.17g.',mu2,mu4);
+end
+        coeff=psi_coefficients(mu2,mu4);
+for j=1:m
+for k=j:m
+                empirical=mean(Y(:,j).*Y(:,k))-mean(Y(:,j))*mean(Y(:,k));
+                psi=coeff(1)+coeff(2)*k+coeff(3)*k^2;
+                analytic=j*(j-1)*psi;
+                err=abs(empirical-analytic);
+                maxErr=max(maxErr,err); nPairs=nPairs+1;
+if err>1e-12
+                    error(['Covariance self-test failed at m=%d,p=%d,j=%d,' ...
+'k=%d: empirical %.17g, analytic %.17g.'],m,p,j,k,empirical,analytic);
+end
+end
+end
+        empiricalVar=var(Y*weights,1);
+        analyticVar=sum(coeff.*six_from_weights(weights));
+        err=abs(empiricalVar-analyticVar); maxErr=max(maxErr,err);
+if err>1e-12
+            error('Variance self-test failed at m=%d,p=%d: diff %.3g.',m,p,err);
+end
+        psiM=coeff(1)+coeff(2)*m+coeff(3)*m^2;
+if abs(psiM)>1e-12
+            error('psi(m)=%.17g at m=%d,p=%d, expected 0.',psiM,m,p);
+end
+if abs(mean(Y(:,1))-1)>1e-12
+            error('E[T_1^2]=1 self-test failed.');
+end
+if abs(mean(Y(:,m))-(S*S))>1e-12 || abs(mean(Y(:,m).^2)-S^4)>1e-12
+            error('Deterministic endpoint moment failed at m=%d,p=%d.',m,p);
+end
+if m==6 && p==3
+if abs(var(Y(:,2),1)-3.84)>1e-12
+                error('Var(T_2^2)=%.17g, expected 3.84.',var(Y(:,2),1));
+end
+end
+        nClass=nClass+1;
+end
+end
+out=struct('classes',nClass,'covariancePairs',nPairs,'maxError',maxErr);
+end
+function [lo,hi]=wilson_interval(k,n,confidence)
+z=sqrt(2)*erfcinv(1-confidence); phat=k/n;
+den=1+z^2/n; centre=(phat+z^2/(2*n))/den;
+half=z*sqrt(phat*(1-phat)/n+z^2/(4*n^2))/den;
+lo=max(0,centre-half); hi=min(1,centre+half);
+end
+function q=sample_quantile_sorted(x,p)
+n=numel(x); u=1+(n-1)*p; i=floor(u); f=u-i;
+if i>=n, q=x(n); else, q=(1-f)*x(i)+f*x(i+1); end
+end
+function value=binomial_power_nll(theta,L,R,H)
+% [F14] log(p) is NEVER formed from p.  With H=0 and eta below about -745
+% the old p=exp(eta) underflowed to 0, H.*log(p) became 0*(-Inf)=NaN, and
+% the whole profile-likelihood machinery inherited the NaN.  eta IS log p.
+beta=exp(theta(2)); eta=theta(1)-beta*L;
+penalty=1e8*sum(max(eta,0).^2);
+etaSafe=min(eta,-1e-12);
+p=min(exp(etaSafe),1-1e-12);
+value=-sum(H.*etaSafe+(R-H).*log1p(-p))+penalty;
+if ~isfinite(value), value=realmax/16; end
+end
+function value=profile_nll_at_logbeta(logBeta,L,R,H)
+objective=@(b) binomial_power_nll([b logBeta],L,R,H);
+bHat=fminsearch(objective,0,optimset('Display','off'));
+value=objective(bHat);
+end
+function [low,high,threshold]=profile_beta_interval(L,R,H,thetaHat,confidence)
+nllMin=binomial_power_nll(thetaHat,L,R,H);
+z=sqrt(2)*erfcinv(1-confidence);
+threshold=nllMin+0.5*z^2;
+centre=thetaHat(2);
+grid=linspace(centre-8,centre+8,321);
+prof=zeros(size(grid));
+for i=1:numel(grid)
+    prof(i)=profile_nll_at_logbeta(grid(i),L,R,H);
+end
+% [F14] Any non-finite profile value is treated as outside, and every
+% fzero call is bracketed by a verified sign change and protected, so this
+% routine can never abort a run that has already cost hours.
+inside=isfinite(prof) & prof<=threshold;
+if ~any(inside), low=NaN; high=NaN; return; end
+i1=find(inside,1,'first'); i2=find(inside,1,'last');
+g=@(x) profile_nll_at_logbeta(x,L,R,H)-threshold;
+if i1==1
+    low=0;
+else
+    low=exp(safe_root(g,grid(i1-1),grid(i1)));
+end
+if i2==numel(grid)
+    high=Inf;
+else
+    high=exp(safe_root(g,grid(i2),grid(i2+1)));
+end
+end
+function x=safe_root(g,a,b)
+fa=g(a); fb=g(b);
+if ~isfinite(fa) || ~isfinite(fb) || fa*fb>0
+    x=NaN;
+    warning('Profile bracketing failed on [%.6g,%.6g]: f=[%.6g,%.6g].',a,b,fa,fb);
+return;
+end
+try
+    x=fzero(g,[a b]);
+catch err
+    warning('fzero failed on [%.6g,%.6g]: %s',a,b,err.message);
+    x=NaN;
+end
+end
+%==========================================================================
+% REGRESSION.  Every assertion prints its numbers before erroring.
+%==========================================================================
+function out=regression_checks(T)
+knownN=[5e6;5e7;1e8;1.5e8;2e8;2.5e8;3e8;3.5e8;455052511];
+knownQ=[3039633;30396344;60792694;91189087;121585426;151981736; ...
+    182378126;212774472;276638778];
+knownS=[-709;-908;1928;1089;320;-982;-592;2896;-5414];
+knownE=[.029515;.029733;.029641;.029536;.029772;.029944;.029662;.029508;.029334];
+knownMean=[.548482;.553360;.558440;.557670;.558240;.559410;.559890;.562260;.566280];
+fprintf('T4 known-run regression...\n');
+for i=1:numel(knownN)
+    ix=find(T.Cutoff==knownN(i),1);
+if isempty(ix), error('T4 missing known cutoff %d.',knownN(i)); end
+if T.NonzeroAnts(ix)~=knownQ(i) || T.Endpoint(ix)~=knownS(i)
+        error('T4 census mismatch at N=%d: Q %d vs %d, M %d vs %d.', ...
+            knownN(i),T.NonzeroAnts(ix),knownQ(i),T.Endpoint(ix),knownS(i));
+end
+% The archived E column was printed to about six decimal places, the mean
+% column to about five.  Their tolerances reflect those rounding intervals.
+    dE=abs(T.Ereal(ix)-knownE(i));
+if dE>6e-7
+        error(['T4 observed-energy mismatch at N=%d: computed %.17g, ' ...
+'rounded reference %.17g, difference %.3g.'],knownN(i), ...
+            T.Ereal(ix),knownE(i),dE);
+end
+    dM=abs(T.Eperm(ix)-knownMean(i));
+if dM>6e-6
+        error(['T4 permutation-mean mismatch at N=%d: computed %.17g, ' ...
+'rounded reference %.17g, difference %.3g.'],knownN(i), ...
+            T.Eperm(ix),knownMean(i),dM);
+end
+end
+ix=find(T.Cutoff==5e6,1);
+v5=[T.Ereal(ix) T.Eperm(ix) T.Rho(ix)];
+r5=[0.0295150019629 0.548481916755 0.0538121696655];
+n5={'E(M)','mu','rho'};
+for k=1:3
+if abs(v5(k)-r5(k))>5e-11
+        error(['T4 full-precision %s at N=5e6: computed %.17g, reference ' ...
+'%.17g, difference %.3g.'],n5{k},v5(k),r5(k),v5(k)-r5(k));
+end
+end
+fprintf('  T4 passed (%d rows + full precision at 5e6).\n',numel(knownN));
+% ---- T6, rewritten ------------------------------------------------------
+% The previous version compared against a hand-copied literal 0.1059512
+% with a 2e-6 absolute tolerance, and reported one message for three
+% sub-conditions.  The true value is 5414^2/276638778 = 0.10595548538751859,
+% so the difference was 4.285e-6 and the run died for no mathematical
+% reason.  Everything is now recomputed from the COMPUTED census, compared
+% with relative tolerances, and printed before any error is raised.
+fprintf('T6 full-file asymptotic mean check...\n');
+ix=find(T.Cutoff==455052511,1);
+if isempty(ix)
+    warning('T6 skipped: full-file cutoff absent from the table.');
+    out=struct('rows',numel(knownN),'T6',false); return;
+end
+m6=T.NonzeroAnts(ix); S6=T.Endpoint(ix);
+expT=(S6/m6)*S6;
+expL=log(T.Cutoff(ix)/1000);
+expLead=(6/pi^2)*(1-(1-expT)/expL);
+rel=@(a,b) abs(a-b)/max([1 abs(a) abs(b)]);
+dT=rel(T.EndpointScale(ix),expT);
+dL=rel(T.L(ix),expL);
+dLead=rel(T.OUmeanLeading(ix),expLead);
+dRel=abs(T.RelMeanDiscrepancy(ix));
+fprintf('  t        = %.17g   ref %.17g   rel %.3g\n',T.EndpointScale(ix),expT,dT);
+fprintf('  L        = %.17g   ref %.17g   rel %.3g\n',T.L(ix),expL,dL);
+fprintf('  leading  = %.17g   ref %.17g   rel %.3g\n',T.OUmeanLeading(ix),expLead,dLead);
+fprintf('  |relative mean discrepancy| = %.6g\n',dRel);
+if dT>1e-12
+    error('T6: endpoint scale t, relative difference %.3g.',dT);
+end
+if dL>1e-12
+    error('T6: log-span L, relative difference %.3g.',dL);
+end
+if dLead>1e-12
+    error('T6: leading mean, relative difference %.3g.',dLead);
+end
+if dRel>5e-4
+    error(['T6: relative mean discrepancy %.6g exceeds 5e-4. The bridge ' ...
+'asymptotic no longer tracks the exact mean.'],dRel);
+end
+fprintf('  T6 passed.\n');
+out=struct('rows',numel(knownN),'T6',true,'dT',dT,'dL',dL,'dLead',dLead,'dRel',dRel);
+end
+%==========================================================================
+% NEW TESTS
+%==========================================================================
+function assert_reference_arithmetic(R)
+% [F13] No hand-copied literal enters this test.  Each quantity is checked
+% against an INDEPENDENT formulation of the same number, at a relative
+% tolerance.  The previous version compared (1-0.00428)^2800 against the
+% literal 6.0836e-6 with a 1e-9 ABSOLUTE tolerance; the true value is
+% 6.0847849594206e-6, so the difference 1.185e-9 exceeded the tolerance and
+% aborted the run in its first second.  The two formulations below agree to
+% about 1.4e-13 relative, so 1e-10 is loose enough to be stable and tight
+% enough to catch any genuine arithmetic error, which would be >= 1e-7.
+v=[R.ZeroUpper2800 R.PZeroChi2800 R.ZeroUpper9500 R.ExpectedHits9500];
+alt=[-expm1(log(0.05)/2800), exp(2800*log1p(-0.00428)), ...
+     -expm1(log(0.05)/9500), 0.00428*9500];
+nm={'zeroUpper2800','pZero2800','zeroUpper9500','expectedHits9500'};
+for i=1:4
+    dRelative=abs(v(i)-alt(i))/abs(alt(i));
+    fprintf('  [G] %-17s = %.17g   independent %.17g   rel %.3g\n', ...
+        nm{i},v(i),alt(i),dRelative);
+if dRelative>1e-10
+        error('[G] %s: relative difference %.3g between two formulations.', ...
+            nm{i},dRelative);
+end
+end
+fprintf('  [G] binomial arithmetic asserted against independent formulae.\n');
+end
+% -------------------------------------------------------------------------
+% [A] The file really contains mu(n).  A linear sieve is computed from
+% scratch and compared entry by entry: no tabulated value and no remembered
+% constant enters.  Plus the hand control mu(1..10) and the Mertens
+% recurrence sum_{d<=K} M(floor(K/d)) = 1, verified by hand at K=10:
+%   M(10)+M(5)+M(3)+2*M(2)+5*M(1) = -1-2-1+0+5 = 1.
+% -------------------------------------------------------------------------
+function out=test_file_is_moebius(fileName,Nsieve)
+Nsieve=round(Nsieve);
+fprintf('[A] Sieving mu(n) to %d and comparing to the file...\n',Nsieve);
+muS=moebius_sieve(Nsieve);
+fid=fopen(fileName,'rb');
+if fid<0, error('[A] cannot open %s',fileName); end
+c=onCleanup(@() fclose(fid));
+muF=double(fread(fid,Nsieve,'*int8')).';
+clear c;
+if numel(muF)~=Nsieve, error('[A] short read: %d of %d.',numel(muF),Nsieve); end
+bad=find(muF~=muS,1);
+if ~isempty(bad)
+    error('[A] file disagrees with the sieve at n=%d (file %d, sieve %d).', ...
+        bad,muF(bad),muS(bad));
+end
+if ~isequal(muF(1:10),[1 -1 -1 0 -1 1 -1 0 0 1])
+    error('[A] mu(1..10) hand control failed: %s',mat2str(muF(1:10)));
+end
+M=cumsum(muS);
+for K=[10 100 1000 10000 100000]
+if K>Nsieve, continue; end
+    dd=1:K; s=sum(M(floor(K./dd)));
+if s~=1
+        error('[A] Mertens recurrence at K=%d gave %d, expected 1.',K,s);
+end
+end
+out=struct('sieveLimit',Nsieve,'mismatches',0,'recurrenceChecked',true);
+fprintf('    A passed: %d entries identical to the sieve; recurrence holds.\n',Nsieve);
+end
+function mu=moebius_sieve(N)
+mu=ones(1,N); isComp=false(1,N);
+for p=2:N
+if ~isComp(p)
+        mu(p:p:N)=-mu(p:p:N);
+        isComp(p:p:N)=true;
+        pp=p*p;
+if pp<=N, mu(pp:pp:N)=0; end
+end
+end
+end
+% -------------------------------------------------------------------------
+% [B] Q(N) at every cutoff by an independent arithmetic identity:
+%   #{n<=N squarefree} = sum_{d<=floor(sqrt N)} mu(d) floor(N/d^2).
+% Hand-verified at N=10: 10-2-1 = 7 = Q(10).
+% It needs mu(d) only for d <= sqrt(455052511) = 21332, a range TEST A has
+% already certified against the sieve.  A and B therefore compose into a
+% complete validation of the Q column across the whole file, including the
+% tail beyond 3.5e8 that has never been checked against anything.
+% -------------------------------------------------------------------------
+function out=test_squarefree_identity(fileName,T)
+fprintf('[B] Checking Q(N) by the squarefree identity at every cutoff...\n');
+dMax=floor(sqrt(max(T.Cutoff)));
+fid=fopen(fileName,'rb');
+if fid<0, error('[B] cannot open %s',fileName); end
+c=onCleanup(@() fclose(fid));
+muSmall=double(fread(fid,dMax,'*int8')).';
+clear c;
+if numel(muSmall)~=dMax, error('[B] short read.'); end
+out.checked=0;
+for i=1:height(T)
+    N=T.Cutoff(i); D=floor(sqrt(N)); dd=1:D;
+    Qid=sum(muSmall(dd).*floor(N./(dd.^2)));
+if Qid~=T.NonzeroAnts(i)
+        error('[B] Q(%d): identity %d, streaming %d, diff %d.', ...
+            N,Qid,T.NonzeroAnts(i),Qid-T.NonzeroAnts(i));
+end
+if mod(T.NonzeroAnts(i)-T.Endpoint(i),2)~=0
+        error('[B] parity failed at N=%d: Q=%d, M=%d.', ...
+            N,T.NonzeroAnts(i),T.Endpoint(i));
+end
+    out.checked=out.checked+1;
+end
+fprintf('    B passed: %d cutoffs, including the full file.\n',out.checked);
+end
+% -------------------------------------------------------------------------
+% [C] Direct, naive recomputation at a small cutoff.  Plain loop, no
+% chunking, no Kahan, no rescaling, integer forms used directly (at N=1e4
+% every n^2 <= 1e8 and Q^2 <= 3.7e7 is exact).  Shares no code path with the
+% streaming accumulators, so it catches a range or off-by-one error that the
+% weights route would inherit.
+% -------------------------------------------------------------------------
+function out=test_direct_small_energy(fileName,N0,N,T)
+N=round(N); ix=find(T.Cutoff==N,1);
+if isempty(ix)
+    warning('[C] cutoff %d absent; skipped.',N); out=struct('skipped',true); return;
+end
+fprintf('[C] Naive recomputation at N=%d...\n',N);
+fid=fopen(fileName,'rb');
+if fid<0, error('[C] cannot open %s',fileName); end
+c=onCleanup(@() fclose(fid));
+mu=double(fread(fid,N,'*int8'));
+clear c;
+M=cumsum(mu); Q=cumsum(mu~=0);
+sM=0; s1=0; s2=0;
+for n=(N0+1):N
+    sM=sM+M(n)^2/n^2;
+    s1=s1+Q(n)/n^2;
+    s2=s2+Q(n)*(Q(n)-1)/n^2;
+end
+Lc=log(N/N0); m=Q(N); S=M(N);
+mu2=(S^2-m)/(m*(m-1));
+Ed=sM/Lc; Ep=(s1+mu2*s2)/Lc;
+relE=abs(Ed-T.Ereal(ix))/max(abs(T.Ereal(ix)),realmin);
+relP=abs(Ep-T.Eperm(ix))/max(abs(T.Eperm(ix)),realmin);
+if relE>1e-12 || relP>1e-12
+    fprintf('  naive E  %.17g vs streaming %.17g\n',Ed,T.Ereal(ix));
+    fprintf('  naive mu %.17g vs streaming %.17g\n',Ep,T.Eperm(ix));
+    error('[C] relE=%.3g, relP=%.3g.',relE,relP);
+end
+if m~=T.NonzeroAnts(ix) || S~=T.Endpoint(ix)
+    error('[C] census mismatch at N=%d: Q %d vs %d, M %d vs %d.', ...
+        N,m,T.NonzeroAnts(ix),S,T.Endpoint(ix));
+end
+out=struct('relEnergy',relE,'relMean',relP);
+fprintf('    C passed: relE=%.3g, relMean=%.3g.\n',relE,relP);
+end
+% -------------------------------------------------------------------------
+% [D] psi(k)=c0+c1k+c2k^2 pointwise.  The main program uses only the
+% coefficient form; the brute-force auditor uses only the direct form.  They
+% are compared in aggregate at one cutoff; here pointwise at every cutoff,
+% including k=m where psi(m)=0 arises by cancellation.
+% -------------------------------------------------------------------------
+function out=test_psi_expansion(T)
+fprintf('[D] psi expansion, pointwise...\n');
+worst=0;
+for i=1:height(T)
+    m=T.NonzeroAnts(i); S=T.Endpoint(i);
+    [mu2,mu4,~]=exchangeable_moments(m,S);
+    c=psi_coefficients(mu2,mu4);
+    ks=unique([2 3 4 max(4,floor(m/2)) m-1 m]);
+for k=ks
+        direct=2+4*mu2*(k-2)+mu4*(k-2)*(k-3)-mu2^2*k*(k-1);
+        expand=c(1)+c(2)*k+c(3)*k^2;
+        sc=max([1 abs(direct) abs(expand)]);
+        e=abs(direct-expand)/sc; worst=max(worst,e);
+if e>1e-10
+            error(['[D] psi mismatch at N=%d, k=%d: direct %.17g, ' ...
+'expanded %.17g, rel %.3g.'],T.Cutoff(i),k,direct,expand,e);
+end
+end
+    psiM=c(1)+c(2)*m+c(3)*m^2;
+if abs(psiM)>1e-9
+        error('[D] psi(m)=%.17g at N=%d, expected 0.',psiM,T.Cutoff(i));
+end
+end
+out=struct('worstRelative',worst);
+fprintf('    D passed: worst relative discrepancy %.3g.\n',worst);
+end
+% -------------------------------------------------------------------------
+% [E] Every accumulated quantity is a sum of non-negative terms, so it must
+% be non-decreasing in the cutoff.  Catches a snapshot / kCut bug that no
+% algebraic test can see.
+% -------------------------------------------------------------------------
+function out=test_accumulator_monotonicity(T)
+fprintf('[E] Monotonicity across cutoffs...\n');
+[~,ord]=sort(T.Cutoff); S=T(ord,:);
+if any(diff(S.NonzeroAnts)<0), error('[E] Q(N) decreased.'); end
+if any(diff(S.L)<=0), error('[E] L did not increase.'); end
+if any(diff(S.Ereal.*S.L)<-1e-12), error('[E] Sigma_M decreased.'); end
+if any(diff(S.MaxAbsM)<0), error('[E] running max|M| decreased.'); end
+if any(S.SDPerm<=0), error('[E] a non-positive exact SD was produced.'); end
+out=struct('rows',height(S));
+fprintf('    E passed.\n');
+end
+% -------------------------------------------------------------------------
+% [F] Soft check of the exact variance against the bridge asymptotic
+% sigma^2 ~ 4 d^2 (L-5/2)/L^2, applied only for L>5 where it is meaningful;
+% it is not defined at all for L<=2.5.  WARNING, not an error.
+% -------------------------------------------------------------------------
+function out=test_asymptotic_variance_soft(T)
+fprintf('[F] Exact SD vs bridge asymptotic (soft, L>5 only)...\n');
+d=6/pi^2; out.ratio=nan(height(T),1);
+for i=1:height(T)
+    Li=T.L(i);
+if Li<=5, continue; end
+    sA=sqrt(4*d^2*(Li-2.5)/Li^2);
+    out.ratio(i)=T.SDPerm(i)/sA;
+if abs(out.ratio(i)-1)>0.05
+        warning('[F] N=%d: exact SD / asymptotic = %.4f (outside 5%%).', ...
+            T.Cutoff(i),out.ratio(i));
+end
+end
+ok=~isnan(out.ratio);
+fprintf('    F done: ratios in [%.4f, %.4f].\n',min(out.ratio(ok)),max(out.ratio(ok)));
+end
+% -------------------------------------------------------------------------
+% [H] Sampler invariants and seed independence at the cheapest cutoff.
+%   H1. Every draw must satisfy T_m = S exactly.
+%   H2. The marginal frequency of +1 at a fixed plateau index must match p/m.
+%   H3. Two independent seeds must give consistent lower-tail rates.
+% A single-seed run cannot detect a sampler that is deterministic in some
+% coordinate; H3 can.
+% -------------------------------------------------------------------------
+function out=test_sampler_invariants(QMC,N0,N,T)
+N=round(N); ix=find(T.Cutoff==N,1);
+if isempty(ix)
+    warning('[H] cutoff %d absent; skipped.',N); out=struct('skipped',true); return;
+end
+fprintf('[H] Sampler invariants at N=%d...\n',N);
+m=T.NonzeroAnts(ix); S=T.Endpoint(ix);
+p=round((m+S)/2); q=round((m-S)/2); Lc=T.L(ix);
+nn=(N0+1:N).'; idx=QMC(N0+1:N); keep=idx>0;
+w=accumarray(idx(keep),(1./nn(keep))./nn(keep),[m 1],[],0);
+wantTotal=sum((1./nn)./nn);
+if abs(sum(w)-wantTotal)>1e-12*wantTotal
+    error('[H] weights sum %.17g, expected %.17g.',sum(w),wantTotal);
+end
+R=20000; probe=max(1,floor(m/2));
+hits=[0 0]; plusAtProbe=[0 0];
+for s=1:2
+    rng(10000+s,'twister');
+    base=[ones(p,1);-ones(q,1)];
+for r=1:R
+        sgn=base(randperm(m));
+        Tp=cumsum(sgn);
+if Tp(end)~=S
+            error('[H] draw %d, seed %d: endpoint %d, expected %d.',r,s,Tp(end),S);
+end
+if sgn(probe)>0, plusAtProbe(s)=plusAtProbe(s)+1; end
+if dot(w,Tp.*Tp)/Lc<=T.Ereal(ix), hits(s)=hits(s)+1; end
+end
+end
+pi0=p/m; se=sqrt(pi0*(1-pi0)/R);
+for s=1:2
+    zq=(plusAtProbe(s)/R-pi0)/se;
+if abs(zq)>5
+        error('[H] marginal sign frequency %.6g vs %.6g, z=%.2f (seed %d).', ...
+            plusAtProbe(s)/R,pi0,zq,s);
+end
+end
+pPool=sum(hits)/(2*R);
+if pPool>0 && pPool<1
+    zSeeds=(hits(1)-hits(2))/(R*sqrt(2*pPool*(1-pPool)/R));
+if abs(zSeeds)>5
+        error('[H] seed dependence detected: hits %d vs %d, z=%.2f.', ...
+            hits(1),hits(2),zSeeds);
+end
+else
+    zSeeds=NaN;
+end
+out=struct('R',R,'hits',hits,'zSeeds',zSeeds,'plusAtProbe',plusAtProbe);
+fprintf('    H passed: hits %d / %d over %d draws each, seed z=%.3g.\n', ...
+    hits(1),hits(2),R,zSeeds);
+end
+%==========================================================================
+% LATEX FRAGMENT
+%==========================================================================
+function lines=build_tex_fragment(N0,E,M,H,fit,selfTest,confidence,repro)
+% No LaTeX command is ever placed in a numeric formatting string.
+lines={};
+lines{end+1}='% Generated by mobius_final_exact_mc_ldp.m';
+lines{end+1}='% Layer I: exact finite class';
+lines{end+1}='\begin{theorem}[Exact mean in the fixed-mask, fixed-endpoint class]';
+lines{end+1}='\label{thm:exact-fixed-mask-mean}';
+lines{end+1}='Let $m=Q(N)$, $S=M(N)$ and $\mu_2=(S^2-m)/(m(m-1))$.';
+lines{end+1}='For the uniformly permuted nonzero signs,';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\mathbb E_\pi T_j^2=j+\mu_2j(j-1).';
+lines{end+1}='\label{eq:exact-second-moment}';
+lines{end+1}='\end{equation}';
+lines{end+1}='Consequently,';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\mu_N=\mathbb E_\pi\mathcal E_{N_0,N}(\pi)';
+lines{end+1}='=\frac{\Sigma_1+\mu_2\Sigma_2}{\log(N/N_0)},';
+lines{end+1}='\quad \Sigma_1=\sum\frac{Q(n)}{n^2},\quad';
+lines{end+1}='\Sigma_2=\sum\frac{Q(n)(Q(n)-1)}{n^2}.';
+lines{end+1}='\label{eq:exact-fixed-mask-mean}';
+lines{end+1}='\end{equation}';
+lines{end+1}='\end{theorem}';
+lines{end+1}='\begin{proof}';
+lines{end+1}='Exchangeability gives $\mathbb E_\pi\xi_a\xi_b=\mu_2$ for $a\ne b$.';
+lines{end+1}='Expanding $T_j^2$ proves the first identity; summing it with the';
+lines{end+1}='fixed plateau weights $n^{-2}$ proves the second.';
+lines{end+1}='\end{proof}';
+lines{end+1}='';
+lines{end+1}='\begin{theorem}[Exact variance and factored covariance]';
+lines{end+1}='\label{thm:exact-fixed-mask-variance}';
+lines{end+1}='For $j\leq k$,';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\operatorname{Cov}_\pi(T_j^2,T_k^2)=\phi(j)\psi(k),';
+lines{end+1}='\qquad \phi(j)=j(j-1),';
+lines{end+1}='\label{eq:factored-square-covariance}';
+lines{end+1}='\end{equation}';
+lines{end+1}='where';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\psi(k)=2+4\mu_2(k-2)+\mu_4(k-2)(k-3)-\mu_2^2k(k-1),';
+lines{end+1}='\label{eq:psi-kernel}';
+lines{end+1}='\end{equation}';
+lines{end+1}='Here $\mu_4$ is the fourth distinct-index sign moment,';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\mu_4=\frac{S^4-6mS^2+8S^2+3m^2-6m}{m(m-1)(m-2)(m-3)}.';
+lines{end+1}='\label{eq:fourth-sign-moment}';
+lines{end+1}='\end{equation}';
+lines{end+1}='Writing $\psi(k)=c_0+c_1k+c_2k^2$, the six accumulators';
+lines{end+1}='$G_0,G_1,G_2,H_0,H_1,H_2$ are defined by';
+lines{end+1}='\begin{equation}';
+lines{end+1}='G_r=\sum_{N_0<n\leq N}\frac{Q(n)^r}{n^2}\Phi(n-1),\quad';
+lines{end+1}='H_r=\sum_{N_0<n\leq N}\frac{Q(n)(Q(n)-1)Q(n)^r}{n^4},';
+lines{end+1}='\quad \Phi(x)=\sum_{N_0<u\leq x}\frac{Q(u)(Q(u)-1)}{u^2}.';
+lines{end+1}='\label{eq:six-variance-accumulators}';
+lines{end+1}='\end{equation}';
+lines{end+1}='They give';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\sigma_N^2=\frac{2\sum_{r=0}^2c_rG_r+\sum_{r=0}^2c_rH_r}';
+lines{end+1}='{\log^2(N/N_0)}.';
+lines{end+1}='\label{eq:exact-fixed-mask-variance}';
+lines{end+1}='\end{equation}';
+lines{end+1}='\end{theorem}';
+lines{end+1}='\begin{proof}';
+lines{end+1}='Expansion of $T_j^2T_k^2$ by coincidence pattern gives';
+lines{end+1}='\eqref{eq:factored-square-covariance}. Monotonicity of $Q(n)$ then';
+lines{end+1}='reduces the triangular covariance sum to the six quantities in';
+lines{end+1}='\eqref{eq:six-variance-accumulators}.';
+lines{end+1}='\end{proof}';
+lines{end+1}='';
+lines{end+1}='\begin{remark}[Verification record]';
+lines{end+1}=['The implementation exhaustively checked ' int2str(selfTest.classes) ...
+' finite classes and ' int2str(selfTest.covariancePairs) ...
+' covariance entries, with maximum discrepancy ' ...
+    num2str(selfTest.maxError,'%.3g') '. It also verified ' ...
+'$\psi(m)=0$, $\mathbb ET_1^2=1$, $\mathbb ET_m^2=S^2$, ' ...
+'$\mathbb ET_m^4=S^4$, and $\operatorname{Var}(T_2^2)=3.84$ ' ...
+'for $(m,p)=(6,3)$.'];
+lines{end+1}='At $N=10^4$ the six-accumulator result was independently checked';
+lines{end+1}='against a literal quadratic double sum without a running prefix.';
+lines{end+1}='The input file was verified entry by entry against an independent';
+lines{end+1}='linear sieve of $\mu(n)$ up to $10^6$, and $Q(N)$ was verified at';
+lines{end+1}='every cutoff by $Q(N)=\sum_{d\leq\sqrt N}\mu(d)\lfloor N/d^2\rfloor$.';
+lines{end+1}='\end{remark}';
+lines{end+1}='';
+lines{end+1}='\begin{corollary}[Bridge asymptotics]';
+lines{end+1}='If $Q(N)/N\to d=6/\pi^2$ and $S_N^2/m_N\to0$, then';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\mu_N\sim d\left(1-\frac{1-S_N^2/m_N}{L_N}\right),';
+lines{end+1}='\qquad \sigma_N^2\sim\frac{4d^2(L_N-5/2)}{L_N^2}.';
+lines{end+1}='\label{eq:bridge-energy-asymptotics}';
+lines{end+1}='\end{equation}';
+lines{end+1}='For a non-negligible fixed endpoint, the finite-$L$ comparison retains';
+lines{end+1}='the explicit $S_N^2/m_N$ boundary correction reported in the data table.';
+lines{end+1}='\end{corollary}';
+lines{end+1}='';
+lines{end+1}='\begin{experiment}[Certified finite-cutoff comparison]';
+lines{end+1}='\label{exp:certified-energy-comparison}';
+lines{end+1}=['All rows use $N_0=' int2str(N0) '$ and binary64 arithmetic.'];
+lines{end+1}='The displayed interval certifies only the sign of';
+lines{end+1}='$\Delta_N=\mathcal E_{N_0,N}(M)-\mu_N$; it is an a-priori';
+lines{end+1}='propagated error bound, not directed-rounding interval arithmetic.';
+lines{end+1}='\begin{table}[htbp]\centering\scriptsize';
+lines{end+1}='\caption{Exact finite-class moments and certified energy separation.}';
+lines{end+1}='\label{tab:certified-energy-separation}';
+lines{end+1}='\begin{tabular}{rcccccc}\toprule';
+lines{end+1}='$N$&$\mathcal E(M)$&$\mu_N$&$\sigma_N$&$\Delta_N$&$\varepsilon_N$&margin\\\midrule';
+for i=1:height(E)
+    lines{end+1}=[int2str(E.Cutoff(i)) '&' num2str(E.Ereal(i),'%.8g') '&' ...
+        num2str(E.Eperm(i),'%.8g') '&' num2str(E.SDPerm(i),'%.8g') '&' ...
+        num2str(E.Delta(i),'%.8g') '&' num2str(E.DeltaBound(i),'%.3e') '&' ...
+        num2str(E.DeltaMargin(i),'%.3e') '\\']; %#ok<AGROW>
+end
+lines{end+1}='\bottomrule\end{tabular}\end{table}';
+lines{end+1}='\end{experiment}';
+lines{end+1}='';
+lines{end+1}='\begin{proposition}[Finite-cutoff inequality]';
+lines{end+1}='Subject to the stated IEEE-754 assumptions, every listed cutoff satisfies';
+lines{end+1}='$\mathcal E_{N_0,N}(M)<\mathbb E_\pi\mathcal E_{N_0,N}(\pi)$.';
+lines{end+1}='\end{proposition}';
+lines{end+1}='';
+lines{end+1}='% Layer II: measurement';
+lines{end+1}='\begin{experiment}[Uniform permutation ladder]';
+lines{end+1}='\label{exp:uniform-permutation-ladder}';
+lines{end+1}='\begin{table}[htbp]\centering\scriptsize';
+lines{end+1}='\caption{Uniform fixed-count permutation measurements.}';
+lines{end+1}='\label{tab:permutation-ladder}';
+lines{end+1}='\begin{tabular}{rrrrccccc}\toprule';
+lines{end+1}='$N$&$R$&$H$&$\widehat P_E$&Wilson low&Wilson high&$\bar E$&$s$&$Z_s$\\\midrule';
+for i=1:height(M)
+    lines{end+1}=[int2str(M.Cutoff(i)) '&' int2str(M.Samples(i)) '&' ...
+        int2str(M.Hits(i)) '&' num2str(M.PHat(i),'%.4g') '&' ...
+        num2str(M.WilsonLow(i),'%.3g') '&' num2str(M.WilsonHigh(i),'%.3g') '&' ...
+        num2str(M.SampleMean(i),'%.7g') '&' num2str(M.SampleSD(i),'%.7g') '&' ...
+        num2str(M.ZSD(i),'%.4g') '\\']; %#ok<AGROW>
+end
+lines{end+1}='\bottomrule\end{tabular}\end{table}';
+lines{end+1}=['Zero-hit bounds use the exact one-sided ' ...
+    num2str(100*confidence,'%.1f') '\% formula $1-(1-' ...
+    num2str(confidence,'%.3f') ')^{1/R}$.'];
+lines{end+1}='\end{experiment}';
+lines{end+1}='';
+lines{end+1}='\begin{remark}[Negative two-moment result]';
+lines{end+1}='The moment-matched scaled chi-square law uses the exact finite-class';
+lines{end+1}='$\mu_N$ and $\sigma_N^2$. Its predicted tail counts and zero-hit';
+lines{end+1}='probabilities are reported alongside the measurements.';
+ix5=find(M.Cutoff==5e6,1);
+if ~isempty(ix5)
+    lines{end+1}=['At $N=5\cdot10^6$ the model predicts ' ...
+        num2str(M.ExpectedHitsChiSquare(ix5),'%.6g') ...
+' lower-tail hits and assigns probability ' ...
+        num2str(M.PZeroChiSquare(ix5),'%.3e') ...
+' to the observed zero-hit event.'];
+end
+lines{end+1}=['Rejecting this model shows that the exact mean and the exact ' ...
+'variance do not determine the lower tail.'];
+lines{end+1}='\end{remark}';
+lines{end+1}='';
+lines{end+1}='% Layer III: heuristic only';
+lines{end+1}='\begin{heuristic}[OU large-deviation prediction]';
+lines{end+1}='\label{heur:ou-energy-ldp}';
+lines{end+1}='This statement is not a theorem for the finite permutation class.';
+lines{end+1}='The unproved step is the transfer from the conditioned permutation bridge';
+lines{end+1}='to the OU limit together with an interchange of large-deviation limits.';
+lines{end+1}='The implementation self-test verifies only the Legendre transform step.';
+lines{end+1}='\begin{equation}';
+lines{end+1}='I(a)=\frac{(a-1)^2}{8a},\qquad';
+lines{end+1}='\log P_E(N)\approx-I(a_N)\log(N/N_0),\qquad';
+lines{end+1}='a_N=\zeta(2)\mathcal E_{N_0,N}(M).';
+lines{end+1}='\label{eq:ou-ldp-rate}';
+lines{end+1}='\end{equation}';
+lines{end+1}='\begin{table}[htbp]\centering\scriptsize';
+lines{end+1}='\caption{OU--LDP predictions and residual diagnostic.}';
+lines{end+1}='\begin{tabular}{rccccc}\toprule';
+lines{end+1}='$N$&$L_N$&$a_N$&$I(a_N)$&$P_{\rm OU}$&residual\\\midrule';
+for i=1:height(H)
+if H.HeuristicSamples(i)==0
+        residualText='---';
+elseif isnan(H.Residual(i))
+        residualText=['$<' num2str(H.ResidualUpper(i),'%.4g') '$'];
+else
+        residualText=num2str(H.Residual(i),'%.4g');
+end
+    lines{end+1}=[int2str(H.HeuristicCutoff(i)) '&' ...
+        num2str(H.HeuristicL(i),'%.6g') '&' num2str(H.HeuristicA(i),'%.6g') '&' ...
+        num2str(H.HeuristicI(i),'%.6g') '&' num2str(H.HeuristicPOU(i),'%.3e') '&' ...
+        residualText '\\']; %#ok<AGROW>
+end
+lines{end+1}='\bottomrule\end{tabular}\end{table}';
+if fit.binomialAvailable
+    lines{end+1}=['The secondary binomial fit gives $\log P_E=' ...
+        num2str(fit.binomialIntercept,'%.6g') '-' ...
+        num2str(fit.binomialBeta,'%.6g') 'L$, with profile-likelihood interval $[' ...
+        num2str(fit.betaProfileLow,'%.6g') ',' ...
+        num2str(fit.betaProfileHigh,'%.6g') ']$ for $\beta$.'];
+end
+lines{end+1}='The LDP is asymptotic in $L$, whereas direct Monte Carlo has power only';
+lines{end+1}='at small $L$; the ladder tests the form and does not determine the constant.';
+lines{end+1}='\end{heuristic}';
+lines{end+1}='';
+lines{end+1}='\begin{remark}[Cumulative entropy supersedes the window definition]';
+lines{end+1}='\begin{equation}';
+lines{end+1}='\Sigma_N^{\leq}(\mathcal E_N(M))-\log|\Omega_N^{(1)}|=\log P_E(N).';
+lines{end+1}='\label{eq:cumulative-entropy-deficit}';
+lines{end+1}='\end{equation}';
+lines{end+1}='The earlier shrinking-window formulation is retired: its divergence as';
+lines{end+1}='$\delta_N\downarrow0$ is automatic and contains no arithmetic information.';
+lines{end+1}='\end{remark}';
+lines{end+1}='';
+lines{end+1}='\begin{warning}[A small percentile is not a selection principle]';
+lines{end+1}='Under the exchangeable null the plateau amplitude obeys';
+lines{end+1}='$\mathbb E_\pi T_j^2=j+\mu_2j(j-1)$, so a sampled path reaches';
+lines{end+1}='$|T_j|$ of order $\sqrt j$.';
+ixWarn=find(E.Cutoff==5e6,1);
+if ~isempty(ixWarn)
+    lines{end+1}=['At $N=5\cdot10^6$ that is $\sqrt m\simeq' ...
+        num2str(sqrt(E.NonzeroAnts(ixWarn)),'%.0f') ...
+'$, whereas the observed word ends at $|M(N)|=' ...
+        num2str(abs(E.Endpoint(ixWarn)),'%d') ...
+'$ and its energy ratio is $\rho_E=' ...
+        num2str(E.Rho(ixWarn),'%.4f') '$.'];
+end
+lines{end+1}='A small $P_E$ therefore measures the amplitude of $M$ relative to the';
+lines{end+1}='chosen null; by itself it does not identify a new combinatorial';
+lines{end+1}='selection mechanism. Any spectral identification of the'; 
+lines{end+1}='limiting amplitude with $\sum_\rho|\rho\zeta''(\rho)|^{-2}$ requires its';
+lines{end+1}='classical hypotheses and citations.';
+lines{end+1}='\end{warning}';
+lines{end+1}='';
+lines{end+1}='\begin{remark}[Classical status of bounded logarithmic energy]';
+lines{end+1}='The boundedness assertion $\mathcal E_{N_0,N}(M)=O(1)$ is the weak Mertens';
+lines{end+1}='conjecture in discrete logarithmic form; existence of a finite limit is';
+lines{end+1}='strictly stronger. Its implications for RH and';
+lines{end+1}='simplicity of the zeros must be attributed to the classical literature';
+lines{end+1}='\cite{Cramer,Titchmarsh,Ng2004}; this is not a new consequence of the model.';
+lines{end+1}='\end{remark}';
+lines{end+1}='';
+lines{end+1}='\begin{remark}[Reproducibility]';
+lines{end+1}=['MATLAB ' repro.matlabVersion '; RNG ' repro.rngGenerator ...
+', master seed ' int2str(repro.masterSeed) '; file SHA-256 ' ...
+    repro.fileSHA256 '.'];
+lines{end+1}=['File bytes ' int2str(repro.fileBytes) '; $N_0=' int2str(repro.N0) ...
+'$; streaming block $2^{' num2str(log2(repro.chunkSize),'%.0f') ...
+'}$; certified-sum sub-block $2^{' ...
+    num2str(log2(repro.certBlockSize),'%.0f') '}$; wall-clock ' ...
+    num2str(repro.wallClockSeconds,'%.3f') ' seconds.'];
+lines{end+1}=['Exact cutoffs: \texttt{' mat2str(repro.cutoffs) '}.'];
+lines{end+1}=['Monte Carlo seeds: \texttt{' mat2str(repro.mcSeeds) '}.'];
+lines{end+1}='MT19937 cannot enumerate the full permutation class at the largest cutoff;';
+lines{end+1}='the Monte Carlo claims concern the sampled marginal distribution only.';
+lines{end+1}='\end{remark}';
+end
+function hash=sha256_file(name)
+md=java.security.MessageDigest.getInstance('SHA-256');
+fid=fopen(name,'rb'); if fid<0, error('Could not hash %s.',name); end
+cleaner=onCleanup(@() fclose(fid));
+while true
+    bytes=fread(fid,2^22,'*uint8');
+if isempty(bytes), break; end
+    md.update(typecast(bytes(:),'int8'));
+end
+raw=typecast(int8(md.digest()),'uint8');
+hash=lower(reshape(dec2hex(raw,2).',1,[]));
+clear cleaner;
+end
+function ok=sha256_self_test
+md=java.security.MessageDigest.getInstance('SHA-256');
+bytes=uint8('abc');
+md.update(typecast(bytes(:),'int8'));
+raw=typecast(int8(md.digest()),'uint8');
+got=lower(reshape(dec2hex(raw,2).',1,[]));
+expected='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad';
+if ~strcmp(got,expected), error('Java SHA-256 self-test failed: got %s.',got); end
+ok=true;
+end
+function ok=ou_rate_self_test
+% [F7] Checks ONLY that the Legendre transform of the assumed OU scaled
+% cumulant generating function is (a-1)^2/(8a). It does NOT validate the OU
+% large-deviation theorem, nor its transfer to the finite permutation class.
+theta=0.5; sigma=1;
+if abs(sigma^2/(2*theta)-1)>1e-15
+    error('OU mean normalisation self-test failed.');
+end
+a=[0.05 0.2 0.7 1 1.5];
+rate=(a-1).^2./(8*a);
+lambda=(theta^2-sigma^4./(4*a.^2))/(2*sigma^2);
+scgf=0.5*(theta-sqrt(theta^2-2*lambda*sigma^2));
+legendre=lambda.*a-scgf;
+if max(abs(rate-legendre))>1e-12 || abs(rate(4))>1e-15
+    error('Legendre consistency failed: max diff %.3g.',max(abs(rate-legendre)));
+end
+ok=struct('scope','Legendre step only; OU theorem NOT validated here');
+end
+function write_lines(name,lines)
+fid=fopen(name,'w'); if fid<0, error('Could not write %s.',name); end
+for i=1:numel(lines), fprintf(fid,'%s\n',lines{i}); end
+fclose(fid);
+end

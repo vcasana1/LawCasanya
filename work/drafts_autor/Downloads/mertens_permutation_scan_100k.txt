@@ -1,0 +1,281 @@
+function mertens_permutation_scan_100k
+% MERTENS PERMUTATION SCAN: N = 10000, 20000, ..., 100000.
+% Save this text file as mertens_permutation_scan_100k.m and press Run.
+% The zeros of Mobius remain at their original physical positions.
+% Only the nonzero signs are randomly reordered.
+%
+% Exact permutation mean and variance require no enumeration.
+% Monte Carlo is used ONLY for the distribution of the path maximum.
+% No toolboxes, file picker, or manual function call are required.
+%
+% Statistics for each cutoff N:
+%   Q          = number of nonzero Mobius values in 1:N
+%   m          = M(N)
+%   E[M_pi(n)] = Q(n)*m/Q                                  [exact]
+%   Var[M_pi(n)] = Q(n)*(Q-Q(n))/(Q-1)*(1-(m/Q)^2)         [exact]
+%   T = max_n |M_pi(n)-E[M_pi(n)]| / sqrt(Q*(1-(m/Q)^2))
+%
+% The supremum can be evaluated at the nonzero ordinals q=0:Q:
+% zero steps do not change either the walk or the exact mean.
+%
+% At N=100000 the last figure compares a SINGLE sample mean with the
+% EXACT integrated-variance benchmark proportional to K^(-1/2).
+% The single-realization sup/RMS need not be monotone or follow K^(-1/2)
+% exactly; the expected SQUARED RMS follows 1/K exactly.
+
+clc;
+close all;
+
+filename = '/Users/vcasana/Documents/·.· MATLAB/·.· bin_unicos/moebius.bin';
+cutoffs = (10000:10000:100000)';
+B = 1000;                       % Independent permutations per cutoff
+seed = 271828;
+Kcheck = [1 2 5 10 20 50 100 200 500 1000];
+Kcheck = Kcheck(Kcheck <= B);
+rng(seed, 'twister');
+
+% Read only the FIRST 100000 values, rather than the 455-million file.
+info = dir(filename);
+if isempty(info)
+    error('Mobius binary file not found: %s', filename);
+end
+if info.bytes < cutoffs(end)
+    error('The binary file contains fewer than %d values.', cutoffs(end));
+end
+fid = fopen(filename, 'rb');
+if fid < 0
+    error('Cannot open Mobius binary file.');
+end
+mu = fread(fid, [cutoffs(end), 1], '*int8');
+fclose(fid);
+if numel(mu) ~= cutoffs(end) || any(~ismember(mu, [-1 0 1]))
+    error('Incomplete read or values other than -1, 0, +1.');
+end
+
+nFull = (1:cutoffs(end))';
+qFull = cumsum(double(mu ~= 0));
+MFull = cumsum(double(mu));
+
+nCases = numel(cutoffs);
+Qcounts = zeros(nCases, 1);
+Mend = zeros(nCases, 1);
+Treal = zeros(nCases, 1);
+nullMedian = zeros(nCases, 1);
+nullLo = zeros(nCases, 1);
+nullHi = zeros(nCases, 1);
+pLeft = zeros(nCases, 1);
+pLeftCIlo = zeros(nCases, 1);
+pLeftCIhi = zeros(nCases, 1);
+KSnull = zeros(nCases, 1);
+
+% Diagnostics of the LAST cutoff only; no additional simulation.
+Kobserved = nan(numel(Kcheck), 1);
+Kreference = nan(numel(Kcheck), 1);
+lastNull = [];
+lastDrift = [];
+lastVariance = [];
+lastQ = [];
+
+fprintf('FIXED-ZERO MOBIUS PERMUTATIONS\n');
+fprintf('N: 10000 to 100000 in steps of 10000; Monte Carlo B=%d\n', B);
+fprintf('The exact mean is calculated from the full sign population, NOT from the Monte Carlo sample.\n\n');
+fprintf('       N       Q      M(N)     T_real  null_med   null_05   null_95    p_left    KS_null\n');
+
+for i = 1:nCases
+    N = cutoffs(i);
+    muN = mu(1:N);
+    nz = double(muN(muN ~= 0));
+    Q = numel(nz);
+    m = MFull(N);
+    if Q < 2
+        error('At least two nonzero signs are needed.');
+    end
+    v = 1 - (m/Q)^2;
+    if v <= 0
+        error('At N=%d, all signs coincide and the permutation variance is zero.', N);
+    end
+
+    q = (1:Q)';
+    drift = q*(m/Q);
+    exactVariance = q.*(Q-q)/(Q-1)*v;
+    scale = sqrt(Q*v);
+    origWalk = cumsum(nz);
+    originalT = max(abs(origWalk - drift))/scale;
+
+    % Exact checks: the compressed and physical walk have identical
+    % centered suprema because every zero is a horizontal plateau.
+    physicalDrift = qFull(1:N)*(m/Q);
+    physicalT = max(abs(MFull(1:N) - physicalDrift))/scale;
+    if abs(originalT - physicalT) > 1e-11
+        error('Physical and compressed maxima disagree at N=%d.', N);
+    end
+    if abs(origWalk(end)-m) > 1e-11 || abs(drift(end)-m) > 1e-11
+        error('Endpoint or exact-mean check failed at N=%d.', N);
+    end
+
+    nullT = zeros(B, 1);
+    isLast = (i == nCases);
+    if isLast
+        sumWalk = zeros(Q, 1);
+        nextCheckpoint = 1;
+        refRMSnumerator = sqrt(mean(exactVariance));
+        lastDrift = drift;
+        lastVariance = exactVariance;
+        lastQ = q;
+    end
+
+    for b = 1:B
+        % A uniform permutation of the ORIGINAL signs fixes all zeros.
+        sp = nz(randperm(Q));
+        walk = cumsum(sp);
+        nullT(b) = max(abs(walk-drift))/scale;
+
+        if isLast
+            sumWalk = sumWalk + walk;
+            if nextCheckpoint <= numel(Kcheck) && b == Kcheck(nextCheckpoint)
+                K = b;
+                err = sumWalk/K - drift;
+                Kobserved(nextCheckpoint) = sqrt(mean(err.^2))/scale;
+                Kreference(nextCheckpoint) = refRMSnumerator/(scale*sqrt(K));
+                nextCheckpoint = nextCheckpoint + 1;
+            end
+        end
+    end
+
+    sortedNull = sort(nullT);
+    getQuantile = @(p) sortedNull(max(1,min(B,ceil(p*B))));
+    nLeft = sum(nullT <= originalT + 1e-12);
+    p = nLeft/B;
+    [lo,hi] = wilson95(nLeft, B);
+
+    % Finite-Q diagnostic: compare empirical null to the ASYMPTOTIC
+    % Kolmogorov distribution. No asymptotic calibration is presumed valid.
+    F = kolmogorovCDF(sortedNull);
+    u = (1:B)';
+    ks = max([max(u/B - F), max(F - (u-1)/B)]);
+
+    Qcounts(i) = Q;
+    Mend(i) = m;
+    Treal(i) = originalT;
+    nullMedian(i) = getQuantile(0.50);
+    nullLo(i) = getQuantile(0.05);
+    nullHi(i) = getQuantile(0.95);
+    pLeft(i) = (nLeft+1)/(B+1);  % Smoothed tail estimate
+    pLeftCIlo(i) = lo;
+    pLeftCIhi(i) = hi;
+    KSnull(i) = ks;
+
+    if isLast
+        lastNull = nullT;
+    end
+
+    fprintf('%8d %7d %9.0f %10.5f %9.5f %9.5f %9.5f %9.5f %10.5f\n', ...
+        N,Q,m,originalT,nullMedian(i),nullLo(i),nullHi(i),pLeft(i),ks);
+end
+
+% Reproducible machine-readable numeric output, including the Monte Carlo
+% uncertainty interval for the left-tail probability.
+results = table(cutoffs, Qcounts, Mend, Treal, nullMedian, nullLo, nullHi, ...
+    pLeft, pLeftCIlo, pLeftCIhi, KSnull, ...
+    'VariableNames', {'N','NonzeroCount','MofN','OriginalT','NullMedian', ...
+    'NullP05','NullP95','PLeftSmoothed','PLeftWilsonLow', ...
+    'PLeftWilsonHigh','NullVsKolmogorovKS'});
+outname = fullfile(pwd, 'mertens_permutation_scan_100k_results.csv');
+writetable(results, outname);
+fprintf('\nSaved numeric results: %s\n', outname);
+
+% FIGURE 1: change at every 10000, without mixing independent x-axis clocks.
+fig1 = figure('Color','w','Position',[70 50 1250 980], ...
+    'Name','Mertens permutation scan: checkpoints');
+tl = tiledlayout(fig1,3,1,'TileSpacing','compact','Padding','compact');
+
+ax1 = nexttile(tl);
+hold(ax1,'on');
+patch(ax1,[cutoffs; flipud(cutoffs)], [nullLo; flipud(nullHi)], ...
+    [0.80 0.87 0.95],'FaceAlpha',0.45,'EdgeColor','none');
+hMedian = plot(ax1,cutoffs,nullMedian,'b-o','LineWidth',1.2);
+hOriginal = plot(ax1,cutoffs,Treal,'r-o','LineWidth',1.8);
+ylabel(ax1,'T = centered maximum / sqrt(Qv)');
+title(ax1,'Original Mertens versus fixed-zero permutation null');
+legend(ax1,[hOriginal,hMedian],{'Original trajectory','Permutation median (5-95% shaded)'}, ...
+    'Location','best');
+grid(ax1,'on'); box(ax1,'on');
+xlim(ax1,[cutoffs(1) cutoffs(end)]);
+
+ax2 = nexttile(tl);
+hold(ax2,'on');
+errorbar(ax2,cutoffs,pLeft,pLeft-pLeftCIlo,pLeftCIhi-pLeft, ...
+    'o-','LineWidth',1.0);
+yline(ax2,0.5,'k--');
+ylabel(ax2,'P(null T <= original T)');
+title(ax2,'Left-tail proportion; vertical bars: 95% Wilson Monte Carlo intervals');
+grid(ax2,'on'); box(ax2,'on');
+xlim(ax2,[cutoffs(1) cutoffs(end)]);
+ylim(ax2,[0 1]);
+
+ax3 = nexttile(tl);
+plot(ax3,cutoffs,KSnull,'o-','LineWidth',1.3);
+xlabel(ax3,'Physical cutoff N');
+ylabel(ax3,'KS distance');
+title(ax3,'Finite-permutation null versus asymptotic Kolmogorov law');
+grid(ax3,'on'); box(ax3,'on');
+xlim(ax3,[cutoffs(1) cutoffs(end)]);
+
+% FIGURE 2: check the K-dependence at N=100000, without estimating the
+% baseline mean using the same Monte Carlo sample.
+fig2 = figure('Color','w','Position',[110 90 1150 760], ...
+    'Name','Exact K scaling and original trajectory');
+tl2 = tiledlayout(fig2,2,1,'TileSpacing','compact','Padding','compact');
+
+ax4 = nexttile(tl2);
+loglog(ax4,Kcheck,Kobserved,'o-','LineWidth',1.5); hold(ax4,'on');
+loglog(ax4,Kcheck,Kreference,'k--','LineWidth',1.6);
+xlabel(ax4,'K independently sampled permutations');
+ylabel(ax4,'Normalized RMS of the sample mean');
+title(ax4,'Observed sample RMS versus exact sqrt(E[RMS^2]) = constant / sqrt(K)');
+legend(ax4,{'One Monte Carlo realization','Exact second-moment reference'}, ...
+    'Location','best');
+grid(ax4,'on'); box(ax4,'on');
+
+ax5 = nexttile(tl2);
+histogram(ax5,lastNull,'Normalization','probability'); hold(ax5,'on');
+xline(ax5,Treal(end),'r-','LineWidth',2);
+xlabel(ax5,'T at N = 100000');
+ylabel(ax5,'Relative frequency');
+title(ax5,sprintf('Permutation null (B=%d); red = actual Mertens',B));
+grid(ax5,'on'); box(ax5,'on');
+
+% Demonstrate exact centering and variance without enumerating a single
+% permutation. These checks use the fixed complete sign population.
+expectedAtEnd = lastDrift(end);
+varianceAtEnd = lastVariance(end);
+fprintf('\nCHECKS AT N=%d\n',cutoffs(end));
+fprintf('Exact permutation mean at endpoint: %.0f = M(N) = %.0f\n', ...
+    expectedAtEnd,Mend(end));
+fprintf('Exact permutation endpoint variance: %.8g (should be zero)\n', ...
+    varianceAtEnd);
+fprintf('Final nonzero ordinal: %d\n',lastQ(end));
+fprintf('No exhaustive enumeration was attempted.\n');
+end
+
+function [low,high] = wilson95(k,n)
+% Wilson score interval; no Statistics Toolbox required.
+z = 1.95996398454005;
+p = k/n;
+den = 1+z^2/n;
+center = (p+z^2/(2*n))/den;
+half = z*sqrt(p*(1-p)/n+z^2/(4*n^2))/den;
+low = max(0,center-half);
+high = min(1,center+half);
+end
+
+function F = kolmogorovCDF(x)
+% Limiting distribution of sup |B(t)| for a standard Brownian bridge.
+% For the range of the plotted finite-permutation statistic, the
+% alternating series converges rapidly. This is only a diagnostic.
+F = ones(size(x));
+for k = 1:60
+    F = F + 2*(-1)^k * exp(-2*(k^2)*(x.^2));
+end
+F = min(1,max(0,F));
+end

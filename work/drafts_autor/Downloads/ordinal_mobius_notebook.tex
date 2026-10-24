@@ -1,0 +1,832 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Hil}{\mathcal{H}}
+
+\title{
+Notebook:
+Non-Commutative and Non-Hilbert Structures
+Attached to the Ordinal--M\"obius Pairing
+}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\begin{remark}
+\label{rem:exploratory_nature}
+This notebook is exploratory in nature. Its purpose is to investigate
+whether the pair $(n,\mu(n))$ -- the ordinal index and the value of
+the M\"obius function at that index -- can be organized into a
+coherent operator-theoretic structure exhibiting a genuine,
+non-statistical incompatibility analogous to the position-momentum
+complementarity of quantum mechanics.
+
+Several sections contain formal manipulations, heuristic arguments,
+and speculative interpretations. Whenever a statement is rigorous it
+is explicitly identified as such (Definition, Proposition, Lemma,
+Corollary), with a full derivation. All remaining claims are
+tentative, heuristic, or conjectural, and are marked as such.
+
+The scope of this notebook is the algebraic and operator-theoretic
+structure of the ordinal--M\"obius pairing itself. It does not
+address the asymptotic behaviour of the Mertens function $M(x)=\sum_{k\le x}\mu(k)$
+or the Riemann Hypothesis; no result below bears on either.
+\end{remark}
+
+\section{Introduction}
+\label{sec:introduction}
+
+The M\"obius function $\mu:\N\to\{-1,0,1\}$ is defined by $\mu(1)=1$,
+$\mu(n)=(-1)^{\omega(n)}$ if $n$ is squarefree with $\omega(n)$ distinct
+prime factors, and $\mu(n)=0$ otherwise. The present notebook records
+an attempt to attach to the pair $(n,\mu(n))$ an operator-theoretic
+structure in which $n$ (the ordinal) plays the role of a
+\emph{position} variable and $\mu(n)$ (or a quantity built from it)
+plays the role of a \emph{momentum}-type variable, in such a way that
+knowledge of one genuinely precludes exact knowledge of the other --
+not as a statement about measurement precision, but as a structural
+fact about the objects involved.
+
+The motivating question, stated informally, is:
+
+\begin{question}
+\label{q:motivating}
+Can the ordinal $n$ and the M\"obius value $\mu(n)$ be realized as a
+canonically conjugate pair, in a sense that reproduces the qualitative
+content of Heisenberg complementarity (an intrinsic impossibility, not
+a statistical spread), while remaining fully precise and auditable at
+each step?
+\end{question}
+
+Section~\ref{sec:naive_ansatz} records a first, heuristic attempt
+(``MQMNL'') and explains why it does not answer
+Question~\ref{q:motivating}: it postulates an uncertainty relation
+without deriving it from the algebra of the operators involved.
+Section~\ref{sec:obstruction} isolates a precise obstruction to the
+most literal reading of the question. Section~\ref{sec:number_phase}
+gives a Hilbert-space construction, adapted from the number-phase
+formalism of quantum optics, in which a genuine (derived, not
+postulated) complementarity holds between the ordinal and a phase
+variable, with $\mu$ recovered as a coarse-grained observable.
+Section~\ref{sec:non_hilbert} gives a second, non-Hilbert-space
+construction, built directly from the Dirichlet convolution ring of
+arithmetic functions, in which the incompatibility between $n$ and
+$\mu$ is an algebraic fact with no probabilistic content at all.
+Section~\ref{sec:literature} discusses the closest structures found in
+the literature. Section~\ref{sec:open} lists open questions.
+
+\section{A naive quantum ansatz, and why it fails}
+\label{sec:naive_ansatz}
+
+\begin{remark}[Failed attempt]
+\label{rem:failed_mqmnl}
+An initial heuristic proposal (``M\"obius Quantum Model, Non-Localizable'',
+MQMNL) represents the partial sum $M(n)=\sum_{k\le n}\mu(k)$ as a state
+$|\Psi_n\rangle=\sum_{m\in\Z}a_m^{(n)}|m\rangle$ in $\ell^2(\Z)$,
+evolving by
+\begin{equation}
+|\Psi_n\rangle = T_{\mu(n)}|\Psi_{n-1}\rangle,
+\qquad
+T_{+1}|m\rangle=|m+1\rangle,\
+T_{0}=\mathrm{Id},\
+T_{-1}|m\rangle=|m-1\rangle,
+\label{eq:mqmnl_evolution}
+\end{equation}
+and postulates an uncertainty relation
+\begin{equation}
+\Delta\mathcal{M}_n \, D_{\theta,n} \geq \kappa
+\label{eq:mqmnl_postulated_uncertainty}
+\end{equation}
+for some constant $\kappa>0$, where $D_\theta$ is a dispersion of a
+conjugate phase variable.
+
+This does not answer Question~\ref{q:motivating}, for an identifiable
+reason: the operators $T_{+1},T_0,T_{-1}$ in \eqref{eq:mqmnl_evolution}
+all commute with one another, being translations on $\Z$, which forms
+an abelian group. A translation does not broaden a distribution, so
+the evolution \eqref{eq:mqmnl_evolution} alone provides no mechanism
+that could force \eqref{eq:mqmnl_postulated_uncertainty}. The relation
+\eqref{eq:mqmnl_postulated_uncertainty} is an additional hypothesis,
+not a consequence of \eqref{eq:mqmnl_evolution}. This approach is
+therefore recorded here as a failed attempt: it does not derive the
+complementarity it sets out to model.
+\end{remark}
+
+\section{An elementary obstruction to exact canonical conjugacy}
+\label{sec:obstruction}
+
+The classical Heisenberg relation asks for operators $\hat A,\hat B$
+with $[\hat A,\hat B]=ic\hat I$, $c\neq0$ a real scalar. It is standard
+that such a relation cannot be realized by two \emph{bounded}
+operators on a Hilbert space.
+
+\begin{remark}[Standard background]
+\label{rem:wintner_wielandt}
+If $\hat A,\hat B$ are bounded operators on a Hilbert space and
+$[\hat A,\hat B]=c\hat I$ for a nonzero scalar $c$, no such pair
+exists; equivalently, at least one of the two operators satisfying an
+exact canonical commutation relation must be unbounded
+\cite{Wintner1947,Wielandt1949}.
+\end{remark}
+
+For the ordinal--M\"obius pair a stronger, elementary, and
+self-contained statement holds, not requiring both operators to be
+bounded.
+
+\begin{definition}
+\label{def:position_operator}
+Let $S\subseteq\Z$ be a set with no repeated elements (e.g.\ $S=\N$),
+and let $\{|n\rangle\}_{n\in S}$ be an orthonormal family. The
+\emph{position operator} $\hat n$ is defined on the algebraic span of
+this family by $\hat n|n\rangle=n|n\rangle$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:no_exact_conjugate}
+Let $\hat n$ be as in Definition~\ref{def:position_operator}. There is
+no linear operator $\hat B$, defined at least on the span of
+$\{|n\rangle\}_{n\in S}$ (bounded or not), satisfying
+$[\hat n,\hat B]=ic\hat I$ for a nonzero scalar $c$.
+\end{proposition}
+
+\begin{proof}
+Write $B_{mn}=\langle m|\hat B|n\rangle$. Taking matrix elements of
+$[\hat n,\hat B]=ic\hat I$ between $\langle m|$ and $|n\rangle$ gives
+\begin{equation}
+(m-n)\,B_{mn} = ic\,\delta_{mn}.
+\label{eq:obstruction_matrix_elements}
+\end{equation}
+For $m\neq n$, since $S$ has no repeated elements $m-n\neq0$, so
+\eqref{eq:obstruction_matrix_elements} forces $B_{mn}=0$: any $\hat B$
+satisfying the relation is diagonal in this basis. For $m=n$, the left
+side of \eqref{eq:obstruction_matrix_elements} is $0$, while the right
+side is $ic\neq0$, a contradiction.
+\end{proof}
+
+\begin{corollary}
+\label{cor:mu_not_conjugate}
+Let $\hat\mu$ be any operator with $\hat\mu|n\rangle=\mu(n)|n\rangle$
+absorbed into a basis change, or more generally any operator with
+spectrum contained in $\{-1,0,1\}$. Then $\hat\mu$ cannot satisfy
+$[\hat n,\hat\mu]=ic\hat I$ for any nonzero $c$. In particular, the
+literal reading of Question~\ref{q:motivating} -- $\mu(n)$ as the exact
+canonical momentum conjugate to $n$, in the sense $[\hat n,\hat\mu]=i\hbar\hat I$
+-- is not realizable, regardless of boundedness.
+\end{corollary}
+
+\begin{proof}
+Immediate from Proposition~\ref{prop:no_exact_conjugate}, which places
+no boundedness hypothesis on $\hat B$.
+\end{proof}
+
+\begin{remark}
+\label{rem:obstruction_consequence}
+Corollary~\ref{cor:mu_not_conjugate} rules out the most literal form of
+Question~\ref{q:motivating}. The two remaining sections propose two
+different, weaker, but fully rigorous readings of the question, one
+Hilbert-space based (Section~\ref{sec:number_phase}) and one not
+(Section~\ref{sec:non_hilbert}).
+\end{remark}
+
+\section{A number-phase realization on $\ell^2(\Z)$}
+\label{sec:number_phase}
+
+\subsection{Construction}
+\label{subsec:number_phase_construction}
+
+This construction adapts the number-phase formalism of quantum optics
+\cite{SusskindGlogower1964,CarruthersNieto1968} -- there developed for
+the photon-number operator and its conjugate phase -- to the ordinal
+variable $n$.
+
+\begin{definition}
+\label{def:shift_operator}
+On $\Hil=\ell^2(\Z)$ with orthonormal basis $\{|n\rangle\}_{n\in\Z}$,
+define the position operator $\hat n$ as in
+Definition~\ref{def:position_operator} and the unitary shift operator
+$\hat S$ by $\hat S|n\rangle=|n+1\rangle$.
+\end{definition}
+
+\begin{proposition}[Weyl relation]
+\label{prop:weyl_relation}
+\begin{equation}
+[\hat n,\hat S]=\hat S.
+\label{eq:weyl_relation}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$\hat n\hat S|n\rangle=\hat n|n+1\rangle=(n+1)|n+1\rangle$, and
+$\hat S\hat n|n\rangle=n|n+1\rangle$. Subtracting gives
+$[\hat n,\hat S]|n\rangle=|n+1\rangle=\hat S|n\rangle$ for every basis
+vector, hence \eqref{eq:weyl_relation}.
+\end{proof}
+
+\begin{remark}
+\label{rem:weyl_not_obstructed}
+Relation \eqref{eq:weyl_relation} does not conflict with
+Proposition~\ref{prop:no_exact_conjugate}: the right-hand side is
+$\hat S$, not a nonzero scalar multiple of $\hat I$.
+\end{remark}
+
+By Pontryagin duality between $\Z$ and the circle $\mathbb{T}=[-\pi,\pi)$,
+write $|\theta\rangle=\sum_{n\in\Z}e^{in\theta}|n\rangle$ (formally);
+then $\hat S=e^{i\hat\theta}$ in this representation, and $\hat\theta$
+is the genuine conjugate variable to $\hat n$.
+
+\begin{definition}
+\label{def:coarse_mobius_operator}
+Fix a measurable partition $\mathbb{T}=\Delta_{-1}\sqcup\Delta_0\sqcup\Delta_{+1}$
+into three arcs. Define the bounded self-adjoint operator
+\begin{equation}
+\hat\mu \;=\; (-1)\,\Pi_{\Delta_{-1}} + 0\cdot\Pi_{\Delta_0} + (+1)\,\Pi_{\Delta_{+1}},
+\label{eq:coarse_mobius_operator}
+\end{equation}
+where $\Pi_{\Delta_c}$ is the spectral projection of $\hat\theta$ onto
+the arc $\Delta_c$.
+\end{definition}
+
+The partition in Definition~\ref{def:coarse_mobius_operator} is a free
+choice of the construction; nothing below determines it from the
+arithmetic of $\mu$.
+
+\begin{proposition}
+\label{prop:flat_distribution}
+For every $n\in\Z$ and every $c\in\{-1,0,1\}$,
+\begin{equation}
+P(\hat\mu=c \mid \hat n = n) = \frac{|\Delta_c|}{2\pi},
+\label{eq:flat_distribution}
+\end{equation}
+independently of $n$.
+\end{proposition}
+
+\begin{proof}
+In the $\theta$-representation, $|n\rangle$ corresponds to the function
+$\theta\mapsto e^{-in\theta}$, of constant modulus $1$ on $\mathbb{T}$.
+Hence $P(\hat\mu=c\mid \hat n=n)=\int_{\Delta_c}|e^{-in\theta}|^2\,\frac{d\theta}{2\pi}
+= |\Delta_c|/2\pi$, which does not depend on $n$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:no_exceptional_state}
+If every $\Delta_c$ has $0<|\Delta_c|<2\pi$, then
+$\operatorname{Var}(\hat\mu\mid \hat n=n)>0$ for every $n$: there is no
+exceptional value of $n$ for which the outcome of $\hat\mu$ becomes
+determined.
+\end{corollary}
+
+\begin{proof}
+Immediate from \eqref{eq:flat_distribution}: the three probabilities
+are positive constants independent of $n$, so the variance is the same
+positive constant for every $n$.
+\end{proof}
+
+\begin{remark}
+\label{rem:no_vacuum_analogue}
+In ordinary quantum mechanics, non-commuting observables can share an
+exceptional common eigenstate when the commutator's expectation value
+vanishes there (e.g.\ the zero-angular-momentum state for
+$\hat L_x,\hat L_y,\hat L_z$). Corollary~\ref{cor:no_exceptional_state}
+shows that this pair, $(\hat n,\hat\mu)$, has no analogous exceptional
+state: the incompatibility holds uniformly.
+\end{remark}
+
+\section{A non-Hilbert-space realization}
+\label{sec:non_hilbert}
+
+\subsection{Ambient space}
+\label{subsec:non_hilbert_ambient}
+
+\begin{definition}
+\label{def:arithmetic_sequence_space}
+Let $A=\C^\N$, the space of all sequences $a:\N\to\C$, equipped with
+the topology of pointwise convergence. $A$ is a Fr\'echet space; it
+carries no inner product and is not normable in general.
+\end{definition}
+
+\begin{definition}
+\label{def:dirichlet_convolution_operator}
+For an arithmetic function $f:\N\to\C$, the Dirichlet convolution
+operator $T_f:A\to A$ is
+\begin{equation}
+(T_f a)(n) = \sum_{d\mid n} f(d)\,a(n/d).
+\label{eq:dirichlet_convolution_operator}
+\end{equation}
+The set of arithmetic functions with pointwise addition and Dirichlet
+convolution forms a commutative ring, isomorphic to a formal power
+series ring over $\C$ in countably many indeterminates and, in
+particular, a unique factorization domain \cite{CashwellEverett1959}.
+\end{definition}
+
+\begin{definition}
+\label{def:pointwise_position_operator}
+The position operator $\hat N:A\to A$ is $(\hat N a)(n)=n\cdot a(n)$.
+\end{definition}
+
+Note that $T_\zeta$ (convolution with the constant function
+$\zeta\equiv1$) and $T_\mu$ are mutually inverse,
+\begin{equation}
+T_\mu T_\zeta = T_\zeta T_\mu = \hat I,
+\label{eq:mobius_inversion_operator}
+\end{equation}
+this being the classical M\"obius inversion formula restated as an
+operator identity.
+
+\subsection{The commutator}
+\label{subsec:non_hilbert_commutator}
+
+\begin{proposition}
+\label{prop:non_hilbert_commutator}
+For any arithmetic function $f$,
+\begin{equation}
+[\hat N, T_f] = \hat N\,T_g,
+\qquad
+g(d) = f(d)\left(1-\frac1d\right).
+\label{eq:non_hilbert_commutator}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Directly from Definitions~\ref{def:dirichlet_convolution_operator} and
+\ref{def:pointwise_position_operator}, for $a\in A$,
+\begin{align}
+(\hat N T_f a)(n) - (T_f \hat N a)(n)
+&= n\sum_{d\mid n}f(d)a(n/d) - \sum_{d\mid n}f(d)\,\frac{n}{d}\,a(n/d)
+\label{eq:commutator_step_one}\\
+&= n\sum_{d\mid n} f(d)\left(1-\frac1d\right)a(n/d)
+\label{eq:commutator_step_two}\\
+&= n\,(T_g a)(n)
+= (\hat N T_g a)(n),
+\label{eq:commutator_step_three}
+\end{align}
+with $g$ as in \eqref{eq:non_hilbert_commutator}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:mobius_commutator_nonzero}
+Taking $f=\mu$, $g(d)=\mu(d)(d-1)/d$ is not identically zero (e.g.\
+$g(2)=-1/2$), so $[\hat N,T_\mu]\neq0$.
+\end{corollary}
+
+\begin{remark}[Consistency check]
+\label{rem:leibniz_consistency}
+Since $[\hat N,\hat I]=0$, the identity
+\eqref{eq:mobius_inversion_operator} and the Leibniz rule for
+commutators, $[\hat N, T_\mu T_\zeta] = [\hat N,T_\mu]T_\zeta + T_\mu[\hat N,T_\zeta]$,
+give a relation between the commutators of $\hat N$ with $T_\mu$ and
+with $T_\zeta$. This relation has not been developed further here.
+\end{remark}
+
+\subsection{The escape from Hilbert space}
+\label{subsec:non_hilbert_escape}
+
+\begin{definition}
+\label{def:indicator_sequence}
+Let $e_n\in A$ be the indicator sequence, $e_n(k)=1$ if $k=n$ and $0$
+otherwise: the position eigenstate at $n$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:infinite_support}
+\begin{equation}
+(T_\mu e_n)(m) = \mu(m/n)\cdot[\,n\mid m\,].
+\label{eq:infinite_support}
+\end{equation}
+In particular, $T_\mu e_n$ is supported on the infinite set of
+multiples of $n$.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:dirichlet_convolution_operator}, $(T_\mu e_n)(m)=\sum_{d\mid m}\mu(d)e_n(m/d)$.
+The summand is nonzero only when $m/d=n$, i.e.\ $d=m/n$, which requires
+$n\mid m$; when this holds, the unique contributing term is $\mu(m/n)$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:no_hilbert_space}
+$T_\mu e_n\notin\ell^p(\N)$ for any $1\le p<\infty$: applying the
+momentum-type operator $T_\mu$ to an exact position eigenstate
+produces a vector that cannot be normalized in any Hilbert (or, more
+generally, $\ell^p$) space, and exists only in the Fr\'echet space $A$
+of Definition~\ref{def:arithmetic_sequence_space}.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:infinite_support}, $|(T_\mu e_n)(m)|\in\{0,1\}$
+on the multiples of $n$, an infinite set on which the entries do not
+tend to $0$; hence the sequence is not in $\ell^p$ for any finite $p$.
+\end{proof}
+
+\begin{remark}
+\label{rem:non_hilbert_motivated}
+Corollary~\ref{cor:no_hilbert_space} is the sense in which the
+non-Hilbert ambient space of
+Definition~\ref{def:arithmetic_sequence_space} is not a stylistic
+choice: it is forced by the requirement that $\hat N$ (position, exact
+ordinal) and $T_\mu$ (the Dirichlet-convolution momentum-type
+operator) act on a common domain. No probability distribution is
+invoked anywhere in this section; the incompatibility recorded in
+Corollary~\ref{cor:no_hilbert_space} is a deterministic algebraic fact.
+\end{remark}
+
+\section{A Bost--Connes-type flow on the Fr\'echet space}
+\label{sec:bc_flow}
+
+This section pushes the construction of Section~\ref{sec:non_hilbert}
+in the direction of the Bost--Connes quantum statistical mechanical
+system \cite{BostConnes1995}, which is built on a genuine Hilbert
+space. The goal here is more modest: to see how much of that structure
+-- a Hamiltonian, a time evolution, and a distinguished commutator --
+survives when the ambient space is the Fr\'echet space $A$ of
+Definition~\ref{def:arithmetic_sequence_space} instead.
+
+\subsection{The ring homomorphism property}
+\label{subsec:bc_flow_ring_hom}
+
+\begin{proposition}
+\label{prop:convolution_operator_homomorphism}
+For arithmetic functions $f,g$,
+\begin{equation}
+T_f T_g = T_{f*g},
+\label{eq:convolution_operator_homomorphism}
+\end{equation}
+where $*$ denotes Dirichlet convolution. In particular, since $*$ is
+commutative, the operators $\{T_f\}_f$ pairwise commute.
+\end{proposition}
+
+\begin{proof}
+For $a\in A$,
+\begin{align}
+(T_fT_g a)(n)
+&= \sum_{d\mid n} f(d)\,(T_g a)(n/d)
+= \sum_{d\mid n} f(d) \sum_{e\mid (n/d)} g(e)\,a\!\left(\frac{n}{de}\right)
+\label{eq:hom_step_one}\\
+&= \sum_{de\mid n} f(d)g(e)\,a\!\left(\frac{n}{de}\right)
+= \sum_{k\mid n}\Big(\sum_{d\mid k} f(d)g(k/d)\Big) a(n/k)
+\label{eq:hom_step_two}\\
+&= \sum_{k\mid n} (f*g)(k)\,a(n/k)
+= (T_{f*g}a)(n).
+\label{eq:hom_step_three}
+\end{align}
+\end{proof}
+
+\begin{remark}
+\label{rem:commutative_subalgebra}
+Proposition~\ref{prop:convolution_operator_homomorphism} shows that
+$\{T_f\}_f$ is a commutative subalgebra of operators on $A$: the
+non-commutativity found in
+Proposition~\ref{prop:non_hilbert_commutator} comes entirely from the
+position/Hamiltonian-type operator, not from within this family. This
+mirrors the structure of the Bost--Connes algebra, where the Hecke
+operators also form a commutative subalgebra and non-commutativity
+enters only through the number operator \cite{BostConnes1995}.
+\end{remark}
+
+\subsection{Hamiltonian and time evolution}
+\label{subsec:bc_flow_hamiltonian}
+
+\begin{definition}
+\label{def:hamiltonian_operator}
+Define $\hat H:A\to A$ by $(\hat H a)(n) = \log(n)\,a(n)$ for $n\ge2$,
+and $(\hat Ha)(1)=0$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:time_evolution}
+For $t\in\mathbb{R}$, define formally $\sigma_t(T_f) := e^{it\hat H}T_f e^{-it\hat H}$.
+Then
+\begin{equation}
+\sigma_t(T_f) = T_{f_t}, \qquad f_t(d) = f(d)\,d^{it}.
+\label{eq:time_evolution}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$(e^{it\hat H}T_f e^{-it\hat H}a)(n) = n^{it}\sum_{d\mid n} f(d)\,(e^{-it\hat H}a)(n/d)
+= n^{it}\sum_{d\mid n} f(d)(n/d)^{-it}a(n/d) = \sum_{d\mid n}f(d)d^{it}a(n/d) = (T_{f_t}a)(n)$.
+\end{proof}
+
+\begin{remark}[Parallel with Bost--Connes]
+\label{rem:bc_parallel}
+The twist $f(d)\mapsto f(d)d^{it}$ in \eqref{eq:time_evolution} is the
+same qualitative operation as the time evolution of the Bost--Connes
+system, which acts on its generating isometries $\mu_n$ by
+$\sigma_t(\mu_n)=n^{it}\mu_n$ \cite{BostConnes1995}. This is recorded
+as an adaptation [ADAPT]: same mechanism (multiplicative twist by
+$d^{it}$, generated by a logarithmic Hamiltonian), transplanted from a
+$C^*$-algebra of isometries on $\ell^2(\N)$ to the commutative
+convolution algebra $\{T_f\}$ on the Fr\'echet space $A$. No claim is
+made that $\sigma_t$ as defined here is continuous in any topology on
+$A$, or that it extends to a genuine one-parameter group of
+automorphisms of a well-defined algebra; this is left as
+Question~\ref{q:flow_continuity} below.
+\end{remark}
+
+\subsection{The commutator with the Hamiltonian}
+\label{subsec:bc_flow_commutator}
+
+\begin{proposition}
+\label{prop:hamiltonian_commutator}
+For any arithmetic function $f$,
+\begin{equation}
+[\hat H, T_f] = T_{f\log}, \qquad (f\log)(d) := f(d)\log(d).
+\label{eq:hamiltonian_commutator}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For $a\in A$ and $n\ge1$,
+\begin{align}
+(\hat H T_f a)(n) - (T_f\hat H a)(n)
+&= \log(n)\sum_{d\mid n} f(d)a(n/d) - \sum_{d\mid n} f(d)\log(n/d)\,a(n/d)
+\label{eq:ham_comm_step_one}\\
+&= \sum_{d\mid n} f(d)\big[\log n - \log(n/d)\big]a(n/d)
+= \sum_{d\mid n} f(d)\log(d)\,a(n/d)
+\label{eq:ham_comm_step_two}\\
+&= (T_{f\log}a)(n).
+\label{eq:ham_comm_step_three}
+\end{align}
+\end{proof}
+
+\begin{corollary}
+\label{cor:hamiltonian_mobius_commutator}
+\begin{equation}
+[\hat H, T_\mu] = -\,T_\Lambda\, T_\mu,
+\label{eq:hamiltonian_mobius_commutator}
+\end{equation}
+where $\Lambda$ is the von Mangoldt function.
+\end{corollary}
+
+\begin{proof}
+The classical identity $\Lambda = \mu * \log$, i.e.
+$\Lambda(n)=\sum_{d\mid n}\mu(d)\log(n/d)$, is standard
+\cite[Thm.~2.10]{Apostol1976}. Expanding $\log(n/d)=\log n-\log d$ and
+using $\sum_{d\mid n}\mu(d)=\varepsilon(n)$ (the Dirichlet identity
+element) gives, for $n\ge1$,
+\begin{equation}
+(\mu\log)*\zeta = -\Lambda,
+\label{eq:mulog_convolution_identity}
+\end{equation}
+where $(\mu\log)(d)=\mu(d)\log(d)$. Since $\zeta^{-1}=\mu$ in the
+Dirichlet ring, \eqref{eq:mulog_convolution_identity} gives
+$\mu\log = -\Lambda*\mu$. By
+Proposition~\ref{prop:convolution_operator_homomorphism},
+$T_{\mu\log}=T_{-\Lambda*\mu}=-T_\Lambda T_\mu$. Combined with
+Proposition~\ref{prop:hamiltonian_commutator} at $f=\mu$, this gives
+\eqref{eq:hamiltonian_mobius_commutator}.
+\end{proof}
+
+\begin{remark}
+\label{rem:hamiltonian_mobius_meaning}
+Corollary~\ref{cor:hamiltonian_mobius_commutator} refines the bare
+non-vanishing statement of
+Corollary~\ref{cor:mobius_commutator_nonzero}: the commutator of the
+Hamiltonian $\hat H$ with the M\"obius operator $T_\mu$ is not an
+arbitrary nonzero operator but is exactly (minus) the von Mangoldt
+operator composed with $T_\mu$ itself. The incompatibility between
+$\hat H$ (energy/ordinal scale) and $T_\mu$ (M\"obius momentum) is thus
+governed, in this formalism, by the same function $\Lambda$ that
+records the location and multiplicity of prime powers -- a fact
+obtained here as a derived consequence of
+Definitions~\ref{def:dirichlet_convolution_operator} and
+\ref{def:hamiltonian_operator}, not assumed.
+\end{remark}
+
+\subsection{A formal partition function}
+\label{subsec:bc_flow_partition}
+
+\begin{heuristic}
+\label{heur:formal_partition_function}
+On $\ell^2(\N)$, the Bost--Connes Hamiltonian has partition function
+$\operatorname{Tr}(e^{-\beta H}) = \sum_n n^{-\beta} = \zeta(\beta)$, a
+rigorous trace of a well-defined trace-class operator for
+$\operatorname{Re}\beta>1$ \cite{BostConnes1995}. On the Fr\'echet
+space $A$ there is no inner product and no trace-class structure, so
+no analogous trace exists rigorously here. Formally associating to the
+diagonal operator $e^{-\beta\hat H}$ (with eigenvalues $n^{-\beta}$ on
+$e_n$) the generating Dirichlet series $\sum_n n^{-\beta}=\zeta(\beta)$
+reproduces the same expression, but this is a bookkeeping device, not
+a trace of an operator on $A$ in any sense established in this
+notebook. This is recorded as a heuristic only.
+\end{heuristic}
+
+\begin{question}
+\label{q:flow_continuity}
+Is there a topology on (a subspace of) $A$, coarser than or different
+from the Fr\'echet topology of
+Definition~\ref{def:arithmetic_sequence_space}, in which $\sigma_t$ of
+Proposition~\ref{prop:time_evolution} is continuous in $t$ and the
+operators $T_f$ are continuous, so that
+Heuristic~\ref{heur:formal_partition_function} could be replaced by an
+actual trace or an actual KMS condition?
+\end{question}
+
+\section{Related structures in the literature}
+\label{sec:literature}
+
+This section records what has and has not been located in the
+literature, and is not itself a source of new results.
+
+\begin{itemize}[leftmargin=*]
+
+\item The classical probabilistic model for $\mu$ replaces it by a
+Rademacher random multiplicative function $f$, $f(p)=\pm1$ i.i.d.\ on
+primes \cite{Wintner1944}. A na\"ive central-limit heuristic for
+$\sum_{n\le x}f(n)$, of the same flavour as the ``fluctuating version''
+discarded in Remark~\ref{rem:failed_mqmnl}, predicts fluctuations of
+order $\sqrt{x\log\log x}$. This has been shown to be false in the
+opposite direction: $\mathbb{E}\left|\sum_{n\le x}f(n)\right|\asymp
+\sqrt{x}/(\log\log x)^{1/4}$ \cite{Harper2020}, i.e.\ \emph{better}
+than square-root cancellation, driven by multiplicative correlations
+among the $f(n)$ rather than by any added source of uncertainty. This
+is the opposite of what an add-on uncertainty postulate such as
+\eqref{eq:mqmnl_postulated_uncertainty} would suggest.
+
+\item The Hilbert--P\'olya program and the Berry--Keating $H=xp$
+model \cite{BerryKeating1999} pursue a different question -- realizing
+the ordinates of the nontrivial zeros of $\zeta(s)$ as the spectrum of
+a self-adjoint operator -- and are not directly about $\mu(n)$ or about
+the ordinal--M\"obius pairing studied here.
+
+\item The construction of Section~\ref{sec:non_hilbert} is structurally
+closest to the Bost--Connes system \cite{BostConnes1995}, whose scaling
+isometries $\mu_n$ and phase-type generators $e(r)$ satisfy a
+non-commutation relation of the same qualitative type as
+\eqref{eq:non_hilbert_commutator} (multiplication/averaging over
+multiples of $n$ against a phase-type variable). That system is built
+on a genuine Hilbert space and a $C^*$-algebra of isometries, motivated
+by class field theory and KMS states, and does not use the
+Fr\'echet-space escape argument of
+Corollary~\ref{cor:no_hilbert_space}.
+
+\end{itemize}
+
+\begin{remark}[Novelty check]
+\label{rem:novelty_check}
+A literature search was carried out for the specific commutator
+identity \eqref{eq:non_hilbert_commutator} and for the escape argument
+of Corollary~\ref{cor:no_hilbert_space}. Neither was located in this
+exact form. Absence of a search result is weak evidence, not a proof
+of originality; the pieces used (the Dirichlet convolution ring
+\cite{CashwellEverett1959}, elementary computation) are all standard.
+\end{remark}
+
+\section{Open questions}
+\label{sec:open}
+
+\begin{question}
+\label{q:relate_to_bjorner}
+Does the commutator identity \eqref{eq:non_hilbert_commutator}, or the
+escape argument of Corollary~\ref{cor:no_hilbert_space}, connect in any
+precise way to the Bj\"orner cellular complex realization of $M(n)$ as
+a reduced Euler characteristic, used elsewhere in this research
+program?
+\end{question}
+
+\begin{question}
+\label{q:other_partitions}
+How does Corollary~\ref{cor:no_exceptional_state} depend on the choice
+of partition $\Delta_{-1},\Delta_0,\Delta_{+1}$ in
+Definition~\ref{def:coarse_mobius_operator}? Is there a
+partition-independent formulation of the same complementarity
+statement?
+\end{question}
+
+\begin{conjecture}[Purely exploratory]
+\label{conj:leibniz_extension}
+The relation recorded in Remark~\ref{rem:leibniz_consistency} between
+$[\hat N,T_\mu]$ and $[\hat N,T_\zeta]$ extends to a full family of
+commutator identities $[\hat N,T_f]$ for $f$ ranging over the
+multiplicative functions, organized by the Dirichlet-series structure
+of $f$. No evidence beyond Proposition~\ref{prop:non_hilbert_commutator}
+is offered for this at present.
+\end{conjecture}
+
+\section*{Notebook History}
+\addcontentsline{toc}{section}{Notebook History}
+
+\noindent Version 0.1: Naive quantum ansatz (MQMNL) recorded and
+identified as a failed attempt (Section~\ref{sec:naive_ansatz}).
+
+\noindent Version 0.2: Elementary obstruction to exact canonical
+conjugacy established (Section~\ref{sec:obstruction}).
+
+\noindent Version 0.3: Number-phase Hilbert-space construction added
+(Section~\ref{sec:number_phase}).
+
+\noindent Version 0.4: Non-Hilbert Dirichlet-convolution construction
+added, including the escape-from-Hilbert-space argument
+(Section~\ref{sec:non_hilbert}).
+
+\noindent Version 0.5: Bost--Connes-type Hamiltonian, time evolution,
+and commutator with $T_\mu$ added, expressing the incompatibility
+between $\hat H$ and $T_\mu$ exactly in terms of the von Mangoldt
+operator; formal partition function flagged as heuristic
+(Section~\ref{sec:bc_flow}).
+
+\begin{thebibliography}{99}
+
+\bibitem{Wintner1947}
+A.~Wintner, \emph{The unboundedness of quantum-mechanical matrices},
+Phys. Rev. \textbf{71} (1947), 738--739.
+doi:10.1103/PhysRev.71.738.2
+
+\bibitem{Wielandt1949}
+H.~Wielandt, \emph{\"Uber die Unbeschr\"anktheit der Operatoren der
+Quantenmechanik}, Math. Ann. \textbf{121} (1949), 21.
+doi:10.1007/BF01329611
+
+\bibitem{SusskindGlogower1964}
+L.~Susskind and J.~Glogower, \emph{Quantum mechanical phase and time
+operator}, Physics \textbf{1} (1964), 49--61.
+
+\bibitem{CarruthersNieto1968}
+P.~Carruthers and M.~M.~Nieto, \emph{Phase and angle variables in
+quantum mechanics}, Rev. Mod. Phys. \textbf{40} (1968), 411--440.
+doi:10.1103/RevModPhys.40.411
+
+\bibitem{CashwellEverett1959}
+E.~D.~Cashwell and C.~J.~Everett, \emph{The ring of number-theoretic
+functions}, Pacific J. Math. \textbf{9} (1959), no.~4, 975--985.
+doi:10.2140/pjm.1959.9.975
+
+\bibitem{Wintner1944}
+A.~Wintner, \emph{Random factorisations and Riemann's hypothesis},
+Duke Math. J. \textbf{11} (1944), 267--275.
+
+\bibitem{Harper2020}
+A.~J.~Harper, \emph{Moments of random multiplicative functions, I: Low
+moments, better than squareroot cancellation, and critical
+multiplicative chaos}, Forum Math. Pi \textbf{8} (2020), e1, 95~pp.
+arXiv:1703.06654
+
+\bibitem{BostConnes1995}
+J.-B.~Bost and A.~Connes, \emph{Hecke algebras, type III factors and
+phase transitions with spontaneous symmetry breaking in number
+theory}, Selecta Math. (N.S.) \textbf{1} (1995), 411--457.
+
+\bibitem{Apostol1976}
+T.~M.~Apostol, \emph{Introduction to Analytic Number Theory},
+Undergraduate Texts in Mathematics, Springer-Verlag, New York, 1976.
+
+\bibitem{BerryKeating1999}
+M.~V.~Berry and J.~P.~Keating, \emph{The Riemann zeros and eigenvalue
+asymptotics}, SIAM Rev. \textbf{41} (1999), 236--266.
+
+\end{thebibliography}
+
+\end{document}

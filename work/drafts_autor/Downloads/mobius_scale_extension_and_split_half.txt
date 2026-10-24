@@ -1,0 +1,368 @@
+function mobius_scale_extension_and_split_half
+clc; clear;
+% FOLLOW-UP TO mobius_excursion_orbit_selection.
+%
+% Answers the three open questions from the previous run, purely from the
+% word itself (moebius.bin). No zeta zeros, no zeta derivatives, no fitted
+% spectral model, no MCMC.
+%
+%   1) EXTENDED LADDER
+%      Does the variance suppression seen at window=1024 excursions keep
+%      falling, saturate, or reverse for larger windows, up to floor(K/2)?
+%      Family-wise corrected the same way as before: minimum ratio under
+%      the SAME joint Rademacher draws across all tested window sizes.
+%
+%   2) SPLIT-HALF REPLICATION
+%      The excursion sequence is split at its midpoint (by excursion
+%      index, i.e. by time order) into two halves. Each half is tested
+%      independently, against its OWN matched Rademacher null (its own K,
+%      its own excursions). A real effect should show the same direction
+%      (ratio<1) in both halves; an effect that appears in only one half
+%      is more likely a fluctuation of the full-word estimate.
+%
+%   3) ENVELOPE-TRACKING TEST
+%      M(x)/sqrt(x), computed directly from the word (no zero table
+%      needed), is the classical normalized Mertens function. It is
+%      already known to have slow, low-frequency-dominated trends. This
+%      stage asks directly: does the windowed excursion-orientation
+%      statistic simply track the sign of that already-known trend over
+%      the same integer range, or is it uncorrelated with it? A strong
+%      correlation would mean the earlier "coherence" finding is nothing
+%      beyond the classical slow-trend behavior of M(x)/sqrt(x); a weak
+%      one would mean it is doing something else.
+%      Null: reassign excursion signs at random (same windows), correlate
+%      against the SAME real trend (which is fixed data, not
+%      re-randomized), and see where the real correlation sits.
+%
+% CAVEAT PRINTED AT THE END, NOT HIDDEN: the largest window sizes leave
+% very few (~4-6) largely non-overlapping windows. The randomization null
+% matches that exact geometry, so p-values there are valid, but the
+% estimate itself is intrinsically noisy. Treat agreement across several
+% window sizes and across both halves as the real evidence, not any
+% single p-value at the extreme end.
+
+%% CONFIGURATION
+fileName='moebius.bin';
+Nread=5000000;
+minimumN=1000;
+randomSeed=21092026;
+
+extendedWindowSizes=[256 512 1024 1536 2048 2560 2978];
+strideFraction=.25;
+slidingRandomizations=20000;
+slidingBatch=200;
+
+savePrefix='mobius_scale_extension_and_split_half';
+rng(randomSeed,'twister'); runClock=tic;
+
+%% READ THE WORD (same convention as the earlier scripts)
+fid=fopen(fileName,'rb');
+if fid<0, error('%s was not found.',fileName); end
+cleaner=onCleanup(@() fclose(fid));
+mu=int8(fread(fid,Nread,'*int8')); clear cleaner;
+if isempty(mu) || any(mu < -1 | mu > 1)
+    error('Input must be a nonempty int8 {-1,0,+1} word.');
+end
+mu=mu(:); N=numel(mu); integerTime=(1:N).';
+nz=find(mu~=0); steps=double(mu(nz));
+M=cumsum(double(mu));
+prefixLogWeight=[0;cumsum(1./double(integerTime))];
+fprintf('Integers: %d; nonzero ants: %d\n',N,numel(nz));
+fprintf('Primes or zeta data used: FALSE\n');
+fprintf('MCMC used: FALSE\n\n');
+
+%% EXACT LEVEL-0 EXCURSION DECOMPOSITION (full word)
+level0=excursion_data(steps,nz,0,minimumN,prefixLogWeight);
+K=level0.K;
+fprintf('Total level-0 excursions: %d (matches the earlier script if the ', K);
+fprintf('same minimumN and word are used)\n\n');
+
+if any(extendedWindowSizes>floor(K/2))
+    error(['A requested window size exceeds floor(K/2)=%d; shrink ' ...
+        'extendedWindowSizes.'],floor(K/2));
+end
+
+%% STAGE 1: EXTENDED SLIDING-SCALE LADDER ON THE FULL WORD
+fprintf('Stage 1/3: extended sliding-scale ladder on the full word...\n');
+stageClock=tic;
+fullAudit=sliding_scale_audit(level0,extendedWindowSizes,strideFraction, ...
+    slidingRandomizations,slidingBatch,randomSeed+11);
+fprintf('  done in %.1f s\n',toc(stageClock));
+
+WindowExcursions=fullAudit.WindowSizes(:);
+NumberOfWindows=fullAudit.NumberOfWindows(:);
+Stride=fullAudit.Strides(:);
+RealVariance=fullAudit.RealVariance(:);
+NullMedianVariance=fullAudit.NullMedian(:);
+VarianceRatio=fullAudit.VarianceRatio(:);
+PLower=fullAudit.PLower(:);
+PTwoSided=fullAudit.PTwoSided(:);
+fullLadderTable=table(WindowExcursions,NumberOfWindows,Stride, ...
+    RealVariance,NullMedianVariance,VarianceRatio,PLower,PTwoSided);
+
+%% STAGE 2: SPLIT-HALF REPLICATION
+fprintf('Stage 2/3: split-half replication...\n');
+stageClock=tic;
+half1=restrict_excursions(level0,1,floor(K/2));
+half2=restrict_excursions(level0,floor(K/2)+1,K);
+halfWindowSizes=extendedWindowSizes( ...
+    extendedWindowSizes<=floor(min(half1.K,half2.K)/2));
+if isempty(halfWindowSizes)
+    error('No window size fits inside a half after splitting.');
+end
+audit1=sliding_scale_audit(half1,halfWindowSizes,strideFraction, ...
+    slidingRandomizations,slidingBatch,randomSeed+23);
+audit2=sliding_scale_audit(half2,halfWindowSizes,strideFraction, ...
+    slidingRandomizations,slidingBatch,randomSeed+41);
+fprintf('  done in %.1f s\n',toc(stageClock));
+
+Half=[repmat("First",numel(halfWindowSizes),1); ...
+    repmat("Second",numel(halfWindowSizes),1)];
+WindowExcursions2=[halfWindowSizes(:);halfWindowSizes(:)];
+NumberOfWindows2=[audit1.NumberOfWindows(:);audit2.NumberOfWindows(:)];
+VarianceRatio2=[audit1.VarianceRatio(:);audit2.VarianceRatio(:)];
+PLower2=[audit1.PLower(:);audit2.PLower(:)];
+PTwoSided2=[audit1.PTwoSided(:);audit2.PTwoSided(:)];
+splitHalfTable=table(Half,WindowExcursions2,NumberOfWindows2, ...
+    VarianceRatio2,PLower2,PTwoSided2,'VariableNames',{'Half', ...
+    'WindowExcursions','NumberOfWindows','VarianceRatio','PLower', ...
+    'PTwoSided'});
+
+%% STAGE 3: DOES IT JUST TRACK THE KNOWN SLOW TREND OF M(x)/sqrt(x)?
+fprintf('Stage 3/3: correlation against the smoothed M(x)/sqrt(x) trend...\n');
+stageClock=tic;
+envelopeTest=envelope_tracking_test(level0,M,extendedWindowSizes, ...
+    strideFraction,slidingRandomizations,slidingBatch,randomSeed+59);
+fprintf('  done in %.1f s\n',toc(stageClock));
+
+WindowExcursions3=envelopeTest.WindowSizes(:);
+RealCorrelation=envelopeTest.RealCorrelation(:);
+NullCorrelationSD=envelopeTest.NullCorrelationSD(:);
+PEnvelopeTwoSided=envelopeTest.PTwoSided(:);
+envelopeTable=table(WindowExcursions3,RealCorrelation, ...
+    NullCorrelationSD,PEnvelopeTwoSided);
+
+%% REPORT
+fprintf('\nEXTENDED SLIDING-SCALE LADDER (FULL WORD)\n');
+disp(fullLadderTable);
+fprintf('Global look-elsewhere p (min ratio across %d scales): %.6g\n\n', ...
+    numel(extendedWindowSizes),fullAudit.GlobalPLower);
+
+fprintf('SPLIT-HALF REPLICATION\n');
+disp(splitHalfTable);
+fprintf(['Read this by AGREEMENT IN DIRECTION between First and Second at ', ...
+    'the same window size, not by either half individually clearing ', ...
+    'p<0.05 alone -- each half has roughly half the excursions and ', ...
+    'therefore less power than the earlier full-word test.\n\n']);
+
+fprintf('ENVELOPE-TRACKING TEST\n');
+fprintf(['Positive RealCorrelation means the windowed orientation ', ...
+    'statistic moves with the sign of the contemporaneous smoothed ', ...
+    'M(x)/sqrt(x) trend computed directly from the word (no zero table). ', ...
+    'A large |RealCorrelation| with small two-sided p means the earlier ', ...
+    'variance-suppression finding is essentially the already-known slow ', ...
+    'trend of M(x)/sqrt(x) seen through a different statistic, not a ', ...
+    'separate phenomenon.\n']);
+disp(envelopeTable);
+
+fprintf(['\nCAVEAT: the two largest window sizes leave only a handful of ', ...
+    'largely non-overlapping windows (see NumberOfWindows above). Their ', ...
+    'p-values are computed against a correctly matched null, but the ', ...
+    'underlying estimate itself is intrinsically noisy at that end -- do ', ...
+    'not anchor a conclusion on those rows alone.\n']);
+
+%% SAVE
+writetable(fullLadderTable,[savePrefix '_full_ladder.csv']);
+writetable(splitHalfTable,[savePrefix '_split_half.csv']);
+writetable(envelopeTable,[savePrefix '_envelope.csv']);
+save([savePrefix '.mat'],'fullLadderTable','splitHalfTable', ...
+    'envelopeTable','fullAudit','audit1','audit2','envelopeTest', ...
+    'level0','half1','half2','-v7.3');
+fprintf('\nFINISHED in %.1f s. Three CSV files and %s.mat saved.\n', ...
+    toc(runClock),savePrefix);
+end
+
+%% ========================================================================
+function out=excursion_data(steps,nz,level,minimumN,prefixLogWeight)
+% Exact level-0 (or level-L) excursion decomposition. Records, per
+% excursion: orientation (+-1), unsigned length in nonzero steps, exact
+% logarithmic duration (harmonic-sum based, matching the earlier script),
+% logarithmic center, and the first/last INTEGER positions it spans (so
+% later stages can look up M(x)/sqrt(x) over exactly that range).
+state=[0;cumsum(steps)];
+visits=find(state==level)-1; % number of nonzero steps already taken
+K0=max(numel(visits)-1,0);
+orientation=zeros(K0,1); lengthAnt=zeros(K0,1);
+logDuration=zeros(K0,1); logCenter=zeros(K0,1);
+firstInteger=zeros(K0,1); lastInteger=zeros(K0,1);
+k=0;
+for j=1:numel(visits)-1
+    a=visits(j); b=visits(j+1); ell=b-a;
+    if ell<2, continue; end
+    fi=nz(a+1); li=nz(b);
+    if fi<=minimumN || li<=fi, continue; end
+    epsSign=sign(state(a+2)-level);
+    if epsSign==0, continue; end
+    s=prefixLogWeight(li)-prefixLogWeight(fi);
+    if ~(s>0), continue; end
+    k=k+1;
+    orientation(k)=epsSign;
+    lengthAnt(k)=ell;
+    logDuration(k)=s;
+    logCenter(k)=.5*(log(double(fi))+log(double(li)));
+    firstInteger(k)=fi;
+    lastInteger(k)=li;
+end
+out.Level=level; out.K=k;
+out.orientation=orientation(1:k); out.lengthAnt=lengthAnt(1:k);
+out.logDuration=logDuration(1:k); out.logCenter=logCenter(1:k);
+out.firstInteger=firstInteger(1:k); out.lastInteger=lastInteger(1:k);
+out.coveredLogSpan=sum(out.logDuration);
+end
+
+%% ========================================================================
+function sub=restrict_excursions(data,i1,i2)
+% Excursion-index subset (a contiguous half of the sequence), used for the
+% split-half replication. Everything downstream treats this exactly like
+% a fresh excursion_data output with its own K.
+sub.Level=data.Level;
+sub.orientation=data.orientation(i1:i2);
+sub.lengthAnt=data.lengthAnt(i1:i2);
+sub.logDuration=data.logDuration(i1:i2);
+sub.logCenter=data.logCenter(i1:i2);
+sub.firstInteger=data.firstInteger(i1:i2);
+sub.lastInteger=data.lastInteger(i1:i2);
+sub.K=i2-i1+1;
+sub.coveredLogSpan=sum(sub.logDuration);
+end
+
+%% ========================================================================
+function audit=sliding_scale_audit(data,requestedSizes,strideFraction,B, ...
+    batchSize,seed)
+% Same statistic and same family-wise correction as the previous script's
+% sliding_scale_audit: for each excursion-window size m, the variance
+% across overlapping windows of the log-duration-weighted orientation
+% mean, compared to a Rademacher null using the SAME window geometry. The
+% global p is the minimum-ratio permutation test across all tested m,
+% using the same joint null draws (not a naive Bonferroni correction).
+rng(seed,'twister');
+K=data.K; w=data.logDuration(:).'; epsReal=data.orientation(:).';
+sizes=unique(requestedSizes(requestedSizes>=2 & requestedSizes<=floor(K/2)));
+if isempty(sizes)
+    error('No valid sliding excursion-window sizes for this subset (K=%d).',K);
+end
+L=numel(sizes); strides=max(1,round(sizes*strideFraction));
+realVariance=zeros(1,L); nullVariance=zeros(B,L); numberOfWindows=zeros(1,L);
+prefixW=[0,cumsum(w)];
+windowStarts=cell(1,L); windowStops=cell(1,L); windowDenom=cell(1,L);
+for j=1:L
+    m=sizes(j); stride=strides(j);
+    starts=1:stride:(K-m+1); stops=starts+m;
+    windowStarts{j}=starts; windowStops{j}=stops;
+    windowDenom{j}=prefixW(stops)-prefixW(starts);
+    numberOfWindows(j)=numel(starts);
+end
+realPrefix=[0,cumsum(epsReal.*w)];
+for j=1:L
+    localTheta=(realPrefix(windowStops{j})-realPrefix(windowStarts{j})) ...
+        ./windowDenom{j};
+    realVariance(j)=var(localTheta,1);
+end
+for first=1:batchSize:B
+    last=min(B,first+batchSize-1); q=last-first+1;
+    signs=2*(rand(q,K)>.5)-1;
+    signedPrefix=[zeros(q,1),cumsum(signs.*w,2)];
+    for j=1:L
+        localTheta=(signedPrefix(:,windowStops{j})- ...
+            signedPrefix(:,windowStarts{j}))./windowDenom{j};
+        nullVariance(first:last,j)=var(localTheta,1,2);
+    end
+end
+nullMedian=median(nullVariance,1);
+varianceRatio=realVariance./nullMedian;
+pLower=zeros(1,L); pTwo=pLower;
+for j=1:L
+    pLower(j)=lower_randomization(nullVariance(:,j),realVariance(j));
+    pTwo(j)=equal_tail_randomization(nullVariance(:,j),realVariance(j));
+end
+nullRatios=nullVariance./nullMedian;
+realMinimumRatio=min(varianceRatio);
+nullMinimumRatio=min(nullRatios,[],2);
+globalPLower=lower_randomization(nullMinimumRatio,realMinimumRatio);
+audit.WindowSizes=sizes; audit.Strides=strides;
+audit.NumberOfWindows=numberOfWindows;
+audit.RealVariance=realVariance; audit.NullMedian=nullMedian;
+audit.VarianceRatio=varianceRatio; audit.PLower=pLower; audit.PTwoSided=pTwo;
+audit.RealMinimumRatio=realMinimumRatio;
+audit.NullMinimumRatio=nullMinimumRatio;
+audit.GlobalPLower=globalPLower;
+end
+
+%% ========================================================================
+function result=envelope_tracking_test(data,M,windowSizes,strideFraction, ...
+    B,batchSize,seed)
+% For each window size, compares the real windowed orientation statistic
+% against the CONTEMPORANEOUS mean of M(x)/sqrt(x) over the exact same
+% integer range (computed directly from the word via a prefix sum; no
+% zero table, no fitted model). The null holds that trend fixed (it is
+% real data, not exchangeable) and asks how large a correlation random
+% sign reassignment would produce by chance against it.
+rng(seed,'twister');
+K=data.K; w=data.logDuration(:).'; epsReal=data.orientation(:).';
+N=numel(M);
+trendPerInteger=double(M(:))./sqrt((1:N).');
+prefixTrend=[0;cumsum(trendPerInteger)];
+sizes=unique(windowSizes(windowSizes>=2 & windowSizes<=floor(K/2)));
+L=numel(sizes); strides=max(1,round(sizes*strideFraction));
+prefixW=[0,cumsum(w)];
+realPrefix=[0,cumsum(epsReal.*w)];
+realCorrelation=zeros(1,L); nullCorrelationSD=zeros(1,L); pTwo=zeros(1,L);
+for j=1:L
+    m=sizes(j); stride=strides(j);
+    starts=1:stride:(K-m+1); stops=starts+m;
+    denom=prefixW(stops)-prefixW(starts);
+    thetaReal=(realPrefix(stops)-realPrefix(starts))./denom;
+    firstInt=data.firstInteger(starts);
+    lastInt=data.lastInteger(stops-1);
+    trendReal=(prefixTrend(lastInt+1)-prefixTrend(firstInt)) ...
+        ./double(lastInt-firstInt+1);
+    realCorrelation(j)=safe_corr(thetaReal(:),trendReal(:));
+
+    tCentered=trendReal(:).'-mean(trendReal);
+    tNorm=sqrt(sum(tCentered.^2));
+    nullCorr=zeros(B,1);
+    for first=1:batchSize:B
+        last=min(B,first+batchSize-1); q=last-first+1;
+        signs=2*(rand(q,K)>.5)-1;
+        signedPrefix=[zeros(q,1),cumsum(signs.*w,2)];
+        thetaNull=(signedPrefix(:,stops)-signedPrefix(:,starts))./denom;
+        vCentered=thetaNull-mean(thetaNull,2);
+        vNorm=sqrt(sum(vCentered.^2,2));
+        numerator=vCentered*tCentered.';
+        nullCorr(first:last)=numerator./max(vNorm*tNorm,eps);
+    end
+    nullCorrelationSD(j)=std(nullCorr);
+    pTwo(j)=equal_tail_randomization(nullCorr,realCorrelation(j));
+end
+result.WindowSizes=sizes;
+result.RealCorrelation=realCorrelation;
+result.NullCorrelationSD=nullCorrelationSD;
+result.PTwoSided=pTwo;
+end
+
+%% ========================================================================
+function r=safe_corr(x,y)
+x=x(:)-mean(x); y=y(:)-mean(y);
+d=sqrt(sum(x.^2)*sum(y.^2));
+if d<=eps, r=0; else, r=sum(x.*y)/d; end
+end
+
+function p=lower_randomization(nullValue,realValue)
+p=(1+sum(nullValue<=realValue))/(numel(nullValue)+1);
+end
+
+function p=equal_tail_randomization(nullValue,realValue)
+lower=(1+sum(nullValue<=realValue))/(numel(nullValue)+1);
+upper=(1+sum(nullValue>=realValue))/(numel(nullValue)+1);
+p=min(1,2*min(lower,upper));
+end

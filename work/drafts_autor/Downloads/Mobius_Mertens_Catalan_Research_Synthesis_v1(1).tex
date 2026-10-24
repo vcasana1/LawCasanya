@@ -1,0 +1,1615 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{microtype}
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% Notation
+\newcommand{\Mert}{M}
+\newcommand{\Mob}{\mu}
+\newcommand{\Sq}{Q}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Ftwo}{\mathbb F_2}
+\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Cut}{\operatorname{Cut}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\LIT}{\textup{[LIT]}}
+\newcommand{\DED}{\textup{[DED]}}
+\newcommand{\COMP}{\textup{[COMP]}}
+\newcommand{\OPEN}{\textup{[OPEN]}}
+\newcommand{\NEG}{\textup{[NEG]}}
+\newcommand{\HEUR}{\textup{[HEUR]}}
+
+\title[Arithmetic Selection and Catalan Geometry]{Arithmetic Selection and Catalan Geometry of the Mertens Walk:\\
+Exact Structures, Capacity Deficits, Occupation Energy, and Open Routes}
+\author{V\'ictor Casa\~na-Giner}
+\address{Bio Logic Crop Science S.L., Spain}
+\thanks{ORCID: 0000-0002-8252-2608}
+\date{15 September 2026}
+
+% hyperref must be loaded last
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+\begin{abstract}
+We organize several exact and experimental structures around the M\"obius function
+$\Mob(n)$ and its summatory function $\Mert(x)$.  The squarefree-compressed Mertens
+walk is an exact nearest-neighbour path; complete zero-to-zero excursions are
+primitive Dyck paths and open pieces are ballot meanders.  This produces a canonical
+Catalan state space, but ambient Catalan rarity alone does not restrict the arithmetic
+selector.  We therefore emphasize arithmetic mechanisms that can act on the whole
+prefix profile.
+
+The first part develops the occupation-energy formulation
+$\mathcal E_q(x,H)=\sum_{h\le H}|\Mert(x+h)-\Mert(x)|^{2q}$ and the exact quadratic
+operator $J_H^*J_H$.  The all-$q$ dyadic hierarchy is an exact RH criterion, while any
+fixed power saving over the ballistic quadratic scale is a strictly weaker and
+quantitatively meaningful first target.  The second part combines adversarial
+multiplicative completions, signed displacement cuts, and collective Catalan capacities.
+For a finite squarefree prime product $P$, the squarefree integers decompose into
+components $aD(P)$, and the exact worst-case prefix capacity is expressed by an
+$L^1$ norm of a signed divisor-window kernel.  Adding a prime acts by a delayed
+anti-copy, gives a monotone capacity ratio, and also yields a lower barrier showing a
+tradeoff between confinement and remaining entropy.  A further no-go theorem shows
+that static Ramar\'e relations over a finite prime set do not couple different
+$aD(P)$ components; genuine inter-component gain must use causal truncation or an
+analytic recombination estimate.
+
+The synthesis also retains the signed-cut extinction programme, the ordinal-prime
+transform and its coercive negative-excursion energy, the divisibility-surface and
+$p$-adic shell coordinates, and a one-way Catalan calibration of hypothetical
+off-critical zeta zeros.  Finite computations through $N=455{,}052{,}511$ are recorded
+only as experiments.  The resulting research frontier is explicit: obtain a proved,
+non-tautological, sign-sensitive collective restriction that reduces high Catalan
+sectors or occupation energy by a fixed power while leaving substantial arithmetic
+freedom.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip
+
+\begin{remark}[Status and purpose]
+\label{rem:status-purpose}
+This document is a research synthesis and working notebook.  It consolidates the strongest exact constructions, negative results, finite experiments, and open mechanisms developed in a collection of M\"obius--Mertens manuscripts and project notebooks.  The labels \LIT, \DED, \COMP, \OPEN, \NEG, and \HEUR mean, respectively: established literature input; rigorous deduction recorded in the project; finite computation; unresolved target; rigorous or structural negative result; and heuristic.  No literature-wide priority claim is made for deductions marked \DED without a separate bibliographic audit.  In particular, exact reformulations equivalent to the Riemann hypothesis are not presented as progress toward its proof unless an independent arithmetic estimate is supplied.
+\end{remark}
+
+
+
+\section{Main objects and logical boundary}
+\label{sec:main-objects}
+
+Let
+\begin{equation}
+\Mert(x)=\sum_{n\le x}\Mob(n),
+\label{eq:mertens-definition}
+\end{equation}
+and let
+\begin{equation}
+\Sq(x)=\sum_{n\le x}\Mob(n)^2
+=\#\{n\le x:n\text{ is squarefree}\}.
+\label{eq:squarefree-count}
+\end{equation}
+The standard squarefree counting asymptotic is
+\begin{equation}
+\Sq(x)=\frac{6}{\pi^2}x+O(\sqrt x).
+\label{eq:squarefree-asymptotic}
+\end{equation}
+The classical Mertens criterion states that
+\begin{equation}
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\Mert(x)=O_{\eps}(x^{1/2+\eps})
+\quad\text{for every }\eps>0;
+\label{eq:mertens-rh-criterion}
+\end{equation}
+see, for example, \cite{Titchmarsh1986}.  The obsolete Mertens conjecture
+$|\Mert(x)|<\sqrt x$ is false \cite{OdlyzkoTeRiele1985}; it must never be used as an
+asymptotic surrogate for \eqref{eq:mertens-rh-criterion}.
+
+\begin{warning}[Criterion versus mechanism]
+\label{warn:criterion-mechanism}
+Any construction that immediately reduces to \eqref{eq:mertens-rh-criterion}, to a
+zero-free half-plane for $1/\zeta$, or to an equivalent mean-square statement is a
+criterion or change of coordinates.  It becomes a proof route only after a genuinely
+independent arithmetic estimate is established.
+\end{warning}
+
+The central methodological boundary used throughout this notebook is
+\begin{equation}
+\boxed{
+\text{partial arithmetic information}
+\Longrightarrow
+\text{uniform non-tautological geometric or energetic inequality}.}
+\label{eq:boundary-principle}
+\end{equation}
+The left side must not contain the desired Mertens bound in disguised form.
+
+\section{The squarefree-compressed Mertens walk}
+\label{sec:compressed-walk}
+
+Let
+\begin{equation}
+1=q_1<q_2<q_3<\cdots
+\label{eq:squarefree-order}
+\end{equation}
+be the squarefree integers in increasing order, and define
+\begin{equation}
+X_m=\sum_{j\le m}\Mob(q_j).
+\label{eq:compressed-walk}
+\end{equation}
+
+\begin{proposition}[Exact compression \DED]
+\label{prop:compression}
+For every $m\ge1$ and real $x\ge1$,
+\begin{align}
+X_m&=\Mert(q_m),
+\label{eq:compression-at-squarefree}\\
+\Mert(x)&=X_{\Sq(x)}.
+\label{eq:decompression}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The terms deleted from ordinary time are exactly the terms for which $\Mob(n)=0$.
+Thus the nonzero increments are unchanged and only holding times are removed.
+\end{proof}
+
+Let
+\begin{equation}
+0=z_0<z_1<z_2<\cdots
+\label{eq:return-times}
+\end{equation}
+be successive return times of $X_m$ to zero, when they exist.  Put
+\begin{equation}
+L_r=z_r-z_{r-1}=2n_r.
+\label{eq:excursion-length}
+\end{equation}
+Parity forces each complete excursion length to be even.
+
+\begin{proposition}[Primitive Catalan factorization \DED]
+\label{prop:catalan-factorization}
+Fix a finite return skeleton and the sign of each complete excursion.  The number of
+nearest-neighbour paths realizing excursions of lengths $2n_1,\ldots,2n_R$ is
+\begin{equation}
+\mathcal N(z_1,\ldots,z_R)=\prod_{r=1}^{R}C_{n_r-1},
+\label{eq:catalan-product}
+\end{equation}
+where
+\begin{equation}
+C_n=\frac{1}{n+1}\binom{2n}{n}
+\label{eq:catalan-number}
+\end{equation}
+is the $n$th Catalan number.
+\end{proposition}
+
+\begin{proof}
+After reflection of a negative excursion, removing the first up-step and final
+down-step gives an arbitrary Dyck path of semilength $n_r-1$.  Distinct complete
+excursions are combinatorially independent once the skeleton and signs are fixed.
+\end{proof}
+
+For open pieces the exact ballot count is equally important.
+
+\begin{proposition}[Strict meander endpoint count \LIT]
+\label{prop:meander-count}
+Let $t\ge1$ and $h>0$ with $t\equiv h\pmod 2$.  The number of $\pm1$ paths from $0$
+to $h$ in $t$ steps that remain strictly positive after time zero is
+\begin{equation}
+\#\mathcal M_{t,h}=\frac{h}{t}\binom{t}{(t+h)/2}.
+\label{eq:meander-count}
+\end{equation}
+\end{proposition}
+
+The ordinary-time embedding is retained by the holding times of the squarefree clock.
+For a window $(a,b]$, let
+\begin{equation}
+w_j(a,b)=\#\{n\in(a,b]:\Sq(n)=j\}.
+\label{eq:holding-weights}
+\end{equation}
+Then any ordinary-time occupation statistic can be written as a weighted statistic of
+the compressed path.  Deleting zeros therefore preserves the path shape but not the
+physical time at which a given height occurs.
+
+\section{Catalan height as a calibrated geometric scale}
+\label{sec:catalan-height}
+
+Let $\mathcal D_n$ be the set of Dyck paths of semilength $n$ and let
+$D_{n,h}$ denote the number whose height is at most $h$.
+
+\begin{proposition}[Bounded-height spectral formula \LIT]
+\label{prop:bounded-height}
+For $n\ge1$ and $h\ge1$,
+\begin{equation}
+D_{n,h}
+=
+\frac{2}{h+2}
+\sum_{j=1}^{h+1}
+\sin^2\!\left(\frac{\pi j}{h+2}\right)
+\left(2\cos\frac{\pi j}{h+2}\right)^{2n}.
+\label{eq:bounded-height-spectral}
+\end{equation}
+\end{proposition}
+
+This is the transfer-matrix formula for the path graph on heights
+$0,1,\ldots,h$.  The corresponding Brownian-excursion scaling and moderate deviations
+are classical; see \cite{Kaigh1976,DurrettIglehartMiller1977,KhorunzhiyMarckert2009,Kousha2012}.
+
+\begin{proposition}[Height phase transition \LIT]
+\label{prop:height-transition}
+Fix $c>0$ and put $h_n=\lfloor c n^\beta\rfloor$.  Then the Catalan height threshold
+occurs at $\beta=1/2$: for $\beta<1/2$,
+\begin{equation}
+\log\frac{D_{n,h_n}}{C_n}
+=
+-\frac{\pi^2}{c^2}n^{1-2\beta}+O(\log n),
+\label{eq:subcritical-height}
+\end{equation}
+whereas for $\beta>1/2$ the ratio tends to one.  At $\beta=1/2$ the ratio has a
+non-degenerate Brownian-excursion limit distribution.
+\end{proposition}
+
+\begin{warning}[Ambient rarity is not an arithmetic restriction]
+\label{warn:ambient-rarity}
+The estimates in Proposition~\ref{prop:height-transition} describe the uniform Catalan
+ensemble.  A deterministic arithmetic selector may choose a member of an exponentially
+small Catalan sector.  No conclusion for $\Mert$ follows until an arithmetic property of
+the selector is proved.
+\end{warning}
+
+A simple reflection estimate gives a finite bound useful for calibration.
+
+\begin{lemma}[Finite high-height tail \DED]
+\label{lem:finite-height-tail}
+For $1\le H\le N$,
+\begin{equation}
+\frac{\#\{D\in\mathcal D_N:\max D\ge H\}}{C_N}
+\le
+(N+1)\exp\!\left(-\frac{H^2}{2N}\right).
+\label{eq:finite-height-tail}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+A Dyck path reaching $H$ is in particular an unrestricted bridge from $0$ to $0$ that
+reaches $H$.  Reflection after its first visit to $H$ injects such bridges into walks from
+$0$ to $2H$, giving at most $\binom{2N}{N+H}$ possibilities.  Since
+$C_N=(N+1)^{-1}\binom{2N}{N}$,
+\begin{equation}
+\frac{\#\{D:\max D\ge H\}}{C_N}
+\le
+(N+1)\prod_{j=1}^{H}\frac{N-j+1}{N+j}.
+\label{eq:tail-product}
+\end{equation}
+Using $\log(1-u)\le-u$ on the product yields \eqref{eq:finite-height-tail}.
+\end{proof}
+
+\section{Occupation energy and the exact operator \texorpdfstring{$J_H^*J_H$}{J*J}}
+\label{sec:occupation-energy}
+
+For $q\ge1$ define the ordinary-time Catalan occupation energy
+\begin{equation}
+\mathcal E_q(x,H)
+=
+\sum_{h=1}^{H}|\Mert(x+h)-\Mert(x)|^{2q}.
+\label{eq:occupation-energy}
+\end{equation}
+The compressed analogue is
+\begin{equation}
+\mathcal E_q^{\#}(m,L)
+=
+\sum_{u=1}^{L}|X_{m+u}-X_m|^{2q}.
+\label{eq:compressed-energy}
+\end{equation}
+These quantities should not be silently identified; ordinary time repeats heights at nonsquarefree
+integers.
+
+\begin{definition}[Dyadic Catalan energy]
+\label{def:dyadic-energy}
+For fixed $q\ge1$, write $\mathrm{CE}^{\mathrm{dyad}}_q$ for the estimate
+\begin{equation}
+\mathcal E_q(x,x)\ll_{q,\eps}x^{q+1+\eps}
+\quad(x\ge2).
+\label{eq:dyadic-energy}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Exact exponent ladder \DED]
+\label{thm:energy-ladder}
+For every fixed $q\ge1$,
+\begin{equation}
+\mathrm{CE}^{\mathrm{dyad}}_q
+\quad\Longrightarrow\quad
+\Mert(X)\ll_{q,\eps}X^{(q+1)/(2q+1)+\eps}.
+\label{eq:energy-ladder}
+\end{equation}
+Moreover,
+\begin{equation}
+\bigl[\mathrm{CE}^{\mathrm{dyad}}_q\text{ for every fixed }q\bigr]
+\quad\Longleftrightarrow\quad
+\mathrm{RH}.
+\label{eq:all-q-rh}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Put $S_x(h)=\Mert(x+h)-\Mert(x)$ and $A=|S_x(x)|$.  Since the path is
+one-Lipschitz, at least a constant multiple of $A$ final values have size at least a
+constant multiple of $A$.  Hence
+\begin{equation}
+A^{2q+1}\ll_q\mathcal E_q(x,x).
+\label{eq:plateau-energy}
+\end{equation}
+Estimate \eqref{eq:energy-ladder} follows for $\Mert(2x)-\Mert(x)$ and then by dyadic
+telescoping.  If the hierarchy holds for all fixed $q$, the exponents decrease to
+$1/2$.  Conversely, RH gives $|S_x(h)|\ll_\eta x^{1/2+\eta}$ uniformly for
+$x\le x+h\le2x$, which implies \eqref{eq:dyadic-energy} after choosing $\eta$ in
+terms of $q$ and $\eps$.
+\end{proof}
+
+The quadratic member has an exact spectral structure.  Put
+\begin{equation}
+a_n=\Mob(x+n),\qquad 1\le n\le H,
+\label{eq:increment-vector}
+\end{equation}
+and let $J_H$ be the cumulative-sum matrix,
+\begin{equation}
+(J_Ha)_h=\sum_{n\le h}a_n.
+\label{eq:summation-matrix}
+\end{equation}
+Then
+\begin{equation}
+\mathcal E_1(x,H)=\langle a,K_Ha\rangle,
+\qquad K_H=J_H^*J_H,
+\label{eq:quadratic-kernel}
+\end{equation}
+with
+\begin{equation}
+(K_H)_{rs}=H+1-\max(r,s).
+\label{eq:quadratic-kernel-entries}
+\end{equation}
+
+\begin{proposition}[Exact occupation spectrum \DED]
+\label{prop:occupation-spectrum}
+The eigenvalues of $K_H$ are
+\begin{equation}
+\lambda_k=
+\frac{1}{4\sin^2\!\left(\frac{(2k-1)\pi}{4H+2}\right)},
+\qquad 1\le k\le H.
+\label{eq:occupation-eigenvalues}
+\end{equation}
+In particular, for $k\ll H$,
+\begin{equation}
+\lambda_k\asymp\frac{H^2}{(2k-1)^2}.
+\label{eq:low-mode-weight}
+\end{equation}
+\end{proposition}
+
+Thus low Fourier-like modes are weighted much more strongly than generic high modes.  This is the
+reason to retain prime colours or twisted sums until after the $J_H^*J_H$ weighting rather than
+projecting immediately to a scalar endpoint.
+
+Let
+\begin{equation}
+A_{x,H}(\alpha)=\sum_{n=1}^{H}\Mob(x+n)e^{2\pi i\alpha n}.
+\label{eq:short-twisted-mobius}
+\end{equation}
+The sine eigenvectors of $K_H$ give the deterministic comparison
+\begin{equation}
+\boxed{
+\mathcal E_1(x,H)<
+(H+1)\sup_{\alpha\in\R}|A_{x,H}(\alpha)|^2.}
+\label{eq:energy-twist-bound}
+\end{equation}
+
+\section{What is already known analytically, and the first power frontier}
+\label{sec:known-analytic-frontier}
+
+Matom\"aki and Ter\"av\"ainen proved cancellation of $\Mob$ in every interval of length
+$x^\theta$ for every $\theta>0.55$, with Ramar\'e extraction as a key new ingredient
+\cite{MatomakiTeravainen2023}.  They also proved a uniform twisted estimate for
+$\theta>3/5$; higher-uniformity results in all intervals at the threshold $5/8$ were later
+proved by Matom\"aki, Shao, Tao, and Ter\"av\"ainen \cite{MatomakiShaoTaoTeravainen2023}.
+Combining the twisted estimates with \eqref{eq:energy-twist-bound} gives logarithmic
+anti-ballistic occupation-energy savings in their valid ranges.
+
+\begin{proposition}[Known anti-ballistic quadratic bounds \LIT+\DED]
+\label{prop:known-antiballistic}
+Fix $\eta>0$.  The published twisted short-interval estimates imply bounds of the form
+\begin{equation}
+\mathcal E_1(x,H)
+\ll_{\theta,\eta}
+\frac{H^3}{(\log x)^{2/3-2\eta}}
+\qquad(H\ge x^\theta,\ \theta>3/5),
+\label{eq:known-log-energy}
+\end{equation}
+and, for every $A>0$,
+\begin{equation}
+\mathcal E_1(x,H)
+\ll_{A,\eta}
+\frac{H^3}{(\log x)^A}
+\qquad(x^{5/8+\eta}\le H\le x^{1-\eta}).
+\label{eq:known-arbitrary-log-energy}
+\end{equation}
+\end{proposition}
+
+These are genuine improvements over the trivial ballistic energy $O(H^3)$, but they are not power
+savings in $H$.
+
+\begin{lemma}[One-sided tent conversion \DED]
+\label{lem:tent}
+For any integer-valued path $S(0)=0$ with increments of modulus at most one, let
+$\Delta=\max_{0\le h\le H}|S(h)|$.  Then
+\begin{equation}
+\frac{\Delta^3}{3}
+\le
+\sum_{h=1}^{H}|S(h)|^2.
+\label{eq:tent-inequality}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+If $|S(h_0)|=\Delta$, one-Lipschitz continuity forces
+$|S(h_0-t)|\ge\Delta-t$ for $0\le t\le\Delta$.  Summing the resulting squares gives
+\eqref{eq:tent-inequality}.
+\end{proof}
+
+\begin{conjecture}[First major open energy target \OPEN]
+\label{conj:first-power-saving}
+There exist fixed $\theta,\delta>0$ such that, uniformly in the initial point on dyadic ranges and
+for $H\asymp X^\theta$,
+\begin{equation}
+\mathcal E_1(x,H)\ll H^{3-\delta}X^\eps
+\label{eq:first-power-saving}
+\end{equation}
+for every $\eps>0$.
+\end{conjecture}
+
+\begin{proposition}[Propagation of a mesoscopic power saving \DED]
+\label{prop:power-propagation}
+If \eqref{eq:first-power-saving} holds, then
+\begin{equation}
+\Mert(X)\ll X^{1-\theta\delta/3+\eps}.
+\label{eq:power-propagation}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:tent} gives a window endpoint bound
+$O(H^{1-\delta/3}X^\eps)$.  Partition a dyadic interval into $O(X/H)$ windows and sum the
+endpoint increments.
+\end{proof}
+
+\begin{remark}[Calibration]
+\label{rem:energy-calibration}
+The Brownian target $\mathcal E_1\ll H^{2+\eps}$ is a long-term endpoint, not the first milestone.
+The first nonclassical analytic step is any fixed power saving in \eqref{eq:first-power-saving}.
+\end{remark}
+
+\section{Why pointwise revelation is insufficient}
+\label{sec:pointwise-no-go}
+
+Suppose a word of length $m$ has a set $F$ of already fixed signs.  Define
+\begin{align}
+s_F(t)&=\sum_{\substack{j\le t\\j\in F}}\sigma_j,
+\label{eq:fixed-prefix-sum}\\
+U_F(t)&=\#\{j\le t:j\notin F\}.
+\label{eq:unrevealed-count}
+\end{align}
+
+\begin{proposition}[Exact pointwise envelope \DED]
+\label{prop:pointwise-envelope}
+For every prefix $t$,
+\begin{equation}
+\max_{\text{compatible completions}}|S_t|
+=U_F(t)+|s_F(t)|.
+\label{eq:pointwise-envelope}
+\end{equation}
+Consequently,
+\begin{equation}
+H_F^*(m)
+=
+\max_{t\le m}\bigl(U_F(t)+|s_F(t)|\bigr).
+\label{eq:pointwise-global-envelope}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Every free sign in a fixed prefix can be chosen to reinforce the sign of $s_F(t)$; if the fixed sum is
+zero, choose all free signs with the same orientation.
+\end{proof}
+
+\begin{corollary}[Near-total revelation barrier \NEG]
+\label{cor:near-total-revelation}
+A pointwise-revelation mechanism can force the envelope to
+$O(m^{1/2+\eps})$ only if every relevant prefix contains at most
+$O(m^{1/2+\eps})$ unrevealed positions, apart from cancellation already proved in the fixed part.
+\end{corollary}
+
+Thus a proof based only on revealing $\omega(n)$ layers one position at a time approaches full knowledge of the
+M\"obius word and risks becoming the desired Mertens estimate in disguise.  Collective restrictions are required.
+
+\section{Consistent signed graphs and collective prefix geometry}
+\label{sec:signed-graph}
+
+A convenient universal model is a consistent signed graph on positions.  If an edge $uv$ carries
+$\eta_{uv}\in\{\pm1\}$, impose
+\begin{equation}
+\varepsilon_v=\eta_{uv}\varepsilon_u.
+\label{eq:signed-graph-relation}
+\end{equation}
+On each connected component $C$ there are deterministic labels $\lambda_v\in\{\pm1\}$ and one
+free orientation $s_C$ such that $\varepsilon_v=s_C\lambda_v$.
+
+\begin{definition}[Prefix charge]
+\label{def:prefix-charge}
+For a component $C$ define
+\begin{equation}
+Q_C(t)=\sum_{\substack{v\in C\\v\le t}}\lambda_v.
+\label{eq:prefix-charge}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Exact signed-graph envelope \DED]
+\label{prop:signed-graph-envelope}
+For every prefix $t$,
+\begin{equation}
+\max_{\text{compatible orientations}}|S_t|
+=
+\sum_C|Q_C(t)|,
+\label{eq:signed-graph-envelope}
+\end{equation}
+and therefore
+\begin{equation}
+H_G^*=\max_t\sum_C|Q_C(t)|.
+\label{eq:signed-graph-global-envelope}
+\end{equation}
+\end{proposition}
+
+This identity converts an arithmetic relation graph into an exact geometric height problem.  The next sections
+specialize it to multiplicative divisor components.
+
+\section{Adversarial multiplicative completions and signed displacement cuts}
+\label{sec:extinction}
+
+A separate project route begins with the finite cube of multiplicative squarefree sign completions.  Fix the
+squarefree support and prime signs up to scale $N$.  The true M\"obius word is one vertex of this finite cube.
+For a completion $x$ define
+\begin{equation}
+C_h(x)=\sum_{n\le N-h}x_nx_{n+h},
+\qquad
+d_h(x)=C_h(x)-C_h(\Mob).
+\label{eq:completion-correlation}
+\end{equation}
+Let $D(x)=\{n:x_n\ne\Mob(n)\}$ on the squarefree support.
+
+\begin{theorem}[Exact signed-cut identity \DED]
+\label{thm:signed-cut}
+For each displacement $h$, there is a signed displacement graph $G_h$ such that
+\begin{equation}
+\frac{d_h(x)}{2}=\Cut_{G_h}(D(x)).
+\label{eq:signed-cut}
+\end{equation}
+If $u_e\in\Ftwo^{\pi(N)-1}$ is the odd-prime parity form attached to an edge $e$, its sign satisfies
+\begin{equation}
+w_h(e)=(-1)^{|u_e|+h+1}.
+\label{eq:edge-parity-law}
+\end{equation}
+\end{theorem}
+
+The exact finite formulas convert every displacement test into a weighted parity-threshold condition on the
+prime-sign Boolean cube.  Neighboring literature on random multiplicative functions, small partial sums, and sign
+patterns includes \cite{AymoneSidoravicius2017,KoukoulopoulosSoundararajan2020,MatomakiRadziwillTao2016}; the
+specific finite extinction architecture is treated here only as a project construction, without a literature-wide
+priority assertion.
+
+\begin{experiment}[Finite extinction audit \COMP]
+\label{exp:finite-extinction}
+The project computations verified complete extinction of every non-M\"obius multiplicative completion at several
+small finite scales, including $N=25,43,53,61,71,73$.  This is finite evidence only.  The general statement
+\begin{equation}
+\mathcal B_{H_0(N)}(N)=\{0\}
+\label{eq:general-extinction-target}
+\end{equation}
+is not proved.
+\end{experiment}
+
+\begin{warning}[Extinction route versus mean square]
+\label{warn:extinction-nonroute}
+A Fej\'er or moving-window mean-square estimate can be formulated directly for the true $\Mob$ sequence without the
+completion cube.  Such an estimate may be mathematically useful, but it does not explain finite extinction and is not
+an internal continuation of that mechanism.
+\end{warning}
+
+\section{Collective divisor-cube capacity}
+\label{sec:divisor-capacity}
+
+We now introduce a collective arithmetic restriction that acts on whole multiplicative components rather than fixing
+signs position by position.  Let
+\begin{equation}
+P=\prod_{p\in\mathcal P}p
+\label{eq:finite-prime-product}
+\end{equation}
+be squarefree.  Every squarefree integer has a unique representation
+\begin{equation}
+n=ad,\qquad d\mid P,\qquad (a,P)=1.
+\label{eq:component-factorization}
+\end{equation}
+The relations generated by the primes dividing $P$ force every compatible sign assignment to have the form
+\begin{equation}
+\varepsilon(ad)=s_a\Mob(d),\qquad s_a\in\{\pm1\}.
+\label{eq:component-signs}
+\end{equation}
+Thus one bit remains for each $P$-free squarefree base $a$.
+
+Fix a window $W=(A,T]$ and define
+\begin{equation}
+D_a(W)=\{d\mid P:A<ad\le T\}.
+\label{eq:active-divisors}
+\end{equation}
+Let
+\begin{align}
+E_a(W)&=\#\{d\in D_a(W):\Mob(d)=+1\},
+\label{eq:even-parity-count}\\
+O_a(W)&=\#\{d\in D_a(W):\Mob(d)=-1\}.
+\label{eq:odd-parity-count}
+\end{align}
+
+\begin{theorem}[Exact component capacity \DED]
+\label{thm:component-capacity}
+Within the component $S_a=\{ad:d\in D_a(W)\}$ the number of up-steps satisfies
+\begin{equation}
+|B\cap S_a|\le\max(E_a,O_a).
+\label{eq:component-up-capacity}
+\end{equation}
+Moreover, if only the multiplicative relations from $P$ are imposed, then the exact maximum signed contribution over
+the whole window is
+\begin{equation}
+H_P^{\mathrm{free}}(A,T)
+=
+L(A,T)-2\mathcal B_P(A,T),
+\label{eq:component-exact-height}
+\end{equation}
+where
+\begin{align}
+L(A,T)&=\Sq(T)-\Sq(A),
+\label{eq:window-squarefree-length}\\
+\mathcal B_P(A,T)&=\sum_a\min(E_a,O_a).
+\label{eq:capacity-deficit}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+In the component $a$, all signs equal $s_a\Mob(d)$.  If $s_a=+1$, the up-steps are the $E_a$ divisors; if
+$s_a=-1$, they are the $O_a$ divisors.  Hence the maximal signed contribution of that component is
+$|E_a-O_a|=(E_a+O_a)-2\min(E_a,O_a)$.  Sum over the disjoint components.
+\end{proof}
+
+\begin{remark}[Sign-sensitive fail gate]
+\label{rem:capacity-sign-sensitive}
+The deficit in \eqref{eq:capacity-deficit} genuinely uses M\"obius parity.  Under the replacement
+$\Mob\mapsto|\Mob|$, all active divisors in a component have the same sign and the deficit disappears.  Thus this
+capacity passes the sign-sensitivity test required of a nontrivial arithmetic layer.
+\end{remark}
+
+For a multiplicative window $T=\lambda A$, define
+\begin{equation}
+g_{P,\lambda}(y)
+=
+\sum_{\substack{d\mid P\\y<d\le\lambda y}}\Mob(d).
+\label{eq:divisor-window-kernel}
+\end{equation}
+
+\begin{theorem}[Exact asymptotic capacity ratio for fixed $P$ \DED]
+\label{thm:rho-capacity}
+For fixed squarefree $P$ and $\lambda>1$,
+\begin{equation}
+H_P(A,\lambda A)
+=
+\sum_{\substack{a\ \mathrm{squarefree}\\(a,P)=1}}
+\left|g_{P,\lambda}(A/a)\right|.
+\label{eq:capacity-sum-kernel}
+\end{equation}
+Furthermore,
+\begin{equation}
+H_P(A,\lambda A)
+=
+\delta_PA I_P(\lambda)+O_P(\sqrt A),
+\label{eq:capacity-asymptotic}
+\end{equation}
+where
+\begin{align}
+\delta_P&=\frac6{\pi^2}\prod_{p\mid P}\frac{p}{p+1},
+\label{eq:coprime-squarefree-density}\\
+I_P(\lambda)&=
+\int_{1/\lambda}^{\infty}
+\left|
+\sum_{\substack{d\mid P\\y<d\le\lambda y}}\Mob(d)
+\right|\frac{dy}{y^2}.
+\label{eq:capacity-integral}
+\end{align}
+Consequently the surviving ballistic ratio is
+\begin{equation}
+\boxed{
+\rho_P(\lambda)
+=
+\frac{1}{\lambda-1}
+\left(\prod_{p\mid P}\frac{p}{p+1}\right)
+I_P(\lambda).}
+\label{eq:rho-definition}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For each base $a$, the signed component sum is $s_ag_{P,\lambda}(A/a)$, proving
+\eqref{eq:capacity-sum-kernel}.  The count of squarefree $a$ coprime to fixed $P$ has density $\delta_P$ and an
+$O_P(\sqrt A)$ elementary squarefree-counting error.  Since $g_{P,\lambda}$ is a finite step function, summation over
+its finitely many threshold intervals gives \eqref{eq:capacity-asymptotic}.  Divide by
+$\Sq(\lambda A)-\Sq(A)=(6/\pi^2)(\lambda-1)A+O(\sqrt A)$.
+\end{proof}
+
+\begin{example}
+\label{ex:p30-capacity}
+For $P=30$ and $\lambda=2$, the opposite-parity divisors $5$ and $6$ already force the full deficit and one obtains
+\begin{equation}
+\rho_{30}(2)=\frac89.
+\label{eq:rho30}
+\end{equation}
+For $P=210$ the corresponding exact finite-divisor calculation gives
+\begin{equation}
+\rho_{210}(2)=\frac56.
+\label{eq:rho210}
+\end{equation}
+These are constant-factor contractions, not exponent contractions.
+\end{example}
+
+\section{Prime insertion, monotonicity, and the entropy--capacity barrier}
+\label{sec:capacity-monotonicity}
+
+Set
+\begin{equation}
+F_{P,\lambda}(x)
+=
+\sum_{d\mid P}\Mob(d)\mathbf 1_{(1/d,\lambda/d]}(x)
+\label{eq:reciprocal-kernel}
+\end{equation}
+and
+\begin{equation}
+c(P)=\prod_{p\mid P}\frac{p}{p+1}.
+\label{eq:cP}
+\end{equation}
+Then
+\begin{equation}
+\rho_P(\lambda)
+=
+\frac{c(P)}{\lambda-1}\|F_{P,\lambda}\|_{L^1(0,\infty)}.
+\label{eq:rho-L1}
+\end{equation}
+
+\begin{proposition}[Delayed anti-copy under prime insertion \DED]
+\label{prop:prime-anti-copy}
+If $p\nmid P$, then
+\begin{equation}
+F_{Pp,\lambda}(x)
+=
+F_{P,\lambda}(x)-F_{P,\lambda}(px).
+\label{eq:prime-anti-copy}
+\end{equation}
+Consequently,
+\begin{equation}
+\frac{p-1}{p+1}\rho_P(\lambda)
+\le
+\rho_{Pp}(\lambda)
+\le
+\rho_P(\lambda).
+\label{eq:rho-two-sided-step}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Split the divisors of $Pp$ into $d$ and $pd$ with $d\mid P$, using $\Mob(pd)=-\Mob(d)$.
+For the upper bound, apply the triangle inequality to \eqref{eq:prime-anti-copy}; for the lower bound apply the reverse
+triangle inequality and use
+$\|F_{P,\lambda}(p\,\cdot)\|_1=p^{-1}\|F_{P,\lambda}\|_1$.  Multiplication by
+$c(Pp)=p(p+1)^{-1}c(P)$ gives \eqref{eq:rho-two-sided-step}.
+\end{proof}
+
+\begin{corollary}[Structural lower barrier \DED]
+\label{cor:rho-barrier}
+For every finite squarefree $P$,
+\begin{equation}
+\prod_{p\mid P}\frac{p-1}{p+1}
+\le
+\rho_P(\lambda)
+\le1.
+\label{eq:rho-product-barrier}
+\end{equation}
+In particular,
+\begin{equation}
+\rho_P(\lambda)
+\ge
+\frac{c(P)^2}{\zeta(2)}.
+\label{eq:rho-zeta-barrier}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Iterate \eqref{eq:rho-two-sided-step} from $P=1$.  Since
+\begin{equation}
+\prod_{p\mid P}\frac{p-1}{p+1}
+=c(P)^2\prod_{p\mid P}\left(1-\frac1{p^2}\right),
+\label{eq:barrier-factorization}
+\end{equation}
+and the finite Euler product is at least $1/\zeta(2)$, \eqref{eq:rho-zeta-barrier} follows.
+\end{proof}
+
+The exact gain from a newly inserted prime can also be isolated.  Define
+\begin{equation}
+J_{P,p}(\lambda)
+=
+\int_{\{F_{P,\lambda}(x)F_{P,\lambda}(px)>0\}}
+\min\{|F_{P,\lambda}(x)|,|F_{P,\lambda}(px)|\}\,dx.
+\label{eq:overlap-functional}
+\end{equation}
+Then the identity $|u-v|=|u|+|v|-2\min(|u|,|v|)$ on the same-sign region gives
+\begin{equation}
+\rho_P(\lambda)-\rho_{Pp}(\lambda)
+=
+\frac{2p}{p+1}\frac{c(P)}{\lambda-1}J_{P,p}(\lambda).
+\label{eq:rho-synergy}
+\end{equation}
+Thus the layer synergy is exactly the same-sign overlap between a divisor kernel and its multiplicative dilation.
+
+For the primorial $P_z=\prod_{p\le z}p$, Mertens' product theorem gives
+\begin{equation}
+c(P_z)\sim\frac{\zeta(2)e^{-\gamma}}{\log z}.
+\label{eq:c-primorial}
+\end{equation}
+Hence \eqref{eq:rho-zeta-barrier} implies the structural lower scale
+\begin{equation}
+\rho_{P_z}(\lambda)
+\gtrsim
+\frac{\zeta(2)e^{-2\gamma}}{(\log z)^2}.
+\label{eq:rho-primorial-lower}
+\end{equation}
+
+\begin{warning}[Entropy--capacity tradeoff \NEG]
+\label{warn:entropy-capacity}
+Driving $\rho_{P_z}$ toward zero by taking $z\to\infty$ also drives the density of $P_z$-free base components toward
+zero.  The number of independent orientations $s_a$ in a macroscopic interval is of order $A/\log z$ in the usual
+sieve range, so the resulting number of componentwise free completions is only
+\begin{equation}
+2^{O(A/\log z)}=2^{o(A)}
+\qquad(z\to\infty).
+\label{eq:entropy-loss}
+\end{equation}
+Thus this within-component mechanism cannot simultaneously produce sublinear confinement and retain
+$2^{cA}$ independent component orientations with fixed $c>0$.
+\end{warning}
+
+\section{Static Ramar\'e does not couple divisor components}
+\label{sec:static-ramare-no-go}
+
+The Catalan programme uses the exact Ramar\'e colouring
+\begin{equation}
+\Mob(n)
+=
+-\sum_{\substack{p\in\mathcal P\\p\mid n}}
+\frac{\Mob(n/p)}{\nu_{\mathcal P}(n)},
+\qquad
+\nu_{\mathcal P}(n)=\#\{p\in\mathcal P:p\mid n\},
+\label{eq:ramare-colouring}
+\end{equation}
+for squarefree $n$ having at least one prime factor in the band $\mathcal P$.  This weighted extraction is a central
+analytic device in the short-interval work of Matom\"aki and Ter\"av\"ainen \cite{MatomakiTeravainen2023}.
+
+\begin{proposition}[Static component decomposition \NEG]
+\label{prop:static-ramare-components}
+Fix a finite prime set $\mathcal P$ and let $P=\prod_{p\in\mathcal P}p$.  Form the graph on squarefree integers with an
+edge between $n$ and $n/p$ whenever $p\in\mathcal P$ divides $n$.  Its connected components are exactly
+\begin{equation}
+\mathcal C_a=\{ad:d\mid P\},
+\qquad (a,P)=1,
+\label{eq:ramare-components}
+\end{equation}
+with the obvious truncation if a finite cutoff is imposed.  Every sign assignment compatible with all static prime-deletion
+relations has one free bit per component and has the form \eqref{eq:component-signs}.
+\end{proposition}
+
+\begin{proof}
+Deleting primes from $\mathcal P$ changes only the divisor $d$ and leaves the $P$-free part $a$ unchanged.  Conversely,
+any two divisors of $P$ can be connected by successive insertion or deletion of primes from $\mathcal P$.  M\"obius parity
+changes once per prime insertion, yielding \eqref{eq:component-signs}.
+\end{proof}
+
+\begin{corollary}[No static inter-component gain \NEG]
+\label{cor:no-static-intercomponent}
+A reweighting of the static identities \eqref{eq:ramare-colouring} alone cannot correlate the independent orientations
+$s_a$ of distinct components.  Any gain beyond Theorem~\ref{thm:rho-capacity} must use additional information, such as the
+causal order/cutoff, an analytic recombination estimate, or another relation coupling different bases.
+\end{corollary}
+
+This no-go is compatible with the ``redundant prime lift'' already present in the Catalan notebook: subtracting the exact
+prime-shell identity at two excursion endpoints reproduces the same Mertens prefix for every prime and gives no estimate by
+averaging over primes.
+
+\section{The causal Ramar\'e prefix lift and the open inter-component frontier}
+\label{sec:causal-ramare}
+
+For an interval beginning at $a$, retain the prime colour until after the prefix has been formed.  Define the coloured currents
+\begin{equation}
+C_p(u)
+=
+-\sum_{\substack{a<n\le a+u\\p\mid n,\ \Mob(n)^2=1\\\nu_{\mathcal P}(n)>0}}
+\frac{\Mob(n/p)}{\nu_{\mathcal P}(n)}
+\label{eq:coloured-current}
+\end{equation}
+and the rough remainder
+\begin{equation}
+R_{\mathcal P}(u)
+=
+\sum_{\substack{a<n\le a+u\\\nu_{\mathcal P}(n)=0}}\Mob(n).
+\label{eq:rough-current}
+\end{equation}
+Then every prefix satisfies the exact vector identity
+\begin{equation}
+\boxed{
+\Mert(a+u)-\Mert(a)
+=
+R_{\mathcal P}(u)+\sum_{p\in\mathcal P}C_p(u).}
+\label{eq:ramare-prefix-vector}
+\end{equation}
+Unlike the static component relations, the functions $u\mapsto C_p(u)$ retain the causal truncation and can be passed through
+the occupation operator $J_H^*J_H$ before scalar projection.
+
+\begin{conjecture}[Weak causal prime-incidence power saving \OPEN]
+\label{conj:weak-causal-frame}
+There exist admissible growing prime bands and fixed $\delta>0$ such that the signed recombination in
+\eqref{eq:ramare-prefix-vector}, after low-mode $J_H^*J_H$ weighting and with the rough term retained, implies
+\begin{equation}
+\mathcal E_1(x,H)\ll H^{3-\delta}X^\eps
+\label{eq:causal-power-target}
+\end{equation}
+uniformly on a nontrivial polynomial window range.
+\end{conjecture}
+
+\begin{remark}[Long-term Brownian frame]
+\label{rem:brownian-frame}
+The stronger square-function target of order $H^{2+\eps}$ is retained as the Brownian endpoint of the programme, not as the
+first milestone.  The finite-power estimate \eqref{eq:causal-power-target} is the calibrated first open target.
+\end{remark}
+
+\section{Catalan rank and collective capacity constraints}
+\label{sec:catalan-rank}
+
+A generic collective restriction on up-step positions has the form
+\begin{equation}
+|B\cap S|\le c(S).
+\label{eq:generic-capacity}
+\end{equation}
+In the Catalan matroid description, a Dyck basis with ordered up-step positions $b_1<\cdots<b_n$ satisfies
+\begin{equation}
+b_i\le2i-1
+\qquad(1\le i\le n).
+\label{eq:catalan-basis-criterion}
+\end{equation}
+The project notebook develops a universal rank-to-height conversion for restrictions of this type.
+
+\begin{proposition}[Exact layer drop in a Catalan minor \DED]
+\label{prop:layer-drop}
+Suppose a Catalan completion class has current free prefix set $E_t$ and matroid rank $r_M(E_t)$.  A new layer fixes previously
+free sets $P_+$ upward and $P_-$ downward, producing a new minor $M'$.  Define
+\begin{equation}
+\Delta_t
+=
+r_M(E_t)-|P_+\cap I_t|
+-r_{M'}\bigl(E_t\setminus(P_+\cup P_-)\bigr).
+\label{eq:rank-deficit}
+\end{equation}
+Then $\Delta_t\ge0$ and the maximal compatible prefix height drops by
+\begin{equation}
+h^*_{\mathrm{old}}(t)-h^*_{\mathrm{new}}(t)=2\Delta_t.
+\label{eq:exact-layer-drop}
+\end{equation}
+\end{proposition}
+
+The divisor-cube capacity in Section~\ref{sec:divisor-capacity} supplies an explicit arithmetic source of a collective deficit;
+the unresolved task is to obtain a growing family whose joint deficit acts at mesoscopic scales without spending essentially all
+remaining entropy.
+
+\section{Sign constraints and exact ballot suppression}
+\label{sec:sign-constrained-words}
+
+The project chat on Mertens sign changes also gives a useful negative calibration.  Fix the actual zero positions of $\Mob$ and
+require a candidate ternary word to have partial sums with the same sign pattern as $\Mert$.  In the initial example through
+$n=20$, after the forced touch at zero and the first negative steps, the remaining problem is a one-sided ballot problem.
+
+\begin{proposition}[Closed count for the initial sign-constrained model \DED]
+\label{prop:sign-model-count}
+Let $n$ denote the number of nonzero steps in the model described above.  For $n\ge4$, the number of admissible words is
+\begin{equation}
+R(n)=\binom{n-3}{\lfloor(n-3)/2\rfloor}.
+\label{eq:sign-model-count}
+\end{equation}
+Thus, among the $2^n$ unrestricted sign words,
+\begin{equation}
+\frac{R(n)}{2^n}
+\sim
+\frac18\sqrt{\frac{2}{\pi(n-3)}}.
+\label{eq:sign-model-fraction}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+After the finite forced prefix, reflect the negative walk to a walk starting at height two and require it to avoid zero.  The
+reflection principle gives a difference of binomial coefficients for each endpoint.  Summing over admissible endpoints telescopes
+to the central binomial expression in \eqref{eq:sign-model-count}.  Stirling's formula gives
+\eqref{eq:sign-model-fraction}.
+\end{proof}
+
+\begin{remark}[Interpretation \NEG]
+\label{rem:sign-model-negative}
+In this model, sign/crossing information suppresses the ambient word count only by a polynomial factor.  It is standard ballot
+geometry, not yet a M\"obius-specific cancellation mechanism.
+\end{remark}
+
+\section{Ordinal-prime transform: exact information and coercive negative excursions}
+\label{sec:ordinal-prime}
+
+A complementary project assigns ordinal primes separately to positive and negative nonzero M\"obius occurrences, producing a
+sequence $S(n)$ and partial sum $SS(n)$.  Its endpoint theory is exact but largely determined by the pair $(\Mert(n),\Sq(n))$.
+After subtracting the deterministic zero contribution, the remaining term is a signed block of $|\Mert(n)|$ consecutive primes.
+Thus its endpoint RH criteria are reformulations rather than independent constraints.
+
+The transform nevertheless contains a useful pathwise asymmetry on negative excursions.  Let
+\begin{equation}
+R(q)=\Mert(q_q)
+\label{eq:ordinal-squarefree-walk}
+\end{equation}
+be the compressed walk in the notation of the ordinal project.  A complete negative excursion has depth
+\begin{equation}
+H=-\min R(q).
+\label{eq:negative-depth}
+\end{equation}
+For each level $-k$, let $u_k,v_k$ be its first and last visits and write $v_k-u_k=2r_k$.
+
+\begin{theorem}[Coercive negative-excursion energy \DED]
+\label{thm:ordinal-cubic-energy}
+The ordinal-prime level-return functional $\mathcal A$ defined by the positive prime-separation sums satisfies
+\begin{equation}
+\mathcal A\ge\frac{H^3-H}{3}.
+\label{eq:ordinal-cubic-energy}
+\end{equation}
+More sharply, if
+\begin{equation}
+G(k)=\inf_{m\ge2}(p_{m+k}-p_m),
+\label{eq:prime-gap-block-min}
+\end{equation}
+then
+\begin{equation}
+\mathcal A\ge\sum_{k=1}^{H-1}(H-k)G(k).
+\label{eq:ordinal-sharp-energy}
+\end{equation}
+\end{theorem}
+
+\begin{warning}[What the cubic lower bound does not do]
+\label{warn:ordinal-upper-missing}
+Theorem~\ref{thm:ordinal-cubic-energy} becomes an upper bound on the excursion depth only after an independent upper estimate for
+$\mathcal A$ is proved.  No such estimate at the required scale is presently supplied by the transform itself.
+\end{warning}
+
+\section{The analytic \texorpdfstring{$\alpha$}{alpha} programme as a calibrated companion}
+\label{sec:alpha-programme}
+
+The ordinal programme also produces Dirichlet-type functions whose convergence boundaries encode the zeta zero frontier.  Let
+\begin{equation}
+\Theta=\sup_{\zeta(\rho)=0}\Re\rho.
+\label{eq:theta-zero-frontier}
+\end{equation}
+The source notebook proves, for its explicitly defined $\alpha$ and paired term $\delta$, the abscissa identity
+\begin{equation}
+\sigma_c(\alpha)=\sigma_c(\delta)=1+\Theta.
+\label{eq:alpha-abscissa}
+\end{equation}
+It also isolates a component $B(s)$ whose poles occur at $1+\rho$ with multiplicity inherited from the zeros of $\zeta$.
+
+\begin{warning}[Pole transfer boundary]
+\label{warn:alpha-poles}
+The poles of the explicit $B$ component do not by themselves prove corresponding poles for the full $\alpha$ or $\delta$.
+A relatively smaller Mellin remainder can still generate a logarithmic branch singularity.  Continuation of the full object requires
+an independent uniform estimate.
+\end{warning}
+
+An exact energy version is particularly clean.  If
+\begin{equation}
+\mathcal I(\sigma)
+=
+\int_1^\infty
+\bigl(SS(x)-\lfloor x\rfloor+\Sq(x)\bigr)^2
+x^{-2\sigma-1}\,dx,
+\label{eq:alpha-energy}
+\end{equation}
+then the project establishes an exact comparison with a weighted Mertens mean square and consequently
+\begin{equation}
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\mathcal I(\sigma)<\infty
+\text{ for every }\sigma>3/2.
+\label{eq:alpha-energy-rh}
+\end{equation}
+This is a useful calibration of exponent strength, not an independent proof mechanism.
+
+\section{Divisibility surfaces and \texorpdfstring{$p$-adic}{p-adic} shell coordinates}
+\label{sec:surface-padic}
+
+The divisibility-surface programme introduces
+\begin{equation}
+F(n,r)=\sum_{\substack{a\mid n\\a>r}}\Mob(n/a)
+\label{eq:divisibility-surface}
+\end{equation}
+and a finite square matrix $B_N$ built from these values.  One of its exact structural identities is the explicit inverse
+\begin{equation}
+(B_N^{-1})_{r,n}=\mathbf 1_{n\mid r+1}-\mathbf 1_{n\mid r}.
+\label{eq:surface-inverse}
+\end{equation}
+This supplies a common coordinate system for M\"obius, Liouville, squarefree projections, and additive shifts.  The construction is
+structural: by itself it does not create the missing cancellation needed for ordinary fixed-shift Chowla or
+\eqref{eq:mertens-rh-criterion}.
+
+A related $p$-adic shell factorization writes suitable Liouville correlations as a valuation-parity factor times a $p$-free part.
+The special triadic centering can eliminate a constant local channel, but the remaining additively modulated $p$-free channels still
+require cancellation.  This yields another general methodological rule: local martingale orthogonality is not arithmetic
+independence.
+
+\begin{warning}[Single-prime shell no-go]
+\label{warn:single-prime-no-go}
+The single-prime shell route does not provide a universal base-independent contraction.  Exact shell decompositions are retained as
+coordinates, but closure of their tails requires cancellation of essentially the original Chowla/Mertens type.  They are not used here
+as a proof shortcut.
+\end{warning}
+
+\section{One-way Catalan calibration of hypothetical off-critical zeros}
+\label{sec:offcritical-calibration}
+
+This section records a consequence, not a proof strategy.  Suppose $\zeta$ has a zero
+$\rho=\beta+i\gamma$ with $\beta>1/2$.  The Mellin representation of $1/\zeta$ implies that for every $\eps>0$,
+$\Mert(x)$ cannot be $O(x^{\beta-\eps})$; see \cite{Titchmarsh1986}.  Thus there are arbitrarily large points with Mertens displacement at
+that exponent scale.
+
+Take such a compressed point $m$, let $z<m$ be the last return to zero, reflect the open meander if necessary, and close it by adding
+$|X_m|$ downward steps.  This gives a canonical Dyck path of some semilength $N_m\le m$ and height at least $|X_m|$.  Combining this
+with Lemma~\ref{lem:finite-height-tail} yields the following calibration.
+
+\begin{proposition}[Off-critical zero forces rare Catalan selections \DED]
+\label{prop:offcritical-catalan}
+If $\zeta(\beta+i\gamma)=0$ with $\beta>1/2$, then for every $\eps>0$ there are arbitrarily large compressed times for which the canonical
+closed Mertens meander belongs to a Catalan height sector of relative size at most
+\begin{equation}
+\exp\!\left(-m^{2\beta-1-2\eps+o(1)}\right).
+\label{eq:offcritical-catalan-rarity}
+\end{equation}
+\end{proposition}
+
+\begin{warning}[Not a selector theorem]
+\label{warn:offcritical-not-proof}
+Proposition~\ref{prop:offcritical-catalan} is one-way.  It says what an off-critical zero would force the arithmetic selector to do.
+Excluding all such rare sectors is essentially the unresolved Mertens/RH problem unless exclusion is obtained from an independent
+arithmetic mechanism.  No low-height anomaly is inferred from the reflected zero $1-\beta$.
+\end{warning}
+
+The functional equation pairs $\beta$ with $1-\beta$, while $1/2$ is its unique fixed point.  Independently, $1/2$ is the Catalan
+height-transition exponent of Proposition~\ref{prop:height-transition}.  This coincidence is a useful structural calibration, not an
+identity between zeta zeros and Catalan species.
+
+\section{Project computations on the full M\"obius data set}
+\label{sec:project-computations}
+
+The following experiments belong to the project data analysis.  They are finite statements and are not used as asymptotic premises.
+
+\begin{experiment}[Excursion census through $455{,}052{,}511$ \COMP]
+\label{exp:excursion-census}
+A blockwise scan of the binary M\"obius data through
+\begin{equation}
+N=455{,}052{,}511
+\label{eq:data-N}
+\end{equation}
+reported the following values:
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+quantity & measured value\\
+\midrule
+nonzero squarefree steps & $276{,}638{,}778$\\
+$\Mert(N)$ & $-5414$\\
+returns of the compressed walk to zero & $53{,}078$\\
+real sign changes between excursions & $26{,}720$\\
+last ordinary-time return & $420{,}059{,}551$\\
+last compressed-time return & $255{,}365{,}638$\\
+open compressed tail & $21{,}273{,}140$\\
+mean completed-excursion gap & $4811.139041$\\
+maximum completed-excursion gap & $33{,}409{,}232$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The same audit computed a cumulative Catalan-compatible path count with
+$\log_{10}$ fraction approximately $-77{,}335.1889795$ relative to all unconstrained nonzero sign words.  This enormous ambient entropy
+loss does not by itself imply height confinement, by Warning~\ref{warn:ambient-rarity}.
+\end{experiment}
+
+\begin{experiment}[Finite square-root envelope audit \COMP]
+\label{exp:finite-sqrt-envelope}
+An exhaustive scan over every integer
+\begin{equation}
+1000\le x\le455{,}052{,}511
+\label{eq:finite-envelope-range}
+\end{equation}
+found
+\begin{equation}
+|\Mert(x)|\le0.472203\sqrt x
+\label{eq:finite-envelope}
+\end{equation}
+throughout that finite range, with the maximum normalized value attained at $x=2803$.  On the same squarefree support, $25$ random-sign
+controls had mean normalized maximum $1.8972$ and standard deviation $0.3384$; none was below the M\"obius value.
+\end{experiment}
+
+\begin{warning}[Finite envelope is not an $O(\sqrt x)$ theorem]
+\label{warn:finite-envelope}
+Experiment~\ref{exp:finite-sqrt-envelope} is a finite computation only.  It neither proves nor suggests that the false Mertens conjecture
+should hold asymptotically.  The correct RH-scale benchmark remains \eqref{eq:mertens-rh-criterion}.
+\end{warning}
+
+\begin{experiment}[Catalan height-percentile audit \COMP]
+\label{exp:catalan-percentile}
+For every completed excursion, the project code compares the observed maximum with all primitive Catalan excursions having the same
+compressed length and fixed excursion sign.  Because the height distribution is discrete, the calibrated null statistic is the mid-rank
+\begin{equation}
+u_r
+=
+\mathbb P(H<H_r)+\frac12\mathbb P(H=H_r),
+\label{eq:catalan-midrank}
+\end{equation}
+whose expectation under the uniform Catalan null is exactly $1/2$.  An earlier raw geometric average of cumulative probabilities was about
+$79.3\%$, but that raw statistic is not uniform under the discrete null and is retained only as a diagnostic.  The mid-rank, not the raw
+geometric percentile, is the correct calibrated observable.
+\end{experiment}
+
+\section{A unified master spectrum for partial arithmetic information}
+\label{sec:master-spectrum}
+
+Let $\mathcal P_r(m)$ be a class of nearest-neighbour paths compatible with the arithmetic information revealed through layer $r$, together
+with any explicitly imposed return, sign, endpoint, or meander constraints.  Define
+\begin{equation}
+\mathfrak Z_{r,m}(v,z,u)
+=
+\sum_{Y\in\mathcal P_r(m)}
+v^{\mathcal R_m(Y)}z^{Y_m}u^{\max_{0\le j\le m}|Y_j|},
+\label{eq:master-spectrum}
+\end{equation}
+where $\mathcal R_m(Y)$ counts returns to zero.
+
+This single polynomial retains three quantities that total completion counts lose: return structure, endpoint displacement, and maximum
+height.  The corresponding high-sector count is
+\begin{equation}
+N_r^{\ge H}(m)
+=
+\#\{Y\in\mathcal P_r(m):\max_{j\le m}|Y_j|\ge H\}.
+\label{eq:high-sector-count}
+\end{equation}
+
+\begin{remark}[What counts as genuine progress]
+\label{rem:genuine-progress}
+A reduction in $|\mathcal P_r(m)|$ is not sufficient.  A useful partial theorem must preferentially reduce
+$N_r^{\ge H}(m)$ or an occupation-energy analogue while leaving a nontrivial family of completions alive.  This criterion prevents both
+full-revelation tautologies and entropy-only claims.
+\end{remark}
+
+\section{Priority research programme}
+\label{sec:priority-programme}
+
+The preceding exact results narrow the next steps considerably.
+
+\begin{question}[Causal inter-component capacity]
+\label{question:causal-capacity}
+Can the causal prime-incidence lift \eqref{eq:ramare-prefix-vector} produce a proved family of constraints
+\begin{equation}
+|B\cap S|\le c(S)
+\label{eq:causal-capacity-question}
+\end{equation}
+that couples distinct divisor bases $a$ and yields a power-size cumulative prefix deficit before near-total revelation?
+\end{question}
+
+\begin{question}[Low-mode Ramar\'e frame]
+\label{question:low-mode-frame}
+Can one bound the low eigenmodes of $J_H^*J_H$ after Ramar\'e decomposition without summing absolute values of all cross-colour
+correlations, and obtain \eqref{eq:causal-power-target}?
+\end{question}
+
+\begin{question}[Extinction-to-height transfer]
+\label{question:extinction-height}
+Can first-witness signed-cut extinction cells be shown to preferentially remove high Catalan sectors, rather than merely reducing the total
+number of multiplicative completions?
+\end{question}
+
+\begin{question}[Ordinal cubic energy upper bound]
+\label{question:ordinal-upper}
+Is there an independent upper bound on the negative-excursion functional $\mathcal A$ strong enough, together with
+\eqref{eq:ordinal-cubic-energy}, to yield a nontrivial depth estimate?
+\end{question}
+
+\begin{question}[Filtered shadow restoration]
+\label{question:filtered-shadow}
+Bj\"orner's squarefree simplicial complex has Mertens as an Euler-characteristic quantity \cite{Bjorner2011}.  Can a filtered shadow or
+persistent-homology inequality force opposite-parity mass to enter within a bounded future multiplicative window, rather than merely
+exist somewhere in the static complex?
+\end{question}
+
+The priority order is therefore
+\begin{equation}
+\boxed{
+\begin{aligned}
+\text{causal arithmetic relation}
+&\Longrightarrow \text{ collective prefix/low-mode deficit}\\
+&\Longrightarrow \mathcal E_1\ll H^{3-\delta}\\
+&\Longrightarrow \text{ global exponent improvement}.
+\end{aligned}}
+\label{eq:priority-chain}
+\end{equation}
+The Brownian $H^{2+\eps}$ scale and the all-$q$ RH-complete hierarchy remain later stages.
+
+\section{Negative results and circularity audit}
+\label{sec:negative-audit}
+
+The following barriers are retained because they prevent the programme from cycling through equivalent formulations.
+
+\begin{proposition}[Consolidated no-go list \NEG]
+\label{prop:no-go-list}
+The present collection establishes or records the following limitations.
+\begin{enumerate}[label=(\roman*)]
+\item Ambient Catalan rarity does not restrict a deterministic arithmetic selector.
+\item Pointwise revelation cannot force the RH scale while a macroscopic number of independent signs remain free.
+\item Any fixed finite set of multiplicative factor relations leaves a positive linear local capacity in sufficiently short relative windows.
+\item Static finite-band Ramar\'e relations have exactly the same $aD(P)$ connected components as the divisor-cube capacity and do not couple their free orientations.
+\item A moving prime cutoff can reduce the capacity ratio, but the componentwise free entropy simultaneously loses positive density.
+\item Scalar short-interval chord flatness alone does not rule out gentle high mountains; occupation energy contains strictly more path information.
+\item The ordinal endpoint transform is a deterministic function of $(\Mert,\Sq)$ and supplies no independent endpoint constraint.
+\item The explicit poles of a component of the $\alpha$ decomposition do not automatically transfer to the full function without a continuation estimate.
+\item The divisibility surface and $p$-adic shell coordinates are exact changes of structure but do not themselves create a spectral or cancellation gap.
+\item The single-prime shell route is blocked unless one proves cancellation in the remaining $p$-free modulated channels.
+\end{enumerate}
+\end{proposition}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+The most useful common object across the project is not a single transform but the squarefree Mertens path equipped with three compatible
+structures: its Catalan return geometry, its multiplicative completion space, and its occupation-energy operator.  The Catalan state space is
+exact; the arithmetic selector is the missing mechanism.  The divisor-cube theorem supplies a first explicit M\"obius-specific collective
+capacity and quantifies exactly how finite prime layers lower the ballistic constant.  Its lower barrier and entropy tradeoff show why the same
+mechanism cannot simply be iterated to the RH scale.  The static Ramar\'e no-go then identifies where genuinely new information must enter:
+through causal truncation and analytic recombination of prime-coloured currents, or through another inter-component relation.
+
+The calibrated first analytic objective is therefore not RH and not the Brownian endpoint.  It is the fixed-power occupation saving
+\eqref{eq:first-power-saving}.  The calibrated first combinatorial objective is a collective capacity or extinction statement that preferentially
+removes high sectors while retaining substantial freedom.  These two objectives are close enough to interact through the low modes of
+$J_H^*J_H$, yet weak enough not to be merely restatements of \eqref{eq:mertens-rh-criterion}.
+
+\section*{Notebook history}
+\addcontentsline{toc}{section}{Notebook history}
+
+\noindent
+\textbf{Version 1, 15 September 2026.}
+Consolidated the Catalan--Mertens excursion programme, the occupation-energy/$J^*J$ route, adversarial completions and signed-cut extinction,
+the ordinal-prime and $\alpha$ programmes, divisibility-surface/$p$-adic coordinates, the project excursion and sign-change experiments, and
+the new divisor-cube collective-capacity analysis.  Added the monotone capacity ratio $\rho_P$, the entropy--capacity barrier, and the static
+Ramar\'e component no-go.  No literature-wide novelty claim is made for these notebook deductions.
+
+\begin{thebibliography}{99}
+
+\bibitem{Apostol1976}
+T. M. Apostol,
+\emph{Introduction to Analytic Number Theory},
+Springer-Verlag, New York, 1976.
+
+\bibitem{AymoneSidoravicius2017}
+M. Aymone and V. Sidoravicius,
+Partial sums of biased random multiplicative functions,
+\emph{J. Number Theory} \textbf{172} (2017), 343--382.
+\href{https://doi.org/10.1016/j.jnt.2016.08.020}{doi:10.1016/j.jnt.2016.08.020};
+arXiv:1412.1157.
+
+\bibitem{Bhat1991}
+B. V. Rajarama Bhat,
+On greatest common divisor matrices and their applications,
+\emph{Linear Algebra Appl.} \textbf{158} (1991), 77--97.
+\href{https://doi.org/10.1016/0024-3795(91)90051-W}{doi:10.1016/0024-3795(91)90051-W}.
+
+\bibitem{Bjorner2011}
+A. Bj\"orner,
+A cell complex in number theory,
+\emph{Adv. Appl. Math.} \textbf{46} (2011), 71--85.
+\href{https://doi.org/10.1016/j.aam.2010.09.007}{doi:10.1016/j.aam.2010.09.007};
+arXiv:1101.5704.
+
+\bibitem{CsakiMohanty1981}
+E. Cs\'aki and S. G. Mohanty,
+Excursion and meander in random walk,
+\emph{Canad. J. Statist.} \textbf{9} (1981), 57--70.
+\href{https://doi.org/10.2307/3315296}{doi:10.2307/3315296}.
+
+\bibitem{DurrettIglehartMiller1977}
+R. T. Durrett, D. L. Iglehart, and D. R. Miller,
+Weak convergence to Brownian meander and Brownian excursion,
+\emph{Ann. Probab.} \textbf{5} (1977), 117--129.
+\href{https://doi.org/10.1214/aop/1176995895}{doi:10.1214/aop/1176995895}.
+
+\bibitem{HelfgottRadziwill2021}
+H. A. Helfgott and M. Radziwi\l\l,
+Expansion, divisibility and parity,
+arXiv:2103.06853, 2021.
+
+\bibitem{Kaigh1976}
+W. D. Kaigh,
+An invariance principle for random walk conditioned by a late return to zero,
+\emph{Ann. Probab.} \textbf{4} (1976), 115--121.
+\href{https://doi.org/10.1214/aop/1176996189}{doi:10.1214/aop/1176996189}.
+
+\bibitem{KhorunzhiyMarckert2009}
+O. Khorunzhiy and J.-F. Marckert,
+Uniform bounds for exponential moment of maximum of a Dyck path,
+\emph{Electron. Commun. Probab.} \textbf{14} (2009), 327--333.
+\href{https://doi.org/10.1214/ECP.v14-1486}{doi:10.1214/ECP.v14-1486};
+arXiv:0902.1229.
+
+\bibitem{Kousha2012}
+T. Kousha,
+Asymptotic behavior and the moderate deviation principle for the maximum of a Dyck path,
+\emph{Statist. Probab. Lett.} \textbf{82} (2012), 340--347.
+\href{https://doi.org/10.1016/j.spl.2011.10.015}{doi:10.1016/j.spl.2011.10.015};
+arXiv:1008.0606.
+
+\bibitem{KoukoulopoulosSoundararajan2020}
+D. Koukoulopoulos and K. Soundararajan,
+The structure of multiplicative functions with small partial sums,
+\emph{Discrete Anal.} (2020), Paper No. 6, 19 pp.
+\href{https://doi.org/10.19086/da.11963}{doi:10.19086/da.11963};
+arXiv:1909.13105.
+
+\bibitem{Littlewood1912}
+J. E. Littlewood,
+Quelques cons\'equences de l'hypoth\`ese que la fonction $\zeta(s)$ de Riemann n'a pas de z\'eros dans le demi-plan
+$\Re s>1/2$,
+\emph{C. R. Acad. Sci. Paris} \textbf{154} (1912), 263--266.
+
+\bibitem{MatomakiRadziwill2016}
+K. Matom\"aki and M. Radziwi\l\l,
+Multiplicative functions in short intervals,
+\emph{Ann. of Math.} (2) \textbf{183} (2016), no.~3, 1015--1056.
+\href{https://doi.org/10.4007/annals.2016.183.3.6}{doi:10.4007/annals.2016.183.3.6};
+arXiv:1501.04585.
+
+\bibitem{MatomakiRadziwillTao2015}
+K. Matom\"aki, M. Radziwi\l\l, and T. Tao,
+An averaged form of Chowla's conjecture,
+\emph{Algebra Number Theory} \textbf{9} (2015), no.~9, 2167--2196.
+\href{https://doi.org/10.2140/ant.2015.9.2167}{doi:10.2140/ant.2015.9.2167};
+arXiv:1503.05121.
+
+\bibitem{MatomakiRadziwillTao2016}
+K. Matom\"aki, M. Radziwi\l\l, and T. Tao,
+Sign patterns of the Liouville and M\"obius functions,
+\emph{Forum Math. Sigma} \textbf{4} (2016), e14.
+\href{https://doi.org/10.1017/fms.2016.6}{doi:10.1017/fms.2016.6};
+arXiv:1509.01545.
+
+\bibitem{MatomakiTeravainen2023}
+K. Matom\"aki and J. Ter\"av\"ainen,
+On the M\"obius function in all short intervals,
+\emph{J. Eur. Math. Soc.} \textbf{25} (2023), no.~4, 1207--1225.
+\href{https://doi.org/10.4171/JEMS/1205}{doi:10.4171/JEMS/1205};
+arXiv:1911.09076.
+
+\bibitem{MatomakiShaoTaoTeravainen2023}
+K. Matom\"aki, X. Shao, T. Tao, and J. Ter\"av\"ainen,
+Higher uniformity of arithmetic functions in short intervals I. All intervals,
+\emph{Forum Math. Pi} \textbf{11} (2023), e29.
+\href{https://doi.org/10.1017/fmp.2023.28}{doi:10.1017/fmp.2023.28};
+arXiv:2204.03754.
+
+\bibitem{Mirsky1949}
+L. Mirsky,
+On the frequency of pairs of square-free numbers with a given difference,
+\emph{Bull. Amer. Math. Soc.} \textbf{55} (1949), 936--939.
+\href{https://doi.org/10.1090/S0002-9904-1949-09313-8}{doi:10.1090/S0002-9904-1949-09313-8}.
+
+\bibitem{Ng2004}
+N. Ng,
+The distribution of the summatory function of the M\"obius function,
+\emph{Proc. London Math. Soc.} (3) \textbf{89} (2004), 361--389.
+\href{https://doi.org/10.1112/S0024611504014741}{doi:10.1112/S0024611504014741};
+arXiv:math/0310381.
+
+\bibitem{Nunes2015}
+R. M. Nunes,
+Squarefree numbers in arithmetic progressions,
+\emph{J. Number Theory} \textbf{153} (2015), 1--36.
+\href{https://doi.org/10.1016/j.jnt.2014.12.025}{doi:10.1016/j.jnt.2014.12.025}.
+
+\bibitem{OdlyzkoTeRiele1985}
+A. M. Odlyzko and H. J. J. te Riele,
+Disproof of the Mertens conjecture,
+\emph{J. Reine Angew. Math.} \textbf{357} (1985), 138--160.
+\href{https://doi.org/10.1515/crll.1985.357.138}{doi:10.1515/crll.1985.357.138}.
+
+\bibitem{Pilatte2024}
+C. Pilatte,
+Improved bounds for the two-point logarithmic Chowla conjecture,
+\emph{J. Amer. Math. Soc.}, in press.
+\href{https://doi.org/10.1090/jams/1084}{doi:10.1090/jams/1084};
+arXiv:2310.19357.
+
+\bibitem{Tao2016}
+T. Tao,
+The logarithmically averaged Chowla and Elliott conjectures for two-point correlations,
+\emph{Forum Math. Pi} \textbf{4} (2016), e8, 36 pp.
+\href{https://doi.org/10.1017/fmp.2016.6}{doi:10.1017/fmp.2016.6};
+arXiv:1509.05422.
+
+\bibitem{TaoTeravainen2018}
+T. Tao and J. Ter\"av\"ainen,
+Odd order cases of the logarithmically averaged Chowla conjecture,
+\emph{J. Th\'eor. Nombres Bordeaux} \textbf{30} (2018), no.~3, 997--1015.
+\href{https://doi.org/10.5802/jtnb.1062}{doi:10.5802/jtnb.1062};
+arXiv:1710.02112.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D. R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\end{thebibliography}
+
+\end{document}

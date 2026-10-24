@@ -1,0 +1,431 @@
+function mobius_certified_permutation_mean_v2
+clc; clear;
+% CERTIFIED EXACT COMPARISON: OBSERVED ENERGY VS PERMUTATION-MEAN ENERGY
+%
+% Supersedes mobius_exact_permutation_mean. Same streaming skeleton (already
+% validated: its m and S reproduced the census table at all eight cutoffs),
+% but with three changes that turn the sign of Delta into a certified result
+% instead of an unbounded floating-point measurement.
+%
+% -------------------------------------------------------------------------
+% CHANGE 1. CLEANER CLOSED FORM
+%   With alpha = 1 - S^2/m^2, beta = S^2/m^2, the earlier A, B satisfy
+%   A = 1 - B exactly, and
+%
+%       B = (S^2 - m) / (m(m-1)),        E[T_j^2] = j + B*j*(j-1).
+%
+%   Checks: j=1 gives 1 (correct, T_1^2 = 1 always);
+%           j=m gives m + (S^2-m) = S^2 (correct, T_m = S deterministically).
+%   B is an exact rational in the integers S^2-m and m(m-1); there is no
+%   model error to certify, only rounding in two sums.
+%
+% -------------------------------------------------------------------------
+% CHANGE 2. NO PRODUCT EXCEEDS 2^53
+%   The previous version formed n.^2 and Q.^2 in double. At Nc = 3.5e8 both
+%   exceed 2^53 = 9.007e15 (n^2 = 1.22e17, Q^2 = 4.53e16), so those products
+%   were themselves rounded. The effect on the printed values was far below
+%   the last digit shown, but it breaks the exactness precondition a
+%   certificate needs. Here every term is formed by division only:
+%
+%       M(n)^2/n^2        as  (M(n)/n)^2
+%       Q(n)/n^2          as  (Q(n)/n)/n
+%       Q(n)(Q(n)-1)/n^2  as  (Q(n)/n)*((Q(n)-1)/n)
+%       B                 as  ((S^2-m)/m)/(m-1)
+%
+%   M(n), Q(n), n, S^2-m are all exactly representable (asserted at runtime),
+%   so each term carries at most 3 roundings: relative error <= 3u + O(u^2).
+%
+% -------------------------------------------------------------------------
+% CHANGE 3. CERTIFIED INTERVAL
+%   All three sums have non-negative terms, so sum|x_i| equals the sum itself
+%   and the Kahan bound |Shat - S| <= 2u*sum|x_i| applies directly. A blanket
+%   per-sum bound of 8u*S is used: generous by roughly a factor of three,
+%   covering per-term rounding (3u), Kahan (2u), and chunk recombination.
+%   Errors are then propagated explicitly through B, the subtraction, and the
+%   division by log(Nc/N0). The routine ABORTS if 0 lies in the resulting
+%   interval for Delta, rather than reporting a sign it cannot justify.
+%
+%   Declared assumption: IEEE-754 binary64 throughout, with no extended
+%   precision, no FMA contraction and no reassociation. This holds for MATLAB
+%   on x86-64. The certificate is conditional on that and on nothing else.
+%
+% -------------------------------------------------------------------------
+% ANALYTIC CONTROL PRINTED ALONGSIDE
+%   Using Q(n) ~ d*n with d = 6/pi^2 one gets Sigma1 ~ d*L, Sigma2' ~ d^2*N,
+%   B ~ -(1 - S^2/m)/(m-1), hence
+%
+%       E_pi[E] ~ (6/pi^2) * ( 1 - (1 - S^2/m)/log(Nc/N0) ).
+%
+%   The deficit against 6/pi^2 is therefore 1/log(Nc/N0) up to the endpoint
+%   term: it decays only logarithmically. The table prints this alongside the
+%   exact value; they agreed to four significant figures at both ends of the
+%   previous run. A large discrepancy means a bug, not a discovery.
+
+%% CONFIGURATION
+fileName   = 'moebius.bin';
+N0         = 1000;
+cutoffs    = [5e6 5e7 1e8 1.5e8 2e8 2.5e8 3e8 3.5e8];
+chunkSize  = 2^22;
+savePrefix = 'mobius_certified_permutation_mean_v2';
+u          = eps(1)/2;              % 2^-53, the binary64 unit roundoff
+runClock   = tic;
+
+%% FILE LENGTH AND CUTOFF VALIDATION
+info = dir(fileName);
+if isempty(info), error('%s was not found.', fileName); end
+fileEntries = info.bytes;
+cutoffs = unique(round(cutoffs(:).'));
+cutoffs = cutoffs(cutoffs > N0 & cutoffs <= fileEntries);
+if isempty(cutoffs)
+    error('No requested cutoff lies in (%d, %d].', N0, fileEntries);
+end
+Nmax = max(cutoffs);
+
+fprintf('File entries: %d\n', fileEntries);
+fprintf('N0 = %d; cutoffs: %s\n', N0, mat2str(cutoffs));
+fprintf('Unit roundoff u = %.6g;  IEEE-754 binary64 assumed.\n', u);
+fprintf('Monte Carlo used: FALSE\nPrimes or zeta data used: FALSE\n\n');
+
+%% STREAMING PASS
+fid = fopen(fileName, 'rb');
+if fid < 0, error('Could not open %s.', fileName); end
+cleaner = onCleanup(@() fclose(fid));
+
+nCut = numel(cutoffs);
+resSM = zeros(1,nCut); resS1 = zeros(1,nCut); resS2 = zeros(1,nCut);
+resm  = zeros(1,nCut); resS  = zeros(1,nCut); resMaxAbsM = zeros(1,nCut);
+
+sM = 0; cM = 0;      % sum (M(n)/n)^2
+s1 = 0; c1 = 0;      % sum (Q(n)/n)/n
+s2 = 0; c2 = 0;      % sum (Q(n)/n)*((Q(n)-1)/n)
+
+runningM = 0; runningQ = 0; offset = 0; k = 1; maxAbsM = 0;
+TWO53 = 2^53;
+
+while offset < Nmax
+    stop  = min([offset + chunkSize, cutoffs(k), Nmax]);
+    count = stop - offset;
+    chunk = fread(fid, count, '*int8');
+    if numel(chunk) < count
+        error('Unexpected end of file at entry %d.', offset + numel(chunk));
+    end
+    if any(chunk < -1 | chunk > 1)
+        error('Entry outside {-1,0,+1} in chunk ending at %d.', stop);
+    end
+
+    a = double(chunk(:));
+    Mloc = runningM + cumsum(a);
+    Qloc = runningQ + cumsum(a ~= 0);
+    runningM = Mloc(end);
+    runningQ = Qloc(end);
+    maxAbsM  = max(maxAbsM, max(abs(Mloc)));
+
+    n = (offset+1 : stop).';
+    keep = n > N0;
+    if any(keep)
+        nn = n(keep);
+        Mk = Mloc(keep);
+        Qk = Qloc(keep);
+
+        % Exactness preconditions for the certificate: every value fed to a
+        % division must itself be an exactly represented integer.
+        if max(abs(Mk)) >= TWO53 || max(Qk) >= TWO53 || nn(end) >= TWO53
+            error('Exactness precondition violated near n = %d.', stop);
+        end
+
+        mn  = Mk ./ nn;                 % 1 rounding
+        qn  = Qk ./ nn;                 % 1 rounding
+        qn1 = (Qk - 1) ./ nn;           % Qk-1 exact; 1 rounding
+
+        tM = kahan_sum(mn .* mn);       % <= 2 roundings per term
+        t1 = kahan_sum(qn ./ nn);       % <= 2 roundings per term
+        t2 = kahan_sum(qn .* qn1);      % <= 3 roundings per term
+
+        [sM, cM] = kahan_step(sM, cM, tM);
+        [s1, c1] = kahan_step(s1, c1, t1);
+        [s2, c2] = kahan_step(s2, c2, t2);
+    end
+
+    offset = stop;
+    while k <= nCut && cutoffs(k) == offset
+        resSM(k) = sM; resS1(k) = s1; resS2(k) = s2;
+        resm(k) = runningQ; resS(k) = runningM; resMaxAbsM(k) = maxAbsM;
+        k = k + 1;
+    end
+
+    if mod(offset, 50*chunkSize) < chunkSize || offset == Nmax
+        fprintf('  n = %d / %d   (%.1f s)\n', offset, Nmax, toc(runClock));
+    end
+end
+clear cleaner;
+
+%% CERTIFIED EVALUATION AT EACH CUTOFF
+Cutoff = cutoffs(:); NonzeroAnts = resm(:); Endpoint = resS(:);
+Ereal = zeros(nCut,1); ErealLo = Ereal; ErealHi = Ereal;
+Eperm = Ereal; EpermLo = Ereal; EpermHi = Ereal;
+Rho = Ereal; RhoLo = Ereal; RhoHi = Ereal;
+Delta = Ereal; EpsCert = Ereal; Margin = Ereal;
+Asymp = Ereal; AsympRelDiff = Ereal;
+Verdict = strings(nCut,1);
+
+for i = 1:nCut
+    m = resm(i); S = resS(i); Nc = cutoffs(i);
+    if m < 2, error('Fewer than two nonzero entries at cutoff %d.', Nc); end
+
+    L = log(Nc / N0);                       % Nc/N0 exact here; <=3u relative
+    epsL = 3*u*L;
+
+    % B = (S^2 - m) / (m(m-1)), formed without the product m(m-1).
+    Bnum = S*S - m;                         % exact integer, |.| < 2^53
+    if abs(Bnum) >= TWO53, error('B numerator not exact at Nc = %d.', Nc); end
+    B    = (Bnum / m) / (m - 1);            % 2 roundings
+    epsB = 2*u*abs(B);
+
+    SM = resSM(i); S1 = resS1(i); S2 = resS2(i);   % all sums non-negative
+    epsSM = 8*u*SM; epsS1 = 8*u*S1; epsS2 = 8*u*S2;
+
+    % Permutation-mean numerator P = Sigma1 + B*Sigma2'   (B < 0 here).
+    BS2   = B * S2;
+    epsBS2 = abs(B)*epsS2 + S2*epsB + u*abs(BS2);
+    P      = S1 + BS2;
+    epsP   = epsS1 + epsBS2 + u*abs(P);
+
+    DL   = SM - P;                          % = Delta * L
+    epsDL = epsSM + epsP + u*abs(DL);
+
+    Ereal(i) = SM / L;
+    Eperm(i) = P  / L;
+    Delta(i) = DL / L;
+
+    epsEreal = (epsSM + (SM/L)*epsL) / L + u*abs(Ereal(i));
+    epsEperm = (epsP  + (abs(P)/L)*epsL) / L + u*abs(Eperm(i));
+    EpsCert(i) = (epsDL + (abs(DL)/L)*epsL) / L + u*abs(Delta(i));
+
+    ErealLo(i) = Ereal(i) - epsEreal; ErealHi(i) = Ereal(i) + epsEreal;
+    EpermLo(i) = Eperm(i) - epsEperm; EpermHi(i) = Eperm(i) + epsEperm;
+
+    if EpermLo(i) <= 0
+        error('Permutation mean interval touches zero at Nc = %d.', Nc);
+    end
+    Rho(i)   = Ereal(i) / Eperm(i);
+    RhoLo(i) = ErealLo(i) / EpermHi(i);
+    RhoHi(i) = ErealHi(i) / EpermLo(i);
+
+    Margin(i) = abs(Delta(i)) / EpsCert(i);
+    if abs(Delta(i)) > EpsCert(i)
+        Verdict(i) = sprintf('CERTIFIED %s', ternary(Delta(i) < 0, '<', '>'));
+    else
+        Verdict(i) = 'UNDECIDED';
+    end
+
+    % Analytic control: (6/pi^2)*(1 - (1 - S^2/m)/L).
+    Asymp(i) = (6/pi^2) * (1 - (1 - (S*S)/m)/L);
+    AsympRelDiff(i) = (Asymp(i) - Eperm(i)) / Eperm(i);
+end
+
+resultTable = table(Cutoff, NonzeroAnts, Endpoint, Ereal, Eperm, Rho, ...
+    Delta, EpsCert, Margin, Verdict, Asymp, AsympRelDiff);
+intervalTable = table(Cutoff, ErealLo, ErealHi, EpermLo, EpermHi, ...
+    RhoLo, RhoHi);
+
+%% REPORT
+fprintf('\nCERTIFIED COMPARISON. Both sides on (N0,Nc], normaliser log(Nc/N0).\n\n');
+disp(resultTable);
+fprintf('\nCERTIFIED INTERVALS\n');
+disp(intervalTable);
+
+allCert = all(startsWith(Verdict, 'CERTIFIED'));
+fprintf('\nDelta = E(M) - E_pi[E(pi)].  EpsCert is a rigorous bound on the\n');
+fprintf('total rounding error in Delta.  Margin = |Delta|/EpsCert.\n');
+fprintf('All cutoffs certified: %s\n', string(allCert));
+if ~allCert
+    error(['At least one cutoff is UNDECIDED: the computed |Delta| does not ' ...
+           'exceed its certified error bound. No sign may be claimed there.']);
+end
+
+fprintf('\nCROSS-CHECK against the census table (must match exactly):\n');
+for i = 1:nCut
+    fprintf('  Nc = %11d :  nonzero = %d,  M(Nc) = %d,  max|M| = %d\n', ...
+        cutoffs(i), resm(i), resS(i), resMaxAbsM(i));
+end
+
+fprintf('\nHEADLINE AT Nc = %d:\n', cutoffs(1));
+fprintf('  E(M)          in [%.15g, %.15g]\n', ErealLo(1), ErealHi(1));
+fprintf('  E_pi[E(pi)]   in [%.15g, %.15g]   (6/pi^2 = %.15g)\n', ...
+    EpermLo(1), EpermHi(1), 6/pi^2);
+fprintf('  rho_E         in [%.15g, %.15g]\n', RhoLo(1), RhoHi(1));
+fprintf('  Delta         = %.15g  +/- %.3g   (margin %.3g x)\n', ...
+    Delta(1), EpsCert(1), Margin(1));
+
+%% LATEX FRAGMENT (+ mandatory .txt copy)
+tex = build_tex(N0, cutoffs, resm, resS, Ereal, Eperm, Rho, Delta, ...
+    EpsCert, ErealLo, ErealHi, EpermLo, EpermHi, RhoLo, RhoHi);
+write_lines([savePrefix '_insert.tex'], tex);
+write_lines([savePrefix '_insert.txt'], tex);
+writetable(resultTable,   [savePrefix '_result.csv']);
+writetable(intervalTable, [savePrefix '_intervals.csv']);
+save([savePrefix '.mat'], 'resultTable', 'intervalTable', 'cutoffs', 'N0', ...
+    'resSM', 'resS1', 'resS2', 'resm', 'resS', '-v7.3');
+
+fprintf('\nFINISHED in %.1f s. Wrote %s_insert.{tex,txt}, two CSVs and %s.mat\n', ...
+    toc(runClock), savePrefix, savePrefix);
+end
+
+%% ========================================================================
+function s = kahan_sum(x)
+s = 0; c = 0;
+for i = 1:numel(x)
+    y = x(i) - c; t = s + y; c = (t - s) - y; s = t;
+end
+end
+
+function [s, c] = kahan_step(s, c, x)
+y = x - c; t = s + y; c = (t - s) - y; s = t;
+end
+
+function out = ternary(cond, a, b)
+if cond, out = a; else, out = b; end
+end
+
+function write_lines(name, lines)
+fid = fopen(name, 'w');
+if fid < 0, error('Could not write %s.', name); end
+for i = 1:numel(lines), fprintf(fid, '%s\n', lines{i}); end
+fclose(fid);
+end
+
+%% ========================================================================
+function L = build_tex(N0, cutoffs, m, S, Ereal, Eperm, Rho, Delta, ...
+    EpsCert, ErealLo, ErealHi, EpermLo, EpermHi, RhoLo, RhoHi) %#ok<INUSL>
+L = {};
+L{end+1} = '% ---- drop-in for Section "All fixed-mask permutations" ----';
+L{end+1} = '';
+L{end+1} = '\begin{theorem}[Exact energy mean over all fixed-mask permutations]';
+L{end+1} = '\label{thm:exact-energy-mean}';
+L{end+1} = 'Let $Q(n)=\#\{k\leq n:\mu(k)\neq0\}$, let $1\leq N_0<N$ be the cutoffs';
+L{end+1} = 'of Definition \ref{def:logarithmic-energy}, and set $m=Q(N)$,';
+L{end+1} = '$S=M(N)$. Then';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E_{\pi\in\Om_N^{(1)}}\cE_{N_0,N}(\pi)';
+L{end+1} = '=\frac{1}{\log(N/N_0)}\sum_{N_0<n\leq N}\frac{\E T_{Q(n)}^2}{n^2}.';
+L{end+1} = '\label{eq:exact-energy-mean}';
+L{end+1} = '\end{equation}';
+L{end+1} = '\end{theorem}';
+L{end+1} = '\begin{proof}';
+L{end+1} = 'For $r_j\leq n<r_{j+1}$ the path of $\pi$ equals $T_j$ with $j=Q(n)$;';
+L{end+1} = 'apply linearity of expectation and \eqref{eq:permutation-second-moment}.';
+L{end+1} = '\end{proof}';
+L{end+1} = '';
+L{end+1} = '\begin{remark}[Normalisation]';
+L{end+1} = '\label{rem:mean-normalisation}';
+L{end+1} = 'Both sides of \eqref{eq:energy-to-mean-ratio} must use the same $N_0$';
+L{end+1} = 'and the same normaliser $\log(N/N_0)$. Stating the mean with';
+L{end+1} = '$1/\log N$ over the full range makes the ratio incomparable with';
+L{end+1} = '\eqref{eq:measured-log-energy}.';
+L{end+1} = '\end{remark}';
+L{end+1} = '';
+L{end+1} = '\begin{lemma}[Falling-factorial form]';
+L{end+1} = '\label{lem:falling-factorial}';
+L{end+1} = 'With $B=\dfrac{S^2-m}{m(m-1)}$ one has $A=1-B$ and';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E T_j^2=j+B\,j(j-1).';
+L{end+1} = '\label{eq:falling-factorial}';
+L{end+1} = '\end{equation}';
+L{end+1} = 'In particular $\E T_1^2=1$ and $\E T_m^2=S^2$, as required by';
+L{end+1} = '$T_1=\pm1$ and $T_m=S$. Writing';
+L{end+1} = '$\Sigma_1=\sum_{N_0<n\leq N}Q(n)/n^2$ and';
+L{end+1} = '$\Sigma_2=\sum_{N_0<n\leq N}Q(n)(Q(n)-1)/n^2$,';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E_{\pi\in\Om_N^{(1)}}\cE_{N_0,N}(\pi)';
+L{end+1} = '=\frac{\Sigma_1+B\Sigma_2}{\log(N/N_0)}.';
+L{end+1} = '\label{eq:one-pass-mean}';
+L{end+1} = '\end{equation}';
+L{end+1} = 'Both sums are cumulative in $n$ and $B$ depends only on the cutoff, so';
+L{end+1} = 'a single streaming pass evaluates \eqref{eq:one-pass-mean} at every';
+L{end+1} = 'cutoff in $O(N)$ total time.';
+L{end+1} = '\end{lemma}';
+L{end+1} = '\begin{proof}';
+L{end+1} = 'Expand $\frac{j(m-j)}{m-1}\bigl(1-\frac{S^2}{m^2}\bigr)+\frac{j^2S^2}{m^2}$';
+L{end+1} = 'and collect the coefficients of $j$ and $j(j-1)$.';
+L{end+1} = '\end{proof}';
+L{end+1} = '';
+L{end+1} = '\begin{corollary}[Why $6/\pi^2$ is the wrong finite reference]';
+L{end+1} = '\label{cor:log-deficit}';
+L{end+1} = 'With $Q(n)\sim n/\zeta(2)$ one has $\Sigma_1\sim\log(N/N_0)/\zeta(2)$,';
+L{end+1} = '$\Sigma_2\sim N/\zeta(2)^2$ and $B\sim-(1-S^2/m)/m$, whence';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\E_{\pi\in\Om_N^{(1)}}\cE_{N_0,N}(\pi)';
+L{end+1} = '\sim\frac{1}{\zeta(2)}\left(1-\frac{1-S^2/m}{\log(N/N_0)}\right).';
+L{end+1} = '\label{eq:log-deficit}';
+L{end+1} = '\end{equation}';
+L{end+1} = 'The deficit against $1/\zeta(2)$ is of order $1/\log(N/N_0)$: it comes';
+L{end+1} = 'from the bridge constraint $T_m=S$, and it decays only';
+L{end+1} = 'logarithmically. Hence $1/\zeta(2)$ is the correct asymptotic null';
+L{end+1} = 'mean but not the correct finite-$N$ one, and any ratio formed against';
+L{end+1} = 'it carries a spurious $1/\log(N/N_0)$ drift.';
+L{end+1} = '\end{corollary}';
+L{end+1} = '';
+L{end+1} = '\begin{experiment}[Certified evaluation]';
+L{end+1} = '\label{exp:certified-rho}';
+L{end+1} = sprintf(['With $N_0=%d$, equation \\eqref{eq:one-pass-mean} was ' ...
+    'evaluated in IEEE-754 binary64 with compensated summation and an ' ...
+    'explicit propagated error bound $\\varepsilon$. Every term is formed ' ...
+    'by division from exactly represented integers, so no intermediate ' ...
+    'product exceeds $2^{53}$.'], N0);
+L{end+1} = '\begin{table}[htbp]';
+L{end+1} = '\centering';
+L{end+1} = '\caption{Observed energy against the exact fixed-mask permutation';
+L{end+1} = 'mean, with certified error bounds. $\Delta=\cE_{N_0,N}(M)-';
+L{end+1} = '\E_\pi\cE_{N_0,N}$; the sign of $\Delta$ is certified wherever';
+L{end+1} = '$|\Delta|>\varepsilon$.}';
+L{end+1} = '\label{tab:certified-rho}';
+L{end+1} = '\begin{tabular}{rrrcccc}';
+L{end+1} = '\toprule';
+L{end+1} = '$N$&$m$&$S$&$\cE_{N_0,N}(M)$&$\E_\pi\cE_{N_0,N}$&$\rho_E$&$|\Delta|/\varepsilon$\\';
+L{end+1} = '\midrule';
+for i = 1:numel(cutoffs)
+    L{end+1} = sprintf('%s&%s&%d&%.9f&%.9f&%.6f&$%.1g$\\\\', ...
+        commafy(cutoffs(i)), commafy(m(i)), S(i), Ereal(i), Eperm(i), ...
+        Rho(i), abs(Delta(i))/EpsCert(i)); %#ok<AGROW>
+end
+L{end+1} = '\bottomrule';
+L{end+1} = '\end{tabular}';
+L{end+1} = '\end{table}';
+L{end+1} = '\end{experiment}';
+L{end+1} = '';
+L{end+1} = '\begin{proposition}[Certified sign at the computed cutoffs]';
+L{end+1} = '\label{prop:certified-sign}';
+L{end+1} = 'At each cutoff of Table \ref{tab:certified-rho},';
+L{end+1} = '\begin{equation}';
+L{end+1} = '\cE_{N_0,N}(M)<\E_{\pi\in\Om_N^{(1)}}\cE_{N_0,N}(\pi).';
+L{end+1} = '\label{eq:certified-sign}';
+L{end+1} = '\end{equation}';
+L{end+1} = '\end{proposition}';
+L{end+1} = '\begin{proof}';
+L{end+1} = 'Both sides are finite sums of the explicitly determined data';
+L{end+1} = '$M(n)$, $Q(n)$, $m$, $S$. Each was evaluated with a propagated';
+L{end+1} = 'rounding bound $\varepsilon$, and the computed $|\Delta|$ exceeds';
+L{end+1} = '$\varepsilon$ by the factor shown in the last column, under the';
+L{end+1} = 'stated IEEE-754 binary64 semantics.';
+L{end+1} = '\end{proof}';
+L{end+1} = '';
+L{end+1} = '\begin{remark}[Scope]';
+L{end+1} = '\label{rem:rho-scope}';
+L{end+1} = 'Proposition \ref{prop:certified-sign} settles the sign of $\Delta$ at';
+L{end+1} = 'the listed cutoffs and nothing else. It replaces the heuristic';
+L{end+1} = 'calibration \eqref{eq:global-c-calibration}, whose reference';
+L{end+1} = '$1/\zeta(2)$ omits the $1/\log(N/N_0)$ deficit of Corollary';
+L{end+1} = '\ref{cor:log-deficit}. It does \emph{not} establish low energy in the';
+L{end+1} = 'sense of Definition \ref{def:relative-low-energy}: by Warning';
+L{end+1} = '\ref{warn:no-complete-enumeration} the mean is not the distribution,';
+L{end+1} = 'and $P_E(N)$ in \eqref{eq:exact-energy-percentile} remains uncomputed.';
+L{end+1} = 'Nor does it say anything as $N\to\infty$.';
+L{end+1} = '\end{remark}';
+end
+
+function s = commafy(x)
+s = sprintf('%d', round(x));
+for i = numel(s)-3 : -3 : 1
+    s = [s(1:i) ',' s(i+1:end)];
+end
+end

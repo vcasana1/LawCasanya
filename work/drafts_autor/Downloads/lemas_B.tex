@@ -1,0 +1,173 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newcommand{\RVM}{\mathrm{RVM}}
+\newcommand{\NR}{\mathcal N_{\RVM}}
+\DeclareMathOperator{\Lap}{\mathcal L}
+
+\title{Two lemmas for route B\\ \large (canonical constants and an a priori bound for quasi-solutions of the rung system)}
+\author{Notes to \texttt{rvm\_zeta\_pi\_mertens\_v18}}
+\date{10 October 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Conventions.} All references are to v18. $\tau_k$ is the midpoint clock, $n(t):=\#\{k:\tau_k\le t\}$, $\NR(t)=\frac t{2\pi}\log\frac t{2\pi e}+\frac78$, $G(s)=s(s-1)\pi^{-s/2}\Gamma(s/2)$, $q(s)=s(s-1)$, and for a nondecreasing real list $\boldsymbol\kappa=(\kappa_k)_{k\ge1}$ with $\kappa_1\ge\tau_0^+$ and $|\kappa_k-\tau_k|$ bounded,
+\[
+ P_{\boldsymbol\kappa}(s)=\prod_{k\ge1}\Bigl(1+\frac{q(s)}{\frac14+\kappa_k^2}\Bigr),\qquad
+ \zeta_{\boldsymbol\kappa}=\frac{P_{\boldsymbol\kappa}}{G},\qquad
+ N_{\boldsymbol\kappa}(t)=\#\{k:\kappa_k\le t\},
+\]
+as in (eq:list-objects). $P_{\boldsymbol\kappa}$ is entire, real on the real axis, symmetric under $s\mapsto1-s$, positive on $(1,\infty)$, and its zeros are exactly $\frac12\pm i\kappa_k$ (Theorem thm:path in its list form). The rung system is (eq:rung-system),
+\begin{equation}\label{eq:rung}
+ \sum_{k\ge1}\cos(\kappa_ku)+\sum_{n\ge2}\mathsf a_n\,\delta(u-\log n)=\mathsf k(u)\qquad\text{in }\mathcal D'(0,\infty),
+\end{equation}
+with $\mathsf k$ as in (eq:transport-defs). Nothing below uses the ordinates of $\zeta$.
+
+\section*{Lemma 1: the constants of route B are canonical}
+
+\begin{lemma}[Canonical constants]\label{lem:canonical}
+Let $(\boldsymbol\kappa,(\mathsf a_n))$ be a solution of \eqref{eq:rung} with $\boldsymbol\kappa\in\mathscr O$. Then
+\[
+ |\kappa_k-\tau_k|\le C_\eta\quad(k\ge1),\qquad 0\le\mathsf a_n\le\frac1e\quad(n\ge2),
+\]
+where $C_\eta$ is the constant of Lemma lem:bounded-displacement. Consequently, if bounded finite sections of \eqref{eq:rung} are solved under the constraints $|\kappa_k-\tau_k|\le C$ and $|\mathsf a_n|\le M$, nothing is lost by taking
+\[
+ C=C_\eta,\qquad M=\tfrac1e,
+\]
+and route B is the single parameter-free statement $E_m(C_\eta,\tfrac1e)\to0$.
+\end{lemma}
+
+\begin{proof}
+By Theorem thm:free-masses the solution is unique, $\boldsymbol\kappa=(\gamma_k)$ and $\mathsf a_n=\Lambda(n)/(2\sqrt n)$. The first bound is Lemma lem:bounded-displacement. For the second, $\mathsf a_n\le\frac{\log n}{2\sqrt n}$, and $x\mapsto\frac{\log x}{2\sqrt x}$ has its maximum on $[1,\infty)$ at $x=e^2$, where it equals $1/e$.
+\end{proof}
+
+\begin{remark}
+Theorem thm:free-masses is stated for $\boldsymbol\kappa\in\mathscr O$, and $\mathscr O$ carries, besides the tube $|\kappa_k-\tau_k|\le C_\eta$, the primitive-count condition $|\int_{\tau_0}^X(N_{\boldsymbol\kappa}-\NR)|\le C\log X$ of (eq:list-space). A list obtained as a coordinatewise limit of finite sections inherits the tube and the ordering, not that condition. Before Lemma~\ref{lem:canonical} is applied to such a limit, Theorem thm:free-masses must be checked for exact solutions of \eqref{eq:rung} that satisfy the tube only. For an exact solution the half-plane boundedness of $\zeta_{\boldsymbol\kappa}$, which is what the primitive-count condition is used for, follows directly from \eqref{eq:rung} (Lemma~\ref{lem:apriori}, Step~1 with $E\equiv0$), so the proof should go through; this has to be written.
+\end{remark}
+
+\section*{Lemma 2: an a priori bound for quasi-solutions}
+
+Throughout, $\sigma_0:=2$, $r:=\sigma_0-\frac12=\frac32$, $R:=2$.
+
+\medskip\noindent\textbf{Section data.} A \emph{section list} is a nondecreasing real list with $\kappa_1\ge\tau_0^+$, $|\kappa_k-\tau_k|\le C$ for all $k$ and $\kappa_k=\tau_k$ for $k>K$. Its \emph{masses} are real numbers $\mathsf a_n$, $2\le n\le N$, with $|\mathsf a_n|\le M$; put $\mathsf a_n=0$ for $n>N$. The \emph{Laplace residual} of $(\boldsymbol\kappa,(\mathsf a_n))$ is the function
+\begin{equation}\label{eq:Rhat}
+ \widehat{\mathsf R}(s):=\tfrac12\,\frac{P_{\boldsymbol\kappa}'}{P_{\boldsymbol\kappa}}(s)-\tfrac12\,\frac{G'}{G}(s)+\sum_{n=2}^{N}\mathsf a_n\,n^{\frac12-s},\qquad \Re s>1,
+\end{equation}
+which by the distributional explicit formula (Theorem thm:distributional-EF, list form) is the Laplace transform $\int_0^\infty e^{-(s-\frac12)u}\mathsf R(u)\,du$ of the residual distribution $\mathsf R:=\sum_k\cos(\kappa_ku)+\sum_n\mathsf a_n\delta(u-\log n)-\mathsf k(u)$ of \eqref{eq:rung}; \eqref{eq:Rhat} is taken as the definition. The \emph{accumulated residual} is
+\begin{equation}\label{eq:E}
+ E(T):=\int_{-T}^{T}\bigl|\widehat{\mathsf R}(\sigma_0+iv)\bigr|\,dv,\qquad
+ \varepsilon:=\sup_{T\ge2}\frac{E(T)}{\log T}.
+\end{equation}
+Finally $\Lambda_0:=2\sum_{n\ge2}n^{\frac12-\sigma_0}/\log n<\infty$ and $c_{\RVM}:=\sup_{\Re s\ge\sigma_0}|\log\zeta_{\RVM}(s)|$, finite by Theorem thm:halfplane-RVM.
+
+\begin{lemma}[A priori bound for quasi-solutions]\label{lem:apriori}
+There are absolute constants $A_1,A_2,A_3,T_0$ such that, for every section list with masses as above and every $T\ge T_0$ with $T\notin\{\kappa_k\}$,
+\begin{equation}\label{eq:count-bound}
+ \bigl|N_{\boldsymbol\kappa}(T)-n(T)\bigr|\le A_1\log T+A_2\bigl(1+c_{\RVM}+M\Lambda_0+10^{-2}C\bigr)+A_3\,E(T+R),
+\end{equation}
+and consequently, for every $k$ with $\tau_k\ge T_0+C+R$,
+\begin{equation}\label{eq:disp-bound}
+ |\kappa_k-\tau_k|\le 2\pi\bigl(A_1+A_3\,\varepsilon\bigr)+\frac{2\pi\bigl(A_2(1+c_{\RVM}+M\Lambda_0+10^{-2}C)+A_3\varepsilon\log(1+C+R)+1\bigr)}{\log(\tau_k/2\pi)}\,(1+o(1)).
+\end{equation}
+In particular, with $C^*:=2\pi A_1$: if the section is solved under the constraints $|\kappa_k-\tau_k|\le C$, $|\mathsf a_n|\le M$, and its accumulated residual satisfies $\varepsilon\le\varepsilon_0$, then for all $k$ beyond a height depending only on $C,M,\varepsilon_0$,
+\[
+ |\kappa_k-\tau_k|\le C^*+2\pi A_3\,\varepsilon_0+o(1),
+\]
+so that the tube constraint is not active for $C>C^*+2\pi A_3\varepsilon_0+1$. The constants do not depend on $K$, $N$, $C$, $M$ or on the section.
+\end{lemma}
+
+\begin{proof}
+\emph{Step 1: the Dirichlet factor on the half-plane.} Put
+\[
+ \Lambda_{\mathsf a}(s):=\sum_{n=2}^{N}\frac{2\mathsf a_n}{\log n}\,n^{\frac12-s},\qquad
+ Y(s):=\zeta_{\boldsymbol\kappa}(s)\,e^{-\Lambda_{\mathsf a}(s)}.
+\]
+For $\Re s\ge\sigma_0$, $|\Lambda_{\mathsf a}(s)|\le M\Lambda_0$ (this is where $\sigma_0>\frac32$ is needed: the masses are bounded, not decaying). Since $P_{\boldsymbol\kappa}$ has no zeros off $\Re s=\frac12$ and $G$ has none in $\Re s>1$, $Y$ is holomorphic and zero-free in $\Re s>1$, so $\log Y$ has a holomorphic branch there, real on $(1,\infty)$. Differentiating, by \eqref{eq:Rhat},
+\begin{equation}\label{eq:logY-deriv}
+ (\log Y)'(s)=2\,\widehat{\mathsf R}(s)\qquad(\Re s>1).
+\end{equation}
+At the real point, $\log Y(\sigma_0)=\log\zeta_{\RVM}(\sigma_0)+\sum_{k\le K}\log\frac{(\frac14+\kappa_k^2+q)(\frac14+\tau_k^2)}{(\frac14+\kappa_k^2)(\frac14+\tau_k^2+q)}-\Lambda_{\mathsf a}(\sigma_0)$ with $q=q(\sigma_0)=2$. Each logarithm has modulus at most $\frac{2q\,|\kappa_k-\tau_k|}{\tau_k^3}(1+o(1))\le\frac{4C}{\tau_k^3}(1+o(1))$, and $\sum_k\tau_k^{-3}<2.5\cdot10^{-3}$ (the first terms are $14.5^{-3}+20.7^{-3}+25.5^{-3}+\cdots$). Hence
+\[
+ |\log Y(\sigma_0)|\le c_{\RVM}+M\Lambda_0+10^{-2}C=:B_0 .
+\]
+Integrating \eqref{eq:logY-deriv} along the vertical line,
+\begin{equation}\label{eq:logY-line}
+ |\log Y(\sigma_0+it)|\le B_0+2E(|t|)\qquad(t\in\mathbb R).
+\end{equation}
+
+\emph{Step 2: Phragm\'en--Lindel\"of in the strip.} Let $W(s):=\log|P_{\boldsymbol\kappa}(s)|-\log|G(s)|=\log|Y(s)|+\Re\Lambda_{\mathsf a}(s)$ in $\Re s>1$. On the strip $\Sigma:=\{1-\sigma_0\le\Re s\le\sigma_0,\ t\ge1\}$ the function $W$ is subharmonic: $\log|P_{\boldsymbol\kappa}|$ is subharmonic and $\log|G|$ is harmonic there ($G$ has no zeros or poles with $t\ge1$). On the right side $\Re s=\sigma_0$, by \eqref{eq:logY-line} and $E(t)\le\varepsilon\log t$,
+\[
+ W(\sigma_0+it)\le B_0+M\Lambda_0+2\varepsilon\log t .
+\]
+On the left side, the symmetry $P_{\boldsymbol\kappa}(1-s)=P_{\boldsymbol\kappa}(s)$ gives $W(1-s)=W(s)+\log|G(s)/G(1-s)|$, and $\log|G(\sigma_0+it)/G(1-\sigma_0-it)|=(\sigma_0-\tfrac12)\log\frac t{2\pi}+O(1/t)$ by Stirling; hence
+\[
+ W(1-\sigma_0+it)\le B_0+M\Lambda_0+2\varepsilon\log t+(\sigma_0-\tfrac12)\log\tfrac t{2\pi}+c_1 .
+\]
+On the bottom side $t=1$, $W$ is bounded by a constant depending on $C$ only through $B_0$ (finitely many factors). $W(s)\le c|s|\log|s|$ in $\Sigma$ because $P_{\boldsymbol\kappa}$ is entire of order one with $N_{\boldsymbol\kappa}(t)\ll t\log t$. The function $W(s)-(\sigma_0-\tfrac12+2\varepsilon)\log|s-\tfrac12|$ is subharmonic in $\Sigma$, bounded above by $B_0+M\Lambda_0+c_2$ on $\partial\Sigma$, and of growth $o(e^{\pi t/(2\sigma_0-1)})$; the Phragm\'en--Lindel\"of principle for the half-strip gives
+\begin{equation}\label{eq:W-strip}
+ W(s)\le B_0+M\Lambda_0+c_2+(\sigma_0-\tfrac12+2\varepsilon)\log(2+|t|)\qquad(s\in\Sigma).
+\end{equation}
+For $\Re s>\sigma_0$ the same bound holds directly from \eqref{eq:logY-line} and Step~1.
+
+\emph{Step 3: Backlund's lemma on the segment at height $T$.} Fix $T\ge T_0$, $T\notin\{\kappa_k\}$, and let $\alpha\in\mathbb R$ be such that $e^{i\alpha}P_{\boldsymbol\kappa}(\sigma_0+iT)>0$. Put $F(z):=\Re\bigl(e^{i\alpha}P_{\boldsymbol\kappa}(z+iT)\bigr)$ for real $z$, which is the restriction to the real axis of the entire function $\frac12\bigl(e^{i\alpha}P_{\boldsymbol\kappa}(z+iT)+e^{-i\alpha}P_{\boldsymbol\kappa}(\bar z-iT)^{\,-}\bigr)$, where the last term is $e^{-i\alpha}\overline{P_{\boldsymbol\kappa}(\bar z+iT)}$ extended analytically; it is entire because $P_{\boldsymbol\kappa}$ is real on the real axis. The variation of $\arg P_{\boldsymbol\kappa}$ along the segment $[\tfrac12+iT,\sigma_0+iT]$ is at most $\pi(\nu+1)$, where $\nu$ is the number of zeros of $F$ on $[\tfrac12,\sigma_0]$. By Jensen's formula on the disc $|z-\sigma_0|\le R$ (which contains $[\tfrac12,\sigma_0]$, of radius $r<R$ about $\sigma_0$),
+\[
+ \nu\,\log\frac Rr\le\max_{|z-\sigma_0|=R}\log|F(z)|-\log|F(\sigma_0)|
+ \le\max_{|s-(\sigma_0+iT)|\le R}\log|P_{\boldsymbol\kappa}(s)|-\log|P_{\boldsymbol\kappa}(\sigma_0+iT)| ,
+\]
+using $|F(z)|\le\max\{|P_{\boldsymbol\kappa}(z+iT)|,|P_{\boldsymbol\kappa}(\bar z+iT)|\}$ and $|F(\sigma_0)|=|P_{\boldsymbol\kappa}(\sigma_0+iT)|$. On the disc, by $\log|P_{\boldsymbol\kappa}|=W+\log|G|$, \eqref{eq:W-strip} and the symmetry of $W$ (the disc meets $\Re s<1-\sigma_0$ only if $R>2\sigma_0-1$, which is not the case for $R=2$, $\sigma_0=2$),
+\[
+ \max_{\rm disc}\log|P_{\boldsymbol\kappa}|\le B_0+M\Lambda_0+c_2+(\sigma_0-\tfrac12+2\varepsilon)\log(T+R)+\max_{\rm disc}\log|G| .
+\]
+At the centre, by Step~1,
+\[
+ \log|P_{\boldsymbol\kappa}(\sigma_0+iT)|=\log|Y(\sigma_0+iT)|+\Re\Lambda_{\mathsf a}(\sigma_0+iT)+\log|G(\sigma_0+iT)|\ge-B_0-2E(T)-M\Lambda_0+\log|G(\sigma_0+iT)| .
+\]
+Since $|\nabla\log|G(s)||\le\frac12\log\frac{|t|}{2\pi}+c_3$ for $t\ge T_0$, the oscillation of $\log|G|$ over the disc is at most $R(\frac12\log\frac{T+R}{2\pi}+c_3)$. Altogether
+\begin{equation}\label{eq:nu}
+ \nu\le\frac{2B_0+2M\Lambda_0+c_4+2E(T)+\bigl(\sigma_0-\tfrac12+2\varepsilon+\tfrac R2\bigr)\log(T+R)}{\log(R/r)} .
+\end{equation}
+
+\emph{Step 4: the count.} $P_{\boldsymbol\kappa}$ is entire, real on $\mathbb R$, symmetric under $s\mapsto1-s$, positive at $\sigma_0$, with all zeros on $\Re s=\frac12$; the argument principle on the rectangle $[1-\sigma_0,\sigma_0]\times[-T,T]$, together with the two symmetries, gives (Titchmarsh, \S9.3, applied verbatim)
+\[
+ \pi N_{\boldsymbol\kappa}(T)=\Delta_{[\sigma_0,\sigma_0+iT]}\arg P_{\boldsymbol\kappa}+\Delta_{[\sigma_0+iT,\frac12+iT]}\arg P_{\boldsymbol\kappa}.
+\]
+Write $P_{\boldsymbol\kappa}=G\,e^{\Lambda_{\mathsf a}}\,Y$. The two pieces of $\arg G$ give the Riemann--von Mangoldt main term, $\vartheta(T)+\pi+O(1/T)=\pi\NR(T)+O(1/T)$, exactly as for $\zeta$, since $G$ is the same. The vertical piece of $\arg(e^{\Lambda_{\mathsf a}}Y)$ is at most $2B_0+2E(T)+2M\Lambda_0$ by \eqref{eq:logY-line}, since $\log(e^{\Lambda_{\mathsf a}}Y)=\log\zeta_{\boldsymbol\kappa}$ is a continuous branch on the line. The horizontal piece of $\arg(e^{\Lambda_{\mathsf a}}Y)$ equals $\Delta_{\rm seg}\arg P_{\boldsymbol\kappa}-\Delta_{\rm seg}\arg G$, bounded by $\pi(\nu+1)+c_5$ by Step~3 and Stirling. With $|n(T)-\NR(T)|\le\frac12$ this proves \eqref{eq:count-bound}, with $A_1=\frac{\sigma_0-\frac12+R/2}{\log(R/r)}+1$, $A_3=\frac{4}{\log(R/r)}+1$ and $A_2$ collecting the remaining constants.
+
+\emph{Step 5: from the count to the displacement.} Let $\Phi(T)$ denote the right side of \eqref{eq:count-bound}, nondecreasing in $T$. If $\kappa_k>\tau_k+d$ with $d>0$, then at $T=\tau_k+d$ (perturbed slightly if it is an ordinate) $N_{\boldsymbol\kappa}(T)\le k-1$ while $n(T)\ge n(\tau_k)+\lfloor\NR(\tau_k+d)-\NR(\tau_k)\rfloor-1\ge k+\frac{d}{2\pi}\log\frac{\tau_k}{2\pi}-2$, because $\NR(\tau_k)=k-\frac12$ and $\NR'(t)=\frac1{2\pi}\log\frac t{2\pi}$ is increasing; hence $\frac d{2\pi}\log\frac{\tau_k}{2\pi}\le\Phi(\tau_k+d)+1$. The symmetric argument handles $\kappa_k<\tau_k-d$. Since $d\le C$ is known a priori, $\Phi(\tau_k+d)\le\Phi(\tau_k+C)$, and $E(\tau_k+C+R)\le\varepsilon\log(\tau_k+C+R)\le\varepsilon\log\tau_k+\varepsilon\log(1+C+R)$, which gives \eqref{eq:disp-bound}. The final assertion follows by letting $k\to\infty$.
+\end{proof}
+
+\begin{remark}[Exact solutions]
+If $(\boldsymbol\kappa,(\mathsf a_n))$ is an exact solution of \eqref{eq:rung} (no truncation in $k$ or $n$, masses bounded, $\varepsilon=0$), the same proof applies without any tube assumption beyond local density $N_{\boldsymbol\kappa}(t+1)-N_{\boldsymbol\kappa}(t)\ll\log t$, the real-point term being then estimated through $\sum_k|\kappa_k-\tau_k|\tau_k^{-3}$, which converges under local density alone. The conclusion is $|\kappa_k-\tau_k|\le C^*+o(1)$ with $C^*$ absolute. This is Proposition prop:rung-apriori-v18 with the constants made explicit.
+\end{remark}
+
+\begin{remark}[What a section controls]\label{rem:window}
+A finite section imposes \eqref{eq:rung} only against its tests. Let the tests be $\{w(u)\,\varphi(u):\ \varphi\ \text{band-limited to}\ |\omega|\le\Omega\}$ with a fixed window $w\in C_c^\infty(0,\infty)$, $w\equiv1$ on $[u_0,U]$, $\operatorname{supp}w\subset[u_0/2,2U]$. For $|v|\le\Omega-\Omega_1$ the kernel $w(u)e^{-(\sigma_0-\frac12)u}e^{-ivu}$ lies, up to a tail of size $O(\Omega_1^{-A})$, in the span of the tests, so
+\[
+ \widehat{\mathsf R}(\sigma_0+iv)=\underbrace{\langle\mathsf R,\ w\,e^{-(\sigma_0-\frac12)u}e^{-ivu}\rangle}_{\text{controlled by the section residual}}
+ +\underbrace{\int_0^{u_0}(1-w)\,e^{-(\sigma_0-\frac12)u}e^{-ivu}\mathsf R(u)\,du}_{\text{near edge}}
+ +\underbrace{\int_U^\infty(1-w)\,e^{-(\sigma_0-\frac12)u}e^{-ivu}\mathsf R(u)\,du}_{\text{far edge}} .
+\]
+The far edge is $O(e^{-(\sigma_0-1)U})$ times a polynomial in $U$, uniformly in $v$, because $\mathsf R$ has at most exponential growth $e^{u/2}$ on $(U,\infty)$ (the pole term of $\mathsf k$) and no atoms there enter the section. The near edge is not small automatically: on $(0,u_0)$ there are no atoms and $\mathsf R=\sum_k[\cos(\kappa_ku)-\cos(\tau_ku)]-\mathsf D_\tau(u)$, which for a list at distance $C$ from the clock is of size $C\log(1/u)$ as $u\to0$. Its contribution to $E(T)$ is at most $T\int_0^{u_0}|\mathsf R|$, i.e. $O(C\,T\,u_0\log(1/u_0))$, which is $\le\varepsilon_0\log T$ only for $u_0\le\varepsilon_0\log T/(C\,T\log(1/u_0))$; in a band-limited section $u_0$ cannot be taken below $1/\Omega$. Therefore the heights $T$ to which Lemma~\ref{lem:apriori} applies with a given $\varepsilon_0$ are
+\[
+ T\le T_{\max}(\Omega):=\frac{\varepsilon_0\,\Omega}{C\log\Omega}\,(1+o(1)),
+\]
+the ``interior ordinates'' of the section. Equivalently: the quantity that a section must make small is not the Euclidean residual but
+\[
+ \sup_{2\le T\le T_{\max}}\frac1{\log T}\int_{-T}^{T}\bigl|\langle\mathsf R,\ w\,e^{-(\sigma_0-\frac12)u}e^{-ivu}\rangle\bigr|\,dv ,
+\]
+and the near edge must be handled either by tests reaching $u_0\ll1/T$ or by an independent bound on $\mathsf R$ near $u=0$.
+\end{remark}
+
+\begin{remark}[Informative sections]
+Where the atoms are denser than the resolution of the tests, $e^{-u}\ll\pi/\Omega$, i.e.\ $u>\log\Omega+O(1)$, the masses alone synthesize any smooth target by a Riemann sum, $\mathsf a_n\approx g(\log n)/n$, with $|\mathsf a_n|<1/e$ and without moving any ordinate. Hence the part of the window above $\log\Omega$ carries no information about the ordinates, and a section informs only if $U\le\log\Omega+O(1)$. In that regime the unknown count is about $e^U(\frac U{2\pi}+1)$ against about $\frac{U}{\pi}e^U$ test equations: the system is overdetermined by a factor close to $2$, and $E_m\to0$ is a compatibility statement, not a dimension count. This is why route B is equivalent to (D) and not weaker.
+\end{remark}
+
+\end{document}

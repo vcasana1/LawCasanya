@@ -1,0 +1,235 @@
+APUNTES DE CONTINUACION RVM PARA INCORPORAR EN V57 SOLO POR ORDEN EXPRESA
+Fecha: 2026-10-03. No se ha creado v57 ni modificado v56.
+
+INSTRUCCION DEL USUARIO
+Incorporar en la futura v57 TODO lo utilizable del corpus RVM. Dar prioridad
+a la evidencia numerica; auditar cada premisa analitica, pues puede suponer
+RH. No convertir observaciones finitas en teoremas asintoticos. El handoff
+original conserva su autoridad; estos apuntes lo complementan.
+
+FUENTES CONSULTADAS Y MAPA DE IMPORTACION
+1. excursion_area_section_v56.tex y V57_handoff.txt (adjuntos exactos).
+2. Exponential Sums/zeta_rvm_exponential_centroids_v14.tex y fuentes v15.
+   Usables: residual despues de exponenciar, factorizacion exacta, centroides
+   ordinales, datos sobre 2,001,052 pares, identidades finitas. El limite
+   complejo de zeta se presenta con RH e intercambio de borde; no utilizar
+   esa evaluacion como entrada incondicional.
+3. PACK PDF/montgomery_centroid_paper_v1/montgomery_from_exponential_centroids_v1.tex
+   Usables: reconstruccion exacta de pares mediante residuos del reloj,
+   inversion finita de la familia de centroides, separacion diagonal/conexo,
+   comparaciones numericas de pares y factor de forma. Su rampa analitica y
+   ciertas leyes de energia suponen RH. El dato de plateau procede de
+   22,491 ordenadas, NO del conjunto de 2,001,052. El carrier RVM ofrece un
+   contraejemplo a inferir leyes de pares desde convergencia de centroides.
+4. PACK PDF/General SN/SN_CN_Central.tex
+   Tiene identidades modales y Green deweighting finitos para fases puras,
+   aparte de especializaciones bajo RH de sumas de ceros completos. Importar
+   solo despues de cotejar las definiciones y las hipotesis de cada cota;
+   una cota por una energia aun no estimada no cierra la puerta.
+5. PACK PDF/LogPhaseWalk/AMP_LogPhaseWalk_Zeta_RVM_completed_tests.tex
+   Evidencia numerica sobre transformaciones con frecuencia dependiente del
+   indice, isotropia de incrementos, controles radiales y ventanas. Esos
+   objetos son distintos de V a frecuencia comun u. Su formula de reloj
+   N_0(gamma_k^RVM)=k difiere de la convencion midpoint k-1/2 de v56 y del
+   fichero zLamb.bin actual: reconciliar antes de reutilizar desplazamientos.
+6. Restantes fuentes relacionadas del PACK (PhaseDistribution, Zfases,
+   shark_fin_phase_pair_criterion, FINITE_HEIGHT_EXPONENTIAL_CRITERIA,
+   CentroidGeometry, LogProperTime, etc.): localizadas, pendientes de auditoria
+   especifica. No se afirma que se hayan verificado todos sus resultados.
+
+PRECISION SOBRE EL SENTIDO DE CANCELACION
+Escribir t_k=gamma_k^RVM, delta_k=gamma_k-t_k,
+x_k(kappa)=t_k+kappa delta_k, B_kappa(u)=sum exp(iu x_k(kappa)),
+V_kappa(u)=sum delta_k exp(iu x_k(kappa)). Todas las identidades siguientes
+son finitas e incondicionales para la lista genuina con multiplicidades.
+
+partial_kappa B_kappa=iu V_kappa.
+R_N(u)=B_1(u)-B_0(u)=iu integral_0^1 V_kappa(u) d kappa.
+La version exacta del promedio de V es
+integral_0^1 V_kappa(u) d kappa
+ = sum delta_k sinc(u delta_k/2) exp(iu(t_k+gamma_k)/2),
+donde sinc(z)=sin(z)/z. No extrapolar la linealizacion a u grande.
+
+Para kappa fijo, el promedio de |V|^2 en [-U,U] tiende a
+sum_y (sum_{k:x_k(kappa)=y} delta_k)^2.
+Si kappa<1, las frecuencias son distintas y ese limite es sum delta_k^2.
+Por tanto no es razonable pedir V(u)->0 uniformemente a frecuencia alta
+para N fijo. Una cota tipo raiz de sum delta^2 no implica por si sola
+continuidad de la energia al extremo. Tampoco conviene pedir continuidad
+L2 de B mismo en la escala U(1-kappa)->infinito: incluso sin colisiones
+las fases de un termino pueden decorrelacionarse por el desplazamiento.
+
+RESPUESTA BILINEAL EXACTA DE LA ENERGIA
+P_{N,U}(kappa)=1/U integral_{-U}^U (1-|u|/U)|B_kappa(u)|^2 du.
+partial_kappa P_{N,U}(kappa)
+ =2/U integral_{-U}^U (1-|u|/U) Re(iu V_kappa(u) conj(B_kappa(u))) du.
+La diagonal desaparece exactamente: delta_k es real y Re(iu delta_k)=0.
+
+Definir, con h>0,
+T_{N,U}(h)=2/U integral_{-U}^U (1-|u|/U)
+  integral_{1-h}^1 Re(iu V_kappa(u) conj(B_kappa(u))) d kappa du.
+Entonces T_{N,U}(h)=P_{N,U}(1)-P_{N,U}(1-h), sin estimaciones ni RH.
+
+LEY DE ESCALA SUPERCRITICA (N FIJO)
+Sean a_jk=t_k-t_j>0, g_jk=gamma_k-gamma_j>=0.
+El hueco transportado es h a_jk+(1-h)g_jk>=h a_jk.
+Por Fejer,
+0<=P_{N,U}(1-h)-N<=8/(Uh)^2 sum_{j<k} a_jk^{-2}.
+Luego para h->0 y U=U(h) con Uh->infinito,
+P_{N,U}(1-h)->N, mientras P_{N,U}(1)->N+2 c_N^col.
+Por tanto
+  T_{N,U(h)}(h)->2 c_N^col.
+Demostrar T=o(1) por estimaciones independientes, para cada N fijo,
+eliminaria las colisiones. En v56 esto equivale a RH mas simplicidad.
+La identidad y la ley de escala NO prueban T=o(1); esa es la obligacion.
+
+En la escala critica U=L/h con L>0 fijo,
+P_{N,L/h}(1-h)->N+2 sum_{j<k:g_jk=0} sinc^2(L a_jk/2).
+Esto muestra como la frecuencia resuelve los huecos abiertos por el reloj.
+
+DATOS RECALCULADOS DIRECTAMENTE DE zeross.bin Y zLamb.bin
+N=2,001,052; ambos IEEE754 float64 little-endian, 16,008,416 bytes.
+RMS(delta)=0.18806629977698566; sqrt(sum delta^2)=266.0358516088531;
+sum |delta|=302576.97021863976.
+Residual a u=1: |R_N(1)|=2.404091061939066;
+max_{m<=N}|R_m(1)|=3.0068262770265037.
+A u=10: |R_N(10)|=2153.457796823089;
+max_{m<=N}|R_m(10)|=2234.2523764007274.
+La cancelacion a u=1 es muy fuerte en el rango finito, pero no uniforme
+en u. No inferir independencia ni dependencia estadistica solo de centroides.
+
+|V_{N,kappa}(u)| (fase float64; comprobaciones long double debajo):
+ u       kappa        |V|
+ 1       0            9.627576802409392
+ 1       0.5          2.4583483513320714
+ 1       1            9.495568290046304
+ 10      0.9          413.0558264420838
+ 100     0.99         94.56008220490493
+ 1000    0.999        58.2489327153229
+ 100     0.9          129.65566007682463
+ 10000   0.99         243.22761274738838
+Fase formada y evaluada en long double sobre los mismos datos float64:
+(100,.99):94.56008298961444; (1000,.999):58.24892593141232;
+(10000,.99):243.22769114463594. Usar pocas cifras al reportar u grande.
+
+COLA NUMERICA DE CONTRACCIONES, EN EL OBJETO EXACTO TE.15
+q_k=(gamma_{k+1}-gamma_k)/(t_{k+1}-t_k).
+Min q_k=0.005446783116825813; min hueco genuino=0.0029586540767922997.
+ v       # {q_k<=v}       #/((N-1)v^3)
+ .01     2                0.9994747760052091
+ .02     17               1.0619419495055347
+ .05     255              1.0194642715253133
+ .10     1824             0.9115209957167507
+ .20     14279            0.8919687704111487
+Minimos de q para lags 2 y 3: 0.13171814663505224 y
+0.39084572752481517. Todo entero lag>=2 es suma de 2 y 3; su ratio es
+una media con pesos positivos de los ratios de esos subintervalos.
+Asi todos los lags>=2 tienen q>0.1 en estos datos. Para v<=0.1 los
+recuentos adyacentes de la tabla son exactamente F_N(v) de TODOS los pares.
+Los recuentos son observaciones finitas y no certificacion de la lista
+infinita ni de ausencia de ceros adicionales fuera de la tabla.
+
+El patron F_N(v) aproximadamente N v^3 en esa ventana sugiere una cola
+cuantitativa a estudiar. Si F_N(v)<=K_N v^3 se probase independientemente
+para todo v pequeno y cada N genuino, excluiria colisiones y daria
+curvatura acotada hasta el extremo. NO sustituir eta=3 en TE.17: su
+formulacion exige 0<eta<2. Para eta>2 el argumento de Stieltjes satura
+en una cota O(K_N+N^2), no en una curvatura que tienda a cero.
+
+LIMITACION DE LOS PROMEDIOS DE PARES DEL CORPUS
+Los promedios normalizados en N o en altura pueden ocultar un numero finito
+de colisiones; pruebas vagas contra funciones con soporte en (0,infinito)
+no observan un atomo en cero. Ni una curva empirica de pares ni un plateau
+normalizado excluyen por si solos c_N^col>0 en algun bloque fijo. El nuevo
+control debe resolver el extremo para cada N o detectar todos los atomos.
+
+TAREA DE V57, CUANDO SEA AUTORIZADA
+Preservar integralmente la base, numeracion derecha, navegacion y hovering;
+reparar la absorcion sqrt(N) indicada por el handoff; incorporar el mapa
+completo de material utilizable tras su auditoria; traducir las notaciones
+de reloj y desplazamiento sin colisiones; incorporar las identidades y
+los experimentos precedentes con su alcance exacto. Entregar TEX/TXT
+byte-identicos y PDF. No generar esa version antes de la orden expresa.
+
+CONTINUACION DEL 2026-10-03: LOCALIZACION UNIFORME DE LA CURVATURA
+
+Notacion: d_N=min_{i<N}(t_{i+1}-t_i)>0; D_N=max |delta_i|;
+A_N=sum delta_i^2. Para un retardo entero m,
+a_{j,j+m}>=m d_N y, para TODO 0<=kappa<=1,
+x_{j+m}(kappa)-x_j(kappa)>=m d_N-2D_N.
+Siempre que H d_N>2D_N, la cola de curvatura cumple
+
+ sum_{m>H} sum_{j<=N-m}
+  (delta_{j+m}-delta_j)^2/(x_{j+m}(kappa)-x_j(kappa))^2
+ <=4 A_N/[d_N(H d_N-2D_N)].
+
+Prueba: sum_j(delta_{j+m}-delta_j)^2<=4A_N; sumar las cotas
+4A_N/(m d_N-2D_N)^2 y comparar con la integral desde H hasta infinito.
+No se requiere positividad de los huecos cortos del extremo. Los huecos
+de la propia cola son positivos por la desigualdad determinista.
+
+En la lista genuina, usando los inputs de v56 A_N<<N loglog N/(log N)^2,
+D_N<=D_RVM y la cota del reloj d_N>>1/log N, escoger
+H_N=ceil(C log N) con C suficientemente grande da
+  cola << N loglog N/log N = o(N),
+uniformemente en kappa hasta el extremo. Esta conclusion permite
+colisiones entre indices cercanos. No demuestra control de la parte local.
+Se puede usar directamente el paso inferior de reloj 2pi/ell_N de TE.13
+en lugar del minimo d_N para una formulacion analitica explicita.
+
+CURVATURA DEL EXTREMO EN LOS DATOS COMPLETOS
+N=2,001,052; D_N=.9937108509875827; A_N=70775.0743412477;
+d_N=.5191834385041147.
+Suma de curvatura hasta retardo H y cociente por N:
+ H       suma extremo          suma/N
+ 1       1768772.8085611379     .8839214615917717
+ 2       1926281.3067092905     .9626343077087904
+ 4       2024100.6661817955     1.011518274478522
+ 8       2081242.1777759178     1.0400740099587207
+ 16      2107237.603732164      1.053064889734082
+ 32      2120256.205323839      1.0595707684377214
+ 64      2126996.0222327914     1.0629389052522331
+ 128     2130380.683713826      1.064630346294762
+La formula anterior acota la cola mas alla de 128 por 8458.140680659848,
+o .004226847018798036 N. Asi la curvatura total, para el array estudiado,
+se estima entre 1.0646303463 N y 1.0688571934 N. Son calculos float64,
+no una certificacion por aritmetica de intervalos de ordenadas exactas.
+Las primeras diferencias representan aproximadamente 83% del total.
+Suma inicial hasta lag 128: 628909.1271840144 = .31428924744784964 N.
+
+COMPROBACION DE LA COLA CUBICA POR CUARTOS DE INDICES
+Cada cuarto tiene aproximadamente 500,263 pares adyacentes.
+Coeficiente count/(numero_pares*v^3):
+ cuarto    v=.05      v=.10
+ 1         1.0714     .8715
+ 2         1.0554     .8875
+ 3          .8955     .9635
+ 4         1.0554     .9235
+El patron se observa en los cuatro cuartos, sin deducir independencia ni
+una ley asintotica. Para v=.02 hay pocos eventos y mayor variabilidad.
+Menor q observado: indice i=1,115,578, gamma_i=663318.508310486,
+q_i=.005446783116825813.
+
+PROPAGACION EXACTA DE UNA COTA LOCAL A TODOS LOS PARES
+Definir q_i=(gamma_{i+1}-gamma_i)/(t_{i+1}-t_i) y d_i=t_{i+1}-t_i.
+Para cualquier par j<k,
+q_jk=sum_{i=j}^{k-1} (d_i/a_jk) q_i: es una media convexa.
+Sean W_i=sum_{j<=i<k<=N} d_i/a_jk y
+G_N(v)=sum_i W_i 1_{q_i<=v}.
+Si q_jk<=v, al menos la mitad del peso de esa media corresponde a q_i<=2v.
+Sumando sobre los pares,
+  F_N(v)<=2 G_N(2v).
+Ademas W_i<=(d_i/d_N)(N-1), por contar intervalos por su longitud ordinal.
+Una cota de recuento adyacente Aadj_N(v)<=C_N v^eta implica, para v<=1/4,
+  F_N(v)<=2^(eta+1) Wmax C_N v^eta.
+Todos los pesos W_i dependen SOLO del reloj RVM. La potencia se conserva
+sin constantes definidas mediante inversos de huecos genuinos.
+Si eta>2, esta cota y la integral de Stieltjes dan curvatura acotada
+al extremo; la prueba de la cota adyacente para todo v pequeno sigue abierta.
+
+FORMULACION RESIDUAL LOCAL
+q_i=1+(delta_{i+1}-delta_i)/d_i. La region q_i<=v equivale a
+-d_i<=delta_{i+1}-delta_i<=-(1-v)d_i.
+El objetivo es controlar la frecuencia de incrementos negativos casi
+iguales a -d_i. La energia cuadratica de los delta por si sola no aporta
+esa cola. Es la formulacion local precisa del problema de contraccion.

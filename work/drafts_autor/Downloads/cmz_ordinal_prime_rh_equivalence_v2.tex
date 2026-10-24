@@ -1,0 +1,1458 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\CMZ}{\mathrm{CMZ}}
+\newcommand{\RH}{\mathrm{RH}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\Res}{\operatorname*{Res}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\eps}{\varepsilon}
+
+% Hyperref is loaded last.
+\usepackage[hidelinks]{hyperref}
+
+\title{An Ordinal-Prime CMZ Deformation Criterion\\
+for the Riemann Hypothesis (v2)}
+\author{@kasnyscience}
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+We give a self-contained arithmetic-to-dynamical bridge between the Riemann
+hypothesis and a two-channel logarithmic stretching observable motivated by
+the multiscale mechanisms of C\'ordoba, Mart\'inez-Zoroa, and Zheng.  The
+arithmetic input is the sign-specific ordinal-prime transform $S$, its
+summatory function $SS$, and the Dirichlet series $\alpha$.  An exact finite
+Abel identity, including its unfinished-pair boundary term, identifies the
+residual Dirichlet polynomial $\delta_Q(\sigma)$ with the logarithm of the
+relative deformation of two positive CMZ-type channels.  We prove that the
+Riemann hypothesis is equivalent to tail stability of this relative
+deformation for every real $\sigma>3/2$.  We also record the domains of
+absolute convergence, all justified interchanges, the meromorphic blocks of
+$\alpha$, and the singularities that cannot be transferred to the full
+series without additional continuation.  The equivalence is rigorous; a
+realisation by the published Euler gluing scheme is stated separately as an
+open PDE problem and is not asserted here.  Three concrete attempts to feed
+the ordinal-prime data into a genuine forced Euler or IPM tower are examined:
+each is shown either to require an extension of the cited theorems that is
+not on record, or to encode the arithmetic input without constraining it.  A
+bounded-ratio generalisation of the unforced layered self-interaction bound
+of C\'ordoba, Mart\'inez-Zoroa, and Zheng is proved along the way.  The
+precise sense in which completing any such realisation would still not
+decide the Riemann hypothesis is stated as
+Warning~\ref{warn:no-progress-without-independent-bound}.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\begin{remark}[Mathematical status and provenance]
+\label{rem:status}
+Statements marked \textup{[LIT]} are imported from the cited literature.
+Statements marked \textup{[DED]} are proved in this article from the stated
+definitions.  Statements marked \textup{[ADAPT]} adapt a published mechanism
+to a different object.  A statement marked \textup{[OPEN]} is not proved.
+The exact ordinal identities and the CMZ--RH equivalence are \textup{[DED]}.
+The scalar stretching law is an \textup{[ADAPT]} of the CMZ amplitude
+mechanism.  No theorem in this article claims that the existing Euler,
+Boussinesq, or IPM constructions supply the missing arithmetic tail estimate.
+\end{remark}
+
+\section{Introduction}
+\label{sec:introduction}
+
+For $s=\sigma+it$ with $\sigma>1$, the Riemann zeta function is defined by
+the absolutely convergent Dirichlet series and Euler product
+\begin{equation}
+\zeta(s)=\sum_{n=1}^{\infty}\frac1{n^s}
+=\prod_p\left(1-p^{-s}\right)^{-1}.
+\label{eq:zeta-series-product}
+\end{equation}
+It extends meromorphically to $\C$, has a simple pole at $s=1$, and satisfies
+a functional equation relating $s$ and $1-s$; see
+\cite{Titchmarsh1986,Apostol1976}.  Its nontrivial zeros lie in
+$0<\Re s<1$.  The Riemann hypothesis is the assertion
+\begin{equation}
+\RH:\qquad \zeta(\rho)=0,\quad 0<\Re\rho<1
+\quad\Longrightarrow\quad \Re\rho=\frac12.
+\label{eq:RH-statement}
+\end{equation}
+
+The bridge developed here begins with four classical arithmetic functions.
+The M\"obius function $\mu$, the Liouville function $\lambda$, and the von
+Mangoldt function $\Lambda$ are
+\begin{align}
+\mu(n)&=
+\begin{cases}
+1,&n=1,\\
+(-1)^r,&n\text{ is a product of }r\text{ distinct primes},\\
+0,&p^2\mid n\text{ for some prime }p,
+\end{cases}
+\label{eq:mobius-definition}\\
+\lambda(n)&=(-1)^{\Omega(n)},
+\label{eq:liouville-definition}\\
+\Lambda(n)&=
+\begin{cases}
+\log p,&n=p^k\text{ with }p\text{ prime and }k\ge1,\\
+0,&\text{otherwise}.
+\end{cases}
+\label{eq:mangoldt-definition}
+\end{align}
+Here $\Omega(n)$ counts prime factors with multiplicity.  Absolute convergence
+and multiplication of Euler factors give, for $\sigma>1$,
+\begin{align}
+\frac1{\zeta(s)}&=\sum_{n=1}^{\infty}\frac{\mu(n)}{n^s},
+\label{eq:mobius-zeta}\\
+\frac{\zeta(2s)}{\zeta(s)}&=
+\sum_{n=1}^{\infty}\frac{\lambda(n)}{n^s},
+\label{eq:liouville-zeta}\\
+-\frac{\zeta'(s)}{\zeta(s)}&=
+\sum_{n=1}^{\infty}\frac{\Lambda(n)}{n^s}.
+\label{eq:mangoldt-zeta}
+\end{align}
+The first identity makes cancellation in $\mu$ directly sensitive to zeros of
+$\zeta$.  The second and third identities explain why Liouville signs and
+prime-power weights are natural comparison objects.  The construction below
+uses $\mu$ itself; $\lambda$ and $\Lambda$ are introductory reference points,
+not substituted coefficients.
+
+Write
+\begin{equation}
+M(x)=\sum_{n\le x}\mu(n).
+\label{eq:mertens-definition}
+\end{equation}
+The classical Littlewood criterion states
+\begin{equation}
+\RH\quad\Longleftrightarrow\quad
+M(x)=O_\eta\!\left(x^{1/2+\eta}\right)
+\quad\text{for every }\eta>0.
+\label{eq:littlewood-criterion}
+\end{equation}
+We use this imported theorem in its stated pointwise form
+\cite{Littlewood1912,Titchmarsh1986}.  The objective of this article is not to
+replace \eqref{eq:littlewood-criterion} by an unproved estimate under a new
+name.  It is to identify exactly how an ordinal-prime observable enters a CMZ
+logarithmic stretching law and to state the resulting equivalence without
+discarding cut-off or analytic-domain information.
+
+\section{The ordinal-prime transform}
+\label{sec:ordinal-transform}
+
+\subsection{Counters and transformed values}
+\label{subsec:counters-transform}
+
+Let $p_j$ be the $j$th prime and put $p_0=0$.  For real $x\ge1$, define
+\begin{align}
+N_+(x)&=\#\{n\le x:\mu(n)=1\},
+\label{eq:Nplus-definition}\\
+N_-(x)&=\#\{n\le x:\mu(n)=-1\},
+\label{eq:Nminus-definition}\\
+Q(x)&=N_+(x)+N_-(x),
+\label{eq:Q-definition}\\
+M(x)&=N_+(x)-N_-(x).
+\label{eq:M-counter-identity}
+\end{align}
+The last definition agrees with \eqref{eq:mertens-definition}.  In
+particular,
+\begin{equation}
+N_\pm(x)=\frac{Q(x)\pm M(x)}2.
+\label{eq:counters-QM}
+\end{equation}
+
+\begin{definition}[Ordinal-prime transform]
+\label{def:S-transform}
+The sign-specific ordinal-prime transform and its summatory function are
+\begin{align}
+S(n)&=
+\begin{cases}
+p_{N_+(n)},&\mu(n)=1,\\
+-p_{N_-(n)},&\mu(n)=-1,\\
+1,&\mu(n)=0,
+\end{cases}
+\label{eq:S-definition}\\
+SS(x)&=\sum_{n\le x}S(n).
+\label{eq:SS-definition}
+\end{align}
+\end{definition}
+
+Thus the first positive M\"obius value receives $p_1$, the second receives
+$p_2$, and so on; the negative occurrences receive the negatives of the same
+prime list on their own clock.  The value $1$ at nonsquarefree integers is part
+of the definition and must be retained.
+
+Put
+\begin{equation}
+\calP(m)=\sum_{j=1}^{m}p_j,
+\qquad \calP(0)=0.
+\label{eq:prime-prefix-definition}
+\end{equation}
+
+\begin{proposition}[Closed form for $SS$]
+\label{prop:SS-closed-form}
+For every real $x\ge1$,
+\begin{equation}
+SS(x)=\lfloor x\rfloor-Q(x)
++\calP\bigl(N_+(x)\bigr)-\calP\bigl(N_-(x)\bigr).
+\label{eq:SS-closed-form}
+\end{equation}
+Consequently, with
+\begin{equation}
+T(x)=SS(x)-\lfloor x\rfloor+Q(x),
+\label{eq:T-definition}
+\end{equation}
+one has
+\begin{equation}
+T(x)=\calP\bigl(N_+(x)\bigr)-\calP\bigl(N_-(x)\bigr).
+\label{eq:T-prime-block}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+There are $\lfloor x\rfloor-Q(x)$ nonsquarefree integers up to $x$, each
+contributing $1$.  The positive squarefree occurrences contribute the prime
+prefix $p_1+\cdots+p_{N_+(x)}$, and the negative occurrences contribute the
+negative prime prefix $-(p_1+\cdots+p_{N_-(x)})$.  Their sum is
+\eqref{eq:SS-closed-form}; subtracting the zero row gives
+\eqref{eq:T-prime-block}.
+\end{proof}
+
+\subsection{Ordinal and prime-displacement parts}
+\label{subsec:ordinal-displacement}
+
+For a squarefree $n$, let $j(n)$ denote its occurrence number inside its own
+sign class.  Define
+\begin{equation}
+w_j=p_j-j,\qquad
+D_w(m)=\sum_{j=1}^{m}w_j,\qquad D_w(0)=0.
+\label{eq:w-Dw-definition}
+\end{equation}
+
+\begin{lemma}[Exact ordinal coefficient sum]
+\label{lem:ordinal-coefficient-sum}
+For every real $x\ge1$,
+\begin{equation}
+\sum_{\substack{n\le x\\ \mu(n)\ne0}}
+\mu(n)j(n)=\frac{M(x)(Q(x)+1)}2.
+\label{eq:ordinal-coefficient-sum}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The positive occurrences contribute $1+\cdots+N_+$ and the negative
+occurrences contribute $-(1+\cdots+N_-)$.  Therefore
+\begin{align}
+\sum_{\substack{n\le x\\ \mu(n)\ne0}}\mu(n)j(n)
+&=\frac{N_+(N_++1)-N_-(N_-+1)}2
+\label{eq:ordinal-sum-first}\\
+&=\frac{(N_+-N_-)(N_++N_-+1)}2
+\label{eq:ordinal-sum-second}\\
+&=\frac{M(x)(Q(x)+1)}2.
+\label{eq:ordinal-sum-third}
+\end{align}
+\end{proof}
+
+\begin{definition}[Prime-displacement partial sum]
+\label{def:W-partial-sum}
+Set
+\begin{equation}
+W(x)=\sum_{\substack{n\le x\\ \mu(n)\ne0}}
+\mu(n)w_{j(n)}.
+\label{eq:W-definition}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Exact recovery of $W$ from $SS$]
+\label{prop:W-from-SS}
+For every real $x\ge1$,
+\begin{align}
+W(x)&=D_w\bigl(N_+(x)\bigr)-D_w\bigl(N_-(x)\bigr)
+\label{eq:W-Dw}\\
+&=SS(x)-\lfloor x\rfloor+Q(x)
+-\frac{M(x)(Q(x)+1)}2.
+\label{eq:W-SS}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The first equality follows by summing $w_j$ on the two occurrence clocks.
+Since $p_j=j+w_j$, the signed-prime contribution $T(x)$ is the sum of the
+ordinal contribution in Lemma~\ref{lem:ordinal-coefficient-sum} and $W(x)$.
+Use \eqref{eq:T-definition} and rearrange.
+\end{proof}
+
+\begin{proposition}[Asymptotic amplification]
+\label{prop:W-asymptotic}
+Let $c_0=3/\pi^2$.  As $x\to\infty$,
+\begin{equation}
+W(x)=c_0x\log x\,M(x)\bigl(1+o(1)\bigr),
+\label{eq:W-asymptotic}
+\end{equation}
+with equality of both sides when $M(x)=0$ understood before taking the
+relative error.
+\end{proposition}
+
+\begin{proof}
+The prime number theorem gives $p_j\sim j\log j$ and $M(x)=o(x)$, while
+elementary squarefree counting gives
+\begin{equation}
+Q(x)=\frac6{\pi^2}x+O(\sqrt{x})=2c_0x+O(\sqrt{x}).
+\label{eq:Q-asymptotic}
+\end{equation}
+Hence both $N_+(x)$ and $N_-(x)$ are $c_0x(1+o(1))$.  If $M(x)>0$,
+\eqref{eq:W-Dw} is the block sum of $w_j$ over
+$N_-(x)<j\le N_+(x)$; if $M(x)<0$, it is the negative of the reversed
+block.  Every index in that block is $c_0x(1+o(1))$, uniformly, and
+\begin{equation}
+w_j=p_j-j=c_0x\log x\bigl(1+o(1)\bigr)
+\label{eq:w-uniform-block}
+\end{equation}
+uniformly on the block.  There are $|M(x)|$ terms and their common orientation
+is $\sgn M(x)$, proving \eqref{eq:W-asymptotic}.
+\end{proof}
+
+\section{The Dirichlet series \texorpdfstring{$\alpha$}{alpha} and its exact decomposition}
+\label{sec:alpha-decomposition}
+
+\begin{definition}[The series $\alpha$ and $\delta$]
+\label{def:alpha-delta}
+Define
+\begin{align}
+\alpha(s)&=\sum_{n=1}^{\infty}\frac{S(n)}{n^s},
+\label{eq:alpha-definition}\\
+\delta(s)&=
+\sum_{\substack{n\ge1\\ \mu(n)\ne0}}
+\frac{\mu(n)w_{j(n)}}{n^s}.
+\label{eq:delta-definition}
+\end{align}
+The analytic function $\alpha(s)$ is not the ordinal position $\alpha_j$
+introduced later.
+\end{definition}
+
+Since $p_j\ll j\log(2j)$ and $j(n)\le n$, both series in
+Definition~\ref{def:alpha-delta} converge absolutely in $\Re s>2$.  This is
+the unconditional half-plane in which termwise regrouping will first be used.
+
+\begin{proposition}[Four-block decomposition]
+\label{prop:alpha-four-blocks}
+For $\Re s>2$,
+\begin{equation}
+\alpha(s)=A(s)+B(s)+C(s)+\delta(s),
+\label{eq:alpha-ABCD}
+\end{equation}
+where
+\begin{align}
+A(s)&=\zeta(s)-\frac{\zeta(s)}{\zeta(2s)},
+\label{eq:A-definition}\\
+B(s)&=c_0\frac{s}{(s-1)\zeta(s-1)},
+\label{eq:B-definition}\\
+C(s)&=\frac{s}{2}\int_1^\infty
+M(x)\bigl(Q(x)+1-2c_0x\bigr)x^{-s-1}\,dx.
+\label{eq:C-definition}
+\end{align}
+The functions $A$ and $B$ are meromorphic on $\C$.  The integral defining
+$C$ converges locally uniformly and defines a holomorphic function in
+$\Re s>3/2$.
+\end{proposition}
+
+\begin{proof}
+The nonsquarefree row of $S$ equals
+\begin{align}
+\sum_{\mu(n)=0}\frac1{n^s}
+&=\sum_{n\ge1}\frac1{n^s}
+-\sum_{n\ge1}\frac{\mu(n)^2}{n^s}
+\label{eq:zero-row-first}\\
+&=\zeta(s)-\frac{\zeta(s)}{\zeta(2s)}=A(s),
+\label{eq:zero-row-second}
+\end{align}
+where the second equality uses the Euler product for the squarefree indicator.
+All series are absolutely convergent for $\Re s>2$, in fact for this step
+$\Re s>1$ suffices.
+
+For squarefree $n$, the identity $p_{j(n)}=j(n)+w_{j(n)}$ gives
+\begin{equation}
+S(n)=\mu(n)j(n)+\mu(n)w_{j(n)}.
+\label{eq:S-ordinal-residual}
+\end{equation}
+The second term produces $\delta$.  Let
+\begin{equation}
+J(x)=\sum_{\substack{n\le x\\ \mu(n)\ne0}}\mu(n)j(n)
+=\frac{M(x)(Q(x)+1)}2.
+\label{eq:J-definition}
+\end{equation}
+Finite Abel summation followed by passage to infinity yields
+\begin{equation}
+\sum_{\substack{n\ge1\\ \mu(n)\ne0}}
+\frac{\mu(n)j(n)}{n^s}
+=s\int_1^\infty J(x)x^{-s-1}\,dx,
+\label{eq:J-Mellin}
+\end{equation}
+because $J(x)=O(x^2)$ and $J(X)X^{-s}\to0$ for $\Re s>2$.
+Split $Q(x)+1$ as $2c_0x+(Q(x)+1-2c_0x)$.  The remainder is exactly
+$C(s)$.  For the main term, put $z=s-1$ and use
+\begin{equation}
+\int_1^\infty M(x)x^{-z-1}\,dx
+=\frac1{z\zeta(z)},\qquad \Re z>1,
+\label{eq:M-mellin}
+\end{equation}
+which follows by Abel summation from \eqref{eq:mobius-zeta}.  The main term is
+therefore $B(s)$.
+
+Finally, \eqref{eq:Q-asymptotic} and the unconditional bound $|M(x)|\le x$
+give
+\begin{equation}
+\left|M(x)\bigl(Q(x)+1-2c_0x\bigr)x^{-s-1}\right|
+\ll x^{1/2-\Re s}.
+\label{eq:C-majorant}
+\end{equation}
+The majorant is integrable precisely when $\Re s>3/2$.  On every compact
+subset of that half-plane it is uniform, so dominated convergence for
+holomorphic parameter integrals proves holomorphy of $C$ there.
+\end{proof}
+
+\subsection{Singularities and the noncancellation warning}
+\label{subsec:singularities}
+
+\begin{proposition}[Singularities of the explicit shifted block]
+\label{prop:B-singularities}
+If $\rho$ is a nontrivial zero of $\zeta$ of multiplicity $m$, then $B$ has
+a pole of order $m$ at $s=1+\rho$.  For a simple zero,
+\begin{equation}
+\Res_{s=1+\rho}B(s)
+=c_0\frac{1+\rho}{\rho\zeta'(\rho)}.
+\label{eq:B-residue}
+\end{equation}
+The function $B$ also has a simple pole at $s=1$ with residue $-2c_0$, poles
+at $s=1-2k$ arising from the trivial zeros, and a zero rather than a pole at
+$s=2$.
+\end{proposition}
+
+\begin{proof}
+At a zero $\rho$, factor $\zeta(s-1)$ locally and note that
+$c_0s/(s-1)$ is finite and nonzero at $1+\rho$.  Formula
+\eqref{eq:B-residue} follows from the linear factor at a simple zero.  At
+$s=1$, use $\zeta(0)=-1/2$.  At $s=2$, the pole of $\zeta(s-1)$ makes its
+reciprocal vanish.  The trivial zeros of $\zeta(s-1)$ occur at $s=1-2k$.
+\end{proof}
+
+\begin{warning}[No automatic poles for the full $\alpha$]
+\label{warn:alpha-poles}
+Proposition~\ref{prop:B-singularities} locates poles of $B$, not of the full
+$\alpha$.  Identity \eqref{eq:alpha-ABCD} is initially established only in
+$\Re s>2$.  A pole of $B$ cannot be assigned to $\alpha$ outside that common
+domain without first continuing the other terms and proving noncancellation.
+In particular, neither $\delta$ nor $C$ may be silently absorbed into an
+unspecified holomorphic remainder.
+\end{warning}
+
+\section{Squarefree time, ordinal pairs, and finite boundaries}
+\label{sec:squarefree-pairs}
+
+Let $s_1<s_2<\cdots$ enumerate the squarefree positive integers, and define
+\begin{equation}
+\varepsilon_q=\mu(s_q),\qquad
+R(q)=\sum_{r=1}^{q}\varepsilon_r=M(s_q),\qquad R(0)=0.
+\label{eq:squarefree-clock}
+\end{equation}
+The occurrence counters at squarefree time are
+\begin{equation}
+u_q=\frac{q+R(q)}2,qquad
+v_q=\frac{q-R(q)}2.
+\label{eq:uv-counters}
+\end{equation}
+
+Let $\alpha_j$ and $\beta_j$ denote the squarefree-time positions of the
+$j$th positive and negative signs, respectively, and put
+\begin{equation}
+a_j=s_{\alpha_j},\qquad b_j=s_{\beta_j},
+\qquad d_j=\beta_j-\alpha_j.
+\label{eq:ordinal-pairs}
+\end{equation}
+
+\begin{proposition}[Pair representation]
+\label{prop:pair-representation}
+For $\Re s>2$,
+\begin{equation}
+\delta(s)=\sum_{j=1}^{\infty}w_j
+\left(a_j^{-s}-b_j^{-s}\right).
+\label{eq:delta-pair-representation}
+\end{equation}
+Moreover, for every complex $s$ and every $j$,
+\begin{equation}
+a_j^{-s}-b_j^{-s}
+=s\int_{a_j}^{b_j}x^{-s-1}\,dx,
+\label{eq:oriented-pair-integral}
+\end{equation}
+where the orientation of the integral is retained.
+\end{proposition}
+
+\begin{proof}
+Absolute convergence in $\Re s>2$ permits matching the $j$th positive and
+negative occurrences.  Their residual coefficients are $w_j$ and $-w_j$,
+which gives \eqref{eq:delta-pair-representation}.  The derivative of
+$x^{-s}$ is $-sx^{-s-1}$, proving \eqref{eq:oriented-pair-integral}; the
+formula also holds at $s=0$ by direct evaluation.
+\end{proof}
+
+Define the coefficient at squarefree time and its cumulative sum by
+\begin{align}
+c_q&=\varepsilon_q w_{j(s_q)},
+\label{eq:cq-definition}\\
+U(q)&=\sum_{r=1}^{q}c_r
+=D_w(u_q)-D_w(v_q).
+\label{eq:U-definition}
+\end{align}
+
+\begin{proposition}[Open-pair block and $SS$ readout]
+\label{prop:U-open-block}
+For every $q\ge1$,
+\begin{align}
+U(q)&=\sgn R(q)
+\sum_{j=\min(u_q,v_q)+1}^{\max(u_q,v_q)}w_j,
+\label{eq:U-open-block}\\
+U(q)&=SS(s_q)-s_q+q-\frac{q+1}{2}R(q).
+\label{eq:U-from-SS}
+\end{align}
+An empty sum in \eqref{eq:U-open-block} is zero.
+\end{proposition}
+
+\begin{proof}
+The difference $D_w(u_q)-D_w(v_q)$ is the oriented block in
+\eqref{eq:U-open-block}.  It consists exactly of ordinal pairs with one
+endpoint at or before cut $q$ and the other endpoint after it.  Formula
+\eqref{eq:U-from-SS} is \eqref{eq:W-SS} evaluated at $x=s_q$, using
+$Q(s_q)=q$ and $M(s_q)=R(q)$.
+\end{proof}
+
+\begin{lemma}[Finite Abel identity with the endpoint term]
+\label{lem:finite-Abel}
+For $Q\ge1$ and every $s\in\C$, let
+\begin{equation}
+\delta_Q(s)=\sum_{q=1}^{Q}c_qs_q^{-s}.
+\label{eq:deltaQ-definition}
+\end{equation}
+Then
+\begin{equation}
+\delta_Q(s)=U(Q)s_Q^{-s}
++\sum_{q=1}^{Q-1}U(q)
+\left(s_q^{-s}-s_{q+1}^{-s}\right).
+\label{eq:finite-Abel-identity}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $c_q=U(q)-U(q-1)$, with $U(0)=0$, finite summation gives
+\begin{align}
+\sum_{q=1}^{Q}c_qs_q^{-s}
+&=\sum_{q=1}^{Q}\bigl(U(q)-U(q-1)\bigr)s_q^{-s}
+\label{eq:finite-Abel-first}\\
+&=U(Q)s_Q^{-s}
++\sum_{q=1}^{Q-1}U(q)
+\bigl(s_q^{-s}-s_{q+1}^{-s}\bigr).
+\label{eq:finite-Abel-second}
+\end{align}
+No infinite interchange occurs in this proof.
+\end{proof}
+
+\begin{remark}[Meaning of the boundary]
+\label{rem:unfinished-boundary}
+The term $U(Q)s_Q^{-s}$ is the contribution of all ordinal pairs still open at
+the final cut.  Removing it replaces the original order by a completed-pair
+grouping.  Such a replacement is not legitimate in the RH transfer unless the
+boundary is independently shown to vanish.
+\end{remark}
+
+For $\Re s>2$, the bound $|U(q)|\ll s_q^2\log(2s_q)$ makes the infinite
+cut representation absolutely convergent, and Lemma~\ref{lem:finite-Abel}
+then yields
+\begin{equation}
+\delta(s)=\sum_{q=1}^{\infty}U(q)
+\left(s_q^{-s}-s_{q+1}^{-s}\right).
+\label{eq:infinite-cut-representation}
+\end{equation}
+This passage is not used to define the finite CMZ observable; the finite
+identity \eqref{eq:finite-Abel-identity} is the primary formula.
+
+\section{The CMZ multiscale mechanism: a proof-architecture summary}
+\label{sec:CMZ-summary}
+
+\subsection{Euler vorticity and hyperbolic stretching}
+\label{subsec:Euler-stretching}
+
+The forced incompressible Euler equations and their vorticity formulation are
+\begin{align}
+\partial_tu+(u\cdot\nabla)u+\nabla p&=f,
+\qquad \nabla\cdot u=0,
+\label{eq:forced-Euler}\\
+\partial_t\omega+(u\cdot\nabla)\omega
+&=(\omega\cdot\nabla)u+\nabla\times f,
+\qquad \omega=\nabla\times u.
+\label{eq:forced-vorticity}
+\end{align}
+The CMZ constructions arrange an older vorticity field whose velocity is
+approximately linear near the origin.  A younger, much smaller oscillatory
+packet is transported and stretched by this hyperbolic linearisation
+\cite{CordobaMartinezZoroa2023,CordobaMartinezZoroaZheng2023}.
+
+In the forced non-axisymmetric construction, a parent scale $N$ and child
+scale $L$ are related by
+\begin{equation}
+L^{1/2}=exp\left(
+\int_{1-N^{-\eps/2}}^1
+\partial_1u_{N,1}(0,t)\,dt\right),
+\label{eq:CMZ-scale-relation}
+\end{equation}
+under a positive strain bound of size $N^\eps$.  Writing
+\begin{equation}
+K_N(t)=\exp\left(\int_t^1\partial_1u_{N,1}(0,s)\,ds\right),
+\qquad
+b(t)=\frac{\log K_N(t)}{\log L},
+\label{eq:CMZ-K-b}
+\end{equation}
+the transported child packet has anisotropic widths of orders
+\begin{equation}
+L^{-1/2-b+\eps},\qquad
+L^{-1/2-\eps+b},\qquad
+L^{-1/2},
+\label{eq:CMZ-support-widths}
+\end{equation}
+and oscillation frequency of order $L$.
+
+\subsection{Parametrix, cancellation, and gluing}
+\label{subsec:CMZ-proof-stages}
+
+The proof architecture in \cite{CordobaMartinezZoroa2023} has the following
+linked stages.
+\begin{enumerate}[label=\textup{C\arabic*.},leftmargin=*]
+\item A local Biot--Savart parametrix approximates the two leading velocity
+components generated by the packet.  For spatial derivatives of order
+$r=0,1$, the quoted error has the form
+\begin{equation}
+\|\widetilde u_j-u_j\|_{C^r}
+\le C_\kappa L^{2\eps+r-3/2+\kappa}.
+\label{eq:CMZ-parametrix-error}
+\end{equation}
+\item The leading pieces of
+$\widetilde u_2\partial_2\omega_1$ and
+$\widetilde u_3\partial_3\omega_1$ cancel.  The proof printed after the
+stated lemma safely yields
+\begin{equation}
+\|u(\omega)\cdot\nabla\omega\|_{C^\vartheta}
++\|\omega\cdot\nabla u(\omega)\|_{C^\vartheta}
+\lesssim L^{4\eps-1/2+\vartheta}.
+\label{eq:CMZ-safe-quadratic}
+\end{equation}
+The exponent $4\eps$ in \eqref{eq:CMZ-safe-quadratic}, rather than the
+$3\eps$ appearing in the lemma statement, is the exponent obtained after the
+paper chooses its auxiliary loss parameter equal to $\eps$.
+\item Oscillation and spatial separation make the child's velocity decay
+faster than any prescribed power outside its anisotropic support.  Odd parity
+and Taylor expansion control interactions with the parent field.
+\item Replacing the parent velocity by its local linear model produces a
+controlled forcing error.  With
+$\vartheta=1/2-6\eps$, the safe power in
+\eqref{eq:CMZ-safe-quadratic} becomes $L^{-2\eps}$.
+\item The induction alternates the expanding direction and adds a child
+whose strain at the origin is comparable to $L^\eps$, while its forcing
+increment is bounded by
+\begin{equation}
+\|F_{\mathrm{child}}\|_{C^{1/2-6\eps}}
+\lesssim L^{-2\eps}.
+\label{eq:CMZ-force-increment}
+\end{equation}
+Choosing scales sufficiently separated makes the forcing increments summable.
+\end{enumerate}
+
+These steps summarise the actual proof mechanism; they do not assert that an
+arbitrary prescribed time-dependent strain can be realised with constants
+independent of its magnitude.
+
+\subsection{The separated-layer amplitude system}
+\label{subsec:CMZZ-ODE}
+
+In the unforced separated-layer construction of
+\cite{CordobaMartinezZoroaZheng2023}, the height $x_k(t)>0$ of the $k$th
+packet is governed, up to controlled geometric errors, by
+\begin{equation}
+\dot x_k(t)=x_k(t)\sum_{j<k}a_j(t)x_j(t),
+\label{eq:CMZZ-ODE}
+\end{equation}
+where $a_j(t)$ is close to $1$ and, importantly, does not depend on the child
+index $k$.  In the exact model $a_j=1$, writing $y_k=\log x_k$ gives
+\begin{equation}
+\dot y_k(t)=\sum_{j<k}x_j(t).
+\label{eq:CMZZ-log-law}
+\end{equation}
+For terminal data $x_k(0)=A^k$, $A>1$, the model admits a uniform bound on
+the time integral of each amplitude over a fixed backward interval:
+\begin{equation}
+\int_{-a}^{0}x_k(t)\,dt\le a,
+\qquad a=A(1-e^{-a}).
+\label{eq:CMZZ-integral-bound}
+\end{equation}
+This positivity is structural.  Encoding $\mu$ by allowing signed amplitudes
+would destroy the hypothesis behind \eqref{eq:CMZZ-integral-bound}.  The
+two-channel construction in Section~\ref{sec:CMZ-deformation} avoids that
+problem by keeping both channels positive.
+
+\subsection{Later multiscale developments}
+\label{subsec:later-multiscale}
+
+The 2026 IPM manuscript \cite{AlpogeBuckmasterCoiculescu2026} transports
+oscillatory packets through nested Fourier cutoffs and proves joint
+space--time smoothness of the force on the torus.  The 2026 Boussinesq
+manuscript \cite{AlpogeBuckmaster2026} uses an exact growing wave, compactly
+supported corrections, lifetime derivative estimates, and summable local
+corrections to obtain smooth forcing in both equations.  These works confirm
+the flexibility of the multiscale programme.  Their theorems concern different
+PDEs and do not imply an arithmetic cancellation estimate for $U(q)$.
+
+\section{The positive two-channel CMZ deformation}
+\label{sec:CMZ-deformation}
+
+The construction in this section is an \textup{[ADAPT]} of the logarithmic
+stretching law \eqref{eq:CMZZ-log-law}.  It is an exact finite-dimensional
+dynamical encoding, not yet an Euler solution.
+
+Fix a real $\sigma>0$ and a cutoff $Q\ge1$.  Define positive clock lengths
+\begin{equation}
+\ell_q^{(Q)}(\sigma)=
+\begin{cases}
+s_q^{-\sigma}-s_{q+1}^{-\sigma},&1\le q<Q,\\
+s_Q^{-\sigma},&q=Q.
+\end{cases}
+\label{eq:CMZ-clock-lengths}
+\end{equation}
+Since $s_1=1$, these lengths satisfy
+\begin{equation}
+\sum_{q=1}^{Q}\ell_q^{(Q)}(\sigma)=1.
+\label{eq:CMZ-clock-total}
+\end{equation}
+Let $0=\tau_0<\tau_1<\cdots<\tau_Q=1$ be defined by
+\begin{equation}
+\tau_q=\sum_{r=1}^{q}\ell_r^{(Q)}(\sigma).
+\label{eq:CMZ-clock-partition}
+\end{equation}
+
+Write $U_+(q)=\max\{U(q),0\}$ and
+$U_-(q)=\max\{-U(q),0\}$.  Define the nonnegative, piecewise constant
+strains
+\begin{equation}
+g_{\pm,Q,\sigma}(t)=U_\pm(q),
+\qquad \tau_{q-1}\le t<\tau_q.
+\label{eq:positive-strains}
+\end{equation}
+
+\begin{definition}[Paired CMZ-type channels]
+\label{def:paired-channels}
+Let $X_{\pm,Q,\sigma}$ solve
+\begin{equation}
+\dot X_{\pm,Q,\sigma}(t)
+=g_{\pm,Q,\sigma}(t)X_{\pm,Q,\sigma}(t),
+\qquad X_{\pm,Q,\sigma}(0)=1.
+\label{eq:paired-channel-ODE}
+\end{equation}
+Their relative terminal deformation is
+\begin{equation}
+\mathscr C_Q(\sigma)=
+\frac{X_{+,Q,\sigma}(1)}{X_{-,Q,\sigma}(1)}.
+\label{eq:relative-deformation}
+\end{equation}
+\end{definition}
+
+Both amplitudes in \eqref{eq:paired-channel-ODE} remain positive.  The
+arithmetic sign occurs only through their ratio.
+
+\begin{proposition}[Exact arithmetic readout]
+\label{prop:exact-CMZ-readout}
+For every $Q\ge1$ and every real $\sigma>0$,
+\begin{equation}
+\log\mathscr C_Q(\sigma)=\delta_Q(\sigma).
+\label{eq:CMZ-readout}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Solving the scalar equations gives
+\begin{equation}
+\log X_{\pm,Q,\sigma}(1)
+=\sum_{q=1}^{Q}U_\pm(q)\ell_q^{(Q)}(\sigma).
+\label{eq:channel-solution}
+\end{equation}
+Subtracting the two identities in \eqref{eq:channel-solution} yields
+\begin{equation}
+\log\mathscr C_Q(\sigma)
+=\sum_{q=1}^{Q}U(q)\ell_q^{(Q)}(\sigma).
+\label{eq:channel-difference}
+\end{equation}
+Insert \eqref{eq:CMZ-clock-lengths}.  The result is precisely the finite Abel
+identity \eqref{eq:finite-Abel-identity}.
+\end{proof}
+
+\begin{remark}[Why real $\sigma$ is used]
+\label{rem:real-sigma}
+For nonreal $s$, the differences $s_q^{-s}-s_{q+1}^{-s}$ are complex and
+cannot serve as positive time lengths.  Proposition
+\ref{prop:exact-CMZ-readout} therefore uses real $\sigma$.  This loses no
+information in the main equivalence, because convergence of $\delta(\sigma)$
+for every real $\sigma>3/2$ is already equivalent to RH.  Complex continuation
+is treated separately in Section~\ref{sec:analytic-criterion}.
+\end{remark}
+
+\section{The CMZ deformation equivalence with RH}
+\label{sec:main-equivalence}
+
+We now state the exact bridge.  It is a theorem about the explicitly defined
+deformation in Definition~\ref{def:paired-channels}; it does not assume a PDE
+realisation.
+
+\begin{theorem}[Ordinal-prime CMZ deformation criterion]
+\label{thm:CMZ-RH-equivalence}
+The following statements are equivalent.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item The Riemann hypothesis holds.
+\item For every real $\sigma>3/2$, the sequence
+$\delta_Q(\sigma)$ converges as $Q\to\infty$.
+\item For every real $\sigma>3/2$, the positive relative deformation
+$\mathscr C_Q(\sigma)$ converges to a finite nonzero limit.
+\item For every real $\sigma>3/2$,
+\begin{equation}
+\lim_{X\to\infty}\ 
+\sup_{Y\ge X}
+\left|
+\log\frac{\mathscr C_Y(\sigma)}{\mathscr C_X(\sigma)}
+\right|=0.
+\label{eq:CMZ-tail-criterion}
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Because the coefficients $c_n=\mathbf1_{\mu(n)\ne0}\mu(n)w_{j(n)}$
+vanish at every nonsquarefree integer, the squarefree cutoff
+$\delta_Q(s)=\sum_{q\le Q}c_{s_q}s_q^{-s}$ is exactly the ordinary partial
+sum through the integer $s_Q$.  Thus convergence on the squarefree clock is
+equivalent to convergence in the original integer ordering; no rearrangement
+is being made.
+
+Assume first RH.  By the Littlewood criterion
+\eqref{eq:littlewood-criterion}, for every $\eta>0$,
+\begin{equation}
+M(x)=O_\eta\left(x^{1/2+\eta}\right).
+\label{eq:RH-M-bound}
+\end{equation}
+The block formula \eqref{eq:W-Dw}, the prime number theorem, and
+\eqref{eq:RH-M-bound} imply
+\begin{equation}
+W(x)=O_\eta\left(x^{3/2+\eta}\log(2x)\right).
+\label{eq:RH-W-bound}
+\end{equation}
+Fix $\sigma>3/2$ and choose $\eta$ with
+$0<\eta<\sigma-3/2$.  Abel summation between integer cutoffs $X<Y$ gives
+\begin{align}
+\sum_{X<n\le Y}
+\frac{\mathbf1_{\mu(n)\ne0}\mu(n)w_{j(n)}}{n^\sigma}
+&=W(Y)Y^{-\sigma}-W(X)X^{-\sigma}
+\label{eq:delta-tail-Abel-one}\\
+&\quad+\sigma\int_X^YW(x)x^{-\sigma-1}\,dx.
+\label{eq:delta-tail-Abel-two}
+\end{align}
+By \eqref{eq:RH-W-bound}, the endpoint terms tend to zero and the integral
+tail is dominated by a constant times
+\begin{equation}
+\int_X^\infty x^{1/2+\eta-\sigma}\log(2x)\,dx,
+\label{eq:delta-tail-majorant}
+\end{equation}
+which tends to zero because $1/2+\eta-\sigma<-1$.  Thus the original-order
+series $\delta(\sigma)$ converges, proving (i)$\Rightarrow$(ii).
+
+Conversely, suppose (ii).  Fix any $\epsilon>0$ and take
+\begin{equation}
+\sigma=\frac32+\frac{\epsilon}{2}.
+\label{eq:sigma-choice}
+\end{equation}
+Convergence of $\sum c_nn^{-\sigma}$, where
+$c_n=\mathbf1_{\mu(n)\ne0}\mu(n)w_{j(n)}$, permits Kronecker's lemma and
+gives
+\begin{equation}
+W(x)=o\left(x^\sigma\right).
+\label{eq:Kronecker-W}
+\end{equation}
+Combine \eqref{eq:Kronecker-W} with the two-sided asymptotic
+\eqref{eq:W-asymptotic}.  At points where $M(x)\ne0$ this gives
+\begin{equation}
+M(x)=o\left(\frac{x^{\sigma-1}}{\log x}\right)
+=o\left(\frac{x^{1/2+\epsilon/2}}{\log x}\right).
+\label{eq:M-from-delta}
+\end{equation}
+At points where $M(x)=0$, the desired bound is automatic.  Therefore
+$M(x)=O_\epsilon(x^{1/2+\epsilon})$.  Since $\epsilon>0$ was arbitrary,
+\eqref{eq:littlewood-criterion} gives RH.  This proves
+(ii)$\Rightarrow$(i).
+
+Proposition~\ref{prop:exact-CMZ-readout} gives
+$\mathscr C_Q(\sigma)=\exp(\delta_Q(\sigma))$.  Since the real exponential
+is a homeomorphism from $\R$ to $(0,\infty)$, (ii) is equivalent to (iii).
+Finally,
+\begin{equation}
+\log\frac{\mathscr C_Y(\sigma)}{\mathscr C_X(\sigma)}
+=\delta_Y(\sigma)-\delta_X(\sigma),
+\label{eq:tail-log-delta}
+\end{equation}
+so the Cauchy criterion proves the equivalence of (ii) and (iv).
+\end{proof}
+
+\begin{remark}[The first RH-equivalent node]
+\label{rem:first-equivalent-node}
+Definitions of $S$, $SS$, $U$, and the finite deformation are unconditional.
+The first statement in the dependency chain that is equivalent to RH is the
+tail condition \eqref{eq:CMZ-tail-criterion}.  Consequently, an Euler estimate
+that implies this condition with an unattenuated arithmetic normalisation is
+an RH-strength estimate; it cannot be counted as a routine consequence of
+the existence of a CMZ gluing.
+\end{remark}
+
+\section{The analytic \texorpdfstring{$\alpha$}{alpha} criterion and singularity audit}
+\label{sec:analytic-criterion}
+
+Let
+\begin{equation}
+\mathcal H=\{s\in\C:\Re s>3/2\}.
+\label{eq:H-half-plane}
+\end{equation}
+
+\begin{theorem}[Shifted reciprocal-zeta criterion]
+\label{thm:analytic-alpha-criterion}
+The following are equivalent.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item RH holds.
+\item $B$ is holomorphic on $\mathcal H$.
+\item The function $\alpha-\delta$, initially defined on $\Re s>2$, admits a
+holomorphic continuation to $\mathcal H$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:B-definition}, poles of $B$ in $\mathcal H$ are exactly the
+points $1+\rho$ arising from zeros $\rho$ of $\zeta$ with
+$\Re\rho>1/2$; the elementary poles listed in Proposition
+\ref{prop:B-singularities} lie outside $\mathcal H$.  Thus (i) is equivalent
+to (ii), using the functional-equation symmetry of nontrivial zeros.
+
+In $\mathcal H$, the function $C$ is holomorphic by Proposition
+\ref{prop:alpha-four-blocks}.  Also $A$ is holomorphic there: its possible
+denominator singularities arise from zeros of $\zeta(2s)$, which have
+$\Re s<1/2$, while the pole at $s=1$ is outside $\mathcal H$.  On
+$\Re s>2$, identity \eqref{eq:alpha-ABCD} gives
+\begin{equation}
+\alpha(s)-\delta(s)=A(s)+B(s)+C(s).
+\label{eq:alpha-minus-delta}
+\end{equation}
+Therefore the right-hand side extends holomorphically to $\mathcal H$ exactly
+when $B$ does.  Uniqueness follows from the identity theorem, proving the
+equivalence of (ii) and (iii).
+\end{proof}
+
+\begin{warning}[Two distinct routes]
+\label{warn:two-routes}
+Theorem~\ref{thm:CMZ-RH-equivalence} concerns original-order convergence of
+$\delta_Q(\sigma)$ on the real axis.  Theorem
+\ref{thm:analytic-alpha-criterion} concerns continuation of
+$\alpha-\delta$.  A regrouped continuation of $\delta$ does not by itself
+prove original-order convergence, and holomorphy of $\delta$ alone does not
+cancel a pole of $B$ in the full $\alpha$.
+\end{warning}
+
+\begin{corollary}[Abscissa statement]
+\label{cor:abscissa}
+Let
+\begin{equation}
+\Theta=\sup_{\zeta(\rho)=0,\ 0<\Re\rho<1}\Re\rho.
+\label{eq:Theta-definition}
+\end{equation}
+For the original ordering of the Dirichlet series,
+\begin{equation}
+\sigma_c(\delta)=\sigma_c(\alpha)=1+\Theta.
+\label{eq:abscissae}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The classical growth-abscissa relation for $M$ gives growth exponent
+$\Theta$ \cite{Titchmarsh1986}.  Proposition~\ref{prop:W-asymptotic} raises
+that exponent by one for $W$, so the abscissa of $\delta$ is $1+\Theta$.
+The signed-prime part of $SS$ has the same exponent, whereas the zero row has
+partial sums $O(x)$; hence $\alpha$ has the same abscissa.  This argument is
+about ordinary ordering and does not assert a natural boundary or a line of
+poles.
+\end{proof}
+
+\section{Conditional realisation by genuine CMZ towers}
+\label{sec:PDE-realisation}
+
+The exact criterion above uses the CMZ logarithmic law, but its prescribed
+piecewise strain $g_{\pm,Q,\sigma}$ is not automatically generated by a
+solution of the Euler equation.  We isolate the additional statement needed
+for a genuine PDE realisation.
+
+\begin{definition}[Admissible CMZ readout]
+\label{def:admissible-readout}
+For fixed real $\sigma>3/2$, an admissible CMZ readout is a family of positive
+PDE deformation ratios $\widetilde{\mathscr C}_Q(\sigma)$ for which
+\begin{equation}
+\log\widetilde{\mathscr C}_Q(\sigma)
+=\delta_Q(\sigma)+r_Q(\sigma),
+\label{eq:PDE-readout-error}
+\end{equation}
+where the realisation error satisfies
+\begin{equation}
+\lim_{X\to\infty}\sup_{Y\ge X}
+|r_Y(\sigma)-r_X(\sigma)|=0.
+\label{eq:readout-error-Cauchy}
+\end{equation}
+The coefficient of $\delta_Q$ in \eqref{eq:PDE-readout-error} is exactly one
+and is independent of $Q$ and of all spatial carrier frequencies.
+\end{definition}
+
+\begin{theorem}[Conditional Euler-CMZ transfer]
+\label{thm:conditional-PDE-transfer}
+Assume that an admissible CMZ readout exists for every real
+$\sigma>3/2$.  Then RH is equivalent to
+\begin{equation}
+\lim_{X\to\infty}\sup_{Y\ge X}
+\left|
+\log\frac{\widetilde{\mathscr C}_Y(\sigma)}
+{\widetilde{\mathscr C}_X(\sigma)}
+\right|=0
+\quad\text{for every real }\sigma>3/2.
+\label{eq:PDE-CMZ-tail}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Subtract \eqref{eq:PDE-readout-error} at $Y$ and $X$ to obtain
+\begin{align}
+\log\frac{\widetilde{\mathscr C}_Y(\sigma)}
+{\widetilde{\mathscr C}_X(\sigma)}
+&=\delta_Y(\sigma)-\delta_X(\sigma)
+\label{eq:PDE-tail-decomposition-one}\\
+&\quad+r_Y(\sigma)-r_X(\sigma).
+\label{eq:PDE-tail-decomposition-two}
+\end{align}
+Condition \eqref{eq:readout-error-Cauchy} shows that
+\eqref{eq:PDE-CMZ-tail} holds exactly when the $\delta$ tails satisfy the
+Cauchy condition.  Apply Theorem~\ref{thm:CMZ-RH-equivalence}.
+\end{proof}
+
+\begin{question}[Paired-reunion problem]
+\label{q:paired-reunion}
+Can one construct two genuine CMZ towers from the ordinal pairs
+$+p_j,-p_j$ so that their principal Biot--Savart strains cancel after both
+members have appeared, while the transported reunion defects satisfy
+\eqref{eq:readout-error-Cauchy} with the exact, frequency-independent
+normalisation in \eqref{eq:PDE-readout-error}?
+\end{question}
+
+Question~\ref{q:paired-reunion} is \textup{[OPEN]}.  Fixed-duration pairs are
+compatible with local transport estimates, but long pairs can undergo large
+hyperbolic deformation before reunion.  Allowing the carrier scale to absorb
+$|U(q)|$ does not answer the question: it changes the readout coefficient and
+can make any finite datum appear small.
+
+\subsection{Three attempted insertions of the ordinal-prime data}
+\label{subsec:three-attempts}
+
+The two-channel model of Section~\ref{sec:CMZ-deformation} reads $U(q)$ off
+an already-defined scalar ODE; it does not feed $SS$ into a genuine solution
+of a forced Euler or IPM equation.  Three routes toward such a feeding are
+recorded here, because each rules out a naive fix and narrows what a correct
+insertion must do.
+
+\textbf{(a) Rescaling the amplitude of a single packet.}  In the forced
+construction of \cite{CordobaMartinezZoroa2023} (its Theorem~5.1) and in its
+space--time-smooth extension \cite{AlpogeBuckmasterCoiculescu2026} (its
+Proposition~5.13, eq.~(101), and Corollary~4.10), the leading amplitude of a
+child packet is not a free parameter.  In \cite{CordobaMartinezZoroa2023},
+the parent hypothesis pins $\partial_{x_1}u_1(\bar\omega_1)$ to
+$[C_0/4,C_0]N^\varepsilon$ over a window of length $N^{-\varepsilon/2}$,
+forcing the next scale $M^{1/2}=\exp\big(\Theta(N^{\varepsilon/2})\big)$; in
+\cite{AlpogeBuckmasterCoiculescu2026}, the amplitude $a_{n+1}(t)$ solves an
+ODE driven by the parent field and is normalised at the terminal time,
+$a_{n+1}(1)=1$, which forces the seed value $a_{n+1}(s_{n+1})$ to be
+exponentially small.  Multiplying an already-built exact solution by an
+external factor changes the force by a term of the same nonlinear order as
+the self-interaction already accounted for in \eqref{eq:CMZ-force-increment},
+and no estimate in either source covers that modified force.
+\textup{[OPEN, ruled out as stated]}: neither source offers a free per-event
+amplitude dial.
+
+\textbf{(b) Continuous exponent insertion.}  In
+\cite{AlpogeBuckmasterCoiculescu2026}, the scale exponent
+$\beta_{n+1}\in[\beta_n/2,\beta_n]$ of its Proposition~5.13 is a genuine
+interval, and the threshold $\Lambda_{\mathrm{sep}}$ of its Proposition~4.2
+is proved uniform over that whole interval.  It is tempting to set
+$\beta_{n(q)+1}/\beta_{n(q)}=\tfrac34\exp(\kappa\, c_qs_q^{-\sigma})\in[\tfrac12,1]$
+and read $\delta_Q(\sigma)$ off $\log\beta_{n(Q)+1}$.  Checked against the
+same paper's global assembly rather than against the one-step proposition
+alone, this fails for a structural reason: the recursive exponent choice
+that proves global existence there (its eqs.~(172)--(174)) never uses an
+intermediate value of $\beta_{n+1}$ --- at every level it sets $\beta_{n+1}$
+to exactly $\beta_n$ or exactly $\beta_n/2$, and the argument proving
+$\beta_n\downarrow0$ (its Lemma~6.3) uses this finitely-many-halvings
+dichotomy directly.  A continuously varying exponent schedule is therefore
+outside what the cited global theorem proves, not an unverified special case
+of it.  \textup{[OPEN]}: encoding $\delta_Q$ in $\beta_{n+1}$ this way needs
+a new global-iteration theorem for a continuously varying exponent, which is
+not in the cited sources.  It is also, on its own terms, the wrong kind of
+fix: the same scheme accepts \emph{any} sequence $x_q\to0$, so proving the
+extension would encode $SS$ without constraining it.
+
+\textbf{(c) Insertion into the parent gradient.}  Writing
+$P_{n+1}=S_{\mu_{n+1}}\rho^{(n)}$ for the actual parent of the next packet
+(eq.~(107) of \cite{AlpogeBuckmasterCoiculescu2026}), the real amplitude law
+there is
+\begin{equation}
+\frac{\dot a_{n+1}}{a_{n+1}}
+=C_0\cos\alpha_{n+1}\,e^\perp(\alpha_{n+1})\cdot\nabla P_{n+1}(0,t),
+\qquad a_{n+1}(1)=1.
+\label{eq:CMZ-amplitude-real}
+\end{equation}
+Asking that
+\begin{equation}
+\nabla P_{n(q)+1}(0,t_q)
+=\nabla P^{\mathrm{cascade}}_{n(q)+1}(0,t_q)+\mathbf v\,U(q)+E_q
+\label{eq:parent-insertion-target}
+\end{equation}
+for a fixed vector $\mathbf v$ and a summable error, so that $U(q)$ enters
+\eqref{eq:CMZ-amplitude-real} through an output of the construction rather
+than through a hand-chosen parameter, is structurally the right kind of
+target: $\nabla P_{n+1}$ is forced by the sum of earlier packets, not free.
+It is also compatible with the actual size of the data: $c_q=O(q\log q)$
+grows, and the native CMZ regime is one of growing packet amplitudes, not
+decaying ones, unlike attempts (a) and (b) above.  No construction of the
+auxiliary packets in \eqref{eq:parent-insertion-target} is given here or in
+the sources consulted; it is recorded below as
+Question~\ref{q:parent-insertion} and is \textup{[OPEN]}.
+
+\subsection{A generalisation of the layered amplitude bound}
+\label{subsec:generalised-lemma}
+
+The unforced layered construction of \cite{CordobaMartinezZoroaZheng2023}
+states its self-interaction bound (its Lemma~1) only for geometric initial
+data $x_n(0)=A^n$, with a single ratio $A>1$ fixed for the whole tower.  The
+following removes that restriction.  It is proved here and is not present in
+the cited source.
+
+\begin{lemma}[Bounded-ratio generalisation]
+\label{lem:generalised-layer-bound}
+Let $(B_n)_{n\ge0}$ be positive reals with $B_0=1$ and
+\begin{equation}
+r_n:=B_n/B_{n-1}\in(0,\bar r]\qquad(n\ge1),\qquad\bar r>1.
+\label{eq:ratio-range}
+\end{equation}
+Suppose $x_n(t)>0$ solves $\dot x_n(t)=x_n(t)\sum_{j<n}a_j(t)x_j(t)$ with
+$a_j(t)\ge1$ and $x_n(0)=B_n$.  Let $\zeta>0$ solve $\zeta=\bar r(1-e^{-\zeta})$.
+Then, for every $n\ge0$,
+\begin{equation}
+\int_{-\zeta}^0x_n(t)\,dt\le\zeta.
+\label{eq:generalised-layer-bound}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $y_n=\ln x_n$ and $Z_n(T)=\int_{-T}^0x_n(t)\,dt$.  Since $a_n(t)\ge1$,
+$\dot y_{n+1}(t)\ge\dot y_n(t)+e^{y_n(t)}$; integrating from $t\le0$ to $0$
+and exponentiating,
+\begin{equation}
+x_{n+1}(t)\le r_{n+1}\,x_n(t)\exp\Big(-\int_t^0x_n(s)\,ds\Big).
+\label{eq:generalised-layer-step}
+\end{equation}
+Integrating \eqref{eq:generalised-layer-step} over $t\in[-T,0]$ and using
+$\frac{d}{dt}\exp(-\int_t^0x_n(s)ds)=x_n(t)\exp(-\int_t^0x_n(s)ds)$ gives
+\begin{equation}
+Z_{n+1}(T)\le r_{n+1}\big(1-e^{-Z_n(T)}\big).
+\label{eq:generalised-layer-recursion}
+\end{equation}
+Since $x_0\equiv B_0=1$, $Z_0(T)=T$; take $T=\zeta$, so $Z_0(\zeta)=\zeta$.
+If $Z_n(\zeta)\le\zeta$, then \eqref{eq:generalised-layer-recursion},
+$r_{n+1}\le\bar r$, and monotonicity of $x\mapsto1-e^{-x}$ give
+$Z_{n+1}(\zeta)\le\bar r(1-e^{-\zeta})=\zeta$.  Induction closes.
+\end{proof}
+
+\begin{remark}[Scope of Lemma~\ref{lem:generalised-layer-bound}]
+\label{rem:generalised-layer-scope}
+This replaces the single global ratio $A$ by a bounded, otherwise arbitrary
+sequence of ratios $r_n$, so in principle a different target can be assigned
+at each level.  It does not by itself insert $SS$: the construction of
+\cite{CordobaMartinezZoroaZheng2023} is a finite-time blow-up at $t=0$,
+driven by $x_n(0)\to\infty$ along the tower, whereas the quantity needed for
+Theorem~\ref{thm:CMZ-RH-equivalence} is convergence, as $Q\to\infty$, of a
+Cauchy tail --- the opposite regime.  Reusing this lemma for the
+ordinal-prime problem therefore requires either a genuinely different,
+non-blow-up time parametrisation, or keeping only the self-interaction
+estimate and discarding the blow-up end state; neither is done here.
+\end{remark}
+
+\begin{warning}[What a completed insertion would and would not show about RH]
+\label{warn:no-progress-without-independent-bound}
+Suppose Question~\ref{q:parent-insertion} were answered completely: a
+genuine, forced, jointly smooth family of Euler or IPM solutions were built
+whose real deformation ratio equals $\exp(\delta_Q(\sigma))$ exactly, for
+every $\sigma>3/2$.  By Theorem~\ref{thm:conditional-PDE-transfer}, this
+would upgrade statement~(iv) of Theorem~\ref{thm:CMZ-RH-equivalence} from a
+toy-ODE statement to a genuine PDE statement, closing
+Question~\ref{q:paired-reunion}.  It would \emph{not} decide the Riemann
+hypothesis, and would not bring a decision closer, for a specific reason:
+the equivalence of RH with convergence of $\delta_Q(\sigma)$ is already
+proved unconditionally in Theorem~\ref{thm:CMZ-RH-equivalence} by
+Littlewood's criterion alone, with no reference to any PDE.  A PDE
+realisation re-encodes $\delta_Q(\sigma)$; it supplies no independent
+information about $M(x)$.  Whether $\delta_Q(\sigma)$ converges would remain
+exactly as open after the realisation as before it.
+
+The only way a construction of this kind could contribute to deciding RH is
+if the completed PDE side supplied an inequality that is not derived by
+first estimating $c_q$ or $U(q)$ arithmetically and then importing the
+estimate into the packets, but is instead a bound holding for every
+admissible family of auxiliary packets of the type in
+\eqref{eq:parent-insertion-target}, proved by genuinely fluid-dynamical
+means (an energy identity, a monotonicity formula, a maximum principle for
+the transported angle or amplitude), and that, when specialised to the
+ordinal-prime packets, gives a bound on $M(x)$ at least as strong as
+$O_\eta(x^{1/2+\eta})$.  No such universal bound exists in the literature
+consulted here: the multiscale method of
+\cite{CordobaMartinezZoroa2023,CordobaMartinezZoroaZheng2023,AlpogeBuckmasterCoiculescu2026,AlpogeBuckmaster2026}
+proves \emph{existence} of a blow-up for a chosen forcing, which is the
+opposite kind of statement from a \emph{universal} bound holding for every
+admissible forcing.  \textup{[OPEN, speculative]}: whether any
+fluid-mechanical monotonicity of this kind exists for the CMZ mechanism is
+not addressed by the present manuscript.  Absent such a bound, every result
+in this section, however completed, is a physical model of the Mertens
+problem and not a route to its resolution.
+\end{warning}
+
+\begin{question}[Parent-insertion problem]
+\label{q:parent-insertion}
+Can auxiliary packets, attached to the cascade of
+\cite{AlpogeBuckmasterCoiculescu2026} at the activation times of the ordinal
+pairs, be constructed so that \eqref{eq:parent-insertion-target} holds with
+$\sum_q|E_q|\,(s_q^{-\sigma}-s_{q+1}^{-\sigma})<\infty$, while the resulting
+force increments remain summable in the sense used in
+Proposition~\ref{prop:exact-CMZ-readout}?
+\end{question}
+
+Question~\ref{q:parent-insertion} is \textup{[OPEN]} and replaces
+Question~\ref{q:paired-reunion} as the concrete remaining problem; per
+Warning~\ref{warn:no-progress-without-independent-bound}, closing it would
+settle Question~\ref{q:paired-reunion} without settling RH.
+
+\section{Boundary, convergence, and interchange audit}
+\label{sec:audit}
+
+\begin{proposition}[Complete audit of the logical dependencies]
+\label{prop:dependency-audit}
+The proof has the following dependency chain:
+\begin{equation}
+(S,SS)\longrightarrow U(q)
+\longrightarrow\delta_Q(\sigma)
+\longrightarrow\mathscr C_Q(\sigma)
+\longrightarrow\text{tail stability}
+\longrightarrow\RH.
+\label{eq:dependency-chain}
+\end{equation}
+The first three arrows are finite identities.  The fourth is the exact scalar
+ODE solution.  The final arrow uses the original-order convergence theorem
+and the Littlewood criterion.  No step before tail stability assumes RH.
+\end{proposition}
+
+\begin{proof}
+The first arrow is Proposition~\ref{prop:U-open-block}; the second is
+Lemma~\ref{lem:finite-Abel}; the third is Proposition
+\ref{prop:exact-CMZ-readout}; and the last two arrows are Theorem
+\ref{thm:CMZ-RH-equivalence}.
+\end{proof}
+
+The analytic and finite operations used above have the following status.
+\begin{enumerate}[label=\textup{A\arabic*.},leftmargin=*]
+\item All rearrangements defining $A+B+C+\delta$ take place first in
+$\Re s>2$, where coefficient bounds give absolute convergence.
+\item Formula \eqref{eq:finite-Abel-identity} is finite and valid for every
+complex $s$; it requires no convergence theorem.
+\item The physical CMZ clock uses real $\sigma>0$, ensuring positivity of all
+interval lengths.
+\item The unfinished-pair boundary is retained as $U(Q)s_Q^{-\sigma}$.
+Under RH it vanishes by \eqref{eq:RH-W-bound}; in the converse direction it is
+part of $\delta_Q$ and is not separately discarded.
+\item The integral defining $C$ is holomorphic in $\Re s>3/2$ by the explicit
+majorant \eqref{eq:C-majorant}.  No continuation of $\delta$ is used in that
+argument.
+\item Singularities of $B$ are not promoted to singularities of $\alpha$.
+The analytic criterion concerns the proved continuation of
+$A+B+C=\alpha-\delta$.
+\item The CMZ literature estimates concern prescribed PDE layers.  They do not
+establish Definition~\ref{def:admissible-readout}; that definition is an
+additional hypothesis in Theorem~\ref{thm:conditional-PDE-transfer}.
+\end{enumerate}
+
+\begin{remark}[A failed shortcut]
+\label{rem:failed-shortcut}
+It is insufficient to prove merely that each finite arithmetic profile can be
+inserted into a CMZ layer after choosing an arbitrarily large carrier scale.
+Such a choice may make the PDE residual small while the normalised logarithmic
+deformation still grows with $Q$.  The uniform, unattenuated identity
+\eqref{eq:PDE-readout-error} and the tail estimate
+\eqref{eq:readout-error-Cauchy} are the properties that discriminate the RH
+problem from finite gluing flexibility.
+\end{remark}
+
+\section{Conclusion and research route}
+\label{sec:conclusion}
+
+The ordinal-prime transform produces an exact open-pair strain $U(q)$ that is
+readable from $SS$.  Finite Abel summation turns this strain into the residual
+Dirichlet polynomial $\delta_Q$.  Splitting $U$ into positive and negative
+parts permits two positive logarithmic-stretching channels, and their relative
+deformation equals $\exp(\delta_Q)$.  Theorem
+\ref{thm:CMZ-RH-equivalence} is therefore an exact dynamical reformulation of
+RH, with the physical clock confined to the fixed interval $[0,1]$.
+
+The unresolved PDE route is specific: realise the paired arithmetic strains
+by genuine transported CMZ packets and prove a Cauchy tail estimate for their
+relative deformation without allowing carrier frequencies to attenuate the
+arithmetic coefficient, now stated as the parent-insertion problem,
+Question~\ref{q:parent-insertion}.  This is an \textup{[OPEN]} research
+proposal.  It is not supplied by the four fluid papers cited here, and no
+claim of novelty relative to all literature is made.  Three more direct
+attempts at an insertion (Section~\ref{subsec:three-attempts}) were checked
+against the cited theorems and each falls outside what those theorems prove.
+Whatever the fate of Question~\ref{q:parent-insertion}, it does not bear on
+RH itself: this is stated precisely in
+Warning~\ref{warn:no-progress-without-independent-bound}, and is the single
+most important qualification in this manuscript.
+
+The route count is as follows: four \textup{[LIT]} multiscale inputs, one
+\textup{[ADAPT]} two-channel stretching model, two principal \textup{[DED]}
+bridges (finite readout and RH equivalence), one \textup{[DED]}
+generalisation of an existing lemma (Lemma~\ref{lem:generalised-layer-bound}),
+three examined and rejected-as-stated insertion attempts, and one explicitly
+\textup{[OPEN]} PDE realisation problem whose resolution would not, by
+itself, decide RH.
+
+\section*{Notebook History}
+\label{sec:notebook-history}
+
+Version 1.0: definitions of $\zeta$, $\mu$, $\lambda$, and $\Lambda$;
+fundamental properties of $S$, $SS$, and $\alpha$; audited CMZ proof summary;
+finite-boundary readout; full CMZ deformation equivalence; analytic
+singularity audit; and conditional genuine-PDE transfer.
+
+Version 2.0: examined three candidate insertions of the ordinal-prime data
+into a genuine forced Euler/IPM tower (amplitude rescaling, continuous
+exponent encoding, parent-gradient insertion), and showed each is either an
+unproved extension of the cited theorems or an encoding that does not
+constrain the arithmetic input; proved a bounded-ratio generalisation of the
+layered self-interaction bound of C\'ordoba, Mart\'inez-Zoroa, and Zheng;
+replaced the paired-reunion question by the parent-insertion problem; and
+recorded, as a standalone warning, the precise sense in which completing any
+of these routes would not by itself decide the Riemann hypothesis.
+
+\begin{thebibliography}{99}
+
+\bibitem{Apostol1976}
+T. M. Apostol,
+\emph{Introduction to Analytic Number Theory},
+Undergraduate Texts in Mathematics, Springer, New York, 1976.
+DOI: 10.1007/978-1-4757-5579-4.
+
+\bibitem{Littlewood1912}
+J. E. Littlewood,
+Quelques cons\'equences de l'hypoth\`ese que la fonction $\zeta(s)$ de
+Riemann n'a pas de z\'eros dans le demi-plan $\Re s>1/2$,
+\emph{C. R. Acad. Sci. Paris} \textbf{154} (1912), 263--266.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D. R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\bibitem{Ng2004}
+N. Ng,
+The distribution of the summatory function of the M\"obius function,
+\emph{Proc. London Math. Soc.} (3) \textbf{89} (2004), 361--389.
+DOI: 10.1112/S0024611504014741; arXiv:math/0310381.
+
+\bibitem{CordobaMartinezZoroa2023}
+D. C\'ordoba and L. Mart\'inez-Zoroa,
+Blow-up for the incompressible 3D-Euler equations with uniform
+$C^{1,1/2-\varepsilon}\cap L^2$ force,
+preprint, 2023.
+arXiv:2309.08495.
+
+\bibitem{CordobaMartinezZoroaZheng2023}
+D. C\'ordoba, L. Mart\'inez-Zoroa, and F. Zheng,
+Finite time singularities to the 3D incompressible Euler equations for
+solutions in $C^\infty(\mathbb R^3\setminus\{0\})\cap C^{1,\alpha}\cap L^2$,
+preprint, 2023.
+arXiv:2308.12197.
+
+\bibitem{AlpogeBuckmasterCoiculescu2026}
+L. Alp\"oge, T. Buckmaster, and M. P. Coiculescu,
+Extending the C\'ordoba--Mart\'inez-Zoroa IPM blow-up to uniformly space-time
+smooth forcing,
+manuscript, 2026.
+
+\bibitem{AlpogeBuckmaster2026}
+L. Alp\"oge and T. Buckmaster,
+Blowup for the Boussinesq equations with smooth forcing,
+manuscript, 2026.
+
+\end{thebibliography}
+
+\end{document}

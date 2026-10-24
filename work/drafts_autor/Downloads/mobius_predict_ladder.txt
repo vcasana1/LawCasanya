@@ -1,0 +1,255 @@
+function mobius_predict_ladder
+clc; clear;
+% MOBIUS_PREDICT_LADDER
+% A) escalera de cortes X y bandas de horizonte: la ganancia NO debe decaer
+% B) control: cada permutacion global aprende su propio theta,omega,A,phi
+%    y se predice a si misma  -> ganancia esperada ~ 0
+% C) residuo M - Mhat: energia y espectro (deben salir los ceros altos)
+% D) descomposicion de E cero a cero, con barras por desplazamiento de ventana
+%
+% AUDITORIA INCLUIDA: la ganancia se reporta CON y SIN extrapolar la
+% tendencia lineal del ajuste. Una recta extrapolada fuera de ventana puede
+% hacer trabajo que no le toca; si las dos ganancias difieren mucho, el
+% 79.8% anterior estaba inflado por la recta.
+%
+% Renombra a .m
+
+%% CONFIGURACION
+fileName    = 'moebius.bin';
+Nread       = 5000000;
+t0          = log(1000);      % e^t0*dt >= 1 evita sobremuestreo
+nSamples    = 2048;
+nModes      = 12;             % IGUAL para real y permutaciones
+omegaMax    = 200;
+padFactor   = 8;
+minSep      = 0.45;
+thetaGrid   = (0.46:0.005:0.56).';
+cutFactors  = [1/32 1/16 1/8 1/4 1/2];   % cortes X = cutFactor*N
+bandWidth   = 0.35;           % ancho de banda de horizonte en log
+nBands      = 6;
+nPerm       = 30;
+beatPeriod  = 2*pi/(21.022040-14.134725);  % 0.91229, batido gamma2-gamma1
+nOffsets    = 8;              % desplazamientos dentro de un batido, para D
+randomSeed  = 18092026;
+savePrefix  = 'mobius_predict_ladder';
+refOmega    = [14.134725;21.022040;25.010858;30.424876;32.935062; ...
+               37.586178;40.918719;43.327073;48.005151;49.773832; ...
+               52.970321;56.446248];
+rng(randomSeed,'twister');
+
+if ~isfile(fileName), error('%s no encontrado.',fileName); end
+fid = fopen(fileName,'rb'); if fid<0, error('No se pudo abrir.'); end
+cl = onCleanup(@() fclose(fid));
+mu = double(fread(fid,Nread,'*int8')); clear cl;
+mu = mu(:); N = numel(mu); R = cumsum(mu);
+tEnd = log(N);
+fprintf('Enteros: %d;  t en [%.3f, %.3f]\n',N,t0,tEnd);
+
+%% THETA, UNA SOLA VEZ, EN EL PRIMER CUARTO
+tCal = linspace(t0,log(N/4),nSamples).';
+theta = fit_theta(R,tCal,thetaGrid,nModes,omegaMax,padFactor,minSep);
+fprintf('theta ciego = %.9f   (RH = 0.5)\n\n',theta);
+
+%% A) ESCALERA DE CORTES x BANDAS DE HORIZONTE
+rows = [];
+for c = 1:numel(cutFactors)
+    Xc = round(cutFactors(c)*N); tc = log(Xc);
+    tf = linspace(t0,tc,nSamples).';
+    [obsF,~] = sample_path(R,tf,theta);
+    m = fit_modes(tf,obsF,nModes,omegaMax,padFactor,minSep);
+    for bI = 1:nBands
+        ta = tc+(bI-1)*bandWidth; tb = min(tc+bI*bandWidth,tEnd);
+        if tb-ta < 0.5*bandWidth, break; end
+        tp = linspace(ta,tb,512).';
+        obs = sample_path(R,tp,theta);
+        [gFull,gOsc] = gains(tp,obs,m);
+        rows = [rows; Xc, bI, exp(ta), exp(tb), gFull, gOsc, ...
+                corr_safe(obs,predict_modes(tp,m,true))]; %#ok<AGROW>
+    end
+end
+ladder = array2table(rows,'VariableNames',{'Xcut','Band','xFrom','xTo', ...
+    'GainWithTrend','GainOscOnly','Corr'});
+fprintf('A) ESCALERA. La prediccion teorica es que GainOscOnly NO decaiga\n');
+fprintf('   con Band (el error de fase acumulado es dOmega*dt ~ 0.02*%.2f).\n',nBands*bandWidth);
+disp(ladder);
+
+%% B) CONTROL DE PERMUTACIONES
+Xc = round(N/2); tc = log(Xc);
+tf = linspace(t0,tc,nSamples).';
+tp = linspace(tc,tEnd,1024).';
+obsF = sample_path(R,tf,theta);
+mReal = fit_modes(tf,obsF,nModes,omegaMax,padFactor,minSep);
+obsP  = sample_path(R,tp,theta);
+[gRealFull,gRealOsc] = gains(tp,obsP,mReal);
+fprintf('\nB) REAL con corte N/2: ganancia con recta %.5f; solo oscilatoria %.5f\n', ...
+    gRealFull,gRealOsc);
+
+nz = find(mu~=0); s = mu(nz); q = numel(s); cand = zeros(N,1);
+permFull = zeros(nPerm,1); permOsc = zeros(nPerm,1); permTheta = zeros(nPerm,1);
+for p = 1:nPerm
+    cand(:) = 0; cand(nz) = s(randperm(q)); Rp = cumsum(cand);
+    th_p = fit_theta(Rp,tf,thetaGrid,nModes,omegaMax,padFactor,minSep);
+    mp   = fit_modes(tf,sample_path(Rp,tf,th_p),nModes,omegaMax,padFactor,minSep);
+    [permFull(p),permOsc(p)] = gains(tp,sample_path(Rp,tp,th_p),mp);
+    permTheta(p) = th_p;
+    if mod(p,5)==0, fprintf('   permutaciones: %d/%d\n',p,nPerm); end
+end
+fprintf('   CONTROL: ganancia oscilatoria media %.5f (sd %.5f); max %.5f\n', ...
+    mean(permOsc),std(permOsc),max(permOsc));
+fprintf('   p empirico del real = %.4f\n',(1+sum(permOsc>=gRealOsc))/(nPerm+1));
+fprintf('   theta permutado medio %.4f (sd %.4f)\n',mean(permTheta),std(permTheta));
+
+%% C) RESIDUO
+tAll  = linspace(t0,tEnd,4*nSamples).';
+obsA  = sample_path(R,tAll,theta);
+res   = obsA - predict_modes(tAll,mReal,true);
+mRes  = fit_modes(tAll,res,nModes,omegaMax,padFactor,minSep);
+fprintf('\nC) RESIDUO: var(obs)=%.6g  var(res)=%.6g  fraccion=%.4f\n', ...
+    var(obsA,1),var(res,1),var(res,1)/var(obsA,1));
+resTable = table((1:nModes).',mRes.omega,mRes.amplitude, ...
+    'VariableNames',{'modo','omega_residuo','A_residuo'});
+disp(resTable);
+
+%% D) E CERO A CERO, CON BARRAS POR DESPLAZAMIENTO DENTRO DE UN BATIDO
+off = (0:nOffsets-1).'*(beatPeriod/nOffsets);
+Aoff = zeros(nOffsets,nModes); Eoff = zeros(nOffsets,1);
+for o = 1:nOffsets
+    ta = t0+off(o); tb = tEnd-beatPeriod+off(o);
+    tw = linspace(ta,tb,nSamples).';
+    ow = sample_path(R,tw,theta);
+    mw = fit_modes(tw,ow,nModes,omegaMax,padFactor,minSep);
+    [~,ord] = sort(mw.omega,'ascend');
+    Aoff(o,:) = mw.amplitude(ord).';
+    Eoff(o)   = mean(ow.^2);          % E estimada en esa ventana
+end
+Amean = mean(Aoff,1).'; Asd = std(Aoff,0,1).';
+contrib = Amean.^2/2; contribSd = Amean.*Asd;    % d(A^2/2) = A dA
+Emean = mean(Eoff); Esd = std(Eoff);
+tail  = Emean - sum(contrib);
+tailSd = sqrt(Esd^2 + sum(contribSd.^2));
+nearest = zeros(nModes,1);
+mwOm = mean(reshape([],0,1)); %#ok<NASGU>
+[~,ordRef] = sort(mReal.omega,'ascend'); omSorted = mReal.omega(ordRef);
+for j = 1:nModes
+    [~,ii] = min(abs(refOmega-omSorted(j))); nearest(j) = refOmega(ii);
+end
+decomp = table((1:nModes).',omSorted,nearest,omSorted-nearest, ...
+    Amean,Asd,contrib,contribSd,cumsum(contrib), ...
+    'VariableNames',{'modo','omega','gamma_ref','error_omega', ...
+    'A_media','A_sd','contrib_E','contrib_sd','contrib_acum'});
+fprintf('\nD) DESCOMPOSICION DE E CERO A CERO (%d desplazamientos en un batido)\n',nOffsets);
+disp(decomp);
+fprintf('   E (media de ventanas) = %.6f  (sd %.6f)\n',Emean,Esd);
+fprintf('   suma de los %d modos   = %.6f\n',nModes,sum(contrib));
+fprintf('   COLA mas alla de omega=%.2f: %.6f  +/- %.6f\n',omSorted(end),tail,tailSd);
+
+%% SALIDA
+writetable(ladder,[savePrefix,'_ladder.csv']);
+writetable(resTable,[savePrefix,'_residual.csv']);
+writetable(decomp,[savePrefix,'_decomposition.csv']);
+save([savePrefix,'.mat'],'ladder','resTable','decomp','theta','mReal', ...
+    'permOsc','permFull','permTheta','gRealOsc','gRealFull','Emean','Esd', ...
+    'tail','tailSd','Aoff','Eoff','-v7.3');
+
+figure('Name','Ladder y descomposicion');
+subplot(2,2,1);
+for c = 1:numel(cutFactors)
+    k = ladder.Xcut==round(cutFactors(c)*N);
+    plot(ladder.Band(k),ladder.GainOscOnly(k),'o-'); hold on;
+end
+grid on; xlabel('banda de horizonte'); ylabel('ganancia (solo oscilatoria)');
+title('No debe decaer'); legend(compose('X=%g',round(cutFactors*N)),'Location','best');
+subplot(2,2,2);
+histogram(permOsc,20); hold on; xline(gRealOsc,'r','LineWidth',2); grid on;
+xlabel('ganancia'); title('Control de permutaciones (rojo = real)');
+subplot(2,2,3);
+errorbar(1:nModes,contrib,contribSd,'o-'); grid on;
+xlabel('modo'); ylabel('A_j^2/2'); title('Contribucion a E por cero');
+subplot(2,2,4);
+plot(mRes.omega,mRes.amplitude,'o'); grid on;
+xlabel('\omega del residuo'); ylabel('amplitud'); title('Espectro del residuo');
+
+fprintf('\nTERMINADO. Tres CSV y %s.mat guardados.\n',savePrefix);
+end
+
+%% ------------------------------------------------------------------
+function [y,idx] = sample_path(R,t,theta)
+idx = min(numel(R),max(1,floor(exp(t))));
+y = R(idx).*exp(-theta*t);
+end
+
+function th = fit_theta(R,t,grid,J,omMax,pad,sep)
+sc = inf(numel(grid),1);
+for h = 1:numel(grid)
+    y = sample_path(R,t,grid(h));
+    m = fit_modes(t,y,J,omMax,pad,sep);
+    sc(h) = amp_drift(t,y,m.omega);
+end
+[~,w] = min(sc); th = grid(w);
+end
+
+function s = amp_drift(t,y,om)
+n = numel(t); L = floor(0.6*n); st = round(linspace(1,n-L+1,4));
+A = zeros(4,numel(om)); ct = zeros(4,1);
+for w = 1:4
+    ii = st(w):st(w)+L-1; ct(w) = mean(t(ii));
+    X = design(t(ii),om,mean(t)); b = X\y(ii);
+    A(w,:) = hypot(b(3:2:end),b(4:2:end));
+end
+[~,o] = sort(mean(A,1),'descend'); o = o(1:min(4,numel(o)));
+sl = zeros(numel(o),1);
+for j = 1:numel(o)
+    p = polyfit(ct,log(max(A(:,o(j)),realmin)),1); sl(j) = p(1);
+end
+s = sqrt(mean(sl.^2));
+end
+
+function m = fit_modes(t,y,J,omMax,pad,sep)
+n = numel(t); dt = median(diff(t)); tc = mean(t);
+tr = [ones(n,1),t-tc]; r = y-tr*(tr\y);
+w = 0.5-0.5*cos(2*pi*(0:n-1)'/(n-1));
+nf = 2^nextpow2(pad*n); S = abs(fft(r.*w,nf)).^2;
+g = 2*pi*(0:nf-1)'/(nf*dt);
+v = find(g>2*pi/(t(end)-t(1)) & g<=omMax);
+cd = v(S(v)>=S(v-1) & S(v)>=S(v+1));
+[~,o] = sort(S(cd),'descend'); cd = cd(o);
+om = zeros(0,1); step = 2*pi/(nf*dt);
+for qq = 1:numel(cd)
+    w0 = g(cd(qq));
+    if isempty(om) || all(abs(om-w0)>=sep)
+        om(end+1,1) = fminbnd(@(ww)-fpow(t,y,ww,tc), ...
+            max(step,w0-2*step),min(omMax,w0+2*step)); %#ok<AGROW>
+        if numel(om)>=J, break; end
+    end
+end
+om = sort(om); X = design(t,om,tc); b = X\y;
+m.omega = om; m.beta = b; m.tCenter = tc;
+m.amplitude = hypot(b(3:2:end),b(4:2:end));
+m.phase = atan2(-b(4:2:end),b(3:2:end));
+end
+
+function p = fpow(t,y,w,tc)
+X = [ones(numel(t),1),t-tc,cos(w*t),sin(w*t)]; b = X\y; p = b(3)^2+b(4)^2;
+end
+
+function X = design(t,om,tc)
+X = [ones(numel(t),1),t-tc];
+for j = 1:numel(om), X = [X,cos(om(j)*t),sin(om(j)*t)]; end %#ok<AGROW>
+end
+
+function yh = predict_modes(t,m,withTrend)
+X = design(t,m.omega,m.tCenter); b = m.beta;
+if ~withTrend, b(1:2) = 0; end
+yh = X*b;
+end
+
+function [gFull,gOsc] = gains(t,obs,m)
+s0 = sum(obs.^2);
+gFull = 1-sum((obs-predict_modes(t,m,true)).^2)/s0;
+gOsc  = 1-sum((obs-predict_modes(t,m,false)).^2)/s0;
+end
+
+function c = corr_safe(a,b)
+a = a-mean(a); b = b-mean(b); d = sqrt(sum(a.^2)*sum(b.^2));
+if d<=eps, c = 0; else, c = sum(a.*b)/d; end
+end

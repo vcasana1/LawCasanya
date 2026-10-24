@@ -1,0 +1,956 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage[no-math]{fontspec}
+\fi
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[pagebackref=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{pdfcomment}
+
+% Hover previews for internal references (no layout change).
+\makeatletter
+\let\CG@origref\ref
+\let\CG@origeqref\eqref
+\newcommand{\CG@gettip}[1]{\@ifundefined{CGTip@#1}{Reference: #1}{\csname CGTip@#1\endcsname}}
+\DeclareRobustCommand{\CGref}[1]{\pdftooltip{\CG@origref{#1}}{\CG@gettip{#1}}}
+\DeclareRobustCommand{\CGeqref}[1]{\pdftooltip{\CG@origeqref{#1}}{\CG@gettip{#1}}}
+% ---------------- tooltips: sections ----------------
+\expandafter\gdef\csname CGTip@sec:defs\endcsname{Section: Definitions and the individual objective}
+\expandafter\gdef\csname CGTip@sec:synthetic\endcsname{Section: Synthetic zeta and the Euler-phase spiral}
+\expandafter\gdef\csname CGTip@sec:abel\endcsname{Section: Analytic Abel prime correction and an ordered flow}
+\expandafter\gdef\csname CGTip@sec:poisson\endcsname{Section: Exact clock-prime decomposition and rational resonances}
+\expandafter\gdef\csname CGTip@sec:spectral\endcsname{Section: Spectral correction of close groups: separate from the synthetic argument}
+\expandafter\gdef\csname CGTip@sec:clusters\endcsname{Section: Clusters, real blocks and analytically isolated pairs}
+\expandafter\gdef\csname CGTip@subsec:close\endcsname{Subsection: Close ordinates cannot be discarded}
+\expandafter\gdef\csname CGTip@subsec:blocks\endcsname{Subsection: Reality of blocks without simplicity}
+\expandafter\gdef\csname CGTip@subsec:isolated\endcsname{Subsection: Fourth-order accuracy for analytically isolated pairs}
+\expandafter\gdef\csname CGTip@subsec:certificate\endcsname{Subsection: A computable two-zero certificate}
+\expandafter\gdef\csname CGTip@subsec:limit\endcsname{Subsection: Local accuracy does not exclude other non-real zeros}
+\expandafter\gdef\csname CGTip@subsec:gue\endcsname{Subsection: Statistical heuristics and a regularity hypothesis}
+\expandafter\gdef\csname CGTip@sec:status\endcsname{Section: What is proved and what remains an actual research problem}
+\expandafter\gdef\csname CGTip@sec:appA\endcsname{Appendix A: Arguments to defeat: failed routes, gaps, and known walls}
+\expandafter\gdef\csname CGTip@sec:appB\endcsname{Appendix B: Reported numerical cases (not certifications)}
+% ---------------- tooltips: Section 1 ----------------
+\expandafter\gdef\csname CGTip@eq:theta\endcsname{Equation: theta(t)=Im log Gamma(1/4+it/2)-(t/2)log pi, N\_0(t)=1+theta(t)/pi, chi(s)=pi\textasciicircum\{\}(s-1/2) Gamma((1-s)/2)/Gamma(s/2).}
+\expandafter\gdef\csname CGTip@eq:lead-clock\endcsname{Equation: approximate clock calN(t)=(t/2pi)(log(t/2pi)-1)+7/8, L(t)=calN'(t)=(1/2pi)log(t/2pi).}
+\expandafter\gdef\csname CGTip@eq:P-S\endcsname{Equation: P\_X(s)=prod\_\{p<=X\}(1-p\textasciicircum\{\}-s)\textasciicircum\{\}-1, S\_X(t)=-(1/pi) sum\_\{p<=X\} arg(1-p\textasciicircum\{\}(-1/2-it)), F\_X=N\_0+S\_X.}
+\expandafter\gdef\csname CGTip@thm:cell\endcsname{Theorem - Individual midpoint cell: gamma\_k lies in the open Voronoi cell of c\_k iff -r\_k/2 < e\_k < l\_k/2, e\_k=c\_k-gamma\_k. If this holds for every k (all nontrivial zeros with multiplicity) then all zeros are on the critical line and simple.}
+\expandafter\gdef\csname CGTip@eq:directional\endcsname{Equation: directional cell condition -r\_k/2 < e\_k < l\_k/2.}
+\expandafter\gdef\csname CGTip@eq:Rk\endcsname{Equation: R\_k=max\{2e\_k/l\_k, -2e\_k/r\_k\}; the cell condition is R\_k<1.}
+\expandafter\gdef\csname CGTip@rem:cell\endcsname{Remark: no uniform margin is required; the condition is quantified over every index; RMS error is irrelevant.}
+% ---------------- tooltips: Section 2 ----------------
+\expandafter\gdef\csname CGTip@eq:synthetic\endcsname{Equation: Xi\_c(z)=prod(1-z\textasciicircum\{\}2/c\_k\textasciicircum\{\}2), D(s)=(1/2)s(s-1)pi\textasciicircum\{\}(-s/2)Gamma(s/2), zeta\_c(s)=Xi\_c(-i(s-1/2))/D(s).}
+\expandafter\gdef\csname CGTip@thm:func\endcsname{Theorem - Synthetic functional equation and signed zeros: Xi\_c is even entire with simple zeros +-c\_k; zeta\_c(s)=chi(s)zeta\_c(1-s); Z\_c is real on the critical line and sgn Z\_c'(c\_k)=(-1)\textasciicircum\{\}(k+1).}
+\expandafter\gdef\csname CGTip@eq:fe\endcsname{Equation: zeta\_c(s)=chi(s) zeta\_c(1-s).}
+\expandafter\gdef\csname CGTip@eq:Zc\endcsname{Equation: Z\_c(t)=e\textasciicircum\{\}(i theta(t)) zeta\_c(1/2+it) = -2 pi\textasciicircum\{\}(1/4) Xi\_c(t)/((t\textasciicircum\{\}2+1/4)|Gamma(1/4+it/2)|), sgn Z\_c'(c\_k)=(-1)\textasciicircum\{\}(k+1).}
+\expandafter\gdef\csname CGTip@eq:DonLine\endcsname{Equation: D(1/2+it)=-(t\textasciicircum\{\}2+1/4) pi\textasciicircum\{\}(-1/4) |Gamma(1/4+it/2)| e\textasciicircum\{\}(i theta(t))/2.}
+\expandafter\gdef\csname CGTip@eq:Xiprime\endcsname{Equation: Xi\_c'(c\_k)=-(2/c\_k) prod\_\{j!=k\}(1-c\_k\textasciicircum\{\}2/c\_j\textasciicircum\{\}2), sign (-1)\textasciicircum\{\}k.}
+\expandafter\gdef\csname CGTip@rem:norm\endcsname{Remark - Normalization: zeta\_c has a simple pole at s=1 with residue 2 Xi\_c(i/2); zeta\_c/(2Xi\_c(i/2)) has residue 1.}
+\expandafter\gdef\csname CGTip@eq:respole\endcsname{Equation: Res\_\{s=1\} zeta\_c = 2 Xi\_c(i/2) = 2 prod(1+1/(4c\_k\textasciicircum\{\}2)).}
+\expandafter\gdef\csname CGTip@eq:normalized\endcsname{Equation: normalized synthetic zeta zeta\_c\textasciicircum\{\}nat = zeta\_c/(2 Xi\_c(i/2)).}
+\expandafter\gdef\csname CGTip@thm:spiral\endcsname{Theorem - Euler-phase and meromorphic spiral: E\_X=2e\textasciicircum\{\}(-i theta)|P\_X|cos(pi(F\_X-1)) on the critical line; P\_X/E\_X=1/2+(i/2)tan; B\_X\textasciicircum\{\}c phase formula; residue at c\_k equals |P\_X|/|zeta\_c'| e\textasciicircum\{\}(i pi eps\_k); c\_k in (m\_\{k-1\},m\_k) iff |eps\_k|<1/2.}
+\expandafter\gdef\csname CGTip@eq:EX\endcsname{Equation: E\_X(1/2+it)=2e\textasciicircum\{\}(-i theta(t))|P\_X(1/2+it)| cos(pi(F\_X(t)-1)).}
+\expandafter\gdef\csname CGTip@eq:EXzeros\endcsname{Equation: E\_X(1/2+it)=0 iff F\_X(t) is a half-integer.}
+\expandafter\gdef\csname CGTip@eq:tangent\endcsname{Equation: (P\_X/E\_X)(1/2+it)=1/2+(i/2)tan(pi(F\_X(t)-1)).}
+\expandafter\gdef\csname CGTip@eq:Bphase\endcsname{Equation: B\_X\textasciicircum\{\}c(1/2+it)=|P\_X(1/2+it)|/Z\_c(t) e\textasciicircum\{\}(i pi(F\_X(t)-1)).}
+\expandafter\gdef\csname CGTip@eq:realratio\endcsname{Equation: (E\_X/zeta\_c)(1/2+it)=2 Re B\_X\textasciicircum\{\}c(1/2+it).}
+\expandafter\gdef\csname CGTip@eq:residue\endcsname{Equation: Res\_\{s=1/2+ic\_k\} B\_X\textasciicircum\{\}c = |P\_X(1/2+ic\_k)|/|zeta\_c'(1/2+ic\_k)| e\textasciicircum\{\}(i pi eps\_k), eps\_k=F\_X(c\_k)-k+1/2.}
+\expandafter\gdef\csname CGTip@eq:cellphase\endcsname{Equation: Gonek-cell condition |eps\_k|<1/2.}
+\expandafter\gdef\csname CGTip@eq:reschain1\endcsname{Equation: zeta\_c'(1/2+ic\_k)=-i e\textasciicircum\{\}(-i theta(c\_k)) Z\_c'(c\_k), e\textasciicircum\{\}(i pi(F\_X(c\_k)-1))=i(-1)\textasciicircum\{\}k e\textasciicircum\{\}(i pi eps\_k).}
+\expandafter\gdef\csname CGTip@eq:reschain2\endcsname{Equation: residue = i|P\_X|e\textasciicircum\{\}(i pi(F\_X(c\_k)-1))/Z\_c'(c\_k) = (-1)\textasciicircum\{\}(k+1)|P\_X|e\textasciicircum\{\}(i pi eps\_k)/Z\_c'(c\_k) = |P\_X|e\textasciicircum\{\}(i pi eps\_k)/|Z\_c'(c\_k)|.}
+\expandafter\gdef\csname CGTip@rem:spiral\endcsname{Remark: the synthetic spiral crosses the real axis at integer F\_X, the imaginary axis at half-integer F\_X, has poles at c\_k; the Gonek cell (m\_\{k-1\},m\_k) contains the k-th zero kappa\_k of E\_X.}
+% ---------------- tooltips: Section 3 ----------------
+\expandafter\gdef\csname CGTip@eq:Abel\endcsname{Equation: Q\_a(t)=(t/2pi)\textasciicircum\{\}a, calS\_a(t)=-(1/pi) sum\_p sum\_r e\textasciicircum\{\}(-p\textasciicircum\{\}r/Q\_a(t)) sin(rt log p)/(r p\textasciicircum\{\}(r/2)).}
+\expandafter\gdef\csname CGTip@eq:onestep\endcsname{Equation: one-step Casanya centres c\_\{a,k\}\textasciicircum\{\}(1)=tau\_k - calS\_a(tau\_k)/L(tau\_k).}
+\expandafter\gdef\csname CGTip@prop:Abel\endcsname{Proposition - Convergence and deterministic displacement: calS\_a is real analytic on t>0; |calS\_a(t)| << Q\_a(t)\textasciicircum\{\}(1/2)/log Q\_a(t); |c\_\{a,k\}\textasciicircum\{\}(1)-tau\_k| << tau\_k\textasciicircum\{\}(a/2)/(log tau\_k)\textasciicircum\{\}2.}
+\expandafter\gdef\csname CGTip@eq:Abelbound\endcsname{Equation: |calS\_a(t)| << Q\_a(t)\textasciicircum\{\}(1/2)/log Q\_a(t), |c\_\{a,k\}\textasciicircum\{\}(1)-tau\_k| << tau\_k\textasciicircum\{\}(a/2)/(log tau\_k)\textasciicircum\{\}2.}
+\expandafter\gdef\csname CGTip@eq:primesum\endcsname{Equation: pi |calS\_a(t)| <= sum\_p p\textasciicircum\{\}(-1/2) e\textasciicircum\{\}(-p/Q) + sum\_p sum\_\{r>=2\} p\textasciicircum\{\}(-r/2) e\textasciicircum\{\}(-p\textasciicircum\{\}r/Q).}
+\expandafter\gdef\csname CGTip@eq:flow\endcsname{Equation: V\_a(t)=-(1-2pi/t)\textasciicircum\{\}2 calS\_a(t)/L(t); d/dlambda Y\_a=V\_a(Y\_a), Y\_a(0,nu)=tau(nu).}
+\expandafter\gdef\csname CGTip@thm:flow\endcsname{Theorem - Global ordered prime flow: for 0<a<=2 the flow exists for all lambda in (2pi,infinity) and nu -> Y\_a(1,nu) is strictly increasing; the flow centres are strictly ordered.}
+\expandafter\gdef\csname CGTip@eq:flowderivative\endcsname{Equation: d/dnu Y\_a(1,nu)=tau'(nu) exp(int\_0\textasciicircum\{\}1 V\_a'(Y\_a(v,nu))dv)>0.}
+\expandafter\gdef\csname CGTip@rem:flow\endcsname{Remark: synthetic order only, not localization; the multiplier regularizes the boundary.}
+% ---------------- tooltips: Section 4 ----------------
+\expandafter\gdef\csname CGTip@thm:poisson\endcsname{Theorem - Half-integer Poisson clock: sum of deltas at kappa\_k equals F\_X'(1+2 sum (-1)\textasciicircum\{\}m cos(2 pi m F\_X)); trace formula with archimedean term, prime term over p<=X and an absolutely convergent remainder.}
+\expandafter\gdef\csname CGTip@eq:poisson\endcsname{Equation: sum delta\_\{kappa\_k\} = F\_X'(t)[1+2 sum\_\{m>=1\}(-1)\textasciicircum\{\}m cos(2 pi m F\_X(t))].}
+\expandafter\gdef\csname CGTip@eq:poissontrace\endcsname{Equation: sum\_k w(kappa\_k)=int w N\_0' - (1/2pi) sum\_\{p<=X\} sum\_r log p p\textasciicircum\{\}(-r/2) hat w\_e(r log p) + calR\_X[w].}
+\expandafter\gdef\csname CGTip@eq:remainder\endcsname{Equation: calR\_X[w]=2 sum\_\{m>=1\}(-1)\textasciicircum\{\}m int w F\_X' cos(2 pi m F\_X) dt.}
+\expandafter\gdef\csname CGTip@eq:remainderabs\endcsname{Equation: int w F\_X' cos(2 pi m F\_X) dt = int g(u) cos(2 pi m u) du = O\_N(m\textasciicircum\{\}-N), g = w composed with the inverse of F\_X.}
+\expandafter\gdef\csname CGTip@eq:poissong\endcsname{Equation: sum\_k w(kappa\_k)=sum\_j g(j+1/2) = sum\_m (-1)\textasciicircum\{\}m hat g(2 pi m).}
+\expandafter\gdef\csname CGTip@eq:SXprime\endcsname{Equation: S\_X'(t)=-(1/pi) sum\_\{p<=X\} sum\_\{r>=1\} log p p\textasciicircum\{\}(-r/2) cos(rt log p).}
+\expandafter\gdef\csname CGTip@lem:ibp\endcsname{Lemma - Off-resonance first derivative estimate: |int A e\textasciicircum\{\}(i Phi\_m)| <= ||A'||\_1/Delta\_m + 2 pi m ||A F\_X''||\_1/Delta\_m\textasciicircum\{\}2.}
+\expandafter\gdef\csname CGTip@eq:ibp\endcsname{Equation: |int A e\textasciicircum\{\}(i Phi\_m) dt| <= ||A'||\_1/Delta\_m + 2 pi m ||A F\_X''||\_1/Delta\_m\textasciicircum\{\}2.}
+\expandafter\gdef\csname CGTip@eq:coeffdef\endcsname{Equation: calQ\_X = \{q=n/d: d | P(X), n X-smooth, (n,d)=1\}.}
+\expandafter\gdef\csname CGTip@eq:cX\endcsname{Equation: c\_X(d)=prod\_\{p<=X, p not dividing d\}(1-1/p).}
+\expandafter\gdef\csname CGTip@thm:rational\endcsname{Theorem - Exact rational-frequency decomposition with Moebius weights: e\textasciicircum\{\}(-2 pi i S\_X(t)) = sum b\_X(q) q\textasciicircum\{\}(it), b\_X(n/d)=mu(d)c\_X(d)/sqrt(nd), absolutely convergent with L1 mass prod(1+2p\textasciicircum\{\}(-1/2)).}
+\expandafter\gdef\csname CGTip@eq:rational\endcsname{Equation: e\textasciicircum\{\}(-2 pi i S\_X(t))=sum\_\{q in calQ\_X\} b\_X(q) q\textasciicircum\{\}(it), b\_X(n/d)=mu(d) c\_X(d)/sqrt(nd).}
+\expandafter\gdef\csname CGTip@eq:L1mass\endcsname{Equation: sum |b\_X(q)| = prod\_\{p<=X\}(1+2p\textasciicircum\{\}(-1/2)).}
+\expandafter\gdef\csname CGTip@eq:rationalderiv\endcsname{Equation: F\_X'(t)e\textasciicircum\{\}(-2 pi i F\_X(t)) = e\textasciicircum\{\}(-2i theta(t)) sum b\_X(q)(N\_0'(t)-log q/(2pi)) q\textasciicircum\{\}(it).}
+\expandafter\gdef\csname CGTip@eq:localfactor\endcsname{Equation: (1-alpha/omega)/(1-alpha omega) = -alpha/omega + (1-alpha\textasciicircum\{\}2) sum\_\{r>=0\} alpha\textasciicircum\{\}r omega\textasciicircum\{\}r.}
+\expandafter\gdef\csname CGTip@eq:SXprimeexp\endcsname{Equation: S\_X'(t) e\textasciicircum\{\}(-2 pi i S\_X(t)) = -(1/2pi) sum b\_X(q)(log q) q\textasciicircum\{\}(it).}
+\expandafter\gdef\csname CGTip@eq:convolution\endcsname{Equation: P\_X(1-s)/P\_X(s) = (sum\_\{d|P(X)\} mu(d)d\textasciicircum\{\}(-s))(sum\_\{n X-smooth\} n\textasciicircum\{\}(s-1)).}
+\expandafter\gdef\csname CGTip@eq:cXsum\endcsname{Equation: sum\_\{e|P(X)/d\} mu(e)/e = c\_X(d).}
+\expandafter\gdef\csname CGTip@cor:stationary\endcsname{Corollary - Precise stationary-point equation: the q-term of the first negative harmonic has phase (u+log q)t-2theta(t); stationary points satisfy 2theta'(t)=u+log q and t=2pi q e\textasciicircum\{\}u(1+O(t\textasciicircum\{\}-2)).}
+\expandafter\gdef\csname CGTip@eq:Iu\endcsname{Equation: I\_u = int A(t) e\textasciicircum\{\}(i(ut-2 pi F\_X(t))) dt, A=wF\_X'.}
+\expandafter\gdef\csname CGTip@eq:stphase\endcsname{Equation: Phi\_\{q,u\}(t)=(u+log q)t-2theta(t), Phi\_\{q,u\}'(t)=u+log q-2theta'(t).}
+\expandafter\gdef\csname CGTip@eq:stloc\endcsname{Equation: t\_\{q,u\}=2 pi q e\textasciicircum\{\}u (1+O(t\_\{q,u\}\textasciicircum\{\}-2)).}
+\expandafter\gdef\csname CGTip@rem:rational\endcsname{Remark: the rational decomposition is proved and exact; no uniform stationary-phase remainder after summing over q is proved; the bare resonance q=1 carries the Mertens weight.}
+\expandafter\gdef\csname CGTip@eq:mertens\endcsname{Equation: b\_X(1)=prod\_\{p<=X\}(1-1/p) \textasciitilde\{\} e\textasciicircum\{\}(-gamma\_E)/log X.}
+\expandafter\gdef\csname CGTip@prop:cutoff\endcsname{Proposition - Absolute monotonicity test: |S\_X'| <= sigma\_X/pi, F\_X' >= N\_0'-sigma\_X/pi; sigma\_X=(2+o(1))sqrt X.}
+\expandafter\gdef\csname CGTip@eq:sigmadef\endcsname{Equation: sigma\_X = sum\_\{p<=X\} log p/(sqrt p - 1).}
+\expandafter\gdef\csname CGTip@eq:sigma\endcsname{Equation: |S\_X'(t)| <= sigma\_X/pi, F\_X'(t) >= N\_0'(t)-sigma\_X/pi.}
+\expandafter\gdef\csname CGTip@eq:logderiv\endcsname{Equation: S\_X'(t) = -(1/pi) sum\_\{p<=X\} log p Re(w\_p/(1-w\_p)), w\_p=p\textasciicircum\{\}(-1/2-it).}
+% ---------------- tooltips: Section 5 ----------------
+\expandafter\gdef\csname CGTip@thm:hankel\endcsname{Theorem - Hankel criteria: for a real entire f and a conjugation-symmetric domain with n zeros, the Hankel matrix of contour moments is real symmetric; it is positive semidefinite iff all enclosed zeros are real, positive definite iff they are real and simple; two-root formula for n=2.}
+\expandafter\gdef\csname CGTip@eq:moments\endcsname{Equation: frak m\_j = (1/2 pi i) oint (z-x\_0)\textasciicircum\{\}j f'/f dz, calH=(frak m\_\{r+s\})\_\{0<=r,s<n\}.}
+\expandafter\gdef\csname CGTip@eq:Hpsd\endcsname{Equation: calH positive semidefinite iff all enclosed zeros are real.}
+\expandafter\gdef\csname CGTip@eq:Hiff\endcsname{Equation: calH positive definite iff all enclosed zeros are real and simple.}
+\expandafter\gdef\csname CGTip@eq:tworoot\endcsname{Equation: z\_\{+-\}=x\_0+(frak m\_1 +- sqrt(2 frak m\_2 - frak m\_1\textasciicircum\{\}2))/2.}
+\expandafter\gdef\csname CGTip@eq:quadform\endcsname{Equation: v\textasciicircum\{\}T calH v = sum over enclosed zeros (with multiplicity) of P(z\_nu - x\_0)\textasciicircum\{\}2.}
+\expandafter\gdef\csname CGTip@rem:hankel\endcsname{Remark: conjugation symmetry is indispensable; repeating a contour gives no new information.}
+\expandafter\gdef\csname CGTip@thm:rouche\endcsname{Theorem - Local Rouche certificate for a Taylor pair: if the Taylor remainder bound M\_\{K+1\}R\textasciicircum\{\}(K+1)/(K+1)! is below min |T\_K| on two disjoint circles around the real roots y\_+-, each disc contains exactly one real simple zero of f.}
+\expandafter\gdef\csname CGTip@eq:rouche\endcsname{Equation: M\_\{K+1\} R\textasciicircum\{\}(K+1)/(K+1)! < min |T\_K(z)| over the two circles |z-y\_+-|=eta.}
+\expandafter\gdef\csname CGTip@eq:quadratic\endcsname{Equation: M\_3 R\textasciicircum\{\}3/6 < (|f''(x\_0)|/2) eta(delta\_0-eta).}
+\expandafter\gdef\csname CGTip@eq:taylorrem\endcsname{Equation: |f(z)-T\_K(z)| <= M\_\{K+1\}|z-x\_0|\textasciicircum\{\}(K+1)/(K+1)!.}
+\expandafter\gdef\csname CGTip@prop:near\endcsname{Proposition - Near-pair accuracy of spectral Taylor truncations: for f\_h(t\_*+x)=(x\textasciicircum\{\}2-h\textasciicircum\{\}2)H\_h(t\_*+x), the stationary point shifts by H\_h'/(2H\_h) h\textasciicircum\{\}2+O(h\textasciicircum\{\}4) and the order-K Taylor roots are O(h\textasciicircum\{\}K)-accurate, K=2,3,4.}
+\expandafter\gdef\csname CGTip@eq:bshift\endcsname{Equation: t\_h=t\_*+H\_h'(t\_*)/(2H\_h(t\_*)) h\textasciicircum\{\}2+O(h\textasciicircum\{\}4).}
+\expandafter\gdef\csname CGTip@eq:nearorders\endcsname{Equation: y\textasciicircum\{\}(K)\_+- - (t\_* +- h) = O(h\textasciicircum\{\}K), K=2,3,4.}
+\expandafter\gdef\csname CGTip@eq:Gh\endcsname{Equation: G\_h(x)=2xH\_h(t\_*+x)+(x\textasciicircum\{\}2-h\textasciicircum\{\}2)H\_h'(t\_*+x).}
+\expandafter\gdef\csname CGTip@rem:near\endcsname{Remark: the stationary-point method repairs local pairs but does not certify global labels or exclude other non-real zeros; derivative bounds must be validated on complex discs.}
+% ---------------- tooltips: Section 6 ----------------
+\expandafter\gdef\csname CGTip@prop:samepair\endcsname{Proposition - Coincident ordinates of off-line zeros: if rho=beta+i gamma is a zero with beta != 1/2, then 1-conj(rho) is a distinct zero with the same ordinate.}
+\expandafter\gdef\csname CGTip@eq:symmetricpair\endcsname{Equation: rho=beta+i gamma, 1-conj(rho)=1-beta+i gamma.}
+\expandafter\gdef\csname CGTip@rem:exceptions\endcsname{Remark: close ordinates may be exempted from separation but not from certification; density-zero exceptional sets are invisible to limiting laws.}
+\expandafter\gdef\csname CGTip@cor:blocks\endcsname{Corollary - Block reality certificate: if conjugation-symmetric blocks cover all zeros of calF and each block Hankel matrix is positive semidefinite, all zeros of calF are real (RH), without simplicity.}
+\expandafter\gdef\csname CGTip@eq:blockpsd\endcsname{Equation: calH\_\{Omega\_k\} positive semidefinite for every k.}
+\expandafter\gdef\csname CGTip@rem:blockwall\endcsname{Remark: the block criterion removes simplicity but proving it for all blocks requires a new spectral inequality; coverage is itself a counting problem.}
+\expandafter\gdef\csname CGTip@thm:isolated\endcsname{Theorem - Fourth-order accuracy for isolated pairs: if f=((z-t\_*)\textasciicircum\{\}2-h\textasciicircum\{\}2)H with m\_* <= |H| <= M\_* on |z-t\_*|<=R and h/R <= 1/(1000B), B=M\_*/m\_*, then the stationary point, half-separation, calK\_b <= 520B(h/R)\textasciicircum\{\}3 and the quartic Taylor roots satisfy |y\_+- - (t\_* +- h)| <= 40B h\textasciicircum\{\}4/R\textasciicircum\{\}3.}
+\expandafter\gdef\csname CGTip@eq:pairfactor\endcsname{Equation: f(z)=((z-t\_*)\textasciicircum\{\}2-h\textasciicircum\{\}2)H(z).}
+\expandafter\gdef\csname CGTip@eq:Hbounds\endcsname{Equation: m\_* <= |H(z)| <= M\_* on |z-t\_*|<=R, B=M\_*/m\_*.}
+\expandafter\gdef\csname CGTip@eq:isolcond\endcsname{Equation: isolation condition h/R <= 1/(1000B).}
+\expandafter\gdef\csname CGTip@eq:tbshift\endcsname{Equation: |t\_b-t\_*| <= 1.01 B h\textasciicircum\{\}2/R.}
+\expandafter\gdef\csname CGTip@eq:hb\endcsname{Equation: h\_b=sqrt(-2f(t\_b)/f''(t\_b)), |h\_b-h| <= 10 B\textasciicircum\{\}2 h\textasciicircum\{\}3/R\textasciicircum\{\}2.}
+\expandafter\gdef\csname CGTip@eq:Kb\endcsname{Equation: calK\_b=(h\_b\textasciicircum\{\}3/|f''(t\_b)|) sup\_\{|z-t\_b|<=2h\_b\} |f\textasciicircum\{\}(5)(z)|.}
+\expandafter\gdef\csname CGTip@eq:Kbbound\endcsname{Equation: calK\_b <= 520 B (h/R)\textasciicircum\{\}3.}
+\expandafter\gdef\csname CGTip@eq:q4\endcsname{Equation: |y\_+- - (t\_* +- h)| <= 40 B h\textasciicircum\{\}4/R\textasciicircum\{\}3.}
+\expandafter\gdef\csname CGTip@eq:q4rel\endcsname{Equation: |y\_+- - (t\_* +- h)|/(2h) <= 20 B (h/R)\textasciicircum\{\}3.}
+\expandafter\gdef\csname CGTip@eq:cauchyH\endcsname{Equation: Cauchy bounds |H\textasciicircum\{\}(j)(z)| <= j! M\_* (2/R)\textasciicircum\{\}j for |z-t\_*| <= R/2.}
+\expandafter\gdef\csname CGTip@eq:f2\endcsname{Equation: f''(z)=2H(z)+4xH'(z)+(x\textasciicircum\{\}2-h\textasciicircum\{\}2)H''(z), x=z-t\_*.}
+\expandafter\gdef\csname CGTip@eq:f2eps\endcsname{Equation: f''=2H(1+eps), |eps| <= Bh/R+4Bh\textasciicircum\{\}2/R\textasciicircum\{\}2 on |x|<=h/4.}
+\expandafter\gdef\csname CGTip@eq:hbsq\endcsname{Equation: h\_b\textasciicircum\{\}2=(h\textasciicircum\{\}2-delta\textasciicircum\{\}2)/(1+eps'), delta=t\_b-t\_*.}
+\expandafter\gdef\csname CGTip@eq:f5\endcsname{Equation: f\textasciicircum\{\}(5)(z)=20H'''(z)+10(z-t\_*)H\textasciicircum\{\}(4)(z)+((z-t\_*)\textasciicircum\{\}2-h\textasciicircum\{\}2)H\textasciicircum\{\}(5)(z).}
+\expandafter\gdef\csname CGTip@eq:f5bound\endcsname{Equation: sup\_\{|z-t\_*|<=3h\} |f\textasciicircum\{\}(5)(z)| <= 1000 M\_*/R\textasciicircum\{\}3.}
+\expandafter\gdef\csname CGTip@eq:R5\endcsname{Equation: |f(z)-T\_4(z)| <= 8.5 M\_* h\textasciicircum\{\}5/R\textasciicircum\{\}3 on the two discs.}
+\expandafter\gdef\csname CGTip@eq:rouchecomp\endcsname{Equation: |f(z)| >= m\_* r(2h-r) >= 79 M\_* h\textasciicircum\{\}5/R\textasciicircum\{\}3 on the two circles.}
+\expandafter\gdef\csname CGTip@thm:certificate\endcsname{Theorem - Computable two-zero certificate: if f'(t\_b)=0, f(t\_b)f''(t\_b)<0 and h\_b M\_3/|f''(t\_b)| < 84/125, then f has exactly two zeros in |z-t\_b|<3h\_b/2, both real and simple.}
+\expandafter\gdef\csname CGTip@eq:certQ\endcsname{Equation: Q(z)=(f''(t\_b)/2)((z-t\_b)\textasciicircum\{\}2-h\_b\textasciicircum\{\}2), the quadratic Taylor polynomial at t\_b.}
+\expandafter\gdef\csname CGTip@eq:certM3\endcsname{Equation: M\_3=sup\_\{|z-t\_b|<=3h\_b/2\} |f'''(z)|.}
+\expandafter\gdef\csname CGTip@eq:cert\endcsname{Equation: certificate h\_b M\_3/|f''(t\_b)| < 84/125.}
+\expandafter\gdef\csname CGTip@eq:certcircle\endcsname{Equation: |Q| >= 7|f''(t\_b)|h\_b\textasciicircum\{\}2/32 and remainder <= 125 M\_3 h\_b\textasciicircum\{\}3/384 on the small circles.}
+\expandafter\gdef\csname CGTip@eq:certbig\endcsname{Equation: |Q| >= 5|f''(t\_b)|h\_b\textasciicircum\{\}2/8 and remainder <= 9M\_3h\_b\textasciicircum\{\}3/16 on |z-t\_b|=3h\_b/2.}
+\expandafter\gdef\csname CGTip@rem:certificate\endcsname{Remark: the certificate uses only f(t\_b), f''(t\_b) and a rigorous bound for M\_3; no zero is an input.}
+\expandafter\gdef\csname CGTip@rem:quartic\endcsname{Remark - A quartic example: f\_h=(z\textasciicircum\{\}2-h\textasciicircum\{\}2)(z\textasciicircum\{\}2+4h\textasciicircum\{\}2) has f\textasciicircum\{\}(5)=0, so calK=0, yet has the non-real zeros +-2ih.}
+\expandafter\gdef\csname CGTip@eq:quartic\endcsname{Equation: f\_h(z)=(z\textasciicircum\{\}2-h\textasciicircum\{\}2)(z\textasciicircum\{\}2+4h\textasciicircum\{\}2), zeros -h, h, -2ih, 2ih.}
+\expandafter\gdef\csname CGTip@heur:gue\endcsname{Heuristic - GUE spacing statistics: P(s\_k<eps) \textasciitilde\{\} (pi\textasciicircum\{\}2/9)eps\textasciicircum\{\}3; two further zeros within eps of a given one has probability O(eps\textasciicircum\{\}8).}
+\expandafter\gdef\csname CGTip@eq:sk\endcsname{Equation: s\_k=(gamma\_\{k+1\}-gamma\_k) log(gamma\_k/2pi)/(2pi).}
+\expandafter\gdef\csname CGTip@eq:psmall\endcsname{Equation: p(s)=(pi\textasciicircum\{\}2/3)s\textasciicircum\{\}2+O(s\textasciicircum\{\}4), P(s\_k<eps) \textasciitilde\{\} (pi\textasciicircum\{\}2/9) eps\textasciicircum\{\}3.}
+\expandafter\gdef\csname CGTip@eq:triple\endcsname{Equation: probability of two further zeros within eps of a given zero is O(eps\textasciicircum\{\}8).}
+\expandafter\gdef\csname CGTip@eq:s1000055\endcsname{Equation: s\_k approx 0.0699 for k=1000055.}
+\expandafter\gdef\csname CGTip@rem:gue\endcsname{Remark: GUE predicts arbitrarily small normalized gaps but typically isolated compressed pairs; a limiting law does not control every index.}
+\expandafter\gdef\csname CGTip@hyp:regular\endcsname{Hypothesis - Regularity of compressed pairs: calK\_k < C\_k\textasciicircum\{\}Rou for every compressed pair, with an analytically chosen neighbourhood.}
+\expandafter\gdef\csname CGTip@eq:Kk\endcsname{Equation: calK\_k = h\_k\textasciicircum\{\}3 sup\_\{|z-t\_\{b,k\}|<=L\_k\} |f\textasciicircum\{\}(5)(z)| / |f''(t\_\{b,k\})|.}
+\expandafter\gdef\csname CGTip@eq:KkRou\endcsname{Equation: calK\_k < C\_k\textasciicircum\{\}Rou.}
+\expandafter\gdef\csname CGTip@rem:adaptive\endcsname{Remark - Adaptive-degree cluster scheme: Casanya, cluster detection, Taylor of degree 2n, Rouche certification; n must be allowed arbitrary.}
+\expandafter\gdef\csname CGTip@eq:scheme\endcsname{Equation: Casanya -> cluster detection -> Taylor of degree 2n -> Rouche certification.}
+\expandafter\gdef\csname CGTip@rem:balance\endcsname{Remark - Status of the cluster statements: separation may be dropped for RH, certification may not.}
+\makeatother
+
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 1},
+  linkbordercolor={1 0 0},
+  citebordercolor={0 0.3 1},
+  urlbordercolor={0 0.6 0.6},
+  filebordercolor={0 0.6 0.6},
+  linktoc=all,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=1,
+  pdfstartview=FitH,
+  pdftitle={Prime-Corrected Clocks, Synthetic Zeta Functions, and Spectral Spirals},
+  pdfauthor={Rotkiv Ayn\"asac},
+  pdfsubject={Prime-corrected Riemann--von Mangoldt clock, synthetic zeta functions, Euler-phase spiral, spectral certification of close zeros},
+  pdfkeywords={Riemann--von Mangoldt clock, synthetic zeta function, finite Euler product, Moebius weights, Hankel moments, Rouche certificate, close pairs of zeros}
+}
+% Back-references in the bibliography.
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+  \ifcase #1 %
+    \relax
+  \or
+    \ (Cited on p.~#2.)%
+  \else
+    \ (Cited on pp.~#2.)%
+  \fi}
+
+% In \cite[note]{key} the note (e.g. a section number) is linked too.
+\makeatletter
+\let\CG@origcite\cite
+\renewcommand*{\cite}[2][]{\def\CG@citekey{#2}%
+  \ifx\relax#1\relax\CG@origcite{#2}\else\CG@origcite[#1]{#2}\fi}
+\def\@cite#1#2{{\@citestyle[\citeform{#1}\if@tempswa, \hyper@link{cite}{cite.\CG@citekey}{#2}\fi]}}
+\makeatother
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setlength{\emergencystretch}{1.5em}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\N}{\mathbb N}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\Li}{\operatorname{Li}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\status}[1]{\textbf{#1}}
+
+\begin{document}
+
+\title[Prime-corrected clocks and spectral spirals]{Prime-Corrected Clocks, Synthetic Zeta Functions, and Spectral Spirals: Exact Identities, Local Certification Theorems, and Unresolved Barriers}
+\author{Rotkiv Ayn\"asac}
+\email{rotkivanyasac@gmail.com}
+\date{23 October 2026}
+
+\begin{abstract}
+We construct a self-contained analytic framework for a prime-corrected Riemann--von Mangoldt clock and its associated synthetic zeta function. The central outputs are \emph{proved} identities: a finite-Euler phase and residue formula, individual (rather than averaged) ordinal-cell criteria, a globally order-preserving prime flow, an exact Poisson decomposition for the corrected clock, an absolutely convergent rational-frequency expansion of its first harmonic with M\"obius coefficients, and spectral moment/Rouch\'e tests for real simple roots. For close zeros we prove a semidefinite Hankel criterion that certifies the reality of a block of zeros without simplicity, an explicit fourth-order accuracy theorem for analytically isolated pairs, and a computable two-zero certificate that takes no zero as input; an explicit quartic example shows why local accuracy cannot exclude other non-real zeros. Each theorem states its hypotheses; none asserts that the corrected clock locates every genuine zeta zero. The main text contains proofs, while an appendix records failed arguments, unverified numerical certificates and known RH-equivalent obstacles. The criterion of success is a \emph{per-index separation threshold at every index to infinity}, never root-mean-square error.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+\section{Definitions and the individual objective}\label{sec:defs}
+Put
+\begin{equation}\label{eq:theta}
+\vartheta(t)=\Im\log\Gamma\!\left(\tfrac14+\tfrac{it}{2}\right)-\tfrac t2\log\pi,
+\quad N_0(t)=1+\frac{\vartheta(t)}\pi,
+\quad\chi(s)=\pi^{s-1/2}\frac{\Gamma((1-s)/2)}{\Gamma(s/2)}
+\end{equation}
+(see \cite{Titchmarsh1986,Edwards1974}; $N_0$ is the smooth part of the Riemann--von Mangoldt formula \cite{Mangoldt1905}). The continuous logarithm is fixed by continuation along real $t$. On a high half-line where $N_0$ is increasing, the RvM clock is $\tau(\nu)=N_0^{-1}(\nu-\tfrac12)$; $\tau_k=\tau(k)$. The approximate clock
+\begin{equation}\label{eq:lead-clock}
+\mathcal N(t)=\frac{t}{2\pi}\left(\log\frac{t}{2\pi}-1\right)+\frac78,
+\qquad L(t)=\mathcal N'(t)=\frac1{2\pi}\log\frac{t}{2\pi}
+\end{equation}
+is used \emph{only} when stated; $N_0$ and $\mathcal N$ are not identical.
+
+For fixed $X\ge2$ set
+\begin{equation}\label{eq:P-S}
+P_X(s)=\prod_{p\le X}(1-p^{-s})^{-1},\qquad
+S_X(t)=-\frac1\pi\sum_{p\le X}\arg(1-p^{-1/2-it}),\qquad F_X(t)=N_0(t)+S_X(t).
+\end{equation}
+For real $t$, each argument is the unique principal value in $(-\pi/2,\pi/2)$. Whenever $F_X$ is increasing, denote by $\kappa_k$ the solutions $F_X(\kappa_k)=k-\tfrac12$ and by $m_k$ the solutions $F_X(m_k)=k$, with the applicable local range of indices understood.
+
+A \emph{synthetic system} is $0<c_1<c_2<\cdots$ with $c_k\to\infty$ and $\sum c_k^{-2}<\infty$. The genuine nontrivial zeta zeros, when mentioned for evaluation, are $\rho_k=\beta_k+i\gamma_k$, indexed by \emph{all} positive ordinates with multiplicity, without assuming $\beta_k=1/2$.
+
+\begin{theorem}[Individual midpoint cell]\label{thm:cell}
+For $k\ge2$ put $\ell_k=c_k-c_{k-1}>0$, $r_k=c_{k+1}-c_k>0$, and $e_k=c_k-\gamma_k$. The statement that $\gamma_k$ lies in the open Voronoi cell of $c_k$ is \emph{equivalent} to
+\begin{equation}\label{eq:directional}
+-\frac{r_k}{2}<e_k<\frac{\ell_k}{2}.
+\end{equation}
+The symmetric condition $2|e_k|<\min(\ell_k,r_k)$ is sufficient, but need not be necessary. If \CGeqref{eq:directional} holds for every $k$, with the first cell treated at its lower endpoint, then the $\gamma_k$ are pairwise distinct; if the enumeration contains every nontrivial zero with multiplicity, this forces all nontrivial zeros onto the critical line and simple.
+\end{theorem}
+\begin{proof}
+The cell is $((c_{k-1}+c_k)/2,(c_k+c_{k+1})/2)$; rearranging its two inequalities yields \CGeqref{eq:directional}. The open cells are disjoint. An off-line zero has a reflected partner $1-\overline\rho$ with the same positive ordinate, and a repeated zero gives repeated ordinates. Both contradict the strict distinctness enforced by disjoint cells. The endpoint statement follows in the same manner.
+\end{proof}
+\begin{remark}\label{rem:cell}
+No uniform margin is required: the ratio to the local permissible half-gap may tend to $1$. Equivalently, with the directional ratio
+\begin{equation}\label{eq:Rk}
+R_k=\max\Bigl\{\frac{2e_k}{\ell_k},\,-\frac{2e_k}{r_k}\Bigr\},
+\end{equation}
+condition \CGeqref{eq:directional} reads $R_k<1$. The quantified condition is nonetheless \emph{for every index to infinity}. Numerical root-mean-square error is irrelevant to this theorem.
+\end{remark}
+
+\section{Synthetic zeta and the Euler-phase spiral}\label{sec:synthetic}
+Define
+\begin{equation}\label{eq:synthetic}
+\Xi_c(z)=\prod_{k\ge1}\left(1-\frac{z^2}{c_k^2}\right),\qquad
+D(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2),\qquad
+\zeta_c(s)=\frac{\Xi_c(-i(s-1/2))}{D(s)}.
+\end{equation}
+These are synthetic functions, not a claimed equality with Riemann's $\zeta$.
+\begin{theorem}[Synthetic functional equation and signed zeros]\label{thm:func}
+The product $\Xi_c$ is even and entire and has precisely the simple zeros $\pm c_k$. The meromorphic function $\zeta_c$ satisfies
+\begin{equation}\label{eq:fe}
+\zeta_c(s)=\chi(s)\zeta_c(1-s).
+\end{equation}
+On the critical line
+\begin{equation}\label{eq:Zc}
+Z_c(t):=e^{i\vartheta(t)}\zeta_c(\tfrac12+it)
+=-\frac{2\pi^{1/4}\Xi_c(t)}{(t^2+1/4)|\Gamma(1/4+it/2)|}\in\R,
+\qquad \sgn Z_c'(c_k)=(-1)^{k+1}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+On a compact set, $\sum_k |z|^2/c_k^2$ converges; hence the canonical paired product converges normally \cite{Titchmarsh1939}. Evenness and the reality of its zeros are immediate. Under $s\mapsto1-s$ the argument $z=-i(s-1/2)$ changes sign; direct division of $D(1-s)$ by $D(s)$ gives $\chi(s)$, proving \CGeqref{eq:fe}. On $s=1/2+it$ one has $(\tfrac12+it)(-\tfrac12+it)=-(t^2+\tfrac14)$, so
+\begin{equation}\label{eq:DonLine}
+D(\tfrac12+it)=-\tfrac12(t^2+\tfrac14)\pi^{-1/4}|\Gamma(\tfrac14+\tfrac{it}2)|\,e^{i\vartheta(t)},
+\end{equation}
+which gives the closed form in \CGeqref{eq:Zc}. Finally
+\begin{equation}\label{eq:Xiprime}
+\Xi_c'(c_k)=-\frac2{c_k}\prod_{j\ne k}\Bigl(1-\frac{c_k^2}{c_j^2}\Bigr)
+\end{equation}
+has exactly $k-1$ negative factors, hence sign $(-1)^k$; the negative prefactor in \CGeqref{eq:Zc} reverses it.
+\end{proof}
+\begin{remark}[Normalization]\label{rem:norm}
+Since $D$ has a simple zero at $s=1$ with $D'(1)=\tfrac12$, and its only other zeros or poles are the poles at $s=-2,-4,\dots$, the function $\zeta_c$ has a single pole, at $s=1$, with
+\begin{equation}\label{eq:respole}
+\Res_{s=1}\zeta_c=2\,\Xi_c(\tfrac i2)=2\prod_{k\ge1}\Bigl(1+\frac1{4c_k^2}\Bigr),
+\end{equation}
+and zeros at $s=-2,-4,\dots$. The normalized function
+\begin{equation}\label{eq:normalized}
+\zeta_c^{\natural}(s)=\frac{\zeta_c(s)}{2\,\Xi_c(i/2)}
+\end{equation}
+has residue $1$ at $s=1$, satisfies \CGeqref{eq:fe}, and changes \CGeqref{eq:Zc} and \CGeqref{eq:residue} only by the positive factor $(2\Xi_c(i/2))^{-1}$; no sign changes. If $c_k=\gamma_k$ for every $k$ (which presupposes RH), the Hadamard product of $\xi$ \cite{Titchmarsh1986} gives $\Xi_c(z)=\xi(\tfrac12+iz)/\xi(\tfrac12)$, so $\zeta_c=\zeta/\xi(\tfrac12)$ with $\xi(\tfrac12)\approx0.4971$, while $\zeta_c^\natural=\zeta$.
+\end{remark}
+Set $E_X(s)=P_X(s)+\chi(s)P_X(1-s)$ and $B_X^c(s)=P_X(s)/\zeta_c(s)$. The function $E_X$ is the finite-Euler-product model of Gonek \cite{Gonek2012}, here with the plain product $P_X$ in place of Gonek's smoothed exponential of a prime-power sum.
+\begin{theorem}[Euler-phase and meromorphic spiral]\label{thm:spiral}
+On the critical line, at points where the displayed quotients are defined,
+\begin{align}
+E_X(\tfrac12+it)&=2e^{-i\vartheta(t)}|P_X(\tfrac12+it)|\cos\big(\pi(F_X(t)-1)\big),\label{eq:EX}\\
+\frac{P_X}{E_X}(\tfrac12+it)&=\frac12+\frac i2\tan\big(\pi(F_X(t)-1)\big),\label{eq:tangent}\\
+B_X^c(\tfrac12+it)&=\frac{|P_X(\tfrac12+it)|}{Z_c(t)}\,e^{i\pi(F_X(t)-1)},\label{eq:Bphase}\\
+\frac{E_X}{\zeta_c}(\tfrac12+it)&=2\Re B_X^c(\tfrac12+it).
+\label{eq:realratio}
+\end{align}
+In particular
+\begin{equation}\label{eq:EXzeros}
+E_X(\tfrac12+it)=0\iff F_X(t)\in\mathbb Z+\tfrac12,
+\end{equation}
+so on any interval where $F_X$ is increasing the zeros of $t\mapsto E_X(\tfrac12+it)$ are exactly the points $\kappa_k$, and they are simple.
+For $\eps_k:=F_X(c_k)-k+\tfrac12$ the residue in the \emph{$s$-plane} is
+\begin{equation}\label{eq:residue}
+\Res_{s=1/2+ic_k}B_X^c(s)=
+\frac{|P_X(1/2+ic_k)|}{|\zeta_c'(1/2+ic_k)|}\,e^{i\pi\eps_k}.
+\end{equation}
+If $F_X$ is strictly increasing, $c_k$ belongs to the $k$th interval $(m_{k-1},m_k)$ if and only if
+\begin{equation}\label{eq:cellphase}
+|\eps_k|<\frac12.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Write $P_X(1/2+it)=|P_X|e^{i\pi S_X(t)}$ and $\chi(1/2+it)=e^{-2i\vartheta(t)}$; since $1-s=\overline s$ on the line, $P_X(1/2-it)=|P_X|e^{-i\pi S_X(t)}$. Adding the two conjugate-phase terms gives \CGeqref{eq:EX}, and division gives \CGeqref{eq:tangent}. Each factor of $P_X(1/2+it)$ is finite and nonzero, so $|P_X(1/2+it)|>0$ and \CGeqref{eq:EXzeros} follows from \CGeqref{eq:EX}; where $F_X'>0$ the cosine has simple zeros. Since $e^{i\vartheta}\zeta_c=Z_c\in\R$, the quotient gives \CGeqref{eq:Bphase} and \CGeqref{eq:realratio}. At $s_k=1/2+ic_k$, $\zeta_c$ has a simple zero and $P_X$ is regular, so the residue is $P_X(s_k)/\zeta_c'(s_k)$. Differentiating $Z_c(t)=e^{i\vartheta(t)}\zeta_c(1/2+it)$ at the zero $c_k$, and using $F_X(c_k)-1=\eps_k+k-\tfrac32$,
+\begin{equation}\label{eq:reschain1}
+\zeta_c'(s_k)=-i\,e^{-i\vartheta(c_k)}Z_c'(c_k),\qquad
+e^{i\pi(F_X(c_k)-1)}=i\,(-1)^k e^{i\pi\eps_k}.
+\end{equation}
+Hence, by Theorem~\CGref{thm:func},
+\begin{equation}\label{eq:reschain2}
+\Res_{s=s_k}B_X^c=\frac{i\,|P_X(s_k)|\,e^{i\pi(F_X(c_k)-1)}}{Z_c'(c_k)}
+=\frac{(-1)^{k+1}|P_X(s_k)|\,e^{i\pi\eps_k}}{Z_c'(c_k)}
+=\frac{|P_X(s_k)|\,e^{i\pi\eps_k}}{|Z_c'(c_k)|},
+\end{equation}
+and $|Z_c'(c_k)|=|\zeta_c'(s_k)|$, proving \CGeqref{eq:residue}. Finally $(m_{k-1},m_k)$ maps monotonically onto $(k-1,k)$, equivalent to \CGeqref{eq:cellphase}.
+\end{proof}
+\begin{remark}\label{rem:spiral}
+The curve $t\mapsto B_X^c(1/2+it)$ crosses the real axis at $F_X(t)\in\mathbb Z$, the imaginary axis at $F_X(t)\in\mathbb Z+1/2$, and has poles at $c_k$. Between poles its angular speed is $\pi F_X'(t)$; crossing infinity requires a chosen projective continuation. This \emph{synthetic spiral} records the arithmetic phase defect, not genuine zeta zero locations. By \CGeqref{eq:EXzeros}, the interval $(m_{k-1},m_k)$ is the Gram-type interval of the model $E_X$ that contains its $k$th zero $\kappa_k$; we call it the $k$th \emph{Gonek cell}. Thus \CGeqref{eq:cellphase} compares $c_k$ with the $k$th zero of the Gonek model \cite{Gonek2012}, and is different from \CGeqref{eq:directional}.
+\end{remark}
+
+\section{Analytic Abel prime correction and an ordered flow}\label{sec:abel}
+For a real exponent $a>0$, put
+\begin{equation}\label{eq:Abel}
+Q_a(t)=(t/2\pi)^a,\qquad
+\mathcal S_a(t)=-\frac1\pi\sum_p\sum_{r\ge1}
+\frac{e^{-p^r/Q_a(t)}}{r p^{r/2}}\sin(rt\log p),\qquad t>0.
+\end{equation}
+This is an \emph{analytic model choice}; the exponent is not determined by a theorem of zero localization. The \emph{one-step Casanya centres} are
+\begin{equation}\label{eq:onestep}
+c_{a,k}^{(1)}=\tau_k-\frac{\mathcal S_a(\tau_k)}{L(\tau_k)}.
+\end{equation}
+\begin{proposition}[Convergence and deterministic displacement]\label{prop:Abel}
+For every $a>0$, the series \CGeqref{eq:Abel} and its termwise derivatives converge locally uniformly for real $t>0$; in particular $\mathcal S_a$ is real analytic on $(0,\infty)$. As $t\to\infty$,
+\begin{equation}\label{eq:Abelbound}
+|\mathcal S_a(t)|\ll_a \frac{Q_a(t)^{1/2}}{\log Q_a(t)},\qquad
+|c_{a,k}^{(1)}-\tau_k|\ll_a \frac{\tau_k^{a/2}}{(\log\tau_k)^2}.
+\end{equation}
+The second statement is a bound on the \emph{synthetic correction}, not on $|c_{a,k}^{(1)}-\gamma_k|$.
+\end{proposition}
+\begin{proof}
+Write $Q=Q_a(t)$. Bounding each sine by $1$,
+\begin{equation}\label{eq:primesum}
+\pi|\mathcal S_a(t)|\le\sum_p\frac{e^{-p/Q}}{\sqrt p}+\sum_p\sum_{r\ge2}\frac{e^{-p^r/Q}}{r\,p^{r/2}}.
+\end{equation}
+By partial summation with $\pi(u)\ll u/\log u$ \cite{MontgomeryVaughan2006}, the first sum is $\ll\int_2^\infty u^{-1/2}e^{-u/Q}(\log u)^{-1}\dd u\ll Q^{1/4}+\sqrt Q/\log Q$ (split at $u=\sqrt Q$). The second sum is $\ll\sum_p p^{-1}e^{-p^2/Q}+\sum_p p^{-3/2}\ll\log\log Q+1$. On a compact $t$-interval in $(0,\infty)$, derivatives introduce only powers of $p^r$, $\log p$ and $Q_a(t)^{-1}$, still dominated by the exponential; hence local normal convergence also holds in a sufficiently narrow complex neighbourhood, proving real analyticity. For the displacement divide by $L(\tau_k)\asymp\log\tau_k$ and use $\log Q_a(\tau_k)\asymp_a\log\tau_k$.
+\end{proof}
+A construction that \emph{proves} synthetic order, rather than assuming it, uses a flow:
+\begin{equation}\label{eq:flow}
+V_a(t)=-\frac{(1-2\pi/t)^2}{L(t)}\mathcal S_a(t),\quad
+\partial_\lambda Y_a(\lambda,\nu)=V_a(Y_a(\lambda,\nu)),\quad
+Y_a(0,\nu)=\tau(\nu).
+\end{equation}
+\begin{theorem}[Global ordered prime flow]\label{thm:flow}
+For every $0<a\le2$, every $\nu$ with $\tau(\nu)>2\pi$, and each finite real $\lambda$, equation \CGeqref{eq:flow} has a unique solution in $(2\pi,\infty)$. The map $\nu\mapsto Y_a(1,\nu)$ is strictly increasing, and where $\tau'(\nu)>0$,
+\begin{equation}\label{eq:flowderivative}
+\partial_\nu Y_a(1,\nu)=\tau'(\nu)
+\exp\!\left(\int_0^1V_a'(Y_a(v,\nu))\,\mathrm dv\right)>0.
+\end{equation}
+Thus $c_{a,k}^{\mathrm{flow}}=Y_a(1,k)$ are strictly ordered for all admissible $k$.
+\end{theorem}
+\begin{proof}
+By Proposition~\CGref{prop:Abel}, $\mathcal S_a$ is real analytic on $(0,\infty)$. The function $L(t)=(2\pi)^{-1}\log(t/2\pi)$ has a simple zero at $2\pi$ and no other zero, while $(1-2\pi/t)^2$ has a double zero there; hence $V_a$ extends to a real-analytic function on $(0,\infty)$ with $V_a(2\pi)=0$. In particular $V_a$ is locally Lipschitz and $2\pi$ is an equilibrium, so by uniqueness no solution starting in $(2\pi,\infty)$ reaches $2\pi$ in finite time, forward or backward. At infinity, Proposition~\CGref{prop:Abel} gives $|V_a(t)|\ll t^{a/2}/(\log t)^2=O(t)$ for $a\le2$, excluding finite-time escape. Distinct orbits of a scalar autonomous equation with locally Lipschitz field cannot cross, so $\nu\mapsto Y_a(1,\nu)$ is strictly increasing because $\tau$ is. Differentiating the flow with respect to the initial parameter yields the variational equation, whose integration gives \CGeqref{eq:flowderivative}.
+\end{proof}
+\begin{remark}\label{rem:flow}
+This is an unconditional theorem about \emph{synthetic order only}. It is not a localization theorem: even an ordered sequence can fail \CGeqref{eq:directional}. The multiplier in \CGeqref{eq:flow} regularizes the boundary and is not uniquely imposed by arithmetic.
+\end{remark}
+
+\section{Exact clock--prime decomposition and rational resonances}\label{sec:poisson}
+For fixed $X$ the function $F_X$ is real analytic on the high half-line, because $\vartheta$ and each $\arg(1-p^{-1/2-it})$ are.
+\begin{theorem}[Half-integer Poisson clock]\label{thm:poisson}
+Suppose $F_X'(t)>0$ throughout $[T,2T]$. Let $\kappa$ be its inverse at half-integer levels. As distributions on $(T,2T)$,
+\begin{equation}\label{eq:poisson}
+\sum_{\kappa_k\in(T,2T)}\delta_{\kappa_k}(t)
+=F_X'(t)\left[1+2\sum_{m\ge1}(-1)^m\cos(2\pi mF_X(t))\right].
+\end{equation}
+For $w\in C_c^\infty((T,2T))$, define $w_e(t)=w(|t|)$ on its two symmetric support windows and $\widehat w_e(u)=\int_\R w_e(t)e^{-iut}\,dt$. Then
+\begin{equation}\label{eq:poissontrace}
+\sum_k w(\kappa_k)=\int_T^{2T}w(t)N_0'(t)\dd t
+-\frac1{2\pi}\sum_{p\le X}\sum_{r\ge1}\frac{\log p}{p^{r/2}}\widehat w_e(r\log p)
++\mathcal R_X[w],
+\end{equation}
+where
+\begin{equation}\label{eq:remainder}
+\mathcal R_X[w]=2\sum_{m\ge1}(-1)^m\int_T^{2T}w(t)F_X'(t)\cos(2\pi mF_X(t))\dd t
+\end{equation}
+converges absolutely: with $g=w\circ F_X^{-1}\in C_c^\infty(\R)$,
+\begin{equation}\label{eq:remainderabs}
+\int_T^{2T}w(t)F_X'(t)\cos(2\pi mF_X(t))\dd t=\int_\R g(u)\cos(2\pi mu)\dd u=O_{N,w}(m^{-N})\quad\text{for every }N.
+\end{equation}
+\end{theorem}
+\begin{proof}
+The substitution $u=F_X(t)$ is a real-analytic increasing diffeomorphism of $[T,2T]$ onto its image, so $g\in C_c^\infty$ and \CGeqref{eq:remainderabs} follows by integration by parts in $u$. Poisson summation at the levels $j+\tfrac12$ gives
+\begin{equation}\label{eq:poissong}
+\sum_k w(\kappa_k)=\sum_{j\in\mathbb Z}g(j+\tfrac12)=\sum_{m\in\mathbb Z}(-1)^m\widehat g(2\pi m),
+\end{equation}
+which, after undoing the substitution, is \CGeqref{eq:poisson} tested against $w$. Differentiation of the finite Euler phase gives
+\begin{equation}\label{eq:SXprime}
+S_X'(t)=-\frac1\pi\sum_{p\le X}\sum_{r\ge1}\frac{\log p}{p^{r/2}}\cos(rt\log p),
+\end{equation}
+an absolutely convergent series for fixed $X$. Splitting the $m=0$ term as $\int wN_0'+\int wS_X'$ and using $\int_0^\infty w(t)\cos(ut)\dd t=\widehat w_e(u)/2$ gives \CGeqref{eq:poissontrace}.
+\end{proof}
+\begin{lemma}[Off-resonance first derivative estimate]\label{lem:ibp}
+For $m\ge1$, real $u$, and $A=wF_X'$, put
+$\Phi_m(t)=2\pi mF_X(t)-ut$ and
+$\Delta_m=\inf_{t\in\supp w}|\Phi_m'(t)|$. If $\Delta_m>0$, then
+\begin{equation}\label{eq:ibp}
+\left|\int_T^{2T} A(t)e^{i\Phi_m(t)}\dd t\right|
+\le\frac{\|A'\|_1}{\Delta_m}
++\frac{2\pi m\|AF_X''\|_1}{\Delta_m^2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+By continuity $\Phi_m'\neq0$ on a neighbourhood of $\supp A$. Integrate by parts using $e^{i\Phi}=\frac1{i\Phi'}\frac{d}{dt}e^{i\Phi}$; compact support removes the boundary term. Differentiate $A/\Phi'$ and use $|\Phi'|\ge\Delta_m$, $\Phi''=2\pi mF_X''$.
+\end{proof}
+
+Set $P(X)=\prod_{p\le X}p$ and
+\begin{equation}\label{eq:coeffdef}
+\mathscr Q_X=\{q=n/d>0: d\mid P(X),\ n\text{ has prime factors}\le X,\ (n,d)=1\}.
+\end{equation}
+For $d\mid P(X)$ define
+\begin{equation}\label{eq:cX}
+c_X(d)=\prod_{p\le X,\,p\nmid d}\Bigl(1-\frac1p\Bigr).
+\end{equation}
+\begin{theorem}[Exact rational-frequency decomposition with M\"obius weights]\label{thm:rational}
+For every fixed finite $X$ and every real $t$,
+\begin{equation}\label{eq:rational}
+e^{-2\pi iS_X(t)}=\sum_{q=n/d\in\mathscr Q_X}
+ b_X(q)q^{it},\qquad
+b_X(n/d)=\frac{\mu(d)c_X(d)}{\sqrt{nd}},
+\end{equation}
+with absolute convergence and
+\begin{equation}\label{eq:L1mass}
+\sum_{q\in\mathscr Q_X}|b_X(q)|=\prod_{p\le X}(1+2p^{-1/2}).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:rationalderiv}
+F_X'(t)e^{-2\pi iF_X(t)}
+=e^{-2i\vartheta(t)}\sum_{q\in\mathscr Q_X}
+ b_X(q)\left(N_0'(t)-\frac{\log q}{2\pi}\right)q^{it}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $\alpha_p=p^{-1/2}$ and $\omega_p=p^{it}$ one has the geometric-series identity
+\begin{equation}\label{eq:localfactor}
+\frac{1-\alpha_p\omega_p^{-1}}{1-\alpha_p\omega_p}=-\alpha_p\omega_p^{-1}+(1-\alpha_p^2)\sum_{r\ge0}\alpha_p^r\omega_p^r.
+\end{equation}
+By $e^{-2\pi iS_X}=\overline{P_X}/P_X$ on the critical line, multiplication of \CGeqref{eq:localfactor} over the finitely many primes $p\le X$ yields \CGeqref{eq:rational}, with negative exponent choices indexed by the squarefree denominator $d$ and nonnegative choices indexed by $n$. The local absolute coefficient sum equals $\alpha_p+(1-\alpha_p^2)/(1-\alpha_p)=1+2\alpha_p$, yielding \CGeqref{eq:L1mass}. Absolute convergence permits termwise differentiation; differentiating $e^{-2\pi iS_X}=\sum_q b_X(q)q^{it}$ gives
+\begin{equation}\label{eq:SXprimeexp}
+S_X'(t)e^{-2\pi iS_X(t)}=-\frac1{2\pi}\sum_{q\in\mathscr Q_X} b_X(q)(\log q)\,q^{it}.
+\end{equation}
+Combine this with $F_X'=N_0'+S_X'$ and $e^{-2\pi iN_0}=e^{-2i\vartheta}$.
+
+Equivalently, on the critical line
+\begin{equation}\label{eq:convolution}
+\frac{P_X(1-s)}{P_X(s)}=\Bigl(\sum_{d\mid P(X)}\mu(d)d^{-s}\Bigr)\Bigl(\sum_{n\ X\text{-smooth}}n^{s-1}\Bigr),
+\end{equation}
+and grouping the pairs $(d',n')$ by the reduced fraction $n'/d'=n/d$ (so $d'=de$, $n'=ne$ with $e\mid P(X)/d$) produces the weight
+\begin{equation}\label{eq:cXsum}
+\sum_{e\mid P(X)/d}\frac{\mu(e)}{e}=\prod_{p\le X,\,p\nmid d}\Bigl(1-\frac1p\Bigr)=c_X(d),
+\end{equation}
+which explains the factor $c_X(d)$ in \CGeqref{eq:rational}.
+\end{proof}
+\begin{corollary}[Precise stationary-point equation]\label{cor:stationary}
+For $u\in\R$ and $A=wF_X'$ consider the first negative harmonic of \CGeqref{eq:remainder} tested against $e^{iut}$,
+\begin{equation}\label{eq:Iu}
+I_u=\int_T^{2T}A(t)\,e^{i(ut-2\pi F_X(t))}\dd t,
+\end{equation}
+whose phase is $-\Phi_1$ in the notation of Lemma~\CGref{lem:ibp}. For each rational $q$ in Theorem~\CGref{thm:rational}, the phase of the $q$-term obtained from \CGeqref{eq:rationalderiv} is
+\begin{equation}\label{eq:stphase}
+\Phi_{q,u}(t)=(u+\log q)t-2\vartheta(t),\qquad
+\Phi_{q,u}'(t)=u+\log q-2\vartheta'(t).
+\end{equation}
+Thus any stationary point $t_{q,u}$ solves $2\vartheta'(t_{q,u})=u+\log q$, and, for $t_{q,u}\to\infty$,
+\begin{equation}\label{eq:stloc}
+t_{q,u}=2\pi q e^u\bigl(1+O(t_{q,u}^{-2})\bigr).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Insert \CGeqref{eq:rationalderiv} into $F_X'e^{i(ut-2\pi F_X)}$. The phase of its $q$-term is \CGeqref{eq:stphase}; the Stirling expansion $2\vartheta'(t)=\log(t/2\pi)+O(t^{-2})$ \cite{Edwards1974} proves \CGeqref{eq:stloc} by inversion.
+\end{proof}
+\begin{remark}\label{rem:rational}
+\CGeqref{eq:rational} is a \emph{proved exact arithmetic decomposition}. It displays squarefree M\"obius denominators and $X$-smooth numerators without invoking genuine zeros. It does \emph{not} yet provide a uniform stationary-phase remainder after summing over all $q$, especially for cutoffs $X=X(T)$. The bare single resonance $t=2\pi e^u$ is the term $q=1$, and by Mertens' third theorem \cite{MontgomeryVaughan2006} it carries the weight
+\begin{equation}\label{eq:mertens}
+b_X(1)=\prod_{p\le X}\Bigl(1-\frac1p\Bigr)\sim\frac{e^{-\gamma_E}}{\log X}\qquad(X\to\infty),
+\end{equation}
+$\gamma_E$ being Euler's constant; it is the whole first harmonic only when $P_X$ is absent.
+\end{remark}
+\begin{proposition}[Absolute monotonicity test]\label{prop:cutoff}
+Put
+\begin{equation}\label{eq:sigmadef}
+\sigma_X=\sum_{p\le X}\frac{\log p}{\sqrt p-1}.
+\end{equation}
+Then
+\begin{equation}\label{eq:sigma}
+|S_X'(t)|\le\sigma_X/\pi,\qquad
+F_X'(t)\ge N_0'(t)-\sigma_X/\pi.
+\end{equation}
+Consequently $N_0'(t)>\sigma_X/\pi$ guarantees monotonicity at $t$. The prime number theorem yields $\sigma_X=(2+o(1))\sqrt X$ as $X\to\infty$, so this \emph{sufficient absolute-bound argument} certifies monotonicity on a large-$T$ window only for $X$ of size $O((\log T)^2)$.
+\end{proposition}
+\begin{proof}
+With $w_p=p^{-1/2-it}$, differentiating the logarithm of each Euler factor gives
+\begin{equation}\label{eq:logderiv}
+S_X'(t)=-\frac1\pi\sum_{p\le X}\log p\;\Re\frac{w_p}{1-w_p},
+\end{equation}
+and $|\Re(w/(1-w))|\le|w|/(1-|w|)$ proves \CGeqref{eq:sigma}. Partial summation of $\sum_{p\le X}(\log p)p^{-1/2}$ using the prime number theorem \cite{MontgomeryVaughan2006} gives $2\sqrt X+o(\sqrt X)$; replacing $p^{-1/2}$ by $(\sqrt p-1)^{-1}$ changes the sum by $O(\sum_{p\le X}\log p/p)=O(\log X)$.
+\end{proof}
+
+\section{Spectral correction of close groups: separate from the synthetic argument}\label{sec:spectral}
+This section \emph{does use} the classical completed function $\xi$; it must not be advertised as a construction from primes and $\Gamma$ alone. Put $\mathcal F(z)=\xi(1/2+iz)$, a real entire function on the real axis. Its nonreal zeros occur in conjugate pairs. The following algebraic statements apply to \emph{any} real entire function, independently of RH.
+\begin{theorem}[Two-root recovery and real Hankel criteria]\label{thm:hankel}
+Let $f$ be real entire, $\Omega\subset\C$ a bounded domain invariant under conjugation with zero-free boundary $\partial\Omega$, enclosing $n\ge1$ zeros counted with multiplicity. For $x_0\in\R$ define
+\begin{equation}\label{eq:moments}
+\mathfrak m_j=\frac1{2\pi i}\oint_{\partial\Omega}(z-x_0)^j\frac{f'(z)}{f(z)}\dd z,
+\quad \mathcal H=(\mathfrak m_{r+s})_{0\le r,s<n}.
+\end{equation}
+Then $\mathcal H$ is real symmetric,
+\begin{equation}\label{eq:Hpsd}
+\mathcal H\succeq0\quad\Longleftrightarrow\quad
+\text{all $n$ enclosed zeros are real},
+\end{equation}
+and
+\begin{equation}\label{eq:Hiff}
+\mathcal H\succ0\quad\Longleftrightarrow\quad
+\text{all $n$ enclosed zeros are real and simple}.
+\end{equation}
+For $n=2$ the two zeros are exactly
+\begin{equation}\label{eq:tworoot}
+z_\pm=x_0+\frac{\mathfrak m_1\pm\sqrt{2\mathfrak m_2-\mathfrak m_1^2}}{2}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+This is Hermite's quadratic-form criterion \cite{KreinNaimark1981} applied to contour moments \cite{DelvesLyness1967,KravanjaVanBarel2000}. The residue theorem gives $\mathfrak m_j=\sum_\nu(z_\nu-x_0)^j$, sum over enclosed zeros with multiplicity; conjugation invariance makes these power sums real. For a real polynomial $P$ of degree $<n$ with coefficient vector $v$,
+\begin{equation}\label{eq:quadform}
+v^{\mathsf T}\mathcal Hv=\sum_\nu P(z_\nu-x_0)^2 .
+\end{equation}
+If all zeros are real, \CGeqref{eq:quadform} is nonnegative, even when some coincide. If there is a nonreal pair $z,\bar z$, real Lagrange interpolation on the distinct zeros (at most $n$ of them) produces a real $P$ of degree $<n$ taking the values $i,-i$ at $z-x_0,\bar z-x_0$ and $0$ at the other distinct zeros; then \CGeqref{eq:quadform} equals $-2\,\mathrm{mult}(z)<0$. This proves \CGeqref{eq:Hpsd}. If all zeros are real and distinct, \CGeqref{eq:quadform} vanishes only when $P$ vanishes at $n$ distinct points, i.e. $P=0$; a repeated zero leaves fewer than $n$ distinct zeros, and a nonzero $P$ of degree $<n$ vanishing at all of them makes \CGeqref{eq:quadform} zero. This proves \CGeqref{eq:Hiff}. Finally, the quadratic formula applied to the elementary symmetric functions determined by $\mathfrak m_1,\mathfrak m_2$ yields \CGeqref{eq:tworoot}.
+\end{proof}
+\begin{remark}\label{rem:hankel}
+Conjugation symmetry is indispensable: a single nonreal zero in an asymmetric region gives the $1\times1$ matrix $(1)\succ0$. Repeating a contour around the same set of roots only repeats its moments; turns alone create no new information.
+\end{remark}
+\begin{theorem}[Local Rouch\'e certificate for a Taylor pair]\label{thm:rouche}
+Let $f$ be holomorphic on a neighbourhood of $|z-x_0|\le R$, real on $\R$, with $x_0\in\R$, and let $T_K(z)=\sum_{j=0}^K f^{(j)}(x_0)(z-x_0)^j/j!$ have two distinct real simple roots $y_-<y_+$. Suppose each closed disc $\overline{D(y_\pm,\eta)}$ is contained in $|z-x_0|\le R$ and the two discs are disjoint. Put $M_{K+1}=\sup_{|z-x_0|\le R}|f^{(K+1)}(z)|$. If
+\begin{equation}\label{eq:rouche}
+\frac{M_{K+1}R^{K+1}}{(K+1)!}
+<\min_{\substack{z\in\C\\ |z-y_-|=\eta\;\text{or}\;|z-y_+|=\eta}}|T_K(z)|,
+\end{equation}
+and each disc contains exactly one root of $T_K$, then each disc contains exactly one \emph{real simple} zero of $f$. For $K=2$ and $\delta_0=y_+-y_->2\eta$, \CGeqref{eq:rouche} is implied by
+\begin{equation}\label{eq:quadratic}
+\frac{M_3R^3}{6}<\frac{|f''(x_0)|}{2}\,\eta(\delta_0-\eta).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Taylor's integral remainder along the straight segment in the disc gives
+\begin{equation}\label{eq:taylorrem}
+|f(z)-T_K(z)|\le \frac{M_{K+1}|z-x_0|^{K+1}}{(K+1)!}
+\end{equation}
+(apply the one-variable integral formula to $u\mapsto f(x_0+u(z-x_0))$). Rouch\'e's theorem \cite{Titchmarsh1939} on each circle gives the same zero count as $T_K$, namely one. As $f(\overline z)=\overline{f(z)}$ and each disc is symmetric about the real axis, a unique enclosed zero must be real; multiplicity one gives simplicity. For $K=2$, $T_2(z)=\frac{f''(x_0)}2(z-y_-)(z-y_+)$, and on $|z-y_-|=\eta$ the other factor has modulus at least $\delta_0-\eta$; similarly on the other circle.
+\end{proof}
+\begin{proposition}[Near-pair accuracy of spectral Taylor truncations]\label{prop:near}
+Consider a family
+$f_h(t_*+x)=(x^2-h^2)H_h(t_*+x)$, $t_*\in\R$, $h\downarrow0$, where the analytic factors $H_h$ are real on the real axis, nonvanishing on a common complex neighbourhood of $t_*$, and $H_h,H_h^{-1}$ have derivatives of orders $0$ through $5$ bounded there uniformly in $h$. A real stationary point $t_h$ of $f_h$ exists near $t_*$ and satisfies
+\begin{equation}\label{eq:bshift}
+t_h=t_*+\frac{H_h'(t_*)}{2H_h(t_*)}h^2+O(h^4).
+\end{equation}
+If $y^{(K)}_\pm$ are the two Taylor roots near $t_*\pm h$ of order $K=2,3,4$ about $t_h$, then
+\begin{equation}\label{eq:nearorders}
+y^{(2)}_\pm-(t_*\pm h)=O(h^2),\quad
+y^{(3)}_\pm-(t_*\pm h)=O(h^3),\quad
+y^{(4)}_\pm-(t_*\pm h)=O(h^4).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Writing $t_h=t_*+x$, the critical-point equation is $G_h(x)=0$ with
+\begin{equation}\label{eq:Gh}
+G_h(x)=2xH_h(t_*+x)+(x^2-h^2)H_h'(t_*+x).
+\end{equation}
+By the uniform bounds there are $\eta,\rho,C>0$ with $|H_h|\ge\eta$ and $|G_h'(x)-2H_h(t_*)|\le C(|x|+h^2)$ for $|x|\le\rho$; hence for small $h$ the real function $G_h'$ keeps the sign of $H_h(t_*)$ and $|G_h'|\ge\eta$ on $|x|\le\rho$, while $|G_h(0)|=h^2|H_h'(t_*)|\le Ch^2$. Therefore $G_h$ has a unique zero $x_h$ in $|x|\le\rho$, with $|x_h|\le Ch^2/\eta$ (uniform version of the implicit-function theorem; no regularity in $h$ is needed). Substituting $x_h=O(h^2)$ into $G_h(x_h)=0$ gives $2x_hH_h(t_*)=h^2H_h'(t_*)+O(h^4)$, i.e.\ \CGeqref{eq:bshift}. The order-$K$ Taylor remainder about $t_h$ at distance $O(h)$ is $O(h^{K+1})$, uniformly by the hypotheses, whereas $|f_h(z)|\ge 2\eta\,h\,|z-t_*\mp h|(1+o(1))$ near the root $t_*\pm h$. Rouch\'e on circles of radius $C_1h^K$ around $t_*\pm h$, with $C_1$ large, gives a Taylor root at distance $O(h^K)$, real by conjugation symmetry. For $K=2$ the Taylor polynomial has the two real roots $t_h\pm\sqrt{-2f_h(t_h)/f_h''(t_h)}$ for small $h$.
+\end{proof}
+\begin{remark}\label{rem:near}
+The real stationary point method is useful for repairing \emph{local pairs} even when the one-step Casanya centres \CGeqref{eq:onestep} miss the directional cell. It does not certify their global ordinal labels, nor rule out additional nonreal zeros. The implied constants in \CGeqref{eq:nearorders} depend on the bounds for $H_h$, that is, on the distance from the pair to the other zeros; for a single pair at a fixed height the proposition gives no numerical bound, and Theorem~\CGref{thm:isolated} makes the dependence explicit. Derivative bounds must be validated on complex discs, not inferred from a mesh of sample values.
+\end{remark}
+
+\section{Clusters, real blocks and analytically isolated pairs}\label{sec:clusters}
+This section concerns the \emph{certification} of close zeros, as opposed to their ordinal separation by a synthetic clock. It uses $\mathcal F(z)=\xi(\tfrac12+iz)$ of Section~\CGref{sec:spectral} and general functions real on $\R$.
+
+\subsection{Close ordinates cannot be discarded}\label{subsec:close}
+\begin{proposition}[Coincident ordinates of off-line zeros]\label{prop:samepair}
+If $\zeta(\rho)=0$ with
+\begin{equation}\label{eq:symmetricpair}
+\rho=\beta+i\gamma,\quad 0<\beta<1,\ \beta\ne\tfrac12,\ \gamma>0,\qquad\text{then}\qquad 1-\overline\rho=1-\beta+i\gamma
+\end{equation}
+is a distinct zero with the same positive ordinate $\gamma$.
+\end{proposition}
+\begin{proof}
+$\xi(s)=\xi(1-s)$ and $\xi(\overline s)=\overline{\xi(s)}$ \cite{Titchmarsh1986}, so $\xi(1-\overline\rho)=\overline{\xi(\rho)}=0$; and $1-\overline\rho\ne\rho$ because $\beta\ne\tfrac12$.
+\end{proof}
+\begin{remark}\label{rem:exceptions}
+Two critical zeros, however close, have distinct ordinates; two symmetric off-line zeros have ordinate separation exactly zero. Hence the closest ordinates are precisely where a violation of RH would sit, and they cannot be declared harmless. Certifying all zeros outside an exceptional set of indices, even of density zero, leaves RH undecided; and a statistical limiting law (for instance GUE) is insensitive to exceptional sets of density zero. Close pairs may therefore be exempted from \emph{separation} by the clock, but not from \emph{certification}: every exempted cluster needs another argument proving the reality of its zeros, for all clusters to infinity.
+\end{remark}
+
+\subsection{Reality of blocks without simplicity}\label{subsec:blocks}
+RH does not require simplicity. Criterion \CGeqref{eq:Hpsd} certifies reality while leaving the internal separation of a block unresolved.
+\begin{corollary}[Block reality certificate]\label{cor:blocks}
+Let $(\Omega_k)_{k\ge1}$ be bounded conjugation-symmetric domains with zero-free boundaries whose union contains every zero of $\mathcal F$, and let $\mathcal H_{\Omega_k}$ be the Hankel matrix \CGeqref{eq:moments} of $f=\mathcal F$ on $\Omega_k$, of size $n_k=\mathfrak m_0(\Omega_k)$. If
+\begin{equation}\label{eq:blockpsd}
+\mathcal H_{\Omega_k}\succeq0\qquad\text{for every }k,
+\end{equation}
+then every zero of $\mathcal F$ is real, that is, RH holds. Simplicity is neither assumed nor concluded.
+\end{corollary}
+\begin{proof}
+By \CGeqref{eq:Hpsd} each block contains only real zeros of $\mathcal F$, and the blocks cover all zeros. A zero $z$ of $\mathcal F$ corresponds to the zero $\tfrac12+iz$ of $\xi$, which lies on the critical line exactly when $z\in\R$.
+\end{proof}
+\begin{remark}\label{rem:blockwall}
+Problematic indices, for instance $k,k+1$, can thus be grouped without forcing an individual separation: \CGeqref{eq:blockpsd} for that block certifies that its zeros satisfy RH even if two ordinates are extremely close or coincide. The identity \CGeqref{eq:quadform} does not, however, supply \CGeqref{eq:blockpsd} for all blocks to infinity; that requires a new spectral inequality. Moreover the covering hypothesis of Corollary~\CGref{cor:blocks} is itself a zero-counting statement unless it is obtained by another route.
+\end{remark}
+
+\subsection{Fourth-order accuracy for analytically isolated pairs}\label{subsec:isolated}
+\begin{theorem}[Fourth-order accuracy for isolated pairs]\label{thm:isolated}
+Let $t_*\in\R$, $h>0$, $R>0$, and let $f$ be holomorphic on a neighbourhood of $\overline D=\{|z-t_*|\le R\}$, real on $\R$, with
+\begin{equation}\label{eq:pairfactor}
+f(z)=\bigl((z-t_*)^2-h^2\bigr)H(z),
+\end{equation}
+where $H$ is holomorphic and zero-free on $\overline D$ and
+\begin{equation}\label{eq:Hbounds}
+m_*\le|H(z)|\le M_*\quad(z\in\overline D),\qquad B=\frac{M_*}{m_*}.
+\end{equation}
+If
+\begin{equation}\label{eq:isolcond}
+\frac hR\le\frac1{1000B},
+\end{equation}
+then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $f'$ has exactly one zero $t_b$ in $[t_*-h/4,t_*+h/4]$, and
+\begin{equation}\label{eq:tbshift}
+|t_b-t_*|\le1.01\,B\frac{h^2}R;
+\end{equation}
+\item $f(t_b)f''(t_b)<0$, and the quadratic half-separation satisfies
+\begin{equation}\label{eq:hb}
+h_b=\sqrt{-\frac{2f(t_b)}{f''(t_b)}},\qquad |h_b-h|\le10\,B^2\frac{h^3}{R^2};
+\end{equation}
+\item the quantity
+\begin{equation}\label{eq:Kb}
+\mathcal K_b=\frac{h_b^3}{|f''(t_b)|}\sup_{|z-t_b|\le2h_b}|f^{(5)}(z)|
+\end{equation}
+satisfies
+\begin{equation}\label{eq:Kbbound}
+\mathcal K_b\le520\,B\Bigl(\frac hR\Bigr)^3;
+\end{equation}
+\item the Taylor polynomial $T_4$ of degree $4$ of $f$ about $t_b$ has two real simple roots $y_\pm$ with
+\begin{equation}\label{eq:q4}
+|y_\pm-(t_*\pm h)|\le40\,B\frac{h^4}{R^3},
+\end{equation}
+hence, relative to the true separation $2h$,
+\begin{equation}\label{eq:q4rel}
+\frac{|y_\pm-(t_*\pm h)|}{2h}\le20\,B\Bigl(\frac hR\Bigr)^3.
+\end{equation}
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Write $x=z-t_*$. Since $H$ is real on $\R$ and zero-free, it has constant sign on $[t_*-R,t_*+R]$. Cauchy's inequalities on discs of radius $R/2$ give
+\begin{equation}\label{eq:cauchyH}
+|H^{(j)}(z)|\le j!\,M_*\Bigl(\frac2R\Bigr)^j\qquad(|z-t_*|\le R/2).
+\end{equation}
+\emph{(i)} Differentiating \CGeqref{eq:pairfactor},
+\begin{equation}\label{eq:f2}
+f'=2xH+(x^2-h^2)H',\qquad f''(z)=2H(z)+4xH'(z)+(x^2-h^2)H''(z).
+\end{equation}
+For real $|x|\le h/4$, \CGeqref{eq:cauchyH} gives
+\begin{equation}\label{eq:f2eps}
+f''=2H(1+\eps),\qquad|\eps|\le\frac{4|x||H'|+h^2|H''|}{2|H|}\le B\frac hR+4B\frac{h^2}{R^2}<1.01\cdot10^{-3},
+\end{equation}
+so $f''$ has the sign of $H$ and $|f''|\ge1.99\,m_*$ there. Also $|f'(t_*)|=h^2|H'(t_*)|\le2M_*h^2/R\le0.002\,m_*h$, while $\int_{t_*}^{t_*\pm h/4}|f''|\ge0.49\,m_*h$; hence $f'(t_*-h/4)$ and $f'(t_*+h/4)$ have opposite signs, and $f'$, being monotone, has exactly one zero $t_b$ in the interval, with $|t_b-t_*|\le|f'(t_*)|/(1.99m_*)\le1.01Bh^2/R$.
+
+\emph{(ii)} Put $\delta=t_b-t_*$, so $|\delta|\le1.01Bh^2/R\le1.01\cdot10^{-3}h$. Then $f(t_b)=(\delta^2-h^2)H(t_b)$ has the sign of $-H$, and $f''(t_b)=2H(t_b)(1+\eps')$ with $|\eps'|\le4B|\delta|/R+4Bh^2/R^2$, so $f(t_b)f''(t_b)<0$ and
+\begin{equation}\label{eq:hbsq}
+h_b^2=\frac{h^2-\delta^2}{1+\eps'}.
+\end{equation}
+Using $\delta^2/h^2\le1.03B^2h^2/R^2$, $4B|\delta|/R\le4.04B^2h^2/R^2$, $4Bh^2/R^2\le4B^2h^2/R^2$ and $|\eps'|<10^{-5}$, we get $|h_b^2/h^2-1|\le9.1B^2h^2/R^2$, and $|\sqrt{1+v}-1|\le|v|$ gives \CGeqref{eq:hb}. In particular $h_b\le1.01h$.
+
+\emph{(iii)} Leibniz' rule applied to \CGeqref{eq:pairfactor} gives the exact identity
+\begin{equation}\label{eq:f5}
+f^{(5)}(z)=20H^{(3)}(z)+10(z-t_*)H^{(4)}(z)+\bigl((z-t_*)^2-h^2\bigr)H^{(5)}(z).
+\end{equation}
+The disc $|z-t_b|\le2h_b$ lies in $|z-t_*|\le3h\le R/2$. There \CGeqref{eq:cauchyH} bounds the three terms by $960M_*/R^3$, $11520(h/R)M_*/R^3\le11.6M_*/R^3$ and $38400(h/R)^2M_*/R^3\le0.04M_*/R^3$, so
+\begin{equation}\label{eq:f5bound}
+\sup_{|z-t_*|\le3h}|f^{(5)}(z)|\le\frac{1000\,M_*}{R^3}.
+\end{equation}
+With $|f''(t_b)|\ge2m_*(1-|\eps'|)\ge1.99m_*$ and $h_b\le1.01h$ this gives $\mathcal K_b\le(1.01)^3\cdot1000/1.99\cdot B(h/R)^3\le520B(h/R)^3$.
+
+\emph{(iv)} Let $r=40Bh^4/R^3\le4\cdot10^{-8}h$ and $D_\pm=\{|z-(t_*\pm h)|\le r\}$, two disjoint discs. For $z\in D_\pm$ one has $|z-t_b|\le h+|\delta|+r\le1.002h$, and the segment from $t_b$ to $z$ lies in $|w-t_*|\le3h$, so by \CGeqref{eq:taylorrem} with $K=4$ and \CGeqref{eq:f5bound},
+\begin{equation}\label{eq:R5}
+|f(z)-T_4(z)|\le\frac{1000M_*}{R^3}\,\frac{(1.002h)^5}{120}\le8.5\,M_*\frac{h^5}{R^3}.
+\end{equation}
+On $\partial D_\pm$, by \CGeqref{eq:pairfactor},
+\begin{equation}\label{eq:rouchecomp}
+|f(z)|\ge m_*\,r(2h-r)\ge1.99\,m_*rh=79.6\,M_*\frac{h^5}{R^3}.
+\end{equation}
+Thus $|f-T_4|<|f|$ on $\partial D_\pm$, and by Rouch\'e $T_4$ has, like $f$, exactly one zero in each $D_\pm$. Since $T_4$ has real coefficients and $D_\pm$ is symmetric about $\R$, that zero $y_\pm$ is real and simple, and $|y_\pm-(t_*\pm h)|\le r$, which is \CGeqref{eq:q4}; dividing by $2h$ gives \CGeqref{eq:q4rel}.
+\end{proof}
+The accuracy relative to the local separation improves as the pair compresses, provided the pair remains analytically isolated: the governing parameters are $h/R$ and $B$, not the height. This is a statement of accuracy relative to the local gap, not a root-mean-square estimate.
+
+\subsection{A computable two-zero certificate}\label{subsec:certificate}
+Theorem~\CGref{thm:isolated} explains why an identified pair is well approximated. The following test is computed from $f$ and its derivatives alone.
+\begin{theorem}[Computable two-zero certificate]\label{thm:certificate}
+Let $f$ be real on $\R$, $t_b\in\R$ with $f'(t_b)=0$ and $f(t_b)f''(t_b)<0$, and put $h_b=\sqrt{-2f(t_b)/f''(t_b)}$. Assume $f$ is holomorphic on a neighbourhood of $|z-t_b|\le\tfrac32h_b$, let
+\begin{equation}\label{eq:certQ}
+Q(z)=\frac{f''(t_b)}2\bigl((z-t_b)^2-h_b^2\bigr)
+\end{equation}
+be its quadratic Taylor polynomial at $t_b$, and
+\begin{equation}\label{eq:certM3}
+M_3=\sup_{|z-t_b|\le3h_b/2}|f'''(z)|.
+\end{equation}
+If
+\begin{equation}\label{eq:cert}
+\frac{h_bM_3}{|f''(t_b)|}<\frac{84}{125},
+\end{equation}
+then $f$ has exactly two zeros in $|z-t_b|<\tfrac32h_b$, both real and simple, one in each disc $|z-(t_b\pm h_b)|<h_b/4$.
+\end{theorem}
+\begin{proof}
+Since $f'(t_b)=0$ and $f''(t_b)h_b^2/2=-f(t_b)$, $Q$ is the Taylor polynomial of degree $2$, and \CGeqref{eq:taylorrem} gives $|f(z)-Q(z)|\le M_3|z-t_b|^3/6$ on the disc. On each circle $|z-(t_b\pm h_b)|=h_b/4$ one has $|z-t_b|\le\tfrac54h_b$ and
+\begin{equation}\label{eq:certcircle}
+|Q(z)|\ge\frac{|f''(t_b)|}2\cdot\frac{h_b}4\cdot\frac{7h_b}4=\frac{7|f''(t_b)|h_b^2}{32},\qquad
+|f(z)-Q(z)|\le\frac{125M_3h_b^3}{384},
+\end{equation}
+and \CGeqref{eq:cert} is exactly the condition that the second bound is smaller than the first. On $|z-t_b|=\tfrac32h_b$,
+\begin{equation}\label{eq:certbig}
+|Q(z)|\ge\frac{|f''(t_b)|}2\cdot\frac54h_b^2=\frac{5|f''(t_b)|h_b^2}8,\qquad|f(z)-Q(z)|\le\frac{9M_3h_b^3}{16},
+\end{equation}
+and \CGeqref{eq:cert} implies $h_bM_3/|f''(t_b)|<10/9$, so the second is again smaller. By Rouch\'e, $f$ has exactly two zeros in the large disc and one in each small disc; by conjugation symmetry the latter are real, and each is simple.
+\end{proof}
+\begin{remark}\label{rem:certificate}
+The certificate applies to the holomorphic continuation of $Z(t)$ near the real axis, or to $\mathcal F$. Its inputs are $f(t_b)$, $f''(t_b)$ and a rigorous upper bound for $M_3$ (for instance by Cauchy's inequality from a bound on $|f|$ over a larger circle); no zero is an input. It gives an effective local separation; it has not been shown that every spectral extremum satisfies \CGeqref{eq:cert}.
+\end{remark}
+
+\subsection{Local accuracy does not exclude other non-real zeros}\label{subsec:limit}
+\begin{remark}[A quartic example]\label{rem:quartic}
+The real entire function
+\begin{equation}\label{eq:quartic}
+f_h(z)=(z^2-h^2)(z^2+4h^2),\qquad\text{zeros } -h,\ h,\ -2ih,\ 2ih,
+\end{equation}
+is a polynomial of degree $4$, so $f_h^{(5)}\equiv0$ and every quantity of the form \CGeqref{eq:Kb} vanishes: the fourth-order Taylor approximation locates the real pair exactly, yet $f_h$ has the non-real pair $\pm2ih$. Hence smallness of $\mathcal K$ at all real pairs does not imply that all zeros are real. Consistently, Theorem~\CGref{thm:isolated} does not apply to $f_h$: its factor $H=z^2+4h^2$ vanishes at distance $2h$, which forces $R<2h$ and violates \CGeqref{eq:isolcond}. The obstruction is not the accuracy of Taylor, but the exclusion of non-real zeros that do not take part in the pair under study.
+\end{remark}
+
+\subsection{Statistical heuristics and a regularity hypothesis}\label{subsec:gue}
+\begin{heuristic}[GUE spacing statistics]\label{heur:gue}
+Normalize the ordinate gaps by
+\begin{equation}\label{eq:sk}
+s_k=(\gamma_{k+1}-\gamma_k)\,\frac{\log(\gamma_k/2\pi)}{2\pi}.
+\end{equation}
+In the GUE (sine-kernel) model of the zeros \cite{Montgomery1973,RudnickSarnak1996,Mehta2004} the nearest-neighbour spacing density satisfies
+\begin{equation}\label{eq:psmall}
+p(s)=\frac{\pi^2}3s^2+O(s^4),\qquad\mathbb P(s_k<\eps)\sim\frac{\pi^2}9\eps^3\quad(\eps\to0),
+\end{equation}
+so among $N$ gaps about $N\eps^3$ fall below $\eps$, and the probability that two \emph{further} zeros lie within normalized distance $\eps$ of a given zero is
+\begin{equation}\label{eq:triple}
+O(\eps^8).
+\end{equation}
+For the reported pair $k=1\,000\,055$ (Appendix~\CGref{sec:appB}), with $\gamma_k$ replaced by $\tau_k\approx600\,299.77$ in \CGeqref{eq:sk},
+\begin{equation}\label{eq:s1000055}
+s_k\approx0.0699,
+\end{equation}
+a value fully compatible with \CGeqref{eq:psmall}.
+\end{heuristic}
+\begin{remark}\label{rem:gue}
+By \CGeqref{eq:psmall}, GUE predicts arbitrarily small normalized gaps as the number of zeros grows, so no uniform positive minimal gap may be assumed. By \CGeqref{eq:triple} against \CGeqref{eq:psmall}, a strongly compressed pair is typically isolated from the other zeros, which is the regime of Theorem~\CGref{thm:isolated}. This is an asymptotic statistical prediction, not a prohibition of triple clusters, and it does not supply the analytic bounds on $H$ required there. Assuming GUE allows conditional asymptotic frequencies of pairs and clusters; checking it for millions or billions of zeros is numerical evidence only; proving it at the required strength is open. Even the full GUE law, as a limiting statement, tolerates exceptional sets of density zero, so it would neither give $R_k<1$ in \CGeqref{eq:Rk} for every $k$ nor exclude finitely many multiple or off-line zeros.
+\end{remark}
+\begin{hypothesis}[Regularity of compressed pairs]\label{hyp:regular}
+For every compressed pair located by a spectral extremum $t_{b,k}$ with quadratic half-separation $h_k$, there is an analytically determined radius $L_k>0$ such that
+\begin{equation}\label{eq:Kk}
+\mathcal K_k=h_k^3\,\frac{\sup_{|z-t_{b,k}|\le L_k}|f^{(5)}(z)|}{|f''(t_{b,k})|}
+\end{equation}
+satisfies
+\begin{equation}\label{eq:KkRou}
+\mathcal K_k<C_k^{\mathrm{Rou}},
+\end{equation}
+where $C_k^{\mathrm{Rou}}>0$ is the explicit threshold for which Theorem~\CGref{thm:rouche} with $K=4$ certifies the two roots. The threshold need not be uniform in $k$.
+\end{hypothesis}
+Condition \CGeqref{eq:KkRou} is verifiable from spectral values and derivative bounds alone, without supplying the true zeros, and it is more specific than GUE: it asserts that the analytic structure of the function permits the certification of close pairs. Whether it can be proved from the structure of $\mathcal F$ is open; no proved obstruction to a suitable local formulation is known to us, and it does not follow from GUE.
+\begin{remark}[Adaptive-degree cluster scheme]\label{rem:adaptive}
+Instead of a universal quadratic correction one may use a correction whose degree adapts to the cluster,
+\begin{equation}\label{eq:scheme}
+\text{Casanya}\ \longrightarrow\ \text{cluster detection}\ \longrightarrow\ \text{Taylor of degree }2n\ \longrightarrow\ \text{Rouch\'e certification}.
+\end{equation}
+By Heuristic~\CGref{heur:gue}, highly compressed clusters of many zeros are progressively rarer, but the analytic procedure must allow every size $n$: exceptions cannot be excluded for being statistically improbable. The provable question becomes an inequality between the spectral derivatives and the geometry of each cluster. If it held for every cluster with adaptive $n$, it would give a universal localization procedure for the real zeros found; the absence of further non-real zeros would still need a separate argument (Remark~\CGref{rem:quartic}), but it would not have been assumed in certifying each cluster.
+\end{remark}
+\begin{remark}[Status of the cluster statements]\label{rem:balance}
+\leavevmode
+\begin{center}\small
+\begin{tabular}{@{}p{0.58\textwidth}p{0.34\textwidth}@{}}\toprule
+Statement & Status\\\midrule
+Ignoring a proportion of zeros without certifying them & Insufficient for RH\\
+Ignoring their internal separation while certifying that all are critical & Sufficient for RH (Corollary~\CGref{cor:blocks})\\
+Relative quartic Taylor error $O((h/R)^3)$ for isolated pairs & Proved (Theorem~\CGref{thm:isolated})\\
+Local certification by \CGeqref{eq:cert} & Proved (Theorem~\CGref{thm:certificate})\\
+GUE guarantees regularity of all pairs & Does not follow from GUE\\
+Small $\mathcal K_k$ excludes other non-critical zeros & False (Remark~\CGref{rem:quartic})\\\bottomrule
+\end{tabular}
+\end{center}
+The distinction to keep is \emph{not separating} versus \emph{not certifying}: for RH the first is allowed, the second is not.
+\end{remark}
+
+\section{What is proved and what remains an actual research problem}\label{sec:status}
+Theorem~\CGref{thm:spiral} and Theorem~\CGref{thm:rational} give a new \emph{object of investigation}: a fully arithmetic phase spiral whose first Fourier harmonic has exact rational frequencies $q=n/d$ and M\"obius weights. Theorem~\CGref{thm:flow} proves order preservation of a prime-driven synthetic transport, while Theorem~\CGref{thm:rouche}, Theorem~\CGref{thm:isolated} and Theorem~\CGref{thm:certificate} certify individual spectral pairs under computable derivative inequalities, and Corollary~\CGref{cor:blocks} certifies reality of blocks without simplicity. None of these results asserts the universal cell inequalities \CGeqref{eq:directional}.
+
+The next nontrivial analytical estimate is \emph{not} a reformulation of a zero count: it is a uniform-in-the-active-prime-range asymptotic for the \emph{arithmetic sum of rational resonances} in \CGeqref{eq:rationalderiv}, with controlled cancellation rather than the absolute mass \CGeqref{eq:L1mass}. Such a theorem would be meaningful even independently of RH. Whether it ultimately produces a universal zero-separation law remains open. On the spectral side, the corresponding target is Hypothesis~\CGref{hyp:regular}, or its adaptive-degree version in Remark~\CGref{rem:adaptive}, together with a covering argument that does not reduce to the classical complete count. By contrast, demanding the full explicit formula for an entire synthetic spectrum at once merely repackages the familiar RH-level spectral identification.
+
+\appendix
+\section{Arguments to defeat: failed routes, gaps, and known walls}\label{sec:appA}
+The following is part of the mathematical record, not a collection of claimed theorems.
+\begin{enumerate}[leftmargin=*,itemsep=2.5pt]
+\item \status{RMS optimization is the wrong objective.} An estimate may have larger RMS and still satisfy every individual cell. Earlier experiments using $a=0.5,0.75,1$ for Abel smoothing showed local synthetic-gap contractions and some inversions. Reports based on $2|e_k|/\min(\ell_k,r_k)$ tested a \emph{stronger symmetric} threshold, not the final directional inequality \CGeqref{eq:directional}. Such failure counts must not be silently relabelled as directional failures.
+\item \status{The exponent $3/4$ is not proved optimal.} The value $a=3/4$ used in the experiments is not derived from any optimality principle. The auxiliary cost $J(a)=\log(1/a)+a^2$ considered in earlier tuning has its unique minimum at $a=1/\sqrt2\approx0.707$, not at $3/4$, and weighting its two terms equally was arbitrary; no theorem links either value to an individual bound on $|c_k-\gamma_k|$.
+\item \status{An Abel-series displacement bound is not a true-zero error bound.} The estimate $|c_{a,k}^{(1)}-\tau_k|\ll\tau_k^{a/2}/(\log\tau_k)^2$ of \CGeqref{eq:Abelbound} neither proves nor disproves a bound on $|c_{a,k}^{(1)}-\gamma_k|$.
+\item \status{Guaranteed synthetic monotonicity does not imply localization.} The flow theorem removes synthetic inversions but does not prevent wrong ordinal assignment. Retrospective tests showed residual failures near compressed pairs, including the neighbourhood of index $1\,000\,055$; no all-$k$ conclusion follows.
+\item \status{Newton and paired Taylor steps are not globally certified.} Independent Newton iterations may converge twice to the same zero. Pairwise Taylor approximations have excellent local numerical examples, but Rouch\'e requires rigorously bounded coefficients and complex-disc derivatives. Previously quoted fifth-derivative bounds near index $1\,000\,055$ are \emph{not a finished interval certificate}.
+\item \status{A norm of logarithmic-derivative discrepancy can be overly strong.} If $f=e^{Az^2}g$ with $A\in\R$, then $f$ and $g$ have exactly the same zeros, while $(\log f)'-(\log g)'=2Az$ can have arbitrarily large absolute contour integral. Oriented polynomial moments of the difference all vanish. Thus a large absolute norm does not alone rule out exact spectral transport.
+\item \status{Hankel positivity is conditional.} It is equivalent to reality and simplicity of the enclosed zeros (semidefiniteness to reality alone), but no universal positivity bound for the completed zeta function has been established. The analogous absolute transport bound deteriorates when synthetic Vandermonde matrices become ill-conditioned in close clusters.
+\item \status{The ``even defect'' route is a known wall.} For a conjugation-symmetric domain, the total zero count minus the number of certified real-axis sign changes is a nonnegative even integer. Demanding that it vanish for an exhaustive covering is a classical RH-plus-simplicity-level zero count \cite{Turing1953}, not an independent new inequality.
+\item \status{The full synthetic explicit formula is another known wall.} Demanding equality of the prime trace for \emph{all} admissible test functions forces spectral identification, rather than offering a readily provable intermediate estimate. Such tests require carefully specified Fourier support and growth; a function cannot be both compactly supported in $t$ and have compactly supported Fourier transform unless it vanishes.
+\item \status{The single lattice resonance was an erroneous simplification.} With the Euler phase, $F_X''=N_0''+S_X''$, and $S_X''$ is in general not small compared with $N_0''\asymp1/t$. Stationary points occur in an arithmetic family $t\sim2\pi q e^u$, not solely at $2\pi e^u$. The exact repaired statement is Theorem~\CGref{thm:rational}; a summable stationary-phase error for growing $X$ has \emph{not} been proved.
+\item \status{A sharp growing cutoff is not a smooth clock.} Choosing $X=X(t)$ by suddenly admitting a new prime can make $S_{X(t)}$ jump. Proposition~\CGref{prop:cutoff} yields merely a sufficient, not a necessary, monotonicity range. A monotone regularization may destroy the exact coefficient identity \CGeqref{eq:rational} unless its effect is tracked.
+\item \status{A full Euler product is not an entire model.} $P_X$ has poles, $\chi$ is meromorphic, and $E_X=P_X+\chi P_X(1-s)$ inherits meromorphic singularities in general. Replacing $P_X$ by an exponential of a finite prime-power sum, as in \cite{Gonek2012,GonekHughesKeating2007}, removes its own poles, but does not automatically remove the poles of $\chi$.
+\item \status{The M\"obius resonance sum is not yet a prime selector.} The denominator coefficients $b_X(1/d)=\mu(d)c_X(d)/\sqrt d$ of \CGeqref{eq:rational} constitute a finite-sieve structure. Showing that its combined resonances produce $\Lambda(n)$ with a useful uniform error is unproved. The informal claim that a universal cutoff $X(T)\ge\sqrt{T/2\pi}$ is \emph{necessary} is not established by the sieve heuristic.
+\item \status{A local spectral certificate is not RH.} A collection of rigorously certified real pairs does not exclude unobserved nonreal zeros (Remark~\CGref{rem:quartic}). Proving exhaustive global coverage by ordinary argument counting \cite{Turing1953} returns to the well-known obstruction. A genuinely new analytic inequality is required for any claim beyond local localization.
+\end{enumerate}
+
+\section{Reported numerical cases (not certifications)}\label{sec:appB}
+The following figures are \emph{retrospective observations} archived in the project; no new fitting or independent interval verification was performed here. They cannot establish statements for all indices. Each entry is the reported maximum, over the two indices of the pair, of the absolute deviation in $t$ of the order-$2$ (resp.\ order-$3$) Taylor root of Proposition~\CGref{prop:near} from the archived ordinate.
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}\toprule
+Pair of indices & Maximum quadratic error & Maximum cubic error\\\midrule
+$889$--$890$ & $0.0058411$ & $0.0021378$\\
+$1\,000\,055$--$1\,000\,056$ & $0.0001344$ & $0.0000122$\\
+$2\,000\,992$--$2\,000\,993$ & $0.0053030$ & $0.0020388$\\
+$2\,001\,043$--$2\,001\,044$ & $0.0013431$ & $0.0009932$\\\bottomrule
+\end{tabular}
+\end{center}
+The near pair $1\,000\,055$--$1\,000\,056$ had a reported true separation of $0.038304245$ (normalized gap \CGeqref{eq:s1000055}); the prime flow with $a=0.75$ missed the stronger symmetric cell threshold at its first index (reported ratio $2|e_k|/\min(\ell_k,r_k)=1.058636$), whereas an independent spectral Newton step reduced the reported ratio below $1$. The fourth-order Taylor predictions were reported to have errors of order $10^{-7}$, but the accompanying fifth-derivative bounds were \emph{not certified by interval arithmetic}. Numerical corrections of thirteen previously observed flow failures by mixed Newton/pair rules were local-window tests, not a verified complete infinite sequence. These experiments motivate Theorem~\CGref{thm:rouche}; they do not prove it applies to those particular numerical inputs without validated coefficient bounds. A rigorous certification of such a pair is obtained either by interval evaluation of $Z$ at three points (two sign changes) combined with Turing's method on the surrounding window \cite{Turing1953}, or by Theorem~\CGref{thm:certificate} with a rigorous bound for $M_3$.
+
+\smallskip\noindent\textbf{Data availability.}
+The archived material referred to in Appendices~\CGref{sec:appA} and~\CGref{sec:appB} is in the public repository \url{https://github.com/vcasana1/LawCasanya} (branch \texttt{main}), including \url{https://github.com/vcasana1/LawCasanya/tree/main/work/display}. No new numerical benchmark was performed for this article.
+
+\begin{thebibliography}{99}
+
+\bibitem{DelvesLyness1967}
+L.~M. Delves and J.~N. Lyness, \emph{A numerical method for locating the zeros of an analytic function}, Math. Comp. \textbf{21} (1967), no.~100, 543--560. \href{https://doi.org/10.1090/S0025-5718-1967-0228165-4}{doi:10.1090/S0025-5718-1967-0228165-4}.
+
+\bibitem{Edwards1974}
+H.~M. Edwards, \emph{Riemann's Zeta Function}, Pure and Applied Mathematics, vol.~58, Academic Press, New York, 1974.
+
+\bibitem{Gonek2012}
+S.~M. Gonek, \emph{Finite Euler products and the Riemann hypothesis}, Trans. Amer. Math. Soc. \textbf{364} (2012), no.~4, 2157--2191. \href{https://doi.org/10.1090/S0002-9947-2011-05546-7}{doi:10.1090/S0002-9947-2011-05546-7}.
+
+\bibitem{GonekHughesKeating2007}
+S.~M. Gonek, C.~P. Hughes, and J.~P. Keating, \emph{A hybrid Euler--Hadamard product for the Riemann zeta function}, Duke Math. J. \textbf{136} (2007), no.~3, 507--549. \href{https://doi.org/10.1215/S0012-7094-07-13634-2}{doi:10.1215/S0012-7094-07-13634-2}.
+
+\bibitem{KravanjaVanBarel2000}
+P.~Kravanja and M.~Van Barel, \emph{Computing the Zeros of Analytic Functions}, Lecture Notes in Mathematics, Springer, Berlin, Heidelberg, 2000. \href{https://doi.org/10.1007/BFb0103927}{doi:10.1007/BFb0103927}.
+
+\bibitem{KreinNaimark1981}
+M.~G. Krein and M.~A. Naimark, \emph{The method of symmetric and Hermitian forms in the theory of the separation of the roots of algebraic equations}, Linear and Multilinear Algebra \textbf{10} (1981), no.~4, 265--308. \href{https://doi.org/10.1080/03081088108817420}{doi:10.1080/03081088108817420}.
+
+\bibitem{Mangoldt1905}
+H.~von Mangoldt, \emph{Zur Verteilung der Nullstellen der Riemannschen Funktion $\xi(t)$}, Math. Ann. \textbf{60} (1905), no.~1, 1--19. \href{https://doi.org/10.1007/BF01447494}{doi:10.1007/BF01447494}.
+
+\bibitem{Mehta2004}
+M.~L. Mehta, \emph{Random Matrices}, 3rd ed., Pure and Applied Mathematics, vol.~142, Elsevier/Academic Press, Amsterdam, 2004.
+
+\bibitem{Montgomery1973}
+H.~L. Montgomery, \emph{The pair correlation of zeros of the zeta function}, Analytic Number Theory, Proc. Sympos. Pure Math., vol.~24, Amer. Math. Soc., Providence, RI, 1973, pp.~181--193. \href{https://doi.org/10.1090/pspum/024/9944}{doi:10.1090/pspum/024/9944}.
+
+\bibitem{MontgomeryVaughan2006}
+H.~L. Montgomery and R.~C. Vaughan, \emph{Multiplicative Number Theory I: Classical Theory}, Cambridge Studies in Advanced Mathematics, vol.~97, Cambridge University Press, Cambridge, 2006. \href{https://doi.org/10.1017/CBO9780511618314}{doi:10.1017/CBO9780511618314}.
+
+\bibitem{RudnickSarnak1996}
+Z.~Rudnick and P.~Sarnak, \emph{Zeros of principal $L$-functions and random matrix theory}, Duke Math. J. \textbf{81} (1996), no.~2, 269--322. \href{https://doi.org/10.1215/S0012-7094-96-08115-6}{doi:10.1215/S0012-7094-96-08115-6}.
+
+\bibitem{Titchmarsh1939}
+E.~C. Titchmarsh, \emph{The Theory of Functions}, 2nd ed., Oxford University Press, Oxford, 1939.
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., revised by D.~R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\bibitem{Turing1953}
+A.~M. Turing, \emph{Some calculations of the Riemann zeta-function}, Proc. London Math. Soc. (3) \textbf{3} (1953), 99--117. \href{https://doi.org/10.1112/plms/s3-3.1.99}{doi:10.1112/plms/s3-3.1.99}.
+
+\end{thebibliography}
+
+\end{document}

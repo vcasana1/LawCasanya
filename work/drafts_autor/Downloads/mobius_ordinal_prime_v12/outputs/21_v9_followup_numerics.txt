@@ -1,0 +1,37 @@
+=== cross-coupling tests, regenerated ===
+corr(Z,sgn M)                       +0.00063423
+corr(Z,M/sqrt(n))                   +0.00117220
+corr(Z,cos(gamma1 log n))           -0.00121617
+corr(Z,sin(gamma1 log n))           +0.00176759
+mean(Z|M>0)-mean(Z|M<0)       +0.00127546
+integrated autocorrelation time       51.302698
+effective sample size                 17213.968
+1/sqrt(n_eff)                         0.007622
+8-bin phase mean dispersion           0.003030
+median effective phase-bin SE         0.021292
+
+=== short-interval prime-count variance, regenerated ===
+protocol: all integer starts in [3800000, 4800000-H], reference X=4300000
+H var_measured ratio_MS ratio_Cramer
+  200     7.252200  1.118896     0.553855
+ 1000    30.075359  1.178999     0.459375
+ 5000   112.693004  1.211061     0.344257
+20000   384.715488  1.518395     0.293810
+
+=== quadratic-fit regeneration ===
+D2 log-log slope on balanced prefixes J>=8000 through J=244434: 2.016332
+E2 log-log slope on balanced prefixes J>=8000 through J=244434: 1.464124
+M2 log-log slope on balanced prefixes J>=8000 through J=244434: 2.011982
+E2/D2 at first selected prefix 0.01908663
+E2/D2 at final selected prefix 0.00345883
+median |d| fitted exponent: 0.468878
+median |e| fitted exponent: 0.239950
+
+=== active-lifetime multiset shape, regenerated ===
+height_bin count_M mean/h_M disp_M cv_M | count_iid mean/h_iid disp_iid cv_iid
+8-16 45901 2.065868 0.364397 0.101948 | 16480 2.068417 0.365335 0.102000
+32-64 111059 2.010491 0.170111 0.054547 | 65427 2.025268 0.172069 0.054450
+128-400 119751 1.996790 0.087372 0.028122 | 203244 2.000081 0.081613 0.026267
+P(active |d| >= 1.5 h): Mobius=0.99754202 iid=0.99954336
+P(active |d| >= 2.5 h): Mobius=0.00841474 iid=0.00216695
+P(active |d| >= 3.5 h): Mobius=0.00037221 iid=0.00006505

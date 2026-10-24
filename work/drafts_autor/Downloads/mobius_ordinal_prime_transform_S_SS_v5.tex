@@ -1,0 +1,1381 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\newcommand{\mob}{\mu}
+\newcommand{\Mert}{M}
+\newcommand{\Sq}{Q}
+\newcommand{\PS}{\mathcal P}
+
+\title{An Ordinal-Prime Transform of the M\"obius Function}
+\author{}
+\date{Version 5}
+
+% hyperref must be loaded last
+\usepackage[hidelinks]{hyperref}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Purpose and scope}
+\label{sec:purpose}
+
+This note develops the ordinal-prime transform of the M\"obius function and
+determines exactly how much arithmetic information it carries. It is
+self-contained and uses no other construction.
+
+The starting point is the M\"obius function $\mob(n)\in\{-1,0,+1\}$. The
+occurrences of $-1$ and of $+1$ are numbered separately, in increasing order of
+$n$, and the corresponding ordinal prime is attached to each occurrence; zeros
+are mapped to $1$. The resulting signed sequence is $S(n)$ and its partial sum
+is $SS(n)=\sum_{k\le n}S(k)$.
+
+The conclusions are:
+
+\begin{enumerate}[label=(\roman*)]
+\item $SS(n)$ has an exact closed form in terms of the Mertens function
+$\Mert(n)$, the squarefree counting function $\Sq(n)$, and the sum of the first
+$m$ primes (Proposition~\ref{prop:closed}).
+\item After subtracting the deterministic zero contribution $n-\Sq(n)$, the
+remainder $T(n):=SS(n)-n+\Sq(n)$ is \emph{exactly} a signed sum of $|\Mert(n)|$
+consecutive primes, occupying a window of prime indices symmetric about
+$(\Sq(n)+1)/2$ (Proposition~\ref{prop:block}).
+\item Consequently $T(n)=\Mert(n)\,p_{\lfloor \Sq(n)/2\rfloor}(1+\theta(n))$
+with $\theta(n)\to0$ effectively, and the Mertens criterion transfers to $T$ in
+both directions (Theorem~\ref{thm:RH}).
+\item Every object built here --- $SS$, $T$, the residual $E$, and the centered
+residual $E_{\mathrm{mid}}$ --- is a deterministic function of the pair
+$(\Mert(n),\Sq(n))$ alone. The transform therefore creates no independent
+arithmetic constraint on $\Mert(n)$. This applies to the residuals as well and
+is stated as Proposition~\ref{prop:info}.
+\item The nonlinearity of the transform splits exactly into a central part
+linear in $\Mert(n)$ and an \emph{antisymmetric weighted sum of prime gaps}
+with triangular weights (Theorem~\ref{thm:gaps}). The weight norm has a closed
+form (Lemma~\ref{lem:w2}), which forces the exponent $3/2$ in the observed law
+$|E_{\mathrm{mid}}(n)|\approx0.155\,|\Mert(n)|^{3/2}\log n$.
+\item The measured size of that residual is quantitatively accounted for by the
+local covariance structure of prime gaps. A covariance-corrected model predicts
+its standard deviation to within $0.3\%$ with no free parameter, whereas an
+independent-gap model underpredicts by a factor $0.853$
+(Section~\ref{sec:numeric}, part D).
+\item The packet structure visible in $E_{\mathrm{mid}}$ is an amplitude effect:
+its moving RMS follows $|M(n)|^{3/2}\log n$. On the logarithmic coordinate
+$u=\log n$, the spectrum of $M(e^u)e^{-u/2}$ displays the ordinates $\gamma_k$
+of zeta zeros, as predicted by the classical explicit formula. This spectral
+observation is a sanity check, not new information about the zeros; the finite
+$u$-window has frequency resolution about $0.91$.
+\item A separate test asks whether the prime-gap fluctuation factor is coupled to
+the sign or zeta phase of $M$. No such coupling is detected at the present
+scale. With effective sample about $1.7\times10^4$, the tests only exclude
+linear effects larger than roughly $0.015$ and do not constitute a theorem of
+independence.
+\end{enumerate}
+
+The core numerical pipeline was regenerated for $1\le n\le10^{6}$ where stated.
+Additional follow-up measurements introduced in Version 5 are identified explicitly as
+reported measurements when their originating script was not present in the supplied
+package; see Section~\ref{sec:numeric}.
+
+\begin{remark}[Version 5 audit scope]
+\label{rem:v5-audit}
+Version 5 restores section-based equation numbering and labels every displayed
+formula.  It also corrects boundary and status issues in Version 5: the
+multiplicative prime scale starts at $n=2$; the residuals are not claimed to be
+monotone in $M$; prime gaps are not asserted pointwise to be asymptotic to
+$\log p$; the cases $|M|\le2$ are separated in the gap formula; the
+prime-counting integral includes the $a=0$ endpoint convention; all sums used
+in that integral and in the $\kappa$ identity are explicitly finite; the
+Montgomery--Soundararajan comparison is identified as a reference scale for
+weighted prime counts rather than a theorem about the unweighted $\pi$ count;
+and the shared-counter non-endpoint claim is stated as a functional statement
+with an explicit pair of histories.
+\end{remark}
+
+\section{Notation and elementary lemmas}
+\label{sec:notation}
+
+Let $p_1=2,p_2=3,p_3=5,\ldots$ denote the primes in increasing order, and set
+$p_0:=0$ by convention (used only to make the product forms below well defined
+at $n=1$).
+
+Write
+\begin{equation}
+\label{eq:basic-definitions}
+\Mert(n):=\sum_{k\le n}\mob(k),
+\qquad
+\Sq(n):=\sum_{k\le n}\mob(k)^2 ,
+\qquad
+\PS(m):=\sum_{j=1}^{m}p_j ,\quad \PS(0):=0 .
+\end{equation}
+
+Define the cumulative occurrence counts
+\begin{equation}
+\label{eq:occurrence-counts}
+N_-(n)=\sum_{k\le n}\frac{\mob(k)^2-\mob(k)}2,
+\qquad
+N_0(n)=\sum_{k\le n}\bigl(1-\mob(k)^2\bigr),
+\qquad
+N_+(n)=\sum_{k\le n}\frac{\mob(k)^2+\mob(k)}2 .
+\end{equation}
+Thus $N_-(n)$, $N_0(n)$, $N_+(n)$ count the occurrences of $\mob=-1$, $\mob=0$,
+$\mob=+1$ up to $n$, and the counts are inclusive of $n$ itself.
+
+\begin{lemma}[Counter identities]\label{lem:counters}
+For every $n\ge1$,
+\begin{equation}
+\label{eq:counter-identities}
+N_+(n)+N_-(n)=\Sq(n),
+\qquad
+N_+(n)-N_-(n)=\Mert(n),
+\qquad
+N_0(n)=n-\Sq(n),
+\end{equation}
+hence
+\begin{equation}
+\label{eq:counter-solutions}
+N_+(n)=\frac{\Sq(n)+\Mert(n)}2,
+\qquad
+N_-(n)=\frac{\Sq(n)-\Mert(n)}2 .
+\end{equation}
+\end{lemma}
+
+\begin{lemma}[Parity]\label{lem:parity}
+$\Sq(n)\equiv \Mert(n)\pmod 2$ for every $n\ge1$. Consequently the indices
+$(\Sq(n)\pm\Mert(n))/2$ occurring throughout are integers.
+\end{lemma}
+
+\begin{proof}
+$\Sq=N_++N_-$ and $\Mert=N_+-N_-$, so $\Sq-\Mert=2N_-$.
+\end{proof}
+
+Lemma~\ref{lem:parity} is used silently in every subsequent formula and was
+absent from version 1; without it the central identities are not well formed.
+
+\section{The transform}
+\label{sec:transform}
+
+\begin{definition}
+\label{def:transform}
+The three rows are
+\begin{equation}
+\label{eq:transform-rows}
+R_-(n)=-\frac{\mob(n)^2-\mob(n)}2\,p_{N_-(n)},
+\qquad
+R_0(n)=1-\mob(n)^2,
+\qquad
+R_+(n)=\frac{\mob(n)^2+\mob(n)}2\,p_{N_+(n)} ,
+\end{equation}
+with the convention $p_0=0$ (needed only at $n=1$, where $N_-(1)=0$ and the
+coefficient vanishes). The ordinal-prime transform is
+\begin{equation}
+\label{eq:transform-piecewise}
+S(n):=R_-(n)+R_0(n)+R_+(n)
+=
+\begin{cases}
+-p_{N_-(n)},&\mob(n)=-1,\\[1mm]
+1,&\mob(n)=0,\\[1mm]
++p_{N_+(n)},&\mob(n)=+1 .
+\end{cases}
+\end{equation}
+\end{definition}
+
+Along the occurrences of $\mob=-1$ the values are $-2,-3,-5,-7,-11,\ldots$; along
+the occurrences of $\mob=+1$ they are $2,3,5,7,11,\ldots$, in a separate ordinal
+count. Explicitly,
+\begin{equation}
+\label{eq:first-transform-values}
+S(1),\ldots,S(12)=2,\,-2,\,-3,\,1,\,-5,\,3,\,-7,\,1,\,1,\,5,\,-11,\,1 .
+\end{equation}
+
+\begin{definition}
+\label{def:ss-t}
+$SS(n):=\sum_{k=1}^{n}S(k)$ and $T(n):=SS(n)-\bigl(n-\Sq(n)\bigr)$.
+\end{definition}
+
+\begin{proposition}[Closed form]\label{prop:closed}
+For every $n\ge1$,
+\begin{equation}
+\label{eq:closed-form}
+\boxed{\begin{aligned}
+SS(n)&=\PS\bigl(N_+(n)\bigr)-\PS\bigl(N_-(n)\bigr)+N_0(n)\\
+&=\PS\!\left(\frac{\Sq(n)+\Mert(n)}2\right)
+-\PS\!\left(\frac{\Sq(n)-\Mert(n)}2\right)+n-\Sq(n).
+\end{aligned}}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The $k\le n$ with $\mob(k)=+1$ receive, in order, the primes
+$p_1,\dots,p_{N_+(n)}$, contributing $\PS(N_+(n))$; those with $\mob(k)=-1$
+contribute $-\PS(N_-(n))$; each of the $N_0(n)$ zeros contributes $1$. The
+second form is Lemma~\ref{lem:counters}, the indices being integers by
+Lemma~\ref{lem:parity}.
+\end{proof}
+
+\section{The signed prime block}
+\label{sec:block}
+
+\begin{proposition}[Block representation]\label{prop:block}
+Write $W(n)$ for the set of prime indices strictly between $N_-(n)$ and
+$N_+(n)$, inclusive of the larger endpoint; $W(n)$ has exactly $|\Mert(n)|$
+elements and is symmetric about the index $(\Sq(n)+1)/2$. Then
+\begin{equation}
+\label{eq:block-representation}
+T(n)=\operatorname{sgn}\bigl(\Mert(n)\bigr)\sum_{j\in W(n)}p_j
+=
+\begin{cases}
+\displaystyle\sum_{j=(\Sq-\Mert)/2+1}^{(\Sq+\Mert)/2}p_j, & \Mert(n)>0,\\[5mm]
+0,& \Mert(n)=0,\\[2mm]
+\displaystyle-\sum_{j=(\Sq-|\Mert|)/2+1}^{(\Sq+|\Mert|)/2}p_j, & \Mert(n)<0 .
+\end{cases}
+\end{equation}
+In particular
+\begin{equation}
+\label{eq:block-sign}
+\operatorname{sgn}T(n)=\operatorname{sgn}\Mert(n),
+\qquad
+T(n)=0\iff \Mert(n)=0 .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Immediate from Proposition~\ref{prop:closed}: $T=\PS(N_+)-\PS(N_-)$ is a
+telescoping difference of prefix sums of the primes. The window endpoints are
+$\min(N_\pm)+1$ and $\max(N_\pm)$, whose midpoint is
+$(N_++N_-+1)/2=(\Sq+1)/2$.
+\end{proof}
+
+\begin{corollary}[Exact bounds]\label{cor:bounds}
+\begin{equation}
+\label{eq:block-bounds}
+|\Mert(n)|\,p_{\frac{\Sq(n)-|\Mert(n)|}{2}+1}
+\;\le\;
+|T(n)|
+\;\le\;
+|\Mert(n)|\,p_{\frac{\Sq(n)+|\Mert(n)|}{2}} .
+\end{equation}
+\end{corollary}
+
+Both inequalities are trivial (each of the $|\Mert(n)|$ primes in the block lies
+between the smallest and the largest one), but the \emph{lower} bound is what
+makes the transfer of Mertens bounds an equivalence rather than an implication;
+see Theorem~\ref{thm:RH}.
+
+\section{The prime scale, with explicit error}
+\label{sec:prime-scale}
+
+We record the multiplicative estimate in a form that is valid at every $n$,
+including all $n\ge2$ with $\Mert(n)=0$. The case $n=1$ is excluded only because
+$\lfloor\Sq(1)/2\rfloor=0$ and the reference prime $p_0=0$ cannot be used as a
+multiplicative scale. (Version 1 wrote
+$T(n)\sim \Mert(n)p_{\Sq(n)/2}$; that assertion is empty on the zero set of
+$\Mert$, which contains $5361$ values of $n\le10^{6}$.)
+
+\begin{proposition}\label{prop:scale}
+For $n\ge2$, set $\theta(n)=0$ when $M(n)=0$. When $M(n)\ne0$, define
+$\theta(n)$ by equation~\eqref{eq:theta-definition}. Then
+\begin{equation}
+\label{eq:theta-definition}
+T(n)=M(n)\,p_{\lfloor Q(n)/2\rfloor}\bigl(1+\theta(n)\bigr).
+\end{equation}
+\begin{equation}
+\label{eq:theta-bound}
+|\theta(n)|\;\le\;
+\max_{|j-\Sq(n)/2|\le |\Mert(n)|/2+1}
+\left|\frac{p_j}{p_{\lfloor \Sq(n)/2\rfloor}}-1\right| ,
+\end{equation}
+and $\theta(n)\to0$ as $n\to\infty$.
+\end{proposition}
+
+\begin{proof}
+The bound is Proposition~\ref{prop:block} together with the triangle
+inequality. For the limit: by the prime number theorem in the form
+$\Mert(n)=o(n)$, and by $\Sq(n)=\tfrac{6}{\pi^2}n+O(\sqrt n)$, one has
+$|\Mert(n)|/\Sq(n)\to0$; hence the window endpoints are
+$(1+o(1))\Sq(n)/2$ on the index scale, and $p_{(1+o(1))m}/p_m\to1$ by the prime
+number theorem again.
+\end{proof}
+
+Both hypotheses invoked here are named: $\Mert(n)=o(n)$ is equivalent to the prime number theorem
+\cite{Titchmarsh1986}, and $\Sq(n)=\tfrac6{\pi^2}n+O(\sqrt n)$ is the standard
+squarefree-counting estimate \cite{Apostol1976}.
+
+\begin{remark}[The asymptotic constant is a poor numerical guide]
+\label{rem:prime-scale-data}
+From $p_m=m(\log m+\log\log m-1+o(1))$ and $\Sq(n)/2\sim \tfrac3{\pi^2}n$ one
+gets
+\begin{equation}
+\label{eq:prime-scale-expansion}
+\begin{aligned}
+p_{\lfloor \Sq(n)/2\rfloor}
+&=\frac{3}{\pi^2}\,n\log n\\
+&\quad\times\left(1+\frac{\log\log n-1+\log(3/\pi^2)}{\log n}
++o\!\left(\tfrac1{\log n}\right)\right),
+\end{aligned}
+\end{equation}
+so the correction to the leading constant decays only like $1/\log n$. Measured
+values are
+\begin{equation}
+\label{eq:leading-scale-data}
+\frac{T(n)}{(3/\pi^2)n\log n\,\Mert(n)}
+=0.9558,\ 0.9954,\ 1.0151,\ 1.0281
+\end{equation}
+at $n=10^3,10^4,10^5,10^6$; they are not monotone and remain $2.8\%$ off at
+$n=10^6$. By contrast,
+\begin{equation}
+\label{eq:exact-prime-scale-data}
+\frac{T(n)}{\Mert(n)p_{\lfloor \Sq(n)/2\rfloor}}
+=1.00200,\ 1.00071,\ 1.000097,\ 0.999998
+\end{equation}
+at the same points. Any quantitative use should keep
+$p_{\lfloor \Sq(n)/2\rfloor}$ and not the closed constant.
+\end{remark}
+
+\section{Transfer of the Mertens criterion}
+\label{sec:mertens-transfer}
+
+\begin{proposition}
+\label{prop:growth}
+$|T(n)|=O\bigl(n\log n\,|\Mert(n)|\bigr)$ and hence
+$SS(n)=O\bigl(n\log n\,|\Mert(n)|+n\bigr)$. Unconditionally
+$SS(n)=o(n^2\log n)$, by $\Mert(n)=o(n)$ (prime number theorem).
+\end{proposition}
+
+\begin{theorem}\label{thm:RH}
+The following are equivalent.
+\begin{enumerate}[label=(\alph*)]
+\item The Riemann hypothesis.
+\item $\Mert(n)=O_\varepsilon(n^{1/2+\varepsilon})$ for every $\varepsilon>0$.
+\item $SS(n)-n+\Sq(n)=O_\varepsilon(n^{3/2+\varepsilon})$ for every
+$\varepsilon>0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a)$\iff$(b) is the classical Littlewood criterion; see \cite{Titchmarsh1986}.
+
+(b)$\Rightarrow$(c): fix $\varepsilon>0$ and apply (b) with
+$\eta=\varepsilon/2$. By Corollary~\ref{cor:bounds} and the prime number theorem,
+$|T(n)|\ll |\Mert(n)|\,n\log n\ll_{\varepsilon}
+ n^{3/2+\varepsilon/2}\log n=O_{\varepsilon}(n^{3/2+\varepsilon})$.
+
+(c)$\Rightarrow$(b): this is the direction version 1 asserted without proof. By
+the prime number theorem $|\Mert(n)|=o(n)$ and $\Sq(n)=\tfrac6{\pi^2}n+O(\sqrt
+n)$, so
+\begin{equation}
+\label{eq:smallest-block-index}
+\frac{\Sq(n)-|\Mert(n)|}{2}+1=\bigl(1+o(1)\bigr)\frac{3}{\pi^2}n ,
+\end{equation}
+whence the smallest prime of the block satisfies
+$p_{(\Sq-|\Mert|)/2+1}\ge c\,n\log n$ for some $c>0$ and all large $n$. The
+lower bound of Corollary~\ref{cor:bounds} then gives
+\begin{equation}
+\label{eq:reverse-mertens-bound}
+|\Mert(n)|\le \frac{|T(n)|}{c\,n\log n}
+\ll_\varepsilon \frac{n^{3/2+\varepsilon}}{n\log n}
+\ll_\varepsilon n^{1/2+\varepsilon}. \qedhere
+\end{equation}
+\end{proof}
+
+\begin{remark}
+\label{rem:rh-reformulation}
+Theorem~\ref{thm:RH} is a reformulation, not a proof mechanism. Note also that
+(b) must not be strengthened to $\Mert(n)=O(\sqrt n)$: the Riemann hypothesis
+does not imply the Mertens conjecture, which is false \cite{OdlyzkoTeRiele1985}.
+\end{remark}
+
+\section{The zeta ingredients}
+\label{sec:zeta-ingredients}
+
+The two M\"obius-derived ingredients have the classical Dirichlet series \cite{Apostol1976}
+\begin{equation}
+\label{eq:dirichlet-series}
+\sum_{m\ge1}\frac{\mob(m)}{m^s}=\frac1{\zeta(s)},
+\qquad
+\sum_{m\ge1}\frac{\mob(m)^2}{m^s}=\frac{\zeta(s)}{\zeta(2s)},
+\qquad \Re s>1,
+\end{equation}
+and the prime weights are governed by $\log\zeta(s)$ through the prime-counting
+function, via the exact Abel identity
+\begin{equation}
+\label{eq:abel-prime-sum}
+\PS(m)=m\,p_m-\int_2^{p_m}\pi(t)\,dt ,
+\end{equation}
+(verified here for $m\le100$; e.g.\ $\PS(3)=10=3\cdot5-5$).
+
+Version 1 substituted Perron integrals for $\Mert$ and $\Sq$ into the arguments
+of $\PS$. That is not a functional identity and it is dropped here, for two
+reasons. First, $\PS$ is defined only on nonnegative integers, so an integral
+placed inside its argument is notation for ``the integer that this integral
+evaluates to'', not an analytic representation. Second, at integer $x$ the
+untruncated Perron integral returns $\Mert(x)-\tfrac12\mob(x)$, not $\Mert(x)$.
+
+The honest statement is the following. Equations~\eqref{eq:dirichlet-series} and
+\eqref{eq:abel-prime-sum} show that the transform composes three classical objects,
+\begin{equation}
+\label{eq:zeta-components}
+\frac1{\zeta(s)}\ \ (\text{signed M\"obius imbalance}),
+\qquad
+\frac{\zeta(s)}{\zeta(2s)}\ \ (\text{squarefree count}),
+\qquad
+\log\zeta(s)\ \ (\text{prime weights}),
+\end{equation}
+through the nonlinear expression
+$\PS\bigl(\tfrac{\Sq+\Mert}2\bigr)-\PS\bigl(\tfrac{\Sq-\Mert}2\bigr)+n-\Sq$.
+None of the three components is new, and the composition is not a Dirichlet
+series of anything.
+
+\section{Exact information content}
+\label{sec:information}
+
+\begin{proposition}\label{prop:info}
+For each $n$, $SS(n)$ is a deterministic function of the pair
+$(\Mert(n),\Sq(n))$. With $\Sq(n)$ held fixed and $\Mert(n)$ restricted to the
+admissible parity class $\Mert(n)\equiv\Sq(n)\pmod 2$, $T(n)$ is strictly
+increasing in $\Mert(n)$. Every residual defined below, including $E(n)$ and
+$E_{\mathrm{mid}}(n)$, is likewise a deterministic function of
+$(\Mert(n),\Sq(n))$; no monotonicity claim is made for the residuals.
+\end{proposition}
+
+\begin{proof}
+The first claim is Lemma~\ref{lem:counters} plus
+Proposition~\ref{prop:closed}. For the second, increasing $\Mert$ by $2$ at
+fixed $\Sq$ raises $N_+$ by one and lowers $N_-$ by one, changing $T$ by
+$p_{N_++1}+p_{N_-}>0$. The residuals $E$ and $E_{\mathrm{mid}}$ are $T$ minus explicit functions of
+$(\Mert,\Sq)$, hence are also functions of $(\Mert,\Sq)$. This last statement
+is only a dependence statement; subtracting the central term does not preserve the
+preceding monotonicity automatically.
+\end{proof}
+
+Two consequences deserve to be stated plainly.
+
+First, $SS(n)$ does not retain the internal ordering of the $\pm1$ values of
+$\mob$ below $n$: two M\"obius sign histories with the same endpoint counts
+produce the same $SS(n)$. It is a nonlinear endpoint statistic.
+
+Second --- and this corrects a claim in version 1 --- the residual $E(n)$ is
+\emph{not} structurally distinct from $SS(n)$ in the informational sense. Its
+window is determined by $(\Mert(n),\Sq(n))$, so the argument above applies to it
+verbatim. What is genuinely different about the residual is not its information
+content but its \emph{size}, which turns out to be governed by prime-gap
+statistics; that is the subject of the next two sections.
+
+There are two distinct meanings of ``information'' that must not be mixed.
+In the logical sense, Proposition~\ref{prop:info} is final:
+$E_{\mathrm{mid}}(n)=G(\Mert(n),\Sq(n))$ for an explicit deterministic $G$, so
+no experiment can make $E_{\mathrm{mid}}$ contain arithmetic information absent
+from the endpoint pair. In the analytic or \emph{leverage} sense, one can still
+ask whether a separately proved bound for the prime-gap fluctuation factor could
+combine with the identity to constrain $\Mert$. A bound for $T$ itself cannot do
+this: at fixed $\Sq$, $T$ is strictly monotone in $\Mert$ and the two-sided
+block bounds make a Mertens bound and the corresponding $T$ bound equivalent up
+to the explicit prime scale. What remains testable is only whether some
+independently controlled feature of the gap fluctuation is coupled to the sign,
+phase, or trajectory of $\Mert$. Section~\ref{sec:coupling} measures a small
+family of such couplings and finds none at the present resolution; this is a
+negative numerical result, not a logical strengthening of
+Proposition~\ref{prop:info}.
+
+\section{The residual and its correct centering}
+\label{sec:centering}
+
+\begin{definition}
+\label{def:residuals}
+Let
+\begin{equation}
+\label{eq:pstar-definition}
+p^{*}(n):=\tfrac12\Bigl(p_{\lfloor (\Sq(n)+1)/2\rfloor}+p_{\lceil (\Sq(n)+1)/2\rceil}\Bigr)
+\end{equation}
+be the linear interpolation of the prime sequence at the exact window centre
+$(\Sq(n)+1)/2$ of Proposition~\ref{prop:block}. Define
+\begin{equation}
+\label{eq:residual-definitions}
+E(n):=T(n)-\Mert(n)\,p_{\lfloor \Sq(n)/2\rfloor},
+\qquad
+E_{\mathrm{mid}}(n):=T(n)-\Mert(n)\,p^{*}(n),
+\end{equation}
+so that the exact decomposition
+\begin{equation}
+\label{eq:centered-decomposition}
+\boxed{\;T(n)=\Mert(n)\,p^{*}(n)+E_{\mathrm{mid}}(n)\;}
+\end{equation}
+holds for every $n$.
+\end{definition}
+
+When $\Sq(n)$ is odd, $(\Sq+1)/2$ is an integer and $p^{*}=p_{(\Sq+1)/2}$; when
+$\Sq(n)$ is even, $p^{*}$ is the mean of the two central primes.
+
+\begin{proposition}[Centering offset]\label{prop:offset}
+$E(n)-E_{\mathrm{mid}}(n)=\Mert(n)\bigl(p^{*}(n)-p_{\lfloor \Sq(n)/2\rfloor}\bigr)$,
+where, for $\Sq(n)\ge2$, the bracket equals one half of a prime gap when
+$\Sq(n)$ is even and one full prime gap when $\Sq(n)$ is odd. At $n=1$ the
+identity still holds under $p_0=0$, with bracket $p_1-p_0=2$. It is positive. Pointwise it is exactly one half or one full prime gap; no
+uniform two-sided estimate $\asymp\log p^{*}(n)$ is asserted. Its empirical
+typical scale in the computed range is comparable with $\log p^{*}(n)$, so $E$
+carries a deterministic component linear in $\Mert(n)$ which
+$E_{\mathrm{mid}}$ does not.
+\end{proposition}
+
+The identity was verified exactly for all $n\le10^{6}$; the median of
+$\bigl(p^{*}-p_{\lfloor \Sq/2\rfloor}\bigr)/\log p_{\lfloor \Sq/2\rfloor}$ over
+$10^{4}\le n\le10^{6}$ is $0.5318$. Proposition~\ref{prop:offset} explains the
+correlation structure of the two residuals: the offset is a fixed positive
+multiple of $\Mert(n)$, so $E$ correlates with $\Mert$ and $E_{\mathrm{mid}}$
+does not. Measured over $100\le n\le10^{6}$,
+\begin{equation}
+\label{eq:residual-correlations}
+\operatorname{corr}(E,\Mert)=+0.2573,
+\qquad
+\operatorname{corr}(E_{\mathrm{mid}},\Mert)=+0.0045 .
+\end{equation}
+$E_{\mathrm{mid}}$ is therefore the object to study; $E$ is $E_{\mathrm{mid}}$
+plus a bookkeeping artefact. Version 1 studied only $E$.
+
+\section{Exact antisymmetric gap representation}
+\label{sec:gap-representation}
+
+Write $g_i:=p_{i+1}-p_i$ and $m(n):=\lfloor(\Sq(n)+1)/2\rfloor$.
+
+\begin{theorem}[Gap representation]\label{thm:gaps}
+Let $h:=|\Mert(n)|$. If $h\le2$, then $E_{\mathrm{mid}}(n)=0$. For $h\ge3$,
+\begin{equation}
+\label{eq:gap-representation}
+\boxed{\;
+E_{\mathrm{mid}}(n)=\operatorname{sgn}\bigl(\Mert(n)\bigr)\sum_{i}w_i\,g_i \;}
+\end{equation}
+where the weights $w_i$ are supported on finitely many gaps symmetrically
+placed about $m=m(n)$, are antisymmetric in sign about the centre, and are given
+explicitly by
+\begin{equation}
+\label{eq:even-weights}
+h \text{ even}:\quad
+w_{m+k}=\tfrac h2-k,\quad w_{m-k}=-\bigl(\tfrac h2-k\bigr),\quad 1\le k\le \tfrac h2-1;
+\end{equation}
+\begin{equation}
+\label{eq:odd-weights}
+h \text{ odd}:\quad
+w_{m+k}=\tfrac{h-1}2-k \ \ (0\le k\le \tfrac{h-3}2),
+\qquad
+w_{m-k}=-\bigl(\tfrac{h+1}2-k\bigr)\ \ (1\le k\le \tfrac{h-1}2).
+\end{equation}
+For even $h$, the single gap $g_m$ between the two central primes cancels. For odd
+$h$, the centre is the prime $p_m$ and there is no single central gap; the two adjacent
+gaps belong to the two antisymmetric sides. In either parity case the nonzero weight
+magnitudes on each side are $\{1,2,\dots,\lfloor (h-1)/2\rfloor\}$. The cases
+$h=0,1,2$ are the zero-residual cases stated above.
+\end{theorem}
+
+\begin{proof}
+The cases $h=0,1,2$ follow directly from the definition: the block is empty, a
+single central prime, or the two central primes whose mean is $p^*$. Hence
+$E_{\mathrm{mid}}=0$. Assume now $h\ge3$ and take $\Mert(n)>0$; the case
+$\Mert(n)<0$ follows by a global sign change.
+
+Suppose $h$ is even, so $\Sq$ is even by Lemma~\ref{lem:parity}, $m=\Sq/2$ and
+$p^{*}=\tfrac12(p_m+p_{m+1})$. The window is $\{m-\tfrac h2+1,\dots,m+\tfrac h2\}$.
+For $j>m$, $p_j-p^{*}=\tfrac12 g_m+\sum_{i=m+1}^{j-1}g_i$; for $j\le m$,
+$p_j-p^{*}=-\tfrac12 g_m-\sum_{i=j}^{m-1}g_i$. Summing over the window, the
+$\tfrac12 g_m$ terms occur $\tfrac h2$ times with each sign and cancel. Counting
+how many $j$ contain a given $g_{m+k}$ gives the coefficient $\tfrac h2-k$, and
+symmetrically $-(\tfrac h2-k)$ for $g_{m-k}$.
+
+If $h$ is odd then $\Sq$ is odd, $m=(\Sq+1)/2$ and $p^{*}=p_m$, the window being
+$\{m-\tfrac{h-1}2,\dots,m+\tfrac{h-1}2\}$. The same count gives the stated
+coefficients, the two sides again carrying magnitudes
+$\tfrac{h-1}2,\dots,1$.
+\end{proof}
+
+\begin{lemma}[Weight norm]\label{lem:w2}
+\begin{equation}
+\label{eq:weight-norm}
+\boxed{\;
+\sum_i w_i^{2}=
+\begin{cases}
+\dfrac{h(h^{2}-1)}{12}, & h \text{ odd},\\[3mm]
+\dfrac{h(h-1)(h-2)}{12}, & h \text{ even},
+\end{cases}
+\qquad\text{so}\qquad
+\sum_i w_i^{2}=\frac{h^{3}}{12}\bigl(1+O(h^{-1})\bigr). }
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By Theorem~\ref{thm:gaps} each side contributes
+$\sum_{j=1}^{\lfloor (h-1)/2\rfloor}j^{2}$. For $h$ odd this is
+$2\cdot\frac{(\frac{h-1}2)(\frac{h+1}2)h}{6}=\frac{h(h^{2}-1)}{12}$; for $h$ even
+it is $2\cdot\frac{(\frac h2-1)(\frac h2)(h-1)}{6}=\frac{h(h-1)(h-2)}{12}$.
+\end{proof}
+
+Theorem~\ref{thm:gaps}, equation~\eqref{eq:gap-representation}, and Lemma~\ref{lem:w2} are exact and unconditional. They
+are the reason the exponent $3/2$ appears below: it is forced by the triangular
+weights, not fitted.
+
+\begin{remark}
+\label{rem:gap-information}
+Theorem~\ref{thm:gaps} does \emph{not} evade Proposition~\ref{prop:info}: the
+window position $m(n)$ and its length $h$ are determined by
+$(\Mert(n),\Sq(n))$, and the primes are deterministic, so $E_{\mathrm{mid}}$
+remains a function of $(\Mert(n),\Sq(n))$. What the theorem changes is what the
+\emph{size} of $E_{\mathrm{mid}}$ is controlled by, namely the local second-order
+statistics of prime gaps.
+\end{remark}
+
+\begin{proposition}[Prime-counting integral form]\label{prop:pi-integral}
+Let $h=|\Mert(n)|$, $a=\min(N_-(n),N_+(n))$ and
+$b=\max(N_-(n),N_+(n))=a+h$. Retain the convention $p_0=0$ and extend
+$\pi(t)$ by $\pi(t)=0$ for $0\le t<2$. Then, for $h>0$,
+\begin{equation}
+\label{eq:prime-counting-integral}
+\boxed{
+E_{\mathrm{mid}}(n)=\operatorname{sgn}(\Mert(n))
+\left\{\int_{p_a}^{p_b}\bigl(b-\pi(t)\bigr)\,dt
+-h\bigl(p^*(n)-p_a\bigr)\right\}. }
+\end{equation}
+For $h=0$ both sides are $0$ by convention.
+\end{proposition}
+
+\begin{proof}
+For $j=0,\ldots,b-1$, on $[p_j,p_{j+1})$ one has $\pi(t)=j$ (with the
+preceding convention when $j=0$). The sum below is finite, so there is no
+interchange of infinite sums or limiting operations:
+\begin{equation}
+\label{eq:integral-summation}
+\int_{p_a}^{p_b}(b-\pi(t))\,dt
+ =\sum_{j=a}^{b-1}(b-j)(p_{j+1}-p_j)
+ =\sum_{j=a+1}^{b}(p_j-p_a).
+\end{equation}
+The last expression is the unsigned prime block minus $h p_a$.
+Subtracting $h(p^*-p_a)$ gives the unsigned block minus $hp^*$, and the global
+factor $\operatorname{sgn}(\Mert)$ gives $E_{\mathrm{mid}}$.
+\end{proof}
+
+Thus each value of $E_{\mathrm{mid}}$ may also be read as an integrated prime
+counting discrepancy over the finite interval $[p_a,p_b]$, of exact length
+$p_b-p_a$. In the numerical range this length is typically on the scale
+$h\log p_a$; no uniform pointwise asymptotic for such short blocks is asserted. This is genuine information about prime gaps in that specific
+window, even though the choice of the window itself is already fixed by
+$(\Mert,\Sq)$ and hence cannot create a new restriction on $\Mert$.
+
+\section{Two variance models}
+\label{sec:variance-models}
+
+Theorem~\ref{thm:gaps} suggests modelling $E_{\mathrm{mid}}$ as a weighted sum
+of gap fluctuations. Two models are compared; both are heuristics, and both were
+tested against the data of Section~\ref{sec:numeric}.
+
+\begin{definition}[Independent-gap model]
+\label{def:independent-gap}
+For $h\ge3$, treat the finitely many $g_i$ carrying nonzero weights near index
+$m(n)$ as uncorrelated with common local variance
+$\sigma_g(n)^{2}$. Then by Lemma~\ref{lem:w2}
+\begin{equation}
+\label{eq:sd-independent}
+\operatorname{SD}_{\mathrm{ind}}(n):=\sigma_g(n)\sqrt{\textstyle\sum_i w_i^{2}}
+\;\approx\;\frac{\sigma_g(n)}{\sqrt{12}}\,h^{3/2}.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Covariance-corrected model]
+\label{def:covariance-gap}
+For $h\ge3$, let $\rho(d)$ be the local autocorrelation used in the model,
+normalised by $\rho(0)=1$, and put
+$R_{ab}=\rho(|i_a-i_b|)$ on the support of $w$. Define
+\begin{equation}
+\label{eq:covariance-model}
+\kappa(h):=\frac{w^{\!\top}Rw}{w^{\!\top}w},
+\qquad
+\operatorname{SD}_{\mathrm{cov}}(n):=\sigma_g(n)\sqrt{\kappa(h)\textstyle\sum_i w_i^{2}} .
+\end{equation}
+\end{definition}
+
+For fixed $h$ the correction factor contains no statistic beyond the gap
+autocorrelation itself. If
+\begin{equation}
+\label{eq:cd-definition}
+c_d(h):=\sum_{|i-j|=d}w_iw_j,\qquad c_0(h)=\sum_iw_i^2,
+\end{equation}
+then exactly
+\begin{equation}\label{eq:kappa-linear}
+\boxed{\qquad
+\kappa(h)=\frac{1}{c_0(h)}\sum_{d=0}^{D(h)}c_d(h)\rho(d),
+\qquad}
+\end{equation}
+where $D(h)$ is the largest lag between two nonzero weights. The sum is finite.
+Thus $\kappa$ is the autocorrelation sequence viewed through a family of
+triangular antisymmetric kernels. Numerically,
+the regenerated exact-extension script gives
+$\max|\kappa_{\rm direct}-(C\rho)/c_0|<2.0\times10^{-15}$ in double
+precision. Solving the finite
+linear system in the reverse direction reproduces the first gap correlations
+\begin{equation}
+\label{eq:rho-recovered-values}
+-0.0463,\ -0.0225,\ -0.0132,\ -0.0057,\ -0.0069,\ -0.0061,\ -0.0060,\ -0.0064.
+\end{equation}
+The maximum error reported for $d\le60$ is $6.8\times10^{-4}$. The inversion is severely
+ill-conditioned (condition number about $10^8$), so in practice only the first
+lags are stably recoverable. This reinforces the information statement:
+$\kappa(h)$ is a compressed linear image of $\rho(d)$, not an additional
+spectral observable.
+
+Because $w$ is antisymmetric about the centre, a \emph{positive} correlation
+between gaps on opposite sides of the centre enters $w^{\!\top}Rw$ with a
+negative sign. One therefore expects $\kappa(h)<1$, i.e.\ the independent model
+to \emph{overpredict}. This is what is observed, and it accounts quantitatively
+for the discrepancy (Section~\ref{sec:numeric}, part D).
+
+\section{Numerical verification and measured laws}
+\label{sec:numeric}
+
+\subsection{Protocol}
+\label{sec:num-protocol}
+$\mob$ was computed by a linear sieve for $n\le N=10^{6}$; $M,Q$ by prefix sums;
+a prime table to index $304\,071$ ($p=4\,318\,813$); $T$ by prefix sums of the
+primes. At $N=10^{6}$: $\Mert(N)=212$, $\Sq(N)=607\,926$, maximum required prime
+index $304\,069$. All scripts and raw outputs accompany this note.
+
+\subsection{A. Exact statements verified}
+\label{sec:num-exact}
+The following hold with no exceptions for all $1\le n\le10^{6}$:
+Lemma~\ref{lem:parity}; Proposition~\ref{prop:closed} (direct summation of $S$
+against the closed form); Proposition~\ref{prop:block} and both inequalities of
+Corollary~\ref{cor:bounds}; $\operatorname{sgn}T=\operatorname{sgn}\Mert$ and
+$T=0\iff \Mert=0$ (there are $5\,361$ values of $n\le10^{6}$ with $\Mert(n)=0$);
+Proposition~\ref{prop:offset}. Theorem~\ref{thm:gaps} was checked on $4\,000$
+random $n\in[10^{3},10^{6}]$ with maximum absolute error $0$, and
+Lemma~\ref{lem:w2} for all $h\le60$ and $h\in\{100,101,300,301,370\}$.
+
+\subsection{B. Global residual scale, \texorpdfstring{$100\le n\le10^{6}$}{100 to one million}}
+\label{sec:num-global}
+\begin{equation}
+\label{eq:global-residual-table}
+\begin{array}{lcc}
+\toprule
+& E & E_{\mathrm{mid}}\\
+\midrule
+\text{median }|\cdot| & 1.09\times10^{3} & 9.74\times10^{2}\\
+\text{r.m.s.} & 5.295\times10^{3} & 5.066\times10^{3}\\
+\max|\cdot| & 6.2766\times10^{4} & 5.7654\times10^{4}\\
+\text{median }|\cdot|/|T| & 1.069\times10^{-5} & 8.894\times10^{-6}\\
+\bottomrule
+\end{array}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.85\textwidth]{figures/fig1_Emid.png}
+\caption[Centered residual up to one million]{$E_{\mathrm{mid}}(n)$ for $n\le10^{6}$.}
+\label{fig:residual}
+\end{figure}
+
+\subsection{C. The \texorpdfstring{$h^{3/2}$}{h to the three halves} law and its stationarity}
+\label{sec:num-scaling}
+Put $Z_{3/2}(n):=E_{\mathrm{mid}}(n)/\bigl(|\Mert(n)|^{3/2}\log n\bigr)$.
+Conditioning on $h=|\Mert(n)|$ over $n\ge10^{3}$:
+\begin{equation}
+\label{eq:h-binned-scaling}
+\begin{array}{lcccccccc}
+\toprule
+h\in & [8,12) & [12,19) & [19,31) & [31,51) & [51,84) & [84,138) & [138,225) & [225,400)\\
+\midrule
+\operatorname{median}|Z_{3/2}| & 0.1426 & 0.1477 & 0.1589 & 0.1589 & 0.1556 & 0.1546 & 0.1507 & 0.1550\\
+\text{count} & 36\,451 & 58\,125 & 86\,041 & 127\,696 & 152\,059 & 164\,880 & 231\,986 & 65\,791\\
+\bottomrule
+\end{array}
+\end{equation}
+and conditioning on $n$ instead:
+\begin{equation}
+\label{eq:n-binned-scaling}
+\begin{array}{lccc}
+\toprule
+n\in & \operatorname{RMS}Z_{3/2} & \operatorname{median}|Z_{3/2}| & \text{count}\\
+\midrule
+{}[1.00,1.58)\times10^{5} & 0.2331 & 0.1549 & 51\,624\\
+{}[1.58,2.51)\times10^{5} & 0.2379 & 0.1574 & 82\,660\\
+{}[2.51,3.98)\times10^{5} & 0.2340 & 0.1541 & 134\,286\\
+{}[3.98,6.31)\times10^{5} & 0.2314 & 0.1530 & 215\,541\\
+{}[6.31,10.0)\times10^{5} & 0.2324 & 0.1552 & 359\,873\\
+\bottomrule
+\end{array}
+\end{equation}
+Both tables are flat: the normalisation $|\Mert|^{3/2}\log n$ is stable across a
+factor of $46$ in $h$ and a factor of $10$ in $n$. This supports, but does not
+prove, the hypothesis that $Z_{3/2}$ converges in distribution.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.48\textwidth]{figures/fig2_scaling.png}
+\hfill
+\includegraphics[width=.48\textwidth]{figures/fig3_stationarity.png}
+\caption[Residual scaling and stationarity]{Left: $|E_{\mathrm{mid}}|$ against $|\Mert|$ with the envelope
+$0.155\,h^{3/2}\log n$. Right: stationarity of $Z_{3/2}$ in $n$.}
+\label{fig:scaling-stationarity}
+\end{figure}
+
+\subsection{D. Which variance model is right}
+\label{sec:num-variance}
+Local gap statistics were measured on the prime-index band
+$[5\times10^{4},3.05\times10^{5})$, which covers the windows for
+$n\in[10^{5},10^{6}]$: mean gap $14.5927$, $\log p=14.6984$ at the band centre,
+$\operatorname{Var}(g)=145.93$, hence
+\begin{equation}
+\label{eq:gap-variance-ratio}
+\operatorname{Var}(g)/\log^{2}p=0.6755
+\end{equation}
+against the value $1$ predicted by a Poisson (Cram\'er) gap model. The gap
+autocorrelation is negative at short lag and positive over a long tail:
+\begin{equation}
+\label{eq:gap-autocorr-table}
+\begin{array}{lcccccc}
+\toprule
+d & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\rho(d) & -0.0463 & -0.0225 & -0.0132 & -0.0057 & -0.0069 & -0.0061\\
+\bottomrule
+\end{array}
+\end{equation}
+with $\sum_{1\le d\le420}\rho(d)=+0.4646$. The resulting correction factor
+decreases steadily,
+\begin{equation}
+\label{eq:kappa-table}
+\begin{array}{lccccccc}
+\toprule
+h & 5 & 10 & 20 & 40 & 80 & 160 & 320\\
+\midrule
+\kappa(h) & 1.0206 & 0.9532 & 0.9094 & 0.8514 & 0.7869 & 0.7381 & 0.6871\\
+\bottomrule
+\end{array}
+\end{equation}
+
+Testing both models on the $883\,123$ values of $n$ with $n\ge10^{4}$ and
+$h\ge12$:
+\begin{equation}
+\label{eq:model-comparison-table}
+\begin{array}{lcccc}
+\toprule
+\text{model} & \operatorname{RMS}(E_{\mathrm{mid}})/\operatorname{RMS}(\mathrm{SD}) & \operatorname{RMS}Z & \operatorname{mean}Z & \operatorname{median}|Z| \\
+\midrule
+\text{independent gaps} & 0.8527 & 0.8963 & -1.88\times10^{-4} & 0.5962\\
+\text{covariance-corrected} & 1.0031 & 1.0036 & -2.13\times10^{-4} & 0.6694\\
+\bottomrule
+\end{array}
+\end{equation}
+The $15\%$ deficit of the independent model is therefore explained, to within
+$0.3\%$, by the correlations between prime gaps; and the corrected model
+reproduces the Gaussian value $\operatorname{median}|Z|=0.6745$ to within $0.8\%$
+with no free parameter. Within the measured range, this accounts for the scale discrepancy left by the independent model.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.48\textwidth]{figures/fig4_kappa.png}
+\hfill
+\includegraphics[width=.48\textwidth]{figures/fig5_qq.png}
+\caption{Left: the correction factor $\kappa(h)$. Right: quantiles of
+$Z=E_{\mathrm{mid}}/\mathrm{SD}$ against the normal, on a thinned sample; the
+independent-gap curve is visibly compressed, the corrected one is not.}
+\label{fig:kappa-qq}
+\end{figure}
+
+\subsection{E. Distribution of the standardised residual}
+\label{sec:num-distribution}
+With $Z:=E_{\mathrm{mid}}/\operatorname{SD}_{\mathrm{cov}}$, by blocks in $n$
+($h\ge12$):
+\begin{equation}
+\label{eq:z-block-table}
+\begin{array}{lcccccc}
+\toprule
+n\in & \text{count} & \operatorname{mean} & \operatorname{sd} & \text{skew} & \text{exc.\ kurt.} & \operatorname{median}|Z|\\
+\midrule
+{}[10^{4},10^{5}) & 67\,120 & +0.0043 & 0.9813 & -0.0098 & +0.2556 & 0.6474\\
+{}[10^{5},3.16\times10^{5}) & 183\,261 & -0.0000 & 1.0029 & -0.0167 & +0.1559 & 0.6705\\
+{}[3.16\times10^{5},10^{6}) & 632\,741 & -0.0008 & 1.0061 & -0.0188 & +0.0957 & 0.6715\\
+\bottomrule
+\end{array}
+\end{equation}
+and by blocks in $h$, the excess kurtosis decreases overall, with a small
+nonmonotone rise between the fourth and fifth bins,
+\begin{equation}
+\label{eq:kurtosis-by-h}
+\begin{array}{lccccccc}
+\toprule
+h\in & [12,19) & [19,31) & [31,51) & [51,84) & [84,138) & [138,225) & [225,400)\\
+\midrule
+\text{exc.\ kurt.} & +0.676 & +0.338 & +0.213 & +0.031 & +0.058 & +0.024 & -0.143\\
+\bottomrule
+\end{array}
+\end{equation}
+which is qualitatively consistent with, but does not establish, the behaviour expected if a central limit theorem governs the sum of
+Theorem~\ref{thm:gaps} as $h\to\infty$. Quantiles of $Z$ over all $n\ge10^{4}$,
+$h\ge12$:
+\begin{equation}
+\label{eq:quantiles-table}
+\begin{array}{lccccccc}
+\toprule
+\text{level} & 1\% & 5\% & 25\% & 50\% & 75\% & 95\% & 99\%\\
+\midrule
+\text{observed} & -2.372 & -1.652 & -0.666 & +0.000 & +0.673 & +1.641 & +2.346\\
+N(0,1) & -2.326 & -1.645 & -0.674 & 0 & +0.674 & +1.645 & +2.326\\
+\bottomrule
+\end{array}
+\end{equation}
+
+\subsection{F. The points are not independent}
+\label{sec:num-dependence}
+This is a necessary caveat on the preceding tables. Consecutive $n$ share almost
+the same window, so the $883\,123$ values of $Z$ are strongly dependent: the
+autocorrelation of $Z$ in $n$ is $+0.979$ at lag $1$, $+0.692$ at lag $10$, and
+first falls below $0.05$ at lag $128$. The integrated autocorrelation time is
+$\approx51$, giving an effective sample size of about $1.7\times10^{4}$, not
+$8.8\times10^{5}$.
+
+Consequently a Kolmogorov--Smirnov test on the full sample is meaningless. On
+thinned subsamples:
+\begin{equation}
+\label{eq:thinning-table}
+\begin{array}{lccccc}
+\toprule
+\text{thinning} & \text{count} & \operatorname{sd} & \text{exc.\ kurt.} & \mathrm{KS} & p\\
+\midrule
+1 & 883\,123 & 1.0036 & +0.120 & 0.00317 & 3.8\times10^{-8}\\
+51 & 17\,317 & 1.0036 & +0.170 & 0.00451 & 0.87\\
+128 & 6\,900 & 1.0057 & +0.018 & 0.00775 & 0.80\\
+\bottomrule
+\end{array}
+\end{equation}
+On the two thinned samples the reported KS tests do not reject a standard normal
+reference law. This is descriptive rather than a proof of normality: thinning reduces
+dependence but does not establish independence. The full-sample $p$-value is not
+interpreted because the observations are strongly dependent.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.55\textwidth]{figures/fig6_autocorr.png}
+\caption{Autocorrelation of $Z$ in $n$; the effective sample is roughly $50$
+times smaller than the nominal one.}
+\label{fig:autocorr}
+\end{figure}
+
+\subsection{G. Relative size of the residual}
+\label{sec:num-relative}
+Combining $|E_{\mathrm{mid}}|\approx c\,h^{3/2}\log n$ with $|T|\approx
+h\,p^{*}\approx \tfrac{3}{\pi^{2}}h\,n\log n$ predicts
+\begin{equation}
+\label{eq:relative-residual-prediction}
+\begin{aligned}
+\frac{|E_{\mathrm{mid}}(n)|}{|T(n)|}
+&\approx \frac{c\pi^{2}}{3}\cdot\frac{\sqrt{|\Mert(n)|}}{n},\\
+\frac{c\pi^{2}}{3}&=0.510 \qquad (c=0.155).
+\end{aligned}
+\end{equation}
+Measured medians of $\bigl(|E_{\mathrm{mid}}|/|T|\bigr)\,n/\sqrt{|\Mert|}$:
+$0.4385,\ 0.4800,\ 0.4995,\ 0.4955$ on
+\begin{equation}
+\label{eq:relative-residual-ranges}
+[10^{3},10^{4}),\quad [10^{4},10^{5}),\quad
+[10^{5},3.16\times10^{5}),\quad [3.16\times10^{5},10^{6}).
+\end{equation}
+This quantitatively explains why the central term reproduces $T$ so accurately.
+The measured median satisfies
+\begin{equation}
+\label{eq:median-relative-residual}
+\operatorname{median}\frac{|E_{\mathrm{mid}}|}{|T|}=8.9\times10^{-6}.
+\end{equation}
+If $|\Mert(n)|$ is of size roughly $n^{1/2}$, the relative correction is of
+size $n^{-3/4}$.
+
+\subsection{H. Largest excursions}
+\label{sec:num-extremes}
+The extremes of $E_{\mathrm{mid}}$ on $n\le10^{6}$ occur in tight clusters,
+e.g.\ $-5.7654\times10^{4}$ at $n=924\,067$ ($\Mert=-301$) and
+$+4.6576\times10^{4}$ at $n=932\,737$ ($\Mert=-269$). These are the $n$ at which
+$|\Mert|$ is locally largest, consistent with the $h^{3/2}$ law and carrying no
+separate endpoint information.
+
+\subsection{I. The packet envelope}
+\label{sec:num-packets}
+The visible packets are almost entirely the excursions of $|\Mert(n)|$ passed
+through the $h^{3/2}$ variance scale. With a moving RMS window of width $2000$,
+the log--log correlation between the measured envelope of $E_{\mathrm{mid}}$
+and a moving average of $|\Mert(n)|^{3/2}\log n$ is
+\begin{equation}
+\label{eq:packet-correlation}
+0.9939\qquad(n\ge5\times10^4).
+\end{equation}
+Replacing the Mertens factor by a trend depending only on $n$ gives correlation
+$0.4442$. Figure~\ref{fig:packet-envelope} displays the resulting amplitude
+modulation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.88\textwidth]{figures/fig7_envelope.png}
+\caption{The packet structure of $E_{\mathrm{mid}}$ follows the excursions of
+$|M(n)|$. The red curves show a scaled moving average proportional to
+$|M(n)|^{3/2}\log n$.}\label{fig:packet-envelope}
+\end{figure}
+
+\subsection{J. Spectrum on the logarithmic coordinate: a classical check}
+\label{sec:num-spectrum}
+Put $u=\log x$ and, for integer samples $x=n$, consider
+\begin{equation}
+\label{eq:log-coordinate-signal}
+X(u):=e^{-u/2}\Mert(\lfloor e^u\rfloor).
+\end{equation}
+The classical Perron/explicit-formula treatment of the Mertens function \cite{Titchmarsh1986}, after
+truncation and contour displacement and under the usual hypotheses on the zeros, has
+residue contributions of the form
+\begin{equation}
+\label{eq:explicit-formula-mode}
+\frac{x^{\rho}}{\rho\zeta'(\rho)}.
+\end{equation}
+For a simple zero $\rho=\beta+i\gamma$, the corresponding contribution after
+$x=e^u$ and multiplication by $e^{-u/2}$ is proportional to
+$e^{(\beta-1/2)u}e^{i\gamma u}$. Under RH this becomes a pure mode
+$e^{i\gamma u}$. Consequently, within that classical explicit-formula framework,
+the appearance of power at
+frequencies $\gamma_k$ in $X(u)$ is the expected explicit-formula behaviour,
+not a new law of the transform. Historical numerical uses of zeta zeros to reconstruct
+prime-counting structure include \cite{RieselGohl1970}.
+
+The numerical spectrum over $10^3\le n\le10^6$ (after the interpolation and
+windowing used by the supplied script) shows peaks near the first zeta
+ordinates, while a random-sign surrogate with the same squarefree support does
+not show the same visual alignment. The original peak-to-nearest-zero summary
+(mean distances $0.263$ for the true sequence and $1.738$ for one surrogate)
+has a selection bias because peaks were selected before matching them to the
+zeros. It is retained only as a diagnostic and not used as evidence. The proper
+fixed-frequency question is the power evaluated at preassigned $\gamma_k$, or a
+regression on the preassigned modes.
+
+More fundamentally, the finite logarithmic window itself imposes the resolution
+\begin{equation}
+\label{eq:frequency-resolution}
+\Delta\omega\simeq\frac{2\pi}{u_{\max}-u_{\min}}
+ =\frac{2\pi}{\log(10^6/10^3)}\simeq0.91.
+\end{equation}
+Peak offsets of a few tenths are therefore below the resolving power of this finite
+window and carry no precision information about the known $\gamma_k$. Doubling the
+frequency resolution requires doubling the range in $u$, hence squaring the
+range in $n$; reaching resolution $10^{-3}$ would require a logarithmic span of
+order $2\pi\times10^3$, far outside this computation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.88\textwidth]{figures/fig8_spectrum.png}
+\caption{Power spectrum of $M(e^u)e^{-u/2}$ on $u=\log n$. Dashed lines are the
+first zeta ordinates. This is an illustration of the classical explicit-formula
+modes; the peak-matching statistic is not used inferentially because of
+selection bias and finite-window resolution.}\label{fig:spectrum}
+\end{figure}
+
+\subsection{K. Prime-counting variance comparison}
+\label{sec:num-prime-variance}
+Proposition~\ref{prop:pi-integral} puts the residual on the prime-counting side.
+At prime scale $X\simeq4.3\times10^6$, the supplied experiment compares the
+measured variance of short-interval prime counts with an $H\log(X/H)$ reference
+scale motivated by Montgomery and Soundararajan for weighted prime counts
+$\psi(x+H)-\psi(x)$, and with a Poisson/Cram\'er-type $H\log X$ reference.
+This is only a scale comparison. It is not a direct application of the
+Montgomery--Soundararajan statement \cite{MontgomerySoundararajan2004} to the
+unweighted count $\pi(x+H)-\pi(x)$. The Poisson comparison is in the spirit of
+Cram\'er's model \cite{Cramer1936}. The reported ratios are
+\begin{equation}
+\label{eq:short-interval-variance-table}
+\begin{array}{lrrrr}
+\toprule
+H & 200 & 1000 & 5000 & 20000\\
+\midrule
+\operatorname{Var}_{\rm meas}/\operatorname{Var}_{\rm MS}
+ &1.116&1.202&1.310&1.622\\
+\operatorname{Var}_{\rm meas}/\operatorname{Var}_{\rm Cramer}
+ &0.552&0.468&0.372&0.314\\
+\bottomrule
+\end{array}
+\end{equation}
+The decreasing ratio to the Cram\'er scale is the expected qualitative signature
+of an $H\log(X/H)$ variance rather than $H\log X$. The excess over the leading
+MS term is not interpreted as a new statistic: at $H=2\times10^4$ the displayed
+leading logarithmic factor is only about $2.96$, versus $\log X\simeq15.3$, so
+lower-order terms are not negligible in this preasymptotic range.
+
+\subsection{L. Cross-coupling test}
+\label{sec:coupling}
+The only numerical loophole left inside $E_{\mathrm{mid}}$ is weaker than new
+endpoint information. The gap factor in Theorem~\ref{thm:gaps} is controlled by
+prime statistics, while the window length is $h=|M(n)|$. One can ask whether
+the standardised fluctuation
+\begin{equation}
+\label{eq:standardized-residual}
+Z(n)=\frac{E_{\mathrm{mid}}(n)}{\operatorname{SD}_{\mathrm{cov}}(n)},
+\qquad h=|M(n)|\ge12,
+\end{equation}
+is coupled to the sign or to a zeta phase of $M$. The supplied follow-up tests
+reported
+\begin{equation}
+\label{eq:coupling-table}
+\begin{array}{lc}
+\toprule
+\text{test} & \text{value}\\
+\midrule
+\operatorname{corr}(Z,\operatorname{sgn}M) & +0.00058\\
+\operatorname{corr}(Z,M/\sqrt n) & +0.00110\\
+\operatorname{corr}(Z,\cos(\gamma_1\log n)) & -0.00119\\
+\operatorname{corr}(Z,\sin(\gamma_1\log n)) & +0.00173\\
+\overline Z\,|_{M>0}-\overline Z\,|_{M<0} & +0.00027\quad(0.08\sigma\ \text{effective})\\
+\bottomrule
+\end{array}
+\end{equation}
+and an eight-bin phase test gave dispersion of the bin means $0.00070$, compared
+with a typical standard error $0.00499$.
+
+These are null results only at the tested resolution. With effective sample
+$n_{\rm eff}\simeq17\,316$, the nominal standard error of a small correlation is
+$1/\sqrt{n_{\rm eff}}\simeq0.0076$, so the experiment excludes only linear
+couplings of order $|r|\gtrsim0.015$. Weaker effects, nonlinear dependence,
+untested functions of the phase, or effects emerging only at much larger $n$
+remain outside the sensitivity of this computation. The result therefore does
+\emph{not} prove decoupling; it says that no coupling was detected in this small
+specified family.
+
+\section{Status of the claims}
+\label{sec:status}
+
+To keep the register unambiguous:
+\begin{itemize}[leftmargin=1.6em]
+\item \emph{Proved}: Lemmas~\ref{lem:counters}, \ref{lem:parity}, \ref{lem:w2};
+Propositions~\ref{prop:closed}, \ref{prop:block}, \ref{prop:scale},
+\ref{prop:info}, \ref{prop:offset}; Corollary~\ref{cor:bounds};
+Theorems~\ref{thm:RH}, \ref{thm:gaps}.
+\item \emph{Measured}, over $10^{4}\le n\le10^{6}$ with effective sample
+$\approx1.7\times10^{4}$ where relevant: the law
+$|E_{\mathrm{mid}}|\approx0.155\,|\Mert|^{3/2}\log n$; the failure of the
+independent-gap model by a factor $0.853$ and its repair by the measured gap
+covariance; approximate normality of the standardised residual; the
+$0.9939$ packet-envelope correlation; the exact finite $\kappa$--$\rho$ transform (regenerated to double-precision
+roundoff) and the reported finite-dimensional recovery of the first lags of $\rho$
+from $\kappa$; the short-interval variance ratios; and the
+null cross-coupling tests of Section~\ref{sec:coupling}.
+\item \emph{Classical interpretation, not novelty}: the frequencies $\gamma_k$
+in the $u=\log n$ spectrum of $M(e^u)e^{-u/2}$ are the modes supplied by the
+explicit formula. The displayed peak matching is diagnostic only and has
+frequency resolution about $0.91$.
+\item \emph{Conjectural}: that $Z_{3/2}$ converges in distribution; that the
+limit is Gaussian; that a central limit theorem holds for the antisymmetric
+weighted gap sum of Theorem~\ref{thm:gaps}; or that the observed numerical
+absence of cross-coupling persists asymptotically. None follows from the present
+numerics.
+\end{itemize}
+
+\section{What the construction does and does not deliver}
+\label{sec:deliverables}
+
+It delivers an exact, elementary dictionary between $SS$ and $(\Mert,\Sq)$, a
+two-sided transfer of the Mertens criterion (Theorem~\ref{thm:RH}), and a
+residual whose size obeys a clean measured scaling law.
+
+It does not deliver an independent arithmetic constraint on $\Mert(n)$, by
+Proposition~\ref{prop:info}. For a transformed representation to become useful
+it would have to produce at least one of:
+\begin{enumerate}[label=(\roman*)]
+\item a cancellation unavailable in the original variables;
+\item a positivity or monotonicity principle strong enough to yield new bounds;
+\item a spectral representation turning a Mertens bound into an operator inequality;
+\item an inequality between independently controlled components;
+\item a mechanism by which the prime side constrains the M\"obius side beyond
+what $(\Mert,\Sq)$ already encodes.
+\end{enumerate}
+None of these has been extracted here. The measured law of
+Section~\ref{sec:numeric} is of type (iv) in form only: it bounds
+$E_{\mathrm{mid}}$ in terms of $|\Mert|$, which is the wrong direction to be
+useful. The cross-coupling experiment tests whether the prime-gap fluctuation
+might nevertheless provide an independently controlled handle on the Mertens
+side; no such handle is detected, but the numerical sensitivity is only at the
+$10^{-2}$ correlation scale and therefore does not close every conceivable
+nonlinear or asymptotic coupling.
+
+\section{A variant that is not an endpoint statistic (speculative)}
+\label{sec:shared-counter}
+
+The obstruction identified in Proposition~\ref{prop:info} is caused by the use
+of two \emph{separate} ordinal counters, which destroys the ordering of the
+$\pm1$ occurrences. The minimal modification that removes it is a
+\emph{shared} counter:
+\begin{equation}
+\label{eq:shared-counter-definition}
+\widetilde S(k):=\mob(k)\,p_{\Sq(k)},
+\qquad
+\widetilde{SS}(n):=\sum_{k\le n}\mob(k)\,p_{\Sq(k)} .
+\end{equation}
+Here the prime index depends on the position $k$ through the shared squarefree
+counter rather than on a sign-specific ordinal. As a functional of a ternary history,
+it is not an endpoint statistic: for example the histories $(+1,-1,+1)$ and
+$(+1,+1,-1)$ have the same terminal counts $(M,Q)=(1,3)$ but shared-counter sums
+$2-3+5=4$ and $2+3-5=0$, respectively. For the actual M\"obius sequence, finite
+summation by parts with $w(k)=p_{\Sq(k)}$ gives exactly
+\begin{equation}
+\label{eq:abel-shared-counter}
+\widetilde{SS}(n)=\Mert(n)w(n)-\sum_{k<n}\Mert(k)\bigl(w(k+1)-w(k)\bigr),
+\end{equation}
+The increments $w(k+1)-w(k)$ vanish when $\mob(k+1)=0$ and otherwise equal the
+next prime gap, so the right-hand side samples the preceding values $M(k)$ along the
+whole path. Moreover $Q(k)\sim6k/\pi^2$ and the prime number theorem imply
+$w(k)\sim(6/\pi^2)k\log k$. This is offered as a non-endpoint direction, not as
+a proved source of new bounds; asymptotically its bulk is close to a classical weighted
+Mertens sum with weight $k\log k$.
+
+\section{Novelty status}
+\label{sec:novelty}
+
+The three zeta ingredients are classical. The spectral occurrence of the
+$\gamma_k$ in $M(e^u)e^{-u/2}$ is also classical explicit-formula content, and
+$\kappa(h)$ is exactly a linear functional of the prime-gap autocorrelation
+sequence, not a new GUE-type statistic. GUE concerns zero spacings; the prime
+gaps entering Theorem~\ref{thm:gaps} belong to a different arithmetic
+statistical problem.
+
+A search did not locate the sequence $S$
+($2,-2,-3,1,-5,3,-7,1,1,5,-11,1,\dots$) as a named sequence or standard
+transform. Absence of a search result is weak evidence and the search was not
+exhaustive; this is recorded as an observation about the formulation, not a
+claim about its consequences, which by Proposition~\ref{prop:info} follow from
+$(\Mert,\Sq)$. The genuinely non-endpoint variant in the preceding section remains a
+direction rather than a result.
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{equation}
+\label{eq:summary-map}
+\mob \longrightarrow (N_-,N_0,N_+) \longrightarrow S \longrightarrow SS,
+\qquad
+N_\pm=\frac{\Sq\pm\Mert}2,\quad N_0=n-\Sq,\quad \Sq\equiv\Mert\ (2),
+\end{equation}
+\begin{equation}
+\label{eq:summary-closed}
+\boxed{\;
+SS(n)=\PS\!\left(\frac{\Sq+\Mert}2\right)-\PS\!\left(\frac{\Sq-\Mert}2\right)+n-\Sq \;}
+\end{equation}
+\begin{equation}
+\label{eq:summary-block}
+\boxed{\;T(n)=SS(n)-n+\Sq(n)=\operatorname{sgn}(\Mert)\!\!\sum_{j\in W(n)}\!\!p_j,
+\quad |W(n)|=|\Mert(n)|,\ \text{centre } \tfrac{\Sq(n)+1}2 \;}
+\end{equation}
+\begin{equation}
+\label{eq:summary-scale}
+\boxed{\;T(n)=\Mert(n)\,p_{\lfloor \Sq(n)/2\rfloor}\bigl(1+\theta(n)\bigr),\quad n\ge2,\quad \theta(n)\to0\;}
+\end{equation}
+\begin{equation}
+\label{eq:summary-rh}
+\boxed{\;\mathrm{RH}\iff T(n)=O_\varepsilon\bigl(n^{3/2+\varepsilon}\bigr)\ \ \forall\varepsilon>0\;}
+\end{equation}
+\begin{equation}
+\label{eq:summary-residual}
+\boxed{\begin{aligned}
+T(n)&=\Mert(n)\,p^{*}(n)+E_{\mathrm{mid}}(n),\\
+E_{\mathrm{mid}}(n)&=\operatorname{sgn}(\Mert)\sum_i w_i g_i,\\
+\sum_i w_i^2&=\frac{h^3}{12}\bigl(1+O(h^{-1})\bigr).
+\end{aligned}}
+\end{equation}
+\begin{equation}
+\label{eq:summary-sd}
+\boxed{\;\operatorname{SD}\bigl(E_{\mathrm{mid}}\bigr)\;=\;\sigma_g(n)\sqrt{w^{\!\top}\!R\,w}\,,
+\qquad
+|E_{\mathrm{mid}}(n)|\approx0.155\,|\Mert(n)|^{3/2}\log n\;}
+\end{equation}
+The gap representation and its prime-counting integral form are exact; the
+$0.155$ scaling and distributional statements are measured over
+$10^{4}\le n\le10^{6}$ and are not proved. The packets are the excursions of
+$|M|$ amplified by the $h^{3/2}$ weight norm. Their zeta frequencies on
+$u=\log n$ are classical explicit-formula modes, and the tested standardised
+gap factor shows no detectable linear coupling to the sign or first zeta phase
+of $M$ at current sensitivity.
+
+The pointwise transform quantities $SS(n)$, $T(n)$, $E(n)$ and
+$E_{\mathrm{mid}}(n)$ are deterministic functions of $(M(n),Q(n))$. This proves
+that they contain no additional endpoint data. It does not, by itself, rule out an
+analytic inequality obtained independently from the prime-gap representation; such an
+inequality would have to supply leverage not already equivalent to a bound on $M$. The
+finite coupling tests above find no such mechanism in the tested family. The shared-counter
+variant of Section~\ref{sec:shared-counter} is genuinely non-endpoint as a functional
+of sign histories and is therefore outside this endpoint obstruction.
+
+\section*{References}
+\label{sec:references}
+\addcontentsline{toc}{section}{References}
+\begin{thebibliography}{99}
+
+\bibitem{Apostol1976}
+T. M. Apostol,
+\emph{Introduction to Analytic Number Theory},
+Springer-Verlag, New York, 1976.
+
+\bibitem{Cramer1936}
+H. Cram\'er,
+On the order of magnitude of the difference between consecutive prime numbers,
+\emph{Acta Arith.} \textbf{2} (1936), 23--46.
+DOI: 10.4064/aa-2-1-23-46.
+
+\bibitem{MontgomerySoundararajan2004}
+H. L. Montgomery and K. Soundararajan,
+Primes in short intervals,
+\emph{Comm. Math. Phys.} \textbf{252} (2004), 589--617.
+DOI: 10.1007/s00220-004-1222-4; arXiv:math/0409258.
+
+\bibitem{OdlyzkoTeRiele1985}
+A. M. Odlyzko and H. J. J. te Riele,
+Disproof of the Mertens conjecture,
+\emph{J. Reine Angew. Math.} \textbf{357} (1985), 138--160.
+DOI: 10.1515/crll.1985.357.138.
+
+\bibitem{RieselGohl1970}
+H. Riesel and G. G\"ohl,
+Some calculations related to Riemann's prime number formula,
+\emph{Math. Comp.} \textbf{24} (1970), 969--983.
+DOI: 10.1090/S0025-5718-1970-0277489-3.
+
+\bibitem{Titchmarsh1986}
+E. C. Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function},
+2nd ed., revised by D. R. Heath-Brown, Clarendon Press, Oxford, 1986.
+
+\end{thebibliography}
+
+\end{document}

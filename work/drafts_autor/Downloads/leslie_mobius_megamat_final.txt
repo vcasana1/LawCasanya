@@ -1,0 +1,340 @@
+function resultado = leslie_mobius_megamat_final()
+% LESLIE_MOBIUS_MEGAMAT_FINAL
+% Archivo unico, autocontenido. Entrada obligatoria: moebius.bin (int8).
+% Valores por defecto fijados por el hilo: b0 incluye 1.05 y entrenamiento 0.80.
+% Lee moebius.bin directamente, sin comprobar cabecera, densidad ni contenido.
+%
+% EJECUCION
+%   resultado = leslie_mobius_megamat_final;
+%
+% PRODUCTOS
+%   - Compara predictor cero, peine y frecuencias libres fuera de muestra.
+%   - Repite en varios b0, fracciones y K para medir estabilidad.
+%   - Elimina omega <= 4*pi/Nentreno despues de escoger K picos y no la repone.
+%   - Calcula gamma=omega/log(b0).
+%   - Busca puntos fijos b=r_min(theta(b))^2 con theta=acos(cos(gamma*log(b))).
+%   - Certifica positividad, continuidad local y espectro de cada Leslie.
+%   - No llama "convergencia" a una coleccion de cruces aislados.
+%   - Guarda MAT, CSV, TXT y PNG; imprime un resumen completo en consola.
+%
+% AVISO
+%   No prueba RH ni una identidad con M. Un predictor armonico no cuenta como
+%   Leslie si su polinomio companero no es no negativo.
+
+close all; clc; rng(20260904,'twister'); t0=tic;
+
+%% CONFIGURACION FINAL
+cfg.archivoMu = 'moebius.bin';
+cfg.b0Lista = [1.03 1.05 1.08 1.10 1.15];
+cfg.fracLista = [0.70 0.80];
+cfg.KLista = [4 5 6 8];
+cfg.xMin = 100;
+cfg.bloque = 2000000;
+cfg.minTrain = 30;
+cfg.minTest = 12;
+cfg.nFFTfactor = 32;
+cfg.separacionOmega = 0.05;
+cfg.refinaAncho = 0.03;
+cfg.refinaVueltas = 4;
+cfg.refinaPuntos = 61;
+cfg.bScanMin = 1.001;
+cfg.bScanMax = 1e4;
+cfg.nBscan = 5000;
+cfg.tolCoef = 1e-12;
+cfg.tolRaiz = 1e-9;
+cfg.tolEspectro = 1e-6;
+cfg.deltaCert = [1e-4 3e-5 1e-5 3e-6 1e-6];
+cfg.maxRaicesPorRun = 100;
+cfg.raizPersistenciaLog = 0.03;
+cfg.gammaPersistenciaRel = 0.08;
+cfg.prefijo = ['leslie_mobius_megamat_final_' datestr(now,'yyyymmdd_HHMMSS')];
+
+if ~isfile(cfg.archivoMu)
+    error('No existe %s en la carpeta actual.',cfg.archivoMu);
+end
+N = dir(cfg.archivoMu); N = N.bytes;
+
+%% CONSTRUIR TODAS LAS REJILLAS Y LEER M SOLO EN LOS X NECESARIOS
+runs = struct('b0',{},'frac',{},'Kpedido',{},'n',{},'x',{});
+todosX = [];
+ir=0;
+for b0=cfg.b0Lista
+    n0=ceil(log(cfg.xMin)/log(b0)); n1=floor(log(double(N))/log(b0));
+    n=(n0:n1)'; x=round(exp(n*log(b0)));
+    [x,iu]=unique(x,'stable'); n=n(iu);
+    for frac=cfg.fracLista
+        for K=cfg.KLista
+            ntr=floor(frac*numel(x));
+            if ntr>=cfg.minTrain && numel(x)-ntr>=cfg.minTest && ntr>2*K+5
+                ir=ir+1; runs(ir)=struct('b0',b0,'frac',frac,'Kpedido',K,'n',n,'x',x); %#ok<AGROW>
+            end
+        end
+    end
+    todosX=[todosX;x]; %#ok<AGROW>
+end
+todosX=unique(todosX);
+MuestrasM=leer_M_en_x(cfg.archivoMu,todosX,cfg.bloque);
+
+%% EJECUTAR TODAS LAS CONFIGURACIONES
+plantilla=run_vacio(); R=repmat(plantilla,numel(runs),1);
+for q=1:numel(runs)
+    rr=runs(q); [~,loc]=ismember(rr.x,todosX);
+    y=MuestrasM(loc)./sqrt(double(rr.x));
+    R(q)=ejecutar_run(rr.b0,rr.frac,rr.Kpedido,double(rr.n),double(rr.x),double(y),cfg);
+    R(q).id=q;
+    fprintf(['RUN %02d/%02d b0=%.3f frac=%.2f K=%d->%d ' ...
+        'R2 libre=%+.4f peine=%+.4f raices=%d certificadas=%d\n'], ...
+        q,numel(runs),R(q).b0,R(q).frac,R(q).Kpedido,R(q).Kefectivo, ...
+        R(q).R2Libre,R(q).R2Peine,numel(R(q).raices),sum([R(q).raices.certificada]));
+end
+
+%% ESTABILIDAD DE GAMMA Y RAICES ENTRE RUNS
+estabilidad=analizar_estabilidad(R,cfg);
+
+%% SELECCION HONESTA: b0=1.05, frac=0.80; K por menor RMSE de validacion
+idBase=find(abs([R.b0]-1.05)<1e-12 & abs([R.frac]-0.80)<1e-12);
+if isempty(idBase), error('No existe run base b0=1.05, frac=0.80.'); end
+[~,j]=min([R(idBase).RMSEValidacion]); idElegido=idBase(j); elegido=R(idElegido);
+
+%% VEREDICTO
+mejora=elegido.RMSELibre<elegido.RMSECero;
+hayLesliePredictiva=elegido.leslieFrecuencias.factible;
+hayRaizPersistente=~isempty(estabilidad.clustersRaices) && any([estabilidad.clustersRaices.numeroRuns]>=3);
+gammaEstable=estabilidad.numeroParesGammaEstables>=3;
+if mejora && hayLesliePredictiva && gammaEstable
+    codigo='EVIDENCIA_LOCAL_LESLIE_PREDICTIVA';
+elseif mejora && ~hayLesliePredictiva
+    codigo='PREDICTOR_ARMONICO_SIN_LESLIE';
+elseif hayRaizPersistente && ~mejora
+    codigo='LESLIE_PERSISTENTE_SIN_PREDICCION';
+else
+    codigo='SIN_ACOPLAMIENTO_ESTABLE';
+end
+texto=sprintf(['Run elegido sin mirar prueba: b0=%.3f, frac=%.2f, K=%d. ' ...
+    'R2 libre=%+.4f, peine=%+.4f; RMSE libre=%.5g, cero=%.5g. ' ...
+    'Leslie de frecuencias predictivas=%d. Pares gamma estables=%d. ' ...
+    'Existe cluster de raiz en >=3 runs=%d.'], ...
+    elegido.b0,elegido.frac,elegido.Kefectivo,elegido.R2Libre,elegido.R2Peine, ...
+    elegido.RMSELibre,elegido.RMSECero,hayLesliePredictiva, ...
+    estabilidad.numeroParesGammaEstables,hayRaizPersistente);
+
+resultado=struct('version','FINAL-1','cfg',cfg,'N',N,'runs',R, ...
+    'estabilidad',estabilidad,'idElegido',idElegido,'elegido',elegido, ...
+    'veredicto',struct('codigo',codigo,'texto',texto),'segundos',toc(t0));
+
+%% GUARDAR TODO
+save([cfg.prefijo '_resultado.mat'],'resultado','-v7.3');
+escribir_csv_runs([cfg.prefijo '_runs.csv'],R);
+escribir_csv_raices([cfg.prefijo '_raices.csv'],R);
+escribir_informe([cfg.prefijo '_informe.txt'],resultado);
+crear_figuras([cfg.prefijo '_figuras.png'],R,elegido,estabilidad);
+
+fprintf('\n================ VEREDICTO FINAL ================\n%s\n%s\n',codigo,texto);
+fprintf('Tiempo %.1f s. Archivos con prefijo: %s\n',resultado.segundos,cfg.prefijo);
+assignin('base','resultado_megamat_final',resultado);
+end
+
+%% ======================================================================
+function R=ejecutar_run(b0,frac,K,n,x,y,cfg)
+N=numel(y); ntr=floor(frac*N); nval=max(6,floor(0.1*N));
+if ntr+nval>N-cfg.minTest, nval=max(4,N-cfg.minTest-ntr); end
+itr=(1:ntr)'; iva=(ntr+1:ntr+nval)'; ite=(ntr+nval+1:N)';
+[omega,omegaAntes,wmin]=estimar_omega(y(itr),n(itr),K,cfg);
+Kef=numel(omega); gamma=omega/log(b0);
+thPeine=2*pi*(1:max(1,Kef))/(2*max(1,Kef)+1); thPeine=thPeine(:);
+[pL,mL]=ajustar_armonico(n,y,itr,iva,ite,omega);
+[pP,mP]=ajustar_armonico(n,y,itr,iva,ite,thPeine);
+p0=zeros(size(y)); m0=metricas(y(ite),p0(ite));
+leslieF=certificar_leslie_directa(b0,omega,cfg);
+raices=buscar_raices_gamma(gamma,cfg);
+R=run_vacio(); R.b0=b0; R.frac=frac; R.Kpedido=K; R.Kefectivo=Kef;
+R.n=n; R.x=x; R.y=y; R.itr=itr; R.iva=iva; R.ite=ite;
+R.omega=omega; R.omegaAntes=omegaAntes; R.wmin=wmin; R.gamma=gamma;
+R.predLibre=pL; R.predPeine=pP; R.R2Libre=mL.test.R2; R.R2Peine=mP.test.R2;
+R.RMSELibre=mL.test.RMSE; R.RMSEPeine=mP.test.RMSE; R.RMSECero=m0.RMSE;
+R.RMSEValidacion=mL.validacion.RMSE; R.metricasLibre=mL; R.metricasPeine=mP;
+R.leslieFrecuencias=leslieF; R.raices=raices;
+end
+
+function [pred,M]=ajustar_armonico(n,y,itr,iva,ite,theta)
+X=diseno(n,theta); lambdas=logspace(-10,1,20); ev=nan(size(lambdas));
+pen=ones(size(X,2),1); pen(1)=0;
+for j=1:numel(lambdas)
+    w=ridge_solve(X(itr,:),y(itr),lambdas(j),pen);
+    ev(j)=sqrt(mean((y(iva)-X(iva,:)*w).^2));
+end
+[~,j]=min(ev); tv=[itr;iva]; w=ridge_solve(X(tv,:),y(tv),lambdas(j),pen); pred=X*w;
+M.entrenamiento=metricas(y(itr),pred(itr)); M.validacion=metricas(y(iva),pred(iva));
+M.test=metricas(y(ite),pred(ite)); M.lambda=lambdas(j); M.coef=w;
+end
+
+function X=diseno(n,t)
+n=n(:); t=t(:)'; X=[ones(numel(n),1),cos(n*t),sin(n*t)];
+end
+function w=ridge_solve(X,y,l,p)
+A=X'*X+l*diag(p); if rcond(A)<1e-13,w=pinv(A)*(X'*y);else,w=A\(X'*y);end
+end
+function m=metricas(y,p)
+e=y-p; m.RMSE=sqrt(mean(e.^2)); m.MAE=mean(abs(e)); m.max=max(abs(e));
+den=sum((y-mean(y)).^2); if den<=eps,m.R2=NaN;else,m.R2=1-sum(e.^2)/den;end
+end
+
+function [omega,omega0,wmin]=estimar_omega(y,n,K,cfg)
+y=y(:)-mean(y); n=n(:); NN=numel(y); wmin=4*pi/NN;
+nf=2^nextpow2(cfg.nFFTfactor*NN); P=abs(fft(y,nf)).^2; w=2*pi*(0:nf-1)'/nf;
+h=2:floor(nf/2)-1; P=P(h); w=w(h); pico=false(size(P));
+for j=2:numel(P)-1,pico(j)=P(j)>P(j-1)&&P(j)>=P(j+1);end
+id=find(pico); [~,o]=sort(P(id),'descend'); id=id(o); omega0=[];
+for j=1:numel(id)
+    z=w(id(j)); if z>=pi,continue,end
+    if isempty(omega0)||min(abs(z-omega0))>cfg.separacionOmega,omega0(end+1)=z;end %#ok<AGROW>
+    if numel(omega0)>=K,break,end
+end
+omega=sort(omega0(omega0>wmin & omega0<pi-wmin)); omega=omega(:);
+ancho=cfg.refinaAncho;
+for vuelta=1:cfg.refinaVueltas
+ for k=1:numel(omega)
+  rej=linspace(max(wmin,omega(k)-ancho),min(pi-wmin,omega(k)+ancho),cfg.refinaPuntos);
+  best=inf; zbest=omega(k);
+  for z=rej
+   tt=omega; tt(k)=z; tt=sort(tt); if numel(tt)>1&&min(diff(tt))<cfg.separacionOmega/2,continue,end
+   X=diseno(n,tt); c=X\y; e=norm(y-X*c); if e<best,best=e;zbest=z;end
+  end
+  omega(k)=zbest; omega=sort(omega);
+ end
+ ancho=ancho/2;
+end
+omega0=omega0(:);
+end
+
+function raices=buscar_raices_gamma(gamma,cfg)
+raices=repmat(raiz_vacia(),0,1); if isempty(gamma),return,end
+B=exp(linspace(log(cfg.bScanMin),log(cfg.bScanMax),cfg.nBscan))'; F=nan(size(B)); adm=false(size(B));
+for j=1:numel(B),[F(j),adm(j)]=F_gamma(B(j),gamma,cfg);end
+for j=1:numel(B)-1
+ if ~(adm(j)&&adm(j+1)&&isfinite(F(j))&&isfinite(F(j+1))&&F(j)*F(j+1)<=0),continue,end
+ lo=B(j);hi=B(j+1);flo=F(j); valido=true;
+ for it=1:80
+  mid=sqrt(lo*hi);[fm,am]=F_gamma(mid,gamma,cfg); if ~am||~isfinite(fm),valido=false;break,end
+  if abs(fm)<1e-12||abs(log(hi/lo))<1e-12,lo=mid;hi=mid;break,end
+  if flo*fm<=0,hi=mid;else,lo=mid;flo=fm;end
+ end
+ if ~valido,continue,end
+ b=sqrt(lo*hi); [f,~,rmin,rmax,theta,p]=F_gamma(b,gamma,cfg); cert=certificar_cruce(b,gamma,cfg);
+ if abs(f)>cfg.tolRaiz||~cert,continue,end
+ Lc=construir_leslie(b,theta,p,cfg);
+ z=raiz_vacia();z.b=b;z.r=sqrt(b);z.F=f;z.rmin=rmin;z.rmax=rmax;z.theta=theta;
+ z.certificada=cert;z.leslie=Lc;
+ if isempty(raices)||min(abs(log(b./[raices.b])))>1e-5,raices(end+1)=z;end %#ok<AGROW>
+ if numel(raices)>=cfg.maxRaicesPorRun,break,end
+end
+end
+
+function [F,adm,rmin,rmax,theta,p]=F_gamma(b,gamma,cfg)
+theta=sort(acos(cos(gamma(:)*log(b)))); [rmin,rmax,adm,p]=intervalo_r(theta,cfg.tolCoef);
+if adm,F=log(rmin^2/b);else,F=NaN;end
+end
+function ok=certificar_cruce(b,gamma,cfg)
+okcount=0;
+for d=cfg.deltaCert
+ [fl,al]=F_gamma(b*exp(-d),gamma,cfg);[fr,ar]=F_gamma(b*exp(d),gamma,cfg);
+ if al&&ar&&isfinite(fl)&&isfinite(fr)&&fl*fr<0,okcount=okcount+1;end
+end
+ok=okcount>=3;
+end
+function [rmin,rmax,adm,p]=intervalo_r(theta,tol)
+p=1;for t=theta(:)',p=conv(p,[1 -2*cos(t) 1]);end;p=real(p);
+rmin=1;rmax=inf;
+for j=1:numel(p)-1
+ A=p(j);B=p(j+1);sc=max([1 abs(A) abs(B)]);
+ if abs(A)<=tol*sc,if B>tol*sc,adm=false;return,end
+ elseif A>0,rmin=max(rmin,B/A);else,rmax=min(rmax,B/A);end
+end
+adm=isfinite(rmin)&&rmin<=rmax+tol*max(1,abs(rmin));
+end
+
+function C=certificar_leslie_directa(b,theta,cfg)
+r=sqrt(b);p=poly([b;r*exp(1i*theta(:));r*exp(-1i*theta(:))]);p=real(p);a=-p(2:end);
+C=validar_companera(a,b,r,theta,cfg);
+end
+function C=construir_leslie(b,theta,p,cfg)
+r=sqrt(b);q=[p(2:end)-r*p(1:end-1),-r*p(end)];a=-q.*r.^(1:numel(q));
+C=validar_companera(a,b,r,theta,cfg);
+end
+function C=validar_companera(a,b,r,theta,cfg)
+a=real(a(:)');m=numel(a);L=zeros(m);L(1,:)=a;if m>1,L(2:end,1:end-1)=eye(m-1);end
+ev=eig(L);target=[b;r*exp(1i*theta(:));r*exp(-1i*theta(:))];res=emparejar(ev,target);
+C=struct('factible',min(a)>=-cfg.tolCoef&&res<cfg.tolEspectro,'a',a,'L',L, ...
+ 'minA',min(a),'residuoEspectral',res);
+end
+function d=emparejar(a,b)
+a=a(:);b=b(:);used=false(size(b));d=0;
+for j=1:numel(a),q=find(~used);[v,k]=min(abs(a(j)-b(q)));used(q(k))=true;d=max(d,v);end
+end
+
+function E=analizar_estabilidad(R,cfg)
+pares=0;
+for i=1:numel(R)-1
+ for j=i+1:numel(R)
+  if R(i).Kefectivo==R(j).Kefectivo&&R(i).Kefectivo>0
+   rel=norm(sort(R(i).gamma)-sort(R(j).gamma))/max(norm(R(i).gamma),eps);
+   if rel<cfg.gammaPersistenciaRel,pares=pares+1;end
+  end
+ end
+end
+vals=[];runid=[];
+for i=1:numel(R),for j=1:numel(R(i).raices),vals(end+1)=R(i).raices(j).b;runid(end+1)=i;end,end %#ok<AGROW>
+[vals,o]=sort(vals);runid=runid(o);C=struct('centro',{},'numeroRuns',{},'runs',{});k=1;
+while k<=numel(vals)
+ ids=k;z=k+1;while z<=numel(vals)&&abs(log(vals(z)/median(vals(ids))))<cfg.raizPersistenciaLog,ids(end+1)=z;z=z+1;end %#ok<AGROW>
+ u=unique(runid(ids));C(end+1)=struct('centro',exp(mean(log(vals(ids)))),'numeroRuns',numel(u),'runs',u);k=z; %#ok<AGROW>
+end
+E=struct('numeroParesGammaEstables',pares,'clustersRaices',C);
+end
+
+function M=leer_M_en_x(nombre,x,B)
+fid=fopen(nombre,'rb');if fid<0,error('No se pudo abrir %s.',nombre);end;c=onCleanup(@()fclose(fid));
+x=double(x(:));M=zeros(size(x));q=1;done=0;s=0;
+while q<=numel(x)
+ v=fread(fid,B,'*int8');if isempty(v),break,end;cs=s+cumsum(double(v));fin=done+numel(v);
+ while q<=numel(x)&&x(q)<=fin,M(q)=cs(x(q)-done);q=q+1;end
+ s=cs(end);done=fin;
+end
+if q<=numel(x),error('Fin prematuro del binario.');end
+end
+
+function S=run_vacio()
+S=struct('id',NaN,'b0',NaN,'frac',NaN,'Kpedido',NaN,'Kefectivo',0,'n',[],'x',[],'y',[], ...
+ 'itr',[],'iva',[],'ite',[],'omega',[],'omegaAntes',[],'wmin',NaN,'gamma',[], ...
+ 'predLibre',[],'predPeine',[],'R2Libre',NaN,'R2Peine',NaN,'RMSELibre',NaN, ...
+ 'RMSEPeine',NaN,'RMSECero',NaN,'RMSEValidacion',NaN,'metricasLibre',[], ...
+ 'metricasPeine',[],'leslieFrecuencias',[],'raices',repmat(raiz_vacia(),0,1));
+end
+function z=raiz_vacia()
+z=struct('b',NaN,'r',NaN,'F',NaN,'rmin',NaN,'rmax',NaN,'theta',[], ...
+ 'certificada',false,'leslie',struct('factible',false,'a',[],'L',[],'minA',NaN,'residuoEspectral',NaN));
+end
+
+function escribir_csv_runs(nombre,R)
+fid=fopen(nombre,'w');fprintf(fid,'id,b0,frac,Kpedido,Kefectivo,R2Libre,R2Peine,RMSELibre,RMSECero,LeslieLibre,nRaices,nCertificadas\n');
+for s=R',fprintf(fid,'%d,%.12g,%.3f,%d,%d,%.12g,%.12g,%.12g,%.12g,%d,%d,%d\n',s.id,s.b0,s.frac,s.Kpedido,s.Kefectivo,s.R2Libre,s.R2Peine,s.RMSELibre,s.RMSECero,s.leslieFrecuencias.factible,numel(s.raices),sum([s.raices.certificada]));end
+fclose(fid);
+end
+function escribir_csv_raices(nombre,R)
+fid=fopen(nombre,'w');fprintf(fid,'run,b0,frac,K,b,r,F,rmin,rmax,certificada,Leslie,minA,residuoEspectral\n');
+for s=R',for z=s.raices,fprintf(fid,'%d,%.12g,%.3f,%d,%.12g,%.12g,%.3e,%.12g,%.12g,%d,%d,%.3e,%.3e\n',s.id,s.b0,s.frac,s.Kefectivo,z.b,z.r,z.F,z.rmin,z.rmax,z.certificada,z.leslie.factible,z.leslie.minA,z.leslie.residuoEspectral);end,end
+fclose(fid);
+end
+function escribir_informe(nombre,R)
+fid=fopen(nombre,'w');fprintf(fid,'LESLIE MOBIUS MEGAMAT FINAL\n%s\n\nVEREDICTO: %s\n%s\n',datestr(now,31),R.veredicto.codigo,R.veredicto.texto);
+fprintf(fid,'\nRuns: %d; tiempo %.1f s\n',numel(R.runs),R.segundos);fprintf(fid,'Pares gamma estables: %d\n',R.estabilidad.numeroParesGammaEstables);
+for c=R.estabilidad.clustersRaices,fprintf(fid,'Cluster raiz centro %.12g en %d runs\n',c.centro,c.numeroRuns);end
+fclose(fid);
+end
+function crear_figuras(nombre,R,E,S)
+f=figure('Color','w','Position',[40 40 1500 900]);subplot(2,2,1);plot(E.n,E.y,'k.-');hold on;plot(E.n,E.predLibre,'b-');plot(E.n,E.predPeine,'r-');grid on;legend('M/sqrt x','libre','peine');title(sprintf('Elegido b0=%.3f K=%d',E.b0,E.Kefectivo));
+subplot(2,2,2);scatter([R.R2Peine],[R.R2Libre],45,[R.b0],'filled');hold on;plot(xlim,xlim,'k--');grid on;xlabel('R2 peine');ylabel('R2 libre');colorbar;
+subplot(2,2,3);scatter([R.RMSECero],[R.RMSELibre],45,[R.Kefectivo],'filled');hold on;plot(xlim,xlim,'k--');grid on;xlabel('RMSE cero');ylabel('RMSE libre');colorbar;
+subplot(2,2,4);for c=S.clustersRaices,plot(c.centro,c.numeroRuns,'ko','MarkerFaceColor','g');hold on;end;set(gca,'XScale','log');grid on;xlabel('b de cluster');ylabel('numero de runs');title('Persistencia de raices');
+try,exportgraphics(f,nombre,'Resolution',180);catch,saveas(f,nombre);end
+end

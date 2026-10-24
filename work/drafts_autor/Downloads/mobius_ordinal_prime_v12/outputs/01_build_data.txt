@@ -1,0 +1,8 @@
+N = 1000000   M(N) = 212   Q(N) = 607926
+max ordinal-prime index required = 304069   (p = 4318793)
+elapsed 4.9 s
+closed form SS == cumsum(S) everywhere : True
+sgn T == sgn M everywhere              : True
+T == 0  iff  M == 0                    : True
+block bounds hold everywhere           : True
+#{n <= 10^6 : M(n) = 0}                = 5361

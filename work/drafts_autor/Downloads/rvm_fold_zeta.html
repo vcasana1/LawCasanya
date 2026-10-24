@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>F(β,t) = Re ζ + Im ζ — pliegue en β=1/2 y superficie bisectriz</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+<style>
+  :root{
+    --bg:#0e1117; --panel:#161b22; --border:#2a3040; --text:#e6e9ef;
+    --muted:#9aa4b2; --accent:#5aa9ff; --accent2:#ff7a59;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  header{
+    padding:14px 18px 8px 18px; border-bottom:1px solid var(--border);
+  }
+  h1{
+    font-size:16px; margin:0 0 4px 0; font-weight:600; color:var(--text);
+  }
+  .sub{ font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .sub code{ color:var(--accent); background:#0009; padding:1px 5px; border-radius:4px; }
+  .tabs{
+    display:flex; flex-wrap:wrap; gap:8px; padding:10px 18px; border-bottom:1px solid var(--border);
+    background:var(--panel);
+  }
+  .tab{
+    padding:8px 14px; border-radius:8px; border:1px solid var(--border);
+    background:#1c2230; color:var(--text); font-size:13px; cursor:pointer;
+    transition:background .15s, border-color .15s; user-select:none;
+  }
+  .tab:hover{ background:#242c3d; }
+  .tab.active{ background:var(--accent); border-color:var(--accent); color:#0b1220; font-weight:600; }
+  #plot{ width:100%; height:78vh; }
+  .note{
+    padding:8px 18px 14px 18px; font-size:12px; color:var(--muted); line-height:1.6;
+  }
+  .legend-dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>F(β,t) = Re ζ(β+it) + Im ζ(β+it) — banda crítica β ∈ [0,1]</h1>
+  <div class="sub">
+    ζ evaluada con la fórmula de Euler–Maclaurin (suma directa + término N<sup>1−s</sup>/(s−1) + correcciones de Bernoulli B₂…B₁₂),
+    orden adaptado a t para mantener precisión en todo el rango. Verificado contra ζ(2)=π²/6, ζ(3), ζ(0), ζ(−1)
+    y los dos primeros ceros no triviales (t≈14.1347, t≈21.0220), con error &lt; 10⁻¹².
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab" data-tab="re">Re ζ(β+it)</div>
+  <div class="tab" data-tab="im">Im ζ(β+it)</div>
+  <div class="tab active" data-tab="F">F = Re+Im</div>
+  <div class="tab" data-tab="fold">F plegada 90° en β=1/2</div>
+  <div class="tab" data-tab="bisec">Superficie bisectriz</div>
+</div>
+
+<div id="plot"></div>
+
+<div class="note" id="note"></div>
+
+<script>
+/* ---------- Aritmética compleja ---------- */
+function cAdd(a,b){return [a[0]+b[0], a[1]+b[1]];}
+function cMul(a,b){return [a[0]*b[0]-a[1]*b[1], a[0]*b[1]+a[1]*b[0]];}
+function cScale(a,k){return [a[0]*k, a[1]*k];}
+function cDiv(a,b){
+  const d = b[0]*b[0]+b[1]*b[1];
+  return [(a[0]*b[0]+a[1]*b[1])/d, (a[1]*b[0]-a[0]*b[1])/d];
+}
+function cPowReal(n, w){ // n^w, n real>0, w complejo
+  const lnn = Math.log(n);
+  const mag = Math.exp(w[0]*lnn);
+  const ang = w[1]*lnn;
+  return [mag*Math.cos(ang), mag*Math.sin(ang)];
+}
+
+/* ---------- zeta(s) por Euler-Maclaurin, verificado numéricamente ---------- */
+const BERN = [1/6, -1/30, 1/42, -1/30, 5/66, -691/2730]; // B2..B12
+function factorial(n){let f=1;for(let i=2;i<=n;i++) f*=i; return f;}
+function risingFactorial(s, terms){
+  let p=[1,0];
+  for(let j=0;j<terms;j++) p = cMul(p, [s[0]+j, s[1]]);
+  return p;
+}
+function NforT(t){ return Math.max(18, Math.ceil(Math.abs(t)/2)+15); }
+function zeta(sRe, sIm){
+  const s=[sRe,sIm];
+  if (Math.abs(sRe-1)<1e-12 && Math.abs(sIm)<1e-12) return [NaN,NaN];
+  const N = NforT(sIm), M = 6;
+  let sum=[0,0];
+  for(let n=1;n<N;n++) sum = cAdd(sum, cPowReal(n, [-s[0],-s[1]]));
+  const term2 = cDiv(cPowReal(N,[1-s[0],-s[1]]), [s[0]-1, s[1]]);
+  const term3 = cScale(cPowReal(N,[-s[0],-s[1]]), 0.5);
+  let result = cAdd(cAdd(sum,term2),term3);
+  for(let k=1;k<=M;k++){
+    const terms = 2*k-1;
+    const rf = risingFactorial(s, terms);
+    const coeff = BERN[k-1]/factorial(2*k);
+    const Npow = cPowReal(N, [-s[0]-(2*k-1), -s[1]]);
+    result = cAdd(result, cScale(cMul(rf,Npow), coeff));
+  }
+  return result;
+}
+
+/* ---------- Malla ---------- */
+const nBeta = 41, nT = 121;
+const betaMin=0, betaMax=1, tMin=0.1, tMax=40;
+const betas = Array.from({length:nBeta}, (_,i)=> betaMin + i*(betaMax-betaMin)/(nBeta-1));
+const ts     = Array.from({length:nT},    (_,j)=> tMin  + j*(tMax-tMin)/(nT-1));
+const hingeIdx = betas.findIndex(b => Math.abs(b-0.5) < 1e-9); // = 20
+
+const ReGrid = [], ImGrid = [], FGrid = [];
+for(let j=0;j<nT;j++){
+  const rowRe=[], rowIm=[], rowF=[];
+  for(let i=0;i<nBeta;i++){
+    const z = zeta(betas[i], ts[j]);
+    rowRe.push(z[0]); rowIm.push(z[1]); rowF.push(z[0]+z[1]);
+  }
+  ReGrid.push(rowRe); ImGrid.push(rowIm); FGrid.push(rowF);
+}
+
+/* línea negra en β = 1/2 sobre F */
+const hingeX = ts.map(()=>0.5);
+const hingeZ = FGrid.map(row => row[hingeIdx]);
+
+/* ---------- Pliegue rígido de 90° de la mitad β>1/2, en torno a la charnela β=1/2 ---------- */
+// Para cada t, en el plano (β,z): u=β-0.5, v=z-F(0.5,t).
+// Rotación de -90°: (u,v) -> (β_new, z_new) = (0.5 - v, F(0.5,t) + u)
+const foldX=[], foldY=[], foldZ=[];
+for(let j=0;j<nT;j++){
+  const rowX=[], rowY=[], rowZ=[];
+  const F0 = FGrid[j][hingeIdx];
+  for(let i=hingeIdx;i<nBeta;i++){
+    const u = betas[i]-0.5;
+    const v = FGrid[j][i]-F0;
+    rowX.push(0.5 - v);
+    rowY.push(ts[j]);
+    rowZ.push(F0 + u);
+  }
+  foldX.push(rowX); foldY.push(rowY); foldZ.push(rowZ);
+}
+// mitad izquierda sin modificar (β<=0.5)
+const leftX=[], leftY=[], leftZ=[];
+for(let j=0;j<nT;j++){
+  const rowX=[], rowY=[], rowZ=[];
+  for(let i=0;i<=hingeIdx;i++){
+    rowX.push(betas[i]); rowY.push(ts[j]); rowZ.push(FGrid[j][i]);
+  }
+  leftX.push(rowX); leftY.push(rowY); leftZ.push(rowZ);
+}
+
+/* ---------- Superficie bisectriz del ángulo interior del pliegue ---------- */
+// En cada t: dirección hacia la mitad izquierda L=(-1,-F'), dirección de la mitad
+// plegada (derecha) R=(-F',1), con F'=dF/dβ en β=1/2. Bisectriz = normalizar(L̂+R̂).
+const h = betas[1]-betas[0]; // paso de malla en beta
+const nR = 15, rMax = 0.5;
+const bisX=[], bisY=[], bisZ=[];
+for(let j=0;j<nT;j++){
+  const Fp = (FGrid[j][hingeIdx+1]-FGrid[j][hingeIdx-1])/(2*h); // F'(0.5,t)
+  let L=[-1,-Fp], R=[-Fp,1];
+  const nL=Math.hypot(L[0],L[1]), nR_=Math.hypot(R[0],R[1]);
+  L=[L[0]/nL,L[1]/nL]; R=[R[0]/nR_,R[1]/nR_];
+  let B=[L[0]+R[0], L[1]+R[1]];
+  const nB=Math.hypot(B[0],B[1]) || 1;
+  B=[B[0]/nB, B[1]/nB];
+  const F0 = FGrid[j][hingeIdx];
+  const rowX=[], rowY=[], rowZ=[];
+  for(let k=0;k<nR;k++){
+    const r = rMax*k/(nR-1);
+    rowX.push(0.5 + r*B[0]);
+    rowY.push(ts[j]);
+    rowZ.push(F0 + r*B[1]);
+  }
+  bisX.push(rowX); bisY.push(rowY); bisZ.push(rowZ);
+}
+
+/* ---------- Trazas ---------- */
+function surf(x,y,z,colorscale,name,opacity){
+  return {type:'surface', x:x, y:y, z:z, colorscale:colorscale||'RdBu',
+           reversescale:true, showscale:false, name:name, opacity: opacity===undefined?1:opacity,
+           contours:{z:{show:false}}, lighting:{ambient:0.55, diffuse:0.7, specular:0.3, roughness:0.6}};
+}
+function hingeLine(zArr, extraName){
+  return {type:'scatter3d', mode:'lines', x:hingeX, y:ts, z:zArr,
+          line:{color:'black', width:7}, name:extraName||'β = 1/2'};
+}
+
+const traceRe   = [ surf(betas.map(()=>betas), null, null, 'Viridis', 'Re ζ') ]; // placeholder, fixed below
+const layoutBase = {
+  paper_bgcolor:'#0e1117', font:{color:'#e6e9ef'},
+  scene:{
+    xaxis:{title:'β', color:'#e6e9ef', gridcolor:'#2a3040', range:[0,1]},
+    yaxis:{title:'t', color:'#e6e9ef', gridcolor:'#2a3040'},
+    zaxis:{title:'valor', color:'#e6e9ef', gridcolor:'#2a3040'},
+    aspectmode:'manual', aspectratio:{x:1, y:2.4, z:1},
+    camera:{eye:{x:1.6, y:-1.9, z:1.1}}
+  },
+  margin:{l:0,r:0,t:10,b:0}, showlegend:false
+};
+
+function xyGrid(){ // beta,t repetidos como matrices 2D para trazas rectilíneas
+  const X=[], Y=[];
+  for(let j=0;j<nT;j++){ X.push(betas.slice()); Y.push(ts.map(()=>ts[j])); }
+  return {X,Y};
+}
+const {X:gX, Y:gY} = xyGrid();
+
+function buildRe(){ return [ surf(gX,gY,ReGrid,'RdBu','Re ζ'), hingeLine(hingeX.map((_,j)=>ReGrid[j][hingeIdx])) ]; }
+function buildIm(){ return [ surf(gX,gY,ImGrid,'RdBu','Im ζ'), hingeLine(hingeX.map((_,j)=>ImGrid[j][hingeIdx])) ]; }
+function buildF(){  return [ surf(gX,gY,FGrid,'RdBu','F'), hingeLine(hingeZ) ]; }
+function buildFold(){
+  return [
+    surf(leftX, leftY, leftZ, 'RdBu', 'F (β≤1/2, sin modificar)'),
+    surf(foldX, foldY, foldZ, 'Portland', 'F plegada (β>1/2 rotada 90°)'),
+    hingeLine(hingeZ, 'charnela β=1/2')
+  ];
+}
+function buildBisec(){
+  return [
+    surf(leftX, leftY, leftZ, 'RdBu', 'F (β≤1/2)', 0.55),
+    surf(foldX, foldY, foldZ, 'Portland', 'F plegada', 0.55),
+    surf(bisX, bisY, bisZ, [[0,'#39ff88'],[1,'#39ff88']], 'bisectriz', 0.95),
+    hingeLine(hingeZ, 'charnela β=1/2')
+  ];
+}
+
+const notes = {
+  re:   'Superficie Re ζ(β+it) sobre la banda crítica, con la recta β=1/2 marcada en negro.',
+  im:   'Superficie Im ζ(β+it) sobre la banda crítica, con la recta β=1/2 marcada en negro.',
+  F:    'F(β,t)=Re ζ+Im ζ, con la recta β=1/2 marcada en negro.',
+  fold: 'Pliegue rígido (isometría) de la mitad β&gt;1/2 en torno a la charnela β=1/2, rotada 90° hacia arriba. ' +
+        'Para cada t, con u=β−0.5 y v=F(β,t)−F(0.5,t): (β,z) ↦ (0.5−v, F(0.5,t)+u). La charnela queda fija (línea negra).',
+  bisec:'Superficie bisectriz (verde) del ángulo diedro interior formado en la charnela tras el pliegue: en cada t, ' +
+        'dirección hacia la mitad izquierda L=(−1,−F′) y hacia la mitad plegada R=(−F′,1) (F′=∂F/∂β en β=1/2); ' +
+        'la bisectriz es L̂+R̂ normalizado, barrida a lo largo de t.'
+};
+
+const plotDiv = document.getElementById('plot');
+const noteDiv = document.getElementById('note');
+let current = 'F';
+
+function render(tab){
+  current = tab;
+  document.querySelectorAll('.tab').forEach(el=> el.classList.toggle('active', el.dataset.tab===tab));
+  let data;
+  if(tab==='re') data = buildRe();
+  else if(tab==='im') data = buildIm();
+  else if(tab==='F') data = buildF();
+  else if(tab==='fold') data = buildFold();
+  else data = buildBisec();
+  Plotly.react(plotDiv, data, layoutBase, {responsive:true, displaylogo:false});
+  noteDiv.innerHTML = '<span class="legend-dot" style="background:black;"></span>línea negra = β = 1/2. &nbsp; ' + notes[tab];
+}
+
+document.querySelectorAll('.tab').forEach(el=>{
+  el.addEventListener('click', ()=> render(el.dataset.tab));
+});
+
+render('F');
+</script>
+
+</body>
+</html>

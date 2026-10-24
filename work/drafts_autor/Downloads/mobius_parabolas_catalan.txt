@@ -1,0 +1,337 @@
+%% MOBIUS: PARABOLAS DE EXCURSIONES Y CONTROLES CATALAN
+% Archivo autocontenido: guardar este TXT como mobius_parabolas_catalan.m
+% y ejecutarlo en MATLAB. NO necesita ningun CSV previo ni toolboxes.
+%
+% ENTRADA: moebius.bin, int8, mu(1),mu(2),...,mu(N), valores -1,0,+1.
+% Se usan TODOS los enteros del reloj fisico: los mu=0 NO se eliminan.
+% Un intervalo (A,B] es excursion si M(A)=M(B)=0 y M(n) no se anula
+% para A<n<B. Las mesetas M(n)=0 delimitan intervalos triviales (se omiten).
+%
+% AJUSTES CON UN PARAMETRO CADA UNO:
+% C (centro): P_C(j)=c_C*4*j*(L-j)/L^2.
+% M (maximo): P_M(j)=c_M*[1-((j-tau)/tau)^2] si j<=tau;
+%                       c_M*[1-((j-tau)/(L-tau))^2] si j>tau.
+% ATENCION: M son DOS arcos parabolicos unidos con derivada cero en tau.
+% Una unica parabola con ceros en 0,L NO puede tener vertice fuera de L/2.
+% Tau es el PRIMER indice del maximo de altura absoluta.
+% Ambas amplitudes se ajustan por minimos cuadrados, NO se fijan a H.
+% R2 = 1-SSE / sum_j(y_j-media(y))^2; puede ser negativo.
+%
+% CONTROLES: Dyck primitivo uniforme sobre los pasos no nulos, con las
+% MISMAS posiciones mu=0 que la excursion real, conservando L y # pasos.
+% Null completo: no condiciona altura ni posicion del maximo.
+% Null filtrado: condiciona APROXIMADAMENTE H y tau/L mediante tolerancias;
+% NO se presenta como muestra uniforme con H y tau EXACTOS.
+% Este null NO impone la multiplicatividad de Mobius: es solo Catalan.
+
+clearvars; clc;
+
+%% CONFIGURACION: puede indicar la ruta completa de moebius.bin
+binFile = fullfile(pwd, 'moebius.bin');
+outDir = fullfile(pwd, 'MOBIUS_PARABOLA_RESULTS');
+blockSize = 1000000;             % Lectura a bloques, sin cargar 455 M de bytes.
+minimumLength = 2;              % Guardar todas las excursiones no triviales.
+minimumStepsForNull = 20;        % Evitar controles triviales casi deterministas.
+numNullExcursions = 20;          % 20 excursiones mas largas; Inf = todas.
+numNullEach = 300;               % Caminos Catalan por excursion elegida.
+maxNullLength = 3000000;         % Limite de memoria solo para simulaciones.
+heightToleranceFraction = 0.15; % Filtro APROXIMADO: |H0-H|<=max(2,0.15 H).
+peakToleranceFraction = 0.10;   % Filtro: |tau0/L-tau/L|<=0.10.
+minConditionalSamples = 15;     % No emitir p si faltan controles filtrados.
+randomSeed = 271828183;
+makeFigures = true;
+
+if exist(binFile,'file')~=2
+    [fn,fd]=uigetfile('*.bin','Seleccione moebius.bin');
+    if isequal(fn,0), error('No se ha seleccionado moebius.bin.'); end
+    binFile=fullfile(fd,fn);
+end
+if ~exist(outDir,'dir'), mkdir(outDir); end
+rng(randomSeed,'twister');
+info=dir(binFile);
+N=double(info.bytes);
+fprintf('Archivo: %s\nEnteros n=1,...,%.0f (int8).\n',binFile,N);
+
+%% PASADA 1: localizar TODOS los ceros M(n)=0, incluido M(0)=0.
+fid=fopen(binFile,'rb');
+if fid<0, error('Imposible abrir %s',binFile); end
+zerosM=0; processed=0; carry=0;
+tic;
+while true
+    a=fread(fid,blockSize,'*int8');
+    if isempty(a), break; end
+    if any(a < -1 | a > 1)
+        fclose(fid); error('El binario no parece int8 Mobius: contiene datos fuera de -1,0,1.');
+    end
+    partial=carry+cumsum(double(a));
+    loc=find(partial==0);
+    if ~isempty(loc), zerosM=[zerosM; processed+double(loc)]; end %#ok<AGROW>
+    carry=partial(end); processed=processed+numel(a);
+    if mod(floor(processed/blockSize),50)==0
+        fprintf('Primer pase: n=%.0f, ceros acumulados=%d, M=%.0f, %.1f s\n', ...
+            processed,numel(zerosM),carry,toc);
+    end
+end
+fclose(fid);
+if processed~=N, error('Lectura incompleta.'); end
+fprintf('Primer pase: %d instantes con M=0. M(N)=%.0f. Tiempo %.1f s.\n', ...
+    numel(zerosM),carry,toc);
+
+A=zerosM(1:end-1); B=zerosM(2:end);
+lengths=B-A;
+keep=(lengths>=minimumLength);
+A=A(keep); B=B(keep); lengths=lengths(keep);
+nExc=numel(A);
+fprintf('Excursiones completas no triviales: %d. La ultima incompleta se excluye.\n',nExc);
+
+%% PASADA 2 Y 3: ajustar TODAS las excursiones, en streaming.
+% Ni siquiera una excursion extremadamente larga se carga completa para R2.
+fid=fopen(binFile,'rb');
+if fid<0, error('Imposible reabrir el archivo.'); end
+id=(1:nExc)';
+nSteps=zeros(nExc,1); nZeros=zeros(nExc,1); H=zeros(nExc,1);
+tau=zeros(nExc,1); signE=zeros(nExc,1); area=zeros(nExc,1);
+cCenter=nan(nExc,1); cPeak=nan(nExc,1);
+r2Center=nan(nExc,1); r2Peak=nan(nExc,1);
+tic;
+for r=1:nExc
+    z=fitOneExcursion(fid,A(r),B(r),blockSize);
+    nSteps(r)=z.nSteps; nZeros(r)=z.nZeros;
+    H(r)=z.H; tau(r)=z.tau; signE(r)=z.sign;
+    area(r)=z.area; cCenter(r)=z.cCenter; cPeak(r)=z.cPeak;
+    r2Center(r)=z.r2Center; r2Peak(r)=z.r2Peak;
+    if mod(r,1000)==0 || r==nExc
+        fprintf('Ajuste %d/%d, %.1f s\n',r,nExc,toc);
+    end
+end
+fclose(fid);
+peakFraction=tau./lengths;
+deltaR2=r2Peak-r2Center;
+T=table(id,A,B,lengths,nSteps,nZeros,signE,H,tau,peakFraction,area, ...
+    cCenter,cPeak,r2Center,r2Peak,deltaR2, ...
+    'VariableNames',{'excursion','A','B','L','nSF','nMuZero','sign', ...
+    'height','tau','tauOverL','area','amplitudeCenter','amplitudePeak', ...
+    'R2Center','R2Peak','deltaR2'});
+fileReal=fullfile(outDir,'excursions_parabola_all.csv');
+writetable(T,fileReal);
+fprintf('Excursiones: %s\n',fileReal);
+
+%% CONTROLES CATALAN: seleccionar excursiones largas, configurable.
+valid=find(nSteps>=minimumStepsForNull & ...
+    mod(nSteps,2)==0 & lengths<=maxNullLength & H>0);
+[~,ord]=sort(lengths(valid),'descend'); valid=valid(ord);
+if ~isinf(numNullExcursions)
+    valid=valid(1:min(numNullExcursions,numel(valid)));
+end
+nSelected=numel(valid);
+fprintf('Excursiones con control: %d. Simulaciones por excursion: %d.\n', ...
+    nSelected,numNullEach);
+
+% Filas: excursion, simulacion, L, H simulado, tau/L simulado, R2 C, R2 M, delta.
+sampleRows=zeros(nSelected*numNullEach,8);
+% Resumen: id, real R2C/M/delta, medias, sd, p superior,
+%          num condicionados por H y por H+tau, media delta cond., p cond.
+summaryRows=nan(nSelected,18);
+fid=fopen(binFile,'rb');
+if fid<0, error('Imposible reabrir para controles.'); end
+rowNum=0; tic;
+for v=1:nSelected
+    r=valid(v); L=lengths(r);
+    if fseek(fid,A(r),'bof')~=0, error('fseek fallo en la excursion %d.',r); end
+    actualMu=fread(fid,L,'*int8');
+    if numel(actualMu)~=L, error('Excursion truncada %d.',r); end
+    mask=(actualMu~=0); m=nnz(mask);
+    if mod(m,2)~=0 || m~=nSteps(r)
+        error('Numero impar o inconsistente de pasos no nulos: excursion %d.',r);
+    end
+    realSign=sign(double(actualMu(find(mask,1,'first'))));
+    nullC=zeros(numNullEach,1); nullM=zeros(numNullEach,1);
+    nullH=zeros(numNullEach,1); nullTau=zeros(numNullEach,1);
+    for b=1:numNullEach
+        w=uniformPrimitiveDyck(m/2);
+        steps=zeros(L,1,'int8');
+        steps(mask)=int8(realSign)*w;
+        path=[0;cumsum(double(steps))];
+        q=fitPath(path);
+        nullC(b)=q.r2Center; nullM(b)=q.r2Peak;
+        nullH(b)=q.H; nullTau(b)=q.tau/L;
+        rowNum=rowNum+1;
+        sampleRows(rowNum,:)=[r,b,L,q.H,q.tau/L,q.r2Center,q.r2Peak, ...
+            q.r2Peak-q.r2Center];
+    end
+    nullD=nullM-nullC;
+    hMatch=abs(nullH-H(r))<=max(2,heightToleranceFraction*H(r));
+    htMatch=hMatch & abs(nullTau-peakFraction(r))<=peakToleranceFraction;
+    nH=nnz(hMatch); nHT=nnz(htMatch);
+    statsH=nan(1,6); statsHT=nan(1,6);
+    if nH>=minConditionalSamples
+        statsH=[mean(nullC(hMatch)), ...
+            (1+nnz(nullC(hMatch)>=r2Center(r)))/(nH+1), ...
+            mean(nullM(hMatch)), ...
+            (1+nnz(nullM(hMatch)>=r2Peak(r)))/(nH+1), ...
+            mean(nullD(hMatch)), ...
+            (1+nnz(nullD(hMatch)>=deltaR2(r)))/(nH+1)];
+    end
+    if nHT>=minConditionalSamples
+        statsHT=[mean(nullC(htMatch)), ...
+            (1+nnz(nullC(htMatch)>=r2Center(r)))/(nHT+1), ...
+            mean(nullM(htMatch)), ...
+            (1+nnz(nullM(htMatch)>=r2Peak(r)))/(nHT+1), ...
+            mean(nullD(htMatch)), ...
+            (1+nnz(nullD(htMatch)>=deltaR2(r)))/(nHT+1)];
+    end
+    sdC=std(nullC); sdM=std(nullM); sdD=std(nullD);
+    summaryRows(v,:)=[r,A(r),B(r),L,H(r),tau(r),r2Center(r),r2Peak(r), ...
+        deltaR2(r),mean(nullC),sdC,(1+nnz(nullC>=r2Center(r)))/(numNullEach+1), ...
+        mean(nullM),sdM,(1+nnz(nullM>=r2Peak(r)))/(numNullEach+1), ...
+        mean(nullD),sdD,(1+nnz(nullD>=deltaR2(r)))/(numNullEach+1), ...
+        nH,nHT,statsH,statsHT];
+    fprintf('Control %d/%d: exc=%d, L=%.0f, H=%.0f; R2C %.4f/null %.4f; ', ...
+        v,nSelected,r,L,H(r),r2Center(r),mean(nullC));
+    fprintf('R2M %.4f/null %.4f; H-matched=%d, H+tau=%d, %.1f s\n', ...
+        r2Peak(r),mean(nullM),nH,nHT,toc);
+end
+fclose(fid);
+
+if nSelected>0
+    samples=array2table(sampleRows(1:rowNum,:), ...
+        'VariableNames',{'excursion','simulation','L','simHeight','simTauOverL', ...
+        'simR2Center','simR2Peak','simDeltaR2'});
+    fileSamples=fullfile(outDir,'catalan_null_samples.csv');
+    writetable(samples,fileSamples);
+    comparisons=array2table(summaryRows, ...
+        'VariableNames',{'excursion','A','B','L','height','tau', ...
+        'realR2Center','realR2Peak','realDeltaR2', ...
+        'nullMeanR2Center','nullSdR2Center','pUpperCenter', ...
+        'nullMeanR2Peak','nullSdR2Peak','pUpperPeak', ...
+        'nullMeanDelta','nullSdDelta','pUpperDelta', ...
+        'nHeightMatched','nHeightAndTauMatched', ...
+        'heightMeanCenter','heightPUpperCenter', ...
+        'heightMeanPeak','heightPUpperPeak', ...
+        'heightMeanDelta','heightPUpperDelta', ...
+        'heightTauMeanCenter','heightTauPUpperCenter', ...
+        'heightTauMeanPeak','heightTauPUpperPeak', ...
+        'heightTauMeanDelta','heightTauPUpperDelta'});
+    fileComp=fullfile(outDir,'catalan_comparison.csv');
+    writetable(comparisons,fileComp);
+    fprintf('Controles: %s\nComparacion: %s\n',fileSamples,fileComp);
+else
+    warning('No hay excursiones elegibles para controles con los parametros fijados.');
+end
+
+%% FIGURAS 2D OPCIONALES (no son necesarias para los resultados numericos).
+if makeFigures && nExc>0
+    fig=figure('Name','Parabolas Mobius: todas las excursiones','Color','w');
+    subplot(2,1,1);
+    semilogx(lengths,r2Center,'.'); hold on;
+    semilogx(lengths,r2Peak,'.'); hold off;
+    xlabel('Duracion fisica L'); ylabel('R^2');
+    legend('Centro','Maximo (dos arcos)','Location','best'); grid on;
+    subplot(2,1,2);
+    semilogx(lengths,deltaR2,'.');
+    xlabel('Duracion fisica L'); ylabel('R^2_{max}-R^2_{centro}'); grid on;
+    saveas(fig,fullfile(outDir,'parabolas_all.png'));
+    if nSelected>0
+        fig2=figure('Name','Mobius frente a Catalan','Color','w');
+        subplot(1,2,1);
+        scatter(comparisons.nullMeanR2Center,comparisons.realR2Center,28,'filled');
+        xlabel('Media Catalan: R^2 centro'); ylabel('Mobius: R^2 centro'); grid on; axis square;
+        subplot(1,2,2);
+        scatter(comparisons.nullMeanR2Peak,comparisons.realR2Peak,28,'filled');
+        xlabel('Media Catalan: R^2 maximo'); ylabel('Mobius: R^2 maximo'); grid on; axis square;
+        saveas(fig2,fullfile(outDir,'parabolas_vs_catalan.png'));
+    end
+end
+fprintf('\nTERMINADO. Salidas generadas desde moebius.bin en: %s\n',outDir);
+
+%% FUNCIONES LOCALES (MATLAB R2016b o posterior)
+function z=fitOneExcursion(fid,A,B,blockSize)
+    L=B-A; total=0; carry=0; sy=0; sy2=0;
+    nnzSteps=0; maxY=-Inf; tau=NaN; firstSign=NaN;
+    % Primera pasada por la excursion: maximo, area y denominador R2.
+    if fseek(fid,A,'bof')~=0, error('Error fseek, offset %.0f',A); end
+    while total<L
+        count=min(blockSize,L-total);
+        mu=fread(fid,count,'*int8');
+        if numel(mu)~=count, error('Fin prematuro de archivo.'); end
+        nz=find(mu~=0,1,'first');
+        if isnan(firstSign) && ~isempty(nz)
+            firstSign=sign(double(mu(nz)));
+        end
+        nnzSteps=nnzSteps+nnz(mu);
+        walk=carry+cumsum(double(mu)); carry=walk(end);
+        y=abs(walk); sy=sy+sum(y); sy2=sy2+sum(y.^2);
+        [h,j]=max(y);
+        if h>maxY, maxY=h; tau=total+j; end
+        total=total+count;
+    end
+    if carry~=0, error('Intervalo no termina en un retorno M=0.'); end
+    if nnzSteps<2 || mod(nnzSteps,2)~=0 || tau<=0 || tau>=L
+        error('Excursion no valida entre %.0f y %.0f.',A,B);
+    end
+    denom=sy2-sy^2/(L+1);
+    % Segunda pasada: productos escalares con ambas bases de amplitud 1.
+    if fseek(fid,A,'bof')~=0, error('Error fseek segunda pasada.'); end
+    total=0; carry=0; dotC=0; normC=0; dotM=0; normM=0;
+    while total<L
+        count=min(blockSize,L-total);
+        mu=fread(fid,count,'*int8');
+        walk=carry+cumsum(double(mu)); carry=walk(end);
+        y=abs(walk);
+        j=total+(1:count)';
+        t=j/L;
+        fC=4*t.*(1-t);
+        fM=zeros(count,1);
+        left=(j<=tau);
+        fM(left)=1-((j(left)-tau)/tau).^2;
+        fM(~left)=1-((j(~left)-tau)/(L-tau)).^2;
+        dotC=dotC+sum(y.*fC); normC=normC+sum(fC.^2);
+        dotM=dotM+sum(y.*fM); normM=normM+sum(fM.^2);
+        total=total+count;
+    end
+    cC=dotC/normC; cM=dotM/normM;
+    if denom<=0
+        r2C=NaN; r2M=NaN;
+    else
+        sseC=max(0,sy2-dotC^2/normC);
+        sseM=max(0,sy2-dotM^2/normM);
+        r2C=1-sseC/denom; r2M=1-sseM/denom;
+    end
+    z=struct('nSteps',nnzSteps,'nZeros',L-nnzSteps, ...
+        'sign',firstSign,'H',maxY,'tau',tau,'area',sy, ...
+        'cCenter',cC,'cPeak',cM,'r2Center',r2C,'r2Peak',r2M);
+end
+
+function z=fitPath(path)
+    y=abs(double(path(:))); L=numel(y)-1;
+    [H,k]=max(y); tau=k-1; % Primer maximo; path(1) es el cero inicial.
+    if tau<=0 || tau>=L || H<=0
+        error('Control Catalan no es una excursion primitiva.');
+    end
+    j=(0:L)'; t=j/L;
+    fC=4*t.*(1-t);
+    fM=zeros(L+1,1);
+    left=(j<=tau);
+    fM(left)=1-((j(left)-tau)/tau).^2;
+    fM(~left)=1-((j(~left)-tau)/(L-tau)).^2;
+    sy2=sum(y.^2); ssTot=sum((y-mean(y)).^2);
+    dotC=sum(y.*fC); normC=sum(fC.^2);
+    dotM=sum(y.*fM); normM=sum(fM.^2);
+    z=struct('H',H,'tau',tau,'r2Center', ...
+        1-max(0,sy2-dotC^2/normC)/ssTot, ...
+        'r2Peak',1-max(0,sy2-dotM^2/normM)/ssTot);
+end
+
+function w=uniformPrimitiveDyck(nPairs)
+    % Dyck PRIMITIVO uniforme de 2*nPairs pasos (nPairs>=1).
+    % Un Dyck uniforme de 2m pasos se obtiene de una palabra uniforme
+    % con m incrementos +1 y m+1 incrementos -1: se rota despues del
+    % PRIMER minimo global de sus sumas parciales y se elimina el ultimo -1.
+    % El lema del ciclo da el mismo numero (2m+1) de preimagenes por camino.
+    if nPairs==1, w=int8([1;-1]); return; end
+    m=nPairs-1; K=2*m+1;
+    a=-ones(K,1,'int8'); a(randperm(K,m))=int8(1);
+    partial=cumsum(double(a)); [~,pivot]=min(partial);
+    a=[a(pivot+1:end);a(1:pivot)];
+    w=[int8(1);a(1:end-1);int8(-1)];
+end

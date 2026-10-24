@@ -1,0 +1,2569 @@
+\documentclass[11pt]{amsart}
+
+% Encoding and fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% Layout and utilities
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=1in}
+
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+% ---------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{experiment}[theorem]{Experiment}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{objective}[theorem]{Objective}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
+\title{
+Orientation-Bit Geometry of the M\"obius Path:
+Reflection Fibres, Divisor--Shift Boundary Cocycles,
+and an Observability Route to Two-Point Cancellation
+}
+
+\author{}
+\date{Version 6}
+
+\begin{document}
+
+\begin{abstract}
+This notebook develops an operator framework for the two-point
+correlation $C_N(h)=\sum_{n\le N-h}\mu(n)\mu(n+h)$ built on the
+orientation bits of the M\"obius path and on the divisor operator.
+
+Version 3 adds an analytic layer to the combinatorial one. The central
+new object is the difference $(U_h-I)D$ rather than the commutator or
+the conjugation: each divisor column collapses to the difference of two
+residue classes, vanishes identically when the divisor divides $h$, and
+has interval sums bounded by one. A purely algebraic Haar basis over an
+arbitrary binary tree then annihilates the volumetric CRT term exactly,
+leaving only boundary cocycles which satisfy a parent--children additivity
+law. No doubling, no comparable lengths and no regularity of the
+squarefree mask are required at any point.
+
+Four further results are proved. An exact observability criterion:
+$|x^{\mathsf T}Ax|\le\kappa\|Lx\|^2$ holds for some finite $\kappa$ if
+and only if $\ker L\subseteq\ker A$, with the optimal constant and the
+exact operator-norm dual given in closed form. A no-go: uniform
+observability of the squarefree shift by a sublinear set of divisor rows
+is impossible, because above $N/2$ each column is seen only by its own
+row and shifted squarefree pairs have positive density. An extension of
+the blindness theorem to kernels that are constant on each half of an
+excursion, under which the cross-excursion interaction factors through
+the single channel $s_jH_j$ and the shift kernel is shown not to belong
+to the extended class. And a geometric proposition: the hypothesis
+$u_j\ge m_j/2$ needed for the central divisor matrix to be triangular
+with nonvanishing diagonal fails for at most $\lfloor\log_2 N\rfloor$
+excursions, so that the M\"obius line is isolated up to a kernel of
+logarithmic dimension.
+
+The results of Versions 1 and 2 are retained: the reflection fibre of
+the quadratic profile, the exactly isotropic null, the blindness theorem
+for kernels depending on $\max(a,b)$, and the criterion separating
+tautological from informative sine-kernel content. Negative results,
+including the collapse of every multiplicative diagonal weight onto
+$1/\zeta(1+s)$, are recorded in full. No numerical computation is
+performed.
+
+Version 4 audits the target objective of Version 3 and finds it
+self-defeating as stated. An exact identity expresses the $L^2$ defect
+of any leaf projection in the squarefree space as an explicit
+combination of within-leaf correlations of $\mu$ along consecutive
+squarefree integers. The capture condition of the adaptive boundary
+objective therefore demands maximally positive correlations on every
+nontrivial leaf, the opposite of the cancellation it is meant to
+produce, while long leaves are excluded unconditionally by
+short-interval cancellation. The objective is marked superseded. The
+engine common to both objectives, the annihilation $D\mu=e_1$, survives
+in the central-row objective, which becomes the live target. The
+conditioning of the two-point expansion on central data and the
+redundancy of quarter and octave evaluations are also recorded.
+
+Version 5 incorporates an external audit, verified line by line. It
+corrects the pushed form to $\widehat G=F^{\mathsf T}GF$ with incremental
+factors, fixes a single orientation basis, states the conditioning on
+$M(N)$ that freezes the terminal block, corrects the parity statement for
+single reflections, and withdraws two overstatements (a semicircular
+density inferred from an edge bound, and a general dichotomy for
+non-multiplicative weights). It withdraws the orthogonal-to-unitary
+crossover conjecture as stated: a Hermitian deformation supported on a
+forest, or obtained by unitary transport, is isospectral, so a crossover
+needs flux around cycles. It adds four exact results: the energy kernel
+is Montgomery's weight localised at $\alpha=0$ with tail
+$\Pr(|\alpha|>A)=T^{-2A}$; the Hermitian collision constant differs from
+the M\"obius energy constant by an exact fourth-order term; the form
+$\mathcal A_0'$ is the discrete L\'evy area of the planar path
+$(M_\Omega,L)$, neither a product nor a fixed-shift correlation; and the
+central divisor rows cut the reflection fibre from $2^Z$ orientations to
+at most $2N$, with at most $\lfloor\log_2N\rfloor+1$ further divisor
+rows selecting the M\"obius orientation uniquely.
+
+Version 6 executes the uncompressed, irregular route analytically and
+closes it as a family. The interior divisor--shift operator
+$B_h^\circ=R_{N-h}(U_h-I)D$ has maximal rank $N-h$: the vanishing of the
+columns $d\mid h$ removes only $\tau(h)$ columns. Each nonzero column is
+the exact discrete derivative of a periodic block of $h\bmod d$
+consecutive residues, which yields an optimal variation inequality on
+arbitrary intervals, but the Haar energy of each column is independent
+of the tree. The quantitative no-go is sharpened to
+$|\Lambda|\ge\frac{\mathfrak S_h}{4}N+o_h(N)$ divisor rows for any
+uniform observability with error below $1/2$. The shift does not descend
+to valuation-indexed local factors. The maximal class of kernels blind
+to zero-sum blocks is exactly the additively separable class, the shift
+lies at macroscopic distance from it, and no separable approximation of
+sublinear rank is close in operator norm. What remains open inside this
+family is a collective signed cancellation of CRT boundary errors with
+M\"obius-linked coefficients, which already requires control of the
+parity of large primes.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\bigskip
+
+\begin{remark}
+\label{rem:exploratory_nature}
+This notebook is exploratory. Rigorous statements appear inside theorem,
+proposition, lemma or corollary environments with proofs. Results
+established in separate work are collected in
+Section~\ref{sec:standing_results} and stated without proof. Everything
+else is labelled heuristic, conjectural or objective. No numerical
+computation is performed; the empirical values in
+Remark~\ref{rem:empirical_inputs} are inputs from separate work.
+\end{remark}
+
+\begin{warning}
+\label{warn:bibliographic_metadata}
+Bibliographic metadata in Section~\ref{sec:bibliography} has not been
+verified against primary sources. DOIs are omitted where not confirmed.
+\end{warning}
+
+\section{Introduction}
+\label{sec:introduction}
+
+\subsection{Objects}
+\label{subsec:objects}
+
+Let $\mu$ be the M\"obius function, $q(n)=\mu(n)^2$,
+\begin{equation}
+M(x)=\sum_{n\le x}\mu(n),
+\qquad
+C_N(h)=\sum_{n\le N-h}\mu(n)\mu(n+h).
+\label{eq:mertens_and_correlation}
+\end{equation}
+Let $D$ be the divisor operator $(Dx)(r)=\sum_{d\mid r}x(d)$ and $U_h$
+the truncated shift $(U_hx)(n)=x(n+h)$, with symmetric part
+$A_h=(U_h+U_h^{*})/2$, so that
+\begin{equation}
+C_N(h)=\mu^{\mathsf T}A_h\mu .
+\label{eq:correlation_as_form}
+\end{equation}
+
+\subsection{What is proved in this notebook}
+\label{subsec:what_is_proved}
+
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Reflection fibre} (Prop.~\ref{prop:reflection_fibre}): the
+fibre of the quadratic profile is exactly an orbit of
+$\mathcal R_N\cong(\mathbb Z/2)^{Z(N)}$.
+\item \emph{Exact isotropy} (Prop.~\ref{prop:exact_isotropy}):
+$\mathbb E_\nu[ss^{\mathsf T}]=I_Z$ with no correction term, and closed-form
+variance.
+\item \emph{Blindness} (Thm.~\ref{thm:cross_excursion_vanishing}): every
+cross-excursion contribution to a $\max(a,b)$-kernel vanishes
+identically.
+\item \emph{Extended blindness}
+(Thm.~\ref{thm:half_constant_blindness}): for kernels constant on each
+half of an excursion the cross-excursion interaction factors through the
+rank-one channel $s_jH_j$; the shift kernel is shown not to lie in this
+class.
+\item \emph{Divisor--shift boundary lemma} (Lem.~\ref{lem:boundary}):
+$((U_h-I)D)_{n,d}=\mathbf 1[d\mid n+h]-\mathbf 1[d\mid n]$, identically
+zero for $d\mid h$, supported on two residue classes otherwise, with
+interval sums bounded by $1$.
+\item \emph{Exact CRT pullback} (Lem.~\ref{lem:crt_pullback}):
+$(D^{\mathsf T}U_hD)_{d,e}$ vanishes unless $(d,e)\mid h$ and otherwise
+equals $(N-h)/[d,e]$ up to an error of modulus at most $1$.
+\item \emph{Algebraic Haar and exact bulk vanishing}
+(Lem.~\ref{lem:haar_basis}, Thm.~\ref{thm:haar_crt}): on an arbitrary
+binary tree the volumetric CRT term is annihilated exactly and only a
+boundary cocycle survives, additive over children.
+\item \emph{Observability criterion} (Thm.~\ref{thm:observability}):
+$|x^{\mathsf T}Ax|\le\kappa\|Lx\|^2$ for some $\kappa<\infty$ iff
+$\ker L\subseteq\ker A$; optimal constant and operator-norm dual in
+closed form.
+\item \emph{Sublinear no-go} (Thm.~\ref{thm:sublinear_nogo}): no
+nontrivial observability of the squarefree shift by $o(N)$ divisor rows.
+\item \emph{Logarithmic exceptional set}
+(Prop.~\ref{prop:log_exceptional}): the geometric hypothesis making the
+central divisor matrix triangular with nonvanishing diagonal fails for at
+most $\lfloor\log_2 N\rfloor$ excursions.
+\item \emph{Central dichotomy} (Lem.~\ref{lem:central_dichotomy}): every
+linear reflection-odd functional of an excursion either vanishes on the
+whole fibre or reads the orientation bit directly.
+\item \emph{Leaf-energy identity and squeeze}
+(Prop.~\ref{prop:leaf_energy}, Cor.~\ref{cor:squeeze}): the $L^2$
+defect of a leaf projection equals
+$\sum_I\bigl(k_I-1-\tfrac{2}{k_I}\sum_{i<i'\in I}\mu(a_i)\mu(a_{i'})\bigr)$,
+so $L^2$ capture of $\mu$ by a subspace independent of its signs forces
+either essentially the whole squarefree space or maximal positive
+within-leaf correlation.
+\item \emph{Gauge obstruction} (Prop.~\ref{prop:gauge}): Hermitian
+deformations on forests, and unitary transports, are isospectral.
+\item \emph{Collision versus energy constant}
+(Prop.~\ref{prop:cherm_energy}): exact fourth-order difference.
+\item \emph{L\'evy-area form} (Prop.~\ref{prop:levy_area}):
+$\mathcal A_0'(N)$ is the discrete signed area of $(M_\Omega,L)$.
+\item \emph{Compressed selection} (Cor.~\ref{cor:selection_count},
+Cor.~\ref{cor:selection_completion}): at most $2N$ admissible
+orientations, and unique selection after $\lfloor\log_2N\rfloor+1$
+further divisor rows.
+\item \emph{Interior operator} (Thm.~\ref{thm:interior_rank},
+Prop.~\ref{prop:residue_boundary}, Prop.~\ref{prop:tree_independent}):
+$\rank B_h^\circ=N-h$; columns are discrete derivatives of periodic
+residue blocks; Haar energy is independent of the tree.
+\item \emph{Blind class} (Thm.~\ref{thm:blind_class}): kernels blind to
+zero-sum blocks are exactly $\alpha(a)+\beta(b)$; the shift is at
+macroscopic distance.
+\end{enumerate}
+
+\subsection{Inputs and the methodological point}
+\label{subsec:inputs}
+
+Results established in separate work are listed with status in
+Section~\ref{sec:standing_results}; the two used actively are the tensor
+factorisation \ref{item:S4} and the permutation-null mean \ref{item:S10}.
+
+The methodological criterion of Version 2 is retained: a statistic
+carries sine-kernel content non-tautologically if and only if its value
+under the null differs from its value under the sine kernel
+(Remark~\ref{rem:nontautological_criterion}). Version 3 adds the
+corresponding criterion for weights: every diagonal weight with a
+multiplicative symbol collapses onto $1/\zeta(1+s)$
+(Thm.~\ref{thm:multiplicative_collapse}), so informative weights must
+break the Euler factorisation.
+
+\section{Standing results used as inputs}
+\label{sec:standing_results}
+
+Established in separate work by the author, stated without proof, no
+novelty claimed here.
+
+\begin{remark}
+\label{rem:standing_results_list}
+\begin{enumerate}[label=(S\arabic*)]
+\item \label{item:S1}
+$c\sqrt N\le\lambda_{\max}(D_N)\le C_\varepsilon N^{1/2+\varepsilon}$ with
+Cauchy interlacing corollaries. \emph{Context:
+Rem.~\ref{rem:negative_result_density_of_states}.}
+\item \label{item:S2}
+Trace-norm convergence of $G_N/N^2$ to a compact limit operator.
+\emph{Context.}
+\item \label{item:S3}
+Exact Chinese-remainder formula for the entries of $Q_N$.
+\emph{Context; source of \ref{item:S4}.}
+\item \label{item:S4}
+The tensor factorisation
+\begin{equation}
+\widehat K(r,q)=\prod_p L_p\bigl(v_p(r),v_p(q)\bigr)
+\label{eq:tensor_factorisation_standing}
+\end{equation}
+over all of $\mathbb N\times\mathbb N$, explicit tridiagonal local
+factors, sign corrected. \emph{Used actively as (G2).}
+\item \label{item:S5}
+$C_{\mathrm{herm}}(\rho)=2(\gamma^2-\beta^2)/(|\rho|^4|\zeta'(\rho)|^2)>0$
+for every nontrivial zero, without assuming RH. \emph{Context; see
+Rem.~\ref{rem:extremal_abscissa}.}
+\item \label{item:S6}
+$z_0''(n)=-\tfrac{r^2}{2}\Var_{p\mid n}(\log p)$ for squarefree $n$ with
+$r$ prime factors, and
+$K(s)=\tfrac{\zeta(s)}{2}(S_0S_2-S_1^2)$ with $S_2=(\zeta'/\zeta)'$.
+\emph{Context.}
+\item \label{item:S7}
+Closed form of $z_\vartheta(n)$ as a finite cosine sum over ordered
+partitions via the cocycle $\Phi(\pi)$, with
+$A_r=3(6r-11)/8$, $B_r=r(6r-11)/8$ exact for all $r$. \emph{Context;
+source of the twisted action in Conj.~\ref{conj:twisted_orientation_bits}.}
+\item \label{item:S8}
+Blindness to $\Theta$ of the whole tower of \emph{fixed} transversal
+jets, with complete proof. \emph{Context; the restriction to fixed jets
+leaves the scaling window open.}
+\item \label{item:S9}
+Unconditional equivalence between RH and tail stability of a two-channel
+positive logarithmic deformation of the ordinal-prime transform.
+\emph{Context.}
+\item \label{item:S10}
+$\mathbb E_\pi[E_N]/N=1/\pi^2+M(N)^2/(3N)+o(1)$ with
+$E_N=\tfrac1N\sum_{n\le N}M(n)^2$. \emph{Used actively.}
+\end{enumerate}
+\end{remark}
+
+\begin{remark}
+\label{rem:extremal_abscissa}
+At the extremal abscissa $s=2\Theta$ all contributions come from zeros
+with $\beta=\Theta$ and carry the positive coefficient of \ref{item:S5};
+a sum of positive terms does not cancel, so cancellation between distinct
+pairs cannot occur there. What remains open is the case of a
+non-attained supremum, requiring a limiting formulation.
+\end{remark}
+
+\section{Three spaces and the maps between them}
+\label{sec:three_spaces}
+
+\begin{definition}
+\label{def:three_spaces}
+Let $A_N=\{a_1<\dots<a_m\le N: q(a_j)=1\}$, $m=|A_N|$. Set
+\begin{align}
+H_N&=\mathbb R^N &&\text{(full space; }D,\ U_h\text{)},
+\label{eq:space_full}\\
+H_{\mathrm{sf}}&=\mathbb R^m &&\text{(squarefree space)},
+\label{eq:space_sf}\\
+H_{\mathrm{exc}}&=\mathbb R^{Z} &&\text{(excursion space)} .
+\label{eq:space_exc}
+\end{align}
+Let $Je_j=e_{a_j}$, so $J^{*}J=I$ and $P=JJ^{*}=\mathrm{diag}(q)$, and
+let $F$ be the canonical incremental matrix
+\begin{equation}
+F_{n,j}=\Delta Q_j(n)\,\mathbf 1_{E_j}(n),
+\label{eq:canonical_F}
+\end{equation}
+with $Q_j=|M|$ on $E_j$ (Definition~\ref{def:excursion_signs}). Throughout,
+$s\in\{\pm1\}^Z$ denotes excursion signs in this canonical basis and
+$s_\mu$ the signs of the M\"obius path, so that $\mu=Fs_\mu+x_{\mathrm{term}}$.
+\end{definition}
+
+\begin{remark}
+\label{rem:information_ledger}
+The three spaces retain different information.
+$H_N$ retains position, triangularity, divisibility and boundary data.
+$H_{\mathrm{sf}}$ retains signs and the integer labels $a_j$; if the
+labels are discarded, divisibility is lost. $H_{\mathrm{exc}}$ retains
+only block orientations: all intrablock variation, gcd classes,
+valuations and individual positions are destroyed.
+Since $P\mu=\mu$, the inclusion $J$ loses nothing for the vector $\mu$
+itself, but it does lose operator information about perturbations off the
+mask.
+\end{remark}
+
+\begin{proposition}
+\label{prop:fibre_expansion}
+With $U_h^{\mathrm{sf}}=J^{*}U_hJ$, $A_h=(U_h+U_h^{*})/2$ and
+$x=Fs+x_{\mathrm{term}}$ on the fibre,
+\begin{equation}
+C_N(h)=s^{\mathsf T}(F^{*}A_hF)s
++2s^{\mathsf T}F^{*}A_hx_{\mathrm{term}}
++x_{\mathrm{term}}^{\mathsf T}A_hx_{\mathrm{term}} .
+\label{eq:fibre_expansion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Substitute $x=Fs+x_{\mathrm{term}}$ into
+\eqref{eq:correlation_as_form} and expand the symmetric form.
+\end{proof}
+
+\begin{remark}
+\label{rem:exc_is_subordinate}
+Equation~\eqref{eq:fibre_expansion} is exact, but by
+Cor.~\ref{cor:profile_blindness} the excursion space is a severe
+compression and must be subordinate: it is used in
+Section~\ref{sec:centers} only for the reflection-odd component and as
+one possible family of stopping blocks. The primary space is $H_N$.
+\end{remark}
+
+\section{The three-constraint model}
+\label{sec:three_conditionings}
+
+\begin{definition}
+\label{def:mask}
+The orientation bits are
+$\varepsilon=(\varepsilon_n)_{n\in A_N}\in\{\pm1\}^m$,
+$\varepsilon_n=\mu(n)$. With $m_\pm$ the number of $n\in A_N$ with
+$\mu(n)=\pm1$ and $\bar\varepsilon=M(N)/m$, the \emph{fixed-count sign
+bridge} $\pi$ is uniform on the vectors of $\{\pm1\}^m$ with $m_+$
+entries $+1$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:bridge_covariance}
+Under $\pi$,
+\begin{equation}
+\mathbb E_\pi[\varepsilon\varepsilon^{\mathsf T}]=(1-\beta)I+\beta J_{m},
+\qquad \beta=\frac{m\bar\varepsilon^{\,2}-1}{m-1},
+\label{eq:bridge_covariance}
+\end{equation}
+$J_m$ the all-ones matrix. Consequently, for an orthogonal projection
+$P'$ of rank $d$,
+\begin{equation}
+\mathbb E_\pi[\langle\varepsilon,P'\varepsilon\rangle]
+=(1-\beta)d+\beta\|P'\mathbf 1\|^2=d+O(1)
+\quad\text{if }M(N)=o(\sqrt m).
+\label{eq:bridge_projection_mean}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Diagonal entries are $1$. For $n\ne n'$, counting ordered pairs of
+distinct positions gives
+$\bigl((m_+-m_-)^2-m\bigr)/(m(m-1))$, and $m_+-m_-=m\bar\varepsilon$.
+Trace against $P'$ using $\tr P'=d$, $\tr(P'J_m)=\|P'\mathbf 1\|^2$;
+for the last claim $|\beta|\le 1/(m-1)$ once $M(N)^2\le m$.
+\end{proof}
+
+\begin{remark}
+\label{rem:N1_usage}
+The factorisation of $\Cov_\pi(M(n)^2,M(n')^2)$ through the three-block
+decomposition $(n,n'-n,N-n')$, with its $O(m)$ variance evaluation, is
+recorded separately. Only its structural consequence is used: the
+covariance kernel is separable of bounded rank. By
+Prop.~\ref{prop:exact_isotropy} the third conditioning replaces this by
+an exact closed form.
+\end{remark}
+
+\section{The reflection fibre}
+\label{sec:reflection_fibre}
+
+\begin{definition}
+\label{def:excursions}
+Let $0=z_0<z_1<\dots<z_Z$ enumerate $\{n\le N:M(n)=0\}\cup\{0\}$, and
+\begin{equation}
+E_j=\{n:z_{j-1}<n\le z_j\},\qquad j=1,\dots,Z,
+\label{eq:excursion_blocks}
+\end{equation}
+with terminal block $E_{Z+1}=\{n:z_Z<n\le N\}$, empty iff $M(N)=0$.
+Write $u_j=z_{j-1}$, $v_j=z_j$. The reflection group
+$\mathcal R_N\cong(\mathbb Z/2)^Z$ acts by
+$(\sigma\cdot\varepsilon)_n=\sigma_{j(n)}\varepsilon_n$, the terminal
+block held fixed. Holding it fixed is a conditioning on $M(N)$, which the
+three-constraint model imposes through the fixed sign count.
+\end{definition}
+
+\begin{proposition}
+\label{prop:reflection_fibre}
+$M_{\sigma\cdot\varepsilon}(n)=\sigma_{j(n)}M_\varepsilon(n)$, so the
+quadratic profile $\Pi_N=(M(n)^2)_{n\le N}$ is
+$\mathcal R_N$-invariant; conversely two sign vectors on the same mask
+with the same profile and the same value of $M(N)$ differ by an element
+of $\mathcal R_N$. The fibre of $\Pi_N$ conditioned on $M(N)$ is exactly
+the orbit. Without that conditioning, if $M(N)\ne0$ the terminal block
+can also be reflected and the fibre of $\Pi_N$ is an orbit of
+$(\mathbb Z/2)^{Z+1}$.
+\end{proposition}
+
+\begin{proof}
+For $n\in E_j$, $M_\varepsilon(z_{j-1})=0$ so
+$M_\varepsilon(n)=\sum_{z_{j-1}<k\le n}\varepsilon_k$ lies inside $E_j$
+and $\sigma$ multiplies it by $\sigma_j$. Conversely equal profiles give
+the same zero set, hence the same blocks, and $|M|$ pointwise; inside a
+block $M$ has constant sign, and the ratio of the two signs defines
+$\sigma_j$; increments determine the path.
+\end{proof}
+
+\begin{definition}
+\label{def:excursion_signs}
+The excursion signs $s\in\{\pm1\}^Z$ record the sign of $M$ in the
+interior of each $E_j$. The reflection null $\nu$ is uniform on
+$\{\pm1\}^Z$. Write $Q_j(n)=|M(n)|$ for $n\in E_j$, so that
+\begin{equation}
+M_s(n)=s_jQ_j(n),\qquad \mu_s(n)=s_j\,\Delta Q_j(n),\qquad n\in E_j .
+\label{eq:canonical_positive_path}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:exact_isotropy}
+Under $\nu$, $\mathbb E_\nu[ss^{\mathsf T}]=I_Z$ exactly, hence for
+symmetric $A$
+\begin{equation}
+\mathbb E_\nu[\langle s,As\rangle]=\tr A,
+\qquad
+\Var_\nu[\langle s,As\rangle]=2\sum_{j\ne k}A_{jk}^2,
+\label{eq:exact_mean_variance}
+\end{equation}
+and for a projection $\widehat P$ of rank $d$,
+$\mathbb E_\nu=d$ and
+$\Var_\nu=2(d-\sum_j\widehat P_{jj}^2)$.
+\end{proposition}
+
+\begin{proof}
+The $s_j$ are independent Rademacher. Write
+$\langle s,As\rangle=\tr A+\sum_{j\ne k}A_{jk}s_js_k$ and use
+$\mathbb E_\nu[s_js_ks_{j'}s_{k'}]=\mathbf 1[\{j,k\}=\{j',k'\}]$;
+for a projection $\sum_{j,k}\widehat P_{jk}^2=\tr\widehat P=d$.
+\end{proof}
+
+\begin{remark}
+\label{rem:hierarchy_of_nulls}
+Conditioning on the mask removes the $1/\pi^2$ of \ref{item:S10};
+conditioning on the count removes the drift $M(N)^2/(3N)$; conditioning
+in addition on the profile leaves exactly $\mathcal R_N$, whose null is
+isotropic without the $O(1)$ correction of
+\eqref{eq:bridge_projection_mean}. The third conditioning is where the
+null becomes parameter-free.
+\end{remark}
+
+\section{The divisor-defect Gram form on orientation bits}
+\label{sec:gram_form}
+
+\begin{definition}
+\label{def:hypotheses_on_G}
+Let $B$ be the divisor-defect matrix on $A_N$ and $G=B^{\mathsf T}B$.
+$G$ is \emph{admissible} if (G1) it is real symmetric positive
+semidefinite and (G2) its kernel admits the tensor factorisation
+\eqref{eq:tensor_factorisation_standing}. The orientation-bit form is
+\begin{equation}
+\widehat G=F^{\mathsf T}GF,\quad
+\widehat G_{jk}=\sum_{a\in E_j}\sum_{b\in E_k}\Delta Q_j(a)\,G_{ab}\,\Delta Q_k(b),
+\qquad
+\widehat G=\sum_k\lambda_k\widehat P_k,\quad d_k=\rank\widehat P_k .
+\label{eq:pushed_form}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:pushed_form_odd}
+$\langle s,\widehat Gs\rangle$ is invariant under $s\mapsto-s$. Under a
+single reflection $s_j\mapsto-s_j$ the terms incident to $j$,
+$2\widehat G_{jk}s_js_k$ with $k\ne j$, change sign and all other terms
+are unchanged. Hence the form is not $\mathcal R_N$-invariant unless
+$\widehat G_{jk}=0$ for all $k\ne j$, and it is not a function of the
+quadratic profile unless $\widehat G$ is diagonal.
+\end{proposition}
+
+\begin{proof}
+$s_js_k$ changes sign under $s_j\mapsto-s_j$ for $k\ne j$, terms $s_ks_l$
+with $k,l\ne j$ are unchanged, and $\widehat G_{jj}s_j^2$ is constant; by
+Prop.~\ref{prop:reflection_fibre} functions of the profile are
+$\mathcal R_N$-invariant.
+\end{proof}
+
+\section{Blindness, and its exact extension}
+\label{sec:blindness}
+
+\begin{lemma}
+\label{lem:energy_as_two_point}
+$\displaystyle\sum_{n\le N}M(n)^2
+=\sum_{a,b\le N}\mu(a)\mu(b)\bigl(N+1-\max(a,b)\bigr).$
+\end{lemma}
+
+\begin{proof}
+Expand $M(n)^2$ and exchange summation; the pair $(a,b)$ occurs for
+$N+1-\max(a,b)$ values of $n$.
+\end{proof}
+
+\begin{theorem}
+\label{thm:cross_excursion_vanishing}
+Assume $M(N)=0$. For all $j\ne k$,
+\begin{equation}
+\sum_{a\in E_j}\sum_{b\in E_k}
+\mu(a)\mu(b)\bigl(N+1-\max(a,b)\bigr)=0 .
+\label{eq:cross_excursion_vanishing}
+\end{equation}
+Hence $\sum_{n\le N}M(n)^2$ depends only on within-excursion two-point
+data.
+\end{theorem}
+
+\begin{proof}
+For $j<k$ every $a\in E_j$ precedes every $b\in E_k$, so
+$\max(a,b)=b$ and the double sum factorises as
+$\bigl(\sum_{a\in E_j}\mu(a)\bigr)\bigl(\sum_{b\in E_k}\mu(b)(N+1-b)\bigr)$;
+the first factor is $M(z_j)-M(z_{j-1})=0$. The case $j>k$ is symmetric.
+\end{proof}
+
+\begin{corollary}
+\label{cor:profile_blindness}
+No statistic factoring through $\Pi_N$ detects cross-excursion
+correlation of $\mu$.
+\end{corollary}
+
+\begin{proof}
+Such a statistic is $\mathcal R_N$-invariant by
+Prop.~\ref{prop:reflection_fibre}; by
+Thm.~\ref{thm:cross_excursion_vanishing} the cross-excursion mass does
+not enter the energy, and by the action it is exactly the part on which
+$\mathcal R_N$ acts nontrivially.
+\end{proof}
+
+\subsection{Two channels and the half-constant extension}
+\label{subsec:two_channels}
+
+\begin{lemma}
+\label{lem:two_channels}
+Let $m_j$ be an interior cut of $E_j$, $E_j^{L}=(u_j,m_j]$,
+$E_j^{R}=(m_j,v_j]$, and $H_j=Q_j(m_j)$. Then
+\begin{equation}
+\sum_{n\in E_j^{L}}\mu_s(n)=s_jH_j,
+\qquad
+\sum_{n\in E_j^{R}}\mu_s(n)=-s_jH_j,
+\qquad H_j\ge1 .
+\label{eq:two_channels}
+\end{equation}
+In particular the two halves are not independent channels: they have
+rank one.
+\end{lemma}
+
+\begin{proof}
+Telescoping and $M(u_j)=M(v_j)=0$ give the two sums; $H_j\ge1$ because
+$M$ does not vanish in the interior of an excursion.
+\end{proof}
+
+\begin{theorem}
+\label{thm:half_constant_blindness}
+Let $j<k$ and let a kernel $K(a,b)$ be constant in $a$ on each half of
+$E_j$, say $K(a,b)=K_L(b)$ for $a\in E_j^L$ and $K_R(b)$ for
+$a\in E_j^R$. Then
+\begin{equation}
+\sum_{a\in E_j}\sum_{b\in E_k}\mu_s(a)\mu_s(b)K(a,b)
+= s_jH_j\sum_{b\in E_k}\mu_s(b)\bigl(K_L(b)-K_R(b)\bigr).
+\label{eq:half_constant_blindness}
+\end{equation}
+If $K_L=K_R$ the exact vanishing of
+Thm.~\ref{thm:cross_excursion_vanishing} is recovered; otherwise the
+interaction factors through the single channel $s_jH_j$.
+\end{theorem}
+
+\begin{proof}
+Split the $a$-sum over the two halves and apply
+Lemma~\ref{lem:two_channels} to each.
+\end{proof}
+
+\begin{remark}
+\label{rem:shift_escapes}
+Theorem~\ref{thm:cross_excursion_vanishing} is the case $K_L=K_R$,
+because a kernel depending on $\max(a,b)$ loses all $a$-dependence when
+$j<k$. The shift kernel $K_h(a,b)=\mathbf 1[b-a=h]$ is not constant on
+any half: it resolves $a=b-h$ at unit scale. Hence the shift lies
+outside the extended class, and this is the precise sense in which
+$C_N(h)$ escapes the excursion compression.
+\end{remark}
+
+\subsection{The maximal blind class}
+\label{subsec:blind_class}
+
+\begin{theorem}
+\label{thm:blind_class}
+Let $E,F$ be blocks and $P_E,P_F$ the projections onto vectors of zero
+sum. For a kernel $K_{EF}$ the following are equivalent:
+$x^{\mathsf T}K_{EF}y=0$ for all $x\perp\mathbf 1_E$, $y\perp\mathbf 1_F$;
+$P_EK_{EF}P_F=0$; $K(a,b)=\alpha(a)+\beta(b)$ on $E\times F$. If the
+block of the shift contains $r$ disjoint unit entries, its squared
+Frobenius distance to this class is
+\begin{equation}
+r-\frac{r}{|E|}-\frac{r}{|F|}+\frac{r^2}{|E||F|}.
+\label{eq:blind_distance}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The first two conditions are the same statement. $P_EKP_F=0$ iff $K$
+lies in the span of $\mathbf 1_E\otimes\cdot$ and $\cdot\otimes\mathbf 1_F$,
+which is the additively separable class. The distance is
+$\|P_EKP_F\|_F^2
+=\|K\|_F^2-\frac{\|\mathbf 1^{\mathsf T}K\|^2}{|E|}
+-\frac{\|K\mathbf 1\|^2}{|F|}+\frac{(\mathbf 1^{\mathsf T}K\mathbf 1)^2}{|E||F|}$,
+and for $r$ disjoint unit entries these are $r$, $r/|E|$, $r/|F|$ and
+$r^2/(|E||F|)$.
+\end{proof}
+
+\begin{remark}
+\label{rem:blind_class_meaning}
+Theorem~\ref{thm:cross_excursion_vanishing} is the case
+$K(a,b)=\beta(b)$ for ordered blocks. The distance
+\eqref{eq:blind_distance} is of order $r$, not a boundary error.
+Globally, $U_h$ has $H$ singular values equal to $1$, so by
+Eckart--Young every kernel $K_r$ of rank $r<H$ satisfies
+$\|U_h-K_r\|_{\mathrm{op}}\ge1$ and
+$\|U_h-K_r\|_{\mathrm{HS}}\ge\sqrt{H-r}$: no separable approximation of
+sublinear rank is close in the norm needed for uniform observability.
+\end{remark}
+
+\section{The divisor--shift operator}
+\label{sec:divisor_shift}
+
+\subsection{What conjugation does not give}
+\label{subsec:conjugation}
+
+\begin{remark}
+\label{rem:conjugation_nogo}
+$D$ is lower triangular with $D^{-1}_{r,d}=\mu(r/d)\mathbf 1[d\mid r]$,
+and
+\begin{equation}
+(DU_hD^{-1})_{r,m}
+=\sum_{\substack{a\mid r,\ a+h\le N\\ m\mid a+h}}
+\mu\!\left(\frac{a+h}{m}\right).
+\label{eq:conjugated_shift}
+\end{equation}
+This is exact and gives no spectral gain: a similarity preserves the
+problem. The entries of the commutator,
+\begin{equation}
+[D,U_h]_{r,m}=\mathbf 1[m>h]\mathbf 1[m-h\mid r]
+-\mathbf 1[r\le N-h]\mathbf 1[m\mid r+h],
+\label{eq:commutator}
+\end{equation}
+are not supported on primes dividing $h$: they compare the two distinct
+geometries $m-h\mid r$ and $m\mid r+h$.
+\end{remark}
+
+\subsection{The difference that localises}
+\label{subsec:boundary_lemma}
+
+\begin{lemma}[Divisor--shift boundary lemma]
+\label{lem:boundary}
+Let $H=N-h$ and let $B_h^\circ=R_H(U_h-I)D$ be the restriction to the
+interior rows $1\le n\le H$. Then
+\begin{equation}
+(B_h^\circ)_{n,d}=\mathbf 1[d\mid n+h]-\mathbf 1[d\mid n],
+\qquad 1\le n\le H,
+\label{eq:boundary_lemma}
+\end{equation}
+while on the full operator the rows $r>H$ equal $-\mathbf 1[d\mid r]$,
+so that there the columns $d\mid h$ do not vanish. For $B_h^\circ$:
+\begin{enumerate}[label=(\roman*)]
+\item If $d\mid h$ the column vanishes identically.
+\item If $d\nmid h$ the column is supported on the two disjoint classes
+$n\equiv-h$ and $n\equiv0\pmod d$, with signs $+1$ and $-1$.
+\item For every interval $I$ of integers,
+\begin{equation}
+\Bigl|\sum_{n\in I}\bigl(\mathbf 1[d\mid n+h]-\mathbf 1[d\mid n]\bigr)\Bigr|
+\le 1 .
+\label{eq:boundary_mass}
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\eqref{eq:boundary_lemma} is $D_{n+h,d}-D_{n,d}$. (i) If $d\mid h$ then
+$d\mid n+h\iff d\mid n$. (ii) Immediate. (iii) The sum equals the number
+of multiples of $d$ in $I+h$ minus the number in $I$; two intervals of
+equal length contain numbers of multiples differing by at most one.
+\end{proof}
+
+\begin{remark}
+\label{rem:boundary_interpretation}
+This converts the multiplicative--additive interaction into residue-class
+boundaries of uniformly bounded interval discrepancy, with no regularity
+assumption on $I$. The bound $1$ is optimal and improves the bound $2$
+obtained by estimating the two classes separately. Version 5 stated
+\eqref{eq:boundary_lemma} for the full operator; that was incorrect on
+the boundary rows $r>H$ and is corrected here.
+\end{remark}
+
+\subsection{Structure and norms of the interior operator}
+\label{subsec:interior_operator}
+
+\begin{theorem}[Maximal rank]
+\label{thm:interior_rank}
+$\rank B_h^\circ=H=N-h$ and $\dim\ker B_h^\circ=h$, as a map
+$\mathbb R^N\to\mathbb R^H$.
+\end{theorem}
+
+\begin{proof}
+Take the columns $d=h+r$, $1\le r\le H$. For $n<r$ one has
+$0<n+h<h+r$ and $n<h+r$, so neither $h+r\mid n+h$ nor $h+r\mid n$; for
+$n=r$, $h+r\mid r+h$ and $h+r\nmid r$. The $H\times H$ submatrix on these
+columns is therefore lower triangular with unit diagonal.
+\end{proof}
+
+\begin{remark}
+\label{rem:no_rank_gain}
+The vanishing of the columns $d\mid h$ removes only $\tau(h)$ columns and
+produces no useful subspace: $B_h^\circ$ is surjective onto the interior
+coordinates.
+\end{remark}
+
+\begin{proposition}[Exact norms]
+\label{prop:interior_norms}
+For $d\nmid h$ let $a_d=\lfloor H/d\rfloor$ and
+$b_d=\lfloor N/d\rfloor-\lfloor h/d\rfloor$, the numbers of $n\le H$ with
+$d\mid n$ and with $d\mid n+h$. Then the column $d$ has
+$\ell^1$-norm and squared $\ell^2$-norm $a_d+b_d$, the columns $d\mid h$
+vanish, and
+\begin{align}
+\|B_h^\circ\|_{1\to1}&=\max_{d\nmid h}(a_d+b_d),
+\label{eq:norm_11}\\
+\|B_h^\circ\|_{\infty\to\infty}&=\max_{n\le H}
+\bigl(\tau(n)+\tau(n+h)-2\tau((n,h))\bigr),
+\label{eq:norm_inf}\\
+\|B_h^\circ\|_{\mathrm{HS}}^2&=\sum_{n\le H}\bigl(\tau(n)+\tau(n+h)\bigr)
+-2\sum_{e\mid h}\Bigl\lfloor\frac He\Bigr\rfloor .
+\label{eq:norm_hs}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+For $d\nmid h$ the two classes are disjoint, giving the column norms.
+Row $n$ is supported on divisors of exactly one of $n,n+h$; the common
+divisors are those of $(n,n+h)=(n,h)$. Finally
+$\sum_{n\le H}\tau((n,h))=\sum_{e\mid h}\lfloor H/e\rfloor$.
+\end{proof}
+
+\begin{proposition}[Residue-boundary form and variation bound]
+\label{prop:residue_boundary}
+For $d\nmid h$ write $h=q_dd+r_d$ with $0<r_d<d$ and
+\begin{equation}
+\mathsf A_d(t)=\Bigl\lfloor\frac{t+h}{d}\Bigr\rfloor-\Bigl\lfloor\frac hd\Bigr\rfloor
+-\Bigl\lfloor\frac td\Bigr\rfloor=\mathbf 1[t\bmod d\ge d-r_d].
+\label{eq:residue_block}
+\end{equation}
+Then $(B_h^\circ)_{t,d}=\mathsf A_d(t)-\mathsf A_d(t-1)$: every column is
+the oriented boundary of a periodic block of $r_d$ consecutive residues.
+Consequently, for $f$ on an interval $I=[u,v]$,
+\begin{equation}
+\Bigl|\sum_{n\in I}f(n)(B_h^\circ)_{n,d}\Bigr|
+\le\min\bigl(|f(u)|,|f(v)|\bigr)+\operatorname{Var}_I(f),
+\label{eq:variation_bound}
+\end{equation}
+and the endpoint term disappears when $I$ and $I+h$ contain equally many
+multiples of $d$.
+\end{proposition}
+
+\begin{proof}
+$\lfloor(t+h)/d\rfloor=q_d+\lfloor(t+r_d)/d\rfloor$ gives
+\eqref{eq:residue_block}, and the difference in $t$ counts the new
+multiple of $d$ in $(h,t+h]$ minus the new one in $(0,t]$. For
+\eqref{eq:variation_bound} sum by parts from either end using the
+partial sums, which have modulus at most $1$ by
+Lemma~\ref{lem:boundary}(iii).
+\end{proof}
+
+\subsection{CRT pullback of the shift}
+\label{subsec:crt_pullback}
+
+\begin{lemma}
+\label{lem:crt_pullback}
+\begin{equation}
+(D^{\mathsf T}U_hD)_{d,e}=\#\{n\le N-h: d\mid n,\ e\mid n+h\},
+\label{eq:crt_pullback_definition}
+\end{equation}
+which vanishes unless $(d,e)\mid h$. If $(d,e)\mid h$ there is a unique
+class $c\bmod[d,e]$ and
+\begin{equation}
+(D^{\mathsf T}U_hD)_{d,e}=\frac{N-h}{[d,e]}+\varepsilon_{d,e,h,N},
+\qquad |\varepsilon_{d,e,h,N}|\le1 .
+\label{eq:crt_pullback}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The entry counts $n$ with $n\equiv0\pmod d$ and $n\equiv-h\pmod e$.
+Compatibility of the two congruences requires
+$0\equiv-h\pmod{(d,e)}$; when it holds the solution set is a single
+class modulo $[d,e]$, whose count in an interval of length $N-h$ is the
+stated main term with error of modulus at most $1$.
+\end{proof}
+
+\begin{remark}
+\label{rem:bulk_and_boundary}
+The bulk is an explicit gcd/lcm kernel and all finite irregularity sits
+in a boundary term. Section~\ref{sec:haar} removes the bulk exactly.
+\end{remark}
+
+\section{Algebraic Haar on arbitrary trees, and exact bulk vanishing}
+\label{sec:haar}
+
+\begin{lemma}
+\label{lem:haar_basis}
+Let $I=I_0\sqcup I_1$ with masses $m_0,m_1>0$, $m=m_0+m_1$, and
+\begin{equation}
+\psi_I=\sqrt{\frac{m_1}{m_0m}}\,\mathbf 1_{I_0}
+-\sqrt{\frac{m_0}{m_1m}}\,\mathbf 1_{I_1}.
+\label{eq:haar_function}
+\end{equation}
+Then $\langle\psi_I,\mathbf 1_I\rangle=0$ and $\|\psi_I\|_2=1$. For any
+binary tree terminating in singletons, the normalised constant together
+with the $\psi_I$ form an orthonormal basis.
+\end{lemma}
+
+\begin{proof}
+$\langle\psi_I,\mathbf 1_I\rangle
+=\sqrt{m_0m_1/m}-\sqrt{m_0m_1/m}=0$ and
+$\|\psi_I\|_2^2=m_1/m+m_0/m=1$. Orthogonality of two Haar functions
+follows from disjointness of their supports or, when nested, from the
+mean-zero property on the child in which the finer one is supported.
+Counting gives a basis.
+\end{proof}
+
+\begin{remark}
+\label{rem:no_regularity}
+No doubling measure, comparable children or geometric hypothesis is
+used. The identity is finite-dimensional algebra.
+\end{remark}
+
+\begin{theorem}[Exact vanishing of the CRT bulk]
+\label{thm:haar_crt}
+Let $R_{d,e,h}(n)=\mathbf 1[d\mid n]\mathbf 1[e\mid n+h]$. If
+$(d,e)\nmid h$ then $R\equiv0$. Otherwise $R=\mathbf 1[n\equiv c\bmod q]$
+with $q=[d,e]$, and writing
+$\#(I_j\cap(c\bmod q))=m_j/q+\epsilon_j$ with $|\epsilon_j|<1$,
+\begin{equation}
+\langle R_{d,e,h},\psi_I\rangle
+=\sqrt{\frac{m_1}{m_0m}}\,\epsilon_0-\sqrt{\frac{m_0}{m_1m}}\,\epsilon_1 .
+\label{eq:haar_crt}
+\end{equation}
+Moreover the boundary defects are additive over children:
+\begin{equation}
+\epsilon_I(c,q)=\epsilon_{I_0}(c,q)+\epsilon_{I_1}(c,q).
+\label{eq:cocycle_additivity}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The compatibility statement is Lemma~\ref{lem:crt_pullback}. Insert the
+counts into \eqref{eq:haar_function}: the terms $m_j/q$ contribute
+$\frac1q(\sqrt{m_0m_1/m}-\sqrt{m_0m_1/m})=0$ because $\psi_I$ has mean
+zero, leaving \eqref{eq:haar_crt}. Additivity holds because the counts
+add and $m_I=m_{I_0}+m_{I_1}$.
+\end{proof}
+
+\begin{remark}
+\label{rem:irregularity_is_data}
+The irregularity of the cut is not an error term: it \emph{is} the
+cocycle $(\epsilon_0,\epsilon_1)$. By \eqref{eq:cocycle_additivity} the
+Haar coefficients are martingale differences of a single boundary
+cocycle, which opens a telescoping across scales that the excursion
+compression cannot see.
+\end{remark}
+
+\begin{proposition}[Tree-independent energy]
+\label{prop:tree_independent}
+For a residue class $R$ and $k_i=|R\cap I_i|$,
+\begin{equation}
+\langle\mathbf 1_R,\psi_I\rangle=\frac{m_1k_0-m_0k_1}{\sqrt{m_0m_1(m_0+m_1)}} .
+\label{eq:haar_class}
+\end{equation}
+For any tree whose Haar functions complete the constant on
+$\{1,\dots,H\}$ and any column $d\nmid h$ of $B_h^\circ$,
+\begin{equation}
+\sum_I\bigl|\langle(B_h^\circ)_{\bullet d},\psi_I\rangle\bigr|^2
+=a_d+b_d-\frac{(b_d-a_d)^2}{H},
+\label{eq:tree_independent}
+\end{equation}
+independently of the tree.
+\end{proposition}
+
+\begin{proof}
+\eqref{eq:haar_class} is \eqref{eq:haar_function} evaluated on counts.
+Parseval gives $\sum_I|\langle f,\psi_I\rangle|^2
+=\|f\|^2-H^{-1}|\sum f|^2$; for the column,
+$\|f\|^2=a_d+b_d$ and $\sum f=b_d-a_d$.
+\end{proof}
+
+\begin{warning}
+\label{warn:parseval_nogo}
+A tree aligned with residue boundaries can concentrate the energy in few
+coefficients but cannot reduce it: irregularity produces sparsity, not
+coercivity. Any new estimate must use simultaneously the
+inclusion--exclusion signs, the compatibilities $(d,e)\mid h$ and the
+parent--children coherence \eqref{eq:cocycle_additivity}.
+\end{warning}
+
+\begin{remark}
+\label{rem:shift_matrix_in_haar}
+The shift matrix in this basis is exact:
+\begin{equation}
+\langle\psi_I,U_h\psi_J\rangle
+=\sum_{\alpha,\beta\in\{0,1\}}c_{I,\alpha}c_{J,\beta}\,
+E_h(I_\alpha,J_\beta),
+\qquad E_h(X,Y)=\#\{n\in X:n+h\in Y\},
+\label{eq:shift_in_haar}
+\end{equation}
+with $c_{I,0},c_{I,1}$ the two coefficients of
+\eqref{eq:haar_function}. There is an entry only when an edge joins the
+supports; cancellation depends on the $2\times2$ incidence table, not on
+regular lengths.
+\end{remark}
+
+\section{Observability}
+\label{sec:observability}
+
+\begin{definition}
+\label{def:observability_setup}
+Let $V=PH_N$, $L=D_\Lambda P|_V$ for a set $\Lambda$ of divisor rows,
+and $A=PA_hP|_V$.
+\end{definition}
+
+\begin{theorem}[Exact observability criterion]
+\label{thm:observability}
+There exists $\kappa<\infty$ with
+\begin{equation}
+|x^{\mathsf T}Ax|\le\kappa\|Lx\|^2\qquad\text{for all }x\in V
+\label{eq:observability_inequality}
+\end{equation}
+if and only if $\ker L\subseteq\ker A$. In that case
+$A=L^{\mathsf T}BL$ with $B=(L^{+})^{\mathsf T}AL^{+}$ and the best
+constant is
+\begin{equation}
+\kappa_*=\bigl\|(L^{\mathsf T}L)^{\dagger/2}A(L^{\mathsf T}L)^{\dagger/2}\bigr\|_{\mathrm{op}} .
+\label{eq:best_constant}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Sufficiency: write $x=x_0+x_1$ with $x_0\in\ker L$ and
+$x_1\perp\ker L$. Then $Ax_0=0$ gives
+$x^{\mathsf T}Ax=x_1^{\mathsf T}Ax_1$, while
+$\|Lx\|=\|Lx_1\|\ge\sigma\|x_1\|$ with $\sigma$ the least positive
+singular value, so \eqref{eq:observability_inequality} holds with
+$\kappa=\|A\|/\sigma^2$.
+
+Necessity: let $z\in\ker L$ and $x=z+ty$. Then
+$\|Lx\|^2=t^2\|Ly\|^2$ while
+$x^{\mathsf T}Ax=z^{\mathsf T}Az+2t\,z^{\mathsf T}Ay+t^2y^{\mathsf T}Ay$.
+Letting $t\to0$ forces $z^{\mathsf T}Az=0$, and then the linear term must
+be $O(t^2)$, forcing $z^{\mathsf T}Ay=0$ for all $y$, i.e. $Az=0$.
+Formula \eqref{eq:best_constant} is the induced norm on the range.
+\end{proof}
+
+\begin{remark}
+\label{rem:duality_and_sdp}
+Without the kernel condition the best Frobenius fit is
+$B_F=(L^{+})^{\mathsf T}AL^{+}$ with residual
+$R_F=A-P_{(\ker L)^{\perp}}AP_{(\ker L)^{\perp}}$, and in operator norm
+the exact dual is
+\begin{equation}
+\inf_B\|A-L^{\mathsf T}BL\|_{\mathrm{op}}
+=\sup\bigl\{|\tr(AZ)| : Z=Z^{\mathsf T},\ \|Z\|_*\le1,\ LZL^{\mathsf T}=0\bigr\},
+\label{eq:operator_norm_dual}
+\end{equation}
+the constraint $LZL^{\mathsf T}=0$ being exactly annihilation of the
+subspace $\{L^{\mathsf T}BL\}$. For an error $\varepsilon\|x\|^2$ the
+optimal pair $(\kappa,\varepsilon)$ solves the semidefinite programme
+$-\kappa L^{\mathsf T}L-\varepsilon I\preceq A\preceq
+\kappa L^{\mathsf T}L+\varepsilon I$.
+\end{remark}
+
+\begin{theorem}[No sublinear observability]
+\label{thm:sublinear_nogo}
+Fix $h\ne0$. If $q$ and $q+h$ are squarefree with $q>N/2$ and neither
+row $q$ nor row $q+h$ lies in $\Lambda$, then
+$x=e_q\pm e_{q+h}\in\ker L$ with $|x^{\mathsf T}A_hx|=1$ and
+$\|x\|^2=2$; hence any inequality of the form
+$|x^{\mathsf T}A_hx|\le\kappa\|Lx\|^2+\varepsilon\|x\|^2$ forces
+$\varepsilon\ge1/2$. Consequently, to achieve $\varepsilon<1/2$ the set
+$\Lambda$ must be a vertex cover of the shift graph on $(N/2,N]$, and
+since that graph has maximum degree $2$ and, by Mirsky's theorem
+\cite{Mirsky1949}, a positive density of edges, $|\Lambda|=\Omega_h(N)$.
+No nontrivial observability is possible with $o(N)$ divisor rows.
+\end{theorem}
+
+\begin{proof}
+For $q>N/2$ the only multiple of $q$ up to $N$ is $q$ itself, so column
+$q$ of $D$ is seen only by row $q$; the same for $q+h$. Hence
+$Lx=0$ for the stated $x$, while
+$x^{\mathsf T}A_hx=\pm2\cdot\tfrac12=\pm1$ and $\|x\|^2=2$. The
+covering statement follows since each uncovered edge produces such an
+$x$; a graph of maximum degree $2$ with $\Omega(N)$ edges needs
+$\Omega(N)$ vertices to cover.
+\end{proof}
+
+\begin{corollary}[Quantitative form]
+\label{cor:sublinear_quantitative}
+With $\mathfrak S_h$ the Mirsky density of \eqref{eq:mirsky_density},
+any $\Lambda$ achieving $\varepsilon<1/2$ in
+Theorem~\ref{thm:sublinear_nogo} satisfies
+\begin{equation}
+|\Lambda|\ge\frac{\mathfrak S_h}{4}\,N+o_h(N).
+\label{eq:lambda_lower_bound}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The shift graph on $(N/2,N]$ has $\frac{\mathfrak S_h}{2}N+o_h(N)$ edges
+by \cite{Mirsky1949} and maximum degree $2$, so every vertex cover has at
+least half as many vertices as there are edges.
+\end{proof}
+
+\begin{remark}
+\label{rem:nogo_consequence}
+Centres, quarters and returns can therefore only work after restricting
+to a low-dimensional multiscale subspace; global identification is
+excluded outright. The dual formula \eqref{eq:operator_norm_dual} may
+equivalently be written with the constraint $QZQ=0$, $Q=L^{+}L$.
+\end{remark}
+
+\section{Centres, divisor rows and the M\"obius line}
+\label{sec:centers}
+
+\subsection{The central dichotomy}
+\label{subsec:central_dichotomy}
+
+\begin{lemma}[Central dichotomy]
+\label{lem:central_dichotomy}
+Let $L_j$ be any linear functional of the values or increments of $M$ on
+$E_j$, fixed before the orientation is known. Then
+\begin{equation}
+L_j(M_s)=s_jL_j(Q_j)=s_j\kappa_j ,
+\label{eq:central_dichotomy}
+\end{equation}
+so either $\kappa_j=0$ and $L_j$ vanishes on the whole fibre, or
+$\kappa_j\ne0$ and $s_j=\operatorname{sgn}(L_j(M_s)/\kappa_j)$ is read
+off directly. There is no third possibility.
+\end{lemma}
+
+\begin{proof}
+Immediate from \eqref{eq:canonical_positive_path}.
+\end{proof}
+
+\begin{remark}
+\label{rem:center_values_never_vanish}
+With $m_j^{\mathrm{sf}}$ the support centre, i.e. the vertex after
+$\ell_j$ of the $2\ell_j$ squarefree steps of $E_j$, one has
+$1\le Q_j(m_j^{\mathrm{sf}})\le\ell_j$ and
+$Q_j(m_j^{\mathrm{sf}})\equiv\ell_j\pmod 2$, so the central path value
+never vanishes and always reads the bit. The support centre is the
+canonical choice: it is squarefree, so a divisor row evaluated there
+necessarily contains its own diagonal term, and it avoids spurious
+plateaux with $\mu(n)=0$.
+\end{remark}
+
+\begin{warning}
+\label{warn:path_reading_is_tautological}
+Augmenting the Gram form with central path readings gives
+$C_{\mathrm{path}}=-2\,\mathrm{diag}(h_1,\dots,h_Z)$ and hence
+$G^{+}=V^{\mathsf T}AV+C_{\mathrm{path}}^{\mathsf T}WC_{\mathrm{path}}$
+with $\ker G^{+}=\ker V\cap\ker C_{\mathrm{path}}=\{0\}$, since
+$h_j\ne0$. The kernel disappears, but any $J_h$ then admits
+$J_h=C_{\mathrm{path}}^{\mathsf T}(C_{\mathrm{path}}^{-\mathsf T}
+J_hC_{\mathrm{path}}^{-1})C_{\mathrm{path}}$ with zero remainder. This is
+tautological: the whole difficulty has been moved inside a diagonal bit
+reader.
+\end{warning}
+
+\subsection{Sampling the divisor equation at the centre}
+\label{subsec:divisor_rows_at_centers}
+
+\begin{definition}
+\label{def:cdiv}
+With $m_j=m_j^{\mathrm{sf}}$ and $q_k$ the canonical positive increment
+of excursion $k$, set
+\begin{equation}
+C^{\mathrm{div}}_{jk}=\sum_{\substack{d\mid m_j\\ d\in E_k}}q_k(d).
+\label{eq:cdiv}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:cdiv_triangular}
+$C^{\mathrm{div}}_{jk}=0$ for $k>j$, so $C^{\mathrm{div}}$ is lower
+triangular. If moreover $u_j\ge m_j/2$, then $C^{\mathrm{div}}_{jj}
+=q_j(m_j)\in\{\pm1\}$.
+\end{proposition}
+
+\begin{proof}
+For $k>j$ every element of $E_k$ exceeds $m_j$, so no divisor of $m_j$
+lies in $E_k$. If $u_j\ge m_j/2$ then every proper divisor of $m_j$ is
+$\le m_j/2\le u_j$, hence outside $E_j=(u_j,v_j]$; only $d=m_j$ remains
+and $m_j$ is squarefree.
+\end{proof}
+
+\begin{proposition}[Logarithmic exceptional set]
+\label{prop:log_exceptional}
+The hypothesis $u_j\ge m_j/2$ of Prop.~\ref{prop:cdiv_triangular} holds
+for all but at most $\lfloor\log_2N\rfloor$ indices $j$.
+\end{proposition}
+
+\begin{proof}
+Since $m_j\le v_j$, the inequality $u_j\ge v_j/2$ implies
+$u_j\ge m_j/2$, so the hypothesis can fail only when $v_j>2u_j$. Since
+$M(1)=1$ and $M(2)=0$, $z_1=2$; thus $u_1=0$ and $u_j\ge2$ for $j\ge2$.
+Let $2\le j_1<\dots<j_r$ be the failing indices with $j\ge2$. Using
+$u_{j+1}=v_j$ and monotonicity of $u$,
+$N\ge v_{j_r}>2u_{j_r}>2^2u_{j_{r-1}}>\dots>2^ru_{j_1}\ge2^{r+1}$,
+so $r+1\le\lfloor\log_2N\rfloor$. Adding the possible failure at $j=1$
+gives at most $\lfloor\log_2N\rfloor$ failing indices.
+\end{proof}
+
+\begin{theorem}
+\label{thm:mobius_line}
+Let $\mathcal J$ be the set of indices satisfying $u_j\ge m_j/2$. In
+orientation coordinates, treating the row $n=1$ affinely by $w(1)=1$,
+\begin{equation}
+C^{\mathrm{div}}s_\mu=0,
+\qquad
+\rank C^{\mathrm{div}}\ \ge\ |\mathcal J|\ \ge\ Z-\lfloor\log_2N\rfloor .
+\label{eq:mobius_line}
+\end{equation}
+In particular $\dim\ker C^{\mathrm{div}}\le\lfloor\log_2N\rfloor+1$ and
+$s_\mu$ lies in that kernel.
+\end{theorem}
+
+\begin{proof}
+Row $j$ of $C^{\mathrm{div}}s_\mu$ equals $\sum_{d\mid m_j}\mu(d)$,
+which vanishes for $m_j>1$; the affine treatment of $d=1$ fixes the
+remaining normalisation. The rank bound follows from lower
+triangularity together with Prop.~\ref{prop:cdiv_triangular} on
+$\mathcal J$ and Prop.~\ref{prop:log_exceptional}.
+\end{proof}
+
+\begin{corollary}[Compressed selection]
+\label{cor:selection_count}
+The number of $s\in\{\pm1\}^Z$ satisfying the central divisor equations,
+with the affine normalisation of the row $n=1$, is at most
+$2^{\lfloor\log_2N\rfloor+1}\le2N$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:mobius_line} the solution set is an affine subspace
+of dimension $k\le\lfloor\log_2N\rfloor+1$. It projects injectively onto
+some $k$ coordinates, so its points with entries $\pm1$ are determined by
+those $k$ entries, giving at most $2^k$ of them.
+\end{proof}
+
+\begin{corollary}[Completion to unique selection]
+\label{cor:selection_completion}
+Assume $M(N)=0$. With the canonical $F$ of \eqref{eq:canonical_F},
+$C^{\mathrm{div}}_{jk}=(DF)_{m_j,k}$, so $C^{\mathrm{div}}$ consists of rows
+of $DF$, which has rank $Z$. Hence at most $\lfloor\log_2N\rfloor+1$
+further rows of $DF$ complete $C^{\mathrm{div}}$ to a system of rank $Z$,
+whose unique solution with the normalisation of the row $n=1$ is $s_\mu$.
+\end{corollary}
+
+\begin{proof}
+$(DF)_{r,k}=\sum_{d\mid r}F_{d,k}$, and for $r=m_j$ this is
+\eqref{eq:cdiv}. $D$ is unitriangular and $F$ has $Z$ nonzero columns with
+disjoint supports, so $\rank DF=Z$; extend a basis of the row space of
+$C^{\mathrm{div}}$ to one of $DF$, which needs at most
+$Z-\rank C^{\mathrm{div}}\le\lfloor\log_2N\rfloor+1$ rows. Since
+$DFs_\mu=D\mu=e_1$, every row $r\ne1$ vanishes at $s_\mu$ and the row
+$r=1$ fixes the normalisation.
+\end{proof}
+
+\begin{remark}
+\label{rem:selection_meaning}
+This is a near-minimal compression of M\"obius inversion inside the
+fibre: $Z+O(\log N)$ divisor equations instead of $N$ select the
+M\"obius orientation among $2^Z$. It works inside a fibre that already
+fixes $|M(n)|$ for every $n$, so it carries no information about the
+size of $M$.
+\end{remark}
+
+\begin{remark}
+\label{rem:cdiv_meaning}
+This is a sparse orientational selector: roughly one divisor equation per
+excursion, chosen canonically at its centre, isolating the M\"obius line
+up to a kernel of logarithmic dimension. For the full divisor operator
+these rows are already present, $C^{\mathrm{div}}=RV$ with $R$ a row
+selector, so they do not reduce $\ker V$; for a truncation $V_y$ they
+reduce the kernel exactly when
+$C^{\mathrm{div}}|_{\ker V_y}\ne0$.
+\end{remark}
+
+\begin{warning}
+\label{warn:isolating_is_not_bounding}
+Isolating the M\"obius line does not bound the shift on it. If the
+central rows reduce the kernel to $\operatorname{span}\{s_\mu\}$, then
+estimating $J_h$ on that kernel is exactly estimating the
+cross-excursion M\"obius correlation. Centres help as an arithmetic
+selector, not yet as an estimator.
+\end{warning}
+
+\subsection{Conditioning the two-point expansion on central data}
+\label{subsec:conditioning}
+
+\begin{proposition}
+\label{prop:walsh_conditioning}
+Write the expansion \eqref{eq:fibre_expansion} in the orientation bits
+as
+\begin{equation}
+C_N(h;s)=A_{N,h}+\ell_h^{\mathsf T}s+s^{\mathsf T}J_h^{\mathrm{off}}s ,
+\label{eq:walsh_expansion}
+\end{equation}
+and split $s=(a,u)$ with $a\in\{\pm1\}^{F}$ fixed and $u$ free. Then
+\begin{equation}
+C_N(h;s)=A'+\bigl(\ell_U+2J_{UF}\,a\bigr)^{\mathsf T}u+u^{\mathsf T}J_{UU}\,u,
+\qquad
+A'=A_{N,h}+\ell_F^{\mathsf T}a+a^{\mathsf T}J_{FF}\,a .
+\label{eq:walsh_conditioning}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write $J_h^{\mathrm{off}}$ in blocks indexed by $F$ and $U$ and use its
+symmetry, so that the two mixed blocks contribute $2a^{\mathsf T}J_{FU}u$.
+\end{proof}
+
+\begin{remark}
+\label{rem:conditioning_gives_nothing}
+Conditioning on all signed central values fixes $s$, by
+Lemma~\ref{lem:central_dichotomy}, and the fibre is a singleton: every
+Walsh coefficient disappears only because the full vector has been
+supplied. Conditioning on central magnitudes $|M(m_j)|$ changes nothing,
+since they are profile data. Conditioning on a proper subset $F$
+converts fixed--free quadratic terms into linear ones but leaves the
+quadratic form $J_{UU}$ on the unobserved bits intact. No quantitative
+reduction follows without an independent bound on $J_{UU}$.
+\end{remark}
+
+\begin{remark}
+\label{rem:quarters_octaves}
+On orientations, a single nonvanishing odd evaluation already reads
+$s_j$, so quarter and octave evaluations are redundant by
+Lemma~\ref{lem:central_dichotomy}. On the shift, a coarse Haar
+truncation does not approximate $A_h$ uniformly on vectors with entries
+in $\{-1,0,1\}$, which may oscillate at unit scale; deterministic
+control of the remainder requires cells of size $O(h)$, that is,
+essentially full resolution for fixed $h$.
+Proposition~\ref{prop:leaf_energy} makes this exact.
+\end{remark}
+
+\section{Intrablock identities}
+\label{sec:intrablock}
+
+\begin{lemma}
+\label{lem:second_difference}
+Let $x_1,\dots,x_L$ have zero sum, $P_t=\sum_{r\le t}x_r$ extended by
+zero outside $[0,L]$, and $A_h=\sum_tP_tP_{t+h}$. Then
+\begin{equation}
+C_h:=\sum_tx_tx_{t+h}=2A_h-A_{h-1}-A_{h+1}.
+\label{eq:second_difference}
+\end{equation}
+Moreover
+\begin{equation}
+C_0+2\sum_{h\ge1}C_h=0,
+\qquad
+\sum_{t=1}^{L-1}P_t^2=-\sum_{h\ge1}hC_h .
+\label{eq:aggregate_identities}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand $x_t=P_t-P_{t-1}$ and collect the four autocorrelations. The
+first identity in \eqref{eq:aggregate_identities} is
+$\sum_{h\in\mathbb Z}C_h=(\sum_tx_t)^2=0$. For the second, apply
+\eqref{eq:second_difference} for all $h\in\mathbb Z$ and reindex:
+$\sum_h|h|C_h=\sum_hA_h(2|h|-|h+1|-|h-1|)=-2A_0$, since the bracket
+vanishes for $h\ne0$ and equals $-2$ at $h=0$; halve.
+\end{proof}
+
+\begin{remark}
+\label{rem:intrablock_is_profile}
+Inside an excursion $P_tP_{t+h}=|P_t||P_{t+h}|$, so the intrablock
+autocorrelation is already determined by the absolute profile. The
+centre adds nothing there.
+\end{remark}
+
+\begin{remark}[The centre does not determine a lag]
+\label{rem:counterexample_lag}
+The two positive excursions of length $8$
+\begin{equation}
+(+,+,+,-,+,-,-,-)\quad\text{and}\quad(+,+,-,+,-,+,-,-)
+\label{eq:counterexample_words}
+\end{equation}
+have paths $(1,2,3,2,3,2,1,0)$ and $(1,2,1,2,1,2,1,0)$, hence the same
+central value $2$, but $C_1=1$ and $C_1=-3$ respectively. Length, zero
+sum and central height do not control even the first lag.
+\end{remark}
+
+\begin{lemma}[Left--right splitting]
+\label{lem:left_right}
+With $m$ the centre and
+$C_h=C_h^{LL}+C_h^{RR}+C_h^{\times}$, only indices
+$m-h<t\le m$ can cross, so $|C_h^{\times}|\le h$ and, summing over
+excursions, $|\sum_jC_{h,j}^{\times}|\le hZ$.
+\end{lemma}
+
+\begin{proof}
+A pair $(t,t+h)$ crosses $m$ iff $t\le m<t+h$.
+\end{proof}
+
+\begin{remark}
+\label{rem:Z_growth_is_the_hypothesis}
+Lemma~\ref{lem:left_right} is $o(N)$ precisely when $Z=o(N)$, which is
+not proved anywhere in this project; see \ref{item:Q5}. The other two
+parts can be of the size of the excursion length: the centre isolates a
+layer of width $h$ only.
+\end{remark}
+
+\begin{lemma}[Discrete coarea]
+\label{lem:coarea}
+\begin{equation}
+\mu(n)=\sum_{\ell\in\mathbb Z}
+\Bigl(\mathbf 1[M(n-1)\le\ell<M(n)]-\mathbf 1[M(n)\le\ell<M(n-1)]\Bigr).
+\label{eq:coarea}
+\end{equation}
+Consequently $C_N(h)$ is a sum of oriented intersections of level-set
+boundaries separated by $h$.
+\end{lemma}
+
+\begin{proof}
+If $\mu(n)=+1$ the first indicator contributes once and the second is
+empty; if $\mu(n)=-1$ the roles are exchanged; if $\mu(n)=0$ both are
+empty.
+\end{proof}
+
+\begin{proposition}[Global second difference]
+\label{prop:global_second_difference}
+With $H=N-h$ and $A_k(L)=\sum_{n=1}^{L}M(n)M(n+k)$,
+\begin{equation}
+C_N(h)=2A_h(H-1)-A_{h-1}(H-1)-A_{h+1}(H-1)+M(H)\mu(N).
+\label{eq:global_second_difference}
+\end{equation}
+For a partition into $B$ blocks of zero sum, i.e. between returns of $M$
+to a common level, not necessarily zero, with local prefixes $P_j$
+extended by zero and $A_j(k)=\sum_nP_j(n)P_j(n+k)$,
+\begin{equation}
+C_N(h)=\sum_j\bigl(2A_j(h)-A_j(h-1)-A_j(h+1)\bigr)+R_\partial+R_{\mathrm{tail}},
+\qquad |R_\partial|\le h(B-1),
+\label{eq:block_second_difference}
+\end{equation}
+with $|R_{\mathrm{tail}}|$ bounded by the length of the terminal tail.
+\end{proposition}
+
+\begin{proof}
+Expand $\mu(n)=M(n)-M(n-1)$ in $\sum_{n\le H}\mu(n)\mu(n+h)$: the four
+sums are $A_h(H)$, $A_{h-1}(H)$, $A_{h+1}(H-1)$ and $A_h(H-1)$, and
+$A_h(H)-A_{h-1}(H)=A_h(H-1)-A_{h-1}(H-1)+M(H)\mu(N)$. The block version is
+Lemma~\ref{lem:second_difference} on each block, with at most $h$ crossing
+pairs per cut.
+\end{proof}
+
+\begin{remark}
+\label{rem:curvature_is_the_content}
+The uncontrolled term is the curvature at scale $h$ of the local path
+autocorrelations. Centres and hitting times can shorten the tail, but
+each new cut costs up to $h$ pairs, and no universal choice makes both
+the number of cuts and the curvatures small. In the coarea form
+$C_N(h)=\sum_{\ell,m}\sum_{n\le H}\sigma_\ell(n)\sigma_m(n+h)$,
+up- and down-crossings balance globally in closed blocks, but their
+shifted products do not pair: the shift selects particular times, not
+totals.
+\end{remark}
+
+\section{Exact local structure at each prime}
+\label{sec:local}
+
+\begin{proposition}
+\label{prop:local_tables}
+Fix a prime $p$ and $t=v_p(h)$. Counting residues modulo $p^2$, the
+admissible states $(v_p(n),v_p(n+h))\in\{0,1\}^2$ and their
+multiplicities are
+\begin{center}
+\begin{tabular}{c|l|c}
+$t$ & states and multiplicities & local sign\\ \hline
+$t=0$ & $(0,0)$: $p^2-2p$; $(1,0)$, $(0,1)$: $p-1$ each & $+,-,-$\\
+$t=1$ & $(0,0)$: $p^2-p$; $(1,1)$: $p-2$ & $+$\\
+$t\ge2$ & $(0,0)$: $p^2-p$; $(1,1)$: $p-1$ & $+$
+\end{tabular}
+\end{center}
+The local squarefree density of the pair is $1-2/p^2$ if $p^2\nmid h$
+and $1-1/p^2$ if $p^2\mid h$, which is the Mirsky structure
+\cite{Mirsky1949}. For any finite set of primes $P$,
+\begin{equation}
+\prod_{p\in P}(-1)^{v_p(n)+v_p(n+h)}
+\mathbf 1[v_p(n),v_p(n+h)\le1]
+\label{eq:local_identity}
+\end{equation}
+is an exact identity, not an independence hypothesis.
+\end{proposition}
+
+\begin{proof}
+For $p\nmid h$ the classes $n\equiv0$ and $n\equiv-h\pmod p$ are
+distinct, giving $(p-2)p$ residues with $(0,0)$ and $p-1$ each with
+$(1,0)$, $(0,1)$; the two excluded residues are $p^2\mid n$ and
+$p^2\mid n+h$. For $p\|h$, $p\mid n$ forces $p\mid n+h$, and among the
+$p$ residues with $p\mid n$ one must delete $n\equiv0$ and
+$n\equiv-h$, distinct modulo $p^2$, leaving $p-2$. For $p^2\mid h$ the
+two deleted residues coincide, leaving $p-1$. Signs are
+$(-1)^{v_p(n)+v_p(n+h)}$; the densities follow by counting the excluded
+residues. CRT makes the joint count over distinct primes multiplicative.
+\end{proof}
+
+\begin{remark}
+\label{rem:local_is_not_the_obstruction}
+At the level of residues the shift does not break the local structure:
+every prime participates, with a universal off-diagonal factor for
+$p\nmid h$ and a diagonal factor for $p\mid h$, and CRT is exact. What
+fails on globalising is the cut $n\le N$, the infinite product and the
+parity of large primes appearing to the first power.
+Proposition~\ref{prop:valuation_nogo} shows that at the level of
+valuations the shift does break it.
+\end{remark}
+
+\begin{proposition}[Signed local sums and Mirsky density]
+\label{prop:signed_local}
+With $w_p(n)=(-1)^{\mathbf 1[p\mid n]+\mathbf 1[p\mid n+h]}
+\mathbf 1[p^2\nmid n]\mathbf 1[p^2\nmid n+h]$, the sum of $w_p(n)$ over
+$n\bmod p^2$ equals $p^2-4p+2$, $p^2-2$ or $p^2-1$ according as
+$v_p(h)=0$, $1$ or $\ge2$. With $q(n)=\sum_{r^2\mid n}\mu(r)$,
+\begin{equation}
+\sum_{n\le H}q(n)q(n+h)
+=H\!\!\sum_{\substack{r,s\\ (r,s)^2\mid h}}\!\!\frac{\mu(r)\mu(s)}{[r^2,s^2]}
++\sum_{\substack{r,s\\ (r,s)^2\mid h}}\mu(r)\mu(s)\,\epsilon_{r,s},
+\qquad|\epsilon_{r,s}|<1,
+\label{eq:mirsky_expansion}
+\end{equation}
+the sums over $r\le\sqrt H$, $s\le\sqrt{H+h}$, and the main term has
+density
+\begin{equation}
+\mathfrak S_h=\prod_{p^2\mid h}\Bigl(1-\frac1{p^2}\Bigr)
+\prod_{p^2\nmid h}\Bigl(1-\frac2{p^2}\Bigr)>0 .
+\label{eq:mirsky_density}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The signed sums follow from the table of
+Proposition~\ref{prop:local_tables}. For \eqref{eq:mirsky_expansion},
+expand both $q$ factors; the system $r^2\mid n$, $s^2\mid n+h$ is
+solvable iff $(r,s)^2\mid h$, and then counts one class modulo
+$[r^2,s^2]$. The density is the product of the local densities of
+Proposition~\ref{prop:local_tables}.
+\end{proof}
+
+\begin{remark}
+\label{rem:mirsky_error}
+Mirsky \cite{Mirsky1949} controls the error in \eqref{eq:mirsky_expansion}
+by a power saving, recalled as $O_h(H^{2/3+o(1)})$ and not verified here.
+The tail $\sum_{n\le N}|q(n)-q_P(n)|\le\sum_{P<p\le\sqrt N}\lfloor N/p^2\rfloor$
+is controlled, but it controls only large squares, not the parity of
+large primes appearing to the first power.
+\end{remark}
+
+\begin{proposition}[The shift does not descend to valuations]
+\label{prop:valuation_nogo}
+Let $p\nmid h$ and choose units $u,v\bmod p$ with $u\equiv-h$ and
+$v\not\equiv-h\pmod p$. Then $v_p(u)=v_p(v)=0$, while
+$v_p(u+h)\ge1$ and $v_p(v+h)=0$. Hence translation by $h$ is not well
+defined on the quotient remembering only $v_p(n)$, and there is no exact
+intertwiner between valuation-indexed local factors such as the $L_p$ of
+\ref{item:S4} and the shift without adjoining residue information
+$n/p^{v_p(n)}\bmod p^k$.
+\end{proposition}
+
+\begin{proof}
+Immediate.
+\end{proof}
+
+\section{Multiplicative weights collapse}
+\label{sec:collapse}
+
+\begin{theorem}
+\label{thm:multiplicative_collapse}
+Let $m_d(x)=\sum_{n\le x,\ (n,d)=1}\mu(n)/n$. For $p\nmid d$,
+\begin{equation}
+m_d(x)=m_{dp}(x)-\frac1p\,m_{dp}(x/p),
+\qquad
+m_{dp}(x)=\sum_{k\ge0}p^{-k}m_d(x/p^k),
+\label{eq:local_action}
+\end{equation}
+the second sum being finite. Consequently
+\begin{equation}
+m_d(x)=\sum_{\substack{e\ge1\\ \rad(e)\mid d}}\frac1e\,m_1(x/e),
+\label{eq:lattice_closes}
+\end{equation}
+and with $G_{ab}=2N/[a,b]$,
+\begin{equation}
+\frac{\langle\mu,G\mu\rangle}{2N}
+=\sum_{d\ \mathrm{squarefree}}\varphi(d)
+\left(\sum_{\rad(u)=d}\frac{m_1(N/u)}{u}\right)^{2}.
+\label{eq:gram_collapse}
+\end{equation}
+In Mellin variables the local operator has symbol $1-p^{-1-s}$ and the
+full product has symbol $1/\zeta(1+s)$.
+\end{theorem}
+
+\begin{proof}
+Split $\{(n,d)=1\}$ according to $p\mid n$; for $n=pn'$ squarefree with
+$(n',dp)=1$ one has $\mu(n)=-\mu(n')$, giving the first identity. The
+Neumann series inverts it and terminates because $m_d(x/p^k)=0$ for
+$p^k>x$. Composing over $p\mid d$ gives \eqref{eq:lattice_closes}.
+For \eqref{eq:gram_collapse}, write $\gcd(a,b)=\sum_{d\mid a,\ d\mid b}\varphi(d)$
+to obtain
+$\langle\mu,G\mu\rangle/2N=\sum_d\varphi(d)d^{-2}\mu(d)^2m_d(N/d)^2$;
+substituting \eqref{eq:lattice_closes} with $u=de$, the conditions
+$\rad(e)\mid d$, $d\mid u$ and $d$ squarefree force $d=\rad(u)$, so each
+$u$ lies in exactly one block and $1/e=d/u$. The Mellin symbol follows
+from $\sigma_pf(x)=f(x/p)\leftrightarrow p^{-s}$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:gcd_weight_is_inert}
+Expanding $G$ along its diagonals and using
+$\gcd(a,a+h)=\gcd(a,h)$,
+\begin{equation}
+2\sum_{h\ge1}\sum_a\mu(a)\mu(a+h)\frac{\gcd(a,h)}{a(a+h)}
+=\sum_{d}\varphi(d)\Bigl(\sum_{\rad(u)=d}\frac{m_1(N/u)}{u}\Bigr)^2
+-\sum_{a\le N}\frac{\mu(a)^2}{a^2},
+\label{eq:gcd_aggregate}
+\end{equation}
+so the gcd-weighted Chowla aggregate is determined by $m_1$, i.e. by
+$1/\zeta(1+s)$. The left side is in particular bounded below by
+$-\zeta(2)/\zeta(4)$ since the right side is a sum of squares.
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:multiplicative_collapse} and
+$G_{a,a+h}=2N\gcd(a,h)/(a(a+h))$.
+\end{proof}
+
+\begin{warning}[Scope of the collapse]
+\label{warn:dichotomy}
+Theorem~\ref{thm:multiplicative_collapse} proves collapse for the
+gcd/lcm kernel. The mechanism, closure of the divisor lattice, suggests
+that diagonal weights with a multiplicative symbol collapse in the same
+way; this is heuristic and is not proved here in general. The claim made
+in Version 4, that every weight without a multiplicative symbol is
+strictly harder than $C_N(h)$ with no intermediate case, is incorrect in
+that generality and is withdrawn. The proof of
+collapse uses $\mu(da')=\mu(d)\mu(a')$ and uniqueness of the radical,
+i.e. commutativity of the Euler product; a non-commutative deformation
+such as the cocycle $\Phi(\pi)$ of \ref{item:S7} is the only place where
+the argument does not apply. That escape is a fixed jet in $\vartheta$,
+and \ref{item:S8} closes fixed jets; only the scaling window
+$\vartheta\asymp\vartheta_c(N)$ survives.
+\end{warning}
+
+\section{Scale-resolved statistic and sine-kernel content}
+\label{sec:scale_resolved}
+
+\begin{definition}
+\label{def:scale_resolved_statistic}
+$\mathcal E_k=\langle s,\widehat P_ks\rangle$,
+$\mathcal R_k=\mathcal E_k/d_k$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:statistic_calibration}
+Under $\nu$, $\mathbb E_\nu[\mathcal R_k]=1$ exactly and
+$\Var_\nu[\mathcal R_k]
+=2d_k^{-2}\bigl(d_k-\sum_j\widehat P_{k,jj}^2\bigr)$, with
+$\sum_k\mathcal E_k=Z=\sum_kd_k$.
+\end{proposition}
+
+\begin{proof}
+Prop.~\ref{prop:exact_isotropy} with $A=\widehat P_k$, and
+$\sum_k\widehat P_k=I_Z$.
+\end{proof}
+
+\begin{lemma}
+\label{lem:band_projector_sinc}
+The orthogonal projection onto a contiguous block of $d$ characters of a
+cyclic group of order $Z$ has Dirichlet kernel, whose scaling limit with
+$d/Z$ fixed is $\sin(\pi x)/(\pi x)$ \cite{Mehta2004}. Equivalently
+\begin{equation}
+1-R_2(x)=\Bigl(\frac{\sin\pi x}{\pi x}\Bigr)^{2}
+=\int_{-1}^{1}(1-|\tau|)e^{2\pi i\tau x}\,d\tau .
+\label{eq:fejer_identity}
+\end{equation}
+\end{lemma}
+
+\begin{warning}
+\label{warn:sinc_is_the_null}
+By Prop.~\ref{prop:exact_isotropy} the reflection null has covariance
+$I$, which restricted to a band of characters is a sine kernel. The sine
+kernel is therefore the \emph{null} of $\mathcal R_k$, not a consequence
+of it, and deriving it from flatness carries no evidential weight about
+the zeros of $\zeta$.
+\end{warning}
+
+\begin{remark}
+\label{rem:multiplicative_band}
+Hypothesis (G2), i.e. \ref{item:S4}, makes the eigenbasis of $G$ a
+character basis of the multiplicative structure, so the transported band
+gives a sine kernel in $\log n$, the variable in which
+$n^{i\gamma}=e^{i\gamma\log n}$ oscillates. This does not affect
+Warning~\ref{warn:sinc_is_the_null}.
+\end{remark}
+
+\begin{remark}
+\label{rem:nontautological_criterion}
+A statistic carries sine-kernel content non-tautologically if and only if
+its null value is a number different from its sine-kernel value; the
+measured position between the two is the coefficient. The three
+quantities of Version 2 satisfying this are retained below.
+\end{remark}
+
+\begin{definition}
+\label{def:superposition}
+For the superposition of $p$ independent identically distributed spectra
+each of density $1/p$,
+\begin{equation}
+R_2^{(p)}(x)=1-\frac1p\Bigl(\frac{\sin(\pi x/p)}{\pi x/p}\Bigr)^{2},
+\qquad
+Y^{(p)}_{jk}=\frac1p\Bigl(\frac{\sin(\pi(j-k)/p)}{\pi(j-k)/p}\Bigr)^{2}.
+\label{eq:superposition_matrix}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:positive_sine_fraction}
+If $\tilde r$ is strictly monotone in $p$ with $\tilde r(\infty)=2\ln2-1$
+and $\tilde r(1)$ the unitary value, then a measured
+$\tilde r>2\ln2-1$ forces $p<\infty$ and hence a strictly positive
+sine-kernel fraction $1/p$.
+\end{proposition}
+
+\begin{proof}
+Strict monotonicity and the endpoint values.
+\end{proof}
+
+\begin{lemma}
+\label{lem:triangle_moments}
+$\displaystyle m_n=\int_0^1(1-\tau)\tau^n\,d\tau=\frac{1}{(n+1)(n+2)}$,
+and $(1-\tau)_+$, having compact support, is determined by
+$\{m_n\}_{n\ge0}$.
+\end{lemma}
+
+\begin{proof}
+Elementary integration and determinacy of the Hausdorff moment problem.
+\end{proof}
+
+\begin{lemma}
+\label{lem:spacing_variance_anchors}
+Under the Wigner surmises,
+$\Var_{\mathrm{Poisson}}(s)=1$,
+$\Var_{\mathrm{GOE}}(s)=4/\pi-1$,
+$\Var_{\mathrm{GUE}}(s)=3\pi/8-1$.
+\end{lemma}
+
+\begin{proof}
+For $p(s)=\tfrac\pi2se^{-\pi s^2/4}$ and
+$p(s)=\tfrac{32}{\pi^2}s^2e^{-4s^2/\pi}$, both normalised to
+$\langle s\rangle=1$, ratios of Gaussian moments give
+$\langle s^2\rangle=4/\pi$ and $3\pi/8$; the Poisson case is the
+exponential law.
+\end{proof}
+
+\begin{remark}
+\label{rem:empirical_inputs}
+Recorded in separate work, not computed here, and used only to indicate
+the scale of the effects: a spacing ratio $\tilde r\approx0.42$ for the
+spectrum of the smooth arithmetic term; relative freeness defects of
+about $12\%$ at order two and $32\%$ at order three; an energy deficit
+ratio of about $0.137$ for the area energy and about $0.052$ for the
+truncated logarithmic energy; a persistent bias of about $2.5\%$; and the
+systematic observation that $d=1$ is the weakest anomaly. The reference
+values $2\ln2-1$, $\approx0.5307$ and $\approx0.5996$ are recalled
+from \cite{AtasEtAl2013} and not verified here.
+\end{remark}
+
+\begin{remark}
+\label{rem:defect_ratio_discrimination}
+The triangle moments give $m_3/m_2=0.6$, decreasing; Chebyshev-basis
+variance of linear statistics grows linearly \cite{Johansson1998},
+giving $1.5$; the recorded defects give $32/12\approx2.67$. The observed
+growth is faster than linear where the triangle requires decay. The
+ratio is invariant under a global rescaling of the normalisation of
+relative defect, so the discrimination survives that convention.
+\end{remark}
+
+\begin{remark}
+\label{rem:symmetry_class_obstruction}
+$\mathcal R_N$ and $\widehat G$ are real, hence $\beta=1$, whose form
+factor $2\tau-\tau\log(1+2\tau)$ on $\tau\le1$ \cite{Mehta2004} is not a
+band indicator; the conjectural class for the zeros is $\beta=2$
+\cite{Montgomery1973, Odlyzko1987}.
+\end{remark}
+
+\begin{remark}[Withdrawn conjecture]
+\label{conj:twisted_orientation_bits}
+Versions 1--4 conjectured that letting $U(1)^Z$ act by
+$s_j\mapsto e^{i\vartheta_j}s_j$ and transporting $\widehat G$ produces an
+orthogonal-to-unitary crossover at $\vartheta_c\asymp1/Z$. As stated this
+is incorrect: by Proposition~\ref{prop:gauge} a transported form
+$U_\vartheta^{*}\widehat GU_\vartheta$ is isospectral for every
+$\vartheta$, and the scale $1/Z$ does not follow from
+\cite{PandeyMehta1983}. See Question~\ref{q:flux_deformation}.
+\end{remark}
+
+\section{Audit results of Version 5}
+\label{sec:audit}
+
+\subsection{The energy kernel sits at $\alpha=0$}
+\label{subsec:alpha_zero}
+
+\begin{proposition}
+\label{prop:alpha_localisation}
+Let $K(\Delta)=1/(2+i\Delta)$ with $\Delta=\gamma-\gamma'$. Then
+\begin{equation}
+K(\Delta)+K(-\Delta)=\frac{4}{4+\Delta^2}
+=\int_{-\infty}^{\infty}e^{-2|u|}e^{-iu\Delta}\,du .
+\label{eq:montgomery_weight}
+\end{equation}
+Under $u=\alpha\log T$ the induced normalised density on $\alpha$ is
+\begin{equation}
+p_T(\alpha)=\log T\;T^{-2|\alpha|},
+\qquad
+\mathbb E|\alpha|=\frac{1}{2\log T},
+\qquad
+\Pr(|\alpha|>A)=T^{-2A}.
+\label{eq:alpha_density}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Sum the two fractions; $\int e^{-a|u|}e^{-iu\Delta}du=2a/(a^2+\Delta^2)$
+with $a=2$. Change variables; $\int p_T=1$, and the moments are
+elementary exponential integrals.
+\end{proof}
+
+\begin{remark}
+\label{rem:alpha_meaning}
+The hermitised kernel is Montgomery's smoothing weight
+\cite{Montgomery1973} without the factor $T^{i\alpha(\gamma-\gamma')}$,
+so the scalar energy tests the pair correlation at $\alpha=0$, smeared
+over width $1/\log T$. Evaluating the closed forms at the height of the
+$400$th zero, $T\simeq679.74$, gives $\mathbb E|\alpha|\approx0.0767$ and
+$\Pr(|\alpha|>1)\approx2.16\times10^{-6}$. To reach $\alpha_0>1$ one needs
+the modulated family
+\begin{equation}
+K_{\alpha_0,T}(\Delta)=\frac{4}{4+\Delta^2}\,e^{i\alpha_0\log T\,\Delta}.
+\label{eq:modulated_kernel}
+\end{equation}
+The dependence of the energy on $\log N$
+(Remark~\ref{rem:negative_result_energy_scalar}) supplies exactly this
+phase at $\log N=\alpha_0\log T$; what it does not supply is localisation
+in height (Remark~\ref{rem:negative_result_height_weighting}). The
+modulated family is available, the localised one is not.
+\end{remark}
+
+\begin{warning}
+\label{warn:two_alphas}
+The Montgomery variable $\alpha$ of this subsection is unrelated to the
+parameter $\alpha$ of the ordinal-prime programme behind \ref{item:S9},
+for which separate work records $\sigma_c(\alpha)=1+\Theta$ and
+$\mathrm{RH}\iff\sigma_c(\alpha)=3/2$. The two must not be conflated.
+\end{warning}
+
+\subsection{Gauge obstruction to the crossover}
+\label{subsec:gauge}
+
+\begin{proposition}
+\label{prop:gauge}
+\begin{enumerate}[label=(\roman*)]
+\item A Hermitian matrix whose off-diagonal support is the edge set of a
+forest is conjugate, by a diagonal unitary, to a real symmetric matrix
+with nonnegative off-diagonal entries. In particular a Hermitian Jacobi
+matrix with entries $a_je^{\pm i\phi_j}$ has the spectrum of the real
+Jacobi matrix with entries $a_j$.
+\item If $\widehat G^{(\vartheta)}=U_\vartheta^{*}\widehat GU_\vartheta$
+with $U_\vartheta$ unitary, then
+$\operatorname{Spec}\widehat G^{(\vartheta)}=\operatorname{Spec}\widehat G$
+for every $\vartheta$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Root each tree and choose the phase of each vertex recursively along
+edges so that every edge entry becomes real and nonnegative; no cycle
+imposes a compatibility condition. (ii) Unitary similarity.
+\end{proof}
+
+\begin{question}
+\label{q:flux_deformation}
+Construct a Hermitian deformation of $\widehat G$, or of a divisibility
+operator, on a graph with cycles, with phases whose fluxes around cycles
+are not coboundaries, for instance built from the cocycle $\Phi(\pi)$ of
+\ref{item:S7}. Only such a deformation can change the spectrum.
+\end{question}
+
+\begin{heuristic}
+\label{heur:crossover_scale}
+For a non-isospectral deformation $H_\vartheta$ with
+$A=\frac{d}{d\vartheta}H_\vartheta\big|_{\vartheta=0}$, the crossover
+scale is expected at
+\begin{equation}
+\vartheta_c\asymp
+\frac{\Delta_Z}{\sqrt{\mathbb E|\langle u_j,Au_k\rangle|^2}},
+\label{eq:crossover_scale}
+\end{equation}
+$\Delta_Z$ the mean level spacing and $u_j$ the eigenvectors, in the
+spirit of \cite{PandeyMehta1983}. Depending on normalisation this may be
+$Z^{-1}$, $Z^{-1/2}$ or another scale; the coefficients $A_r,B_r$ of
+\ref{item:S7} alone do not decide it.
+\end{heuristic}
+
+\subsection{Hermitian collision versus the M\"obius energy constant}
+\label{subsec:cherm_energy}
+
+\begin{proposition}
+\label{prop:cherm_energy}
+Assume RH and simple zeros, and let
+$\beta_M=\sum_\rho|\rho\zeta'(\rho)|^{-2}
+=2\sum_{\gamma>0}|\rho|^{-2}|\zeta'(\rho)|^{-2}$. For every
+$\gamma>0$,
+\begin{equation}
+\frac{2}{|\rho|^2|\zeta'(\rho)|^2}-C_{\mathrm{herm}}(\rho)
+=\frac{1}{|\rho|^4|\zeta'(\rho)|^2},
+\label{eq:cherm_pointwise}
+\end{equation}
+hence, whenever the sums converge,
+\begin{equation}
+\sum_{\gamma>0}C_{\mathrm{herm}}(\rho)
+=\beta_M-\sum_{\gamma>0}\frac{1}{|\rho|^4|\zeta'(\rho)|^2}.
+\label{eq:cherm_sum}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+With $\beta=\tfrac12$, $|\rho|^2=\gamma^2+\tfrac14$ and
+$\gamma^2-\beta^2=\gamma^2-\tfrac14$, so
+$\frac{2}{|\zeta'|^2}\bigl(\frac{1}{|\rho|^2}-\frac{\gamma^2-1/4}{|\rho|^4}\bigr)
+=\frac{2}{|\zeta'|^2}\cdot\frac{1/2}{|\rho|^4}$.
+\end{proof}
+
+\begin{remark}
+\label{rem:cherm_not_identical}
+The pointwise ratio is $(\gamma^2-\tfrac14)/(\gamma^2+\tfrac14)$,
+approximately $0.9975005$ at the first zero: the two constants are close
+but not identical. The identification of a recorded logarithmic
+estimator $\hat S_2$ with $\beta_M$ requires RH, simplicity, convergence
+and a limit, and is not asserted here.
+\end{remark}
+
+\subsection{The form $\mathcal A_0'$ is a L\'evy area}
+\label{subsec:levy_area}
+
+\begin{definition}
+\label{def:A0}
+With $M_\Omega(x)=\sum_{n\le x}\mu(n)\Omega(n)$ and
+$L(x)=\sum_{n\le x}\mu(n)\log n$, the form recorded in separate work is
+\begin{equation}
+\mathcal A_0'(N)=\frac12\sum_{m<n\le N}\mu(m)\mu(n)
+\bigl(\Omega(m)\log n-\log m\,\Omega(n)\bigr).
+\label{eq:A0}
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:levy_area}
+\begin{equation}
+\Delta\mathcal A_0'(N)=\frac{\mu(N)}{2}
+\bigl[M_\Omega(N-1)\log N-\Omega(N)L(N-1)\bigr],
+\label{eq:A0_increment}
+\end{equation}
+and consequently
+\begin{equation}
+\mathcal A_0'(N)=\mathfrak A_N(M_\Omega,L),
+\qquad
+\mathfrak A_N(X,Y)=\frac12\sum_{n\le N}\bigl(X(n-1)\,\Delta Y(n)-Y(n-1)\,\Delta X(n)\bigr),
+\label{eq:levy_area}
+\end{equation}
+the discrete signed area swept by the planar path
+$n\mapsto(M_\Omega(n),L(n))$.
+\end{proposition}
+
+\begin{proof}
+The terms of \eqref{eq:A0} with $n=N$ give \eqref{eq:A0_increment}.
+Summing, with $\Delta M_\Omega(n)=\mu(n)\Omega(n)$ and
+$\Delta L(n)=\mu(n)\log n$, gives \eqref{eq:levy_area}.
+\end{proof}
+
+\begin{remark}
+\label{rem:levy_area_meaning}
+A L\'evy area is the antisymmetric second level of an iterated sum, so
+it is neither a product of two summatory functions, which is the
+symmetric part, nor a fixed-shift correlation. This is why the
+dichotomy proposed in session discussion (either a product controlled by
+RH, or a Chowla-type correlation) is false. Separate work records
+$\Delta\mathcal A_0'(N)=\mu(N)N/(2\log N)+o(N/\log N)$.
+\end{remark}
+
+\begin{proposition}
+\label{prop:F_of_s}
+For $\Re s>2$ let
+$F(s)=\sum_{n\ge2}\mu(n)n^{1-s}/\log n$. Then
+\begin{equation}
+F'(s)=1-\frac{1}{\zeta(s-1)},
+\qquad
+F(s)=\int_s^\infty\Bigl(\frac{1}{\zeta(u-1)}-1\Bigr)du,
+\label{eq:F_of_s}
+\end{equation}
+so $F$ has logarithmic singularities at $s=1+\rho$.
+\end{proposition}
+
+\begin{proof}
+Differentiate termwise:
+$F'(s)=-\sum_{n\ge2}\mu(n)n^{1-s}=-(1/\zeta(s-1)-1)$. Since $F(s)\to0$ as
+$s\to+\infty$, integrate from $s$ to $\infty$. Simple poles of
+$1/\zeta(s-1)$ at $s-1=\rho$ integrate to logarithms.
+\end{proof}
+
+\begin{remark}
+\label{rem:perron_mellin_obstacle}
+The precise obstacle on the Perron--Mellin route is then to show that the
+exact remainder of the Dirichlet series of $\mathcal A_0'$ continues far
+enough and does not cancel these singularities.
+\end{remark}
+
+\subsection{Energies as aggregates of shifted correlations}
+\label{subsec:energy_chowla}
+
+\begin{lemma}
+\label{lem:log_energy}
+With $W_N(r)=\sum_{n=r}^{N}n^{-2}$,
+\begin{equation}
+\sum_{n\le N}\frac{M(n)^2}{n^2}
+=\sum_{a\le N}\mu(a)^2W_N(a)
++2\sum_{h=1}^{N-1}\sum_{a\le N-h}\mu(a)\mu(a+h)\,W_N(a+h).
+\label{eq:log_energy}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand $M(n)^2$; the pair $(a,b)$ contributes $\sum_{n=\max(a,b)}^Nn^{-2}$.
+\end{proof}
+
+\begin{remark}
+\label{rem:two_kernels}
+Lemma~\ref{lem:energy_as_two_point} and Lemma~\ref{lem:log_energy} show
+that both energies are weighted aggregates of shifted correlations. The
+logarithmically averaged two-point theorem \cite{Tao2016} controls fixed
+$h$; these aggregates need uniformity up to $h\asymp N$, and that gap is
+not closed by naming the logarithmic theorem. The two recorded ratios
+belong to different kernels, about $0.137$ for the area energy and about
+$0.052$ for the truncated logarithmic energy, and are not comparable.
+\end{remark}
+
+\begin{remark}[Corrections ledger]
+\label{rem:corrections_ledger}
+Corrected in Version 5, in accordance with the archival principle:
+the pushed form \eqref{eq:pushed_form}, previously written without the
+incremental factors; the orientation basis \eqref{eq:canonical_F},
+previously mixing reflections relative to $\mu$ with canonical signs; the
+conditioning on $M(N)$ in Proposition~\ref{prop:reflection_fibre}; the
+parity statement of Proposition~\ref{prop:pushed_form_odd}; the start of
+the proof of Proposition~\ref{prop:log_exceptional}; the density claim of
+Remark~\ref{rem:negative_result_density_of_states}; the scope of
+Warning~\ref{warn:dichotomy}; and the crossover conjecture, withdrawn in
+Remark~\ref{conj:twisted_orientation_bits}.
+\end{remark}
+
+\section{Strategy and the target theorem}
+\label{sec:strategy}
+
+\begin{remark}[Ordered strategy]
+\label{rem:ordered_strategy}
+\begin{enumerate}[label=(\roman*)]
+\item Difference, not commutator: build $(U_h-I)D$, split off the
+columns $d\mid h$ exactly by Lemma~\ref{lem:boundary}, and send the rest
+to adaptive Haar.
+\item Approximate observability: work in $V/\ker D_\Lambda$, measure the
+optimal residual by pseudoinverse and the dual
+\eqref{eq:operator_norm_dual}; do not attempt global identification,
+which Thm.~\ref{thm:sublinear_nogo} excludes.
+\item Irregular tree: choose cuts by changes of divisor density, levels
+of $M$, centres and residue boundaries; exploit
+\eqref{eq:cocycle_additivity}.
+\item Local $p$-adic structure: couple
+Prop.~\ref{prop:local_tables} with the factors $L_p$ of \ref{item:S4},
+treating $p\nmid h$ as a universal factor and $p\mid h$ as diagonal
+defects.
+\item Excursions last: use them only for the reflection-odd component
+and as one family of stopping blocks, subject to \ref{item:Q1}.
+\end{enumerate}
+\end{remark}
+
+\begin{objective}[Adaptive boundary observability]
+\label{obj:adaptive_boundary}
+For fixed $h$, construct trees $\mathcal T_N$, multiscale subspaces
+$W_N\subset H_{\mathrm{sf}}$ and rows $\Lambda_N$ adapted to CRT
+boundaries, not to the signs of $\mu$, such that
+\begin{equation}
+\bigl\|P_{W_N}\bigl(A_h-L^{\mathsf T}B_{h,N}L\bigr)P_{W_N}\bigr\|_{\mathrm{op}}
+=o(1),
+\label{eq:obj_first}
+\end{equation}
+with $B_{h,N}$ the variational minimiser, and simultaneously
+\begin{equation}
+\bigl\|P_{W_N^{\perp}}\mu\bigr\|^2=o(N).
+\label{eq:obj_second}
+\end{equation}
+Estimate \eqref{eq:obj_first} is to be proved by reducing all volumetric
+contributions to zero through Theorem~\ref{thm:haar_crt} and controlling
+only the boundary cocycles; \eqref{eq:obj_second} must come from prefix,
+level and squarefree identities, not from probabilistic regularity.
+Together they would give $C_N(h)=o(N)$.
+\end{objective}
+
+\begin{objective}[Variant with central divisor rows]
+\label{obj:central_rows}
+With
+$F_{N,y}=\begin{bmatrix}V_y\\ C_N^{\mathrm{div}}\end{bmatrix}$,
+truncated divisor equations together with centre rows fixed
+independently of the orientations, prove
+\begin{equation}
+J_h^{\mathrm{off}}=F_{N,y}^{\mathsf T}B_{h,N}F_{N,y}+R_{h,N}
+\label{eq:obj_central}
+\end{equation}
+with $B_{h,N}(d,e)=0$ unless $(d,e)\mid h$, prime-by-prime CRT
+structure, $\|B_{h,N}\|=N^{o(1)}$, and
+$\sup_{s\in\{\pm1\}^Z}|s^{\mathsf T}R_{h,N}s|=o(N)$, no definition using
+$s_\mu$ or $C_N(h)$. Since $F_{N,y}s_\mu=0$ by
+Theorem~\ref{thm:mobius_line}, this gives
+$s_\mu^{\mathsf T}J_h^{\mathrm{off}}s_\mu=o(N)$; combined with the
+independent intrablock objective
+$\sum_j\sum_{n,n+h\in E_j}\mu(n)\mu(n+h)=o(N)$ it gives $C_N(h)=o(N)$.
+\end{objective}
+
+\subsection{Energy capture and the squeeze}
+\label{subsec:squeeze}
+
+\begin{proposition}[Exact energy of a leaf projection]
+\label{prop:leaf_energy}
+Let $W\subset H_{\mathrm{sf}}$ be the space of vectors constant on the
+leaves $I$ of a partition of $\{1,\dots,m\}$ into blocks of consecutive
+indices, with $k_I=|I|$. Then
+\begin{equation}
+\bigl\|P_{W^{\perp}}\mu\bigr\|^2
+=\sum_I\Bigl(k_I-1-\frac{2}{k_I}\sum_{\substack{i<i'\\ i,i'\in I}}
+\mu(a_i)\mu(a_{i'})\Bigr).
+\label{eq:leaf_energy}
+\end{equation}
+Each summand is nonnegative and vanishes if and only if $\mu$ is
+constant on the leaf.
+\end{proposition}
+
+\begin{proof}
+$P_W\mu$ is the leaf average, so, using $\mu(a_i)^2=1$,
+$\|P_W\mu\|^2=\sum_I k_I^{-1}\bigl(\sum_{i\in I}\mu(a_i)\bigr)^2
+=\sum_I\bigl(1+\tfrac{2}{k_I}\sum_{i<i'}\mu(a_i)\mu(a_{i'})\bigr)$;
+subtract from $\|\mu\|^2=\sum_Ik_I$. Nonnegativity and the equality case
+are Cauchy--Schwarz on each leaf.
+\end{proof}
+
+\begin{remark}
+\label{rem:haar_is_leaf}
+The span of the constant and the Haar functions of a truncated tree is
+exactly the space of vectors constant on the leaves of the truncation,
+so Proposition~\ref{prop:leaf_energy} covers every multiscale subspace
+admitted in Objective~\ref{obj:adaptive_boundary}.
+\end{remark}
+
+\begin{corollary}[The squeeze]
+\label{cor:squeeze}
+Condition \eqref{eq:obj_second} holds if and only if
+\begin{equation}
+\sum_I(k_I-1)-\sum_I\frac{2}{k_I}\sum_{\substack{i<i'\\ i,i'\in I}}
+\mu(a_i)\mu(a_{i'})=o(m).
+\label{eq:squeeze}
+\end{equation}
+Consequently:
+\begin{enumerate}[label=(\roman*)]
+\item singleton leaves contribute nothing, so \eqref{eq:obj_second}
+holds trivially when all but $o(m)$ indices lie in singleton leaves; but
+then $W_N$ is essentially all of $H_{\mathrm{sf}}$ and
+\eqref{eq:obj_first} is the full observability problem, subject to
+Theorem~\ref{thm:sublinear_nogo};
+\item on leaves of size $k\ge2$ the condition requires the within-leaf
+correlations of $\mu$ along consecutive squarefree integers to be
+maximal, $\sum_{i<i'}\mu(a_i)\mu(a_{i'})=\binom{k}{2}$ up to $o$ of the
+leaf mass: the opposite of the cancellation the objective is designed to
+establish.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Immediate from \eqref{eq:leaf_energy}.
+\end{proof}
+
+\begin{remark}[Long leaves are excluded unconditionally]
+\label{rem:long_leaves}
+For a leaf with $k_I\to\infty$, $\sum_{i\in I}\mu(a_i)$ is the sum of
+$\mu$ over an integer interval of comparable length, since non-squarefree
+integers contribute zero. For partitions to which the short-interval
+estimate of \cite{MatomakiRadziwill2016} applies, in particular on
+average over the offset of a grid, these sums are $o(k_I)$ in mean
+square, hence $\|P_W\mu\|^2=o(m)$ and \eqref{eq:obj_second} fails by
+the full amount. The input is used here only to refute.
+\end{remark}
+
+\begin{warning}
+\label{warn:adaptive_objective_superseded}
+Objective~\ref{obj:adaptive_boundary} is superseded as stated. Its
+capture condition cannot be met by a subspace built independently of the
+signs of $\mu$ except by taking essentially all of $H_{\mathrm{sf}}$,
+and on leaves of size at least two it demands correlations of the wrong
+sign. In addition, the claimed implication silently requires a norm
+condition: writing $\mu=\mu_W+\mu_\perp$,
+\begin{equation}
+\mu_W^{\mathsf T}L^{\mathsf T}BL\,\mu_W=(L\mu_W)^{\mathsf T}B(L\mu_W),
+\qquad L\mu_W=L\mu-L\mu_\perp,\qquad L\mu=D_\Lambda\mu\in\{0,e_1\},
+\label{eq:hidden_norm}
+\end{equation}
+because $(D\mu)(r)=\sum_{d\mid r}\mu(d)=\mathbf 1[r=1]$; this term is
+$o(N)$ only if $\|B_{h,N}\|\,\|L\|^2\,\|\mu_\perp\|^2=o(N)$. The Haar--CRT
+vanishing of Theorem~\ref{thm:haar_crt} is unaffected, but it must be
+used without an $L^2$ capture condition.
+\end{warning}
+
+\begin{remark}[What survives]
+\label{rem:what_survives}
+The engine common to both objectives is the annihilation
+$D\mu=e_1$ of \eqref{eq:hidden_norm}. Objective~\ref{obj:adaptive_boundary}
+wrapped it in a capture condition that is self-defeating by
+Corollary~\ref{cor:squeeze}. Objective~\ref{obj:central_rows} uses it
+directly, through $F_{N,y}s_\mu=0$ in Theorem~\ref{thm:mobius_line}, and
+requires uniformity over the fibre rather than capture. It is therefore
+the live target, and the boundary-cocycle estimate of
+Theorem~\ref{thm:haar_crt} should be recast as a tool for bounding the
+remainder $R_{h,N}$ there. Uniformity over all of $V$ is excluded by
+Theorem~\ref{thm:sublinear_nogo}; uniformity over the fibre
+$\{\pm1\}^Z$ is not.
+\end{remark}
+
+\begin{warning}
+\label{warn:new_estimate_required}
+The ordinary correlation $C_N(h)=o(N)$ at fixed $h\ne0$ is open; the
+logarithmically averaged version is known \cite{Tao2016}, building on
+\cite{MatomakiRadziwill2016}. Any inequality that yields $o(N)$
+directly must therefore contain a genuinely new estimate, not a
+conjugation or a rewriting. Remark~\ref{rem:conjugation_nogo} and
+Warning~\ref{warn:path_reading_is_tautological} record two ways of
+failing this test.
+\end{warning}
+
+\section{Negative results and failed routes}
+\label{sec:negative_results}
+
+\begin{remark}
+\label{rem:negative_result_energy_scalar}
+The scalar quadratic energy at a single level carries no local
+information; the defect is the collapse to one number, not the weight.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_height_weighting}
+Statistics built from $M$ alone weight zeros by decaying factors in the
+ordinate and therefore mix heights; no operation on $\log N$ repairs
+this, since $\log N$ is conjugate to differences of ordinates, not to
+ordinates.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_jacobi}
+The excursion decomposition passes to continued fractions and hence to a
+Jacobi matrix \cite{Flajolet1980}, which is real symmetric and lands in
+the orthogonal class, as in Rem.~\ref{rem:symmetry_class_obstruction}.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_topology}
+A cell-complex description of $M$ exists \cite{Bjorner2011} but does not
+reach two-point cancellation: the complex is multiplicative while
+shifted correlations are additive, and no map relates the complex at $n$
+to that at $n+h$.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_density_of_states}
+Any operator whose spectrum is the set of ordinates must reproduce
+$N(T)\sim(T/2\pi)\log(T/2\pi)$; the bounds \ref{item:S1} place
+$\lambda_{\max}(D_N)$ at scale $N^{1/2+o(1)}$. This alone does not imply
+a semicircular density, and the earlier claim to that effect is
+withdrawn. What it does imply is that the first $N$ eigenvalues of $D_N$
+cannot be $\gamma_1,\dots,\gamma_N$, since
+$\gamma_N\sim2\pi N/\log N$ exceeds $C_\varepsilon N^{1/2+\varepsilon}$.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_markov_tree}
+A dyadic tree of midpoints of $|M|$ satisfies Chapman--Kolmogorov, hence
+is Markov in the scale variable; a constraint at a coarse level
+therefore gives no information at finer levels beyond the endpoint
+values, and the degrees of freedom double at each refinement. The
+product structure that makes the tree null computable is exactly the
+property that forbids constraint propagation. This closes the route of
+propagating a short-interval input down the tree. The same applies to
+the Euler factorisation in the multiplicative direction: both natural
+indexings factorise, so neither transports a constraint across scales.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_omega_lower_bound}
+Any hierarchy of bounds on the M\"obius walk must respect
+$M(x)=\Omega_\pm(\sqrt x)$ with explicit constants
+\cite{OdlyzkoteRiele1985}; no $\varepsilon$ in such a hierarchy is
+removable.
+\end{remark}
+
+\begin{remark}
+\label{rem:negative_result_halves_crt}
+Splitting an interval into two halves keeps an $O(1)$ CRT error in each
+half; it does not reduce it. A left--right difference can cancel the main
+term when the lengths agree, but leaves a difference of boundary errors
+of size $O(1)$ with no sign and no uniform cancellation. For halves
+defined in squarefree time the set is no longer an arithmetic interval
+and the mask must be inserted, which makes the CRT factorisation less
+clean, not more.
+\end{remark}
+
+\begin{remark}[The irregular route, closed as a family]
+\label{rem:irregular_family_closed}
+Every divisor-to-shift transfer that uses only $o(N)$ rows of $D$
+(Corollary~\ref{cor:sublinear_quantitative}), compression by prime
+valuations (Proposition~\ref{prop:valuation_nogo}), irregular Haar
+without an additional arithmetic estimate of the boundary cocycles
+(Proposition~\ref{prop:tree_independent}), or separable approximations of
+rank $o(N)$ (Remark~\ref{rem:blind_class_meaning}) has macroscopic
+operator error on the squarefree subspace and cannot imply
+$C_N(h)=o(N)$. The quantitative progress available remains for
+logarithmic averages \cite{Tao2016, Pilatte2023}.
+\end{remark}
+
+\begin{heuristic}
+\label{heur:collective_crt}
+The one door left open inside this family is a collective signed
+cancellation of the CRT boundary error,
+\begin{equation}
+\sum_{d,e}c_dc_e\,\epsilon_{d,e,h},
+\label{eq:collective_crt}
+\end{equation}
+for coefficients tied specifically to $\mu$. Obtaining $o(N)$ for this
+form already requires control of the global parity of large primes,
+which is exactly the content that local factors, central rows and the
+squarefree mask do not contain.
+\end{heuristic}
+
+\section{Open questions}
+\label{sec:open_questions}
+
+\begin{enumerate}[label=(Q\arabic*)]
+\item \label{item:Q1}
+Does $\widehat G$ inherit the tensor factorisation
+\eqref{eq:tensor_factorisation_standing} from $G$? The excursion blocks
+are defined by the zero set of $M$ and respect no multiplicative
+structure, so clean inheritance is not expected; partial inheritance
+restricted to the local factors $L_p$ with small $p$ would be the
+interesting outcome. Everything in
+Sections~\ref{sec:scale_resolved}--\ref{sec:strategy} depends on it.
+\item Prove a norm estimate for the boundary CRT cocycle operator of
+Theorem~\ref{thm:haar_crt}, restricted to adaptive Haar subspaces and
+after extracting the exact local $p$-adic modes of
+Prop.~\ref{prop:local_tables}, respecting
+Warning~\ref{warn:parseval_nogo}. Following
+Warning~\ref{warn:adaptive_objective_superseded}, this estimate is now
+sought as a bound for $R_{h,N}$ in Objective~\ref{obj:central_rows},
+not as the first step of the superseded
+Objective~\ref{obj:adaptive_boundary}.
+\item Sharpen Prop.~\ref{prop:log_exceptional}: is the exceptional set
+actually bounded, or can $\log_2N$ be attained?
+\item Test the prediction that $1/p(1)$ is the minimum of the
+divisor-resolved sine-kernel fraction.
+\item \label{item:Q5}
+Determine the growth of $Z(N)$. Lemma~\ref{lem:left_right} and every
+statement with an $O(hZ)$ error depend on $Z=o(N)$, which is not proved
+here.
+\item Close the non-attained-supremum case of
+Rem.~\ref{rem:extremal_abscissa}.
+\item Decide whether the non-commutative deformation of
+Warning~\ref{warn:dichotomy} escapes \ref{item:S8} in the scaling window
+$\vartheta\asymp\vartheta_c(N)$.
+\end{enumerate}
+
+\section*{Notebook History}
+\label{sec:notebook_history}
+
+Version 1:
+Three-constraint model and exact bridge second moment; reflection fibre
+and the canonical parameter-free null; divisor-defect Gram form pushed
+to orientation bits; blindness theorem; scale-resolved statistic with
+exact mean and variance; negative results.
+
+Version 2:
+Abstract added; introduction restructured into what is proved, what is
+input, and the methodological point; standing results listed with status;
+sine-kernel section rewritten around the non-tautology criterion, with
+three recoveries of the sine-kernel coefficient from measured
+quantities; extremal-abscissa gap narrowed.
+
+Version 3:
+Operator layer added. Three spaces and their information ledger;
+divisor--shift boundary lemma with interval mass bound $1$; exact CRT
+pullback; algebraic Haar on arbitrary trees with exact vanishing of the
+volumetric CRT term and parent--children cocycle additivity; exact
+observability criterion with optimal constant, operator-norm dual and
+semidefinite formulation; no-go for sublinear divisor rows; extension of
+the blindness theorem to half-constant kernels, with the shift shown to
+escape it; central dichotomy lemma; triangular central divisor matrix
+with the logarithmic exceptional set, isolating the M\"obius line;
+intrablock second-difference and aggregate identities, discrete coarea,
+and a counterexample showing the centre does not determine a lag; exact
+local tables at each prime; collapse theorem for multiplicative diagonal
+weights and the resulting dichotomy; target objectives stated.
+
+Version 4:
+Audit of the target objective. Conditioning of the two-point expansion
+on central data; redundancy of quarter and octave evaluations; exact
+leaf-energy identity for leaf projections in the squarefree space; the
+squeeze corollary showing that the capture condition of the adaptive
+boundary objective forces essentially the whole squarefree space or
+maximal positive within-leaf correlation; exclusion of long leaves by
+short-interval cancellation; the hidden norm condition in the claimed
+implication. The adaptive boundary objective is marked superseded; the
+central-row objective, built on $D\mu=e_1$ and uniformity over the
+fibre, is the live target.
+
+Version 5:
+External audit incorporated after line-by-line verification. Pushed form
+corrected to $F^{\mathsf T}GF$; single orientation basis; conditioning on
+$M(N)$ made explicit; single-reflection parity corrected; exceptional-set
+proof started at $z_1=2$; semicircle claim and general weight dichotomy
+withdrawn; crossover conjecture withdrawn by the gauge obstruction, with a
+flux question and a crossover-scale heuristic in its place. New: the
+energy kernel as Montgomery's weight at $\alpha=0$ with explicit density
+and tail; exact fourth-order relation between the Hermitian collision
+constant and the M\"obius energy constant; $\mathcal A_0'$ as a discrete
+L\'evy area, with its increment and the function $F(s)$; logarithmic
+energy as an aggregate of shifted correlations; compressed selection to
+at most $2N$ orientations and unique selection after
+$\lfloor\log_2N\rfloor+1$ further rows.
+
+Version 6:
+Uncompressed irregular route executed. Boundary lemma restricted to the
+interior operator, with the boundary rows made explicit; maximal rank of
+the interior operator; exact $1\to1$, $\infty\to\infty$ and
+Hilbert--Schmidt norms; residue-boundary form of each column with the
+optimal variation bound; tree-independent Haar energy; quantitative
+observability no-go with constant $\mathfrak S_h/4$; signed local sums
+and the Mirsky expansion; failure of the shift to descend to valuations;
+maximal blind class as the additively separable kernels, with the
+distance of the shift and the Eckart--Young bound; global and block
+second-difference identities with explicit boundary terms. The irregular
+route is closed as a family; the collective CRT cancellation is recorded
+as the remaining heuristic.
+
+\begin{thebibliography}{99}
+
+\bibitem{AtasEtAl2013}
+Y.~Y.~Atas, E.~Bogomolny, O.~Giraud and G.~Roux,
+\emph{Distribution of the ratio of consecutive level spacings in random
+matrix ensembles},
+Physical Review Letters \textbf{110} (2013), 084101.
+
+\bibitem{Bjorner2011}
+A.~Bj\"orner,
+\emph{A cell complex in number theory},
+arXiv:1101.5704.
+
+\bibitem{Flajolet1980}
+P.~Flajolet,
+\emph{Combinatorial aspects of continued fractions},
+Discrete Mathematics \textbf{32} (1980), 125--161.
+
+\bibitem{Gonek1989}
+S.~M.~Gonek,
+\emph{On negative moments of the Riemann zeta-function},
+Mathematika \textbf{36} (1989), 71--88.
+
+\bibitem{Johansson1998}
+K.~Johansson,
+\emph{On fluctuations of eigenvalues of random Hermitian matrices},
+Duke Mathematical Journal \textbf{91} (1998), 151--204.
+
+\bibitem{Lagarias2002}
+J.~C.~Lagarias,
+\emph{An elementary problem equivalent to the Riemann hypothesis},
+American Mathematical Monthly \textbf{109} (2002), 534--543.
+
+\bibitem{MatomakiRadziwill2016}
+K.~Matom\"aki and M.~Radziwi\l{}\l{},
+\emph{Multiplicative functions in short intervals},
+Annals of Mathematics \textbf{183} (2016), 1015--1056.
+
+\bibitem{Mehta2004}
+M.~L.~Mehta,
+\emph{Random Matrices}, third edition,
+Elsevier, Amsterdam, 2004.
+
+\bibitem{Mirsky1949}
+L.~Mirsky,
+\emph{Arithmetical pattern problems relating to divisibility by $r$th
+powers},
+Proceedings of the London Mathematical Society \textbf{50} (1949),
+497--508.
+
+\bibitem{Montgomery1973}
+H.~L.~Montgomery,
+\emph{The pair correlation of zeros of the zeta function},
+in: Analytic Number Theory,
+Proceedings of Symposia in Pure Mathematics \textbf{24},
+American Mathematical Society, 1973, 181--193.
+
+\bibitem{Odlyzko1987}
+A.~M.~Odlyzko,
+\emph{On the distribution of spacings between zeros of the zeta
+function},
+Mathematics of Computation \textbf{48} (1987), 273--308.
+
+\bibitem{OdlyzkoteRiele1985}
+A.~M.~Odlyzko and H.~J.~J.~te Riele,
+\emph{Disproof of the Mertens conjecture},
+Journal f\"ur die reine und angewandte Mathematik \textbf{357} (1985),
+138--160.
+
+\bibitem{PandeyMehta1983}
+A.~Pandey and M.~L.~Mehta,
+\emph{Gaussian ensembles of random Hermitian matrices intermediate
+between orthogonal and unitary ones},
+Communications in Mathematical Physics \textbf{87} (1983), 449--468.
+
+\bibitem{Pilatte2023}
+C.~Pilatte,
+\emph{Improved bounds for the two-point logarithmic Chowla conjecture},
+arXiv preprint, 2023.
+
+\bibitem{Robin1984}
+G.~Robin,
+\emph{Grandes valeurs de la fonction somme des diviseurs et hypoth\`ese
+de Riemann},
+Journal de Math\'ematiques Pures et Appliqu\'ees \textbf{63} (1984),
+187--213.
+
+\bibitem{Tao2016}
+T.~Tao,
+\emph{The logarithmically averaged Chowla and Elliott conjectures for
+two-point correlations},
+Forum of Mathematics, Pi \textbf{4} (2016), e8.
+
+\bibitem{Titchmarsh1986}
+E.~C.~Titchmarsh,
+\emph{The Theory of the Riemann Zeta-Function}, second edition,
+revised by D.~R.~Heath-Brown,
+Oxford University Press, 1986.
+
+\end{thebibliography}
+
+\label{sec:bibliography}
+
+\end{document}

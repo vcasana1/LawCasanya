@@ -1,0 +1,1262 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage[no-math]{fontspec}
+\fi
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[pagebackref=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{pdfcomment}
+\usepackage{graphicx}
+\graphicspath{{figures/}{./}}
+
+% Hover previews for internal references (no layout change).
+\makeatletter
+\let\CG@origref\ref
+\let\CG@origeqref\eqref
+\newcommand{\CG@gettip}[1]{\@ifundefined{CGTip@#1}{Reference: #1}{\csname CGTip@#1\endcsname}}
+\DeclareRobustCommand{\CGref}[1]{\pdftooltip{\CG@origref{#1}}{\CG@gettip{#1}}}
+\DeclareRobustCommand{\CGeqref}[1]{\pdftooltip{\CG@origeqref{#1}}{\CG@gettip{#1}}}
+\makeatother
+% Tooltip texts shown when hovering over internal references.
+\makeatletter
+\expandafter\gdef\csname CGTip@sec:intro\endcsname{Section 1: Introduction (p. 2)}
+\expandafter\gdef\csname CGTip@sec:setting\endcsname{Section 2: Setting (p. 2)}
+\expandafter\gdef\csname CGTip@eq:NRVM\endcsname{Eq. (2.1), p. 2: N\_RVM(t):=t/(2pi)logt/(2pi e)+7/8, N\_RVM'(t)=1/(2pi)logt/(2pi) (t>0).}
+\expandafter\gdef\csname CGTip@eq:Ntau-floor\endcsname{Eq. (2.2), p. 2: n\_RVM(t)=floor(N\_RVM(t)+1/2), |n\_RVM(t)-N\_RVM(t)|<=1/2 (t>=2pi).}
+\expandafter\gdef\csname CGTip@def:lists\endcsname{Definition 2.1 (Admissible lists) (p. 2): For C>0, a list =(kappa\_k)\_k>=1 is C-admissible if it is real and nondecreasing, kappa\_1>=2pi, and |kappa\_k-tau\_k|<= C for all k. Put N\_(t):=no.k:kappa\_k<= t (with multiplicity) and P\_(s):=prod\_k>=1(1+(q(s))/(1/4+kappa\_k\textasciicircum{}2)), zeta\_:=P\_G. The clock list =(tau\_k) gives zeta\_=zeta\_RVM.}
+\expandafter\gdef\csname CGTip@eq:Pk\endcsname{Eq. (2.3), p. 2: P\_(s):=prod\_k>=1(1+(q(s))/(1/4+kappa\_k\textasciicircum{}2)), zeta\_:=P\_G.}
+\expandafter\gdef\csname CGTip@eq:rung\endcsname{Eq. (2.4), p. 3: sum\_k>=1cos(kappa\_ku)+sum\_n>=2 a\_n delta(u-log n)= k(u) in D'(0,inf),}
+\expandafter\gdef\csname CGTip@eq:residual\endcsname{Eq. (2.5), p. 3: (, a),varphi:=sum\_k>=1 c\_varphi(kappa\_k)+sum\_n>=2 a\_nvarphi(log n)- k,varphi, c\_varphi(t):=int\_0\textasciicircum{}infvarphi(u)cos(tu) du .}
+\expandafter\gdef\csname CGTip@sec:routeB\endcsname{Section 3: Route B: compactness, selection and the canonical box (p. 3)}
+\expandafter\gdef\csname CGTip@eq:rho\endcsname{Eq. (3.1), p. 3: s\_m(, a):=max\_varphi in T\_m|(, a),varphi| .}
+\expandafter\gdef\csname CGTip@def:B\endcsname{Definition 3.1 (Statement B) (p. 3): Statement B(C, M) says that there are finite sections (\textasciicircum{}(m), a\textasciicircum{}(m)) in K(C, M) with s\_m(\textasciicircum{}(m), a\textasciicircum{}(m))->0.}
+\expandafter\gdef\csname CGTip@lem:canonical-box\endcsname{Lemma 3.2 (Canonical box of the exact solution) (p. 3): Let M\_*:=max\_n>=2Lambda(n)/(2 n). Then M\_*=log7/(27)=0.367742...<1/e. If condition (D) holds, the pair (, a\textasciicircum{}zeta), with a\textasciicircum{}zeta\_n:=Lambda(n)/(2 n), solves CGeqrefeq:rung and lies in K(C\_eta, M\_*), where C\_eta is the constant of lem:bounded-displacement.}
+\expandafter\gdef\csname CGTip@cor:D-implies-B\endcsname{Corollary 3.3 ((D) implies B) (p. 3): If (D) holds, then B(C, M) holds for every C>= C\_eta and M>= M\_*.}
+\expandafter\gdef\csname CGTip@prop:compactness\endcsname{Proposition 3.4 (Compactness and passage to the limit) (p. 4): Let (\textasciicircum{}(m), a\textasciicircum{}(m)) in K(C, M) with s\_m(\textasciicircum{}(m), a\textasciicircum{}(m))->0. Then a subsequence converges coordinatewise to some (, a) in K(C, M), and every such limit satisfies R(, a)=0 in D'(0,inf).}
+\expandafter\gdef\csname CGTip@hyp:U\endcsname{Hypothesis 3.5 (Uniqueness in the box) (p. 4): U(C, M): the only (, a) in K(C, M) with R(, a)=0 is (, a\textasciicircum{}zeta).}
+\expandafter\gdef\csname CGTip@rem:U-status\endcsname{Remark 3.6 (What is proved and what is open in U) (p. 4): thm:free-masses proves uniqueness for lists in O. Besides the tube and the ordering, O (eq:list-space) carries a third condition, |int(N\_-N\_RVM)|<= Clog X, and a coordinatewise limit of sections does not inherit it. Hypothesis CGrefhyp:U is therefore the statement that thm:free-masses holds for e...}
+\expandafter\gdef\csname CGTip@cor:selection\endcsname{Corollary 3.7 (Selection of the zeta list) (p. 4): Assume B(C, M) and U(C, M), and let (\textasciicircum{}(m), a\textasciicircum{}(m)) be any sequence in K(C, M) with s\_m->0. Then the whole sequence converges coordinatewise to (, a\textasciicircum{}zeta). In particular R(, a\textasciicircum{}zeta)=0, that is, (D) holds.}
+\expandafter\gdef\csname CGTip@rem:B-status\endcsname{Remark 3.8 (Logical status of route B) (p. 4): Corollaries CGrefcor:D-implies-B and CGrefcor:selection give (D) B(C\_eta, M\_*) and [B(C, M) and U(C, M)] (D). Route B therefore consists of two independent pieces. The first is existence, B, which is not weaker than (D). The second is uniqueness without the third condition of O, Hypothesis CGrefh...}
+\expandafter\gdef\csname CGTip@sec:prescribed\endcsname{Section 3.1: Route B with prescribed von Mangoldt masses (p. 5)}
+\expandafter\gdef\csname CGTip@eq:laplace-def\endcsname{Eq. (3.2), p. 5: LT(s):=, j(u) e\textasciicircum{}-zu,}
+\expandafter\gdef\csname CGTip@lem:archimedean\endcsname{Lemma 3.9 (The Archimedean distribution) (p. 5): Let g(u):=e\textasciicircum{}-u/2e\textasciicircum{}2u-1-1/(2u) for u>0; g is bounded, g(0\textasciicircum{}+)=-3/4, and g(u)=O(e\textasciicircum{}-u/2). Put c\_K:=-1/4log(2pi e\textasciicircum{}gamma\_E), gamma\_E Euler's constant, and K:=1/2e\textasciicircum{}u/21\_+-1/2 g 1\_+-1/4 fp (1\_+)/u+c\_K delta\_0 . Then K is a distribution of order 1 supported in [0,inf), its restriction to (0,inf) is the fu...}
+\expandafter\gdef\csname CGTip@eq:K-dist\endcsname{Eq. (3.3), p. 5: K:=1/2e\textasciicircum{}u/21\_+-1/2 g 1\_+-1/4 fp (1\_+)/u+c\_K delta\_0 .}
+\expandafter\gdef\csname CGTip@eq:LK\endcsname{Eq. (3.4), p. 5: LK(s)=1/2 (G')/G(s) (Re s>1).}
+\expandafter\gdef\csname CGTip@eq:aux-12\endcsname{Eq. (3.5), p. 5: 1/2(Gamma')/(Gamma)(s/2)=int\_0\textasciicircum{}inf(e\textasciicircum{}-2u2u-e\textasciicircum{}-su1-e\textasciicircum{}-2u)du =int\_0\textasciicircum{}inf(e\textasciicircum{}-2u2u-e\textasciicircum{}-zue\textasciicircum{}-u/2e\textasciicircum{}2u-1)du-1/s,}
+\expandafter\gdef\csname CGTip@eq:aux-13\endcsname{Eq. (3.6), p. 5: 1/2(G')/G(s)=1/(2s)+1/(2(s-1))-1/4logpi+1/4(Gamma')/(Gamma)(s/2) =L(1/2e\textasciicircum{}u/21\_+)(s)-1/2L(g1\_+)(s)+1/4logz/2-1/4logpi .}
+\expandafter\gdef\csname CGTip@lem:laplace\endcsname{Lemma 3.10 (Laplace transform of the residual) (p. 5): Let be C-admissible and put H\_(u):=sum\_kkappa\_k\textasciicircum{}-2cos(kappa\_ku), which converges absolutely and uniformly on R since H\_(0)=sum\_kkappa\_k\textasciicircum{}-2<inf, and S\_:=-d\_u\textasciicircum{}2(H\_1\_+)+H\_(0) delta\_0', A\_zeta:=sum\_n>=2 a\textasciicircum{}zeta\_n delta\_log n, E\_:=S\_+A\_zeta-K . Then E\_ is a distribution of order at most 2, supported in...}
+\expandafter\gdef\csname CGTip@eq:S-A-dist\endcsname{Eq. (3.7), p. 6: S\_:=-d\_u\textasciicircum{}2(H\_1\_+)+H\_(0) delta\_0', A\_zeta:=sum\_n>=2 a\textasciicircum{}zeta\_n delta\_log n, E\_:=S\_+A\_zeta-K .}
+\expandafter\gdef\csname CGTip@eq:LR\endcsname{Eq. (3.8), p. 6: LE\_(s)=hat R(s)=1/2(P\_'P\_-(xi')/(xi))(s), xi:=1/2Gzeta ,}
+\expandafter\gdef\csname CGTip@eq:aux-14\endcsname{Eq. (3.9), p. 6: LS\_(s)=-z\textasciicircum{}2sum\_kz/(kappa\_k\textasciicircum{}2(z\textasciicircum{}2+kappa\_k\textasciicircum{}2))+zsum\_k1/(kappa\_k\textasciicircum{}2) =sum\_k(z)/(z\textasciicircum{}2+kappa\_k\textasciicircum{}2)=1/2P\_'P\_(s),}
+\expandafter\gdef\csname CGTip@rem:boundary-term\endcsname{Remark 3.11 (The boundary term) (p. 6): Without the correction H\_(0)delta\_0' in CGeqrefeq:S-A-dist, the transform of -d\_u\textasciicircum{}2(H\_1\_+) is 1/2P'\_/P\_-(s-1/2)H\_(0): the second derivative of the cut-off function produces H\_(0)delta\_0'=H\_(0)delta\_0'. Either normalisation gives the same restriction to (0,inf) and differs by a polynomial in s, wh...}
+\expandafter\gdef\csname CGTip@prop:prescribed-uniqueness\endcsname{Proposition 3.12 (Uniqueness with prescribed masses) (p. 6): Let be C-admissible for some C, and suppose R(, a\textasciicircum{}zeta)=0 in D'(0,inf). Then all nontrivial zeros of zeta lie on Re s=1/2, and =.}
+\expandafter\gdef\csname CGTip@def:Bprime\endcsname{Definition 3.13 (Statement B') (p. 7): Statement B'(C) says that there are C-admissible lists \textasciicircum{}(m), each equal to the clock beyond some finite index, with s\_m(\textasciicircum{}(m), a\textasciicircum{}zeta)->0.}
+\expandafter\gdef\csname CGTip@cor:Bprime\endcsname{Corollary 3.14 (Route B') (p. 7): If B'(C) holds for some C, then every sequence as in Definition CGrefdef:Bprime converges coordinatewise to , and all nontrivial zeros of zeta lie on Re s=1/2. If all nontrivial zeros of zeta lie on Re s=1/2, then B'(C) holds for every C>= C\_eta. Hence the Riemann hypothesis is equivalent to B'(C...}
+\expandafter\gdef\csname CGTip@rem:prescribed\endcsname{Remark 3.15 (What prescribing the masses changes, and what it does not) (p. 7): Hypothesis CGrefhyp:U is no longer needed: uniqueness holds for every list at bounded distance from the clock, not only in O, and it follows from Hadamard's theorem and the functional equation instead of thm:free-masses. Route B' has a single open piece, the existence statement B', which by Corol...}
+\expandafter\gdef\csname CGTip@sec:staged\endcsname{Section 3.2: Staged construction: a certificate theorem and a graded extension (p. 7)}
+\expandafter\gdef\csname CGTip@def:staged\endcsname{Definition 3.16 (Staged sections) (p. 7): Fix u\textasciicircum{}*\_1<u\textasciicircum{}*\_2<*s->inf, finite test sets T\_1\_2s supported in (0,u\textasciicircum{}*\_m) with dense union as in Section CGrefsec:routeB, t\_m:=|T\_m|, and k\textasciicircum{}*\_m->inf. Stage m starts from a list \textasciicircum{}(m,0) that equals the clock beyond some finite index, moves the coordinates k<= k\textasciicircum{}*\_m by x in R\textasciicircum{}k\textasciicircum{}*\_m, and has masses a\textasciicircum{}z...}
+\expandafter\gdef\csname CGTip@eq:Fm\endcsname{Eq. (3.10), p. 7: F\_m: R\textasciicircum{}k\textasciicircum{}*\_m-> R\textasciicircum{}t\_m, F\_m(x)\_varphi:=(\textasciicircum{}(m,0)+x, a\textasciicircum{}zeta),varphi (varphi in T\_m),}
+\expandafter\gdef\csname CGTip@eq:jacobian\endcsname{Eq. (3.11), p. 7: ( J\_m)\_varphi,k=d\_x\_k F\_m(0)\_varphi=-int\_0\textasciicircum{}infvarphi(u) usin(kappa\textasciicircum{}(m,0)\_ku) du (varphi in T\_m, k<= k\textasciicircum{}*\_m).}
+\expandafter\gdef\csname CGTip@eq:eta-H\endcsname{Eq. (3.12), p. 8: h\_m:=| F\_m(0)|\_inf, H\_m:=k\textasciicircum{}*\_mmax\_varphi in T\_mint\_0\textasciicircum{}inf|varphi(u)| u\textasciicircum{}2 du .}
+\expandafter\gdef\csname CGTip@lem:matching\endcsname{Lemma 3.17 (Monotone matching) (p. 8): Let (a\_k)\_k>=1 be real with |a\_k-tau\_k|<= C for all k, and let (a\_(k)) be its nondecreasing rearrangement. Then |a\_(k)-tau\_k|<= C for all k. If moreover a\_k=tau\_k for k>k\textasciicircum{}*, then a\_(k)=tau\_k for all k>k\textasciicircum{}*+j, where j:=no.k>k\textasciicircum{}*:tau\_k<=tau\_K+C<inf.}
+\expandafter\gdef\csname CGTip@lem:lipschitz\endcsname{Lemma 3.18 (Lipschitz bound for the Jacobian) (p. 8): For all x,x' in R\textasciicircum{}k\textasciicircum{}*\_m, |D F\_m(x)-D F\_m(x')|\_inf->inf<= H\_m|x-x'|\_inf, and | F\_m(x)- F\_m(0)- J\_mx|\_inf<=1/2 H\_m|x|\_inf\textasciicircum{}2 .}
+\expandafter\gdef\csname CGTip@eq:taylor\endcsname{Eq. (3.13), p. 8: | F\_m(x)- F\_m(0)- J\_mx|\_inf<=1/2 H\_m|x|\_inf\textasciicircum{}2 .}
+\expandafter\gdef\csname CGTip@thm:certificate\endcsname{Theorem 3.19 (Certificate for one stage) (p. 8): Suppose J\_m has a right inverse Q\_m: R\textasciicircum{}t\_m-> R\textasciicircum{}k\textasciicircum{}*\_m, J\_m Q\_m=I\_t\_m, with | Q\_m|\_inf->inf<= L\_m, and l\_m:=2 L\_m\textasciicircum{}2 H\_m h\_m<1 . Then the map T\_m(y):=y- F\_m( Q\_my) is a contraction of the ball |y|\_inf<=2 h\_m R\textasciicircum{}t\_m with constant l\_m, and x\_*:= Q\_my\_*, y\_* its fixed point, satisfies F\_m(x\_*)=0, |x\_*|\_...}
+\expandafter\gdef\csname CGTip@eq:Am\endcsname{Eq. (), p. : l\_m:=2 L\_m\textasciicircum{}2 H\_m h\_m<1 .}
+\expandafter\gdef\csname CGTip@eq:cert-conclusion\endcsname{Eq. (3.14), p. 8: F\_m(x\_*)=0, |x\_*|\_inf<=2 L\_m h\_m .}
+\expandafter\gdef\csname CGTip@thm:staged\endcsname{Theorem 3.20 (Staged certificate implies route B') (p. 8): Let C<tau\_1-2pi. Start at \textasciicircum{}(1,0):= and, for m>=1, let \textasciicircum{}(m) be the nondecreasing rearrangement of \textasciicircum{}(m,0)+x\_*\textasciicircum{}(m) given by Theorem CGrefthm:certificate, and \textasciicircum{}(m+1,0):=\textasciicircum{}(m). Suppose up(A\_m) holds for every m and sup\_m>=1 sum\_j<= m2 L\_j h\_j<= C . Then every \textasciicircum{}(m) is C-admissible and equals the clock b...}
+\expandafter\gdef\csname CGTip@eq:B\endcsname{Eq. (), p. : sup\_m>=1 sum\_j<= m2 L\_j h\_j<= C .}
+\expandafter\gdef\csname CGTip@rem:certificate-status\endcsname{Remark 3.21 (What the certificate theorem does and does not do) (p. 9): Theorem CGrefthm:staged replaces the extension lemma of the previous version (there Hypothesis E) by two computable quantities per stage, l\_m=2 L\_m\textasciicircum{}2 H\_m h\_m and 2 L\_m h\_m. It requires no contraction factor q, no separate control of the perturbation of old tests, and no prior ``entry into the bas...}
+\expandafter\gdef\csname CGTip@prop:graded\endcsname{Proposition 3.22 (Graded extension) (p. 9): Let s\_m>=0 satisfy s\_m+1<= q\_m s\_m+ h\_m with 0<= q\_m<=1, prod\_m>=1q\_m=0 and sum\_m h\_m<inf. Then s\_m->0. If the lists \textasciicircum{}(m) producing s\_m= s\_m(\textasciicircum{}(m), a\textasciicircum{}zeta) are C-admissible sections for a fixed C, then B'(C) holds.}
+\expandafter\gdef\csname CGTip@rem:graded-status\endcsname{Remark 3.23 (Tube budget, and the two geometries) (p. 9): In Proposition CGrefprop:graded the tube |kappa\textasciicircum{}(m)\_k-tau\_k|<= C, uniform in m, is a separate hypothesis: summability of the coordinate increments sum\_m|kappa\textasciicircum{}(m+1)\_k-kappa\textasciicircum{}(m)\_k| gives convergence of each coordinate but not that the limit stays in a prescribed tube, so a construction must carry ...}
+\expandafter\gdef\csname CGTip@heur:frame\endcsname{Heuristic 3.24 (Frame bound from exponential sums of the clock) (p. 9): In the opposite regime k\textasciicircum{}*\_m t\_m one may take Q\_m:= J\_m\textasciicircum{} T( J\_m J\_m\textasciicircum{} T)\textasciicircum{}-1. If |1/(K\_m) J\_m J\_m\textasciicircum{} T-D|\_inf->inf<d\_- for a diagonal D>= d\_-I, and |( J\_m)\_varphi,k|<=a\_J, then L\_m<= t\_mA/(k\textasciicircum{}*\_m(d\_--epsilon))=O(t\_m/k\textasciicircum{}*\_m) and L\_m\textasciicircum{}2 H\_m=O(t\_m\textasciicircum{}2B/k\textasciicircum{}*\_m) with B\_0:=max\_|varphi|u\textasciicircum{}2, so (A\_m) becomes k\textasciicircum{}*\_m...}
+\expandafter\gdef\csname CGTip@sec:gonek\endcsname{Section 3.3: Explicit lists in the tube: Gonek's symmetrised Euler products (p. 10)}
+\expandafter\gdef\csname CGTip@eq:alphaX\endcsname{Eq. (3.15), p. 10: p\_X(t):= P\_X(1/2+it)=-sum\_n<= X\textasciicircum{}2Lambda\_X(n)sin(tlog n) nlog n,}
+\expandafter\gdef\csname CGTip@eq:aux-16\endcsname{Eq. (3.16), p. 10: m\_X:=sum\_n<= X\textasciicircum{}2Lambda\_X(n) nlog n, n\_X:=sum\_n<= X\textasciicircum{}2Lambda\_X(n) n,}
+\expandafter\gdef\csname CGTip@eq:gonek-phase\endcsname{Eq. (3.17), p. 10: \_X(t):=vartheta(t)+p\_X(t) in 2+pi Z .}
+\expandafter\gdef\csname CGTip@lem:gonek-tube\endcsname{Lemma 3.25 (Gonek lists lie in a tube around the clock) (p. 10): Fix X>=2 and put t\_X:=max(2pi e\textasciicircum{}2n\_X+2, t\_1), where t\_1 is such that |vartheta'(t)-1/2logt/(2pi)|<=1/2 for t>= t\_1. Then \_X is strictly increasing on [t\_X,inf) with \_X'>=1/2, the solutions of CGeqrefeq:gonek-phase in [t\_X,inf) form a strictly increasing sequence t\_1\textasciicircum{}(X)<t\_2\textasciicircum{}(X)<*s, each a simple ...}
+\expandafter\gdef\csname CGTip@eq:gonek-list\endcsname{Eq. (3.18), p. 10: kappa\textasciicircum{}(X)\_k:= tau\_k, k<= j\_X, t\textasciicircum{}(X)\_k-j\_X, k>j\_X,}
+\expandafter\gdef\csname CGTip@eq:gonek-tube\endcsname{Eq. (3.19), p. 10: |kappa\textasciicircum{}(X)\_k-tau\_k|<=2m\_X+o(1)log(tau\_k/2pi) (k->inf).}
+\expandafter\gdef\csname CGTip@eq:aux-15\endcsname{Eq. (3.20), p. 11: N\_RVM(kappa\textasciicircum{}(X)\_k)=k+1/2-p\_X(kappa\textasciicircum{}(X)\_k)pi+r\_vartheta(kappa\textasciicircum{}(X)\_k),}
+\expandafter\gdef\csname CGTip@eq:aux-17\endcsname{Eq. (3.21), p. 11: |N\_RVM(kappa\textasciicircum{}(X)\_k)-N\_RVM(tau\_k)|<=m\_Xpi+c\_rkappa\textasciicircum{}(X)\_k}
+\expandafter\gdef\csname CGTip@rem:gonek-status\endcsname{Remark 3.26 (What the Gonek lists give and what remains) (p. 11): The lists \textasciicircum{}(X) use the primes up to X\textasciicircum{}2 and the clock, and nothing about the zeros of zeta. Their prime side is built in: formally, sum\_kdelta(t-kappa\textasciicircum{}(X)\_k)=\_X'(t)pi[1+2sum\_j>=1(-1)\textasciicircum{}jcos(2j\_X(t))] where \_X'>0, and the j=0 term carries p\_X'/pi=-1\_n<= X\textasciicircum{}2Lambda\_X(n)n\textasciicircum{}-1/2cos(tlog n), whose cosine ...}
+\expandafter\gdef\csname CGTip@sec:apriori\endcsname{Section 4: An a priori bound for quasi-solutions (p. 11)}
+\expandafter\gdef\csname CGTip@def:laplace-residual\endcsname{Definition 4.1 (Laplace residual) (p. 11): For Re s>1 put hat R(s):=1/2 P\_'P\_(s)-1/2 (G')/(G)(s)+sum\_n=2\textasciicircum{}n\textasciicircum{}* a\_n n\textasciicircum{}1/2-s. For T>=0 put E(T):=int\_-T\textasciicircum{}T|hat R(2+iv)| dv, upsilon:=sup\_T>=2( E(T))/(log T) in [0,inf]. Since int\_0\textasciicircum{}inf e\textasciicircum{}-(s-1/2)ucos(kappa u) du=(s-1/2)/((s-1/2)\textasciicircum{}2+kappa\textasciicircum{}2)=1/2d/(ds)log(1+(q(s))/(1/4+kappa\textasciicircum{}2)) and int\_0\textasciicircum{}inf e\textasciicircum{}-(s-...}
+\expandafter\gdef\csname CGTip@eq:Rhat\endcsname{Eq. (4.1), p. 11: hat R(s):=1/2 P\_'P\_(s)-1/2 (G')/(G)(s)+sum\_n=2\textasciicircum{}n\textasciicircum{}* a\_n n\textasciicircum{}1/2-s.}
+\expandafter\gdef\csname CGTip@eq:E\endcsname{Eq. (4.2), p. 11: E(T):=int\_-T\textasciicircum{}T|hat R(2+iv)| dv, upsilon:=sup\_T>=2( E(T))/(log T) in [0,inf].}
+\expandafter\gdef\csname CGTip@eq:beta\endcsname{Eq. (4.3), p. 12: B(C):=sum\_k>=1 sup\_x in [max(tau\_k-C,2pi), tau\_k+C] sup\_s in J|f(x;s)-f(tau\_k;s)| .}
+\expandafter\gdef\csname CGTip@lem:PL\endcsname{Lemma 4.2 (Phragm'en--Lindel"of, two forms) (p. 12): up(a) Let S:=l\_1<=Re s<=l\_2, Im s>= t\_1 have width a:=l\_2-l\_1. Let u be upper semicontinuous on S and subharmonic in its interior, with u<= M\_0 on d S and u(s)<= A\_0e\textasciicircum{}cIm s for some c<pi/a. Then u<= M\_0 on S.; up(b) Let g be holomorphic in Re s>1, continuous on Re s>=2, with |g|<=1 on Re s=2 and ...}
+\expandafter\gdef\csname CGTip@lem:factor\endcsname{Lemma 4.3 (The Dirichlet factor) (p. 12): Put D\_ a(s):=sum\_n=2\textasciicircum{}n\textasciicircum{}*(2 a\_n)/(log n)n\textasciicircum{}1/2-s and Y:=zeta\_e\textasciicircum{}-D\_ a. Then Y is holomorphic and zero-free in Re s>1, and |D\_ a|<= Mc\_ on Re s>=2. For the branch of log Y that is real on (1,inf), (log Y)'=2 hat R, |log Y(2)|<= B\_0:=|logzeta\_RVM(2)|+B(C)+ Mc\_, and, for all real t, |log Y(2+it)|<= B\_0...}
+\expandafter\gdef\csname CGTip@eq:logY-deriv\endcsname{Eq. (4.4), p. 12: (log Y)'=2 hat R, |log Y(2)|<= B\_0:=|logzeta\_RVM(2)|+B(C)+ Mc\_,}
+\expandafter\gdef\csname CGTip@eq:line\endcsname{Eq. (4.5), p. 12: |log Y(2+it)|<= B\_0+ E(|t|)<= B\_0+(2+|t|).}
+\expandafter\gdef\csname CGTip@lem:halfplane\endcsname{Lemma 4.4 (Bound on the half-plane) (p. 12): With W:=log|zeta\_|=log|P\_|-log|G| and B\_1:= B\_0+(22), B\_2:= B\_1+ Mc\_, for Re s>=2, |log|Y(s)||<= B\_1+|s-1|, | W(s)|<= B\_2+|s-1| .}
+\expandafter\gdef\csname CGTip@eq:halfplane\endcsname{Eq. (4.6), p. 12: |log|Y(s)||<= B\_1+|s-1|, | W(s)|<= B\_2+|s-1| .}
+\expandafter\gdef\csname CGTip@lem:strip\endcsname{Lemma 4.5 (Bound on the half-strip) (p. 13): Let S:=-1<=Re s<=2, Im s>=1 and B\_3:=max( B\_2+3/4log2, c\_tau+B(C)). Then W(s)<= B\_3+(3/2+upsilon)log|s+2| (s in S).}
+\expandafter\gdef\csname CGTip@eq:strip\endcsname{Eq. (4.7), p. 13: W(s)<= B\_3+(3/2+upsilon)log|s+2| (s in S).}
+\expandafter\gdef\csname CGTip@eq:G-ratio\endcsname{Eq. (4.8), p. 13: |(G(2+it))/(G(-1+it))|=(|1+it|)/2 pi\textasciicircum{}-3/2(t/2(pi t)/2)\textasciicircum{}1/2<=(1+t)\textasciicircum{}3/2 (t>=1).}
+\expandafter\gdef\csname CGTip@lem:backlund\endcsname{Lemma 4.6 (Backlund--Jensen on a horizontal segment) (p. 13): There are absolute constants T\_0>=3 and c\_5 such that, for T>= T\_0 with Tkappa\_k, the variation of P\_ along the segment from 2+iT to 1/2+iT is at most pi(n\_T+1), where n\_T<=((5/2+upsilon)log(T+8)+ E(T)+ B\_0+ B\_3+ Mc\_+2c\_5)/(log(4/3)) .}
+\expandafter\gdef\csname CGTip@eq:nu\endcsname{Eq. (4.9), p. 13: n\_T<=((5/2+upsilon)log(T+8)+ E(T)+ B\_0+ B\_3+ Mc\_+2c\_5)/(log(4/3)) .}
+\expandafter\gdef\csname CGTip@lem:argument\endcsname{Lemma 4.7 (Argument principle) (p. 14): For T>0, Tkappa\_k, let G\_T be the path 2->2+iT->1/2+iT. Then pi N\_(T)=Delta\_ G\_T P\_ =pi+vartheta(T)+Delta\_ G\_T\_, where vartheta(T)=(pi\textasciicircum{}-iT/2Gamma(1/4+(iT)/2)) is the Riemann--Siegel theta function, defined by continuous variation from vartheta(0)=0.}
+\expandafter\gdef\csname CGTip@eq:arg-principle\endcsname{Eq. (4.10), p. 14: pi N\_(T)=Delta\_ G\_T P\_ =pi+vartheta(T)+Delta\_ G\_T\_,}
+\expandafter\gdef\csname CGTip@thm:count\endcsname{Theorem 4.8 (Counting bound for quasi-solutions) (p. 14): There are absolute constants T\_0 and c\_5 such that, for every finite section in K(C, M) and every T>= T\_0, |N\_(T)-n\_RVM(T)|<=(c\_1+c\_2upsilon)log(T+8)+c\_3 B+c\_5, with c\_1=5/(2log(4/3))=8.690..., c\_2=2/(log(4/3))+1pi=7.270..., c\_3=1/(log(4/3))+1pi=3.794..., and B:= B\_0+ B\_3+ Mc\_. The constants c\_1,...}
+\expandafter\gdef\csname CGTip@eq:count\endcsname{Eq. (4.11), p. 14: |N\_(T)-n\_RVM(T)|<=(c\_1+c\_2upsilon)log(T+8)+c\_3 B+c\_5,}
+\expandafter\gdef\csname CGTip@eq:a-constants\endcsname{Eq. (4.12), p. 14: c\_1=5/(2log(4/3))=8.690..., c\_2=2/(log(4/3))+1pi=7.270..., c\_3=1/(log(4/3))+1pi=3.794...,}
+\expandafter\gdef\csname CGTip@eq:aux-1\endcsname{Eq. (4.13), p. 14: |N\_(T)-n\_RVM(T)|<= n\_T+1+( E(T)+ Mc\_+c\_6)/(pi)+1/T+1/2 .}
+\expandafter\gdef\csname CGTip@cor:displacement\endcsname{Corollary 4.9 (Displacement bound) (p. 14): Assume T\_0>=2pi e. For every k with tau\_k-C>= T\_0, |kappa\_k-tau\_k|<=(2pi[(c\_1+c\_2upsilon)log(tau\_k+C+8)+c\_3 B+c\_5])/(log((tau\_k-C)/2pi)) . In particular limsup\_k->inf|kappa\_k-tau\_k|<=2pi(c\_1+c\_2upsilon) uniformly over sections with given C, M,upsilon. For every p>0 there is k\_0(C, M,upsilon,p) su...}
+\expandafter\gdef\csname CGTip@eq:disp\endcsname{Eq. (4.14), p. 14: |kappa\_k-tau\_k|<=(2pi[(c\_1+c\_2upsilon)log(tau\_k+C+8)+c\_3 B+c\_5])/(log((tau\_k-C)/2pi)) .}
+\expandafter\gdef\csname CGTip@rem:tube\endcsname{Remark 4.10 (What Corollary cor:displacement does not give) (p. 15): The proof uses the imposed tube |kappa\_k-tau\_k|<= C twice: through B(C) in B, and to replace D(tau\_k+d) by D(tau\_k+C). The conclusion is that, inside any finite tube, the coordinates of sufficiently high index lie in the smaller tube of radius 2pi(c\_1+c\_2upsilon)+p. So the constraint is inactive ...}
+\expandafter\gdef\csname CGTip@heur:window\endcsname{Heuristic 4.11 (What a finite section controls) (p. 15): The quantity in Theorem CGrefthm:count is E(T), the L\textasciicircum{}1 norm on Re s=2 of the Laplace transform of the residual. It is not the Euclidean residual that a numerical section minimises over finitely many tests. Let the tests be j\_0(u)varphi(u) with a fixed window j\_0 in C\_c\textasciicircum{}inf(0,inf), j\_0==1 on [u\_0...}
+\expandafter\gdef\csname CGTip@heur:informative\endcsname{Heuristic 4.12 (Informative part of a section) (p. 15): Where the atoms are denser than the resolution of the tests, e\textasciicircum{}-u<<pi/w\textasciicircum{}, the masses alone can approximate a smooth target by a Riemann sum a\_n g(log n)/n without moving any ordinate. That part of the window then carries no information on the ordinates. Counting unknowns against equations in the ...}
+\expandafter\gdef\csname CGTip@sec:riesz\endcsname{Section 5: A Kadec--Avdonin criterion with blocks of variable length (p. 15)}
+\expandafter\gdef\csname CGTip@sec:generating\endcsname{Section 5.1: Discrepancy and generating function (p. 15)}
+\expandafter\gdef\csname CGTip@def:discrepancy\endcsname{Definition 5.1 (Discrepancy, Poisson and conjugate operators) (p. 15): Let X=(x\_k)\_k in Z be a real nondecreasing sequence with |x\_k-(k-1/2)|<= c\_Xlog(2+|k|) (k in Z). Its discrepancy with respect to the half-integers is \_X(x):=sum\_k in Z(1\_[x\_k,inf)(x)-1\_[k-1/2,inf)(x)). The k-th term is +-1 on the interval between x\_k and k-1/2 and 0 elsewhere. By CGeqrefeq:H, at ...}
+\expandafter\gdef\csname CGTip@eq:H\endcsname{Eq. (5.1), p. 15: |x\_k-(k-1/2)|<= c\_Xlog(2+|k|) (k in Z).}
+\expandafter\gdef\csname CGTip@eq:psi\endcsname{Eq. (5.2), p. 15: \_X(x):=sum\_k in Z(1\_[x\_k,inf)(x)-1\_[k-1/2,inf)(x)).}
+\expandafter\gdef\csname CGTip@eq:PQ\endcsname{Eq. (5.3), p. 15: P\_yg(x):=1(y g(s) ds)/((x-s)\textasciicircum{}2+y\textasciicircum{}2), Y\_yg(x):=1 g(s)[(x-s)/((x-s)\textasciicircum{}2+y\textasciicircum{}2)+(s)/(1+s\textasciicircum{}2)]ds .}
+\expandafter\gdef\csname CGTip@lem:generating\endcsname{Lemma 5.2 (Generating function) (p. 16): Let X=(x\_k)\_k in Z satisfy CGeqrefeq:H, understood as a sequence indexed by Z in which a point of multiplicity m occurs m times. Let F\_0(z):=cospi z, and fix z\_0 in R(X( Z+1/2)). The series G\_X(z):=sum\_k in Z(1/(z-x\_k)-1/(z-k+1/2)) converges absolutely and locally uniformly off X( Z+1/2), and F\_X...}
+\expandafter\gdef\csname CGTip@eq:aux-2\endcsname{Eq. (5.4), p. 16: G\_X(z):=sum\_k in Z(1/(z-x\_k)-1/(z-k+1/2))}
+\expandafter\gdef\csname CGTip@eq:aux-3\endcsname{Eq. (5.5), p. 16: F\_X(z):=F\_0(z)expint\_z\_0\textasciicircum{}zG\_X(z) dz}
+\expandafter\gdef\csname CGTip@eq:F-formula\endcsname{Eq. (5.6), p. 16: log|F\_X(x+iy)|=log|F\_0(x+iy)|+pi Y\_y\_X(x)+c\_X'' ;}
+\expandafter\gdef\csname CGTip@eq:Q-growth\endcsname{Eq. (5.7), p. 16: | Y\_y\_X(x)|<= c\_X'''(1+log(1+y\textasciicircum{}-2))log\textasciicircum{}2(4+|z|) (z=x+iy, y>0).}
+\expandafter\gdef\csname CGTip@sec:criterion\endcsname{Section 5.2: The criterion (p. 16)}
+\expandafter\gdef\csname CGTip@eq:aux-4\endcsname{Eq. (5.8), p. 16: [w]\_A\_2:=sup\_I(1/(|I|)int\_Iw)(1/(|I|)int\_Iw\textasciicircum{}-1)<inf ,}
+\expandafter\gdef\csname CGTip@thm:criterion\endcsname{Theorem 5.3 (Block 1/4-criterion) (p. 16): Let X satisfy CGeqrefeq:H and suppose \_X=A+B with measurable A,B such that: |A|\_inf<= d\_<1/4; sup\_x| Y\_1B(x)-c\_B|<= U for some constant c\_B. Then w(x):=|F\_X(x+i)|\textasciicircum{}2 is in (A\_2) and [w]\_A\_2<=pi\textasciicircum{}2\textasciicircum{}2(pi) e\textasciicircum{}4pi Ucos\textasciicircum{}2(2\_) .}
+\expandafter\gdef\csname CGTip@eq:A2const\endcsname{Eq. (5.9), p. 17: [w]\_A\_2<=pi\textasciicircum{}2\textasciicircum{}2(pi) e\textasciicircum{}4pi Ucos\textasciicircum{}2(2\_) .}
+\expandafter\gdef\csname CGTip@eq:aux-5\endcsname{Eq. (5.10), p. 17: |W(o)|=e\textasciicircum{}2pi Y\_1+y\_1A(x\_1), (o)=-2pi P\_1+y\_1A(x\_1) in [-2\_,2\_].}
+\expandafter\gdef\csname CGTip@eq:aux-6\endcsname{Eq. (5.11), p. 17: 1/(|I|)int\_I|W|<=1/(cosb\_) 1/(|I|)int\_IReW<=cosb\_ReW(o\_I)<=cosb\_|W(o\_I)| .}
+\expandafter\gdef\csname CGTip@cor:riesz\endcsname{Corollary 5.4 (Riesz bases) (p. 17): Under the hypotheses of Theorem CGrefthm:criterion: if X is uniformly discrete (in particular without repeated points), e\textasciicircum{}ix\_kv\_k in Z is a Riesz basis of L\textasciicircum{}2(-pi,pi); if X is a finite union of uniformly discrete sets, the generalised divided differences of e\textasciicircum{}ix\_kv in the sense of [ref] form a Ri...}
+\expandafter\gdef\csname CGTip@sec:variable\endcsname{Section 5.3: Kadec, Avdonin, and variable block length (p. 17)}
+\expandafter\gdef\csname CGTip@prop:variable-blocks\endcsname{Proposition 5.5 (Bounded conjugate for block-supported oscillation) (p. 17): Let J\_m be a partition of R into consecutive intervals of lengths n\_m>=1. Let B=sum\_mB\_m with suppB\_m J\_m, int B\_m=0 and |B\_m|<= D'\_m, sup\_mD'\_m<inf. Put U\_ loc:=sup\_m sup\_x in J\_m-1 J\_m J\_m+1|int\_J\_m((x-s) B\_m(s))/(pi((x-s)\textasciicircum{}2+1)) ds|, O:=sup\_m\_0sum\_|m-m\_0|>=2N\_m\textasciicircum{}2dist(J\_m\_0,J\_m)\textasciicircum{}2. If U\_ loc<inf...}
+\expandafter\gdef\csname CGTip@eq:L0\endcsname{Eq. (5.12), p. 17: U\_ loc:=sup\_m sup\_x in J\_m-1 J\_m J\_m+1|int\_J\_m((x-s) B\_m(s))/(pi((x-s)\textasciicircum{}2+1)) ds|, O:=sup\_m\_0sum\_|m-m\_0|>=2N\_m\textasciicircum{}2dist(J\_m\_0,J\_m)\textasciicircum{}2.}
+\expandafter\gdef\csname CGTip@cor:kadec-avdonin\endcsname{Corollary 5.6 (Kadec and Avdonin, with the constant 1/4) (p. 18): up(a) [ref] If |d\_k|<= d\_<1/4 for all k, then e\textasciicircum{}ix\_kv is a Riesz basis of L\textasciicircum{}2(-pi,pi).; up(b) [ref] If X is uniformly discrete, sup\_k|d\_k|<= D, and for a fixed n the means of d\_k over consecutive blocks of n indices are at most d\_<1/4 in modulus, then e\textasciicircum{}ix\_kv is a Riesz basis of L\textasciicircum{}2(-pi,pi).}
+\expandafter\gdef\csname CGTip@thm:variable-N\endcsname{Theorem 5.7 (Avdonin's theorem with variable block length) (p. 18): Let X be uniformly discrete with sup\_k|d\_k|<= D. Let B\_m be a partition of Z into consecutive blocks of n\_m indices, and J\_m:=cup\_k in B\_mI\_k. Let conj d\_m be the mean of d\_k over B\_m, D\_m:=max\_k in B\_m|d\_k-conj d\_m|, and n\_m\textasciicircum{}*:=n\_m-1+n\_m+n\_m+1. Assume sup\_m|conj d\_m|<= d\_<1/4; O<inf, with O as i...}
+\expandafter\gdef\csname CGTip@eq:U-variable\endcsname{Eq. (5.13), p. 18: U=16(1+D)\textasciicircum{}3+6 Vpi+(V O)/(22) .}
+\expandafter\gdef\csname CGTip@rem:price\endcsname{Remark 5.8 (The price of variable length) (p. 18): For fixed n, conditions (b) and (c) hold automatically, and Theorem CGrefthm:variable-N is Avdonin's theorem. If n\_m->inf, the averaging condition (a) is still only |conj d\_m|<= d\_<1/4. However, (c) then requires the oscillation inside the block to decay like 1/log n\_m. In Theorem CGrefthm:criter...}
+\expandafter\gdef\csname CGTip@sec:application\endcsname{Section 6: Application to lists near the RvM clock (p. 19)}
+\expandafter\gdef\csname CGTip@sec:unfolding\endcsname{Section 6.1: Unfolding (p. 19)}
+\expandafter\gdef\csname CGTip@def:unfolding\endcsname{Definition 6.1 (Unfolded list) (p. 19): Let t\_0:=9.6769... be the zero of N\_RVM in (2pi,inf). For a C-admissible list with kappa\_1>t\_0 (true for and ), put x\_k:=N\_RVM(kappa\_k)>0 for k>=1 and x\_1-k:=-x\_k. The resulting symmetric sequence X\_ has discrepancy \_:=\_X\_, and F\_:=F\_X\_ with z\_0=0. For the clock, X\_= Z+1/2 and F\_=F\_0.}
+\expandafter\gdef\csname CGTip@lem:psi-bound\endcsname{Lemma 6.2 (Unfolded discrepancy) (p. 19): For a C-admissible list with kappa\_1>t\_0, |x\_k-(k-1/2)|<=C/(2pi)log(tau\_k+C)/(2pi) for k>=1, so CGeqrefeq:H holds. Moreover, for x=N\_RVM(t) with x>0, \_(x)=N\_(t)-n\_RVM(t), |N\_(t)-n\_RVM(t)|<= C(t+C)/(2pi)+2, and \_(-x)=-\_(x) for almost every x.}
+\expandafter\gdef\csname CGTip@eq:psi-t\endcsname{Eq. (6.1), p. 19: \_(x)=N\_(t)-n\_RVM(t), |N\_(t)-n\_RVM(t)|<= C(t+C)/(2pi)+2,}
+\expandafter\gdef\csname CGTip@prop:O-blocks\endcsname{Proposition 6.3 (The condition of O gives the averaging hypothesis with blocks log\textasciicircum{}2T) (p. 19): Let be C-admissible with kappa\_1>t\_0, and assume the third condition of O (eq:list-space) in the form |int\_2pi\textasciicircum{}R(N\_(t)-N\_RVM(t))dt|<= C\_2log R (R>=3). Put H(T):=16C\_2log T. There is T\_1=T\_1(C,C\_2) such that the following holds for the points T\_m+1:=T\_m+H(T\_m) (m>=1) and the blocks J\_m:=[N\_RVM(T\_m...}
+\expandafter\gdef\csname CGTip@eq:O3\endcsname{Eq. (6.2), p. 19: |int\_2pi\textasciicircum{}R(N\_(t)-N\_RVM(t))dt|<= C\_2log R (R>=3).}
+\expandafter\gdef\csname CGTip@eq:block-mean\endcsname{Eq. (6.3), p. 19: |A\_|\_inf<=3/(16), |J\_m|=8C\_2\textasciicircum{}2T\_m (1+o(1)) (m->inf).}
+\expandafter\gdef\csname CGTip@eq:aux-7\endcsname{Eq. (6.4), p. 19: int\_J\_ dx =int\_T\textasciicircum{}T+H(N\_-n\_RVM)(t) N\_RVM'(t) dt; =N\_RVM'(T) int\_T\textasciicircum{}T+H (N\_-n\_RVM)+int\_T\textasciicircum{}T+H (N\_-n\_RVM)(N\_RVM'(t)-N\_RVM'(T)) dt .}
+\expandafter\gdef\csname CGTip@eq:aux-8\endcsname{Eq. (6.5), p. 20: |1/(|J|)int\_J\_|<=(2C\_2log(T+H))/(H)+5/(4N\_RVM'(T)H)+(H)/(2pi TN\_RVM'(T))( C(T+H+C)/(2pi)+1).}
+\expandafter\gdef\csname CGTip@rem:not-equivalent\endcsname{Remark 6.4 (Correction of an earlier formulation) (p. 20): Proposition CGrefprop:O-blocks is an implication. The averaging condition on blocks of length log\textasciicircum{}2T does not imply CGeqrefeq:O3: summing |int\_J\_m|<=3/(16)|J\_m| over the blocks up to height R gives only O(Rlog R), not O(log R). The two conditions do not coincide.}
+\expandafter\gdef\csname CGTip@cor:one-condition\endcsname{Corollary 6.5 (Reduction to one condition) (p. 20): For every as in Proposition CGrefprop:O-blocks: if Y\_1B\_ is bounded up to a constant, then |F\_(x+i)|\textasciicircum{}2 in (A\_2), with constant CGeqrefeq:A2const for d\_=3/(16). Corollary CGrefcor:riesz(a) then holds for X\_ if it is uniformly discrete, and Corollary CGrefcor:riesz(b) if it is a finite union of uni...}
+\expandafter\gdef\csname CGTip@sec:weight\endcsname{Section 6.2: The weight is a quotient of synthetic zetas (p. 20)}
+\expandafter\gdef\csname CGTip@prop:weight\endcsname{Proposition 6.6 (Weight identity) (p. 20): Let be C-admissible and satisfy CGeqrefeq:O3. For 0<<=1 and t>=2pi, log|zeta\_zeta\_RVM(1/2++it)|=int\_2pi\textasciicircum{}inf(t-s) (N\_-n\_RVM)(s)(t-s)\textasciicircum{}2+\textasciicircum{}2 ds+c\_+m\_,(t), where the integral converges as an improper integral and c\_ is a constant. The remainder satisfies |m\_,(t)|<= c(C,C\_2)log(2+t)/(1+t).}
+\expandafter\gdef\csname CGTip@eq:weight-identity\endcsname{Eq. (6.6), p. 20: log|zeta\_zeta\_RVM(1/2++it)|=int\_2pi\textasciicircum{}inf(t-s) (N\_-n\_RVM)(s)(t-s)\textasciicircum{}2+\textasciicircum{}2 ds+c\_+m\_,(t),}
+\expandafter\gdef\csname CGTip@eq:aux-9\endcsname{Eq. (6.7), p. 20: log|P\_P\_(s)|=sum\_k[l\_(t-kappa\_k)-l\_(t-tau\_k)]+sum\_k[l\_(t+kappa\_k)-l\_(t+tau\_k)]-sum\_klog(1/4+kappa\_k\textasciicircum{}2)/(1/4+tau\_k\textasciicircum{}2).}
+\expandafter\gdef\csname CGTip@rem:local-scale\endcsname{Remark 6.7 (Local scale) (p. 20): With =1 and \_T:=/N\_RVM'(T)=2pi/log(T/2pi) (the notation of the proof of Theorem CGrefthm:obstruction), the substitution x=N\_RVM(t) maps the kernel ((t-s) ds)/((t-s)\textasciicircum{}2+\_T\textasciicircum{}2) to ((x-x') dx')/((x-x')\textasciicircum{}2+1) to first order near t=T. Comparing CGeqrefeq:weight-identity with CGeqrefeq:F-formula at y=1, t...}
+\expandafter\gdef\csname CGTip@sec:obstruction\endcsname{Section 6.3: Obstruction for the zeta list (p. 21)}
+\expandafter\gdef\csname CGTip@thm:obstruction\endcsname{Theorem 6.8 (No (A\_2) for the unfolded zeta ordinates) (p. 21): Let X\_ be the unfolded list of the ordinates gamma\_k>0 of the nontrivial zeros of zeta, counted with multiplicity, and let F be any entire function of exponential type whose zero set is X\_, with multiplicities. Then |F(x+i)|\textasciicircum{}2(A\_2) for every real !=0. The proof does not assume the Riemann hypothe...}
+\expandafter\gdef\csname CGTip@eq:aux-10\endcsname{Eq. (6.8), p. 21: 1/(|I|)int\_I|f-f\_I|\textasciicircum{}2<=4[w\_0]\_A\_2 for every interval I .}
+\expandafter\gdef\csname CGTip@eq:BMO-L2\endcsname{Eq. (6.9), p. 21: 1/(|I|)int\_I| P\_-( P\_)\_I|\textasciicircum{}2<=c\_ JN for every interval I .}
+\expandafter\gdef\csname CGTip@eq:aux-11\endcsname{Eq. (6.10), p. 22: int\_T\textasciicircum{}2T|S-c|\textasciicircum{}2>=int\_T\textasciicircum{}2TS\textasciicircum{}2-1/T(int\_T\textasciicircum{}2TS)\textasciicircum{}2=1/(2pi\textasciicircum{}2)Tloglog T (1+o(1))}
+\expandafter\gdef\csname CGTip@lem:smoothing\endcsname{Lemma 6.9 (Smoothing S at scale 1/log T) (p. 22): Let >0 be fixed, \_T:=2pi /log(T/2pi), and S:=0 on (-inf,t\_0). Then | P\_\_T* S-S|\_L\textasciicircum{}2[T,2T]=O\_( T), unconditionally.}
+\expandafter\gdef\csname CGTip@eq:fujii\endcsname{Eq. (6.11), p. 22: int\_T\textasciicircum{}2T(S(t+u)-S(t))\textasciicircum{}2dt<= c\_FTlog(2+ulog T),}
+\expandafter\gdef\csname CGTip@rem:fujii\endcsname{Remark 6.10 (A second proof) (p. 22): Lemma CGreflem:smoothing also follows from Selberg's mean-square approximation of S(t) by S\_x\_0(t):=-1\_p<= xp\textasciicircum{}-1/2sin(tlog p), x\_0=T\textasciicircum{}delta [ref], and the Montgomery--Vaughan mean value theorem [ref]. Indeed P\_\_T* S\_x\_0-S\_x\_0=-1\_p<= xp\textasciicircum{}-1/2(e\textasciicircum{}-\_Tlog p-1)sin(tlog p) has mean square << T \_T\textasciicircum{}2log\textasciicircum{}2x<...}
+\expandafter\gdef\csname CGTip@cor:obstruction\endcsname{Corollary 6.11 (Consequences for the zeta list) (p. 23): up(a) e\textasciicircum{}ix\_kxi\_x\_k in X\_ is not a Riesz basis of L\textasciicircum{}2(-pi,pi).; up(b) If X\_ is a finite union of uniformly discrete sets, its generalised divided differences are not a Riesz basis of L\textasciicircum{}2(-pi,pi).; up(c) For every decomposition \_=A+B with |A|\_inf<1/4, Y\_1B is unbounded. In particular this holds for...}
+\expandafter\gdef\csname CGTip@heur:graduated\endcsname{Heuristic 6.12 (Graduated version) (p. 23): The proof of Theorem CGrefthm:obstruction uses intervals I\_T of length Tlog T. On a window of L unfolded points at height T, the mean square oscillation of P\_ is governed by the variance of increments of S over t-intervals of length L/N\_RVM'(T). By Fujii's asymptotics this is expected to be of si...}
+\expandafter\gdef\csname CGTip@rem:routeB-stability\endcsname{Remark 6.13 (Bearing on route B) (p. 23): Theorem CGrefthm:obstruction rules out a uniform Riesz-basis (Fredholm) structure for the unfolded zeta list on the whole line, and hence a linear stability argument with constants independent of the height. It says nothing about statement B or B'. The compactness step of route B (Proposition CGr...}
+\expandafter\gdef\csname CGTip@sec:numerics\endcsname{Section 7: Numerical certificates for finite sections (p. 23)}
+\expandafter\gdef\csname CGTip@sec:num-setup\endcsname{Section 7.1: Set-up (p. 23)}
+\expandafter\gdef\csname CGTip@sec:num-init\endcsname{Section 7.2: Initialisation: the clock is outside the basin, the Gonek lists are inside (p. 23)}
+\expandafter\gdef\csname CGTip@fig:gonek\endcsname{Figure 1 (p. 24): Distance to the zeta ordinates, in units of the local mean spacing 2pi/log(gamma\_k/2pi), of the midpoint clock and of the Gonek lists \textasciicircum{}(X) for X=3,8,20 (k<=160 for X=3,20; k<=400 for X=8). The dashed line is the observed radius of the Newton basin. The ordinates gamma\_k are used here only to meas...}
+\expandafter\gdef\csname CGTip@sec:num-kantorovich\endcsname{Section 7.3: Certificates at the Gonek list: the direct bounds fail (p. 24)}
+\expandafter\gdef\csname CGTip@sec:num-certified\endcsname{Section 7.4: Certified exact finite sections (p. 25)}
+\expandafter\gdef\csname CGTip@eq:num-banach\endcsname{Eq. (7.1), p. 25: l(r):=| Q J'|\_inf->inf r+1/2 || Q| A\textasciicircum{}(3)(r)|\_inf->inf r\textasciicircum{}2<1, h<=(1- l(r)) r,}
+\expandafter\gdef\csname CGTip@eq:num-scaling\endcsname{Eq. (7.2), p. 25: L\_m T\textasciicircum{}1.8, | Q J'|\_inf->inf T\textasciicircum{}2.1, margin T\textasciicircum{}-2.1 (T<=487).}
+\expandafter\gdef\csname CGTip@sec:num-entry\endcsname{Section 7.5: The entry step (p. 25)}
+\expandafter\gdef\csname CGTip@fig:scaling\endcsname{Figure 2 (p. 26): Constants of the Banach certificate CGeqrefeq:num-banach for the square sections of Section CGrefsec:num-certified (solid lines, with fitted slopes in log T), and the band-only entry test of Section CGrefsec:num-entry (dashed): the reciprocal of the band margin and the reciprocal of the residual ...}
+\expandafter\gdef\csname CGTip@sec:num-reading\endcsname{Section 7.6: Reading of the computations (p. 26)}
+\expandafter\gdef\csname CGTip@sec:status\endcsname{Section 8: Status of the statements (p. 27)}
+\makeatother
+\makeatletter
+\makeatother
+
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 1},
+  linkbordercolor={1 0 0},
+  citebordercolor={0 0.3 1},
+  urlbordercolor={0 0.6 0.6},
+  filebordercolor={0 0.6 0.6},
+  linktoc=all,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=1,
+  pdfstartview=FitH,
+  pdftitle={Route B for the midpoint RvM system and a Kadec-Avdonin criterion with blocks of variable length, version 4},
+  pdfauthor={Rotkiv Aynasac},
+  pdfsubject={Riesz bases of exponentials, Muckenhoupt weights, synthetic zeta functions, Riemann zeta zeros},
+  pdfkeywords={Kadec 1/4 theorem, Avdonin theorem, A2 weights, Helson-Szego, rung system, Riemann-von Mangoldt clock, Selberg S(t)}
+}
+% Back-references in the bibliography.
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+  \ifcase #1 %
+    \relax
+  \or
+    \ (Cited on p.~#2.)%
+  \else
+    \ (Cited on pp.~#2.)%
+  \fi}
+
+% In \cite[note]{key} the note (e.g. a section number) is linked too.
+\makeatletter
+\let\CG@origcite\cite
+\renewcommand*{\cite}[2][]{\def\CG@citekey{#2}%
+  \ifx\relax#1\relax\CG@origcite{#2}\else\CG@origcite[#1]{#2}\fi}
+\def\@cite#1#2{{\@citestyle[\citeform{#1}\if@tempswa, \hyper@link{cite}{cite.\CG@citekey}{#2}\fi]}}
+\makeatother
+
+\geometry{margin=1in}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{3}
+\setlength{\emergencystretch}{1.5em}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{heuristic}[theorem]{Heuristic}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\RVM}{\mathrm{RVM}}
+\newcommand{\NR}{\mathcal N_{\RVM}}
+\DeclareUrlCommand\msref{\urlstyle{tt}}
+\makeatletter\g@addto@macro\UrlBreaks{\do\-\do\:\do\_}\makeatother
+
+\begin{document}
+
+\title[Route B and a block Kadec--Avdonin criterion]{Route B for the midpoint RvM system: an a priori bound for quasi-solutions, and a Kadec--Avdonin criterion with blocks of variable length}
+
+\author{Rotkiv Ayn\"asac}
+\email{rotkivanyasac@gmail.com}
+
+\date{10 October 2026 -- version 4}
+
+\begin{abstract}
+We work with real lists $\boldsymbol\kappa=(\kappa_k)$ at bounded distance from the midpoint Riemann--von Mangoldt clock $(\tau_k)$ and with the rung system that couples such a list to atomic masses on $\{\log n\}$. (1) Route B: near-solutions of finite sections in a fixed box have a subsequence converging to an exact solution; with the von Mangoldt masses prescribed, the Laplace transform of the residual is identified as $\frac12(P_{\boldsymbol\kappa}'/P_{\boldsymbol\kappa}-\xi'/\xi)$, every exact solution is the zeta list, and the resulting statement B$'$ is equivalent to the Riemann hypothesis; the equivalence is classical in substance. The existence part is given a certificate form for staged sections (Newton--Banach with a frozen right inverse), and Gonek's symmetrised Euler products give explicit lists in a tube around the clock. (2) For quasi-solutions with Laplace residual of size $\upsilon\log T$, the counting discrepancy with respect to the clock is $O((1+\upsilon)\log T)$ with absolute constants. (3) A Kadec--Avdonin criterion for the Muckenhoupt $(A_2)$ property with averaging blocks of arbitrary, varying length; the $\tfrac14$ theorems of Kadec and Avdonin are recovered. For the zeta list the remaining condition fails: unconditionally, no generating function of the unfolded zeta ordinates satisfies $(A_2)$ on any horizontal line. (4) Computations: with the primes and the clock as the only input, exact square finite sections are certified up to height $487$; the certified basin shrinks like $T^{-2}$.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+%======================================================================
+\section{Introduction}\label{sec:intro}
+
+The main manuscript constructs a synthetic zeta system on the midpoint clock $\tau_k$, defined by $\NR(\tau_k)=k-\frac12$, and reduces the remaining step to condition (D). Route B approaches (D) without constructing the zeta ordinates. One solves finite sections of the rung system \CGeqref{eq:rung}, which imposes simultaneously a real critical spectrum and atomic arithmetic on $\{\log n\}$. If the residuals of these sections tend to zero in a fixed box, compactness yields an exact solution. The uniqueness theorem \msref{thm:free-masses} then identifies that solution as the list of zeta ordinates with the von Mangoldt masses. In this scheme the ordinates $\gamma_k$ are the output of an inverse problem, not an input. Section~\CGref{sec:routeB} makes this precise and isolates the two statements that remain open: existence of sections with vanishing residual, and uniqueness in the box without the third condition of $\mathscr O$. Section~\CGref{sec:prescribed} shows that prescribing the von Mangoldt masses removes the second: the Laplace transform of the residual is identified (Lemma~\CGref{lem:laplace}), and uniqueness follows from Hadamard's theorem and the functional equation, so that route B$'$ is equivalent to the Riemann hypothesis. Section~\CGref{sec:staged} gives the existence part a certificate form: two computable quantities per stage, a right inverse of the Jacobian and the residual of the new tests, imply an exact solution of the stage. Section~\CGref{sec:gonek} shows that Gonek's symmetrised Euler products give explicit lists in a tube around the clock. Section~\CGref{sec:numerics} reports the computations that measure these quantities.
+
+Section~\CGref{sec:apriori} proves an a priori bound for quasi-solutions. Section~\CGref{sec:riesz} proves a Kadec--Avdonin criterion with blocks of variable length, which is the tool needed for a Fredholm/stability formulation of the linearised problem. Section~\CGref{sec:application} applies that criterion to lists near the clock and proves that, for the zeta list, the uniform version fails.
+
+References of the form \msref{thm:free-masses} point to labels of the main manuscript \msref{rvm_zeta_pi_mertens_v19}, of which this note is also a section; the notation is that of the main manuscript. Except in Section~\CGref{sec:obstruction}, where the zeta list is the object of study, nothing below uses the ordinates of $\zeta$.
+
+%======================================================================
+\section{Setting}\label{sec:setting}
+
+Throughout, $q(s):=s(s-1)$ and $G(s):=s(s-1)\pi^{-s/2}\Gamma(s/2)$. The smooth clock count is
+\begin{equation}\label{eq:NRVM}
+ \NR(t):=\frac t{2\pi}\log\frac t{2\pi e}+\frac78,\qquad
+ \NR'(t)=\frac1{2\pi}\log\frac t{2\pi}\qquad(t>0).
+\end{equation}
+It is strictly increasing on $[2\pi,\infty)$, with $\NR(2\pi)=-\frac18$, and the clock points are the solutions $\tau_k>2\pi$ of $\NR(\tau_k)=k-\frac12$, $k\ge1$ ($\tau_1=14.5213\ldots$). We write $n_{\RVM}(t):=\#\{k\ge1:\tau_k\le t\}$. Since $\NR$ is increasing,
+\begin{equation}\label{eq:Ntau-floor}
+ n_{\RVM}(t)=\Bigl\lfloor\NR(t)+\tfrac12\Bigr\rfloor,\qquad
+ \bigl|n_{\RVM}(t)-\NR(t)\bigr|\le\tfrac12\qquad(t\ge2\pi).
+\end{equation}
+
+\begin{definition}[Admissible lists]\label{def:lists}
+For $C>0$, a list $\boldsymbol\kappa=(\kappa_k)_{k\ge1}$ is \emph{$C$-admissible} if it is real and nondecreasing, $\kappa_1\ge2\pi$, and $|\kappa_k-\tau_k|\le C$ for all $k$. Put $N_{\boldsymbol\kappa}(t):=\#\{k:\kappa_k\le t\}$ (with multiplicity) and
+\begin{equation}\label{eq:Pk}
+ P_{\boldsymbol\kappa}(s):=\prod_{k\ge1}\Bigl(1+\frac{q(s)}{\frac14+\kappa_k^2}\Bigr),\qquad
+ \zeta_{\boldsymbol\kappa}:=\frac{P_{\boldsymbol\kappa}}{G}.
+\end{equation}
+The clock list $\boldsymbol\tau=(\tau_k)$ gives $\zeta_{\boldsymbol\tau}=\zeta_{\RVM}$.
+\end{definition}
+
+$P_{\boldsymbol\kappa}$ is entire and real on $\mathbb R$, and $P_{\boldsymbol\kappa}(1-s)=P_{\boldsymbol\kappa}(s)$. Its zeros are exactly $\frac12\pm i\kappa_k$, with multiplicity, and it is positive on $[-1,2]$, because $q([-1,2])=[-\frac14,2]$ and $\kappa_k^2\ge4\pi^2$. Writing $s=\frac12+w$, one has $\frac14+\kappa^2+q(s)=\kappa^2+w^2$.
+
+The \emph{rung system} \msref{eq:rung-system} for a list $\boldsymbol\kappa$ and real masses $\mathsf a=(\mathsf a_n)_{n\ge2}$ is
+\begin{equation}\label{eq:rung}
+ \sum_{k\ge1}\cos(\kappa_ku)+\sum_{n\ge2}\mathsf a_n\,\delta(u-\log n)=\mathsf k(u)\qquad\text{in }\mathcal D'(0,\infty),
+\end{equation}
+with the fixed distribution $\mathsf k$ of \msref{eq:transport-defs}. Its residual is the distribution $\mathfrak R(\boldsymbol\kappa,\mathsf a)$ defined, for $\varphi\in C_c^\infty(0,\infty)$, by
+\begin{equation}\label{eq:residual}
+ \langle\mathfrak R(\boldsymbol\kappa,\mathsf a),\varphi\rangle:=\sum_{k\ge1}\mathsf c_\varphi(\kappa_k)+\sum_{n\ge2}\mathsf a_n\varphi(\log n)-\langle\mathsf k,\varphi\rangle,\qquad
+ \mathsf c_\varphi(t):=\int_0^\infty\varphi(u)\cos(tu)\,du .
+\end{equation}
+Two integrations by parts give $|\mathsf c_\varphi(t)|\le\|\varphi''\|_{L^1}\,t^{-2}$. Since $\kappa_k\ge\tau_k-C$ and $\tau_k\gg k/\log(k+1)$, the series in \CGeqref{eq:residual} converges absolutely. The mass sum is finite, because $\operatorname{supp}\varphi\subset[u_1,u^*]$ with $0<u_1<u^*$ leaves only $n\le e^{u^*}$.
+
+%======================================================================
+\section{Route B: compactness, selection and the canonical box}\label{sec:routeB}
+
+For $C,\mathbb M>0$ let $\mathbb K(C,\mathbb M)$ be the set of pairs $(\boldsymbol\kappa,\mathsf a)$ with $\boldsymbol\kappa$ $C$-admissible and $|\mathsf a_n|\le \mathbb M$ for all $n$. A \emph{finite section} is an element of $\mathbb K(C,\mathbb M)$ with $\kappa_k=\tau_k$ for $k>k^*$ and $\mathsf a_n=0$ for $n>n^*$, for some $k^*,n^*$.
+
+Fix finite sets $\mathscr T_1\subset\mathscr T_2\subset\cdots\subset C_c^\infty(0,\infty)$ whose union $\mathscr T_\infty$ is dense in $C_c^\infty(0,\infty)$. Such sets exist because $C_c^\infty(0,\infty)$ is separable for its usual LF topology: it is the countable strict inductive limit of the separable Fr\'echet spaces $C^\infty_{[1/j,j]}$, and a countable union of countable dense subsets of these is dense. For $(\boldsymbol\kappa,\mathsf a)\in\mathbb K(C,\mathbb M)$ put
+\begin{equation}\label{eq:rho}
+ \mathsf s_m(\boldsymbol\kappa,\mathsf a):=\max_{\varphi\in\mathscr T_m}\bigl|\langle\mathfrak R(\boldsymbol\kappa,\mathsf a),\varphi\rangle\bigr| .
+\end{equation}
+
+\begin{definition}[Statement B]\label{def:B}
+\emph{Statement B$(C,\mathbb M)$} says that there are finite sections $(\boldsymbol\kappa^{(m)},\mathsf a^{(m)})\in\mathbb K(C,\mathbb M)$ with $\mathsf s_m(\boldsymbol\kappa^{(m)},\mathsf a^{(m)})\to0$.
+\end{definition}
+
+\begin{lemma}[Canonical box of the exact solution]\label{lem:canonical-box}
+Let $\mathbb M_*:=\max_{n\ge2}\Lambda(n)/(2\sqrt n)$. Then $\mathbb M_*=\log7/(2\sqrt7)=0.367742\ldots<1/e$. If condition (D) holds, the pair $(\boldsymbol\gamma,\mathsf a^\zeta)$, with $\mathsf a^\zeta_n:=\Lambda(n)/(2\sqrt n)$, solves \CGeqref{eq:rung} and lies in $\mathbb K(C_\eta,\mathbb M_*)$, where $C_\eta$ is the constant of \msref{lem:bounded-displacement}.
+\end{lemma}
+
+\begin{proof}
+$x\mapsto\log x/(2\sqrt x)$ increases on $[1,e^2]$ and decreases on $[e^2,\infty)$, with $e^2=7.389\ldots$. Hence among primes its maximum is at $p=7$ or $p=11$; the values are $0.367742\ldots$ and $0.361540\ldots$. A prime power $p^j$ with $j\ge2$ gives $\log p/(2p^{j/2})<\log p/(2\sqrt p)\le \mathbb M_*$. The bound by $1/e$ is the continuous maximum, attained at $x=e^2$. Under (D), $\zeta_{Z1}=\zeta$, so all zeros of $\zeta$ are $\frac12\pm i\gamma_k$. The rung system with list $\boldsymbol\gamma$ and masses $\mathsf a^\zeta$ is then the distributional explicit formula \msref{thm:distributional-EF}. Finally, $|\gamma_k-\tau_k|\le C_\eta$ by \msref{lem:bounded-displacement}, and $\gamma_1=14.13\ldots\ge2\pi$.
+\end{proof}
+
+\begin{corollary}[(D) implies B]\label{cor:D-implies-B}
+If (D) holds, then B$(C,\mathbb M)$ holds for every $C\ge C_\eta$ and $\mathbb M\ge \mathbb M_*$.
+\end{corollary}
+
+\begin{proof}
+Let $(\boldsymbol\kappa^{(k^*,n^*)},\mathsf a^{(k^*,n^*)})$ be the truncation of $(\boldsymbol\gamma,\mathsf a^\zeta)$. Its list is the nondecreasing rearrangement of the multiset $\{\gamma_1,\dots,\gamma_K\}\cup\{\tau_{K+1},\tau_{K+2},\dots\}$, and its masses are $\mathsf a^\zeta_n$ for $n\le n^*$ and $0$ beyond. By Lemma~\CGref{lem:matching} (Section~\CGref{sec:staged}) the rearranged list satisfies $|\kappa_k-\tau_k|\le C_\eta$, coincides with $(\tau_k)$ beyond some index, and $\mathfrak R$ depends only on the multiset. So this is a finite section in $\mathbb K(C_\eta,\mathbb M_*)$. For fixed $\varphi$, $\langle\mathfrak R(\boldsymbol\kappa^{(k^*,n^*)},\mathsf a^{(k^*,n^*)}),\varphi\rangle-\langle\mathfrak R(\boldsymbol\gamma,\mathsf a^\zeta),\varphi\rangle=\sum_{k>k^*}(\mathsf c_\varphi(\tau_k)-\mathsf c_\varphi(\gamma_k))$ as soon as $e^{u^*}\le n^*$. This tends to $0$ as $k^*\to\infty$. Since $\mathscr T_m$ is finite and $\mathfrak R(\boldsymbol\gamma,\mathsf a^\zeta)=0$ by Lemma~\CGref{lem:canonical-box}, $k^*_m,N_m$ can be chosen with $\mathsf s_m\le1/m$.
+\end{proof}
+
+\begin{proposition}[Compactness and passage to the limit]\label{prop:compactness}
+Let $(\boldsymbol\kappa^{(m)},\mathsf a^{(m)})\in\mathbb K(C,\mathbb M)$ with $\mathsf s_m(\boldsymbol\kappa^{(m)},\mathsf a^{(m)})\to0$. Then a subsequence converges coordinatewise to some $(\boldsymbol\kappa,\mathsf a)\in\mathbb K(C,\mathbb M)$, and every such limit satisfies $\mathfrak R(\boldsymbol\kappa,\mathsf a)=0$ in $\mathcal D'(0,\infty)$.
+\end{proposition}
+
+\begin{proof}
+Each $\kappa^{(m)}_k$ lies in the compact interval $[\tau_k-C,\tau_k+C]$ and each $\mathsf a^{(m)}_n$ in $[-\mathbb M,\mathbb M]$. A diagonal extraction over the countably many coordinates gives a coordinatewise convergent subsequence. The limit is nondecreasing, satisfies $\kappa_1\ge2\pi$, $|\kappa_k-\tau_k|\le C$ and $|\mathsf a_n|\le \mathbb M$, and therefore lies in $\mathbb K(C,\mathbb M)$.
+
+\emph{Continuity of each pairing.} Fix $\varphi$ with support in $[u_1,u^*]$. The mass part of \CGeqref{eq:residual} involves only $n\le e^{u^*}$ and converges. For the spectral part, $|\mathsf c_\varphi(\kappa^{(m)}_k)|\le\|\varphi''\|_1(\tau_k-C)^{-2}$ when $\tau_k>2C$, and $|\mathsf c_\varphi|\le\|\varphi\|_1$ for the finitely many other $k$. The majorant is summable, so dominated convergence for series gives $\sum_k\mathsf c_\varphi(\kappa_k^{(m)})\to\sum_k\mathsf c_\varphi(\kappa_k)$. Hence $\langle\mathfrak R(\boldsymbol\kappa^{(m)},\mathsf a^{(m)}),\varphi\rangle\to\langle\mathfrak R(\boldsymbol\kappa,\mathsf a),\varphi\rangle$ along the subsequence.
+
+\emph{Vanishing.} If $\varphi\in\mathscr T_\infty$, then $\varphi\in\mathscr T_m$ for all large $m$, so $|\langle\mathfrak R(\boldsymbol\kappa^{(m)},\mathsf a^{(m)}),\varphi\rangle|\le\mathsf s_m\to0$ and $\langle\mathfrak R(\boldsymbol\kappa,\mathsf a),\varphi\rangle=0$. The limit $\mathfrak R(\boldsymbol\kappa,\mathsf a)$ is a single distribution, hence continuous on $C_c^\infty(0,\infty)$. It vanishes on the dense set $\mathscr T_\infty$, so it vanishes identically. No uniform bound on the residuals is needed for this step.
+\end{proof}
+
+\begin{hypothesis}[Uniqueness in the box]\label{hyp:U}
+\emph{U$(C,\mathbb M)$}: the only $(\boldsymbol\kappa,\mathsf a)\in\mathbb K(C,\mathbb M)$ with $\mathfrak R(\boldsymbol\kappa,\mathsf a)=0$ is $(\boldsymbol\gamma,\mathsf a^\zeta)$.
+\end{hypothesis}
+
+\begin{remark}[What is proved and what is open in U]\label{rem:U-status}
+\msref{thm:free-masses} proves uniqueness for lists in $\mathscr O$. Besides the tube and the ordering, $\mathscr O$ (\msref{eq:list-space}) carries a third condition, $|\int(N_{\boldsymbol\kappa}-\NR)|\le C\log \mathrm X$, and a coordinatewise limit of sections does not inherit it. Hypothesis~\CGref{hyp:U} is therefore the statement that \msref{thm:free-masses} holds for exact solutions in $\mathbb K(C,\mathbb M)$ without the third condition. That condition is used to bound $\zeta_{\boldsymbol\kappa}$ on half-planes. For an exact solution, Lemma~\CGref{lem:factor} below with $\widehat{\mathsf R}\equiv0$ gives that bound directly on $\Re s\ge2$. Whether this suffices for the rest of the proof of \msref{thm:free-masses} has to be checked line by line against that proof. This is not done here, and Hypothesis~\CGref{hyp:U} is not claimed.
+\end{remark}
+
+\begin{corollary}[Selection of the zeta list]\label{cor:selection}
+Assume B$(C,\mathbb M)$ and U$(C,\mathbb M)$, and let $(\boldsymbol\kappa^{(m)},\mathsf a^{(m)})$ be any sequence in $\mathbb K(C,\mathbb M)$ with $\mathsf s_m\to0$. Then the whole sequence converges coordinatewise to $(\boldsymbol\gamma,\mathsf a^\zeta)$. In particular $\mathfrak R(\boldsymbol\gamma,\mathsf a^\zeta)=0$, that is, (D) holds.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\CGref{prop:compactness}, every subsequence has a further subsequence converging to a zero of $\mathfrak R$ in $\mathbb K(C,\mathbb M)$. By U$(C,\mathbb M)$ that zero is $(\boldsymbol\gamma,\mathsf a^\zeta)$, so the whole sequence converges to it. Finally we show that $\mathfrak R(\boldsymbol\gamma,\mathsf a^\zeta)=0$ implies (D). By Lemma~\CGref{lem:laplace} (Section~\CGref{sec:prescribed}), $\widehat{\mathsf R}$ of \CGeqref{eq:Rhat} is the Laplace transform of a distribution of finite order on $[0,\infty)$ whose restriction to $(0,\infty)$ is $\mathfrak R$. If $\mathfrak R=0$, that distribution is supported at $\{0\}$, so $\widehat{\mathsf R}$ is a polynomial $p(s)$. Since $\sum_n\mathsf a^\zeta_nn^{\frac12-s}=-\frac12\zeta'/\zeta(s)$, this reads $P_{\boldsymbol\gamma}'/P_{\boldsymbol\gamma}-(G\zeta)'/(G\zeta)=2p$, so $P_{\boldsymbol\gamma}=c\,G\zeta\,e^{Q}$ with $Q'=2p$. Here $G\zeta=2\xi$ and $P_{\boldsymbol\gamma}$ are entire of order $1$, so $e^Q=P_{\boldsymbol\gamma}/(2c\,\xi)$ is entire, zero-free and of order at most $1$, and $\deg Q\le1$. Both $P_{\boldsymbol\gamma}$ and $\xi$ are invariant under $s\mapsto1-s$, so $e^{Q(1-s)}=e^{Q(s)}$, which forces $Q$ to be constant. Hence $\zeta_{\boldsymbol\gamma}=c'\zeta$. Both functions have residue $1$ at $s=1$ ($P_{\boldsymbol\gamma}(1)=1$ and $G(s)\sim s-1$), so $c'=1$. This is (D), because $\zeta_{\boldsymbol\gamma}=\zeta_{Z1}$.
+\end{proof}
+
+\begin{remark}[Logical status of route B]\label{rem:B-status}
+Corollaries~\CGref{cor:D-implies-B} and~\CGref{cor:selection} give (D) $\Rightarrow$ B$(C_\eta,\mathbb M_*)$ and [B$(C,\mathbb M)$ and U$(C,\mathbb M)$] $\Rightarrow$ (D). Route B therefore consists of two independent pieces. The first is existence, B, which is not weaker than (D). The second is uniqueness without the third condition of $\mathscr O$, Hypothesis~\CGref{hyp:U}, which does not involve $\zeta$. Compactness itself is not an issue in the box: Proposition~\CGref{prop:compactness} uses only the imposed bounds. In this scheme the ordinates $\gamma_k$ never enter the construction; they appear only as the unique admissible zero of $\mathfrak R$. Lemma~\CGref{lem:canonical-box} does \emph{not} show that near-solutions of sections lie in $\mathbb K(C_\eta,\mathbb M_*)$: it locates only the exact solution. Restricting the sections to that box is a choice, justified a posteriori by Corollary~\CGref{cor:D-implies-B}.
+\end{remark}
+
+\subsection{Route B with prescribed von Mangoldt masses}\label{sec:prescribed}
+
+The masses $\mathsf a^\zeta_n=\Lambda(n)/(2\sqrt n)$ are known and do not depend on (D) or on the ordinates of $\zeta$. Prescribing them leaves the ordinates as the only unknowns, and the uniqueness question of Hypothesis~\CGref{hyp:U} disappears. The tool is the identification of the Laplace transform of the residual. In the previous version this was a convention; here it is a lemma.
+
+\emph{Laplace transforms of distributions.} Let $\mathscr T\in\mathcal D'(\mathbb R)$ have support in $[0,\infty)$ and suppose that $e^{-au}\mathscr T$ is a tempered distribution for some $a\in\mathbb R$. For $\Re s>a+\frac12$ put $z:=s-\frac12$ and
+\begin{equation}\label{eq:laplace-def}
+ \mathcal L\mathscr T(s):=\bigl\langle\mathscr T,\ \mathsf j(u)\,e^{-zu}\bigr\rangle,
+\end{equation}
+where $\mathsf j\in C^\infty(\mathbb R)$ equals $1$ on $[-1,\infty)$ and $0$ on $(-\infty,-2]$; the value does not depend on $\mathsf j$, and $\mathcal L\mathscr T$ is holomorphic there \cite[Ch.~8]{Zemanian1965}. The shift by $\frac12$ in $z$ is the normalisation of \CGeqref{eq:Rhat}. Since $\mathsf j'$ vanishes on the support of $\mathscr T$, $\mathcal L(\partial_u\mathscr T)(s)=z\,\mathcal L\mathscr T(s)$; also $\mathcal L\delta_0=1$, $\mathcal L\delta_0'=z$, and for a locally integrable $g$ on $[0,\infty)$ with $|g(u)|\le ce^{au}$, $\mathcal L(\mathfrak g\mathbf 1_+)(s)=\int_0^\infty e^{-zu}g(u)\,du$. We write $\mathbf 1_+:=\mathbf 1_{[0,\infty)}$ and $\mathrm{fp}\,\frac{\mathbf 1_+}u$ for the distribution $\varphi\mapsto\int_0^1\frac{\varphi(u)-\varphi(0)}u\,du+\int_1^\infty\frac{\varphi(u)}u\,du$, of order $1$, supported in $[0,\infty)$, with restriction $1/u$ to $(0,\infty)$.
+
+\begin{lemma}[The Archimedean distribution]\label{lem:archimedean}
+Let $\mathfrak g(u):=\frac{e^{-u/2}}{e^{2u}-1}-\frac1{2u}$ for $u>0$; $\mathfrak g$ is bounded, $\mathfrak g(0^+)=-\frac34$, and $\mathfrak g(u)=O(e^{-u/2})$. Put $\mathrm c_{\mathscr K}:=-\frac14\log(2\pi e^{\gamma_E})$, $\gamma_E$ Euler's constant, and
+\begin{equation}\label{eq:K-dist}
+ \mathscr K:=\tfrac12e^{u/2}\mathbf 1_+-\tfrac12\,\mathfrak g\,\mathbf 1_+-\tfrac14\,\mathrm{fp}\,\frac{\mathbf 1_+}u+\mathrm c_{\mathscr K}\,\delta_0 .
+\end{equation}
+Then $\mathscr K$ is a distribution of order $1$ supported in $[0,\infty)$, its restriction to $(0,\infty)$ is the function $\mathsf k$ of \msref{eq:transport-defs}, and
+\begin{equation}\label{eq:LK}
+ \mathcal L\mathscr K(s)=\tfrac12\,\frac{G'}G(s)\qquad(\Re s>1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+On $(0,\infty)$, $\frac12e^{u/2}-\frac12\mathfrak g(u)-\frac1{4u}=\frac12\bigl(e^{u/2}-\frac{e^{-u/2}}{e^{2u}-1}\bigr)=\mathsf k(u)$. The expansion $\frac{e^{-u/2}}{e^{2u}-1}=\frac1{2u}-\frac34+O(u)$ gives the behaviour of $\mathfrak g$ at $0$. With $z=s-\frac12$ and $\Re s>1$: $\mathcal L(\frac12e^{u/2}\mathbf 1_+)=\frac1{2(z-\frac12)}=\frac1{2(s-1)}$. Gauss's integral $\frac{\Gamma'}{\Gamma}(x)=\int_0^\infty\bigl(\frac{e^{-t}}t-\frac{e^{-xt}}{1-e^{-t}}\bigr)dt$ ($\Re x>0$) for the logarithmic derivative of $\Gamma$ \cite[Ch.~XII]{WhittakerWatson1927}, with $t=2u$ and $x=\frac s2$, reads
+\begin{equation}\label{eq:aux-12}
+ \tfrac12\frac{\Gamma'}{\Gamma}\bigl(\tfrac s2\bigr)=\int_0^\infty\Bigl(\frac{e^{-2u}}{2u}-\frac{e^{-su}}{1-e^{-2u}}\Bigr)du
+ =\int_0^\infty\Bigl(\frac{e^{-2u}}{2u}-e^{-zu}\frac{e^{-u/2}}{e^{2u}-1}\Bigr)du-\frac1s,
+\end{equation}
+because $\frac{e^{-su}}{1-e^{-2u}}=e^{-zu}\bigl(\frac{e^{-u/2}}{e^{2u}-1}+e^{-u/2}\bigr)$ and $\int_0^\infty e^{-zu}e^{-u/2}du=\frac1s$. Writing $\frac{e^{-u/2}}{e^{2u}-1}=\mathfrak g(u)+\frac1{2u}$ and using Frullani's integral $\int_0^\infty\frac{e^{-2u}-e^{-zu}}u\,du=\log\frac z2$ (both sides vanish at $z=2$ and have derivative $\int_0^\infty e^{-zu}du=1/z$ in $z$, for $\Re z>0$), the integral in \CGeqref{eq:aux-12} equals $-\mathcal L(\mathfrak g\mathbf 1_+)(s)+\frac12\log\frac z2$. Hence
+\begin{equation}\label{eq:aux-13}
+ \tfrac12\frac{G'}G(s)=\frac1{2s}+\frac1{2(s-1)}-\frac14\log\pi+\frac14\frac{\Gamma'}{\Gamma}\bigl(\tfrac s2\bigr)
+ =\mathcal L\bigl(\tfrac12e^{u/2}\mathbf 1_+\bigr)(s)-\tfrac12\mathcal L(\mathfrak g\mathbf 1_+)(s)+\tfrac14\log\frac z2-\tfrac14\log\pi .
+\end{equation}
+Finally $\mathcal L\bigl(\mathrm{fp}\,\frac{\mathbf 1_+}u\bigr)(s)=\int_0^1\frac{e^{-zu}-1}u\,du+\int_1^\infty\frac{e^{-zu}}u\,du=-\gamma_E-\log z$: the left side has derivative $-\int_0^\infty e^{-zu}du=-1/z$ in $z$, and its value at $z=1$ is $\int_0^1\frac{e^{-u}-1}u\,du+\int_1^\infty\frac{e^{-u}}u\,du=-\gamma_E$, the classical integral representation of Euler's constant \cite[Ch.~XII]{WhittakerWatson1927}. Substituting, $\frac14\log\frac z2=-\frac14\mathcal L(\mathrm{fp}\,\frac{\mathbf 1_+}u)-\frac14(\gamma_E+\log2)$, and \CGeqref{eq:aux-13} becomes \CGeqref{eq:LK} with the constant $\mathrm c_{\mathscr K}$. (The identity was also checked numerically to $25$ digits at four points $s$; file \texttt{laplace\_check.py}.)
+\end{proof}
+
+\begin{lemma}[Laplace transform of the residual]\label{lem:laplace}
+Let $\boldsymbol\kappa$ be $C$-admissible and put $\mathfrak H_{\boldsymbol\kappa}(u):=\sum_k\kappa_k^{-2}\cos(\kappa_ku)$, which converges absolutely and uniformly on $\mathbb R$ since $\mathfrak H_{\boldsymbol\kappa}(0)=\sum_k\kappa_k^{-2}<\infty$, and
+\begin{equation}\label{eq:S-A-dist}
+ \mathscr S_{\boldsymbol\kappa}:=-\partial_u^2\bigl(\mathfrak H_{\boldsymbol\kappa}\mathbf 1_+\bigr)+\mathfrak H_{\boldsymbol\kappa}(0)\,\delta_0',\qquad
+ \mathscr A_\zeta:=\sum_{n\ge2}\mathsf a^\zeta_n\,\delta_{\log n},\qquad
+ \mathscr E_{\boldsymbol\kappa}:=\mathscr S_{\boldsymbol\kappa}+\mathscr A_\zeta-\mathscr K .
+\end{equation}
+Then $\mathscr E_{\boldsymbol\kappa}$ is a distribution of order at most $2$, supported in $[0,\infty)$, whose restriction to $(0,\infty)$ is $\mathfrak R(\boldsymbol\kappa,\mathsf a^\zeta)$, and for $\Re s>1$
+\begin{equation}\label{eq:LR}
+ \mathcal L\mathscr E_{\boldsymbol\kappa}(s)=\widehat{\mathsf R}(s)=\tfrac12\Bigl(\frac{P_{\boldsymbol\kappa}'}{P_{\boldsymbol\kappa}}-\frac{\xi'}{\xi}\Bigr)(s),\qquad\xi:=\tfrac12G\zeta ,
+\end{equation}
+where $\widehat{\mathsf R}$ is \CGeqref{eq:Rhat} with the masses $\mathsf a^\zeta$ for all $n$. The same holds for a finite section $(\boldsymbol\kappa,\mathsf a)$ with $\mathscr A_\zeta$ replaced by $\sum_{n\le n^*}\mathsf a_n\delta_{\log n}$ and $-\frac12\xi'/\xi$ by $-\frac12G'/G+\sum_{n\le n^*}\mathsf a_nn^{\frac12-s}$.
+\end{lemma}
+
+\begin{proof}
+\emph{Spectral part.} $\kappa_k\ge\tau_k-C\gg k/\log(k+1)$, so $\mathfrak H_{\boldsymbol\kappa}(0)<\infty$ and $\mathfrak H_{\boldsymbol\kappa}$ is continuous and bounded by $\mathfrak H_{\boldsymbol\kappa}(0)$. In $\mathcal D'(0,\infty)$ a uniformly convergent series may be differentiated termwise, so $-\mathfrak H_{\boldsymbol\kappa}''=\sum_k\cos(\kappa_ku)$ there; the term $\mathfrak H_{\boldsymbol\kappa}(0)\delta_0'$ is supported at $0$. Hence $\mathscr S_{\boldsymbol\kappa}|_{(0,\infty)}=\sum_k\cos(\kappa_ku)$, and $\mathscr S_{\boldsymbol\kappa}$ has order at most $2$. For $\Re z>0$, Fubini (the double integral $\sum_k\kappa_k^{-2}\int_0^\infty e^{-\Re z\,u}du$ is finite) gives $\mathcal L(\mathfrak H_{\boldsymbol\kappa}\mathbf 1_+)(s)=\sum_k\kappa_k^{-2}\frac z{z^2+\kappa_k^2}$, so
+\begin{equation}\label{eq:aux-14}
+ \mathcal L\mathscr S_{\boldsymbol\kappa}(s)=-z^2\sum_k\frac z{\kappa_k^2(z^2+\kappa_k^2)}+z\sum_k\frac1{\kappa_k^2}
+ =\sum_k\frac{z}{z^2+\kappa_k^2}=\tfrac12\frac{P_{\boldsymbol\kappa}'}{P_{\boldsymbol\kappa}}(s),
+\end{equation}
+because $\frac z{\kappa^2}-\frac{z^3}{\kappa^2(z^2+\kappa^2)}=\frac z{z^2+\kappa^2}$, and $P_{\boldsymbol\kappa}=\prod_k\frac{z^2+\kappa_k^2}{\frac14+\kappa_k^2}$ converges locally uniformly, so its logarithmic derivative is the termwise sum $\sum_k\frac{2z}{z^2+\kappa_k^2}$.
+
+\emph{Arithmetic part.} On $[0,u^*]$ only $n\le e^{u^*}$ contribute, so $\mathscr A_\zeta$ is a locally finite measure, of order $0$, and $e^{-au}\mathscr A_\zeta$ is a finite measure for $a>\frac12$. For $\Re s>1$, $\mathcal L\mathscr A_\zeta(s)=\sum_n\frac{\Lambda(n)}{2\sqrt n}n^{-z}=\frac12\sum_n\Lambda(n)n^{-s}=-\frac12\frac{\zeta'}\zeta(s)$.
+
+\emph{Assembly.} By Lemma~\CGref{lem:archimedean}, $\mathcal L\mathscr E_{\boldsymbol\kappa}=\frac12P'_{\boldsymbol\kappa}/P_{\boldsymbol\kappa}-\frac12\zeta'/\zeta-\frac12G'/G$, and $(G\zeta)'/(G\zeta)=\xi'/\xi$ since $\xi=\frac12G\zeta$. The restriction to $(0,\infty)$ is $\sum_k\cos(\kappa_ku)+\sum_n\mathsf a^\zeta_n\delta(u-\log n)-\mathsf k(u)$, which is \CGeqref{eq:residual}. The finite-section case is identical with a finite sum.
+\end{proof}
+
+\begin{remark}[The boundary term]\label{rem:boundary-term}
+Without the correction $\mathfrak H_{\boldsymbol\kappa}(0)\delta_0'$ in \CGeqref{eq:S-A-dist}, the transform of $-\partial_u^2(\mathfrak H_{\boldsymbol\kappa}\mathbf 1_+)$ is $\frac12P'_{\boldsymbol\kappa}/P_{\boldsymbol\kappa}-(s-\frac12)\mathfrak H_{\boldsymbol\kappa}(0)$: the second derivative of the cut-off function produces $\mathfrak H_{\boldsymbol\kappa}(0)\delta_0'=\mathfrak H_{\boldsymbol\kappa}(0)\delta_0'$. Either normalisation gives the same restriction to $(0,\infty)$ and differs by a polynomial in $s$, which is harmless in the argument below. Both $\mathscr K$ and $\mathscr S_{\boldsymbol\kappa}$ carry singular terms at $u=0$; this is why the rung system is posed in $\mathcal D'(0,\infty)$ and not on $[0,\infty)$.
+\end{remark}
+
+\begin{proposition}[Uniqueness with prescribed masses]\label{prop:prescribed-uniqueness}
+Let $\boldsymbol\kappa$ be $C$-admissible for some $C$, and suppose $\mathfrak R(\boldsymbol\kappa,\mathsf a^\zeta)=0$ in $\mathcal D'(0,\infty)$. Then all nontrivial zeros of $\zeta$ lie on $\Re s=\frac12$, and $\boldsymbol\kappa=\boldsymbol\gamma$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\CGref{lem:laplace}, $\mathscr E_{\boldsymbol\kappa}$ is a distribution of finite order supported in $[0,\infty)$ whose restriction to $(0,\infty)$ vanishes, so it is supported at $\{0\}$. A distribution of finite order supported at a point is a finite linear combination of $\delta_0$ and its derivatives \cite[Thm.~2.3.4]{Hormander1990}, so $\widehat{\mathsf R}=\mathcal L\mathscr E_{\boldsymbol\kappa}$ is a polynomial $p$ in $z=s-\frac12$. By \CGeqref{eq:LR}, $(P_{\boldsymbol\kappa}e^{-Q}/\xi)'=0$ on $\Re s>1$ with $Q'=2p$, $Q$ a polynomial. Hence $P_{\boldsymbol\kappa}=c\,\xi\,e^{Q}$ there with $c\ne0$, and by analytic continuation on all of $\mathbb C$. In the variable $w=s-\frac12$, $P_{\boldsymbol\kappa}$ is a constant multiple of $\prod_k(1+w^2/\kappa_k^2)$, and $N_{\boldsymbol\kappa}(t)\ll t\log t$, so $P_{\boldsymbol\kappa}$ has order $1$; $\xi$ has order $1$. Thus $e^Q=P_{\boldsymbol\kappa}/(c\xi)$ is entire, zero-free and of order at most $1$, and $\deg Q\le1$ by Hadamard's theorem. Since $P_{\boldsymbol\kappa}(1-s)=P_{\boldsymbol\kappa}(s)$ and $\xi(1-s)=\xi(s)$, $e^{Q(1-s)}=e^{Q(s)}$; for $Q(s)=a+bs$ this forces $b(1-2s)\in2\pi i\mathbb Z$ for all $s$, so $b=0$. Therefore $P_{\boldsymbol\kappa}=c'\xi$. The zeros of $P_{\boldsymbol\kappa}$ are $\frac12\pm i\kappa_k$, so every zero of $\xi$, that is, every nontrivial zero of $\zeta$, has real part $\frac12$, and the ordinates counted with multiplicity are the $\kappa_k$. Both lists are nondecreasing, so $\boldsymbol\kappa=\boldsymbol\gamma$.
+\end{proof}
+
+\begin{definition}[Statement B$'$]\label{def:Bprime}
+\emph{Statement B$'(C)$} says that there are $C$-admissible lists $\boldsymbol\kappa^{(m)}$, each equal to the clock beyond some finite index, with $\mathsf s_m(\boldsymbol\kappa^{(m)},\mathsf a^\zeta)\to0$.
+\end{definition}
+
+\begin{corollary}[Route B$'$]\label{cor:Bprime}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If B$'(C)$ holds for some $C$, then every sequence as in Definition~\CGref{def:Bprime} converges coordinatewise to $\boldsymbol\gamma$, and all nontrivial zeros of $\zeta$ lie on $\Re s=\frac12$.
+\item If all nontrivial zeros of $\zeta$ lie on $\Re s=\frac12$, then B$'(C)$ holds for every $C\ge C_\eta$.
+\end{enumerate}
+Hence the Riemann hypothesis is equivalent to B$'(C)$ for some $C<\infty$.
+\end{corollary}
+
+\begin{proof}
+(a) $|\mathsf a^\zeta_n|\le \mathbb M_*$ by the elementary computation in Lemma~\CGref{lem:canonical-box}, so $(\boldsymbol\kappa^{(m)},\mathsf a^\zeta)\in\mathbb K(C,\mathbb M_*)$. By Proposition~\CGref{prop:compactness}, every subsequence has a further subsequence converging coordinatewise to some $(\boldsymbol\kappa,\mathsf a^\zeta)$ with $\mathfrak R(\boldsymbol\kappa,\mathsf a^\zeta)=0$ and $\boldsymbol\kappa$ $C$-admissible; the masses do not move. By Proposition~\CGref{prop:prescribed-uniqueness}, $\boldsymbol\kappa=\boldsymbol\gamma$ and the zeros lie on the line. Since every subsequence has a further subsequence with the same limit, the whole sequence converges. (b) Under this hypothesis the rung system with $(\boldsymbol\gamma,\mathsf a^\zeta)$ is the distributional explicit formula \msref{thm:distributional-EF}, and $|\gamma_k-\tau_k|\le C_\eta$ by \msref{lem:bounded-displacement}. The truncations in the proof of Corollary~\CGref{cor:D-implies-B}, with the masses kept equal to $\mathsf a^\zeta$, give the sections.
+\end{proof}
+
+\begin{remark}[What prescribing the masses changes, and what it does not]\label{rem:prescribed}
+Hypothesis~\CGref{hyp:U} is no longer needed: uniqueness holds for every list at bounded distance from the clock, not only in $\mathscr O$, and it follows from Hadamard's theorem and the functional equation instead of \msref{thm:free-masses}. Route B$'$ has a single open piece, the existence statement B$'$, which by Corollary~\CGref{cor:Bprime} is equivalent to the Riemann hypothesis. With prescribed masses the whole window $(0,u^*)$ constrains the ordinates; the part above $\log\Omega$ can no longer be absorbed by the masses, as it could in Heuristic~\CGref{heur:informative}.
+
+The equivalence itself is classical in substance. The prime side of the rung system is the prime side of the explicit formula of Riemann and von Mangoldt in the form of Guinand and Weil \cite{Guinand1948,Weil1952}, and the uniqueness is Hadamard's factorisation. Arias de Reyna \cite{AriasdeReyna2024} proves that the Riemann hypothesis is equivalent to the temperedness of the measure $-\sum_n\frac{\Lambda(n)}{\sqrt n}(\delta_{\log n}+\delta_{-\log n})+2\cosh(x/2)\,dx$, the same prime side up to the factor $2$ and the symmetrisation, and identifies its Fourier transform with $\sum_\gamma\delta_{\gamma/2\pi}-2\vartheta'(2\pi t)\,dt$ under that hypothesis; by partial summation his criterion is von Koch's $\sum_{n\le x}\Lambda(n)=x+O(x^{1/2}\log^2x)$. Statement B$'$ is the finite-section form of the same equivalence: it asks for a real spectrum in a tube around the clock that reproduces the prime side against a dense family of tests. It is not a weaker intermediate statement, and the finite sections are not more constrained than the global statement; what they offer is a formulation in which each stage is a finite-dimensional problem with computable certificates (Section~\CGref{sec:staged}) and explicit candidates (Section~\CGref{sec:gonek}). Dyson's suggestion that the zeros form a one-dimensional quasicrystal, and the classification of crystalline measures by Kurasov and Sarnak \cite{KurasovSarnak2020} and Olevskii and Ulanovskii \cite{OlevskiiUlanovskii2020}, concern the same object; the zeta list is not in those classes because of its density, as Arias de Reyna points out.
+\end{remark}
+
+\subsection{Staged construction: a certificate theorem and a graded extension}\label{sec:staged}
+
+\begin{definition}[Staged sections]\label{def:staged}
+Fix $u^*_1<u^*_2<\cdots\to\infty$, finite test sets $\mathscr T_1\subset\mathscr T_2\subset\cdots$ supported in $(0,u^*_m)$ with dense union as in Section~\CGref{sec:routeB}, $\mathrm t_m:=|\mathscr T_m|$, and $k^*_m\to\infty$. Stage $m$ starts from a list $\boldsymbol\kappa^{(m,0)}$ that equals the clock beyond some finite index, moves the coordinates $k\le k^*_m$ by $x\in\mathbb R^{k^*_m}$, and has masses $\mathsf a^\zeta$. Its residual map is
+\begin{equation}\label{eq:Fm}
+ \mathbb F_m:\mathbb R^{k^*_m}\to\mathbb R^{\mathrm t_m},\qquad \mathbb F_m(x)_\varphi:=\bigl\langle\mathfrak R(\boldsymbol\kappa^{(m,0)}+x,\mathsf a^\zeta),\varphi\bigr\rangle\quad(\varphi\in\mathscr T_m),
+\end{equation}
+where $(\boldsymbol\kappa+x)_k=\kappa_k+x_k$ for $k\le k^*_m$ and $\kappa_k$ otherwise, and its Jacobian at $0$ is
+\begin{equation}\label{eq:jacobian}
+ (\mathbb J_m)_{\varphi,k}=\partial_{x_k}\mathbb F_m(0)_\varphi=-\int_0^\infty\varphi(u)\,u\sin(\kappa^{(m,0)}_ku)\,du\qquad(\varphi\in\mathscr T_m,\ k\le k^*_m).
+\end{equation}
+We use the norms $\|x\|_\infty$ on $\mathbb R^{k^*_m}$ and $\mathbb R^{\mathrm t_m}$ and the induced operator norms $\|\cdot\|_{\infty\to\infty}$ (maximal absolute row sum). Put
+\begin{equation}\label{eq:eta-H}
+ \mathsf h_m:=\|\mathbb F_m(0)\|_\infty,\qquad \mathbb H_m:=k^*_m\max_{\varphi\in\mathscr T_m}\int_0^\infty|\varphi(u)|\,u^2\,du .
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Monotone matching]\label{lem:matching}
+Let $(\mathrm a_k)_{k\ge1}$ be real with $|\mathrm a_k-\tau_k|\le C$ for all $k$, and let $(\mathrm a_{(k)})$ be its nondecreasing rearrangement. Then $|\mathrm a_{(k)}-\tau_k|\le C$ for all $k$. If moreover $\mathrm a_k=\tau_k$ for $k>k^*$, then $\mathrm a_{(k)}=\tau_k$ for all $k>k^*+j$, where $j:=\#\{k>k^*:\tau_k\le\tau_K+C\}<\infty$.
+\end{lemma}
+
+\begin{proof}
+At least $k$ of the $\mathrm a_i$ (those with $i\le k$) are $\le\tau_k+C$, so $\mathrm a_{(k)}\le\tau_k+C$; at least $k$ of them (those with $i\ge k$) are $\ge\tau_k-C$, hence at most $k-1$ are $<\tau_k-C$, so $\mathrm a_{(k)}\ge\tau_k-C$. For the second claim, the elements of the multiset not exceeding $\tau_K+C$ are the $k^*$ moved ones and the $j$ clock points $\tau_k$, $k^*<k\le k^*+j$; the remaining elements are exactly $\tau_k$, $k>k^*+j$, in increasing order.
+\end{proof}
+
+\begin{lemma}[Lipschitz bound for the Jacobian]\label{lem:lipschitz}
+For all $x,x'\in\mathbb R^{k^*_m}$, $\|D\mathbb F_m(x)-D\mathbb F_m(x')\|_{\infty\to\infty}\le \mathbb H_m\|x-x'\|_\infty$, and
+\begin{equation}\label{eq:taylor}
+ \|\mathbb F_m(x)-\mathbb F_m(0)-\mathbb J_mx\|_\infty\le\tfrac12\mathbb H_m\|x\|_\infty^2 .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$\mathbb F_m(x)_\varphi=\sum_{k\le k^*_m}\mathsf c_\varphi(\kappa^{(m,0)}_k+x_k)+\text{const}$, so $D^2\mathbb F_m(x)_\varphi$ is diagonal with entries $\partial_{x_k}^2\mathbb F_m(x)_\varphi=-\int\varphi(u)u^2\cos((\kappa_k+x_k)u)\,du$, of modulus at most $\int|\varphi|u^2$. The row $\varphi$ of $D\mathbb F_m(x)-D\mathbb F_m(x')$ has absolute sum at most $\sum_{k\le k^*_m}\int|\varphi|u^2\,|x_k-x'_k|\le \mathbb H_m\|x-x'\|_\infty$. The Taylor bound follows by integrating $D\mathbb F_m$ along the segment.
+\end{proof}
+
+\begin{theorem}[Certificate for one stage]\label{thm:certificate}
+Suppose $\mathbb J_m$ has a right inverse $\mathbb Q_m:\mathbb R^{\mathrm t_m}\to\mathbb R^{k^*_m}$, $\mathbb J_m\mathbb Q_m=I_{\mathrm t_m}$, with $\|\mathbb Q_m\|_{\infty\to\infty}\le \mathbb L_m$, and
+\begin{equation}\label{eq:Am}
+ \mathsf l_m:=2\mathbb L_m^2\mathbb H_m\mathsf h_m<1 .\tag{A$_m$}
+\end{equation}
+Then the map $\mathbb T_m(y):=y-\mathbb F_m(\mathbb Q_my)$ is a contraction of the ball $\{\|y\|_\infty\le2\mathsf h_m\}\subset\mathbb R^{\mathrm t_m}$ with constant $\mathsf l_m$, and $x_*:=\mathbb Q_my_*$, $y_*$ its fixed point, satisfies
+\begin{equation}\label{eq:cert-conclusion}
+ \mathbb F_m(x_*)=0,\qquad\|x_*\|_\infty\le2\mathbb L_m\mathsf h_m .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$D\mathbb T_m(y)=I-D\mathbb F_m(\mathbb Q_my)\mathbb Q_m=(\mathbb J_m-D\mathbb F_m(\mathbb Q_my))\mathbb Q_m$ because $\mathbb J_m\mathbb Q_m=I$, so by Lemma~\CGref{lem:lipschitz}, for $\|y\|_\infty\le2\mathsf h_m$, $\|D\mathbb T_m(y)\|_{\infty\to\infty}\le \mathbb H_m\|\mathbb Q_my\|_\infty \mathbb L_m\le2\mathbb H_m\mathbb L_m^2\mathsf h_m=\mathsf l_m<1$. Moreover $\mathbb T_m(y)=-\mathbb F_m(0)-\bigl(\mathbb F_m(\mathbb Q_my)-\mathbb F_m(0)-\mathbb J_m\mathbb Q_my\bigr)$, and by \CGeqref{eq:taylor} the bracket has norm at most $\frac12\mathbb H_m\mathbb L_m^2\|y\|_\infty^2\le2\mathbb H_m\mathbb L_m^2\mathsf h_m^2$. Hence $\|\mathbb T_m(y)\|_\infty\le\mathsf h_m(1+\mathsf l_m)<2\mathsf h_m$: the ball is mapped into itself. Banach's fixed point theorem gives a unique fixed point $y_*$ in the ball, $y_*=y_*-\mathbb F_m(\mathbb Q_my_*)$, that is, $\mathbb F_m(x_*)=0$ with $\|x_*\|_\infty\le \mathbb L_m\|y_*\|_\infty\le2\mathbb L_m\mathsf h_m$. The iteration $y_{q+1}=\mathbb T_m(y_q)$, $y_0=0$, converges to $y_*$ geometrically with ratio $\mathsf l_m$; in the variable $x$ it is $x_{q+1}=x_q-\mathbb Q_m\mathbb F_m(x_q)$, a Newton iteration with the frozen right inverse $\mathbb Q_m$.
+\end{proof}
+
+\begin{theorem}[Staged certificate implies route B$'$]\label{thm:staged}
+Let $C<\tau_1-2\pi$. Start at $\boldsymbol\kappa^{(1,0)}:=\boldsymbol\tau$ and, for $m\ge1$, let $\boldsymbol\kappa^{(m)}$ be the nondecreasing rearrangement of $\boldsymbol\kappa^{(m,0)}+x_*^{(m)}$ given by Theorem~\CGref{thm:certificate}, and $\boldsymbol\kappa^{(m+1,0)}:=\boldsymbol\kappa^{(m)}$. Suppose \textup{(A$_m$)} holds for every $m$ and
+\begin{equation}\label{eq:B}
+ \sup_{m\ge1}\ \sum_{j\le m}2\mathbb L_j\mathsf h_j\le C .\tag{B}
+\end{equation}
+Then every $\boldsymbol\kappa^{(m)}$ is $C$-admissible and equals the clock beyond a finite index $\widetilde k^*_m$, $\mathsf s_m(\boldsymbol\kappa^{(m)},\mathsf a^\zeta)=0$ for every $m$, B$'(C)$ holds, and therefore (Corollary~\CGref{cor:Bprime}) $\boldsymbol\kappa^{(m)}\to\boldsymbol\gamma$ coordinatewise and the Riemann hypothesis holds. In \textup{(A$_{m+1}$)} and \textup{(B)} the quantity $\mathsf h_{m+1}$ is $\max_{\varphi\in\mathscr T_{m+1}\setminus\mathscr T_m}|\langle\mathfrak R(\boldsymbol\kappa^{(m)},\mathsf a^\zeta),\varphi\rangle|$, the residual of the new tests only.
+\end{theorem}
+
+\begin{proof}
+Induction on $m$. Suppose $\boldsymbol\kappa^{(m,0)}$ is $C_{m-1}$-admissible with $C_{m-1}:=\sum_{j<m}2\mathbb L_j\mathsf h_j$ ($C_0=0$) and equals the clock beyond a finite index. By Theorem~\CGref{thm:certificate}, $\boldsymbol\kappa^{(m,0)}+x_*^{(m)}$ satisfies $|(\cdot)_k-\tau_k|\le C_{m-1}+2\mathbb L_m\mathsf h_m=C_m$ for all $k$, and only finitely many coordinates differ from the clock. Lemma~\CGref{lem:matching} shows that its rearrangement $\boldsymbol\kappa^{(m)}$ satisfies $|\kappa^{(m)}_k-\tau_k|\le C_m\le C$ and equals the clock beyond some $\widetilde k^*_m$; it is nondecreasing, and $\kappa^{(m)}_1\ge\tau_1-C>2\pi$. So $\boldsymbol\kappa^{(m)}$ is $C$-admissible. The residual $\mathfrak R$ depends only on the multiset of ordinates, so $\langle\mathfrak R(\boldsymbol\kappa^{(m)},\mathsf a^\zeta),\varphi\rangle=\mathbb F_m(x_*^{(m)})_\varphi=0$ for all $\varphi\in\mathscr T_m$, that is, $\mathsf s_m=0$. Since $\mathscr T_m\subset\mathscr T_{m+1}$, the start of stage $m+1$ has zero residual on $\mathscr T_m$, which gives the stated form of $\mathsf h_{m+1}$. B$'(C)$ holds with $\mathsf s_m=0$, and Corollary~\CGref{cor:Bprime}(a) gives the rest.
+\end{proof}
+
+\begin{remark}[What the certificate theorem does and does not do]\label{rem:certificate-status}
+Theorem~\CGref{thm:staged} replaces the extension lemma of the previous version (there Hypothesis~E) by two computable quantities per stage, $\mathsf l_m=2\mathbb L_m^2\mathbb H_m\mathsf h_m$ and $2\mathbb L_m\mathsf h_m$. It requires no contraction factor $q$, no separate control of the perturbation of old tests, and no prior ``entry into the basin'': old tests are kept in $\mathscr T_{m+1}$ and are solved again exactly. The two conditions are not independent of the height: $\mathbb H_m\ge k^*_m\int|\varphi|u^2$ grows with the number of unknowns, and $\mathbb L_m$ is the $\ell^\infty$ norm of a right inverse of the Jacobian, whose growth is measured in Section~\CGref{sec:numerics}. The conditions (A$_m$) for all $m$ and (B) together imply the Riemann hypothesis, so they are not a weaker intermediate step; what changes is that each stage is a statement about one finite matrix and one finite residual vector, verifiable in principle by interval arithmetic. The restriction $C<\tau_1-2\pi=8.24\ldots$ only ensures $\kappa_1\ge2\pi$ and can be removed by treating the first coordinate separately.
+\end{remark}
+
+\begin{proposition}[Graded extension]\label{prop:graded}
+Let $\mathsf s_m\ge0$ satisfy $\mathsf s_{m+1}\le \mathrm q_m\mathsf s_m+\mathsf h_m$ with $0\le \mathrm q_m\le1$, $\prod_{m\ge1}\mathrm q_m=0$ and $\sum_m\mathsf h_m<\infty$. Then $\mathsf s_m\to0$. If the lists $\boldsymbol\kappa^{(m)}$ producing $\mathsf s_m=\mathsf s_m(\boldsymbol\kappa^{(m)},\mathsf a^\zeta)$ are $C$-admissible sections for a fixed $C$, then B$'(C)$ holds.
+\end{proposition}
+
+\begin{proof}
+Iterating, $\mathsf s_m\le\mathsf s_1\prod_{j<m}\mathrm q_j+\sum_{\ell<m}\mathsf h_\ell\prod_{\ell<j<m}\mathrm q_j$. Given $\epsilon>0$ choose $L$ with $\sum_{\ell\ge L}\mathsf h_\ell<\epsilon$. The terms with $\ell<L$ are at most $(\mathsf s_1+\sum_{\ell<L}\mathsf h_\ell)\prod_{L\le j<m}\mathrm q_j\cdot\max(1,\ldots)$; more precisely each product $\prod_{\ell<j<m}\mathrm q_j$ with $\ell<L$ is at most $\prod_{L\le j<m}\mathrm q_j\to0$ as $m\to\infty$, since all $\mathrm q_j\le1$ and $\prod_jq_j=0$. The terms with $\ell\ge L$ are at most $\sum_{\ell\ge L}\mathsf h_\ell<\epsilon$. Hence $\limsup\mathsf s_m\le\epsilon$. The second claim is Definition~\CGref{def:Bprime}.
+\end{proof}
+
+\begin{remark}[Tube budget, and the two geometries]\label{rem:graded-status}
+In Proposition~\CGref{prop:graded} the tube $|\kappa^{(m)}_k-\tau_k|\le C$, uniform in $m$, is a separate hypothesis: summability of the coordinate increments $\sum_m|\kappa^{(m+1)}_k-\kappa^{(m)}_k|$ gives convergence of each coordinate but not that the limit stays in a prescribed tube, so a construction must carry a displacement budget $\sum_{m\ge m(k)}|\kappa^{(m+1)}_k-\kappa^{(m)}_k|\le C-|\kappa^{(m(k))}_k-\tau_k|$. For B$'(C)$ itself no convergence of the whole sequence is needed: compactness in the product of the intervals $[\tau_k-C,\tau_k+C]$ (Proposition~\CGref{prop:compactness}) extracts a convergent subsequence, and uniqueness identifies the limit. A second point concerns norms. Theorem~\CGref{thm:certificate} is stated in $\ell^\infty$, where $\mathbb H_m$ has the simple form \CGeqref{eq:eta-H} because the Hessian of each $\mathsf c_\varphi$ is diagonal. A bound $\|\mathbb J_m^\dagger\|_{2\to2}\le1/\sigma_{\min}(\mathbb J_m)$ is a Euclidean statement; passing to $\ell^\infty$ costs factors $\sqrt{\mathrm t_m}$ and $\sqrt{K_m}$ unless the right inverse is controlled directly in $\ell^\infty_{\mathrm t_m}\to\ell^\infty_{K_m}$. The numerical constants of Section~\CGref{sec:numerics} are computed directly in $\ell^\infty$.
+\end{remark}
+
+\begin{heuristic}[Frame bound from exponential sums of the clock]\label{heur:frame}
+In the opposite regime $k^*_m\gg \mathrm t_m$ one may take $\mathbb Q_m:=\mathbb J_m^{\!T}(\mathbb J_m\mathbb J_m^{\!T})^{-1}$. If $\|\frac1{K_m}\mathbb J_m\mathbb J_m^{\!T}-D\|_{\infty\to\infty}\le\epsilon<d_-$ for a diagonal $D\ge d_-I$, and $|(\mathbb J_m)_{\varphi,k}|\le\mathrm a_J$, then $\mathbb L_m\le \mathrm t_mA/(k^*_m(d_--\epsilon))=O(\mathrm t_m/k^*_m)$ and $\mathbb L_m^2\mathbb H_m=O(\mathrm t_m^2B/k^*_m)$ with $\mathrm B_0:=\max_\varphi\int|\varphi|u^2$, so (A$_m$) becomes $k^*_m\gg \mathrm t_m^2B\mathsf h_m$: a wide block compensates a moderate residual. In the point model $\varphi\approx\delta_{u_j}$ the entries of $\frac1{k^*}\mathbb J\mathbb J^{\!T}$ are $u_ju_\ell\cdot\frac1k^*\sum_{k\in\mathfrak B}\sin(\tau_ku_j)\sin(\tau_ku_\ell)$, so the frame property reduces to cancellation in the exponential sums $\frac1k^*\sum_{k\in\mathfrak B}e^{i\mathrm v\tau_k}$ at the frequencies $\mathrm v=u_j\pm u_\ell\ne0$. On a block of $k^*$ consecutive clock points at height $T$ the spacing is $\Delta_T\approx2\pi/\log T$ with curvature $O((k^*)^2/(T\log^3T))$, which suggests $|\frac1k^*\sum e^{i\mathrm v\tau_k}|\lesssim\frac{\log T}{K|v|}+\frac{|v|(k^*)^2}{T\log^3T}$ and a window $\frac{\log T}h\ll k^*\ll(T\log^3T/u^*)^{1/2}$ for tests on a grid of step $\Delta u$. None of this is proved here, and the point model omits a decisive feature of smooth tests: a test of width $\mathrm w$ in $u$ has $|\partial_\kappa \mathsf c_\varphi(\kappa)|\lesssim\mathrm w^{-1}e^{-(\mathrm w\kappa)^2/2}$ for Gaussian $\varphi$, so ordinates with $\mathrm w\kappa\gg1$ are invisible to it and the corresponding columns of $\mathbb J_m$ are exponentially small. The underdetermined right inverse then has $\mathbb L_m$ dominated by the invisible columns; in the computations of Section~\CGref{sec:numerics} this produced $\mathbb L_m$ of size $10^{11}$ within four stages, and the stable regime was the opposite one, $\mathrm t_m\ge k^*_m$ with the unknowns restricted to the visible ordinates. The quasi-orthogonality heuristic is therefore a statement about tests that are not in $C_c^\infty(0,\infty)$, and it is not pursued further here.
+\end{heuristic}
+
+\subsection{Explicit lists in the tube: Gonek's symmetrised Euler products}\label{sec:gonek}
+
+Gonek \cite{Gonek2012} introduced, for $\mathrm X\ge2$, the truncated Euler product $P_{\mathrm X}(s):=\exp\bigl(\sum_{n\le \mathrm X^2}\frac{\Lambda_{\mathrm X}(n)}{n^s\log n}\bigr)$ with $\Lambda_{\mathrm X}(n):=\Lambda(n)$ for $n\le \mathrm X$ and $\Lambda_{\mathrm X}(n):=\Lambda(n)\log(\mathrm X^2/n)/\log \mathrm X$ for $\mathrm X<n\le \mathrm X^2$, and the symmetrised function $\zeta_{\mathrm X}(s):=P_{\mathrm X}(s)+\chi(s)P_{\mathrm X}(1-s)$, where $\chi$ is the factor of the functional equation $\zeta(s)=\chi(s)\zeta(1-s)$. On the critical line $\chi(\frac12+it)=e^{-2i\vartheta(t)}$ and $P_{\mathrm X}(\frac12-it)=\overline{P_{\mathrm X}(\frac12+it)}$, so with
+\begin{equation}\label{eq:alphaX}
+ \mathrm p_{\mathrm X}(t):=\arg P_{\mathrm X}\bigl(\tfrac12+it\bigr)=-\sum_{n\le \mathrm X^2}\frac{\Lambda_{\mathrm X}(n)\sin(t\log n)}{\sqrt n\log n},
+\end{equation}
+and the two constants
+\begin{equation}\label{eq:aux-16}
+ \mathrm m_{\mathrm X}:=\sum_{n\le \mathrm X^2}\frac{\Lambda_{\mathrm X}(n)}{\sqrt n\log n},\qquad \mathrm n_{\mathrm X}:=\sum_{n\le \mathrm X^2}\frac{\Lambda_{\mathrm X}(n)}{\sqrt n},
+\end{equation}
+one has $\zeta_{\mathrm X}(\frac12+it)=2|P_{\mathrm X}(\frac12+it)|\,e^{-i\vartheta(t)}\cos\bigl(\vartheta(t)+\mathrm p_{\mathrm X}(t)\bigr)$. Since $P_{\mathrm X}$ has no zeros, the zeros of $\zeta_{\mathrm X}$ on the line are exactly the solutions of
+\begin{equation}\label{eq:gonek-phase}
+ \varTheta_{\mathrm X}(t):=\vartheta(t)+\mathrm p_{\mathrm X}(t)\in\tfrac\pi2+\pi\mathbb Z .
+\end{equation}
+Gonek proves \cite[Thm.~6.2 of the arXiv version]{Gonek2012} that every zero of $\zeta_{\mathrm X}$ in $0\le\Re s\le1$ with imaginary part at least an absolute constant $C_0$ lies on $\Re s=\frac12$, unconditionally, and that under the Riemann hypothesis the zeros of $\zeta_{\mathrm X}$ approach those of $\zeta$ as $\mathrm X\to\infty$. The phase \CGeqref{eq:gonek-phase} is the clock phase plus a truncated prime sum: $\NR(t)=1+\vartheta(t)/\pi+\mathrm r_\vartheta(t)$ with $|\mathrm r_\vartheta(t)|\le \mathrm c_r/t$ for $t\ge1$, by Stirling's formula \cite[\S12.33]{WhittakerWatson1927}, so \CGeqref{eq:gonek-phase} reads $\NR(t)+\mathrm p_{\mathrm X}(t)/\pi\in\frac12+\mathbb Z+\mathrm r_\vartheta(t)$, to be compared with $\NR(\tau_k)=k-\frac12$.
+
+\begin{lemma}[Gonek lists lie in a tube around the clock]\label{lem:gonek-tube}
+Fix $\mathrm X\ge2$ and put $\mathfrak t_{\mathrm X}:=\max\bigl(2\pi e^{2\mathrm n_{\mathrm X}+2},\,t_1\bigr)$, where $t_1$ is such that $|\vartheta'(t)-\frac12\log\frac t{2\pi}|\le\frac12$ for $t\ge t_1$. Then $\varTheta_{\mathrm X}$ is strictly increasing on $[\mathfrak t_{\mathrm X},\infty)$ with $\varTheta_{\mathrm X}'\ge\frac12$, the solutions of \CGeqref{eq:gonek-phase} in $[\mathfrak t_{\mathrm X},\infty)$ form a strictly increasing sequence $\mathrm t_1^{(\mathrm X)}<\mathrm t_2^{(\mathrm X)}<\cdots$, each a simple zero of $\zeta_{\mathrm X}$, and there is an integer $\mathrm j_{\mathrm X}$ such that the list
+\begin{equation}\label{eq:gonek-list}
+ \kappa^{(\mathrm X)}_k:=\begin{cases}\tau_k,&k\le \mathrm j_{\mathrm X},\\ \mathrm t^{(\mathrm X)}_{k-\mathrm j_{\mathrm X}},&k>\mathrm j_{\mathrm X},\end{cases}
+\end{equation}
+is nondecreasing and $\mathrm c_{\mathrm X}$-admissible for some $\mathrm c_{\mathrm X}<\infty$, with
+\begin{equation}\label{eq:gonek-tube}
+ \bigl|\kappa^{(\mathrm X)}_k-\tau_k\bigr|\le\frac{2\mathrm m_{\mathrm X}+o(1)}{\log(\tau_k/2\pi)}\qquad(k\to\infty).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$|\mathrm p_{\mathrm X}'(t)|=|\sum_{n\le \mathrm X^2}\Lambda_{\mathrm X}(n)n^{-1/2}\cos(t\log n)|\le \mathrm n_{\mathrm X}$ and $|\mathrm p_{\mathrm X}|\le \mathrm m_{\mathrm X}$. For $t\ge \mathfrak t_{\mathrm X}$, $\vartheta'(t)\ge\frac12\log\frac t{2\pi}-\frac12\ge \mathrm n_{\mathrm X}+\frac12$, so $\varTheta_{\mathrm X}'\ge\frac12$. Hence $\varTheta_{\mathrm X}$ is a strictly increasing bijection of $[\mathfrak t_{\mathrm X},\infty)$ onto $[\varTheta_{\mathrm X}(\mathfrak t_{\mathrm X}),\infty)$, and the solutions of \CGeqref{eq:gonek-phase} are the preimages of the points $\frac\pi2+\pi j$, $j\ge j_0$, where $j_0$ is the least integer with $\frac\pi2+\pi j_0\ge\varTheta_{\mathrm X}(\mathfrak t_{\mathrm X})$; they are simple zeros because $\frac d{dt}\cos\varTheta_{\mathrm X}=-\varTheta_{\mathrm X}'\sin\varTheta_{\mathrm X}\ne0$ there. The $i$-th solution $\mathrm t^{(\mathrm X)}_i$ satisfies $\varTheta_{\mathrm X}(\mathrm t^{(\mathrm X)}_i)=\frac\pi2+\pi(j_0+i-1)$; we set $\mathrm j_{\mathrm X}:=j_0$, so that $k=\mathrm j_{\mathrm X}+i$ gives $\varTheta_{\mathrm X}(\kappa^{(\mathrm X)}_k)=\pi(k-\frac12)$. Since $\NR=1+\vartheta/\pi+\mathrm r_\vartheta$,
+\begin{equation}\label{eq:aux-15}
+ \NR\bigl(\kappa^{(\mathrm X)}_k\bigr)=k+\tfrac12-\frac{\mathrm p_{\mathrm X}(\kappa^{(\mathrm X)}_k)}\pi+\mathrm r_\vartheta\bigl(\kappa^{(\mathrm X)}_k\bigr),
+\end{equation}
+so, after replacing $\mathrm j_{\mathrm X}$ by $\mathrm j_{\mathrm X}-1$,
+\begin{equation}\label{eq:aux-17}
+ \bigl|\NR(\kappa^{(\mathrm X)}_k)-\NR(\tau_k)\bigr|\le\frac{\mathrm m_{\mathrm X}}\pi+\frac{\mathrm c_r}{\kappa^{(\mathrm X)}_k}
+\end{equation}
+(the unit shift from the constant $1$ is absorbed into the integer $\mathrm j_{\mathrm X}$, fixed once and for all; in the computations of Section~\CGref{sec:numerics} the offset was determined by matching). The right-hand side is bounded, and $\NR(2t)-\NR(t)\to\infty$, so $\kappa^{(\mathrm X)}_k/\tau_k\to1$. By the mean value theorem, $|\kappa^{(\mathrm X)}_k-\tau_k|\le(\mathrm m_{\mathrm X}/\pi+o(1))/\NR'(\mathrm s_k)$ with $\mathrm s_k$ between $\kappa^{(\mathrm X)}_k$ and $\tau_k$, and $\NR'(\mathrm s_k)=\frac1{2\pi}\log\frac{\tau_k}{2\pi}(1+o(1))$. This is \CGeqref{eq:gonek-tube}; it gives $|\kappa^{(\mathrm X)}_k-\tau_k|\to0$, so the displacements are bounded, the list is eventually nondecreasing, and finitely many initial indices (where the list is the clock) are harmless. If monotonicity of the concatenated list fails at the junction $k=\mathrm j_{\mathrm X}$, one replaces the prefix $\tau_k$, $k\le \mathrm j_{\mathrm X}$, by the nondecreasing rearrangement of Lemma~\CGref{lem:matching}, which keeps the tube.
+\end{proof}
+
+\begin{remark}[What the Gonek lists give and what remains]\label{rem:gonek-status}
+The lists $\boldsymbol\kappa^{(\mathrm X)}$ use the primes up to $\mathrm X^2$ and the clock, and nothing about the zeros of $\zeta$. Their prime side is built in: formally, $\sum_k\delta(t-\kappa^{(\mathrm X)}_k)=\frac{\varTheta_{\mathrm X}'(t)}\pi\bigl[1+2\sum_{j\ge1}(-1)^j\cos(2j\varTheta_{\mathrm X}(t))\bigr]$ where $\varTheta_{\mathrm X}'>0$, and the $j=0$ term carries $\mathrm p_{\mathrm X}'/\pi=-\frac1\pi\sum_{n\le \mathrm X^2}\Lambda_{\mathrm X}(n)n^{-1/2}\cos(t\log n)$, whose cosine transform is a sum of masses $\Lambda_{\mathrm X}(n)/(2\sqrt n)$ at $u=\log n$, equal to $\mathsf a^\zeta_n$ for $n\le \mathrm X$. Two statements would make them a solution of B$'$: \textup{(G1)} a tube uniform in $\mathrm X$, $\sup_{\mathrm X\ge\mathrm X_0}\sup_k|\kappa^{(\mathrm X)}_k-\tau_k|\le C$, which by \CGeqref{eq:gonek-tube} concerns the size of $\mathrm p_{\mathrm X}$ at its own crossing points and not its supremum ($\mathrm m_{\mathrm X}\asymp \mathrm X/\log \mathrm X$ is useless for this); and \textup{(G2)} $\langle\mathfrak R(\boldsymbol\kappa^{(\mathrm X)},\mathsf a^\zeta),\varphi\rangle\to0$ as $\mathrm X\to\infty$ for each test $\varphi$, whose content is the vanishing of the harmonics $j\ge1$ against $\varphi$. Neither is proved here. The monotonicity threshold $\mathfrak t_{\mathrm X}$ of Lemma~\CGref{lem:gonek-tube} grows like $e^{2\mathrm n_{\mathrm X}}$, so the global construction cannot rely on monotonicity of $\varTheta_{\mathrm X}$ at fixed height as $\mathrm X\to\infty$; Gonek's theorem on the location of the zeros does not need it. For fixed $\mathrm X$ the tube constant in \CGeqref{eq:gonek-tube} is $2\mathrm m_{\mathrm X}$: $\mathrm m_3=1.42$, $\mathrm m_8=3.02$, $\mathrm m_{20}=5.98$. Numerically (Section~\CGref{sec:numerics}) the lists with $3\le \mathrm X\le20$ lie within $0.19$ to $0.035$ mean spacings of the zeta ordinates for $k\le400$, whereas the clock is within $0.66$ spacings.
+\end{remark}
+
+%======================================================================
+\section{An a priori bound for quasi-solutions}\label{sec:apriori}
+
+Throughout this section $(\boldsymbol\kappa,\mathsf a)$ is a finite section in $\mathbb K(C,\mathbb M)$ with parameters $k^*,n^*$.
+
+\begin{definition}[Laplace residual]\label{def:laplace-residual}
+For $\Re s>1$ put
+\begin{equation}\label{eq:Rhat}
+ \widehat{\mathsf R}(s):=\tfrac12\,\frac{P_{\boldsymbol\kappa}'}{P_{\boldsymbol\kappa}}(s)-\tfrac12\,\frac{G'}{G}(s)+\sum_{n=2}^{n^*}\mathsf a_n\,n^{\frac12-s}.
+\end{equation}
+For $T\ge0$ put
+\begin{equation}\label{eq:E}
+ \mathbb E(T):=\int_{-T}^{T}\bigl|\widehat{\mathsf R}(2+iv)\bigr|\,dv,\qquad
+ \upsilon:=\sup_{T\ge2}\frac{\mathbb E(T)}{\log T}\in[0,\infty].
+\end{equation}
+Since $\int_0^\infty e^{-(s-\frac12)u}\cos(\kappa u)\,du=\frac{s-\frac12}{(s-\frac12)^2+\kappa^2}=\frac12\frac d{ds}\log\bigl(1+\frac{q(s)}{\frac14+\kappa^2}\bigr)$ and $\int_0^\infty e^{-(s-\frac12)u}\delta(u-\log n)\,du=n^{\frac12-s}$, $\widehat{\mathsf R}$ is formally the Laplace transform of the residual distribution of \CGeqref{eq:rung}, with the normalisation of $\mathsf k$ fixed in \msref{eq:transport-defs}; this is made precise in Lemma~\CGref{lem:laplace}. We take \CGeqref{eq:Rhat} as the definition. Because the coefficients are real, $\widehat{\mathsf R}(\bar s)=\overline{\widehat{\mathsf R}(s)}$, so $\mathbb E(T)=2\int_0^T|\widehat{\mathsf R}(2+iv)|\,dv$. We assume $\upsilon<\infty$ throughout this section; if $\upsilon=\infty$ every bound below is void. By Lemma~\CGref{lem:laplace}, $\widehat{\mathsf R}$ is the Laplace transform of the residual distribution of the section.
+\end{definition}
+
+Constants. Put $\mathrm c_\ell:=2\sum_{n\ge2}n^{-3/2}/\log n<\infty$, and, for $s\in\mathbb C$ and real $x\ge2\pi$, $\mathfrak f(x;s):=\log\bigl(1+\frac{q(s)}{\frac14+x^2}\bigr)$, with the principal branch, which is defined whenever $|s-\frac12|<x$. Let $\mathbb J:=\{2\}\cup\{\sigma+i:\ -1\le\sigma\le2\}$, a compact set on which $|s-\frac12|\le\frac52<2\pi$, and
+\begin{equation}\label{eq:beta}
+ \mathfrak B(C):=\sum_{k\ge1}\ \sup_{x\in[\max(\tau_k-C,2\pi),\,\tau_k+C]}\ \sup_{s\in\mathbb J}\bigl|\mathfrak f(x;s)-\mathfrak f(\tau_k;s)\bigr| .
+\end{equation}
+This is finite. On $\mathbb J$, $|q(s)|\le5$ and $|\partial_xf(x;s)|=\bigl|\frac{2xq(s)}{(\frac14+x^2)(x^2+(s-\frac12)^2)}\bigr|\le\frac{20}{x^3}$ for $x\ge4$. The $k$-th term is therefore at most $160C\tau_k^{-3}$ when $\tau_k\ge2C$, and $\sum_k\tau_k^{-3}<\infty$. Further, $\mathrm c_\tau:=\max_{-1\le\sigma\le2}|\log|\zeta_{\RVM}(\sigma+i)||$ and $\mathrm c_{\RVM}:=\sup_{\Re s\ge2}|\log\zeta_{\RVM}(s)|$. Both are finite: the first because $\zeta_{\RVM}$ has no zeros or poles on that segment, the second by \msref{thm:halfplane-RVM}.
+
+\begin{lemma}[Phragm\'en--Lindel\"of, two forms]\label{lem:PL}
+\textup{(a)} Let $\mathbb S:=\{\mathrm l_1\le\Re s\le\mathrm l_2,\ \Im s\ge t_1\}$ have width $a:=\mathrm l_2-\mathrm l_1$. Let $u$ be upper semicontinuous on $\mathbb S$ and subharmonic in its interior, with $u\le \mathrm M_0$ on $\partial\mathbb S$ and $u(s)\le \mathrm A_0e^{c\Im s}$ for some $c<\pi/a$. Then $u\le \mathrm M_0$ on $\mathbb S$.\\
+\textup{(b)} Let $\mathfrak g$ be holomorphic in $\Re s>1$, continuous on $\Re s\ge2$, with $|g|\le1$ on $\Re s=2$ and $|\mathfrak g(s)|\le \mathrm A_0(2+|s|)^{\mathrm L}$ on $\Re s\ge2$. Then $|g|\le1$ on $\Re s\ge2$.
+\end{lemma}
+
+\begin{proof}
+(a) Choose $c<c'<\pi/a$ and $m:=\frac{\mathrm l_1+\mathrm l_2}2$, and put $\omega(s):=e^{c'\Im s}\cos(c'(\Re s-m))$. This is harmonic, being the real part of $e^{-ic'(s-m)}$. On $\mathbb S$, $\omega\ge\cos(c'a/2)\,e^{c'\Im s}$, and $\cos(c'a/2)>0$. For $\mathrm p>0$, $u-\mathrm M_0-\mathrm p\omega$ is subharmonic, $\le0$ on $\partial\mathbb S$, and tends to $-\infty$ as $\Im s\to\infty$. The maximum principle on $\mathbb S\cap\{\Im s\le t_2\}$, with $t_2$ large, gives $u\le \mathrm M_0+\mathrm p\omega$. Let $\mathrm p\to0$.\\
+(b) For $\mathrm p>0$, $\mathfrak g_\eta(s):=\mathfrak g(s)\exp(-\mathrm p(s-1)^{1/2})$, with the principal branch, satisfies $|\mathfrak g_\eta|\le|g|$ on $\Re s\ge2$, because $\Re(s-1)^{1/2}\ge\cos(\pi/4)|s-1|^{1/2}>0$ there. Moreover $\mathfrak g_\eta(s)\to0$ as $|s|\to\infty$ in $\Re s\ge2$. The maximum principle on large half-discs gives $|\mathfrak g_\eta|\le1$. Let $\mathrm p\to0$.
+\end{proof}
+
+\begin{lemma}[The Dirichlet factor]\label{lem:factor}
+Put $\mathcal D_{\mathsf a}(s):=\sum_{n=2}^{n^*}\frac{2\mathsf a_n}{\log n}n^{\frac12-s}$ and $\mathcal Y:=\zeta_{\boldsymbol\kappa}e^{-\mathcal D_{\mathsf a}}$. Then $\mathcal Y$ is holomorphic and zero-free in $\Re s>1$, and $|\mathcal D_{\mathsf a}|\le \mathbb M\mathrm c_\ell$ on $\Re s\ge2$. For the branch of $\log \mathcal Y$ that is real on $(1,\infty)$,
+\begin{equation}\label{eq:logY-deriv}
+ (\log \mathcal Y)'=2\,\widehat{\mathsf R},\qquad
+ |\log \mathcal Y(2)|\le \mathbb B_0:=|\log\zeta_{\RVM}(2)|+\mathfrak B(C)+\mathbb M\mathrm c_\ell,
+\end{equation}
+and, for all real $t$,
+\begin{equation}\label{eq:line}
+ |\log \mathcal Y(2+it)|\le \mathbb B_0+\mathbb E(|t|)\le \mathbb B_0+\upsilon\log(2+|t|).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$P_{\boldsymbol\kappa}$ vanishes only on $\Re s=\frac12$, and $G$ is holomorphic and zero-free in $\Re s>1$. Hence $\zeta_{\boldsymbol\kappa}$ and $\mathcal Y$ are holomorphic and zero-free there. $|\mathcal D_{\mathsf a}(s)|\le\sum_n2Mn^{\frac12-\Re s}/\log n\le \mathbb M\mathrm c_\ell$ for $\Re s\ge2$. Differentiating, $(\log \mathcal Y)'=\frac{P'_{\boldsymbol\kappa}}{P_{\boldsymbol\kappa}}-\frac{G'}G+2\sum_n\mathsf a_nn^{\frac12-s}=2\widehat{\mathsf R}$. At $s=2$, $\log\zeta_{\boldsymbol\kappa}(2)=\log\zeta_{\RVM}(2)+\sum_{k\le k^*}(\mathfrak f(\kappa_k;2)-\mathfrak f(\tau_k;2))$, a finite sum of real numbers bounded by $\mathfrak B(C)$, and $|\mathcal D_{\mathsf a}(2)|\le \mathbb M\mathrm c_\ell$. Finally, $\log \mathcal Y(2+it)-\log \mathcal Y(2)=2i\int_0^t\widehat{\mathsf R}(2+iv)\,dv$ has modulus at most $\mathbb E(|t|)$. For $|t|\ge2$, $\mathbb E(|t|)\le\upsilon\log|t|$; for $|t|<2$, $\mathbb E(|t|)\le \mathbb E(2)\le\upsilon\log2$.
+\end{proof}
+
+\begin{lemma}[Bound on the half-plane]\label{lem:halfplane}
+With $\mathbb W:=\log|\zeta_{\boldsymbol\kappa}|=\log|P_{\boldsymbol\kappa}|-\log|G|$ and $\mathbb B_1:=\mathbb B_0+\upsilon\log(2\sqrt2)$, $\mathbb B_2:=\mathbb B_1+\mathbb M\mathrm c_\ell$, for $\Re s\ge2$,
+\begin{equation}\label{eq:halfplane}
+ \bigl|\log|\mathcal Y(s)|\bigr|\le \mathbb B_1+\upsilon\log|s-1|,\qquad |\mathbb W(s)|\le \mathbb B_2+\upsilon\log|s-1| .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+On $\Re s=2$, $|s-1|=\sqrt{1+t^2}\ge(2+|t|)/(2\sqrt2)$, so \CGeqref{eq:line} gives $|\mathcal Y(s)|^{\pm1}\le e^{B_1}|s-1|^{\upsilon}$. A priori growth: on $\Re s\ge2$, $|\log|\zeta_{\RVM}||\le \mathrm c_{\RVM}$. The quotient $\zeta_{\boldsymbol\kappa}/\zeta_{\RVM}$ is a finite product of $k^*$ factors $\frac{(\kappa_k^2+w^2)(\frac14+\tau_k^2)}{(\frac14+\kappa_k^2)(\tau_k^2+w^2)}$ with $w=s-\frac12$. Since $|\kappa^2+w^2|=|\kappa-\Im s+i\Re w|\,|\kappa+\Im s-i\Re w|\ge(\Re w)^2\ge\frac94$, each factor and its inverse are $O((2+|s|)^4)$. Hence $|\mathcal Y|^{\pm1}\le \mathrm A_0(2+|s|)^{4k^*}$. Apply Lemma~\CGref{lem:PL}(b) to $\mathfrak g_+:=\mathcal Y\,(s-1)^{-\upsilon}e^{-\mathbb B_1}$ and to $\mathfrak g_-:=\mathcal Y^{-1}(s-1)^{-\upsilon}e^{-\mathbb B_1}$, with the principal branch of $(s-1)^{-\upsilon}$, holomorphic in $\Re s>1$ with $|(s-1)^{-\upsilon}|=|s-1|^{-\upsilon}$; both are holomorphic in $\Re s>1$ and of polynomial growth on $\Re s\ge2$. Finally $\mathbb W=\log|\mathcal Y|+\Re\mathcal D_{\mathsf a}$.
+\end{proof}
+
+\begin{lemma}[Bound on the half-strip]\label{lem:strip}
+Let $\mathbb S:=\{-1\le\Re s\le2,\ \Im s\ge1\}$ and $\mathbb B_3:=\max\bigl(\mathbb B_2+\frac34\log2,\ \mathrm c_\tau+\mathfrak B(C)\bigr)$. Then
+\begin{equation}\label{eq:strip}
+ \mathbb W(s)\le \mathbb B_3+\bigl(\tfrac32+\upsilon\bigr)\log|s+2|\qquad(s\in\mathbb S).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$\mathbb W$ is subharmonic in the interior of $\mathbb S$, since $\log|G|$ is harmonic there ($G$ has no zeros or poles with $\Im s\ge1$), and it is upper semicontinuous on $\mathbb S$. The majorant $\mathrm h_0(s):=(\frac32+\upsilon)\log|s+2|$ is harmonic and nonnegative on $\mathbb S$. We check the three sides.
+
+\emph{Right side.} By \CGeqref{eq:halfplane}, $\mathbb W(2+it)\le \mathbb B_2+\upsilon\log|1+it|\le \mathbb B_2+\mathrm h_0(2+it)$.
+
+\emph{Left side.} $P_{\boldsymbol\kappa}$ and $G$ are real, so $\mathbb W(\bar s)=\mathbb W(s)$. Combined with $P_{\boldsymbol\kappa}(1-s)=P_{\boldsymbol\kappa}(s)$, this gives $\mathbb W(-1+it)=\mathbb W(2+it)+\log|G(2+it)/G(-1+it)|$. By $\Gamma(z+1)=z\Gamma(z)$ and the reflection formula, $|\Gamma(\frac12+iy)|^2=\pi/\cosh\pi y$ and $|\Gamma(1+iy)|^2=\pi y/\sinh\pi y$, so
+\begin{equation}\label{eq:G-ratio}
+ \Bigl|\frac{G(2+it)}{G(-1+it)}\Bigr|=\frac{|1+it|}2\,\pi^{-3/2}\Bigl(\frac t2\coth\frac{\pi t}2\Bigr)^{1/2}\le(1+t)^{3/2}\qquad(t\ge1).
+\end{equation}
+For the inequality: $|1+it|\le1+t$, $\frac t2\coth\frac{\pi t}2\le\frac{1+t}2\coth\frac\pi2$, and $\frac12\pi^{-3/2}(\frac12\coth\frac\pi2)^{1/2}<1$. Since $(1+t)\le\sqrt2|1+it|$ and $|s+2|=|1+it|$ at $s=-1+it$, we get $\mathbb W(-1+it)\le \mathbb B_2+\frac34\log2+\mathrm h_0(-1+it)$.
+
+\emph{Bottom side.} For $s=\sigma+i$, $\mathbb W(s)=\log|\zeta_{\RVM}(s)|+\sum_{k\le k^*}\Re(\mathfrak f(\kappa_k;s)-\mathfrak f(\tau_k;s))\le \mathrm c_\tau+\mathfrak B(C)\le \mathrm c_\tau+\mathfrak B(C)+\mathrm h_0(s)$.
+
+\emph{Growth.} $\log|P_{\boldsymbol\kappa}(s)|\le\sum_k\log(1+|q(s)|/\kappa_k^2)$. Split at $\kappa_k\le2|s|$ and $\kappa_k>2|s|$: the first part has $N_{\boldsymbol\kappa}(2|s|)=O(|s|\log|s|)$ terms, each at most $\log(1+|q(s)|/4\pi^2)=O(\log|s|)$; in the second, $\log(1+|q(s)|/\kappa_k^2)\le|q(s)|\kappa_k^{-2}$, and $\sum_{\kappa_k>2|s|}\kappa_k^{-2}=O(\log|s|/|s|)$ by partial summation with $N_{\boldsymbol\kappa}(t)=O(t\log t)$. Hence $\log|P_{\boldsymbol\kappa}(s)|=O(|s|\log^2|s|)$, and $-\log|G(s)|\le\frac\pi4|\Im s|+O(\log|s|)$ on $\mathbb S$ by Stirling's formula \cite[\S12.33]{WhittakerWatson1927}. Hence $\mathbb W-\mathrm h_0\le \mathrm A_0e^{c\Im s}$ for any $c>0$. Lemma~\CGref{lem:PL}(a), with width $3$ and $c<\pi/3$, applied to $\mathbb W-\mathrm h_0$ gives the claim.
+\end{proof}
+
+\begin{lemma}[Backlund--Jensen on a horizontal segment]\label{lem:backlund}
+There are absolute constants $T_0\ge3$ and $\mathrm c_5$ such that, for $T\ge T_0$ with $T\notin\{\kappa_k\}$, the variation of $\arg P_{\boldsymbol\kappa}$ along the segment from $2+iT$ to $\frac12+iT$ is at most $\pi(n_T+1)$, where
+\begin{equation}\label{eq:nu}
+ n_T\le\frac{(\frac52+\upsilon)\log(T+8)+\mathbb E(T)+\mathbb B_0+\mathbb B_3+\mathbb M\mathrm c_\ell+2\mathrm c_5}{\log(4/3)} .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Choose $\mathrm a_T\in\mathbb R$ with $e^{i\mathrm a_T}P_{\boldsymbol\kappa}(2+iT)>0$ and put $\mathfrak F_T(z):=\frac12\bigl(e^{i\mathrm a_T}P_{\boldsymbol\kappa}(z+iT)+e^{-i\mathrm a_T}P_{\boldsymbol\kappa}(z-iT)\bigr)$, which is entire. Since $P_{\boldsymbol\kappa}$ is real, $P_{\boldsymbol\kappa}(x-iT)=\overline{P_{\boldsymbol\kappa}(x+iT)}$ for real $x$, so $\mathfrak F_T(x)=\Re(e^{i\mathrm a_T}P_{\boldsymbol\kappa}(x+iT))$ and $\mathfrak F_T(2)=|P_{\boldsymbol\kappa}(2+iT)|$. If $\mathfrak F_T$ has $n_T$ zeros on $[\frac12,2]$, the segment splits into at most $n_T+1$ pieces on which $\Re(e^{i\mathrm a_T}P_{\boldsymbol\kappa})$ has constant sign. On each piece $\arg$ varies by less than $\pi$, which gives the first claim \cite[\S9.4]{Titchmarsh1986}.
+
+The segment $[\frac12,2]$ lies in the closed disc $|z-2|\le\frac32$. For $\frac32<r<2$, Jensen's formula on $|z-2|\le R=2$ gives $n_T\log\frac Rr\le\max_{|z-2|=2}\log|\mathfrak F_T(z)|-\log|\mathfrak F_T(2)|$, because the zeros in the closed disc of radius $r$, which include the $n_T$ zeros on the segment, contribute at least $n_T\log(R/r)$; letting $r\downarrow\frac32$ gives the inequality with $\log\frac43$. Moreover $|\mathfrak F_T(z)|\le\max_{|\zeta-2|\le2}|P_{\boldsymbol\kappa}(\zeta+iT)|$, because $|P_{\boldsymbol\kappa}(z-iT)|=|P_{\boldsymbol\kappa}(\bar z+iT)|$. Write $\log|P_{\boldsymbol\kappa}|=\mathbb W+\log|G|$. On the disc $\{|s-(2+iT)|\le2\}$, the part with $\Re s\le2$ lies in $\mathbb S$ and $|s+2|\le T+6$, so Lemma~\CGref{lem:strip} gives $\mathbb W\le \mathbb B_3+(\frac32+\upsilon)\log(T+6)$. The part with $\Re s\ge2$ satisfies $\mathbb W\le \mathbb B_2+\upsilon\log(T+5)$ by Lemma~\CGref{lem:halfplane}, a smaller bound. At the centre, \CGeqref{eq:line} gives $\mathbb W(2+iT)\ge-(\mathbb B_0+\mathbb E(T)+\mathbb M\mathrm c_\ell)$. For the oscillation of $\log|G|$ on the disc: by Stirling's formula for $\Gamma'/\Gamma$ in $|\arg z|\le\frac34\pi$ \cite[\S12.33]{WhittakerWatson1927}, $|G'/G(s)|=|\frac1s+\frac1{s-1}-\frac12\log\pi+\frac12\frac{\Gamma'}{\Gamma}(\frac s2)|\le\frac12\log(T+8)+\mathrm c_5$ on the disc for $T\ge T_0$. So the oscillation is at most $\log(T+8)+2\mathrm c_5$. Collecting terms gives \CGeqref{eq:nu}.
+\end{proof}
+
+\begin{lemma}[Argument principle]\label{lem:argument}
+For $T>0$, $T\notin\{\kappa_k\}$, let $\mathbb G_T$ be the path $2\to2+iT\to\frac12+iT$. Then
+\begin{equation}\label{eq:arg-principle}
+ \pi N_{\boldsymbol\kappa}(T)=\Delta_{\mathbb G_T}\arg P_{\boldsymbol\kappa}
+ =\pi+\vartheta(T)+\Delta_{\mathbb G_T}\arg\zeta_{\boldsymbol\kappa},
+\end{equation}
+where $\vartheta(T)=\arg\bigl(\pi^{-iT/2}\Gamma(\frac14+\frac{iT}2)\bigr)$ is the Riemann--Siegel theta function, defined by continuous variation from $\vartheta(0)=0$.
+\end{lemma}
+
+\begin{proof}
+Take the rectangle $\mathfrak R_T$ with vertices $2\pm iT$, $-1\pm iT$. $P_{\boldsymbol\kappa}$ has no zeros on $\partial\mathfrak R_T$: its zeros lie on $\Re s=\frac12$, and $T\notin\{\kappa_k\}$, so $\frac12\pm iT$ are not zeros. Its zeros inside $\mathfrak R_T$ are $\frac12\pm i\kappa_k$ with $\kappa_k<T$, counted with multiplicity (coincident $\kappa_j=\kappa_k$ give a multiple zero), $2N_{\boldsymbol\kappa}(T)$ in total. Reflection $s\mapsto1-\bar s$ maps $\mathbb G_T$ to the path $-1\to-1+iT\to\frac12+iT$. Since $P_{\boldsymbol\kappa}(1-\bar s)=\overline{P_{\boldsymbol\kappa}(s)}$, the variation of $\arg P_{\boldsymbol\kappa}$ along the reversed image path $\frac12+iT\to-1+iT\to-1$ equals $\Delta_{\mathbb G_T}\arg P_{\boldsymbol\kappa}$. The two lower quarters are handled in the same way with $s\mapsto\bar s$. The four quarter paths make up $\partial\mathfrak R_T$, so $4\Delta_{\mathbb G_T}\arg P_{\boldsymbol\kappa}=2\pi\cdot2N_{\boldsymbol\kappa}(T)$.
+
+For the second equality, write $P_{\boldsymbol\kappa}=G\zeta_{\boldsymbol\kappa}$. Along $\mathbb G_T$, $s(s-1)$ moves from $2$ to $-(\frac14+T^2)$ inside the closed upper half-plane, so its argument varies by $\pi$. $\pi^{-s/2}\Gamma(s/2)$ is holomorphic and zero-free in $\Re s>0$, so its argument variation along $\mathbb G_T$ equals that along $[2,\frac12]\cup[\frac12,\frac12+iT]$, which is $0+\vartheta(T)$.
+\end{proof}
+
+\begin{theorem}[Counting bound for quasi-solutions]\label{thm:count}
+There are absolute constants $T_0$ and $\mathrm c_5$ such that, for every finite section in $\mathbb K(C,\mathbb M)$ and every $T\ge T_0$,
+\begin{equation}\label{eq:count}
+ \bigl|N_{\boldsymbol\kappa}(T)-n_{\RVM}(T)\bigr|\le(\mathrm c_1+\mathrm c_2\upsilon)\log(T+8)+\mathrm c_3\mathbb B+\mathrm c_5,
+\end{equation}
+with
+\begin{equation}\label{eq:a-constants}
+ \mathrm c_1=\frac5{2\log(4/3)}=8.690\ldots,\quad \mathrm c_2=\frac2{\log(4/3)}+\frac1\pi=7.270\ldots,\quad \mathrm c_3=\frac1{\log(4/3)}+\frac1\pi=3.794\ldots,
+\end{equation}
+and $\mathbb B:=\mathbb B_0+\mathbb B_3+\mathbb M\mathrm c_\ell$. The constants $\mathrm c_1,\dots,\mathrm c_5$ do not depend on $k^*$, $n^*$, $C$, $\mathbb M$ or $\upsilon$; $\mathbb B$ depends on $C$ (through $\mathfrak B(C)$), on $\mathbb M$, and linearly on $\upsilon$ (through $\mathbb B_2$), so the total coefficient of $\upsilon$ in \CGeqref{eq:count} is $\mathrm c_2\log(T+8)+\mathrm c_3\log(2\sqrt2)$. In Corollary~\CGref{cor:displacement} the parameters $C$, $\mathbb M$, $\upsilon$ are fixed before $k\to\infty$.
+\end{theorem}
+
+\begin{proof}
+By continuity from the right it suffices to take $T\notin\{\kappa_k\}$. By Lemma~\CGref{lem:argument}, $N_{\boldsymbol\kappa}(T)-1-\vartheta(T)/\pi=\pi^{-1}\Delta_{\mathbb G_T}\arg\zeta_{\boldsymbol\kappa}$.
+
+\emph{Vertical piece.} $\arg\zeta_{\boldsymbol\kappa}=\Im\log \mathcal Y+\Im\mathcal D_{\mathsf a}$, with $\Im\log \mathcal Y(2)=\Im\mathcal D_{\mathsf a}(2)=0$. Its variation is at most $\mathbb E(T)+\mathbb M\mathrm c_\ell$ by Lemma~\CGref{lem:factor}.
+
+\emph{Horizontal piece.} The variation is $\Delta\arg P_{\boldsymbol\kappa}-\Delta\arg G$. The first is at most $\pi(n_T+1)$ by Lemma~\CGref{lem:backlund}. The second is $-\Im\int_{1/2}^2(G'/G)(\sigma+iT)\,d\sigma$. Here $|\Im(G'/G)|\le|\frac1s|+|\frac1{s-1}|+\frac12|\arg\frac s2|+O(1/T)\le1$ for $T\ge T_0$, by Stirling's formula for $\Gamma'/\Gamma$ \cite[\S12.33]{WhittakerWatson1927}. So the second variation is at most $\mathrm c_6:=\frac32$.
+
+\emph{Main term.} By the Stirling expansion of $\vartheta$ \cite[\S12.33]{WhittakerWatson1927}, $1+\vartheta(T)/\pi=\NR(T)+O(1/T)$, and this error is at most $1/T$ for $T\ge T_0$. With \CGeqref{eq:Ntau-floor}:
+\begin{equation}\label{eq:aux-1}
+ |N_{\boldsymbol\kappa}(T)-n_{\RVM}(T)|\le n_T+1+\frac{\mathbb E(T)+\mathbb M\mathrm c_\ell+\mathrm c_6}{\pi}+\frac1T+\frac12 .
+\end{equation}
+Insert \CGeqref{eq:nu} and $\mathbb E(T)\le\upsilon\log(T+8)$.
+\end{proof}
+
+\begin{corollary}[Displacement bound]\label{cor:displacement}
+Assume $T_0\ge2\pi e$. For every $k$ with $\tau_k-C\ge T_0$,
+\begin{equation}\label{eq:disp}
+ |\kappa_k-\tau_k|\le\frac{2\pi\bigl[(\mathrm c_1+\mathrm c_2\upsilon)\log(\tau_k+C+8)+\mathrm c_3\mathbb B+\mathrm c_5\bigr]}{\log\bigl((\tau_k-C)/2\pi\bigr)} .
+\end{equation}
+In particular $\limsup_{k\to\infty}|\kappa_k-\tau_k|\le2\pi(\mathrm c_1+\mathrm c_2\upsilon)$ uniformly over sections with given $C,\mathbb M,\upsilon$. For every $\mathrm p>0$ there is $k_0(C,\mathbb M,\upsilon,\mathrm p)$ such that $|\kappa_k-\tau_k|\le2\pi(\mathrm c_1+\mathrm c_2\upsilon)+\mathrm p$ for $k\ge k_0$.
+\end{corollary}
+
+\begin{proof}
+Let $\mathbb D(T)$ be the right-hand side of \CGeqref{eq:count}; it is nondecreasing. Suppose $\kappa_k>\tau_k+\mathrm q$ with $0<d\le C$, and let $T:=\tau_k+\mathrm q-\mathrm h'$ with small $\mathrm h'>0$. The list is nondecreasing, so $N_{\boldsymbol\kappa}(T)\le k-1$. By \CGeqref{eq:Ntau-floor} and because $\NR'$ is increasing, $n_{\RVM}(T)\ge\NR(T)-\frac12\ge k-1+(\mathrm q-\mathrm h')\NR'(\tau_k)$. Hence $(\mathrm q-\mathrm h')\frac1{2\pi}\log\frac{\tau_k}{2\pi}\le\mathbb D(\tau_k+C)$. Now suppose $\kappa_k<\tau_k-\mathrm q$, and let $T:=\tau_k-\mathrm q+\mathrm h'$. Then $N_{\boldsymbol\kappa}(T)\ge k$ and $n_{\RVM}(T)\le\NR(T)+\frac12\le k-(\mathrm q-\mathrm h')\NR'(\tau_k-C)$. Let $\mathrm h'\to0$ in both cases.
+\end{proof}
+
+\begin{remark}[What Corollary~\ref{cor:displacement} does not give]\label{rem:tube}
+The proof uses the imposed tube $|\kappa_k-\tau_k|\le C$ twice: through $\mathfrak B(C)$ in $\mathbb B$, and to replace $\mathbb D(\tau_k+d)$ by $\mathbb D(\tau_k+C)$. The conclusion is that, inside any finite tube, the coordinates of sufficiently high index lie in the smaller tube of radius $2\pi(\mathrm c_1+\mathrm c_2\upsilon)+\mathrm p$. So the constraint is inactive there once $C>2\pi(\mathrm c_1+\mathrm c_2\upsilon)+\mathrm p$. For the indices $k<k_0(C,\mathbb M,\upsilon,\mathrm p)$ nothing is proved, and the corollary does not show that unconstrained near-minimisers lie in a universal tube. The proof uses finite sections: Lemma~\CGref{lem:halfplane} needs the polynomial growth $\mathrm A_0(2+|s|)^{4k^*}$. Extending it to infinite lists requires a separate growth bound for $P_{\boldsymbol\kappa}/P_{\boldsymbol\tau}$ on $\Re s\ge2$, which is not given here. The constant $2\pi \mathrm c_1=54.60\ldots$ is far from optimal.
+\end{remark}
+
+\begin{heuristic}[What a finite section controls]\label{heur:window}
+The quantity in Theorem~\CGref{thm:count} is $\mathbb E(T)$, the $L^1$ norm on $\Re s=2$ of the Laplace transform of the residual. It is not the Euclidean residual that a numerical section minimises over finitely many tests. Let the tests be $\mathsf j_0(u)\varphi(u)$ with a fixed window $\mathsf j_0\in C_c^\infty(0,\infty)$, $\mathsf j_0\equiv1$ on $[u_0,u^*]$, and $\varphi$ band-limited to $|\omega|\le\mathrm w^\sharp$. Then the kernel $\mathsf j_0(u)e^{-\frac32u}e^{-ivu}$ is, approximately, in the span of the tests only for $|v|\lesssim\mathrm w^\sharp$. The residual on $(0,u_0)$ is then not controlled, and for a list at distance $C$ from the clock it is expected to be of size $C\log(1/u)$ as $u\to0$. Its contribution to $\mathbb E(T)$ is then $O(CTu_0\log(1/u_0))$. Since $u_0\gtrsim1/\mathrm w^\sharp$ in a band-limited section, Theorem~\CGref{thm:count} would apply with a given $\upsilon_0$ only at heights $T\lesssim\upsilon_0\mathrm w^\sharp/(C\log\mathrm w^\sharp)$. None of these size estimates is proved here. They indicate which norm a section must make small. Lemma~\CGref{lem:factor} shows that this norm is the right one.
+\end{heuristic}
+
+\begin{heuristic}[Informative part of a section]\label{heur:informative}
+Where the atoms are denser than the resolution of the tests, $e^{-u}\ll\pi/\mathrm w^\sharp$, the masses alone can approximate a smooth target by a Riemann sum $\mathsf a_n\approx \mathfrak g(\log n)/n$ without moving any ordinate. That part of the window then carries no information on the ordinates. Counting unknowns against equations in the remaining window, $u^*\le\log\mathrm w^\sharp+O(1)$, gives an overdetermined system. This proves nothing about compatibility. It only explains why B is an existence statement and not a dimension count.
+\end{heuristic}
+
+%======================================================================
+\section{A Kadec--Avdonin criterion with blocks of variable length}\label{sec:riesz}
+
+\subsection{Discrepancy and generating function}\label{sec:generating}
+
+\begin{definition}[Discrepancy, Poisson and conjugate operators]\label{def:discrepancy}
+Let $\mathscr X=(\mathrm x_k)_{k\in\mathbb Z}$ be a real nondecreasing sequence with
+\begin{equation}\label{eq:H}
+ |\mathrm x_k-(k-\tfrac12)|\le \mathrm c_{\mathscr X}\log(2+|k|)\qquad(k\in\mathbb Z).
+\end{equation}
+Its \emph{discrepancy} with respect to the half-integers is
+\begin{equation}\label{eq:psi}
+ \varPsi_{\mathscr X}(\mathrm x):=\sum_{k\in\mathbb Z}\bigl(\mathbf 1_{[\mathrm x_k,\infty)}(\mathrm x)-\mathbf 1_{[k-\frac12,\infty)}(\mathrm x)\bigr).
+\end{equation}
+The $k$-th term is $\pm1$ on the interval between $\mathrm x_k$ and $k-\frac12$ and $0$ elsewhere. By \CGeqref{eq:H}, at most $O(\log(2+|\mathrm x|))$ terms are nonzero at $\mathrm x$, so $|\varPsi_{\mathscr X}(\mathrm x)|\le \mathrm c'_{\mathscr X}\log(2+|\mathrm x|)$ and $\varPsi_{\mathscr X}\in L^1(d\mathrm x/(1+\mathrm x^2))$. For $\mathrm g\in L^1(d\mathrm x/(1+\mathrm x^2))$ and $\mathrm y>0$ put
+\begin{equation}\label{eq:PQ}
+ \mathbb P_{\mathrm y}\mathrm g(\mathrm x):=\frac1\pi\int\frac{\mathrm y\,\mathrm g(\mathrm s)\,d\mathrm s}{(\mathrm x-\mathrm s)^2+\mathrm y^2},\qquad
+ \mathbb Y_{\mathrm y}\mathrm g(\mathrm x):=\frac1\pi\int \mathrm g(\mathrm s)\Bigl[\frac{\mathrm x-\mathrm s}{(\mathrm x-\mathrm s)^2+\mathrm y^2}+\frac{\mathrm s}{1+\mathrm s^2}\Bigr]d\mathrm s .
+\end{equation}
+The last term in $\mathbb Y_{\mathrm y}$ only makes the integral converge. Changing it changes $\mathbb Y_{\mathrm y}\mathrm g$ by a constant, which is irrelevant for all statements below.
+\end{definition}
+
+\begin{lemma}[Generating function]\label{lem:generating}
+Let $\mathscr X=(\mathrm x_k)_{k\in\mathbb Z}$ satisfy \CGeqref{eq:H}, understood as a sequence indexed by $\mathbb Z$ in which a point of multiplicity $m$ occurs $m$ times. Let $\mathcal F_0(\mathfrak z):=\cos\pi \mathfrak z$, and fix $\mathfrak z_0\in\mathbb R\setminus(\mathscr X\cup(\mathbb Z+\frac12))$. The series
+\begin{equation}\label{eq:aux-2}
+ \mathfrak G_{\mathscr X}(\mathfrak z):=\sum_{k\in\mathbb Z}\Bigl(\frac1{\mathfrak z-\mathrm x_k}-\frac1{\mathfrak z-k+\frac12}\Bigr)
+\end{equation}
+converges absolutely and locally uniformly off $\mathscr X\cup(\mathbb Z+\frac12)$, and
+\begin{equation}\label{eq:aux-3}
+ \mathcal F_{\mathscr X}(\mathfrak z):=\mathcal F_0(\mathfrak z)\exp\int_{\mathfrak z_0}^{\mathfrak z}\mathfrak G_{\mathscr X}(\mathrm z)\,d\mathrm z
+\end{equation}
+is a real entire function whose zero set is $\mathscr X$, with multiplicities. Moreover:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for $\mathrm y>0$ there is a constant $\mathrm c_{\mathscr X}''$ such that
+\begin{equation}\label{eq:F-formula}
+ \log|\mathcal F_{\mathscr X}(\mathrm x+iy)|=\log|\mathcal F_0(\mathrm x+iy)|+\pi\,\mathbb Y_{\mathrm y}\varPsi_{\mathscr X}(\mathrm x)+\mathrm c_{\mathscr X}'' ;
+\end{equation}
+\item $\mathcal F_{\mathscr X}$ is of exponential type $\pi$, and its indicator diagram is the segment $[-i\pi,i\pi]$;
+\item if $\mathscr X$ is symmetric, $\mathrm x_{1-k}=-\mathrm x_k$, and $\mathfrak z_0=0\notin \mathscr X$, then $\mathcal F_{\mathscr X}$ is even.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Each term of $\mathfrak G_{\mathscr X}$ equals $\frac{x_k-k+\frac12}{(\mathfrak z-\mathrm x_k)(\mathfrak z-k+\frac12)}=O(\log(2+|k|)/k^2)$ locally uniformly, so the series converges. $\mathfrak G_{\mathscr X}$ is meromorphic with simple poles, with residue $+m$ at a point of $\mathscr X$ of multiplicity $m$ and $-1$ at each half-integer; coincident poles combine their residues. The residues are integers, so $\exp\int_{\mathfrak z_0}^{\mathfrak z}\mathfrak G_{\mathscr X}$ is single-valued. It has a pole of order one at each half-integer not in $\mathscr X$, cancelled by the zero of $\mathcal F_0$. Hence $\mathcal F_{\mathscr X}$ is entire with zero set $\mathscr X$. $\mathfrak G_{\mathscr X}(\bar{\mathfrak z})=\overline{\mathfrak G_{\mathscr X}(\mathfrak z)}$ and $\mathfrak z_0$ is real, so $\mathcal F_{\mathscr X}$ is real on $\mathbb R$. Under the symmetry in (iii), $\mathfrak G_{\mathscr X}$ is odd, so $\int_0^{\mathfrak z}\mathfrak G_{\mathscr X}$ is even, and $\mathcal F_{\mathscr X}$ is even.
+
+(i) For $\Im \mathfrak z\ne0$ put $\mathbb A_{\mathscr X}(\mathfrak z):=\int\varPsi_{\mathscr X}(\mathrm s)\bigl[\frac1{\mathfrak z-\mathrm s}+\frac{\mathrm s}{1+\mathrm s^2}\bigr]d\mathrm s$. For $f(\mathrm s):=\frac1{\mathfrak z-\mathrm s}$, the identity $f(\mathrm x_k)-f(k-\frac12)=-\int f'(\mathrm s)\bigl(\mathbf 1_{[\mathrm x_k,\infty)}-\mathbf 1_{[k-\frac12,\infty)}\bigr)(\mathrm s)\,d\mathrm s$ summed over $k$ (Fubini applies because $\sum_k\int|f'||\cdots|<\infty$ by \CGeqref{eq:H}) gives $\mathfrak G_{\mathscr X}(\mathfrak z)=-\int\varPsi_{\mathscr X}(\mathrm s)(\mathfrak z-\mathrm s)^{-2}d\mathrm s=\mathbb A_{\mathscr X}'(\mathfrak z)$. So $\mathcal F_{\mathscr X}=\mathrm c_+\mathcal F_0e^{\mathbb A_{\mathscr X}}$ on $\Im \mathfrak z>0$, with $\mathrm c_+\ne0$. Since $\Re\frac1{\mathfrak z-\mathrm s}=\frac{\mathrm x-\mathrm s}{(\mathrm x-\mathrm s)^2+\mathrm y^2}$, $\Re\mathbb A_{\mathscr X}(\mathrm x+iy)=\pi\mathbb Y_{\mathrm y}\varPsi_{\mathscr X}(\mathrm x)$ and $\Im\mathbb A_{\mathscr X}(\mathrm x+iy)=-\pi \mathbb P_{\mathrm y}\varPsi_{\mathscr X}(\mathrm x)$.
+
+(ii) Split $\mathbb Y_{\mathrm y}\varPsi_{\mathscr X}(\mathrm x)$ into $|\mathrm s-\mathrm x|\le1$, $1<|\mathrm s-\mathrm x|$ with $|\mathrm s|\le2|\mathfrak z|+2$, and $|\mathrm s|>2|\mathfrak z|+2$. Using $|\varPsi_{\mathscr X}(\mathrm s)|\le \mathrm c'_{\mathscr X}\log(2+|\mathrm s|)$, $\int_{|u|\le1}\frac{|u|\,du}{u^2+\mathrm y^2}=\log(1+\mathrm y^{-2})$, and, for $|\mathrm s|>2|\mathfrak z|+2$, $|\frac{\mathrm x-\mathrm s}{(\mathrm x-\mathrm s)^2+\mathrm y^2}+\frac{\mathrm s}{1+\mathrm s^2}|\le8(1+|\mathfrak z|)/\mathrm s^2$, one gets
+\begin{equation}\label{eq:Q-growth}
+ |\mathbb Y_{\mathrm y}\varPsi_{\mathscr X}(\mathrm x)|\le \mathrm c_{\mathscr X}'''\bigl(1+\log(1+\mathrm y^{-2})\bigr)\log^2(4+|\mathfrak z|)\qquad(\mathfrak z=\mathrm x+iy,\ \mathrm y>0).
+\end{equation}
+For $|\mathrm y|\ge1$, $\log|\mathcal F_{\mathscr X}(\mathfrak z)|\le\pi|\mathrm y|+O(\log^2(4+|\mathfrak z|))$ by \CGeqref{eq:F-formula}, \CGeqref{eq:Q-growth} and $|\mathcal F_{\mathscr X}(\bar{\mathfrak z})|=|\mathcal F_{\mathscr X}(\mathfrak z)|$. For $|\mathrm y_1|<1$, apply the sub-mean-value property of $\log|\mathcal F_{\mathscr X}|$ on the circle $|\mathfrak z-\mathfrak z_1|=\frac12$. The factor $\log(1+\mathrm y^{-2})$ is integrable along the circle uniformly in $\mathrm y_1$, since it has at most two logarithmic singularities. This gives $\log|\mathcal F_{\mathscr X}(\mathfrak z_1)|\le\frac{3\pi}2+O(\log^2(4+|\mathfrak z_1|))$ for $|\mathrm y_1|<1$. Hence the type is at most $\pi$ and the indicator satisfies $\mathrm h(\mathrm u)\le\pi|\sin\mathrm u|$. Since \CGeqref{eq:F-formula} is an equality and \CGeqref{eq:Q-growth} is two-sided, $\log|\mathcal F_{\mathscr X}(iy)|=\log|\cos(i\pi \mathrm y)|+\pi\mathbb Y_{\mathrm y}\varPsi_{\mathscr X}(0)+\mathrm c_{\mathscr X}''=\pi|\mathrm y|+O(\log^2(4+|\mathrm y|))$ for $|\mathrm y|\ge1$, so $\mathrm h(\pm\frac\pi2)=\pi$. The indicator diagram lies in $[-i\pi,i\pi]$, whose support function is $\pi|\sin\mathrm u|$, and it contains $\pm i\pi$, so it equals that segment.
+\end{proof}
+
+\subsection{The criterion}\label{sec:criterion}
+
+A weight $\mathrm w>0$ on $\mathbb R$ is in $(A_2)$ if
+\begin{equation}\label{eq:aux-4}
+ [\mathrm w]_{A_2}:=\sup_I\Bigl(\frac1{|I|}\int_Iw\Bigr)\Bigl(\frac1{|I|}\int_Iw^{-1}\Bigr)<\infty ,
+\end{equation}
+the supremum being over bounded intervals.
+
+\begin{theorem}[Block $\tfrac14$-criterion]\label{thm:criterion}
+Let $\mathscr X$ satisfy \CGeqref{eq:H} and suppose $\varPsi_{\mathscr X}=\mathrm A+\mathrm B$ with measurable $\mathrm A,\mathrm B$ such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\|\mathrm A\|_\infty\le \mathrm d_\star<\frac14$;
+\item $\sup_x|\mathbb Y_1\mathrm B(\mathrm x)-\mathrm c_{\mathrm B}|\le \mathbb U$ for some constant $\mathrm c_{\mathrm B}$.
+\end{enumerate}
+Then $\mathrm w(\mathrm x):=|\mathcal F_{\mathscr X}(\mathrm x+i)|^2$ is in $(A_2)$ and
+\begin{equation}\label{eq:A2const}
+ [\mathrm w]_{A_2}\le\frac{\pi^2\coth^2(\pi)\,e^{4\pi \mathbb U}}{\cos^2(2\pi\mathrm d_\star)} .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$\mathrm B=\varPsi_{\mathscr X}-\mathrm A\in L^1(d\mathrm x/(1+\mathrm x^2))$, so $\mathbb Y_1\varPsi_{\mathscr X}=\mathbb Y_1\mathrm A+\mathbb Y_1\mathrm B$. By \CGeqref{eq:F-formula}, $\mathrm w=e^{2\mathrm c''_{\mathscr X}}|\mathcal F_0(\mathrm x+i)|^2e^{2\pi\mathbb Y_1\mathrm A}e^{2\pi\mathbb Y_1\mathrm B}$.
+
+Put $\mathbb A_{\mathrm A}(\mathfrak z):=\int \mathrm A(\mathrm s)\bigl[\frac1{\mathfrak z-\mathrm s}+\frac{\mathrm s}{1+\mathrm s^2}\bigr]d\mathrm s$. It is holomorphic on $\Im \mathfrak z>0$, and $\mathbb A_{\mathrm A}(\mathfrak o+i)$ is holomorphic on $\Im\mathfrak o>-1$. Let $\mathcal W(\mathfrak o):=\exp(2\mathbb A_{\mathrm A}(\mathfrak o+i))$. For $\mathfrak o=\mathrm x_1+i\mathrm y_1$ with $\mathrm y_1\ge0$,
+\begin{equation}\label{eq:aux-5}
+ |\mathcal W(\mathfrak o)|=e^{2\pi\mathbb Y_{1+\mathrm y_1}\mathrm A(\mathrm x_1)},\qquad\arg\mathcal W(\mathfrak o)=-2\pi \mathbb P_{1+\mathrm y_1}\mathrm A(\mathrm x_1)\in[-2\pi\mathrm d_\star,2\pi\mathrm d_\star].
+\end{equation}
+So $\mathcal W$ maps the closed upper half-plane into the sector $|\arg|\le \mathrm b_\star:=2\pi\mathrm d_\star<\frac\pi2$, and $|\mathcal W(\mathrm x)|=e^{2\pi\mathbb Y_1\mathrm A(\mathrm x)}$ on $\mathbb R$.
+
+$\Re\mathcal W$ is a positive harmonic function on $\Im\mathfrak o>0$, continuous up to $\mathbb R$. By the Herglotz representation it equals $\mathrm c\,\mathrm y_1+\int \mathbb P_{\mathfrak o}(t)\,d\mathrm n(t)$ with $\mathrm c\ge0$, $\mathrm n\ge0$, and $\mathrm n=\Re\mathcal W(t)\,dt$ by continuity. Here $\mathbb P_{\mathfrak o}(t):=\frac1\pi\frac{\mathrm y_1}{(t-\mathrm x_1)^2+\mathrm y_1^2}$. Hence $\Re\mathcal W(\mathfrak o)\ge\int \mathbb P_{\mathfrak o}(t)\Re\mathcal W(t)\,dt$. For an interval $I$ with centre $\mathrm x_I$, put $\mathfrak o_I:=\mathrm x_I+i|I|/2$. Then $\mathbb P_{\mathfrak o_I}(t)\ge(\pi|I|)^{-1}$ for $t\in I$, and
+\begin{equation}\label{eq:aux-6}
+ \frac1{|I|}\int_I|\mathcal W|\le\frac1{\cos\mathrm b_\star}\,\frac1{|I|}\int_I\Re\mathcal W\le\frac\pi{\cos\mathrm b_\star}\Re\mathcal W(\mathfrak o_I)\le\frac\pi{\cos\mathrm b_\star}|\mathcal W(\mathfrak o_I)| .
+\end{equation}
+$1/\mathcal W$ maps into the same sector, so the same holds for it. Multiplying, $[|\mathcal W|]_{A_2}\le\pi^2/\cos^2\mathrm b_\star$.
+
+Finally $\mathrm w=\mathrm g\,|\mathcal W|$ with $\mathrm g:=e^{2\mathrm c''_{\mathscr X}}|\mathcal F_0(\mathrm x+i)|^2e^{2\pi\mathbb Y_1\mathrm B}$. Since $|\cos\pi(\mathrm x+i)|^2=\cos^2(\pi \mathrm x)\cosh^2\pi+\sin^2(\pi \mathrm x)\sinh^2\pi\in[\sinh^2\pi,\cosh^2\pi]$ and $e^{2\pi\mathbb Y_1\mathrm B}\in[e^{2\pi(\mathrm c_{\mathrm B}-\mathbb U)},e^{2\pi(\mathrm c_{\mathrm B}+\mathbb U)}]$, we have $\sup \mathrm g/\inf \mathrm g\le\coth^2(\pi)e^{4\pi \mathbb U}$. For any weight $\mathrm w_1$, $[\mathrm g\mathrm w_1]_{A_2}\le(\sup \mathrm g/\inf \mathrm g)[\mathrm w_1]_{A_2}$.
+\end{proof}
+
+\begin{corollary}[Riesz bases]\label{cor:riesz}
+Under the hypotheses of Theorem~\CGref{thm:criterion}:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item if $\mathscr X$ is uniformly discrete (in particular without repeated points), $\{e^{i\mathrm x_k\mathrm v}\}_{k\in\mathbb Z}$ is a Riesz basis of $L^2(-\pi,\pi)$;
+\item if $\mathscr X$ is a finite union of uniformly discrete sets, the generalised divided differences of $\{e^{i\mathrm x_k\mathrm v}\}$ in the sense of \cite{AvdoninIvanov2002} form a Riesz basis of $L^2(-\pi,\pi)$. Consequently, for every partition of $\mathbb Z$ into consecutive blocks $\mathfrak B_m$ that are unions of the groups of \cite{AvdoninIvanov2002}, the subspaces spanned by $\{\mathrm v^je^{i\mathrm x\mathrm v}\}$, with $\mathrm x=\mathrm x_k$ for $k\in\mathfrak B_m$ and $j$ below the multiplicity of $\mathrm x$, form a Riesz basis of subspaces.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+By Lemma~\CGref{lem:generating}, $\mathcal F_{\mathscr X}$ is entire of exponential type with indicator diagram of width $2\pi$ and zero set $\mathscr X$. By Theorem~\CGref{thm:criterion}, $|\mathcal F_{\mathscr X}(\mathrm x+i)|^2\in(A_2)$, which is equivalent to the Helson--Szeg\H{o} condition \cite[Ch.~VI]{Garnett2007}. Then (a) is Pavlov's criterion \cite[Thm.~1]{AvdoninIvanov2002}, and the first statement of (b) is \cite[Thm.~3]{AvdoninIvanov2002}. Both are stated for $L^2(0,2\pi)$, and translation by $\pi$ multiplies each exponential by a unimodular constant. Grouping the vectors of a Riesz basis into disjoint groups gives a Riesz basis of subspaces.
+\end{proof}
+
+\subsection{Kadec, Avdonin, and variable block length}\label{sec:variable}
+
+Write $\mathrm x_k=k-\frac12+\mathrm d_k$, $I_k:=[k-1,k)$, $\mathsf i_k:=\mathbf 1_{[\mathrm x_k,\infty)}-\mathbf 1_{[k-\frac12,\infty)}$, so that $\varPsi_{\mathscr X}=\sum_k\mathsf i_k$ and $\int\mathsf i_k=-\mathrm d_k$.
+
+\begin{proposition}[Bounded conjugate for block-supported oscillation]\label{prop:variable-blocks}
+Let $\{J_m\}$ be a partition of $\mathbb R$ into consecutive intervals of lengths $\mathfrak n_m\ge1$. Let $\mathrm B=\sum_mB_m$ with $\operatorname{supp}\mathrm B_m\subset \mathfrak J_m$, $\int \mathrm B_m=0$ and $|\mathrm B_m|\le \mathrm D'_m$, $\sup_m\mathrm D'_m<\infty$. Put
+\begin{equation}\label{eq:L0}
+ \mathbb U_{\rm loc}:=\sup_m\ \sup_{\mathrm x\in \mathfrak J_{m-1}\cup \mathfrak J_m\cup \mathfrak J_{m+1}}\Bigl|\int_{J_m}\frac{(\mathrm x-\mathrm s)\,\mathrm B_m(\mathrm s)}{\pi((\mathrm x-\mathrm s)^2+1)}\,d\mathrm s\Bigr|,\qquad
+ \mathbb O:=\sup_{m_0}\sum_{|m-m_0|\ge2}\frac{N_m^2}{\operatorname{dist}(\mathfrak J_{m_0},\mathfrak J_m)^2}.
+\end{equation}
+If $\mathbb U_{\rm loc}<\infty$ and $\mathbb O<\infty$, then $\sup_x|\mathbb Y_1\mathrm B(\mathrm x)-\mathrm c_{\mathrm B}|\le3\mathbb U_{\rm loc}+\frac{\mathbb O}{2\pi}\sup_m\mathrm D'_m$ for a constant $\mathrm c_{\mathrm B}$.
+\end{proposition}
+
+\begin{proof}
+The term $\frac1\pi\int\frac{\mathrm s}{1+\mathrm s^2}\mathrm B_m(\mathrm s)\,d\mathrm s$ equals $\frac1\pi\int(\frac{\mathrm s}{1+\mathrm s^2}-\frac{\mathrm m_m}{1+\mathrm m_m^2})\mathrm B_m(\mathrm s)\,d\mathrm s$, where $\mathrm m_m$ is the centre of $\mathfrak J_m$. Since $|\frac d{d\mathrm s}\frac{\mathrm s}{1+\mathrm s^2}|\le\frac1{1+\mathrm s^2}$, its modulus is at most $\mathrm D'_mN_m^2/(2\pi(1+\operatorname{dist}(0,\mathfrak J_m)^2))$. If $m_0$ is the index with $0\in \mathfrak J_{m_0}$, then $\operatorname{dist}(0,\mathfrak J_m)\ge\operatorname{dist}(\mathfrak J_{m_0},\mathfrak J_m)$, so these terms are summable by $\mathbb O<\infty$. Their sum is the constant $\mathrm c_{\mathrm B}$. Let $\mathrm x\in \mathfrak J_{m_0}$. The three blocks with $|m-m_0|\le1$ contribute at most $3\mathbb U_{\rm loc}$. For $|m-m_0|\ge2$, $\int \mathrm B_m=0$ gives $\bigl|\int_{J_m}\mathrm k(\mathrm x-\mathrm s)\mathrm B_m(\mathrm s)\,d\mathrm s\bigr|\le \mathrm D'_mN_m\cdot\frac{N_m}2\sup_{\mathrm s\in \mathfrak J_m}|\mathrm k'(\mathrm x-\mathrm s)|$ with $\mathrm k(\mathrm v):=\frac{\mathrm v}{\pi(\mathrm v^2+1)}$. Moreover $|\mathrm k'(\mathrm v)|\le\frac1{\pi\mathrm v^2}$ and $|\mathrm x-\mathrm s|\ge\operatorname{dist}(\mathfrak J_{m_0},\mathfrak J_m)$. Sum over $m$.
+\end{proof}
+
+\begin{corollary}[Kadec and Avdonin, with the constant $\tfrac14$]\label{cor:kadec-avdonin}
+\textup{(a)} \cite{Kadec1964} If $|\mathrm d_k|\le \mathrm d_\star<\frac14$ for all $k$, then $\{e^{i\mathrm x_k\mathrm v}\}$ is a Riesz basis of $L^2(-\pi,\pi)$.\\
+\textup{(b)} \cite{Avdonin1974} If $\mathscr X$ is uniformly discrete, $\sup_k|\mathrm d_k|\le \mathrm D$, and for a fixed $\mathfrak n$ the means of $\mathrm d_k$ over consecutive blocks of $\mathfrak n$ indices are at most $\mathrm d_\star<\frac14$ in modulus, then $\{e^{i\mathrm x_k\mathrm v}\}$ is a Riesz basis of $L^2(-\pi,\pi)$.
+\end{corollary}
+
+\begin{proof}
+Both statements follow from Theorem~\CGref{thm:variable-N} below: in (a) take $\mathfrak n_m\equiv1$, and in (b) take $\mathfrak n_m\equiv \mathfrak n$. In both cases the blocks at index distance $j\ge2$ from $\mathfrak J_{m_0}$ are at distance $(j-1)\mathfrak n$, so $\mathbb O\le2\sum_{j\ge2}\mathfrak n^2/((j-1)\mathfrak n)^2=\pi^2/3$ and $\mathbb V\le2\mathrm D\log(2+3\mathfrak n)$; for $\mathfrak n=1$, $\mathrm D_m=0$ and $\mathbb V=0$. For (a), $\mathrm d_\star<\frac14$ gives gaps $\ge1-2L>\frac12$, so $\mathscr X$ is uniformly discrete.
+\end{proof}
+
+\begin{theorem}[Avdonin's theorem with variable block length]\label{thm:variable-N}
+Let $\mathscr X$ be uniformly discrete with $\sup_k|\mathrm d_k|\le \mathrm D$. Let $\{\mathfrak B_m\}$ be a partition of $\mathbb Z$ into consecutive blocks of $\mathfrak n_m$ indices, and $\mathfrak J_m:=\bigcup_{k\in\mathfrak B_m}I_k$. Let $\bar{\mathrm d}_m$ be the mean of $\mathrm d_k$ over $\mathfrak B_m$, $\mathrm D_m:=\max_{k\in\mathfrak B_m}|\mathrm d_k-\bar{\mathrm d}_m|$, and $\mathfrak n_m^*:=\mathfrak n_{m-1}+\mathfrak n_m+\mathfrak n_{m+1}$. Assume
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\sup_m|\bar{\mathrm d}_m|\le \mathrm d_\star<\frac14$;
+\item $\mathbb O<\infty$, with $\mathbb O$ as in \CGeqref{eq:L0};
+\item $\mathbb V:=\sup_m\mathrm D_m\log(2+\mathfrak n_m^*)<\infty$.
+\end{enumerate}
+Then $\{e^{i\mathrm x_k\mathrm v}\}$ is a Riesz basis of $L^2(-\pi,\pi)$, and \CGeqref{eq:A2const} holds with
+\begin{equation}\label{eq:U-variable}
+ \mathbb U=16(1+\mathrm D)^3+\frac{6\mathbb V}\pi+\frac{V\mathbb O}{2\pi\log2} .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write $\varPsi_{\mathscr X}=\mathrm A+\mathrm B_1+\mathrm B_2$ with $\mathrm A:=-\sum_m\bar{\mathrm d}_m\mathbf 1_{J_m}$, $\mathrm B_1:=\sum_kb_k$ where $\mathrm b_k:=\mathsf i_k+\mathrm d_k\mathbf 1_{I_k}$, and $\mathrm B_2:=-\sum_m\sum_{k\in\mathfrak B_m}(\mathrm d_k-\bar{\mathrm d}_m)\mathbf 1_{I_k}$. Then $\|\mathrm A\|_\infty\le d$.
+
+\emph{$\mathrm B_1$.} $\mathrm b_k$ has mean zero, $|\mathrm b_k|\le1+\mathrm D$, and support in an interval of length at most $2\mathrm D+1$ containing $\mathrm m_k:=k-\frac12$. With $\mathrm k$ as above, $\sup|\mathrm k|=\frac1{2\pi}$ and $|\mathrm k'(\mathrm v)|\le\frac1{\pi(1+\mathrm v^2)}$, so $|\int \mathrm k(\mathrm x-\mathrm s)\mathrm b_k(\mathrm s)\,d\mathrm s|=|\int(\mathrm k(\mathrm x-\mathrm s)-\mathrm k(\mathrm x-\mathrm m_k))\mathrm b_k(\mathrm s)\,d\mathrm s|\le(1+\mathrm D)(2\mathrm D+1)\min\bigl(\frac1\pi,(2\mathrm D+1)\sup_{\mathrm s\in\operatorname{supp}\mathrm b_k}|\mathrm k'(\mathrm x-\mathrm s)|\bigr)$. At most $8\mathrm D+5\le8(1+\mathrm D)$ indices have $|\mathrm x-\mathrm m_k|<2(2\mathrm D+1)$, and they contribute at most $16(1+\mathrm D)^3/\pi$. For the others $|\mathrm x-\mathrm s|\ge|\mathrm x-\mathrm m_k|/2$ on the support, so the term is at most $4(1+\mathrm D)^3\cdot\frac4\pi(4+(\mathrm x-\mathrm m_k)^2)^{-1}$. Since $\sum_k(4+(\mathrm x-\mathrm m_k)^2)^{-1}\le\frac12+\frac\pi2$, they contribute at most $\frac{16}\pi(\frac12+\frac\pi2)(1+\mathrm D)^3$. The total is below $16(1+\mathrm D)^3$. The modifying term of $\mathbb Y_1$ contributes a convergent sum of constants, as in Proposition~\CGref{prop:variable-blocks}.
+
+\emph{$\mathrm B_2$.} On $\mathfrak J_m$ it has mean zero and modulus at most $\mathrm D_m$. For $\mathrm x$ in $\mathfrak J_{m-1}\cup \mathfrak J_m\cup \mathfrak J_{m+1}$, $|\int_{J_m}\mathrm k(\mathrm x-\mathrm s)\mathrm B_2(\mathrm s)\,d\mathrm s|\le\frac{\mathrm D_m}\pi\int_{|u|\le \mathfrak n_m^*}\frac{|u|\,du}{1+u^2}\le\frac2\pi \mathrm D_m\log(2+\mathfrak n_m^*)\le\frac{2\mathbb V}\pi$. Moreover $\sup_m\mathrm D_m\le \mathbb V/\log2$. Proposition~\CGref{prop:variable-blocks} gives $|\mathbb Y_1\mathrm B_2-\mathrm c|\le\frac{6\mathbb V}\pi+\frac{V\mathbb O}{2\pi\log2}$.
+
+Apply Theorem~\CGref{thm:criterion} and Corollary~\CGref{cor:riesz}(a).
+\end{proof}
+
+\begin{remark}[The price of variable length]\label{rem:price}
+For fixed $\mathfrak n$, conditions (b) and (c) hold automatically, and Theorem~\CGref{thm:variable-N} is Avdonin's theorem. If $\mathfrak n_m\to\infty$, the averaging condition (a) is still only $|\bar{\mathrm d}_m|\le \mathrm d_\star<\frac14$. However, (c) then requires the oscillation inside the block to decay like $1/\log \mathfrak n_m$. In Theorem~\CGref{thm:criterion} the oscillation enters only through the bounded-conjugate condition (ii), which allows cancellation inside the blocks and is weaker than (c). Without some condition of this kind the conclusion fails for growing blocks: a block of length $\mathfrak n$ with oscillation of size $\mathrm D_m$ can make $|\mathbb Y_1\mathrm B|$ of size $\mathrm D_m\log \mathfrak n$. Lyubarskii and Seip derive Kadec's theorem from their Muckenhoupt characterisation (\cite[Thm.~2]{LyubarskiiSeip1997} for $p=2$), and indicate that the same technique gives results of Avdonin type. I have not searched the literature for Theorem~\CGref{thm:variable-N} or for the bounded-conjugate formulation of Theorem~\CGref{thm:criterion}, so their novelty is not claimed. The proof of Theorem~\CGref{thm:criterion} is the sufficiency half of the Helson--Szeg\H{o} argument, applied on the line $\Im \mathfrak z=1$.
+\end{remark}
+
+%======================================================================
+\section{Application to lists near the RvM clock}\label{sec:application}
+
+\subsection{Unfolding}\label{sec:unfolding}
+
+\begin{definition}[Unfolded list]\label{def:unfolding}
+Let $\mathfrak t_0:=9.6769\ldots$ be the zero of $\NR$ in $(2\pi,\infty)$. For a $C$-admissible list $\boldsymbol\kappa$ with $\kappa_1>\mathfrak t_0$ (true for $\boldsymbol\tau$ and $\boldsymbol\gamma$), put $\mathrm x_k:=\NR(\kappa_k)>0$ for $k\ge1$ and $\mathrm x_{1-k}:=-\mathrm x_k$. The resulting symmetric sequence $\mathscr X_{\boldsymbol\kappa}$ has discrepancy $\varPsi_{\boldsymbol\kappa}:=\varPsi_{\mathscr X_{\boldsymbol\kappa}}$, and $\mathcal F_{\boldsymbol\kappa}:=F_{\mathscr X_{\boldsymbol\kappa}}$ with $\mathfrak z_0=0$. For the clock, $\mathscr X_{\boldsymbol\tau}=\mathbb Z+\frac12$ and $\mathcal F_{\boldsymbol\tau}=\mathcal F_0$.
+\end{definition}
+
+\begin{lemma}[Unfolded discrepancy]\label{lem:psi-bound}
+For a $C$-admissible list with $\kappa_1>\mathfrak t_0$, $|\mathrm x_k-(k-\frac12)|\le\frac C{2\pi}\log\frac{\tau_k+C}{2\pi}$ for $k\ge1$, so \CGeqref{eq:H} holds. Moreover, for $\mathrm x=\NR(t)$ with $\mathrm x>0$,
+\begin{equation}\label{eq:psi-t}
+ \varPsi_{\boldsymbol\kappa}(\mathrm x)=N_{\boldsymbol\kappa}(t)-n_{\RVM}(t),\qquad
+ |N_{\boldsymbol\kappa}(t)-n_{\RVM}(t)|\le\frac C\pi\log\frac{t+C}{2\pi}+2,
+\end{equation}
+and $\varPsi_{\boldsymbol\kappa}(-\mathrm x)=-\varPsi_{\boldsymbol\kappa}(\mathrm x)$ for almost every $\mathrm x$.
+\end{lemma}
+
+\begin{proof}
+By the mean value theorem and the monotonicity of $\NR'$, $|\NR(\kappa_k)-\NR(\tau_k)|\le C\NR'(\tau_k+C)$. For $\mathrm x>0$ the terms of \CGeqref{eq:psi} with $k\le0$ vanish, because both $\mathrm x_k$ and $k-\frac12$ are negative. For $k\ge1$, $\mathrm x_k\le \mathrm x$ if and only if $\kappa_k\le t$, by monotonicity of $\NR$. If $N_{\boldsymbol\kappa}(t)=j$, then $\tau_j\le t+C$ and $\tau_{j+1}>t-C$, so $n_{\RVM}(t-C)\le j\le n_{\RVM}(t+C)$. By \CGeqref{eq:Ntau-floor}, $n_{\RVM}(t+C)-n_{\RVM}(\max(t-C,2\pi))\le\NR(t+C)-\NR(\max(t-C,2\pi))+1$. This is at most $\frac{2C}{2\pi}\log\frac{t+C}{2\pi}+2$, the extra $1$ covering $t-C<2\pi$, where $\NR\ge-\frac18$ and $n_{\RVM}=0$. Oddness follows from the symmetry of $\mathscr X_{\boldsymbol\kappa}$ and of $\mathbb Z+\frac12$.
+\end{proof}
+
+\begin{proposition}[The condition of $\mathscr O$ gives the averaging hypothesis with blocks $\asymp\log^2T$]\label{prop:O-blocks}
+Let $\boldsymbol\kappa$ be $C$-admissible with $\kappa_1>\mathfrak t_0$, and assume the third condition of $\mathscr O$ (\msref{eq:list-space}) in the form
+\begin{equation}\label{eq:O3}
+ \Bigl|\int_{2\pi}^{R}\bigl(N_{\boldsymbol\kappa}(t)-\NR(t)\bigr)dt\Bigr|\le C_2\log R\qquad(R\ge3).
+\end{equation}
+Put $\mathrm H(T):=16C_2\log T$. There is $T_1=T_1(C,C_2)$ such that the following holds for the points $T_{m+1}:=T_m+\mathrm H(T_m)$ ($m\ge1$) and the blocks $\mathfrak J_m:=[\NR(T_m),\NR(T_{m+1}))$ with their mirror images $-\mathfrak J_m$. The step function $\mathrm A_{\boldsymbol\kappa}$, equal to the mean of $\varPsi_{\boldsymbol\kappa}$ on each $\pm \mathfrak J_m$ and to $0$ on $(-\NR(T_1),\NR(T_1))$, satisfies
+\begin{equation}\label{eq:block-mean}
+ \|\mathrm A_{\boldsymbol\kappa}\|_\infty\le\tfrac3{16},\qquad |\mathfrak J_m|=\frac{8C_2}\pi\log^2T_m\,(1+o(1))\quad(m\to\infty).
+\end{equation}
+The remainder $\mathrm B_{\boldsymbol\kappa}:=\varPsi_{\boldsymbol\kappa}-\mathrm A_{\boldsymbol\kappa}$ has mean zero on every block. For $\boldsymbol\kappa=\boldsymbol\gamma$, \CGeqref{eq:O3} holds unconditionally for some $C_2$.
+\end{proposition}
+
+\begin{proof}
+Write $\mathfrak J=[\NR(T),\NR(T+\mathrm H))$. Then
+\begin{equation}\label{eq:aux-7}
+\begin{split}
+ \int_{\mathfrak J}\varPsi_{\boldsymbol\kappa}\,d\mathrm x&=\int_T^{T+\mathrm H}(N_{\boldsymbol\kappa}-n_{\RVM})(t)\,\NR'(t)\,dt\\
+ &=\NR'(T)\!\int_T^{T+\mathrm H}\!(N_{\boldsymbol\kappa}-n_{\RVM})+\int_T^{T+\mathrm H}\!(N_{\boldsymbol\kappa}-n_{\RVM})(\NR'(t)-\NR'(T))\,dt .
+\end{split}
+\end{equation}
+The last integral is at most $\mathrm H\cdot\frac{\mathrm H}{2\pi T}\bigl(\frac C\pi\log\frac{T+\mathrm H+C}{2\pi}+1\bigr)$, by \CGeqref{eq:psi-t} and $\NR''(t)=\frac1{2\pi t}$.
+
+Next, $\int_T^{T+\mathrm H}(N_{\boldsymbol\kappa}-n_{\RVM})=\int_T^{T+\mathrm H}(N_{\boldsymbol\kappa}-\NR)+\int_T^{T+\mathrm H}(\NR-n_{\RVM})$. The first piece is at most $2C_2\log(T+\mathrm H)$ by \CGeqref{eq:O3}. For the second, substitute $\mathrm x=\NR(t)$. By \CGeqref{eq:Ntau-floor}, $\NR-n_{\RVM}=\mathrm{saw}(\mathrm x):=\mathrm x-\lfloor \mathrm x+\frac12\rfloor$, which is $1$-periodic with mean zero and $|\mathrm{saw}|\le\frac12$, and $dt=g(\mathrm x)\,d\mathrm x$ with $g:=1/\NR'(t(\mathrm x))$ positive and decreasing. On a full period $[j-\frac12,j+\frac12)$, $|\int\mathrm{saw}\,\mathfrak g_1|=|\int\mathrm{saw}\,(\mathfrak g_1-\mathfrak g_1(j))|\le\frac14(\mathfrak g_1(j-\frac12)-\mathfrak g_1(j+\frac12))$, which telescopes. The two partial periods contribute at most $\mathfrak g_1(\NR(T))$. Hence $|\int_T^{T+\mathrm H}(\NR-n_{\RVM})|\le\frac5{4\NR'(T)}$.
+
+Since $|\mathfrak J|\ge\NR'(T)\mathrm H$,
+\begin{equation}\label{eq:aux-8}
+ \Bigl|\frac1{|\mathfrak J|}\int_{\mathfrak J}\varPsi_{\boldsymbol\kappa}\Bigr|\le\frac{2C_2\log(T+\mathrm H)}{\mathrm H}+\frac5{4\NR'(T)\mathrm H}+\frac{\mathrm H}{2\pi T\NR'(T)}\Bigl(\frac C\pi\log\frac{T+\mathrm H+C}{2\pi}+1\Bigr).
+\end{equation}
+With $\mathrm H=16C_2\log T$, the first term tends to $\frac18$ and the others tend to $0$, so the bound is at most $\frac3{16}$ for $T\ge T_1(C,C_2)$. The length is $|\mathfrak J_m|=\NR'(\mathrm s)\mathrm H(T_m)$ with $\mathrm s\in[T_m,T_{m+1}]$. The mirror blocks follow by oddness. For $\boldsymbol\gamma$: $N_{\boldsymbol\gamma}(t)=1+\vartheta(t)/\pi+S(t)$ \cite[\S9.3]{Titchmarsh1986}, $\int_0^RS=O(\log R)$ \cite[Thm.~9.9]{Titchmarsh1986}, and $1+\vartheta/\pi-\NR=O(1/t)$. Finally, $\boldsymbol\gamma$ is $C_\eta$-admissible, unconditionally, by \msref{lem:bounded-displacement}. In particular \CGeqref{eq:H} holds for $\mathscr X_{\boldsymbol\gamma}$, by Lemma~\CGref{lem:psi-bound}.
+\end{proof}
+
+\begin{remark}[Correction of an earlier formulation]\label{rem:not-equivalent}
+Proposition~\CGref{prop:O-blocks} is an implication. The averaging condition on blocks of length $\asymp\log^2T$ does not imply \CGeqref{eq:O3}: summing $|\int_{\mathfrak J_m}\varPsi|\le\frac3{16}|\mathfrak J_m|$ over the blocks up to height $R$ gives only $O(R\log R)$, not $O(\log R)$. The two conditions do not coincide.
+\end{remark}
+
+\begin{corollary}[Reduction to one condition]\label{cor:one-condition}
+For every $\boldsymbol\kappa$ as in Proposition~\CGref{prop:O-blocks}: if $\mathbb Y_1\mathrm B_{\boldsymbol\kappa}$ is bounded up to a constant, then $|\mathcal F_{\boldsymbol\kappa}(\mathrm x+i)|^2\in(A_2)$, with constant \CGeqref{eq:A2const} for $\mathrm d_\star=\frac3{16}$. Corollary~\CGref{cor:riesz}(a) then holds for $\mathscr X_{\boldsymbol\kappa}$ if it is uniformly discrete, and Corollary~\CGref{cor:riesz}(b) if it is a finite union of uniformly discrete sets.
+\end{corollary}
+
+\begin{proof}
+Lemma~\CGref{lem:psi-bound}, Proposition~\CGref{prop:O-blocks} and Theorem~\CGref{thm:criterion}.
+\end{proof}
+
+\subsection{The weight is a quotient of synthetic zetas}\label{sec:weight}
+
+\begin{proposition}[Weight identity]\label{prop:weight}
+Let $\boldsymbol\kappa$ be $C$-admissible and satisfy \CGeqref{eq:O3}. For $0<\hbar\le1$ and $t\ge2\pi$,
+\begin{equation}\label{eq:weight-identity}
+ \log\Bigl|\frac{\zeta_{\boldsymbol\kappa}}{\zeta_{\RVM}}\Bigl(\tfrac12+\hbar+it\Bigr)\Bigr|=\int_{2\pi}^{\infty}\frac{(t-\mathrm s)\,(N_{\boldsymbol\kappa}-n_{\RVM})(\mathrm s)}{(t-\mathrm s)^2+\hbar^2}\,d\mathrm s+\mathrm c_{\boldsymbol\kappa}+\mathrm m_{\boldsymbol\kappa,\hbar}(t),
+\end{equation}
+where the integral converges as an improper integral and $\mathrm c_{\boldsymbol\kappa}$ is a constant. The remainder satisfies $|\mathrm m_{\boldsymbol\kappa,\hbar}(t)|\le \mathrm c(C,C_2)\log(2+t)/(1+t)$.
+\end{proposition}
+
+\begin{proof}
+For $s=\frac12+\hbar+it$, $|\frac14+\kappa^2+q(s)|=|\kappa^2+(\hbar+it)^2|=|\kappa-t+i\hbar|\,|\kappa+t-i\hbar|$. Hence, with $\mathrm l_\hbar(u):=\frac12\log(u^2+\hbar^2)$,
+\begin{equation}\label{eq:aux-9}
+ \log\Bigl|\frac{P_{\boldsymbol\kappa}}{P_{\boldsymbol\tau}}(s)\Bigr|=\sum_k\bigl[\mathrm l_\hbar(t-\kappa_k)-\mathrm l_\hbar(t-\tau_k)\bigr]+\sum_k\bigl[\mathrm l_\hbar(t+\kappa_k)-\mathrm l_\hbar(t+\tau_k)\bigr]-\sum_k\log\frac{\frac14+\kappa_k^2}{\frac14+\tau_k^2}.
+\end{equation}
+Put $\mathfrak g_1:=N_{\boldsymbol\kappa}-n_{\RVM}$ and $\mathfrak G_1(\mathrm s):=\int_{2\pi}^{\mathrm s}\mathfrak g_1$. By \CGeqref{eq:O3}, by the sawtooth estimate in the proof of Proposition~\CGref{prop:O-blocks} on $[\tau_1,\infty)$, and by $|\NR-n_{\RVM}|\le\frac12$ on $[2\pi,\tau_1]$, $|\mathfrak G_1(\mathrm s)|\le\mathrm c\log(2+\mathrm s)$. For $\mathrm f$ smooth with $\mathrm f'(\mathrm s)=O(1/\mathrm s)$ and $\mathrm f''(\mathrm s)=O(1/\mathrm s^2)$, the sums $\sum_{k\le k^*}[\mathrm f(\kappa_k)-\mathrm f(\tau_k)]=-\int \mathrm f'\mathfrak g_{1,k^*}$ converge as $k^*\to\infty$ to $-\int^\infty \mathrm f'\mathfrak g_1$, an improper integral. Integration by parts against $\mathfrak G_1$ shows both the convergence and that the tail contributions vanish. With $\mathrm f=\mathrm l_\hbar(t-\cdot)$ this gives the integral in \CGeqref{eq:weight-identity}. With $\mathrm f=\log(\frac14+(\cdot)^2)$ it gives the constant $\mathrm c_{\boldsymbol\kappa}$. With $\mathrm f=\mathrm l_\hbar(t+\cdot)$ it gives $\mathrm m_{\boldsymbol\kappa,\hbar}(t)=\int_{2\pi}^\infty \mathrm k_1'(\mathrm s)\mathfrak G_1(\mathrm s)\,d\mathrm s$, where $\mathrm k_1(\mathrm s):=\frac{t+\mathrm s}{(t+\mathrm s)^2+\hbar^2}$ and $|\mathrm k_1'(\mathrm s)|\le(t+\mathrm s)^{-2}$. This yields the bound.
+\end{proof}
+
+\begin{remark}[Local scale]\label{rem:local-scale}
+With $\hbar=1$ and $\hbar_T:=\hbar/\NR'(T)=2\pi/\log(T/2\pi)$ (the notation of the proof of Theorem~\CGref{thm:obstruction}), the substitution $\mathrm x=\NR(t)$ maps the kernel $\frac{(t-\mathrm s)\,d\mathrm s}{(t-\mathrm s)^2+\hbar_T^2}$ to $\frac{(\mathrm x-\mathrm x')\,d\mathrm x'}{(\mathrm x-\mathrm x')^2+1}$ to first order near $t=T$. Comparing \CGeqref{eq:weight-identity} with \CGeqref{eq:F-formula} at $\mathrm y=1$, the unfolded weight $|\mathcal F_{\boldsymbol\kappa}(\mathrm x+i)|^2$ near $\mathrm x=\NR(T)$ is therefore, to first order, $|\zeta_{\boldsymbol\kappa}/\zeta_{\RVM}|^2$ on the line $\Re s=\frac12+\hbar_T$, up to the bounded factor $|\mathcal F_0(\mathrm x+i)|^2$. The identity \CGeqref{eq:weight-identity} is exact. The identification with the unfolded weight is local, and its quantitative form for the Poisson part is Step~3 of the proof of Theorem~\CGref{thm:obstruction}.
+\end{remark}
+
+\subsection{Obstruction for the zeta list}\label{sec:obstruction}
+
+\begin{theorem}[No $(A_2)$ for the unfolded zeta ordinates]\label{thm:obstruction}
+Let $\mathscr X_{\boldsymbol\gamma}$ be the unfolded list of the ordinates $\gamma_k>0$ of the nontrivial zeros of $\zeta$, counted with multiplicity, and let $\mathcal F$ be any entire function of exponential type whose zero set is $\mathscr X_{\boldsymbol\gamma}$, with multiplicities. Then $|\mathcal F(\mathrm x+i\hbar)|^2\notin(A_2)$ for every real $\hbar\ne0$. The proof does not assume the Riemann hypothesis.
+\end{theorem}
+
+\begin{proof}
+Write $\varPsi:=\varPsi_{\boldsymbol\gamma}$ and $\mathcal F_{\boldsymbol\gamma}$ for the function of Definition~\CGref{def:unfolding}. It is even and real by Lemma~\CGref{lem:generating}(iii), because $\mathrm x_1=\NR(\gamma_1)=0.45\ldots>0$, so $0\notin \mathscr X_{\boldsymbol\gamma}$.
+
+\emph{Step 1: reduction to $\mathcal F_{\boldsymbol\gamma}$ and $\hbar>0$.} $\mathcal F$ and $\mathcal F_{\boldsymbol\gamma}$ are entire of order at most $1$ (exponential type) with the same zeros, with multiplicity, so by Hadamard's factorisation theorem both are $e^{\text{linear}}$ times the same canonical product, and $\mathcal F/\mathcal F_{\boldsymbol\gamma}=e^{\mathrm a_1+\mathrm b_1\mathfrak z}$. Hence $|\mathcal F(\mathrm x+i\hbar)|^2=\mathrm c\,e^{2\mathrm b_1'\mathrm x}\mathrm w_0(\mathrm x)$ with $\mathrm b_1'=\Re\mathrm b_1$, a constant $\mathrm c>0$, and $\mathrm w_0(\mathrm x):=|\mathcal F_{\boldsymbol\gamma}(\mathrm x+i\hbar)|^2$, which is even in $\mathrm x$. Moreover $|\mathcal F_{\boldsymbol\gamma}(\mathrm x-i\hbar)|=|\mathcal F_{\boldsymbol\gamma}(\mathrm x+i\hbar)|$. Suppose $e^{2\mathrm b_1'\mathrm x}\mathrm w_0\in(A_2)$. Reflection preserves $(A_2)$, so $e^{-2\mathrm b_1'\mathrm x}\mathrm w_0\in(A_2)$ as well. By Step~2 below both logarithms are in BMO, so $4\mathrm b_1'\mathrm x\in\mathrm{BMO}$, which forces $\mathrm b_1'=0$. So we may assume $\mathcal F=\mathcal F_{\boldsymbol\gamma}$ and $\hbar>0$, and that $\mathrm w_0\in(A_2)$.
+
+\emph{Step 2: BMO.} Let $\mathrm f:=\log \mathrm w_0$ and $\mathrm f_I$ its mean on $I$. By Jensen's inequality, $\frac1{|I|}\int_Ie^{\pm(f-\mathrm f_I)}\ge1$. The product of the two averages is at most $[\mathrm w_0]_{A_2}$, so each is at most $[\mathrm w_0]_{A_2}$. Since $u^2\le2e^{|u|}\le2(e^u+e^{-u})$,
+\begin{equation}\label{eq:aux-10}
+ \frac1{|I|}\int_I|f-\mathrm f_I|^2\le4[\mathrm w_0]_{A_2}\qquad\text{for every interval }I .
+\end{equation}
+By \CGeqref{eq:F-formula} and the boundedness of $\log|\mathcal F_0(\mathrm x+i\hbar)|$, $\mathrm g_0:=\pi\mathbb Y_\hbar\varPsi\in\mathrm{BMO}$. Now take $\mathbb A_\hbar(\mathfrak z):=\mathbb A_{\mathscr X}(\mathfrak z+i\hbar)$, in the notation of the proof of Lemma~\CGref{lem:generating}, which is holomorphic on $\Im \mathfrak z>-\hbar$. Its real part on $\mathbb R$ is $\mathrm g_0$, and its imaginary part on $\mathbb R$ is $-\pi \mathbb P_\hbar\varPsi$. By \CGeqref{eq:Q-growth}, $\Re\mathbb A_\hbar(\mathfrak z)=O(\log^2(4+|\mathfrak z|))$ on $\Im \mathfrak z\ge0$, and so is the Poisson integral $\mathbb P[\mathrm g_0]$. Hence $\Re\mathbb A_\hbar-\mathbb P[\mathrm g_0]$ is harmonic on $\Im \mathfrak z>0$, continuous with zero boundary values, and $O(\log^2|\mathfrak z|)$. After odd reflection it is harmonic on $\mathbb C$ and $o(|\mathfrak z|)$, hence constant, hence zero. Therefore $\mathbb A_\hbar=\mathbb P[\mathrm g_0]+i\mathbb Y[\mathrm g_0]+ic$ on $\Im \mathfrak z>0$, where $\mathbb P[\mathrm g_0]+i\mathbb Y[\mathrm g_0]$ is the holomorphic function with real part $\mathbb P[\mathrm g_0]$ and $\mathbb Y[\mathrm g_0](\mathrm x+iy)=\mathbb Y_{\mathrm y}\mathrm g_0(\mathrm x)$. Letting $\mathrm y\to0$, $-\pi \mathbb P_\hbar\varPsi=\tilde{\mathrm g}_0+c$ almost everywhere on $\mathbb R$, where $\tilde{\mathrm g}_0$ is the conjugate function of $\mathrm g_0$, the a.e.\ boundary value of $\mathbb Y_{\mathrm y}u$ \cite[Ch.~III]{Garnett2007}. Conjugation is bounded on BMO \cite[Ch.~VI]{Garnett2007}, so $\mathbb P_\hbar\varPsi\in\mathrm{BMO}$. By the John--Nirenberg inequality \cite[Ch.~VI]{Garnett2007}, there is $\mathrm c_{\rm JN}<\infty$ with
+\begin{equation}\label{eq:BMO-L2}
+ \frac1{|I|}\int_I\bigl|\mathbb P_\hbar\varPsi-(\mathbb P_\hbar\varPsi)_I\bigr|^2\le\mathrm c_{\rm JN}\qquad\text{for every interval }I .
+\end{equation}
+
+\emph{Step 3: back to the ordinates.} By \cite[\S9.3]{Titchmarsh1986}, $N_{\boldsymbol\gamma}(t)=1+\vartheta(t)/\pi+S(t)$, with $S(t)=O(\log t)$ \cite[Thm.~9.4]{Titchmarsh1986}. Lemma~\CGref{lem:psi-bound} and \CGeqref{eq:Ntau-floor} then give, for $\mathrm x=\NR(t)>0$, $\varPsi(\mathrm x)=S(t)+\mathrm r(\mathrm x)$ with $|\mathrm r|\le \mathrm c_e$. Here $\mathrm c_e$ bounds $|1+\vartheta/\pi-\NR|+\frac12$ on $t\ge2\pi$. Let $\mathfrak t_0:=\NR^{-1}(0)$ and $T\to\infty$, with $t\in[T,2T]$ and $\hbar_t:=\hbar/\NR'(t)$, $\hbar_T:=\hbar/\NR'(T)$.
+\begin{enumerate}[label=(\alph*)]
+\item The part of $\mathbb P_\hbar\varPsi(\NR(t))$ coming from $\mathrm x'<0$ is $O(\log T/T)$, since $|\varPsi(\mathrm x')|\le \mathrm c\log(2+|\mathrm x'|)$. The part coming from $\mathrm r$ is at most $\mathrm c_e$. Substituting $\mathrm x'=\NR(\mathrm s)$, the rest is $\int_{\mathfrak t_0}^\infty \mathbb P^{\NR}_t(\mathrm s)S(\mathrm s)\,d\mathrm s$ with $\mathbb P^{\NR}_t(\mathrm s):=\mathbb P_\hbar(\NR(t)-\NR(\mathrm s))\NR'(\mathrm s)$, where $\mathbb P_\hbar(\mathrm v):=\frac \hbar{\pi(\mathrm v^2+\hbar^2)}$.
+\item Put $\mathbb P^{\circ}_t(\mathrm s):=\mathbb P_{\hbar_t}(t-\mathrm s)=\mathbb P_\hbar(\NR'(t)(t-\mathrm s))\NR'(t)$. For $|\mathrm s-t|\le T^{1/3}$, Taylor's formula with $\NR''=\frac1{2\pi \mathrm s}$ gives $|\NR(t)-\NR(\mathrm s)-\NR'(t)(t-\mathrm s)|\le\mathrm d_T:=T^{-1/3}/\pi$. Hence $|\mathbb P^{\NR}_t(\mathrm s)-\mathbb P^{\circ}_t(\mathrm s)|\le(5\mathrm d_T/\hbar)\mathbb P^{\circ}_t(\mathrm s)$ for $T$ large. With $|S|\le \mathrm c\log(3T)$ on that range, the core difference is $O(T^{-1/3}\log T)$. For $|\mathrm s-t|>T^{1/3}$ we use $\mathbb P_\hbar(\mathrm v)\le\frac \hbar{\pi \mathrm v^2}$, the convexity of $\NR$ and $|S(\mathrm s)|\le \mathrm c\log(2+\mathrm s)$. If $\mathrm s>t+T^{1/3}$, then $\NR(\mathrm s)-\NR(t)\ge\NR'(t)(\mathrm s-t)\ge \mathrm s-t$ for $T$ large, so $\int_{t+T^{1/3}}^\infty \mathbb P^{\NR}_t(\mathrm s)|S(\mathrm s)|\,d\mathrm s\le\frac{\mathrm c\hbar}\pi\int_{T^{1/3}}^\infty\frac{\NR'(t+\mathrm v)\log(2+t+\mathrm v)}{\mathrm v^2}\,d\mathrm v=O(T^{-1/3}\log^2T)$, splitting the $\mathrm v$-integral at $\mathrm v=T$. If $\mathfrak t_0\le \mathrm s<t-T^{1/3}$, then $\NR(t)-\NR(\mathrm s)\ge\NR'(\mathrm s)(t-\mathrm s)$ and $\NR'(\mathrm s)\ge\NR'(\mathfrak t_0)>0$, so $\mathbb P^{\NR}_t(\mathrm s)\le\frac{h}{\pi\NR'(\mathrm s)(t-\mathrm s)^2}\le\frac{h}{\pi\NR'(\mathfrak t_0)(t-\mathrm s)^2}$ and $\int_{\mathfrak t_0}^{t-T^{1/3}}\mathbb P^{\NR}_t|S|\le\frac{\mathrm c\hbar\log(3T)}{\pi\NR'(\mathfrak t_0)}\int_{T^{1/3}}^\infty \mathrm v^{-2}\,d\mathrm v=O(T^{-1/3}\log T)$. The same bounds hold for $\mathbb P^{\circ}_t$ with $\hbar_t$ in place of $\hbar$ and $\NR'(t)$ in place of $\NR'(\mathrm s)$, the region $\mathrm s\gg T$ being handled by the split at $\mathrm v=T$. So that part tends to $0$ as well.
+\item $\|\mathbb P_a-\mathbb P_b\|_{L^1}\le\frac2\pi|\log(a/b)|$, because $\int|\partial_c\mathbb P_c|=\frac2{\pi c}$. Since $\hbar_t/\hbar_T\in[1-\frac{2\log2}{\log(T/2\pi)},1]$, $|\int(\mathbb P_{\hbar_t}-\mathbb P_{\hbar_T})(t-\mathrm s)S(\mathrm s)\,d\mathrm s|=O(\log T/\log T)=O(1)$, again with the tails controlled by $|S(\mathrm s)|\le \mathrm c\log(2+\mathrm s)$.
+\item $\|\mathbb P_{\hbar_T}\ast S-S\|_{L^2[T,2T]}=O(\sqrt T)$, with $S:=0$ on $(-\infty,\mathfrak t_0)$; this is Lemma~\CGref{lem:smoothing} below.
+\end{enumerate}
+Together, (a)--(d) give $\|\mathbb P_\hbar\varPsi\circ\NR-S\|_{L^2[T,2T]}=O(\sqrt T)$.
+
+\emph{Step 4: contradiction.} Let $\mathfrak I_T:=[\NR(T),\NR(2T)]$ and $\bar{\mathrm p}_T:=(\mathbb P_\hbar\varPsi)_{\mathfrak I_T}$. By \CGeqref{eq:BMO-L2}, $\int_T^{2T}|\mathbb P_\hbar\varPsi(\NR(t))-\bar{\mathrm p}_T|^2\NR'(t)\,dt\le\mathrm c_{\rm JN}|\mathfrak I_T|\le\mathrm c_{\rm JN}T\NR'(2T)$, so $\int_T^{2T}|\mathbb P_\hbar\varPsi(\NR(t))-\bar{\mathrm p}_T|^2\,dt\le2\mathrm c_{\rm JN}T$. With Step~3, $\int_T^{2T}|S-\bar{\mathrm p}_T|^2=O(T)$. But
+\begin{equation}\label{eq:aux-11}
+ \int_T^{2T}|S-\mathrm c|^2\ge\int_T^{2T}S^2-\frac1T\Bigl(\int_T^{2T}S\Bigr)^2=\frac1{2\pi^2}T\log\log T\,(1+o(1))
+\end{equation}
+for every constant $\mathrm c$, by Selberg's theorem $\int_0^TS^2=\frac{T}{2\pi^2}\log\log T+O(T(\log\log T)^{1/2})$ \cite{Selberg1946}, with the normalisation $S(t)=\pi^{-1}\arg\zeta(\frac12+it)$ used here and in \cite[p.~225]{Fujii1974}, and $\int_T^{2T}S=O(\log T)$ \cite[Thm.~9.9]{Titchmarsh1986}. This is a contradiction.
+\end{proof}
+
+\begin{lemma}[Smoothing $S$ at scale $1/\log T$]\label{lem:smoothing}
+Let $\hbar>0$ be fixed, $\hbar_T:=2\pi \hbar/\log(T/2\pi)$, and $S:=0$ on $(-\infty,\mathfrak t_0)$. Then $\|\mathbb P_{\hbar_T}\ast S-S\|_{L^2[T,2T]}=O_\hbar(\sqrt T)$, unconditionally.
+\end{lemma}
+
+\begin{proof}
+Fujii's Main Theorem \cite[Main Theorem]{Fujii1974}, proved unconditionally by modifying Selberg's method, states for $q=1$, $k=1$, $T^{1/2+a}\le H\le T$ and $0<u\le H-(H/\sqrt T)^{1/8}$ that $\int_T^{T+H}(S(t+u)-S(t))^2dt=c_1H\cdot2\log(2+u\log T)\,(1+O((\log(2+u\log T))^{-1/2}))$ with an absolute $c_1$. The relative error is $O(1)$ when $u\log T$ is bounded, so the statement carries no asymptotic information there, and we use it only as the upper bound it contains: for $0<u\le1$, $T\ge T_0$ and $H=T$,
+\begin{equation}\label{eq:fujii}
+ \int_T^{2T}\bigl(S(t+u)-S(t)\bigr)^2dt\le \mathrm c_FT\log(2+u\log T),
+\end{equation}
+with an absolute constant $\mathrm c_F$.
+The range $0<u\le H-(H/\sqrt T)^{1/8}=T-T^{1/16}$ of \cite{Fujii1974} contains $0<u\le1$, and the same bound holds for $-1\le u<0$: the substitution $t\mapsto t-u$ moves the integral to $[T-|u|,2T-|u|]\subset[T/2,2T]$, covered by \CGeqref{eq:fujii} at the base points $T/2$ (with $H=T/2$) and $T$ (with $H=T$). By Minkowski's inequality, $\|\mathbb P_{\hbar_T}\ast S-S\|_{L^2[T,2T]}\le\int \mathbb P_{\hbar_T}(u)\|S(\cdot-u)-S\|_{L^2[T,2T]}\,du$. For $0<|u|\le1$ the norm is at most $(2\mathrm c_FT\log(2+|u|\log T))^{1/2}$. For $1<|u|\le T/2$, Selberg's theorem $\int_0^TS^2=\frac1{2\pi^2}T\log\log T+O(T(\log\log T)^{1/2})$ \cite{Selberg1946} bounds it by $\mathrm c(T\log\log T)^{1/2}$. For $|u|>T/2$, $|S(t)|\le \mathrm c\log(2+t)$ \cite[Thm.~9.4]{Titchmarsh1986} bounds it by $\mathrm c\sqrt T\log(3T+|u|)$. Substituting $u=\hbar_Tv$ in the first range, where $\hbar_T\log T\to2\pi \hbar$, and using $\int_{|u|>1}\mathbb P_{\hbar_T}=O(\hbar_T)$ and $\int_{|u|>T/2}\mathbb P_{\hbar_T}(u)\log(3T+|u|)\,du=O(\hbar_T\log T/T)$, all three contributions are $O(\sqrt T)$.
+\end{proof}
+
+\begin{remark}[A second proof]\label{rem:fujii}
+Lemma~\CGref{lem:smoothing} also follows from Selberg's mean-square approximation of $S(t)$ by $S_{\mathrm x_0}(t):=-\frac1\pi\sum_{p\le \mathrm x}p^{-1/2}\sin(t\log p)$, $\mathrm x_0=T^\delta$ \cite{Selberg1946}, and the Montgomery--Vaughan mean value theorem \cite[Cor.~3]{MontgomeryVaughan1974}. Indeed $\mathbb P_{\hbar_T}\ast S_{\mathrm x_0}-S_{\mathrm x_0}=-\frac1\pi\sum_{p\le \mathrm x}p^{-1/2}(e^{-\hbar_T\log p}-1)\sin(t\log p)$ has mean square $\ll T\,\hbar_T^2\log^2\mathrm x\ll T$ on $[T,2T]$, and the remainder $S-S_{\mathrm x_0}$ is handled by Minkowski's inequality. Fujii's announcement \cite{Fujii1975} states the moment lemma of \cite{Fujii1974} in the form used in \cite[Lemma~1]{Fujii1975b}.
+\end{remark}
+
+\begin{corollary}[Consequences for the zeta list]\label{cor:obstruction}
+\textup{(a)} $\{e^{ix_k\xi}\}_{x_k\in \mathscr X_{\boldsymbol\gamma}}$ is not a Riesz basis of $L^2(-\pi,\pi)$.\\
+\textup{(b)} If $\mathscr X_{\boldsymbol\gamma}$ is a finite union of uniformly discrete sets, its generalised divided differences are not a Riesz basis of $L^2(-\pi,\pi)$.\\
+\textup{(c)} For every decomposition $\varPsi_{\boldsymbol\gamma}=A+B$ with $\|A\|_\infty<\frac14$, $\mathbb Y_1B$ is unbounded. In particular this holds for the blocks of Proposition~\CGref{prop:O-blocks}, where the averaging hypothesis is satisfied.
+\end{corollary}
+
+\begin{proof}
+(a) and (b): the criteria \cite[Thm.~1, Thm.~3]{AvdoninIvanov2002} are necessary and sufficient, and require a generating function satisfying Helson--Szeg\H{o}, equivalently $(A_2)$, on some line $\Im \mathfrak z=\hbar$. The line $\hbar=0$ is excluded, since $|\mathcal F(\mathrm x)|^{-2}$ is not locally integrable at a real zero. All lines with $\hbar\ne0$ are excluded by Theorem~\CGref{thm:obstruction}. (c): otherwise Theorem~\CGref{thm:criterion} would give $|\mathcal F_{\boldsymbol\gamma}(\mathrm x+i)|^2\in(A_2)$.
+\end{proof}
+
+\begin{heuristic}[Graduated version]\label{heur:graduated}
+The proof of Theorem~\CGref{thm:obstruction} uses intervals $\mathfrak I_T$ of length $\asymp T\log T$. On a window of $L$ unfolded points at height $T$, the mean square oscillation of $\mathbb P_\hbar\varPsi$ is governed by the variance of increments of $S$ over $t$-intervals of length $L/\NR'(T)$. By Fujii's asymptotics this is expected to be of size $\frac1{\pi^2}\log L$. This suggests that local $(A_2)$ constants on windows of $L$ points grow with $L$ but stay bounded for $L$ bounded. That is the graduated stability that a Fredholm formulation would need. None of this is proved here. The computations of Section~\CGref{sec:numerics} measure the $\ell^\infty$ norm of the inverse of square finite sections directly and find growth like $T^{1.8}$ up to $T=487$.
+\end{heuristic}
+
+\begin{remark}[Bearing on route B]\label{rem:routeB-stability}
+Theorem~\CGref{thm:obstruction} rules out a uniform Riesz-basis (Fredholm) structure for the unfolded zeta list on the whole line, and hence a linear stability argument with constants independent of the height. It says nothing about statement B or B$'$. The compactness step of route B (Proposition~\CGref{prop:compactness}) uses no stability; the open part of route B is existence (Definition~\CGref{def:B}) together with uniqueness in the box (Hypothesis~\CGref{hyp:U}), and the open part of route B$'$ is existence alone (Corollary~\CGref{cor:Bprime}).
+\end{remark}
+
+%======================================================================
+\section{Numerical certificates for finite sections}\label{sec:numerics}
+
+This section reports computations. They are not part of any proof; their role is to measure the quantities of Theorems~\CGref{thm:certificate} and~\CGref{thm:staged} on actual sections and to locate where the staged construction fails. The programs and their outputs are listed in the appendix of the main manuscript and in the archive accompanying this note. Floating point arithmetic was used throughout; no interval arithmetic was run.
+
+\subsection{Set-up}\label{sec:num-setup}
+
+The tests are Gaussians $\varphi_{c,\mathrm w}(u):=e^{-(u-c)^2/2\mathrm w^2}$ with centre $c\ge9\mathrm w$, so that their restriction to $u>0$ is, to working precision, a test supported in $(0,\infty)$; their cosine transform is $\mathsf c_{\varphi_{c,\mathrm w}}(t)=\mathrm w\sqrt{2\pi}\,e^{-(\mathrm wt)^2/2}\cos(ct)$. Stage $m$ uses the width $\mathrm w_m:=0.08\cdot0.85^{m-1}$, the height $T_m:=4/\mathrm w_m$, and the new tests $\varphi_{c,\mathrm w_m}$ with centres $c\in[9\mathrm w_m,\,\log(\max(T_m,7)/2\pi)+2]$ in steps of $\mathrm w_m$; the test set $\mathscr T_m$ is the union of the levels $\le m$. The unknowns of stage $m$ are the ordinates with $\tau_k\le2.4/\mathrm w_m$ (``interior''); the factor $e^{-(\mathrm w_m\kappa)^2/2}$ makes the others invisible to the tests of level $m$. The masses are $\mathsf a^\zeta_n$ for all $n\le e^{c+9\mathrm w}$, and $\mathsf k$ is \msref{eq:transport-defs}. The pairings $\langle\mathsf k,\varphi\rangle$ were computed by adaptive quadrature. The zeta ordinates $\gamma_k$, $k\le400$ ($\gamma_{400}=679.74$), computed with \texttt{mpmath}, enter only in the diagnostic columns; no construction uses them.
+
+Two checks fix the normalisation: $\langle\mathfrak R(\boldsymbol\gamma,\mathsf a^\zeta),\varphi\rangle\approx10^{-16}$ for all tests tried, and $\langle\mathfrak R(\boldsymbol\tau,\mathsf a^\zeta),\varphi\rangle$ between $10^{-3}$ and $10^{-1}$.
+
+\subsection{Initialisation: the clock is outside the basin, the Gonek lists are inside}\label{sec:num-init}
+
+\emph{Receding horizon from the clock.} Starting at $\boldsymbol\kappa=\boldsymbol\tau$, each stage solved the overdetermined least-squares problem for the interior ordinates with all tests of levels $\le m$, with bounds $|\kappa_k-\tau_k|\le3$ and the non-interior ordinates frozen at their current values. The iteration stalls at the first Gram-type failure of the clock: the fit returns $\kappa_{34}=109.75$ where $\gamma_{34}=111.03$ ($\tau_{34}=110.04$), and $\kappa_{41}=125.50$ where $\gamma_{41}=124.26$; from $m=9$ on the residual on the lagged levels $\le m-4$ grows from $2\cdot10^{-5}$ to $4\cdot10^{-2}$ and the front of ordinates within $10^{-2}$ of $\boldsymbol\gamma$ stays at $k\approx31$.
+
+\emph{Receding horizon from a Gonek list.} The same iteration started at $\boldsymbol\kappa^{(\mathrm X)}$ with $\mathrm X=8$ (Lemma~\CGref{lem:gonek-tube}; $983$ roots up to $t=1400$, computed from the Riemann--Siegel expansion of $\vartheta$ and the sum \CGeqref{eq:alphaX}) converged through $m=16$, $T_{16}=572$, $165$ interior ordinates and $4985$ tests: all interior ordinates within $10^{-2}$ of $\gamma_k$, $90$ of them within $10^{-4}$, the first twenty within $5\cdot10^{-6}$, residual on the lagged levels between $10^{-6}$ and $9\cdot10^{-6}$ at every stage, and $\max_k|\kappa_k-\tau_k|=0.99$ throughout. The residual over all tests of level $\le m$ stays at $2\cdot10^{-3}$, which is the contribution of the frozen edge.
+
+\emph{Why.} The basin of the exact solution, measured by random perturbations of $\boldsymbol\gamma$ in the interior block, has radius $0.1$ to $0.25$ mean spacings. The clock lies at up to $0.66$ spacings from $\boldsymbol\gamma$ for $k\le400$, with $50$ indices beyond $0.25$; the lists $\boldsymbol\kappa^{(\mathrm X)}$ lie within $0.184$ ($\mathrm X=3$), $0.081$ ($\mathrm X=5$), $0.053$ ($\mathrm X=8$), $0.047$ ($\mathrm X=12$) and $0.035$ ($\mathrm X=20$) spacings for $k\le160$, and within $0.103$ spacings for $k\le400$ at $\mathrm X=8$ (Figure~\CGref{fig:gonek}). The $\ell^2$ conditioning of the interior block at $\boldsymbol\gamma$ is moderate and roughly uniform up to $T=299$: condition numbers $17$ to $75$, smallest singular value $0.08$ to $0.15$. The coupling of the interior to the frozen edge, $\|\mathbb J_I^+\mathbb J_E\|_{\infty\to\infty}$, is between $0.25$ and $0.47$, and the shift it induces on the low ordinates decays from $2\cdot10^{-2}$ at $m=2$ to $10^{-5}$ for $m\ge10$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{fig_gonek_vs_clock.png}
+\caption{Distance to the zeta ordinates, in units of the local mean spacing $2\pi/\log(\gamma_k/2\pi)$, of the midpoint clock and of the Gonek lists $\boldsymbol\kappa^{(\mathrm X)}$ for $\mathrm X=3,8,20$ ($k\le160$ for $\mathrm X=3,20$; $k\le400$ for $\mathrm X=8$). The dashed line is the observed radius of the Newton basin. The ordinates $\gamma_k$ are used here only to measure the distance.}
+\label{fig:gonek}
+\end{figure}
+
+\subsection{Certificates at the Gonek list: the direct bounds fail}\label{sec:num-kantorovich}
+
+At $\boldsymbol\kappa^{(8)}$, with the interior unknowns of stage $m$ and three choices of the right inverse, the quantities of Theorem~\CGref{thm:certificate} were computed for $m=1,\dots,14$ ($T$ from $50$ to $414$).
+
+\begingroup\small
+\begin{longtable}{p{0.40\textwidth}p{0.22\textwidth}p{0.30\textwidth}}
+\toprule
+Right inverse and norm & Certificate index & Range over $m=1,\dots,14$\\
+\midrule
+square subsystem (tests chosen by pivoted QR), $\ell^\infty$ & $2\mathbb L_m^2\mathbb H_m\mathsf h_m$ & $56\to1.2\cdot10^{7}$\\
+pseudo-inverse of the full system, $\ell^2$, $\beta_2=1/\sigma_{\min}$ & $\beta_2\mathrm K_2\delta_2$ (Kantorovich) & $0.47\to233$\\
+pseudo-inverse of the full system, $\ell^\infty$, diagonal Hessian & $2\mathrm c_{\rm diag}\mathsf h$ & $1.3\to1.6\cdot10^{3}$\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+None of the certificates is satisfied, not even at $T=50$. Yet one Gauss--Newton step from $\boldsymbol\kappa^{(8)}$ reduces $\max_k|\kappa_k-\gamma_k|$ by a factor between $4$ and $15$ at every height ($0.088\to0.016$ at $T=572$), and $\sigma_{\min}$ in $\ell^2$ stays between $1/17$ and $1/5$. The worst-case bounds lose a factor $10^3$ to $10^4$ through cancellation: $\mathbb H_m$ counts every unknown with the full weight $\int|\varphi|u^2$, while the actual second-order term of $\mathbb F_m$ along the Newton step is a sum of $k^*_m$ oscillating terms.
+
+\subsection{Certified exact finite sections}\label{sec:num-certified}
+
+The iterate of Section~\CGref{sec:num-init} was polished, stage by stage, by Newton's method on the square system ($n$ tests selected by pivoted QR on $\mathbb J^{\!T}$, $n$ interior unknowns) to residual $10^{-13}$. At the polished point $x_0$ the certificate of Theorem~\CGref{thm:certificate} was evaluated in the sharper form that uses the separable structure of $F_m$: with $Q$ the inverse of the square Jacobian, $B$ the matrix of second derivatives $\partial^2_{\kappa_k}\mathsf c_\varphi$ at $x_0$, and $A_3(r)$ an entrywise bound for the third derivatives on $|x-x_0|\le\mathrm r$, the map $\mathbb T(x)=x-\mathbb Q\mathbb F(x)$ contracts the ball of radius $\mathrm r$ in $\ell^\infty$ if
+\begin{equation}\label{eq:num-banach}
+ \mathsf l(\mathrm r):=\|\mathbb Q\mathbb J'\|_{\infty\to\infty}\,\mathrm r+\tfrac12\,\bigl\||\mathbb Q|\mathbb A^{(3)}(\mathrm r)\bigr\|_{\infty\to\infty}\,\mathrm r^2<1,\qquad \mathsf h\le(1-\mathsf l(\mathrm r))\,\mathrm r,
+\end{equation}
+in which case the ball contains an exact solution of the square system. The margin of a stage is $\max_{\mathrm r}(1-\mathsf l(\mathrm r))\mathrm r$, the largest residual that \CGeqref{eq:num-banach} could certify at that point.
+
+\begingroup\small
+\begin{longtable}{rrrrrrr}
+\toprule
+$m$ & $T_m$ & $n$ & $\mathbb L_m=\|Q\|_{\infty\to\infty}$ & margin & $\mathsf s_m$ on all tests $\le m$ & $\max_k|\kappa_k-\gamma_k|$\\
+\midrule
+1 & 50 & 4 & $41$ & $7.0\cdot10^{-3}$ & $7.7\cdot10^{-8}$ & $7\cdot10^{-7}$\\
+4 & 81 & 9 & $50$ & $3.1\cdot10^{-3}$ & $2.6\cdot10^{-7}$ & $1\cdot10^{-6}$\\
+8 & 156 & 26 & $150$ & $7.5\cdot10^{-4}$ & $9.6\cdot10^{-7}$ & $1\cdot10^{-5}$\\
+12 & 299 & 68 & $460$ & $2.2\cdot10^{-4}$ & $5.5\cdot10^{-6}$ & $4\cdot10^{-5}$\\
+15 & 487 & 133 & $1600$ & $6.7\cdot10^{-5}$ & $3.3\cdot10^{-3}$ & $4\cdot10^{-2}$\\
+16 & 572 & 165 & -- & square Jacobian singular & -- & --\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+Stages $1$ to $15$ are certified: for each, \CGeqref{eq:num-banach} holds with $\mathrm r$ equal to the polishing residual ($10^{-15}$ to $5\cdot10^{-13}$), so an exact solution of the square section exists within $\mathrm r$ of $x_0$, inside the tube with $C=1$. The margins exceed the residuals by $10^{7}$ or more, which is far above the expected rounding error, so the same certificates are expected, but not verified, to survive interval arithmetic. The certified solutions are not unique: at $m=15$ the solution is $4\cdot10^{-2}$ from $\boldsymbol\gamma$. At $m=16$ the square Jacobian is singular to working precision and the stage is not certified. The scaling with height (Figure~\CGref{fig:scaling}) is
+\begin{equation}\label{eq:num-scaling}
+ \mathbb L_m\sim T^{1.8},\qquad\|\mathbb Q\mathbb J'\|_{\infty\to\infty}\sim T^{2.1},\qquad\text{margin}\sim T^{-2.1}\qquad(T\le487).
+\end{equation}
+
+\subsection{The entry step}\label{sec:num-entry}
+
+The open point of the staged construction, in the form that Theorem~\CGref{thm:staged} makes precise, is whether the residual $\mathsf h_{m+1}$ of the new tests at the start of stage $m+1$ is below the margin of that stage. This was tested as follows: start from the certified solution of stage $m-1$, put the new band of unknowns (those with $\tau_k\in(2.4/\mathrm w_{m-1},2.4/\mathrm w_m]$) and everything beyond at their Gonek values, and evaluate \CGeqref{eq:num-banach} (i) for the band alone, with the new tests of level $m$, and (ii) for the full square system of stage $m$, without polishing.
+
+The band-only test is certified for $T\le96$ and fails from $T=113$ on; its margin falls from $9\cdot10^{-2}$ to $3\cdot10^{-3}$ while the Gonek residual of the band stays between $10^{-2}$ and $3\cdot10^{-1}$ (the Gonek error in the band is $0.02$ to $0.09$). The full-system test is certified only at $T=59$. The margin decreases as a power of $T$ by \CGeqref{eq:num-scaling}, whereas the error of the Gonek lists with fixed $\mathrm X$ does not decrease with $T$, and with $\mathrm X=T^{\mathrm x}$ it would decrease at most like $1/\log T$. Within the range computed, no worst-case certificate in $\ell^\infty$ closes the entry step, and the trend of the constants says that none will at larger $T$. This is a numerical statement, not a theorem.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.9\textwidth]{fig_cert_scaling.png}
+\caption{Constants of the Banach certificate \CGeqref{eq:num-banach} for the square sections of Section~\CGref{sec:num-certified} (solid lines, with fitted slopes in $\log T$), and the band-only entry test of Section~\CGref{sec:num-entry} (dashed): the reciprocal of the band margin and the reciprocal of the residual of the new band at its Gonek values. The entry test is certified where the triangles lie below the squares.}
+\label{fig:scaling}
+\end{figure}
+
+\subsection{Reading of the computations}\label{sec:num-reading}
+
+\begin{enumerate}[label=(\roman*)]
+\item The constructions that use only the clock and the primes (the Gonek lists, the square sections, the certificates) behave as predicted by the tube lemma and the certificate theorem, and the certified sections exist up to $T=487$. These sections would exist equally if the Riemann hypothesis were false: a zero $\frac12+\mathrm b_0+i\gamma_0$ off the line contributes $2\cosh(\mathrm b_0u)\cos(\gamma_0u)$ to the prime side, which real ordinates near $\gamma_0$ can imitate against tests supported in $(0,u^*)$ as long as $\mathrm b_0u^*$ is small. The information about the hypothesis sits entirely at heights $T\gtrsim(C\log\gamma_0)^{1/\mathrm b_0}$, which no finite computation reaches.
+\item The quantities $\mathbb L_m$ and $\|QB\|$ grow polynomially in $T$. This is the quantitative face of the obstruction theorem of Section~\CGref{sec:obstruction}: no height-uniform linear stability, hence no height-uniform Newton basin. A certificate for the infinite construction needs a basin that shrinks no faster than the initial error of a $\gamma$-free list decreases, and the computed trend is $T^{-2}$ against $1/\log T$.
+\item The observed contraction of Gauss--Newton (factor $4$ to $15$ per step at every height) is a mean-square phenomenon that the worst-case constants do not see. A proof of the entry step would have to bound $\|\mathbb Q\mathbb J'\,\mathrm{diag}(\mathrm e)\,\mathrm e\|_\infty$ for the actual error vector $\mathrm e$ of the Gonek list, not for an arbitrary vector of the same norm; that error vector is $\gamma$-free, and its residual $\mathbb F_m(\boldsymbol\kappa^{(\mathrm X)})$ is controlled through the explicit formula by the moments of $S-S_{\mathrm X}$, which are unconditional (Selberg, Fujii). Whether this closes is not known; any proof along this line would contain a proof of the Riemann hypothesis, by Corollary~\CGref{cor:Bprime}.
+\end{enumerate}
+
+%======================================================================
+\section{Status of the statements}\label{sec:status}
+
+\begingroup\small
+\begin{longtable}{p{0.42\textwidth}p{0.5\textwidth}}
+\toprule
+Statement & Status\\
+\midrule
+Lemma~\CGref{lem:canonical-box}, Corollary~\CGref{cor:D-implies-B} & proved; conditional on (D) as stated\\
+Proposition~\CGref{prop:compactness}, Lemma~\CGref{lem:matching} & proved, unconditional\\
+Hypothesis~\CGref{hyp:U} & open; it extends \msref{thm:free-masses}; not needed with prescribed masses\\
+Corollary~\CGref{cor:selection} & proved, assuming B and U\\
+Lemmas~\CGref{lem:archimedean}, \CGref{lem:laplace} & proved, unconditional (the former Hypothesis~(L))\\
+Proposition~\CGref{prop:prescribed-uniqueness}, Corollary~\CGref{cor:Bprime} & proved, unconditional: RH $\Leftrightarrow$ B$'(C)$; classical in substance\\
+Lemma~\CGref{lem:lipschitz}, Theorems~\CGref{thm:certificate}, \CGref{thm:staged}, Proposition~\CGref{prop:graded} & proved; their hypotheses (A$_m$) for all $m$ and (B) are open and imply RH\\
+Heuristic~\CGref{heur:frame} & not proved; its point model is not a test of $C_c^\infty(0,\infty)$\\
+Lemma~\CGref{lem:gonek-tube} & proved, unconditional; uses \cite{Gonek2012} only for the interpretation of the list\\
+(G1), (G2) of Remark~\CGref{rem:gonek-status} & open; together they imply B$'$ and RH\\
+Lemmas~\CGref{lem:PL}--\CGref{lem:argument}, Theorem~\CGref{thm:count}, Corollary~\CGref{cor:displacement} & proved, unconditional; uses \msref{thm:halfplane-RVM}\\
+Heuristics~\CGref{heur:window}, \CGref{heur:informative}, \CGref{heur:graduated} & not proved\\
+Lemma~\CGref{lem:generating}, Theorem~\CGref{thm:criterion}, Corollary~\CGref{cor:riesz} & proved; Corollary~\CGref{cor:riesz} uses \cite{AvdoninIvanov2002}\\
+Corollary~\CGref{cor:kadec-avdonin}, Theorem~\CGref{thm:variable-N}, Proposition~\CGref{prop:variable-blocks} & proved; novelty not checked\\
+Lemma~\CGref{lem:psi-bound}, Proposition~\CGref{prop:O-blocks}, Proposition~\CGref{prop:weight}, Corollary~\CGref{cor:one-condition} & proved, unconditional\\
+Lemma~\CGref{lem:smoothing}, Theorem~\CGref{thm:obstruction}, Corollary~\CGref{cor:obstruction} & proved, unconditional; uses the upper bound contained in \cite[Main Theorem]{Fujii1974}, \cite{Selberg1946,Titchmarsh1986,Garnett2007}\\
+Section~\CGref{sec:numerics} & computations in floating point; not part of any proof\\
+\bottomrule
+\end{longtable}
+\endgroup
+
+%======================================================================
+\begin{thebibliography}{99}
+
+\bibitem{AriasdeReyna2024}
+J.~Arias de Reyna, \emph{Explicit formula and quasicrystal definition}, arXiv:2402.10604 (2024, v2 2025), \href{https://doi.org/10.48550/arXiv.2402.10604}{doi:10.48550/arXiv.2402.10604}.
+
+\bibitem{Avdonin1974}
+S.~A. Avdonin, \emph{On the question of Riesz bases of exponential functions in $L^2$}, Vestnik Leningrad. Univ. Mat. Mekh. Astronom. (1974), no.~13, 5--12. (No DOI.)
+
+\bibitem{AvdoninIvanov2002}
+S.~A. Avdonin and S.~A. Ivanov, \emph{Exponential Riesz bases of subspaces and divided differences}, St. Petersburg Math. J. \textbf{13} (2002), no.~3, 339--351; arXiv:math/0103160, \href{https://doi.org/10.48550/arXiv.math/0103160}{doi:10.48550/arXiv.math/0103160}.
+
+\bibitem{Fujii1974}
+A.~Fujii, \emph{On the zeros of Dirichlet $L$-functions. I}, Trans. Amer. Math. Soc. \textbf{196} (1974), 225--235, \href{https://doi.org/10.1090/S0002-9947-1974-0349603-2}{doi:10.1090/S0002-9947-1974-0349603-2}.
+
+\bibitem{Fujii1975}
+A.~Fujii, \emph{On the distribution of the zeros of the Riemann zeta function in short intervals}, Bull. Amer. Math. Soc. \textbf{81} (1975), 139--142, \href{https://doi.org/10.1090/S0002-9904-1975-13674-3}{doi:10.1090/S0002-9904-1975-13674-3}.
+
+\bibitem{Fujii1975b}
+A.~Fujii, \emph{On the difference between $r$ consecutive ordinates of the zeros of the Riemann zeta function}, Proc. Japan Acad. \textbf{51} (1975), no.~10, 741--743, \href{https://doi.org/10.3792/pja/1195518466}{doi:10.3792/pja/1195518466}.
+
+\bibitem{Gonek2012}
+S.~M. Gonek, \emph{Finite Euler products and the Riemann hypothesis}, Trans. Amer. Math. Soc. \textbf{364} (2012), 2157--2191, \href{https://doi.org/10.1090/S0002-9947-2011-05546-7}{doi:10.1090/S0002-9947-2011-05546-7}; arXiv:0704.3448.
+
+\bibitem{Guinand1948}
+A.~P. Guinand, \emph{A summation formula in the theory of prime numbers}, Proc. London Math. Soc. (2) \textbf{50} (1948), 107--119, \href{https://doi.org/10.1112/plms/s2-50.2.107}{doi:10.1112/plms/s2-50.2.107}.
+
+\bibitem{Garnett2007}
+J.~B. Garnett, \emph{Bounded Analytic Functions}, revised first ed., Graduate Texts in Mathematics 236, Springer, New York, 2007, \href{https://doi.org/10.1007/0-387-49763-3}{doi:10.1007/0-387-49763-3}.
+
+\bibitem{Hormander1990}
+L.~H\"ormander, \emph{The Analysis of Linear Partial Differential Operators I}, 2nd ed., Grundlehren der mathematischen Wissenschaften 256, Springer, Berlin, 1990, \href{https://doi.org/10.1007/978-3-642-61497-2}{doi:10.1007/978-3-642-61497-2}.
+
+\bibitem{Kadec1964}
+M.~I. Kadec, \emph{The exact value of the Paley--Wiener constant}, Dokl. Akad. Nauk SSSR \textbf{155} (1964), 1253--1254; English transl. Soviet Math. Dokl. \textbf{5} (1964), 559--561. (No DOI.)
+
+\bibitem{KurasovSarnak2020}
+P.~Kurasov and P.~Sarnak, \emph{Stable polynomials and crystalline measures}, J. Math. Phys. \textbf{61} (2020), no.~8, 083501, \href{https://doi.org/10.1063/5.0012286}{doi:10.1063/5.0012286}.
+
+\bibitem{LyubarskiiSeip1997}
+Yu.~I. Lyubarskii and K.~Seip, \emph{Complete interpolating sequences for Paley--Wiener spaces and Muckenhoupt's $(A_p)$ condition}, Rev. Mat. Iberoam. \textbf{13} (1997), no.~2, 361--376, \href{https://doi.org/10.4171/RMI/224}{doi:10.4171/RMI/224}.
+
+\bibitem{MontgomeryVaughan1974}
+H.~L. Montgomery and R.~C. Vaughan, \emph{Hilbert's inequality}, J. London Math. Soc. (2) \textbf{8} (1974), 73--82, \href{https://doi.org/10.1112/jlms/s2-8.1.73}{doi:10.1112/jlms/s2-8.1.73}.
+
+\bibitem{OlevskiiUlanovskii2020}
+A.~Olevskii and A.~Ulanovskii, \emph{Fourier quasicrystals with unit masses}, C. R. Math. Acad. Sci. Paris \textbf{358} (2020), no.~11--12, 1207--1211, \href{https://doi.org/10.5802/crmath.142}{doi:10.5802/crmath.142}.
+
+\bibitem{Selberg1946}
+A.~Selberg, \emph{Contributions to the theory of the Riemann zeta-function}, Arch. Math. Naturvid. \textbf{48} (1946), no.~5, 89--155. (No DOI.)
+
+\bibitem{Titchmarsh1986}
+E.~C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., revised by D.~R. Heath-Brown, Oxford University Press, 1986. (No DOI.)
+
+\bibitem{Weil1952}
+A.~Weil, \emph{Sur les ``formules explicites'' de la th\'eorie des nombres premiers}, Comm. S\'em. Math. Univ. Lund [Medd. Lunds Univ. Mat. Sem.] (1952), Tome Suppl\'ementaire, 252--265. (No DOI.)
+
+\bibitem{WhittakerWatson1927}
+E.~T. Whittaker and G.~N. Watson, \emph{A Course of Modern Analysis}, 4th ed., Cambridge University Press, 1927; reissued in the Cambridge Mathematical Library, 1996, \href{https://doi.org/10.1017/CBO9780511608759}{doi:10.1017/CBO9780511608759}.
+
+\bibitem{Zemanian1965}
+A.~H. Zemanian, \emph{Distribution Theory and Transform Analysis}, McGraw-Hill, New York, 1965; reprinted by Dover, New York, 1987. (No DOI.)
+
+\end{thebibliography}
+
+\end{document}

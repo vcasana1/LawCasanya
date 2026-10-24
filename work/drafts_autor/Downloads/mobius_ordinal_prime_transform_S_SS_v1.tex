@@ -1,0 +1,871 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\title{An Ordinal-Prime Transform of the M\"obius Function}
+\author{}
+\date{}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\mob}{\mu}
+\newcommand{\Mert}{M}
+\newcommand{\Sq}{Q}
+\newcommand{\PS}{\mathcal P}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Purpose and scope}
+
+This note develops only the ordinal-prime transform introduced in the present line of discussion. It is independent of the earlier Leslie-matrix constructions and does not use them.
+
+The starting point is the M\"obius function
+\[
+\mob(n)\in\{-1,0,+1\}.
+\]
+The occurrences of $-1$ and $+1$ are numbered separately, in chronological order, and the corresponding ordinal prime is attached to each occurrence. Zeros are replaced by $1$.
+
+The resulting signed sequence is denoted by $S(n)$, and its cumulative sum by
+\[
+SS(n)=\sum_{k\le n}S(k).
+\]
+
+The main conclusions are:
+
+\begin{enumerate}[label=(\roman*)]
+\item $S(n)$ is an ordinal-prime reweighting of the three-valued M\"obius sequence.
+\item $SS(n)$ has an exact closed expression in terms of the Mertens function, the squarefree counting function, and the sum of the first $m$ primes.
+\item After removing the zero contribution, $SS(n)$ is exactly a signed sum of $|M(n)|$ consecutive primes.
+\item Consequently, $SS(n)$ is essentially an amplified nonlinear reparametrization of $M(n)$ once $Q(n)$ is known.
+\item The transform does not create independent arithmetic information by itself; any usefulness must come from a new structural property of the transformed representation.
+\end{enumerate}
+
+\section{Definition of the three rows}
+
+Let
+\[
+p_1=2,\qquad p_2=3,\qquad p_3=5,\qquad p_4=7,\ldots
+\]
+denote the primes in increasing order.
+
+Define the cumulative occurrence counts
+\[
+N_-(n)
+=
+\sum_{k\le n}\frac{\mob(k)^2-\mob(k)}2,
+\]
+\[
+N_0(n)
+=
+\sum_{k\le n}\bigl(1-\mob(k)^2\bigr),
+\]
+and
+\[
+N_+(n)
+=
+\sum_{k\le n}\frac{\mob(k)^2+\mob(k)}2.
+\]
+
+Thus $N_-(n)$ counts the occurrences of $\mob=-1$ up to $n$, $N_0(n)$ counts the zeros, and $N_+(n)$ counts the occurrences of $\mob=+1$.
+
+The three rows are
+
+\[
+R_-(n)
+=
+-\frac{\mob(n)^2-\mob(n)}2\,p_{N_-(n)},
+\]
+
+\[
+R_0(n)
+=
+1-\mob(n)^2,
+\]
+
+and
+
+\[
+R_+(n)
+=
+\frac{\mob(n)^2+\mob(n)}2\,p_{N_+(n)}.
+\]
+
+Equivalently,
+
+\[
+R_-(n)=
+\begin{cases}
+-p_{N_-(n)},&\mob(n)=-1,\\
+0,&\text{otherwise},
+\end{cases}
+\]
+
+\[
+R_0(n)=
+\begin{cases}
+1,&\mob(n)=0,\\
+0,&\text{otherwise},
+\end{cases}
+\]
+
+and
+
+\[
+R_+(n)=
+\begin{cases}
+p_{N_+(n)},&\mob(n)=+1,\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+
+\section{Definition of the ordinal-prime transform}
+
+\begin{definition}
+The ordinal-prime transform $S(n)$ is
+\[
+S(n):=R_-(n)+R_0(n)+R_+(n).
+\]
+Hence
+\[
+\boxed{
+S(n)=
+\begin{cases}
+-p_{N_-(n)},&\mob(n)=-1,\\[1mm]
+1,&\mob(n)=0,\\[1mm]
++p_{N_+(n)},&\mob(n)=+1.
+\end{cases}
+}
+\]
+\end{definition}
+
+The first occurrences therefore behave as follows:
+
+\[
+\mob(n)=-1
+\quad\Longrightarrow\quad
+-2,-3,-5,-7,-11,\ldots
+\]
+
+in ordinal order, whereas
+
+\[
+\mob(n)=+1
+\quad\Longrightarrow\quad
+2,3,5,7,11,\ldots
+\]
+
+in its own separate ordinal order.
+
+Zeros are mapped to $1$.
+
+\section{The cumulative transform}
+
+\begin{definition}
+Define
+\[
+\boxed{
+SS(n):=\sum_{k=1}^{n}S(k).
+}
+\]
+\end{definition}
+
+Let
+\[
+\PS(m):=\sum_{j=1}^{m}p_j
+\]
+be the sum of the first $m$ primes.
+
+Then, by construction,
+
+\begin{proposition}
+For every $n\ge1$,
+\[
+\boxed{
+SS(n)
+=
+\PS\bigl(N_+(n)\bigr)
+-
+\PS\bigl(N_-(n)\bigr)
++
+N_0(n).
+}
+\]
+\end{proposition}
+
+\begin{proof}
+Each positive M\"obius occurrence contributes the next unused positive prime, so the total positive contribution is $\PS(N_+(n))$. Each negative occurrence contributes the negative of the next unused prime, giving $-\PS(N_-(n))$. Every zero contributes $1$, producing $N_0(n)$.
+\end{proof}
+
+\section{Elimination of the occurrence counters}
+
+Introduce the standard functions
+\[
+\Mert(n):=\sum_{k\le n}\mob(k)
+\]
+and
+\[
+\Sq(n):=\sum_{k\le n}\mob(k)^2.
+\]
+
+Since
+\[
+N_+(n)+N_-(n)=\Sq(n)
+\]
+and
+\[
+N_+(n)-N_-(n)=\Mert(n),
+\]
+one has the exact identities
+\[
+\boxed{
+N_+(n)=\frac{\Sq(n)+\Mert(n)}2,
+\qquad
+N_-(n)=\frac{\Sq(n)-\Mert(n)}2.
+}
+\]
+
+Also,
+\[
+\boxed{
+N_0(n)=n-\Sq(n).
+}
+\]
+
+Therefore:
+
+\begin{proposition}
+The cumulative ordinal-prime transform satisfies
+\[
+\boxed{
+SS(n)
+=
+\PS\!\left(\frac{\Sq(n)+\Mert(n)}2\right)
+-
+\PS\!\left(\frac{\Sq(n)-\Mert(n)}2\right)
++
+n-\Sq(n).
+}
+\]
+\end{proposition}
+
+This is the central exact identity.
+
+If one wishes to avoid all auxiliary notation except $\mob$ and the prime sequence, it can also be written as
+
+\[
+\boxed{
+\begin{aligned}
+SS(n)
+={}&
+\sum_{j=1}^{\frac12\sum_{k\le n}(\mob(k)^2+\mob(k))}p_j
+\\
+&-
+\sum_{j=1}^{\frac12\sum_{k\le n}(\mob(k)^2-\mob(k))}p_j
+\\
+&+
+\sum_{k\le n}\bigl(1-\mob(k)^2\bigr).
+\end{aligned}
+}
+\]
+
+\section{Signed block of consecutive primes}
+
+The exact identity becomes particularly transparent after removing the zero contribution. Define
+
+\[
+T(n):=SS(n)-\bigl(n-\Sq(n)\bigr).
+\]
+
+Then
+
+\[
+T(n)
+=
+\PS\!\left(\frac{\Sq(n)+\Mert(n)}2\right)
+-
+\PS\!\left(\frac{\Sq(n)-\Mert(n)}2\right).
+\]
+
+\begin{proposition}
+If $\Mert(n)>0$, then
+\[
+\boxed{
+T(n)
+=
+\sum_{j=(\Sq(n)-\Mert(n))/2+1}^{(\Sq(n)+\Mert(n))/2}p_j.
+}
+\]
+
+If $\Mert(n)<0$, then
+\[
+\boxed{
+T(n)
+=
+-
+\sum_{j=(\Sq(n)-|\Mert(n)|)/2+1}^{(\Sq(n)+|\Mert(n)|)/2}p_j.
+}
+\]
+
+If $\Mert(n)=0$, then $T(n)=0$.
+\end{proposition}
+
+Hence $T(n)$ is exactly the signed sum of $|\Mert(n)|$ consecutive primes, centered at index approximately $\Sq(n)/2$.
+
+Two immediate consequences are
+
+\[
+\boxed{
+\operatorname{sgn}T(n)=\operatorname{sgn}\Mert(n)
+}
+\]
+
+and
+
+\[
+\boxed{
+T(n)=0\iff \Mert(n)=0.
+}
+\]
+
+Thus the transform preserves exactly the sign and the zero set of the Mertens function after subtraction of the deterministic zero-count contribution.
+
+\section{Exact prime-block bounds}
+
+Because the block contains exactly $|\Mert(n)|$ consecutive primes, one has
+
+\[
+\boxed{
+|\Mert(n)|\,
+p_{\frac{\Sq(n)-|\Mert(n)|}{2}+1}
+\le
+|T(n)|
+\le
+|\Mert(n)|\,
+p_{\frac{\Sq(n)+|\Mert(n)|}{2}}.
+}
+\]
+
+These inequalities are completely elementary but useful: they show that bounds for $T(n)$ and bounds for $\Mert(n)$ are directly interconvertible once the prime scale around $\Sq(n)/2$ is controlled.
+
+\section{Asymptotic scale}
+
+The squarefree counting function satisfies
+
+\[
+\Sq(n)\sim \frac{6}{\pi^2}n.
+\]
+
+Hence
+
+\[
+\frac{\Sq(n)}2
+\sim
+\frac{3}{\pi^2}n.
+\]
+
+Also, by the prime number theorem,
+
+\[
+p_m\sim m\log m.
+\]
+
+Therefore the characteristic prime scale of the block defining $T(n)$ is
+
+\[
+p_{\Sq(n)/2}
+\sim
+\frac{3}{\pi^2}n\log n.
+\]
+
+Since $\Mert(n)=o(n)$, the block of $|\Mert(n)|$ primes is short relative to its center on the index scale. Consequently,
+
+\[
+\boxed{
+T(n)\sim \Mert(n)\,p_{\Sq(n)/2}
+}
+\]
+
+in the natural first-order sense, and thus
+
+\[
+\boxed{
+SS(n)-n+\Sq(n)
+\sim
+\frac{3}{\pi^2}n\log n\,\Mert(n).
+}
+\]
+
+Accordingly, the raw cumulative transform behaves as an amplified version of the Mertens function, with amplification factor of order $n\log n$.
+
+\section{Big-O relation}
+
+The exact block representation immediately gives
+
+\[
+|T(n)|
+=
+O\!\bigl(n\log n\,|\Mert(n)|\bigr).
+\]
+
+Hence
+
+\[
+\boxed{
+SS(n)
+=
+O\!\bigl(n\log n\,|\Mert(n)|+n\bigr).
+}
+\]
+
+Using only the trivial estimate $|\Mert(n)|\le n$ gives
+
+\[
+SS(n)=O(n^2\log n).
+\]
+
+Using $\Mert(n)=o(n)$ gives
+
+\[
+SS(n)=o(n^2\log n).
+\]
+
+\section{Conditional scale under the Riemann hypothesis}
+
+Assuming the Riemann hypothesis, one has for every $\varepsilon>0$,
+
+\[
+\Mert(n)=O_\varepsilon\!\left(n^{1/2+\varepsilon}\right).
+\]
+
+Therefore
+
+\[
+SS(n)
+=
+O_\varepsilon\!\left(n^{3/2+\varepsilon}\log n\right).
+\]
+
+Absorbing the logarithm into $n^\varepsilon$,
+
+\[
+\boxed{
+SS(n)
+=
+O_\varepsilon\!\left(n^{3/2+\varepsilon}\right)
+\qquad
+(\forall\,\varepsilon>0).
+}
+\]
+
+It is important not to replace this by the stronger statement
+\[
+\Mert(n)=O(\sqrt n),
+\]
+which is not implied by the Riemann hypothesis.
+
+\section{A corresponding RH reformulation}
+
+Because
+\[
+T(n)=SS(n)-n+\Sq(n)
+\]
+is asymptotically $\Mert(n)$ multiplied by a prime of size $\asymp n\log n$, the Mertens criterion for RH can be transported to the transformed sequence.
+
+At the natural $\varepsilon$-level, one obtains the equivalent scale
+
+\[
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+SS(n)-n+\Sq(n)
+=
+O_\varepsilon\!\left(n^{3/2+\varepsilon}\right)
+\quad
+(\forall\,\varepsilon>0),
+}
+\]
+with the usual understanding that logarithmic factors are absorbed into $\varepsilon$.
+
+This is a reformulation, not an independent proof mechanism.
+
+\section{Insertion of the Riemann zeta function}
+
+The two M\"obius-derived ingredients of the exact identity have standard Dirichlet-series representations:
+
+\[
+\sum_{m\ge1}\frac{\mob(m)}{m^s}
+=
+\frac1{\zeta(s)},
+\qquad
+\Re s>1,
+\]
+
+and
+
+\[
+\sum_{m\ge1}\frac{\mob(m)^2}{m^s}
+=
+\frac{\zeta(s)}{\zeta(2s)},
+\qquad
+\Re s>1.
+\]
+
+Perron's formula therefore gives, formally and with the standard truncation/endpoint qualifications,
+
+\[
+\Mert(x)
+=
+\frac{1}{2\pi i}
+\int_{c-i\infty}^{c+i\infty}
+\frac{x^s}{s\zeta(s)}\,ds,
+\qquad
+c>1,
+\]
+
+and
+
+\[
+\Sq(x)
+=
+\frac{1}{2\pi i}
+\int_{c-i\infty}^{c+i\infty}
+\frac{\zeta(s)}{\zeta(2s)}
+\frac{x^s}{s}\,ds.
+\]
+
+Substituting these into the exact identity yields a zeta-functional representation of $SS$:
+
+\[
+\begin{aligned}
+SS(n)
+={}&
+\PS\!\left[
+\frac{1}{4\pi i}
+\int_{c-i\infty}^{c+i\infty}
+\left(
+\frac{\zeta(s)}{\zeta(2s)}
++
+\frac1{\zeta(s)}
+\right)
+\frac{n^s}{s}\,ds
+\right]
+\\
+&-
+\PS\!\left[
+\frac{1}{4\pi i}
+\int_{c-i\infty}^{c+i\infty}
+\left(
+\frac{\zeta(s)}{\zeta(2s)}
+-
+\frac1{\zeta(s)}
+\right)
+\frac{n^s}{s}\,ds
+\right]
+\\
+&+
+n
+-
+\frac{1}{2\pi i}
+\int_{c-i\infty}^{c+i\infty}
+\frac{\zeta(s)}{\zeta(2s)}
+\frac{n^s}{s}\,ds.
+\end{aligned}
+\]
+
+The prime-sum function $\PS(m)$ can itself be represented through the prime-counting function, and hence through $\log\zeta(s)$. One convenient identity is
+
+\[
+\PS(m)
+=
+m\,p_m
+-
+\int_2^{p_m}\pi(t)\,dt,
+\]
+
+with the ordinary discrete interpretation at the jumps of $\pi$.
+
+The prime-counting structure can in turn be recovered from the classical prime-power counting function built from $\log\zeta$.
+
+Thus three familiar zeta structures enter:
+
+\[
+\boxed{\frac1{\zeta(s)}}
+\]
+
+for the signed M\"obius imbalance,
+
+\[
+\boxed{\frac{\zeta(s)}{\zeta(2s)}}
+\]
+
+for squarefree counting, and
+
+\[
+\boxed{\log\zeta(s)}
+\]
+
+for the prime weights.
+
+\section{Are the three zeta structures themselves new?}
+
+No. Each component is classical:
+
+\begin{enumerate}[label=(\alph*)]
+\item $1/\zeta(s)$ is the Dirichlet series of $\mob$.
+\item $\zeta(s)/\zeta(2s)$ is the Dirichlet series of $\mob^2$.
+\item $\log\zeta(s)$ encodes primes and prime powers.
+\end{enumerate}
+
+What is specific to the present construction is the nonlinear composition
+
+\[
+\PS\!\left(\frac{\Sq+\Mert}{2}\right)
+-
+\PS\!\left(\frac{\Sq-\Mert}{2}\right)
++
+n-\Sq.
+\]
+
+However, the fact that the combination is nonstandard does not by itself imply that it contains new arithmetic information.
+
+\section{Why mixing the characterized pieces is not automatically useful}
+
+Once $n$ is fixed, the pair
+\[
+(\Mert(n),\Sq(n))
+\]
+already determines the three occurrence counts:
+
+\[
+N_+(n)=\frac{\Sq(n)+\Mert(n)}2,
+\]
+
+\[
+N_-(n)=\frac{\Sq(n)-\Mert(n)}2,
+\]
+
+and
+
+\[
+N_0(n)=n-\Sq(n).
+\]
+
+Therefore $SS(n)$ is a deterministic transformation of $(\Mert(n),\Sq(n))$:
+
+\[
+\boxed{
+(\Mert(n),\Sq(n))
+\longmapsto
+SS(n).
+}
+\]
+
+In particular, once $\Sq(n)$ is known, the centered transform
+
+\[
+T(n)=SS(n)-n+\Sq(n)
+\]
+is strictly monotone in $\Mert(n)$.
+
+Thus the construction does not provide an independent arithmetic constraint on $\Mert(n)$. It reweights and amplifies the same imbalance.
+
+This point is essential. Merely combining two completely characterized objects does not create a new source of information. For a transformed representation to become genuinely useful, it would need to produce an additional structural property such as:
+
+\begin{enumerate}[label=(\roman*)]
+\item a new cancellation unavailable in the original variables;
+\item a positivity or monotonicity principle strong enough to yield new bounds;
+\item a spectral representation in which a difficult Mertens bound becomes a simpler geometric or operator inequality;
+\item an inequality between independently controlled components;
+\item or a transformation in which the prime side constrains the M\"obius side in a way not already encoded by $(\Mert,\Sq)$.
+\end{enumerate}
+
+No such independent mechanism has yet been extracted from $SS(n)$ itself.
+
+\section{A normalized form}
+
+A natural normalization is
+
+\[
+\boxed{
+R(n)
+:=
+\frac{SS(n)-n+\Sq(n)}
+{p_{\lfloor \Sq(n)/2\rfloor}}.
+}
+\]
+
+Since
+\[
+SS(n)-n+\Sq(n)
+\sim
+\Mert(n)\,p_{\Sq(n)/2},
+\]
+one expects
+
+\[
+\boxed{
+R(n)\sim \Mert(n).
+}
+\]
+
+This normalization removes the dominant $n\log n$ prime amplification.
+
+Again, this is primarily a reparametrization of Mertens, not an independent object.
+
+\section{A prime-curvature residual}
+
+One can isolate the deviation from replacing the entire consecutive-prime block by a constant central prime. Define
+
+\[
+\boxed{
+E(n)
+:=
+SS(n)-n+\Sq(n)
+-
+\Mert(n)p_{\lfloor \Sq(n)/2\rfloor}.
+}
+\]
+
+Then $E(n)$ measures the local variation of the primes across a window of length $|\Mert(n)|$ centered near index $\Sq(n)/2$.
+
+Indeed, when $\Mert(n)>0$,
+
+\[
+E(n)
+=
+\sum_{j=(\Sq-\Mert)/2+1}^{(\Sq+\Mert)/2}
+\left(
+p_j-p_{\lfloor \Sq/2\rfloor}
+\right),
+\]
+
+and for negative $\Mert(n)$ the corresponding signed formula holds.
+
+This residual separates two ingredients:
+
+\[
+\boxed{\text{Mertens window length}}
+\qquad\text{and}\qquad
+\boxed{\text{local prime variation}}.
+\]
+
+Whether this residual admits useful bounds that are not merely restatements of known information is an open direction within this construction.
+
+\section{Information-theoretic interpretation}
+
+At each fixed $n$, $SS(n)$ does not retain the internal ordering of the previous $+1$ and $-1$ values of the M\"obius sequence.
+
+Only the totals matter:
+
+\[
+N_+(n),\qquad N_-(n),\qquad N_0(n).
+\]
+
+Consequently, two M\"obius sign histories with identical endpoint counts produce the same $SS(n)$.
+
+Therefore the cumulative transform is not sensitive to temporal ordering within the M\"obius sequence. It is a nonlinear endpoint statistic.
+
+This explains both its simplicity and its limitation.
+
+\section{Novelty status}
+
+The standard ingredients used above are classical. The particular ordinal-prime assignment
+
+\[
+-1\mapsto -p_{\text{ordinal among }-1\text{ occurrences}},
+\]
+
+\[
+0\mapsto1,
+\]
+
+\[
++1\mapsto p_{\text{ordinal among }+1\text{ occurrences}}
+\]
+
+and the resulting sequence $SS(n)$ were not identified in the preceding search as a standard named sequence or classical transform.
+
+This should be treated as a novelty observation about the specific formulation, not as a claim that its consequences are automatically new. The exact reduction to $(M,Q)$ shows that many of its first-order properties follow directly from classical objects.
+
+\section{Summary}
+
+The construction can be summarized by the exact chain
+
+\[
+\mob
+\longrightarrow
+(N_-,N_0,N_+)
+\longrightarrow
+S(n)
+\longrightarrow
+SS(n),
+\]
+
+with
+
+\[
+N_\pm(n)=\frac{\Sq(n)\pm\Mert(n)}2,
+\qquad
+N_0(n)=n-\Sq(n),
+\]
+
+and
+
+\[
+\boxed{
+SS(n)
+=
+\PS\!\left(\frac{\Sq(n)+\Mert(n)}2\right)
+-
+\PS\!\left(\frac{\Sq(n)-\Mert(n)}2\right)
++n-\Sq(n).
+}
+\]
+
+After removing the zero contribution,
+
+\[
+\boxed{
+SS(n)-n+\Sq(n)
+=
+\text{signed sum of exactly }|\Mert(n)|\text{ consecutive primes}.
+}
+\]
+
+Hence
+
+\[
+\boxed{
+SS(n)-n+\Sq(n)
+\sim
+\frac{3}{\pi^2}n\log n\,\Mert(n).
+}
+\]
+
+The transform therefore amplifies the Mertens imbalance by the local prime scale, but does not by itself introduce an independent constraint capable of improving known Mertens bounds.
+
+The most structurally distinct residual produced so far is
+
+\[
+\boxed{
+E(n)
+=
+SS(n)-n+\Sq(n)
+-
+\Mert(n)p_{\lfloor \Sq(n)/2\rfloor},
+}
+\]
+
+which measures the interaction between the Mertens window length and local variation of consecutive primes.
+
+\end{document}
