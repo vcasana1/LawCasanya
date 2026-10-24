@@ -1,0 +1,82 @@
+CASANYALAW I v12 — DICTAMEN DE LAS REFUTACIONES INTEGRADAS
+24 octubre 2026
+
+FUENTES EXAMINADAS
+- CasanyaLawI_v11.tex (fuente local, 139 KB).
+- vcasana1/LawCasanya, main, commits 64ba877, 892c085, cab3c86, 108d091 y bcc21a2.
+- work/notes/2026-10-24_control_puntual_conteo.md
+- work/notes/2026-10-24_empuje_sin_RH_tauC.md
+- work/notes/2026-10-24_ley_respuesta_1_menos_Phi.md
+- work/notes/2026-10-24_respuesta_transporte_y_suelo.md
+- work/notes/2026-10-24_teorema_S2_descomposicion_error.md
+- work/display/2026-10-24_verificacion_lema_Omega_autor.md
+
+RESULTADO
+Archivo nuevo autocontenido: CasanyaLawI_v12.tex, copia idéntica .txt y PDF.
+Sección 17: “What the spectral and counting arguments do not imply”.
+Contiene seis refutaciones o rectificaciones matemáticas con pruebas:
+
+(1) FALSO: “Una estimación del momento escalar C1 implica ortogonalidad matricial”.
+    La proposición 17.1 exhibe una familia de matrices de correlación con
+    energía diagonal exacta en un vector, pero ||G-I||_op -> 1. La casi
+    ortogonalidad matricial requiere su propia demostración (ya presente en
+    la sección 16 para prime powers y b<1).
+
+(2) FALSO: “|e_k| < min(g_{k-1},g_k)/2 equivale a gamma_k en su celda”.
+    Lema 17.3: la condición exacta es -g_k^+/2 < e_k < g_k^-/2.
+    Contraejemplo concreto: g_k^-=10, g_k^+=2, e_k=3. Se conserva
+    y demuestra la desigualdad de conteo 1-4d(T)+o(1) usando la definición correcta.
+
+(3) FALSO: “Un suelo de varianza positiva impide d(T)->0”.
+    Proposición 17.5: listas kappa_k=k y gamma_k=k+1/4; todos los índices
+    son buenos y el error cuadrático medio vale 1/16. El enunciado es
+    una refutación lógica, NO un modelo probado de ceros de zeta.
+
+(4) FALSO si se afirma exactamente: Omega_b[r]=Omega_b[s] para una
+    corrección lineal sin contabilizar chi. Lema 17.6: la igualdad exacta
+    usa s*=Lambda(tau)(tau-gamma)=s+chi; sustituir por s introduce
+    un error O(1/T) en la raíz de la energía.
+
+(5) INFERENCIA INVÁLIDA: V_T->0 no basta para pasar de convergencia
+    de raíces a convergencia absoluta de energías con una cota disponible
+    Omega_b[s]<<loglog T. Proposición 17.7: contraejemplo de números
+    positivos. Se mantiene V_T loglog T->0 como condición SUFICIENTE,
+    no declarada necesaria.
+
+(6) FALSO: “El término gaussiano completo de fase estacionaria con error
+    O(1) vale uniformemente para todos los productos pq cercanos a los
+    extremos del intervalo”. Lema 17.8: al tomar n=p^2,
+    T=2pi(n-1), el primer alias oscilatorio da la MITAD del término
+    gaussiano. Este contraejemplo NO demuestra falsa la fórmula
+    promedio del Teorema C1 de Claude; demuestra que la prueba punto
+    a punto presentada no es válida sin fase estacionaria de borde
+    y suma cuantitativa de los casos próximos al extremo.
+
+(7) INFERENCIA INVÁLIDA: resultados para cada b<1 fijo no autorizan
+    tomar b=b(T)->1. Proposición 17.10 con contraejemplo de indicadores.
+    H1 sigue siendo condicional; H1 en compactos no equivale automáticamente
+    a su forma armónica L² sumable.
+
+OTROS AJUSTES
+- Corregida repetición literal de la definición de S_X en la sección 16.
+- Conclusiones: la estabilidad absoluta de Omega se atribuye a la condición
+  V_T loglog T -> 0 (y sus casos concretos V_T << 1/log T), en lugar
+  de la frase ambigua “masa pequeña”.
+- Se añade a introducción abstract y conclusiones el alcance de la sección.
+- El artículo conserva las secciones de v11, R1–R6 y las pruebas previas.
+
+LÍMITES HONESTOS
+- No se afirma que RH haya sido demostrada.
+- No se ha demostrado falsa la afirmación promedio C1; se ha refutado una
+  fórmula uniforme empleada en su prueba. C1 es candidato pendiente.
+- La respuesta de primos móviles 1-Phi(theta) sigue siendo H1, no un
+  teorema incondicional de esta versión.
+- Compilar y cerrar referencias no equivale a certificar formalmente
+  todos los teoremas de las 43 páginas. Este dictamen certifica las
+  identidades y contraejemplos específicos añadidos a la sección 17.
+
+VERIFICACIONES DE ARCHIVO
+- Tres pasadas de pdflatex sin referencias indefinidas.
+- PDF A4, 43 páginas, número de ecuación a la derecha (reqno).
+- .tex y .txt con idéntica suma SHA-256.
+- Sin modificaciones de GitHub.
