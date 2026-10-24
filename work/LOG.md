@@ -408,3 +408,7 @@
 - work/display/2026-10-24_respuesta_verificacion_v5.md: última respuesta de Claude, literal (las "referencias mal numeradas" lo son solo respecto de prime_corrected_clock_v14.tex; en manuscript/ordinal_prime_cutoff_v14.tex, que es el citado, son Lema 8.3 y Teorema 8.5; propuesta de v6 con R1, tabla de equivalencias entre las dos v14 y R3–R6, pendiente de orden).
 - Textos de ChatGPT, literales, en work/display/2026-10-23_aportes_externos_transporte/: 15 (distancia τ−γ y ϖ_Z1, adjunto) y 16 (verificación de la v5, pegado en el chat).
 - Ningún manuscrito cambiado.
+
+## 2026-10-24 [claude] — truncación infinita: paso de Newton con S completo desde el reloj RvM
+- work/notes/2026-10-24_transporte_truncacion_infinita.md. Lema 1 (sin Korolev): ⟨(S − S_X)(τ_k)²⟩^{1/2} ≤ ((1/2π²)log(1/c))^{1/2} + O(1) para 2 ≤ X ≤ T^{1/2}; prueba con la identidad local S = N − N_0 − ϖ/π, Jensen en los intervalos del reloj, [I] (5.10) y (5.8), y el conteo de pares de ceros cercanos por el teorema de Fujii ([I] Thm 3.6).
+- Teorema 2: τ^∞_k = τ_k − S(τ_k)/Λ(τ_k) cumple ⟨Λ²(τ^∞ − γ)²⟩ = (1/2π²) logloglog T + O((logloglog T)^{5/8}) (identidad exacta r(∞) = t(X) + u(X) − v(X) + χ con X = T^{1/2}, teorema B, Lema 1 y transport_energy_theorem_v5). Forma sin primos: el incremento de S entre cada cero y su punto del reloj tiene media cuadrática ~ (1/2π²) logloglog T. Ningún manuscrito cambiado.
