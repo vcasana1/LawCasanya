@@ -1,0 +1,2013 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs,booktabs,longtable,array,enumitem,microtype}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{xcolor}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+\hypersetup{pdftitle={Transport energy of the prime-corrected Riemann--von Mangoldt clock},pdfauthor={Rotkiv Aynasac},pdfsubject={Riemann zeta zeros, Euler phases and corrected clocks}}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\N}{\mathbb N}
+\newcommand{\av}[1]{\left\langle #1\right\rangle_T}
+\newcommand{\norm}[1]{\left\|#1\right\|_{2,T}}
+\newcommand{\Li}{\operatorname{Li}}
+\newcommand{\e}{\mathrm e}
+\newcommand{\calI}{\mathcal I_T}
+\newcommand{\lamb}{\Lambda}
+\newcommand{\eps}{\varepsilon}
+\title[Transport energy of the corrected clock]{Transport energy of the prime-corrected Riemann--von Mangoldt clock and deterministic response to moving primes}
+\author{Rotkiv Ayn\"asac}
+\date{24 October 2026}
+\begin{document}
+\begin{abstract}
+The midpoint Riemann--von Mangoldt clock is corrected by a finite Euler phase formed from prime powers, without using ordinates of the zeta zeros as construction inputs. We obtain exact multiplicity-preserving identities for the discrepancy at the true ordinates, a uniform second-moment estimate for the residual prime information, and an asymptotic for the transport energy of the one-step clock. For every fixed $0<c\le1/2$, the squared prime-phase transport averaged over ordinates in $(T,2T]$ equals $\frac1{2\pi^2}\log\log\log T+O_c(\sqrt{\log\log\log T\,\log\log\log\log T})$. The corresponding corrected ordinate error is $[2\log\log\log T+O_c(\sqrt{H_1H_2})]/\log^2T$. We establish uniform moving-cutoff consequences, a harmonic cancellation estimate for the bare-clock response, and an arithmetic characteristic profile for the explicitly computable second-clock response over arbitrary prime subsets. The proof is based on corrected-point multiplicity, carefully bounded prime-power truncations, a two-scale aggregated Taylor formula, and deterministic bounds for every nonzero rational frequency. We retain the endpoint $c=1/2$, the full zero multiplicities, and all boundary corrections.
+\end{abstract}
+\maketitle
+\tableofcontents
+\section{Introduction}
+The smooth term in the Riemann--von Mangoldt zero counting formula supplies an explicit increasing clock whose $k$th point is prescribed by the half-integer equation. The true ordinates fluctuate around this clock. Prime sums approximate the fluctuating part of the zero count, but their values at the true ordinates and at clock points are different. The difference is not a negligible formal substitution: moving the argument of a trigonometric polynomial whose largest frequency grows like $\log T$ produces a nonlinear phase response.
+
+The present analysis separates three distinct operations. First, information about primes is evaluated at a true ordinate. Second, the same finite prime-power phase is sampled at a deterministic clock point. Third, a correction formed from that clock value is compared to the ordinate. These operations have different quantitative errors. Their exact relation is given below without assuming the Riemann hypothesis and without requiring monotonicity of the prime-corrected level function.
+
+We use a midpoint clock and all positive ordinates of zeta zeros, counted with multiplicity. In particular $\rho_k=\beta_k+i\gamma_k$ and $0<\beta_k<1$ throughout; no condition $\beta_k=1/2$ enters any of the definitions. Our algebraic lemmas apply even when consecutive ordinates coincide.
+
+A key technical distinction concerns what can be concluded from a second moment. An energy estimate for corrected ordinates gives control of typical displacements; it does not yield a pointwise separation theorem. Likewise the prime-phase characteristic function of an independent model supplies the diagonal of certain polynomial expansions, not automatically the complete deterministic response at the clock. The latter is obtained below through an aggregated finite expansion and off-diagonal bounds uniform in the subsets of primes being tested.
+
+The relevant classical inputs include zero-counting estimates, moments for the argument of zeta and for its increments, and mean-value estimates for Dirichlet polynomials. We retain the parameter restrictions of these results, including the admissible length of every product polynomial and the contribution of the boundary indices. The diagonal of an independent-prime model is transferred to the deterministic clock only after the nonzero frequencies are estimated.
+
+
+\section{Notation and conventions}\label{sec:notation}
+Put
+\begin{equation}\label{eq:N0}
+N_0(t)=\frac{t}{2\pi}\left(\log\frac{t}{2\pi}-1\right)+\frac78,
+\qquad \lamb(t)=N_0'(t)=\frac1{2\pi}\log\frac{t}{2\pi},\qquad
+N_0''(t)=\frac1{2\pi t}.
+\end{equation}
+For sufficiently large indices, $\tau_k$ is the unique solution $N_0(\tau_k)=k-\tfrac12$. Order the positive ordinates $\gamma_k$ of all nontrivial zeros with multiplicity. For $T>0$ let
+\begin{equation}\label{eq:windows}
+\calI=\{k:T<\gamma_k\le 2T\},\quad M_T=\#\calI,
+\quad\av{F}=\frac1{M_T}\sum_{k\in\calI}F_k,\quad \norm{F}=\av{|F|^2}^{1/2}.
+\end{equation}
+We only use $T$ such that $M_T>0$ and all $\tau_k$ with $k\in\calI$ exceed $2\pi$. The strict/weak endpoint convention in \eqref{eq:windows} is used in every sum.
+
+For a real cutoff $X\ge2$, introduce the full Euler phase
+\begin{equation}\label{eq:Sx}
+S_X(t)=-\frac1\pi\sum_{p\le X}\sum_{m\ge1}
+\frac{\sin(mt\log p)}{m p^{m/2}}.
+\end{equation}
+The inner series converges absolutely for each prime, and, since the outer sum is finite, termwise differentiation of any fixed order is legitimate. The first prime harmonic is $a_p\sin(t\log p)$ with $a_p=-1/(\pi\sqrt p)$. Define
+\begin{equation}\label{eq:defs}
+\begin{aligned}
+s_k&=N_0(\tau_k)-N_0(\gamma_k),
+&u_k(X)&=s_k-S_X(\gamma_k),\\
+\mathfrak t_k(X)&=S_X(\gamma_k)-S_X(\tau_k),
+&\tau_k^X&=\tau_k-\frac{S_X(\tau_k)}{\lamb(\tau_k)},\\
+r_k(X)&=\lamb(\tau_k)(\tau_k^X-\gamma_k),
+&d_k&=\tau_k-\gamma_k.
+\end{aligned}
+\end{equation}
+All sampling points $\tau_k^X$ can be computed from indices and primes alone; the $\gamma_k$ appear only in the analysis of their errors.
+
+\begin{longtable}{p{0.19\linewidth}p{0.75\linewidth}}
+\toprule Symbol & Meaning and dependence\\\midrule\endfirsthead
+\toprule Symbol & Meaning and dependence\\\midrule\endhead
+$\rho_k,\beta_k,\gamma_k$ & Actual zero, real part, and positive ordinate; zeros counted with multiplicity.\\
+$N_0,\lamb$ & Smooth count and its derivative; $\lamb(t)>0$ for $t>2\pi$.\\
+$\tau_k$ & Midpoint clock, $N_0(\tau_k)=k-1/2$.\\
+$T,\calI,M_T$ & Dyadic height, index window, exact cardinality.\\
+$\langle\cdot\rangle_T,\|\cdot\|_{2,T}$ & Normalized average and its quadratic norm on $\calI$.\\
+$X,Y$ & Finite prime cutoffs, potentially depending on $T$.\\
+$S_X,a_p$ & Prime-power Euler phase and first-prime coefficient.\\
+$s,u,\mathfrak t,r,d$ & Ordinal defect, prime residual, phase transport, normalized corrected error, bare-clock displacement.\\
+$W_{X,Y}$ & Difference $S_X-S_Y$ between two finite cutoff phases.\\
+$H_0,H_1,H_2$ & $\log\log T$, $\log H_0$, and $\log H_1$, defined for sufficiently large $T$.\\
+$\omega,\theta,L$ & Auxiliary scale, cutoff exponent, and prime-band energy; explicitly defined where used.\\
+$\mathcal J,\mu(\mathcal J)$ & A set of primes and its harmonic mass $\sum_{p\in\mathcal J}p^{-1}$.\\
+$\mathcal R_p^\tau$ & Response coefficient of the clock sampled against the ordinal defect.\\
+$\mathcal B_p$ & Response coefficient of an explicitly constructed phase difference.\\
+$\Phi_T(p)$ & Characteristic factor of an independent-prime model, not a deterministic correlation by definition.\\
+$u$ & Real Fourier frequency; $u=\log x$ in spectral prime-counting formulae.\\
+$x_k^{(1)},e_{1,k}$ & First arithmetic correction at cutoff $X_1$, and its difference from the true ordinate.\\
+$Z,X_1,Y,X_2$ & Two low-prime cutoffs, intermediate moving cutoff, and the second-clock cutoff.\\
+$P_0,P_1,P_2,E_1$ & Finite prime-power decomposition and residual tail of the first correction.\\
+$Q,Q^\flat,J_0,J_1$ & Second prime phase, its truncated polynomial, and the two Taylor orders.\\
+$V_0,\theta_p$ & Variance scale of the prime phase, and moving-prime exponent $\log p/\log T$.\\
+$\eps$ & Arbitrary strictly positive constant; its implicit-constant dependence must be tracked.\\
+\bottomrule
+\end{longtable}
+
+
+\section{Published analytic inputs and their domains}\label{sec:inputs}
+The following established external results enter the proofs below,
+with the domains in which they are applied.
+The Riemann--von Mangoldt formula for the full zero count is used
+with the right-continuous convention at ordinates and with its smooth
+remainder bounded by $O(t^{-1})$; the derivation of the cubic identity
+itself is independent of the zeta function.
+
+For the continuous prime approximation we use the fixed-order
+Selberg--Fujii remainder estimate at $H=T$, with $a_2=1/5$ and
+$k=2$ for the fourth moment, and at any fixed higher integer
+$k$ used in a moment lemma.  The parameters remain in the original
+range $T^{1/2+a_2}\le H\le T$, and no unbounded displacement
+is inserted into Fujii's increment theorem.  The corrections
+published in \cite{Fujii1981} are distinguished from the
+continuous prime approximation employed here.
+
+For a Dirichlet polynomial of length $R$, the Montgomery--Vaughan
+mean-value theorem is used in the form \eqref{eq:MVinput}; for its
+powers the applicable length is the product length, explicitly
+tracked in \cref{lem:bandmom,lem:higherordinal,lem:polysampling,lem:aggerrors,lem:aggoffdiag}.  Kusmin--Landau is applied only when
+the discrete phase derivative stays away from an integer; near the
+product resonance we use the second-derivative test instead.
+Hoeffding's inequality applies to the independent-prime model,
+not by itself to a deterministic mean on the clock.  That transfer
+is proved using the clock exponential-sum estimate.
+The Hardy--Littlewood maximal-function theorem and its Sobolev
+version \cite{Stein1970,Kinnunen1997} are used with the explicitly compactly supported derivative
+of the prime phase, so that their $L^4$ and $L^8$ hypotheses are met.
+
+The Gram-point moments of Korolev concern a distinct sampling system
+and are not silently substituted for moments over the true-ordinate
+window.  Similarly, the finite Euler-product construction in
+\cite{Gonek2012} does not identify synthetic zeros with the
+zeros of $\zeta$; it is pertinent as an independent analytic
+Euler-product model, not as a spectral identification theorem.
+
+
+\section{Exact accounting at finite height}\label{sec:exact}
+\begin{lemma}[Taylor remainder with the true index window]\label{lem:taylor}
+Suppose that $\gamma_k$ and $\tau_k$ belong to $[T/2,3T]$ for $k\in\calI$, with $T>4\pi$. Then
+\begin{equation}\label{eq:taylore}
+s_k=\lamb(\tau_k)d_k+e_k,\qquad
+|e_k|\le\frac{d_k^2}{2\pi T}.
+\end{equation}
+Consequently, for every finite cutoff $X\ge2$,
+\begin{equation}\label{eq:exact_r}
+r_k(X)=u_k(X)+\mathfrak t_k(X)-e_k.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Taylor's integral formula gives
+$N_0(\gamma_k)=N_0(\tau_k)+N_0'(\tau_k)(\gamma_k-\tau_k)
++\int_{\tau_k}^{\gamma_k}(\gamma_k-v)N_0''(v)\,dv$.
+Since $|N_0''(v)|\le1/(\pi T)$ on $[T/2,3T]$, the integral has absolute value at most $d_k^2/(2\pi T)$. Subtracting this identity from $N_0(\tau_k)$ proves the first assertion. By definition,
+$r_k=\lamb(\tau_k)d_k-S_X(\tau_k)$, while
+$u_k+\mathfrak t_k=s_k-S_X(\tau_k)$. This proves \eqref{eq:exact_r}.
+\end{proof}
+
+\begin{theorem}[Exact finite-height comparison]\label{thm:finite}
+Under the assumptions of \cref{lem:taylor}, define $D_T=\max_{k\in\calI}|d_k|$. Then, for all finite cutoffs $X$, including a cutoff depending on $T$,
+\begin{equation}\label{eq:norm_cmp}
+\left|\norm{r(X)}-\norm{\mathfrak t(X)}\right|
+\le\norm{u(X)}+\frac{D_T^2}{2\pi T},
+\end{equation}
+and
+\begin{equation}\label{eq:square_cmp}
+\left|\av{r(X)^2}-\av{\mathfrak t(X)^2}\right|
+\le A_T(X)\bigl(2\norm{\mathfrak t(X)}+A_T(X)\bigr),
+\quad A_T(X)=\norm{u(X)}+\frac{D_T^2}{2\pi T}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Take the $\ell^2(\calI)$ norm of \eqref{eq:exact_r}. The reverse triangle inequality bounds the difference of the two norms by $\norm{u-e}$, which is no greater than $A_T(X)$. For nonnegative numbers $a,b$, $|a^2-b^2|\le|a-b|(2b+|a-b|)$; apply this with the two norms.
+\end{proof}
+
+\begin{remark}[The position of the endpoints]
+The window is defined by actual ordinates, not by $\tau_k$ or $\tau_k^X$. No replacement of $\{T<\gamma_k\le2T\}$ by $\{T<\tau_k\le2T\}$ is used in \cref{thm:finite}. Such a replacement, when necessary for a mean-value theorem, requires a separate bound for the indices in the symmetric difference. Merely knowing $|\tau_k-\gamma_k|\ll1$ does not make the boundary sets identical.
+\end{remark}
+
+
+\section{An exact cubic identity for the ordinal discrepancy}\label{sec:cubic}
+The geometry of the counting function provides an exact identity which does
+not require the phase-corrected count to be increasing.  The treatment of
+multiple zeros is essential: replacing the full index set by distinct
+ordinates changes the jump polynomials.
+
+\begin{theorem}[Cubic counting identity]\label{thm:cubic}
+Let $N(t)$ be a right-continuous integer-valued step function, with
+locally finite jumps of positive integral multiplicity and indices
+$k=1,2,\ldots$ attached in their natural order.  Let $F\in C^1[a,b]$,
+where $a<b$, and let $\Gamma$ be the list of ordinates in $(a,b]$,
+with multiplicity.  Put $G=N-F$ and $v_k=k-\tfrac12-F(\gamma_k)$.
+Then, exactly,
+\begin{equation}\label{eq:cubic}
+\sum_{a<\gamma_k\le b}v_k^2
+ =\int_a^b G(t)^2F'(t)\,dt
+ +\frac{G(b)^3-G(a)^3}{3}-\frac{N(b)-N(a)}{12}.
+\end{equation}
+The identity holds with arbitrary jumps at either endpoint under the
+right-continuous convention, and it does not require $F'\ge0$.
+\end{theorem}
+\begin{proof}
+On an open interval containing no jump, $G'=-F'$ and hence
+$(G^3)'=-3G^2F'$.  Consider a jump of size $m$ at $t_0$, and write
+$g=G(t_0-)$.  The indices at this jump are
+$N(t_0-)+1,\dots,N(t_0-)+m$; their discrepancies are
+$g+j-\tfrac12$ ($1\le j\le m$).  Partition $[g,g+m]$ into its
+unit subintervals.  The elementary identity
+\[
+\int_{j-1/2}^{j+1/2}z^2\,dz=j^2+\frac1{12}
+\]
+(valid after translating the integration variable) yields
+\[
+\frac{(g+m)^3-g^3}{3}
+ =\sum_{j=1}^m(g+j-\tfrac12)^2+\frac{m}{12}.
+\]
+Summing the ordinary fundamental theorem of calculus between jumps
+and this identity across every jump in $(a,b]$ gives
+\[
+G(b)^3-G(a)^3=-3\int_a^bG(t)^2F'(t)\,dt
+ +3\sum_{a<\gamma_k\le b}v_k^2+\frac{N(b)-N(a)}4.
+\]
+This rearranges to \eqref{eq:cubic}.  All operations involve finitely
+many jumps and integrals of bounded regulated functions on a compact
+interval, so no interchange of limiting operations is involved.
+\end{proof}
+
+\begin{corollary}[The prime-corrected ordinal discrepancy]\label{cor:cubicprime}
+Let $N(t)$ count all nontrivial zeta zeros with $0<\Im\rho\le t$,
+with multiplicity, and set $F=N_0+S_X$.  With
+$G_X=N-N_0-S_X$ and the conventions of \eqref{eq:windows},
+\begin{equation}\label{eq:exactdefect}
+M_T\av{u_k(X)^2}
+ =\int_T^{2T}G_X(t)^2[\Lambda(t)+S'_X(t)]\,dt
+ +\frac{G_X(2T)^3-G_X(T)^3}{3}-\frac{M_T}{12}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+For each index $k$ one has
+$v_k=k-\tfrac12-[N_0(\gamma_k)+S_X(\gamma_k)]=u_k(X)$.
+Apply \cref{thm:cubic} on $(T,2T]$.  In particular a zero at $T$
+is excluded and a zero at $2T$ is included, with its full multiplicity.
+\end{proof}
+
+
+\section{Continuous moments of prime phases}\label{sec:continuous}
+Here and below an invocation of a published analytic theorem is distinguished
+from its algebraic consequences.  The following form of the Montgomery--Vaughan
+mean-value estimate is sufficient for our polynomial calculations:
+for $A(t)=\sum_{n\le R}a_n n^{-it}$ and an interval $I$ of length $H$,
+\begin{equation}\label{eq:MVinput}
+\int_I|A(t)|^2dt=H\sum_{n\le R}|a_n|^2
+ +O\left(\sum_{n\le R}n|a_n|^2\right).
+\end{equation}
+Its implied constant is absolute and its application to a product polynomial
+requires using the \emph{length of that product}, not the length of either
+factor.  For the prime reciprocal sum we use
+$\sum_{p\le y}p^{-1}=\log\log y+B_1+O(1/\log y)$ for $y\ge3$.
+
+\begin{lemma}[Prime-band moments]\label{lem:bandmom}
+Let $2\le A\le B\le T^{1/2}$. Define
+\[
+P_{A,B}(t)=\sum_{A<p\le B}a_p\sin(t\log p),\qquad
+V(A,B)=\sum_{A<p\le B}p^{-1}.
+\]
+Uniformly in this range,
+\begin{align}
+\int_T^{2T}P_{A,B}(t)^2dt
+ &=\frac{T}{2\pi^2}V(A,B)+O(T^{1/2}+1),\label{eq:band2}\\
+\int_T^{2T}|P_{A,B}(t)|^4dt
+ &\ll T(1+V(A,B))^2.\label{eq:band4}
+\end{align}
+For the full prime-power phase and the same range of $B$,
+\begin{equation}\label{eq:derivativeL2}
+\int_T^{2T}|S'_B(t)|^2dt\ll T(1+\log B)^2.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Put $D(t)=\sum_{A<p\le B}p^{-1/2-it}$.  The square of its imaginary
+part equals $(|D|^2-\Re D^2)/2$.  Apply \eqref{eq:MVinput} to
+$|D|^2$; the error is at most $\sum_{p\le B}p p^{-1}\le B$.
+For the nonconjugated term, integrate each $(pq)^{-it}$ explicitly:
+$|\int_T^{2T}(pq)^{-it}dt|\le2/\log4$.  Its total is at most
+$C(\sum_{p\le B}p^{-1/2})^2\ll B$, using
+$\sum_{n\le B}n^{-1/2}\ll\sqrt B$.  Hence the error in
+\eqref{eq:band2} is $O(B)\subseteq O(T^{1/2})$.
+
+For the fourth power use $|P_{A,B}|\le|D|/\pi$ and write
+$D^2=\sum_{n\le B^2}b_nn^{-it}$.  By unique factorization,
+$b_{p^2}=p^{-1}$ and $b_{pq}=2(pq)^{-1/2}$ when $p<q$.
+Thus $\sum_n|b_n|^2\le2V(A,B)^2+\sum_pp^{-2}$.
+As $B^2\le T$, the error $\sum nn|b_n|^2$ in
+\eqref{eq:MVinput} is at most $T\sum|b_n|^2$.
+This gives \eqref{eq:band4}.  For \eqref{eq:derivativeL2},
+write the derivative as the sum of the first harmonic,
+the squares, and all $m\ge3$ harmonics.  The latter series
+is uniformly bounded because
+$\sum_p\sum_{m\ge3}(\log p)p^{-m/2}<\infty$.
+The first harmonic has coefficients $(\log p)/(\pi\sqrt p)$,
+so \eqref{eq:MVinput}, partial summation and
+$\sum_{p\le y}(\log p)/p=\log y+O(1)$ give
+$O(T(1+\log B)^2)$.  The squares have coefficients
+$(\log p)/(\pi p)$ and make a smaller contribution, including
+the finite-length mean-value error.  Summing the three estimates
+proves the lemma.
+\end{proof}
+
+\begin{lemma}[Moments of the unselected prime powers]\label{lem:primepowers}
+For $B\le T^{1/2}$, write
+$S_B=S_B^{\rm pr}+S_B^{\rm pp}$, where $S_B^{\rm pr}$ is the
+first-harmonic sum.  On $[T,2T]$ one has
+\begin{equation}\label{eq:pp2}
+\int_T^{2T}|S_B^{\rm pp}(t)|^2dt\ll T,
+\qquad \int_T^{2T}|S_B^{\rm pp}(t)|^4dt\ll T.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The $m\ge3$ subseries is uniformly bounded.  The $m=2$ portion is
+\[
+-\frac1{2\pi}\Im\sum_{p\le B}p^{-1-2it}.
+\]
+Its second moment follows from \eqref{eq:MVinput} and the square
+coefficients.  To estimate its fourth moment, square the polynomial.
+The resulting frequencies are $(pq)^2$, with coefficient-square sum
+bounded by a constant multiple of $(\sum_pp^{-2})^2$.
+The mean-value error is bounded by
+\[
+C\sum_{p,q\le B}(pq)^2(pq)^{-2}
+\ll B^2\le T.
+\]
+The uniform tail adds $O(T)$ to both bounds.
+\end{proof}
+
+
+\section{The ordinal prime-information threshold}\label{sec:threshold}
+The analytical input needed in this section is a bounded fourth moment
+of the remainder in the Selberg approximation, in the precise fixed-order,
+continuous-height form stated next.  The reference to Fujii is to a
+\emph{published} theorem, not to another manuscript of the author.
+
+\begin{theorem}[Published Selberg--Fujii approximation, fixed fourth moment]
+\label{thm:selberginput}
+For $Y_0=T^{1/160}$ and sufficiently large $T$,
+\begin{equation}\label{eq:selberginput}
+\int_T^{2T}\left|S(t)+\frac1\pi\sum_{p\le Y_0}
+\frac{\sin(t\log p)}{\sqrt p}\right|^4dt\ll T.
+\end{equation}
+Here $S(t)=\pi^{-1}\arg\zeta(\frac12+it)$ is defined on
+zero-free heights by continuous variation from $2$ and at ordinates
+by the right-continuous limit for $N(t)$; the symmetric convention
+is used only inside integrals where endpoint values are irrelevant.  This is the fixed-order
+$k=2$, $H=T$, $a_2=1/5$ instance of the error estimates
+on pp.~232--233 of Fujii's 1974 paper, including the harmless
+lengthening of its prime cutoff from $T^{1/200}$ to $T^{1/160}$.
+\end{theorem}
+
+\begin{lemma}[Extension of the fixed-order prime remainder]\label{lem:approxextension}
+Under \cref{thm:selberginput}, uniformly for $2\le X\le T^{1/2}$,
+with $c=\log X/\log T$ and $V=\sum_{\min(X,Y_0)<p\le\max(X,Y_0)}1/p$,
+\begin{align}
+\int_T^{2T}|S(t)-S_X(t)|^2dt
+ &=\frac{T}{2\pi^2}V+O(T(1+\sqrt V)),\label{eq:EX2}\\
+\int_T^{2T}|S(t)-S_X(t)|^4dt
+ &\ll T(1+V)^2,\label{eq:EX4}\\
+V&=\log(1/c)+O(1).\label{eq:Vsize}
+\end{align}
+The constants are absolute.
+\end{lemma}
+\begin{proof}
+Write $S-S_X=E_0+W+P$, where $E_0$ is the remainder
+in \eqref{eq:selberginput}, $W$ is the signed first-harmonic
+prime band between $X$ and $Y_0$, and $P$ is a signed combination
+of prime powers beyond first harmonics.  The latter has
+uniformly bounded second and fourth moments by
+\cref{lem:primepowers}; the $E_0$ second and fourth moments
+are $O(T)$ by \eqref{eq:selberginput} and Holder.
+\cref{lem:bandmom} gives $\int W^2=T V/(2\pi^2)+O(T^{1/2})$
+and $\int W^4\ll T(1+V)^2$.  The cross term
+$\int W(E_0+P)$ is $O(T\sqrt V+T)$ by Cauchy--Schwarz,
+proving \eqref{eq:EX2}.  The elementary estimate
+$|z_1+z_2+z_3|^4\le27\sum|z_i|^4$ proves
+\eqref{eq:EX4}.
+
+To see \eqref{eq:Vsize}, use the reciprocal-prime asymptotic
+at the two endpoints.  If $X\le Y_0$, then
+$V=\log\log Y_0-\log\log X+O(1)
+ =\log(1/c)+\log(1/160)+O(1)$.
+If $X>Y_0$, then $V\ll\log(80)+O(1)$, and
+$\log(1/c)$ is bounded in that regime.
+All statements are uniform, including the empty band and $X=Y_0$.
+\end{proof}
+
+\begin{theorem}[Unconditional mean-square ordinal prime defect]
+\label{thm:primedefect}
+There are absolute constants $C,T_0$ such that, for $T\ge T_0$
+and $2\le X\le T^{1/2}$, with $c=(\log X)/(\log T)$,
+\begin{equation}\label{eq:primedefect}
+\left|\av{u_k(X)^2}-\frac1{2\pi^2}\log\frac1c\right|
+ \le C\left(1+\sqrt{\log(1/c)}\right).
+\end{equation}
+The range includes $c=\frac12$ and the lower endpoint $X=2$;
+the constants are uniform in $c$ in this entire interval.
+\end{theorem}
+\begin{proof}
+We start from the exact identity \eqref{eq:exactdefect}.
+The Riemann--von Mangoldt formula in the present normalization is
+$N(t)=N_0(t)+S(t)+R(t)$, with $R(t)=O(1/t)$ at non-ordinate heights
+(at an ordinate this is understood with the right-limit definition of $S$).
+Write $E_X=S-S_X$.  The integrals in \eqref{eq:exactdefect}
+are absolutely convergent over the finite interval, and
+$G_X=E_X+R$.  By the classical bounds $S(t)=O(\log t)$ and
+$\sum_{p\le X}p^{-1/2}\ll\sqrt X$, one has, uniformly
+for $t\in[T,2T]$, $|G_X(t)|\ll\log T+\sqrt X\ll T^{1/4}$
+for all sufficiently large $T$ (increasing the absolute constant
+if necessary).  Consequently the cubic endpoint term is
+$O(T^{3/4})$.  This argument includes heights where $N$ jumps;
+we evaluate $N$ by its right limit, without shifting endpoints.
+
+The contribution from replacing $G_X^2$ by $E_X^2$ in the integral
+is bounded by
+\[
+O\left(T^{-1}\int_T^{2T}(|E_X|+1)(\Lambda+|S'_X|)dt\right).
+\]
+Cauchy--Schwarz, \eqref{eq:EX2} and \eqref{eq:derivativeL2}
+give $O((1+V)^{1/2}\log T+\log T)$, a negligible term
+once divided by $M_T\asymp T\log T$.
+
+For the main integral, $\Lambda(t)=\Lambda(T)+O(1)$ for
+$t\in[T,2T]$.  Hence, by \eqref{eq:EX2},
+\begin{equation}\label{eq:thresholdmain}
+\int_T^{2T}E_X(t)^2\Lambda(t)dt
+=\frac{T\Lambda(T)}{2\pi^2}V
+ +O(T\log T(1+\sqrt V)+T(1+V)).
+\end{equation}
+The derivative term is estimated by Cauchy--Schwarz:
+\[
+\left|\int_T^{2T}E_X(t)^2S'_X(t)dt\right|
+\le\left(\int_T^{2T}E_X^4\right)^{1/2}
+\left(\int_T^{2T}(S'_X)^2\right)^{1/2}
+\ll T(1+V)(1+\log X).
+\]
+The Riemann--von Mangoldt count gives
+$M_T=T\Lambda(T)+O(T)$.
+Divide \eqref{eq:exactdefect} by $M_T$ and use these bounds.
+The error is
+\[
+O\left(1+\sqrt V+\frac{1+V}{\log T}+(1+V)c
+ +\frac{T^{-1/4}}{\log T}\right).
+\]
+Since $V\ll1+\log(1/c)$ and
+$\sup_{0<c\le1/2}c\log(1/c)<\infty$,
+this is $O(1+\sqrt{\log(1/c)})$ uniformly.
+Finally replace $V$ by $\log(1/c)+O(1)$ using
+\eqref{eq:Vsize}.  This completes the proof.
+\end{proof}
+
+
+
+\section{Clock exponential sums and endpoint orthogonality}\label{sec:clockorth}
+For this section $T$ is sufficiently large, the indices are those of
+\eqref{eq:windows}, and the inverse $x\mapsto\tau_x$ is defined by
+$N_0(\tau_x)=x-\tfrac12$.  The half-integer convention fixes every phase.
+
+\begin{lemma}[Kusmin--Landau sum on the exact ordinal interval]
+\label{lem:klclock}
+If $0<|w|\le\tfrac34\log T$, then for every consecutive subinterval
+$J\subset\mathcal I_T$,
+\begin{equation}\label{eq:klclock}
+\left|\sum_{k\in J}e^{iw\tau_k}\right|
+ \ll1+\frac{\log T}{|w|}.
+\end{equation}
+More generally, if the complex weights $z_k$ have supremum norm $A_0$
+and total variation $A_1$, the weighted sum is bounded by
+$O((A_0+A_1)(1+\log T/|w|))$.
+\end{lemma}
+\begin{proof}
+The derivative of $f(x)=w\tau_x/(2\pi)$ is
+$f'(x)=w/\log(\tau_x/(2\pi))$.  On the relevant interval,
+$\tau_x\in[T-O(1),2T+O(1)]$, so $|f'|\le0.8$ for large $T$;
+$f'$ is monotone, and its distance from the closest integer is at least
+$\min(|w|/\log(3T),1/5)$.
+The Kusmin--Landau first-derivative estimate for exponential sums
+therefore bounds all consecutive partial sums by
+$O(1+\log T/|w|)$.  Abel summation proves the weighted assertion,
+including weights that vary with the index.  The definition
+$(T,2T]$ makes the sampled indices consecutive even if an endpoint
+is a multiple ordinate.
+\end{proof}
+
+\begin{lemma}[Almost orthogonal first prime harmonics]\label{lem:orthprimes}
+For $0<b\le\tfrac12$ let
+$v_p(k)=\sqrt{2/M_T}\sin(\tau_k\log p)$ for primes $p\le T^b$,
+and let $G=(\sum_kv_p(k)v_q(k))_{p,q}$.  Then
+\begin{equation}\label{eq:orthprimes}
+\|G-I\|_{\mathrm{op}}
+ \ll T^{b-1}\log T+\frac1{\log T}.
+\end{equation}
+The estimate remains valid for every subset of those primes, with the
+same absolute implicit constant, including the endpoint $b=1/2$.
+\end{lemma}
+\begin{proof}
+Set $C_T(y)=M_T^{-1}\sum_{k\in\mathcal I_T}e^{i\tau_k\log y}$.
+By the product identity for sines,
+$G_{pq}=\Re C_T(p/q)-\Re C_T(pq)$.  For $p\ne q$, the first
+factor satisfies
+\[
+|C_T(p/q)|\ll\frac{\max(p,q)}{T|p-q|}
+\]
+by \cref{lem:klclock} and $M_T\asymp T\log T$.
+The sum of the absolute entries of any row off the diagonal is
+$O(T^{b-1}\log T)$; Schur's test gives the corresponding
+operator-norm bound.
+
+The product terms $C_T(pq)$ require separate treatment near the
+integer derivative $f'=1$; applying the first-derivative test there
+would be invalid.  Put $n=pq\le T$.  If $n\le T^{3/4}$,
+\cref{lem:klclock} gives $C_T(n)\ll T^{-1}$.  If
+$T^{3/4}<n\le T/\log T$, then
+\[
+\frac12\le\frac{\log n}{\log(\tau_x/2\pi)}
+ \le 1-\frac{\log\log T}{2\log T}
+\]
+for $T$ large, so the first-derivative estimate still gives
+$C_T(n)\ll T^{-1}$.  In the remaining range
+$T/\log T<n\le T$, the second derivative of
+$f(x)=\tau_x\log n/(2\pi)$ has absolute size
+$\asymp1/(T\log^2T)$ and bounded ratio of its maximum to minimum.
+Van der Corput's second-derivative estimate yields
+$|\sum_{k\in\mathcal I_T}e^{i\tau_k\log n}|
+\ll\sqrt T\log T$, whence $C_T(n)\ll T^{-1/2}$.
+Every product in this exceptional last range has
+$p,q>\sqrt T/\log T$ because $p,q\le\sqrt T$.
+The number of such pairs is $O(T/\log^2T)$, using the usual
+upper bound for $\pi(\sqrt T)$.  Consequently the Hilbert--Schmidt
+norm of the product matrix satisfies
+\[
+\sum_{p,q\le T^b}|C_T(pq)|^2
+ \ll \frac{T}{T^2}+\frac{T}{\log^2T}\frac1T
+ \ll(\log T)^{-2}.
+\]
+The operator norm is at most its Hilbert--Schmidt norm.  Combining
+with the quotient matrix proves \eqref{eq:orthprimes}.
+\end{proof}
+
+\begin{corollary}[Harmonic mass on arbitrary bands]
+\label{cor:massbands}
+For every prime subset $\mathcal J\subseteq\{p:p\le T^{1/2}\}$,
+\begin{equation}\label{eq:massbands}
+\av{W_{\mathcal J}(\tau_k)^2}
+=\frac1{2\pi^2}\sum_{p\in\mathcal J}\frac1p
+ \left(1+O((\log T)^{-1})\right).
+\end{equation}
+The error is interpreted as zero if $\mathcal J$ is empty.
+\end{corollary}
+\begin{proof}
+Use the Gram matrix of \cref{lem:orthprimes} and the coefficient
+vector $a_p=-1/(\pi\sqrt p)$ supported on $\mathcal J$.
+The scalar quadratic form differs from its identity-matrix value by
+at most the operator norm times the coefficient-square sum.
+\end{proof}
+
+
+\section{Sampling of corrected points}\label{sec:sampling}
+The first correction changes the sampling set and can produce
+multiple points in a short interval, although the original clock is
+separated.  The relevant multiplicity is quadratic, not merely the
+maximum number of points in a cell.
+
+\begin{lemma}[Finite-point sampling inequality]\label{lem:abstractsampling}
+Let $y_1,\ldots,y_M$ be real points, $b>0$, and
+$n_b(t)=\#\{j:t-b\le y_j\le t\}$.  For every absolutely
+continuous nonnegative function $F$ on an interval containing
+all $[y_j,y_j+b]$,
+\begin{equation}\label{eq:abssampling}
+\sum_{j=1}^MF(y_j)
+\le\frac{\|n_b\|_2}{b}
+\left(\|F\|_2+b\|F'\|_2\right),
+\end{equation}
+where all $L^2$ norms on the right are over that interval.
+\end{lemma}
+\begin{proof}
+For every $z\in[y_j,y_j+b]$, absolute continuity gives
+$F(y_j)\le F(z)+\int_{y_j}^{y_j+b}|F'(v)|dv$.
+Average over $z$ and sum over $j$.  The first contribution is
+$b^{-1}\int n_b(z)F(z)dz$; the second is bounded by
+$\int n_b(z)|F'(z)|dz$.  Apply Cauchy--Schwarz to both
+integrals.  The definition of $n_b$ makes this estimate exact,
+regardless of coincidence among the points.
+\end{proof}
+
+\begin{lemma}[Moment sampling with an additive error]\label{lem:polysampling}
+Let $f$ be a real trigonometric polynomial supported on prime powers
+$n=p^m\le R$, with no constant term, and coefficients $f_n$.
+Define
+$\|f\|_1=\sum_n|f_n|$ (counting the sine and cosine coefficients),
+and
+\[
+\sigma_f^2=\sum_p\left(\sum_{p^m\le R}|f_{p^m}|\right)^2.
+\]
+Let $q\in\{1,2,3,4\}$, let $y_k\in[T-T^{1/2},2T+T^{1/2}]$,
+and suppose that, for $b=2\pi/\log(3T)$,
+\begin{equation}\label{eq:samplingconditions}
+\int_{\mathbb R}n_b(t)^2dt\le\varkappa bM_T,
+\qquad (2\|f\|_1)^{4q}R^{8q}\le T^{1/2},
+\end{equation}
+where $\varkappa\ge1$.  Then
+\begin{equation}\label{eq:polysampling}
+\av{|f(y_k)|^{2q}}
+\ll_q\varkappa^{1/2}(1+b\log R)
+\left(\sigma_f^{2q}+T^{-1/4}\right).
+\end{equation}
+The additive $T^{-1/4}$ term cannot be absorbed into
+$\sigma_f^{2q}$ without a lower bound for that variance.
+\end{lemma}
+\begin{proof}
+Let $F=f^{2q}$.  Apply \cref{lem:abstractsampling} on
+$J=[T-2T^{1/2},2T+2T^{1/2}]$.
+In the independent-prime model, the contributions of distinct primes
+are independent, centered and bounded by their coefficient sums;
+Hoeffding's inequality, integrated against $2qz^{2q-1}dz$,
+gives $\mathbb E|f|^{4q}\ll_q\sigma_f^{4q}$.
+The rational trigonometric polynomial $f^{4q}$ has height at most
+$R^{4q}$ and coefficient norm at most $(2\|f\|_1)^{4q}$.
+For a nonzero rational frequency $\log(a/b)$ with $a,b\le R^{4q}$,
+$|\int_Je^{it\log(a/b)}dt|\le2R^{4q}$.
+The model zero-frequency term is its expectation by unique
+factorization.  Therefore
+\[
+\frac1{|J|}\int_J|f|^{4q}dt
+\ll_q\sigma_f^{4q}+\Delta_f,
+\qquad \Delta_f=\frac{(2\|f\|_1)^{4q}R^{4q}}T.
+\]
+The same argument for $f'$ gives the bound with an additional
+$(\log R)^{4q}$, since differentiation multiplies each coefficient
+by at most $\log R$.  Holder's inequality applied to
+$F'=2q f^{2q-1}f'$ now yields
+$\|F\|_2+b\|F'\|_2
+\ll_q\sqrt{|J|}(1+b\log R)(\sigma_f^{4q}+\Delta_f)^{1/2}$.
+Use $|J|\asymp bM_T\asymp T$ in \eqref{eq:abssampling}.
+Finally the second hypothesis of \eqref{eq:samplingconditions}
+shows $\Delta_f\le T^{-1/2}$, proving \eqref{eq:polysampling}.
+\end{proof}
+
+
+\begin{lemma}[Maximal derivatives at deformed sampling points]
+\label{lem:maxsample}
+Let $f$ be a real, finite prime-power polynomial with frequencies
+at most $\log R$, whose eighth-power product length and coefficient
+norm satisfy the mean-value condition of
+\cref{lem:polysampling} with $q=2$. Let $\varphi$ be supported in
+$[T-3T^{1/2},2T+3T^{1/2}]$, equal to one on
+$[T-2T^{1/2},2T+2T^{1/2}]$, with derivatives bounded
+by absolute constants. Set $g=\mathcal M(\varphi f)$, where
+$\mathcal M$ is the centered Hardy--Littlewood maximal operator.
+Suppose the points $y_k$ have the multiplicity bound
+$\int n_b^2\le CbM_T$ and lie in the inner interval. Then
+\begin{equation}\label{eq:maxsample}
+\bigl\langle |g(y_k)|^4\bigr\rangle_T^{1/4}
+\ll_C (1+b\log R)\left(\sigma_f+T^{-1/16}\right),
+\end{equation}
+where $\sigma_f$ is the prime-group coefficient variance proxy
+of \cref{lem:polysampling}.  This applies with
+$f=(Q^\flat)'$ and gives
+\begin{equation}\label{eq:sampleQprime}
+\bigl\langle|\mathcal M(\varphi(Q^\flat)')(y_k)|^4
+\bigr\rangle_T^{1/4}\ll 1+\log X_2.
+\end{equation}
+\end{lemma}
+\begin{proof}
+By the strong $L^8$ bound for the maximal operator and the
+Sobolev maximal theorem (in the form $|g'|\le
+\mathcal M((\varphi f)')$ a.e.),
+\begin{equation}\label{eq:g8}
+\|g\|_{L^8}\ll\|\varphi f\|_{L^8},\qquad
+\|g'\|_{L^8}\ll\|(\varphi f)'\|_{L^8}.
+\end{equation}
+The latter derivative has the terms $\varphi' f$ and
+$\varphi f'$.  Expanding $f^8$ into its finite rational
+frequencies and applying the clock-independent time averaging
+argument in the proof of \cref{lem:polysampling}, with $q=2$,
+gives, on every interval of length comparable to $T$,
+\[
+\int |f(t)|^8dt\ll T(\sigma_f^8+T^{-1/2}),\quad
+\int|f'(t)|^8dt\ll
+T(\log R)^8(\sigma_f^8+T^{-1/2}).
+\]
+The cutoff terms are treated identically by domination and its
+bounded derivatives. Thus
+\[
+\|g\|_{L^8}+b\|g'\|_{L^8}
+\ll T^{1/8}(1+b\log R)
+(\sigma_f+T^{-1/16}).
+\]
+Apply \cref{lem:abstractsampling} to $F=g^4$.
+Since $(g^4)'=4g^3g'$ a.e., H\"older gives
+\[
+\|F\|_2\le\|g\|_8^4,\qquad
+\|F'\|_2\le4\|g\|_8^3\|g'\|_8.
+\]
+The multiplicity factor, divided by $M_T$, is
+$\sqrt{CbM_T}/(bM_T)\asymp T^{-1/2}$, and
+$\|g\|_8^4=O(T^{1/2})$ times the fourth power of the
+coefficient scale. This proves \eqref{eq:maxsample}.
+For $f=(Q^\flat)'$, coefficients on the prime $p$ have size
+$\ll(\log p)/\sqrt p$ and its higher-power companions; hence
+\[
+\sigma_f^2\ll\sum_{p\le X_2}\frac{(\log p)^2}{p}
+\ll(1+\log X_2)^2.
+\]
+The length requirement holds because $R=X_2^2=T^{o(1)}$
+while the eighth product and the coefficient norm are
+$T^{o(1)}$. Moreover $b\log R=O(H_1^{-1/2})$.
+This completes \eqref{eq:sampleQprime}.
+\end{proof}
+
+\begin{lemma}[Quadratic multiplicity for first-step deformations]
+\label{lem:multcorrected}
+Let $X_1=T^{1/\sqrt{H_0}}$, $b=2\pi/\log(3T)$,
+and let $\Pi(t)$ be a finite coefficientwise contraction of the
+full $S_{X_1}(t)$ (including its absolutely convergent prime-power
+tails).  Set
+\[
+y_k=\tau_k-\frac{\Pi(\tau_k)}{\Lambda(\tau_k)},\qquad
+n_b(t)=\#\{k\in\mathcal I_T:t-b\le y_k\le t\}.
+\]
+Then $y_k\in[T-T^{1/2},2T+T^{1/2}]$ and
+\begin{equation}\label{eq:multcorrected}
+\int n_b(t)^2dt\ll bM_T
+\end{equation}
+uniformly in every such contraction, including
+$\Pi=P_0+vP_1$, $\Pi=vP_0$, and
+$\Pi=P_0+P_1+v(P_2+E_1)$, $v\in[0,1]$.
+\end{lemma}
+\begin{proof}
+For $T$ sufficiently large, the crude bound
+$\sup|\Pi|\ll X_1$ gives
+$|y_k-\tau_k|\ll X_1/\log T<T^{1/2}/2$.
+The derivative satisfies
+\begin{equation}\label{eq:PiL2}
+\int_{T-1}^{2T+1}|\Pi'(t)|^2dt
+\ll T(1+\log X_1)^2,
+\end{equation}
+by the same Montgomery--Vaughan calculation as
+\eqref{eq:derivativeL2}, uniformly under coefficient domination.
+The fourth moment at the clock obeys
+\begin{equation}\label{eq:PiL4}
+\av{|\Pi(\tau_k)|^4}\ll(1+H_0)^2.
+\end{equation}
+Indeed, truncate the full phase to prime powers $\le X_1^2$;
+the tail is $O(1/\log X_1)$ uniformly.  The fourth power of the
+remaining polynomial has frequency height $\le X_1^8=T^{8/\sqrt{H_0}}
+=T^{o(1)}$.  Apply \cref{lem:klclock} to all nonzero frequencies
+and identify the diagonal with the independent-prime fourth moment.
+The latter is bounded by the Hoeffding inequality, since
+$\sum_{p\le X_1}p^{-1}\ll H_0$.
+
+We compute the second moment of the multiplicity function exactly:
+\begin{equation}\label{eq:paircount}
+\int n_b(t)^2dt
+=\sum_{j,k\in\mathcal I_T}(b-|y_j-y_k|)_+.
+\end{equation}
+The diagonal and $|j-k|\le1$ pairs contribute at most $3bM_T$.
+Fix $m\ge2$ and a pair $(k,k+m)$ counted in
+\eqref{eq:paircount}.  Since the clock gaps are at least $b$,
+$\tau_{k+m}-\tau_k\ge mb$, and hence the shift
+$h(t)=\Pi(t)/\Lambda(t)$ satisfies
+$|h(\tau_{k+m})-h(\tau_k)|\ge(m-1)b$.
+By the derivative formula for $h$ and $\Lambda'/\Lambda^2
+\ll (T\log^2T)^{-1}$, its contribution involving $\Pi$
+itself is $o((m-1)b)$; thus
+$\int_{\tau_k}^{\tau_{k+m}}|\Pi'(t)|dt\gg(m-1)b\log T$.
+The interval length is at most $mb(1+O(1/\log T))$.
+Cauchy--Schwarz shows that its $L^2$ derivative integral is
+$\gg mb(\log T)^2$ for $m\ge2$.
+The intervals associated to a fixed $m$ overlap at most $m$ times;
+using \eqref{eq:PiL2} gives
+\begin{equation}\label{eq:pairvar}
+\#\{k:|y_{k+m}-y_k|<b\}
+ \ll \frac{T(1+\log X_1)^2}{b(\log T)^2}
+ \ll M_T H_0^{-1}.
+\end{equation}
+Alternatively, at least one of the shifts has magnitude
+$(m-1)b/2$, so the corresponding $|\Pi(\tau)|\gg m-1$.
+Markov's inequality applied to \eqref{eq:PiL4} gives
+\begin{equation}\label{eq:pairsiz}
+\#\{k:|y_{k+m}-y_k|<b\}
+ \ll \frac{M_T(1+H_0)^2}{(m-1)^4}.
+\end{equation}
+Sum the minimum of \eqref{eq:pairvar} and \eqref{eq:pairsiz}
+over $m\ge2$.  Splitting where $m\asymp H_0^{3/4}$,
+this sum is $O(M_TH_0^{-1/4})$.
+Combine with \eqref{eq:paircount} to conclude
+$\int n_b^2\le (3+O(H_0^{-1/4}))bM_T$.
+The argument depends only on coefficientwise bounds, so the constants
+are uniform in the indicated deformation parameters.
+\end{proof}
+
+
+
+\section{The second sampling scale and the residual}\label{sec:second}
+The first corrected point is denoted $x_k^{(1)}$, avoiding the use of
+$\rho_k$ for anything other than a genuine zero.
+For sufficiently large $T$ put
+\begin{equation}\label{eq:scales}
+\begin{gathered}
+H_0=\log\log T,\quad H_1=\log H_0,\quad H_2=\log H_1,\\
+X_1=T^{H_0^{-1/2}},\qquad X_2=T^{H_1^{-1/2}},\\
+x_k^{(1)}=\tau_k-\frac{S_{X_1}(\tau_k)}{\Lambda(\tau_k)}.
+\end{gathered}
+\end{equation}
+The independent arithmetic definition uses no actual ordinate.
+
+\begin{lemma}[Higher fixed moments at actual ordinates]\label{lem:higherordinal}
+For every fixed integer $m\ge1$, provided the prime cutoff
+$X=T^c$ satisfies $c\to0$ and $c\le1/(16m)$, one has
+\begin{equation}\label{eq:higherordinal}
+\av{|s_k-S_X(\gamma_k)|^{2m}}
+ \ll_m\left(1+\log\frac1c\right)^m.
+\end{equation}
+In particular, for $X=X_1$ and all sufficiently large $T$,
+$\|u(X_1)\|_{4,T}\ll\sqrt{H_1}$, whereas
+$\|s\|_{8,T}\ll H_0^{1/2}$.
+\end{lemma}
+\begin{proof}
+Let $B_n(z)$ be the Bernoulli polynomials and set
+$\mathcal P_m(z)=B_{2m+1}(z+\frac12)/(2m+1)$.
+The Bernoulli difference identity
+$B_n(z+1)-B_n(z)=nz^{n-1}$ gives
+\[
+\mathcal P_m(z+r)-\mathcal P_m(z)
+ =\sum_{j=1}^r(z+j-\tfrac12)^{2m}
+\]
+for every positive integer $r$.
+Repeat the proof of \cref{thm:cubic} with $\mathcal P_m(G)$.
+The derivative $\mathcal P_m'(z)$ is an even polynomial of degree
+$2m$, with leading term $z^{2m}$ and lower even powers.
+This gives an exact sum over $(T,2T]$ expressed by integrals of
+$\mathcal P_m'(N-N_0-S_X)(\Lambda+S_X')$ and its endpoints.
+
+At continuous height the published Selberg--Fujii fixed-order
+approximation, applied with order $2m$, bounds the $4m$-th moment
+of $S-S_{Y_{2m}}^{\rm pr}$ by $O_m(T)$ for a sufficiently short
+fixed power $Y_{2m}=T^{a_m}$.
+The remaining first-prime band, up to $X=T^c$, has $4m$-th
+moment $O_m(T(1+\log(1/c))^{2m})$: raise its Dirichlet polynomial
+to power $2m$, apply \eqref{eq:MVinput}, and check that its length
+$X^{2m}\le T^{1/8}$ under the stated restriction.
+The prime powers have bounded fixed moments by absolute convergence
+of all $m\ge3$ harmonics and the same calculation for squares.
+Consequently the continuous $2m$-th and $4m$-th moments of
+$E_X=S-S_X$ are bounded by
+$O_m(T(1+\log(1/c))^m)$ and
+$O_m(T(1+\log(1/c))^{2m})$ respectively.
+
+The derivative term has absolute value at most
+\[
+\left(\int_T^{2T}|E_X|^{4m}dt\right)^{1/2}
+\left(\int_T^{2T}|S_X'|^2dt\right)^{1/2}
+\ll_m T(1+\log(1/c))^m(1+\log X).
+\]
+After dividing by $M_T\asymp T\log T$ this is
+$O_m((1+\log(1/c))^m)$, because $c\le1/(16m)$.
+The lower-degree Bernoulli terms satisfy the same bound.
+The endpoint polynomial has degree $2m+1$ and, by
+$|N-N_0-S_X|\ll\log T+\sqrt X$, contributes
+$O_m((\log T+\sqrt X)^{2m+1})$; since
+$c(2m+1)/2<1$, it is $o(M_T)$ times any positive fixed
+power of $\log\log T$.  The smooth Riemann--von Mangoldt
+remainder is handled as in \cref{thm:primedefect}.
+This proves \eqref{eq:higherordinal}.
+For $s$, repeat the same argument with $F=N_0$ and the standard
+continuous $8$-th moment of $S(t)$, obtaining
+$\av{|s|^8}\ll H_0^4$.
+\end{proof}
+
+\begin{lemma}[The short first transport]\label{lem:shorttransport}
+For $2\le X\le T^{1/2}$,
+\begin{equation}\label{eq:shorttransport}
+\left\|S_X(\gamma_k)-S_X(\tau_k)\right\|_{2,T}
+ \ll\sqrt{H_0}\,\frac{1+\log X}{\log T}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The clock displacement satisfies
+$\|\gamma-\tau\|_{4,T}\ll\sqrt{H_0}/\log T$
+by the fourth-moment case of \cref{lem:higherordinal} at $X=2$
+and Taylor's formula for $N_0$.
+Let $g(t)$ be the centered Hardy--Littlewood maximal function of
+$\varphi(t)S'_X(t)$, where $\varphi$ is a smooth cutoff equal to
+one on $[T-1,2T+1]$ and supported in $[T-3,2T+3]$.
+The integral from $\tau_k$ to $\gamma_k$ obeys
+$|S_X(\gamma_k)-S_X(\tau_k)|
+\le2|\gamma_k-\tau_k|g(\tau_k)$.
+The $L^4$ boundedness of this maximal operator, together with its
+Sobolev derivative bound and the fourth moments of $S_X'$ and
+$S_X''$ obtained from \eqref{eq:MVinput} (raise the prime
+polynomials to their squares before taking the mean), gives
+\[
+\int_{\mathbb R}g^4\ll T(1+\log X)^4,\qquad
+\int_{\mathbb R}|g'|^4\ll T(1+\log X)^8.
+\]
+Use the disjoint cells $[\tau_k,\tau_k+b]$, with
+$b=2\pi/\log(3T)$, and one-dimensional Sobolev averaging to obtain
+$\av{g(\tau_k)^4}\ll(1+\log X)^4$.
+Cauchy--Schwarz and the fourth moment of the clock displacement
+establish \eqref{eq:shorttransport}.
+\end{proof}
+
+
+\begin{lemma}[Fourth-moment transport at the first arithmetic scale]
+\label{lem:firstL4}
+For $X_1=T^{H_0^{-1/2}}$ and sufficiently large $T$,
+\begin{equation}\label{eq:firstL4}
+\bigl\|S_{X_1}(\gamma)-S_{X_1}(\tau)\bigr\|_{4,T}
+\ll 1,
+\qquad\bigl\|x^{(1)}-\gamma\bigr\|_{4,T}
+\ll\frac{\sqrt{H_1}}{\log T}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+By \cref{lem:higherordinal} with $s$ at exponent eight,
+\[
+\|\gamma-\tau\|_{8,T}\ll\frac{\sqrt{H_0}}{\log T},
+\]
+using the bounded displacement and the derivative
+$\Lambda(v)\asymp\log T$ on the segment from each ordinate to
+its clock point.  With the compactly supported cutoff from the
+proof of \cref{lem:shorttransport}, let
+$g=\mathcal M(\varphi S'_{X_1})$.
+The $8$th-power mean of the prime part of $S'_{X_1}$ follows
+by applying Montgomery--Vaughan to the fourth power of its
+Dirichlet polynomial: its product length is at most
+$X_1^4=T^{4/\sqrt{H_0}}=T^{o(1)}$.
+Its coefficient-square sum is bounded by
+$C(\sum_{p\le X_1}\log^2p/p)^4\ll(\log X_1)^8$.
+The second harmonics are treated with frequencies $p^2$ and
+product length $X_1^8=T^{o(1)}$; higher harmonics and their
+first two derivatives have absolutely convergent tails.
+Consequently
+\begin{equation}\label{eq:continuous8}
+\int_{T-3}^{2T+3}|S'_{X_1}(t)|^8dt
+ \ll T(1+\log X_1)^8,
+\quad
+\int_{T-3}^{2T+3}|S''_{X_1}(t)|^8dt
+ \ll T(1+\log X_1)^{16}.
+\end{equation}
+The strong $L^8$ bound for the centered maximal operator,
+together with its Sobolev derivative estimate, now gives
+$\int g^8\ll T(1+\log X_1)^8$ and
+$\int|g'|^8\ll T(1+\log X_1)^{16}$.
+Since the disjoint clock cells each have length
+$b=2\pi/\log(3T)$, averaging $g^8$ over those cells and
+using absolute continuity yields
+\[
+\av{g(\tau_k)^8}^{1/8}
+ \ll (1+b\log X_1)(1+\log X_1)
+ \ll 1+\log X_1.
+\]
+The pointwise integral estimate
+$|S_{X_1}(\gamma_k)-S_{X_1}(\tau_k)|
+\le2|\gamma_k-\tau_k|g(\tau_k)$ and H\"older
+therefore give
+\[
+\bigl\|S_{X_1}(\gamma)-S_{X_1}(\tau)\bigr\|_{4,T}
+ \ll \frac{\sqrt{H_0}}{\log T}(1+\log X_1)=O(1).
+\]
+Finally \eqref{eq:exact_r} gives
+$\Lambda(\tau)(x^{(1)}-\gamma)=
+u(X_1)+
+[S_{X_1}(\gamma)-S_{X_1}(\tau)]-e$.
+By \cref{lem:higherordinal}, $\|u(X_1)\|_{4,T}
+\ll\sqrt{H_1}$, and $\|e\|_{4,T}\ll T^{-1}$ by the
+bounded displacement. Divide by $\Lambda(\tau)\asymp\log T$
+to finish.
+\end{proof}
+
+\begin{lemma}[Second-scale replacement of the actual ordinates]
+\label{lem:secondreplacement}
+With $Q=S_{X_2}$ and the first corrected points in
+\eqref{eq:scales},
+\begin{equation}\label{eq:secondreplacement}
+\left\|s_k-Q(x_k^{(1)})\right\|_{2,T}
+\ll1+\sqrt{H_2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The identity
+$s_k-Q(x_k^{(1)})=u_k(X_2)+Q(\gamma_k)-Q(x_k^{(1)})$
+is exact.  By \cref{thm:primedefect}, the first term has norm
+$O(1+\sqrt{H_2})$.
+Let $e_{1,k}=x_k^{(1)}-\gamma_k$.
+By \cref{lem:firstL4},
+$\|e_1\|_{4,T}\ll\sqrt{H_1}/\log T$,
+with all eighth-moment polynomial lengths checked at $X_1=T^{o(1)}$.
+
+For the change in $Q$ from $x^{(1)}$ to $\gamma$, the same maximal
+estimate is sampled at the shifted points.  Their quadratic
+multiplicity is uniformly bounded by \cref{lem:multcorrected};
+the $L^8$ maximal-derivative argument and fourth-power sampling in
+\cref{lem:maxsample} then give a fourth-norm bound
+$O(1+\log X_2)$ for the sampled maximal derivative.
+Here the sharp derivative variance
+$\sum_{p\le X_2}(\log p)^2/p\ll(\log X_2)^2$
+is used; replacing it by the much weaker
+$H_0(\log X_2)^2$ would not suffice.
+Thus Holder's inequality yields
+\[
+\|Q(\gamma)-Q(x^{(1)})\|_{2,T}
+ \ll\|e_1\|_{4,T}(1+\log X_2)
+ \ll \frac{\sqrt{H_1}}{\log T}
+  \frac{\log T}{\sqrt{H_1}}=O(1).
+\]
+Combining the two contributions proves the lemma.
+\end{proof}
+
+
+\section{Dyadic reduction to a deterministic correlation}\label{sec:reduction}
+Fix $2\le Y\le X$ and write
+\begin{equation}\label{eq:W}
+W_{X,Y}(t)=S_X(t)-S_Y(t),\qquad
+V_k=W_{X,Y}(\tau_k),\quad U_k=u_k(Y),\quad q_k=u_k(X),\quad h_k=\mathfrak t_k(Y).
+\end{equation}
+\begin{lemma}[Transport splitting]\label{lem:splitting}
+For every $k\in\calI$ and every pair of finite cutoffs,
+\begin{equation}\label{eq:transport_split}
+\mathfrak t_k(X)=U_k-V_k+(h_k-q_k).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Subtract $S_Y$ from $S_X$ in the definition of $\mathfrak t(X)$, and use
+$W_{X,Y}(\gamma_k)=S_X(\gamma_k)-S_Y(\gamma_k)=u_k(Y)-u_k(X)$. No interchange of infinite sums is needed: both cutoff sets are finite, and the prime-power series for each fixed prime converges absolutely.
+\end{proof}
+
+\begin{theorem}[Quantitative deterministic transfer]\label{thm:transfer}
+Retain the finite dyadic window \eqref{eq:windows}. Let $L\ge0$ and suppose that for some numbers $E_U,E_V,E_C\ge0$ and $Q\ge0$,
+\begin{equation}\label{eq:transfer_assumptions}
+\big|\av{U^2}-L\big|\le E_U,\qquad
+\big|\av{V^2}-L\big|\le E_V,\qquad
+\big|\av{UV}\big|\le E_C,\qquad
+\norm{h-q}\le Q.
+\end{equation}
+Then
+\begin{equation}\label{eq:transfer_bound}
+\left|\av{\mathfrak t(X)^2}-2L\right|
+\le E_U+E_V+2E_C
++2Q\bigl(\sqrt{L+E_U}+\sqrt{L+E_V}\bigr)+Q^2.
+\end{equation}
+This statement is uniform in moving cutoffs whenever the four inequalities in \eqref{eq:transfer_assumptions} hold uniformly.
+\end{theorem}
+\begin{proof}
+By \cref{lem:splitting}, the transport equals $U-V+h-q$. Expand its square and average. The contribution from $(U-V)^2$ is $\av{U^2}+\av{V^2}-2\av{UV}$. Its difference from $2L$ is at most $E_U+E_V+2E_C$. Cauchy--Schwarz and the triangle inequality give $\norm{U-V}\le\sqrt{L+E_U}+\sqrt{L+E_V}$, so the remaining linear cross term is bounded by twice this quantity times $Q$; the final quadratic term is bounded by $Q^2$. The proof uses finite sums only.
+\end{proof}
+
+
+
+\begin{remark}[An endpoint without silent extrapolation]
+The algebra of \cref{thm:transfer} does not distinguish $c=1/2$ from smaller fixed positive $c$. The restriction to $c\le1/2$ in a claim based on Dirichlet-polynomial moments must, however, be justified by the degree and total length of the products actually used. The endpoint cannot be obtained by writing ``continuity in $c$'' if the underlying bounds are not uniform there.
+\end{remark}
+
+
+\section{Moving prime bands and exact correlation identities}\label{sec:bands}
+For a finite set $\mathcal J$ of primes write
+\begin{equation}\label{eq:banddef}
+W_{\mathcal J}(t)=\sum_{p\in\mathcal J}a_p\sin(t\log p),
+\quad \mu(\mathcal J)=\sum_{p\in\mathcal J}\frac1p,
+\quad \mathcal R_p^\tau=\frac2{a_p}\av{s_k\sin(\tau_k\log p)}.
+\end{equation}
+\begin{proposition}[Band duality, with no limiting process]\label{prop:banddual}
+For every finite $\mathcal J$,
+\begin{equation}\label{eq:banddual}
+\sum_{p\in\mathcal J}\frac{\mathcal R_p^\tau}{p}
+=2\pi^2\av{s_kW_{\mathcal J}(\tau_k)}.
+\end{equation}
+For an arbitrary sequence $b_k$, define $\mathcal B_p(b)=(2/a_p)\av{b_k\sin(\tau_k\log p)}$. Then
+\begin{equation}\label{eq:bandb}
+\sum_{p\in\mathcal J}\frac{\mathcal B_p(b)}p
+=2\pi^2\av{b_kW_{\mathcal J}(\tau_k)}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+From $a_p^2=1/(\pi^2p)$ we have $\mathcal R_p^\tau/p=2\pi^2a_p\av{s_k\sin(\tau_k\log p)}$. Sum the finite family. The second identity is identical with $s$ replaced by $b$.
+\end{proof}
+
+\begin{theorem}[Uniformity in arbitrary prime subsets]\label{thm:subsets}
+Let $\mathscr P_T$ be any finite set of primes, and let $b=(b_k)$. Suppose for every subset $\mathcal J\subseteq\mathscr P_T$ that
+\begin{equation}\label{eq:model_hyp}
+\left|\av{b_kW_{\mathcal J}(\tau_k)}-
+\frac1{2\pi^2}\sum_{p\in\mathcal J}\frac{F_T(p)}p\right|
+\le \eta_T\bigl(1+\sqrt{\mu(\mathcal J)}\bigr)
+\end{equation}
+with a single $\eta_T$ independent of $\mathcal J$. Then
+\begin{equation}\label{eq:model_out}
+\left|\sum_{p\in\mathcal J}\frac{\mathcal B_p(b)-F_T(p)}p\right|
+\le2\pi^2\eta_T\bigl(1+\sqrt{\mu(\mathcal J)}\bigr)
+\end{equation}
+uniformly for every such subset. If $\mu(\mathscr P_T)\le C$ with fixed $C$, then
+\begin{equation}\label{eq:absbound}
+\sum_{p\in\mathscr P_T}\frac{|\mathcal B_p(b)-F_T(p)|}p
+\le 4\pi^2\eta_T(1+\sqrt C).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Apply \cref{prop:banddual} to \eqref{eq:model_hyp}. For the absolute-value estimate, partition $\mathscr P_T$ into the subset of primes with nonnegative real difference $\mathcal B_p(b)-F_T(p)$ and its complement. All quantities are real. The sum of absolute values is the first signed sum minus the second, and each is bounded by \eqref{eq:model_out}. This argument requires the \emph{same} uniform estimate for all subsets, including subsets selected by the signs; validity only for consecutive intervals does not suffice.
+\end{proof}
+
+
+\section{A finite independent-prime comparison}\label{sec:model}
+Let $\Theta_p$ be independent random variables uniformly distributed on $[0,2\pi]$. For $p\le Y$ define
+\begin{equation}\label{eq:phase_model}
+f_p(\vartheta)=-\frac1\pi\sum_{m\ge1}\frac{\sin(m\vartheta)}{m p^{m/2}},
+\quad P_Y=\sum_{p\le Y}f_p(\Theta_p),
+\quad \Phi_Y(\xi)=\mathbb E\e^{-i\xi P_Y}.
+\end{equation}
+\begin{lemma}[Characteristic factor and its variance]\label{lem:char}
+For $|\xi|\le1$,
+\begin{equation}\label{eq:char_product}
+\Phi_Y(\xi)=\prod_{p\le Y}\frac1{2\pi}\int_0^{2\pi}\e^{-i\xi f_p(\vartheta)}\,d\vartheta,
+\end{equation}
+and, uniformly as $Y\to\infty$,
+\begin{equation}\label{eq:char_asymp}
+\log\Phi_Y(\xi)=-\frac{\xi^2}{4\pi^2}\log\log Y+O(\xi^2+\xi^4).
+\end{equation}
+For sufficiently small $|\xi|$ the logarithm is the real logarithm. The $O(\xi^2)$ includes a convergent arithmetic constant and must not be discarded in a fixed-frequency asymptotic.
+\end{lemma}
+\begin{proof}
+Independence proves \eqref{eq:char_product}. Since $f_p$ is odd, each factor equals the average of $\cos(\xi f_p)$. Orthogonality of sine harmonics gives
+\begin{equation}\label{eq:variance}
+\mathbb E f_p(\Theta_p)^2=\frac1{2\pi^2}\sum_{m\ge1}\frac1{m^2p^m}=
+\frac1{2\pi^2p}+O(p^{-2}).
+\end{equation}
+Moreover $\|f_p\|_\infty\le\pi^{-1}\sum_{m\ge1}(mp^{m/2})^{-1}\ll p^{-1/2}$, hence
+$\mathbb E\cos(\xi f_p)=1-\xi^2\mathbb Ef_p^2/2+O(\xi^4p^{-2})$. Each factor is strictly positive for $|\xi|\le1$ because $|\xi f_p|<\pi/2$ (in fact $\sup|f_p|<1$). Taking logarithms, summing, and using $\sum_{p\le Y}p^{-1}=\log\log Y+B_1+o(1)$ gives the assertion.
+\end{proof}
+
+\begin{remark}[Model versus deterministic clock]
+\cref{lem:char} concerns independent phases $\Theta_p$. To replace its right side by a clock average of prime polynomials evaluated at $\tau_k$ requires a separate bound on all nonzero logarithmic frequencies appearing after expansion. The length of the multiplied Dirichlet polynomials, and not merely the largest individual prime cutoff, determines whether mean-value estimates apply. This remains true when $\xi$ depends on a moving prime $p=T^\theta$.
+\end{remark}
+
+
+\section{A deterministic two-scale phase expansion}\label{sec:twoscale}
+For fixed $0<c\le1/2$ set
+\begin{equation}\label{eq:transparams}
+\begin{gathered}
+V_0=\frac{H_0}{2\pi^2},\quad
+\omega=\frac1\pi\sqrt{\log\log V_0},\quad
+\theta_T=\frac{\omega}{\sqrt{V_0}},\\
+Y=T^{\theta_T},\quad Z=T^{H_0^{-2}},\quad X=T^c,\\
+W=S_X-S_Y,\qquad Q=S_{X_2}.
+\end{gathered}
+\end{equation}
+For sufficiently large $T$ (depending on $c$),
+$Z<X_1<Y<X_2<X\le T^{1/2}$.  Define
+\begin{equation}\label{eq:bandenergy}
+L=\frac1{2\pi^2}\log\frac c{\theta_T}
+ =\frac{H_1}{4\pi^2}+O_c(1+\log H_2).
+\end{equation}
+These parameter relations are asymptotic: no assertion concerning
+small or moderate heights is made by invoking them.
+
+\begin{proposition}[Reduction of the phase energy to one correlation]
+\label{prop:reduceA}
+Put
+\[
+ B_c(T)=\av{[S_X(\gamma_k)-S_X(\tau_k)]^2}.
+\]
+Then
+\begin{equation}\label{eq:reduceA}
+B_c(T)=2L-2\av{s_kW(\tau_k)}
+ +O_c(\sqrt{H_1H_2}).
+\end{equation}
+\end{proposition}
+\begin{proof}
+The identity $W(\gamma)=u(Y)-u(X)$ and
+$\mathfrak t(X)=\mathfrak t(Y)+W(\gamma)-W(\tau)$ is exact.
+By \cref{thm:primedefect},
+$\|u(Y)\|_2^2=L+O(1+\sqrt{H_1})$ and
+$\|u(X)\|_2=O_c(1)$.  Consequently
+$\av{W(\gamma)^2}=L+O_c(\sqrt{H_1})$.
+The almost-orthogonality theorem and the negligible prime-power
+part give $\av{W(\tau)^2}=L+o(1)$.
+\cref{lem:shorttransport} gives
+$\|\mathfrak t(Y)\|_2\ll\sqrt{H_0}\theta_T
+\ll\omega\ll\sqrt{H_2}$.  Hence the cross term involving this
+short transport costs $O(\omega\sqrt L+\omega^2)$.
+Finally,
+$W(\gamma)=s-u(X)-S_Y(\gamma)$ and
+$S_Y(\gamma)=S_Y(\tau)+\mathfrak t(Y)$.
+Thus
+\[
+\av{W(\gamma)W(\tau)}
+ =\av{sW(\tau)}+O_c(\sqrt L+\omega\sqrt L),
+\]
+using Cauchy--Schwarz, the small norm of $u(X)$, and the
+clock orthogonality of the disjoint prime bands of $S_Y$ and $W$.
+The remaining prime powers in $S_Y$ have uniformly bounded
+mean-square norm, giving $O(\sqrt L)$ as claimed.
+Expanding the square proves \eqref{eq:reduceA}.
+\end{proof}
+
+\begin{proposition}[Removing the zeros from the correlation]
+\label{prop:reduceB}
+\begin{equation}\label{eq:reduceB}
+\av{s_kW(\tau_k)}=
+\av{Q(x_k^{(1)})W(\tau_k)}
+ +O(\sqrt{H_1(1+H_2)}).
+\end{equation}
+\end{proposition}
+\begin{proof}
+\cref{lem:secondreplacement} bounds the $L^2$ norm of
+$s-Q(x^{(1)})$ by $O(1+\sqrt{H_2})$.
+The prime-band orthogonality and the prime-power estimate give
+$\|W(\tau)\|_2\ll\sqrt L\ll\sqrt{H_1}$.
+Cauchy--Schwarz yields the stated estimate.  In particular the
+right-hand side is an arithmetic correlation evaluated entirely at
+points computable from the smooth clock and primes.
+\end{proof}
+
+
+\subsection{Finite prime-power reduction}
+Write $\beta_{p^m}=-1/(\pi m p^{m/2})$.  Introduce the
+finite polynomials
+\begin{equation}\label{eq:truncations}
+\begin{split}
+Q^\flat(t)&=\sum_{p\le X_2}\sum_{p^m\le X_2^2}
+ \beta_{p^m}\sin(mt\log p),\\
+P_0(t)&=\sum_{p\le Z}\sum_{p^m\le Z^2}
+ \beta_{p^m}\sin(mt\log p),\\
+P_1(t)&=\sum_{Z<p\le X_1}\sum_{p^m\le X_1^2}
+ \beta_{p^m}\sin(mt\log p),\\
+P_2(t)&=\sum_{p\le Z}\sum_{Z^2<p^m\le X_1^2}
+ \beta_{p^m}\sin(mt\log p),\\
+E_1(t)&=S_{X_1}(t)-(P_0+P_1+P_2)(t),\\
+W_{\rm pr}(t)&=\sum_{Y<p\le X}a_p\sin(t\log p),
+\qquad W_{\rm pp}(t)=W(t)-W_{\rm pr}(t).
+\end{split}
+\end{equation}
+The distinction between primes $p\le X$ and prime powers
+$p^m\le X^2$ in these truncations is deliberate.
+
+\begin{lemma}[Reduction without an unstated limit exchange]
+\label{lem:finitecorr}
+Let
+$y_k=\tau_k-[P_0(\tau_k)+P_1(\tau_k)]/\Lambda(\tau_k)$.
+Then, uniformly for fixed $0<c\le1/2$,
+\begin{equation}\label{eq:finitecorr}
+\av{Q(x_k^{(1)})W(\tau_k)}
+=\av{Q^\flat(y_k)W_{\rm pr}(\tau_k)}+o(1).
+\end{equation}
+\end{lemma}
+\begin{proof}
+For $p\le R$ the absolute sum of the harmonics with
+$p^m>R^2$ is $O(R^{-1})$ for each prime, and summing those tails
+using the reciprocal-prime estimate gives
+\begin{equation}\label{eq:finiteerrs}
+\|Q-Q^\flat\|_\infty\ll1/\log X_2,
+\qquad\|E_1\|_\infty\ll1/\log X_1.
+\end{equation}
+Since $\|W(\tau)\|_2\ll\sqrt{H_1}$, replacing
+$Q$ by $Q^\flat$ costs $O(\sqrt{H_1}/\log X_2)=o(1)$.
+
+For the prime powers in $W$, the Sobolev averaging inequality
+on the disjoint clock cells and Montgomery--Vaughan give
+$\|W_{\rm pp}(\tau)\|_2\ll Y^{-1/4}$.
+By \cref{lem:multcorrected,lem:polysampling} applied to
+$Q^\flat$, with $q=1$ and $R=X_2^2=T^{2/\sqrt{H_1}}$,
+$\|Q^\flat(x^{(1)})\|_2\ll\sqrt{H_0}$.
+Their product is $O(\sqrt{H_0}Y^{-1/4})=o(1)$.
+All length conditions hold for $T$ sufficiently large because
+$R^{8q}(2\|Q^\flat\|_1)^{4q}=T^{o(1)}$.
+
+For the last replacement put
+$\Pi_v=P_0+P_1+v(P_2+E_1)$ and
+$y_k(v)=\tau_k-\Pi_v(\tau_k)/\Lambda(\tau_k)$.
+The fundamental theorem of calculus gives the exact formula
+\[
+Q^\flat(x^{(1)}_k)-Q^\flat(y_k)
+=-\frac{(P_2+E_1)(\tau_k)}{\Lambda(\tau_k)}
+\int_0^1(Q^\flat)'(y_k(v))dv.
+\]
+The coefficient variance of $P_2$ is $O(Z^{-1})$:
+each individual prime contributes at most $O(Z^{-1})$ in
+absolute coefficient sum, and there are $O(Z)$ such primes.
+The clock-model comparison of \cref{lem:klclock} and the
+independent-prime fourth moment give
+$\|P_2(\tau)\|_4\ll Z^{-1/2}+T^{-1/8}$.
+Uniformly in $v$, \cref{lem:multcorrected,lem:polysampling}
+give
+$\|(Q^\flat)'(y(v))\|_4\ll\sqrt{H_0}\log X_2$.
+By Holder with exponents $(4,4,2)$, the resulting correlation
+error is
+\[
+\ll \frac{\sqrt{H_0}\log X_2}{\log T}
+\left(Z^{-1/2}+\frac1{\log X_1}\right)\sqrt{H_1}=o(1).
+\]
+The estimates are uniform in $v\in[0,1]$; integrating in $v$
+therefore introduces no unverified interchange.
+\end{proof}
+
+\subsection{Two-scale expansion with integral remainders}
+For integers $J\ge1$ write
+$e_J(z)=\sum_{j=0}^{J-1}z^j/j!$ and
+$R_J(z)=e^z-e_J(z)$.
+The following formula is used only with the finite polynomial
+$Q^\flat$, so it involves no infinite series expansion.
+
+\begin{lemma}[Exact aggregated Taylor formula]\label{lem:aggregated}
+Let $P_i=P_i(\tau_k)$ and $\Lambda=\Lambda(\tau_k)$.
+For every pair of positive integers $J_0,J_1$,
+\begin{equation}\label{eq:aggregated}
+Q^\flat(y_k)=\mathsf{Main}_k+
+\mathsf{Rem}_{I,k}+\mathsf{Rem}_{II,k},
+\end{equation}
+where
+\begin{align}
+\mathsf{Main}_k
+ &=\sum_{j<J_0}\sum_{\ell<J_1}
+ \frac{(-P_0)^j(-P_1)^\ell}{j!\ell!\Lambda^{j+\ell}}
+ (Q^\flat)^{(j+\ell)}(\tau_k),\label{eq:aggmain}\\
+\mathsf{Rem}_{I,k}
+ &=\frac{(-P_1)^{J_1}}{(J_1-1)!\Lambda^{J_1}}
+ \int_0^1(1-v)^{J_1-1}(Q^\flat)^{(J_1)}
+ \left(\tau_k-\frac{P_0+vP_1}{\Lambda}\right)dv,\label{eq:aggI}\\
+\mathsf{Rem}_{II,k}
+ &=\sum_{\ell<J_1}
+ \frac{(-P_1)^\ell(-P_0)^{J_0}}
+ {\ell!(J_0-1)!\Lambda^{\ell+J_0}}
+ \int_0^1(1-v)^{J_0-1}(Q^\flat)^{(\ell+J_0)}
+ \left(\tau_k-\frac{vP_0}{\Lambda}\right)dv.\label{eq:aggII}
+\end{align}
+\end{lemma}
+\begin{proof}
+Each summand of $Q^\flat$ is a sine harmonic of frequency
+$\log n$.  Its value at $y_k$ is
+$\Im(n^{i\tau_k}e^{a+b})$, where
+$a=-i(\log n)P_0/\Lambda$ and
+$b=-i(\log n)P_1/\Lambda$.
+The elementary identity
+\[
+e^{a+b}=e_{J_0}(a)e_{J_1}(b)
+ +e^aR_{J_1}(b)+R_{J_0}(a)e_{J_1}(b)
+\]
+is exact.  The integral remainder formula
+$R_J(z)=z^J\int_0^1(1-v)^{J-1}e^{vz}dv/(J-1)!$
+turns the last two terms into derivatives of the entire
+polynomial $Q^\flat$ evaluated at the displayed shifted points.
+Summing the finitely many harmonics produces
+\eqref{eq:aggregated}--\eqref{eq:aggII}.  In particular the
+untruncated factor $e^a$ is retained inside a shifted evaluation;
+it is not bounded by its absolute coefficient sum.
+\end{proof}
+
+\begin{lemma}[Uniform control of both remainders]\label{lem:aggerrors}
+Let
+\begin{equation}\label{eq:aggparameters}
+\widehat\xi=\frac{\log X_2^2}{\Lambda(T-1)},
+\quad \sigma_0^2=\sum_{p\le Z}
+\left(\sum_{p^m\le Z^2}|\beta_{p^m}|\right)^2,
+\quad \sigma_1^2=\sum_{Z<p\le X_1}
+\left(\sum_{p^m\le X_1^2}|\beta_{p^m}|\right)^2,
+\end{equation}
+and choose
+\[
+J_1=\lceil H_1\rceil,\qquad
+J_0=\lceil32e^2\widehat\xi^2\sigma_0^2\rceil.
+\]
+For these choices,
+\begin{equation}\label{eq:aggerrors}
+\av{\left(|\mathsf{Rem}_I|+|\mathsf{Rem}_{II}|\right)
+ |W_{\rm pr}(\tau)|}=o(1).
+\end{equation}
+The estimate is uniform when the terminal prime interval is replaced
+by an arbitrary subset of $(X_1,T^{1/2}]$ and
+$\sqrt L$ is replaced by its harmonic square-root mass.
+\end{lemma}
+\begin{proof}
+The cutoffs give
+$\widehat\xi=(4\pi/\sqrt{H_1})(1+o(1))$,
+$\sigma_0^2\le(H_0/\pi^2)(1+o(1))$ and
+$\sigma_1^2\le(3H_1/(2\pi^2))+O(1)$.
+Thus $\widehat\xi^2\sigma_1^2\le25$ and
+$J_0\asymp H_0/H_1$.
+For $P_1$ and $P_0$ evaluated at $\tau_k$, all even moments
+needed below agree with the independent-prime model up to
+$T^{-1/2}$: expand their powers as rational trigonometric
+polynomials, use \cref{lem:klclock}, and check
+\[
+(X_1^2)^{4J_1}=T^{8H_1/\sqrt{H_0}}=T^{o(1)},
+\qquad (Z^2)^{8J_0}=T^{16J_0/H_0^2}=T^{o(1)}.
+\]
+Hoeffding's moment bound in the model reads
+$\mathbb E|P_i|^{2q}\le2q!(2\sigma_i^2)^q$.
+
+For \eqref{eq:aggI} normalize
+$\widetilde Q^{(j)}=(Q^\flat)^{(j)}/(\log X_2^2)^j$.
+Its coefficients are dominated by those of $Q^\flat$,
+independently of $j$.  Jensen's inequality for the probability
+measure $J_1(1-v)^{J_1-1}dv$, Holder with exponents
+$(4,4,2)$ and \cref{lem:multcorrected,lem:polysampling}
+give
+\[
+\av{|\mathsf{Rem}_I W_{\rm pr}|}
+\ll \left\|\frac{(\widehat\xi|P_1|)^{J_1}}{J_1!}\right\|_4
+\sup_{v}\|\widetilde Q^{(J_1)}(y(v))\|_4
+\|W_{\rm pr}(\tau)\|_2.
+\]
+The last two factors are respectively $O(\sqrt{H_0})$
+and $O(\sqrt L)$.  The model moment bound and the factorial
+inequality $J!\ge(J/e)^J$ give
+\[
+\left\|\frac{(\widehat\xi P_1)^{J_1}}{J_1!}\right\|_4
+ \le2\left(\frac{100e^2}{J_1}\right)^{J_1/2}.
+\]
+As $J_1\sim H_1=\log H_0$, the first remainder contributes
+$O(H_0^{1/2-(\log H_1)/2+O(1)}\sqrt L)=o(1)$.
+
+For \eqref{eq:aggII}, use Holder with exponents
+$(8,8,4,2)$ and sum over $\ell<J_1$.  The model moment bound
+implies
+\[
+\sum_{\ell<J_1}\left\|\frac{(\widehat\xi P_1)^\ell}{\ell!}\right\|_8
+ =O(1),
+\qquad
+\left\|\frac{(\widehat\xi P_0)^{J_0}}{J_0!}\right\|_8
+ \le2^{1-J_0}.
+\]
+For the second estimate use $J_0\ge32e^2\widehat\xi^2\sigma_0^2$
+and the eighth-moment factorial estimate; every required model
+moment is within the frequency-height range checked above.
+By bounded multiplicity and the sampling lemma,
+$\|\widetilde Q^{(\ell+J_0)}(\tau-vP_0/\Lambda)\|_4
+\ll\sqrt{H_0}$ uniformly in $\ell,v$.
+Thus the second remainder is
+$O(2^{-J_0}\sqrt{H_0L})=o(1)$.
+There is no dependence on whether the primes of the terminal band
+are consecutive: only their coefficient-square mass appears.
+\end{proof}
+
+\begin{lemma}[All nonzero rational frequencies]\label{lem:aggoffdiag}
+Let $\mathsf{Main}$ be given by \eqref{eq:aggmain}.
+With $0<c\le1/2$ fixed, the difference between its average
+against $W_{\rm pr}(\tau_k)$ and its independent-prime diagonal is
+\begin{equation}\label{eq:aggoffdiag}
+O\left(T^{3c/2-1+o(1)}\right)=o(1).
+\end{equation}
+The estimate is uniform in all subsets of the terminal prime band,
+including when $c=1/2$.
+\end{lemma}
+\begin{proof}
+Expand the finitely many $P_0,P_1,Q^\flat,W_{\rm pr}$
+factors into exponentials.  Each frequency is a rational
+logarithmic frequency $\log(a/b)$, where both numerator and
+denominator are bounded by the product of the individual
+lengths.  At Taylor orders $j<J_0$, $\ell<J_1$ this height is
+\[
+\le Z^{2J_0}X_1^{2J_1}X_2^2X
+ =T^{c+\eta_T},\qquad
+\eta_T=\frac{2J_0}{H_0^2}+
+\frac{2J_1}{\sqrt{H_0}}+\frac2{\sqrt{H_1}}=o(1).
+\]
+The weight $\Lambda(\tau_k)^{-(j+\ell)}$ is monotone
+and has supremum plus variation at most twice its value at
+$T-1$.  Applying \cref{lem:klclock} after partial summation
+to each nonzero frequency, and dividing by $M_T$, costs at most
+$O(T^{c+\eta_T-1})$ times its coefficient absolute value.
+The absolute coefficient sum of the entire expansion is at most
+\[
+J_0J_1(2Z\widehat\xi)^{J_0}
+ (2X_1\widehat\xi)^{J_1}
+ \cdot 2X_2\sqrt X=T^{c/2+o(1)}.
+\]
+Hence the total nonzero-frequency contribution is
+$T^{3c/2-1+o(1)}$.  For $c=1/2$ this is
+$T^{-1/4+o(1)}$, strictly decaying.  The calculation is unchanged
+for any subset, since removing primes can only reduce the
+absolute coefficient sum and the maximal height.
+\end{proof}
+
+\begin{lemma}[The diagonal from unique factorization]\label{lem:aggdiag}
+Let
+$\xi_{p,k}=\log p/\Lambda(\tau_k)$.
+Then the diagonal of $\mathsf{Main}\,W_{\rm pr}$ is exactly
+\begin{equation}\label{eq:aggdiag}
+\sum_{Y<p\le X_2}\frac{a_p^2}{2}
+\av{\Re\,\mathbb E_{\rm mod}
+ [e_{J_0}(-i\xi_{p,k}P_0)]
+ \mathbb E_{\rm mod}[e_{J_1}(-i\xi_{p,k}P_1)]}.
+\end{equation}
+It is bounded by
+\begin{equation}\label{eq:diagdecay}
+O\left(L\exp[-2\pi^2\omega^2(1+o(1))]
+ +L2^{-J_0}\right)=o(1).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Use independent uniform phases $\Theta_p$ and the associated
+prime-power harmonics $e^{im\Theta_p}$.
+The prime factors of $P_0,P_1$ are $\le X_1<Y$, whereas those of
+$W_{\rm pr}$ lie above $Y$.  A product has constant total frequency
+only when the prime $p$ selected from $W_{\rm pr}$ appears in
+$Q^\flat$ with exponent one.  Thus $p\le X_2$, and its sine
+inner product contributes exactly $a_p^2/2$.
+All other prime phases cancel independently by unique factorization.
+The sum over the Taylor orders gives \eqref{eq:aggdiag}.
+
+For imaginary arguments the remainder satisfies
+$|R_J(iz)|\le|z|^J/J!$.  The moment bounds used in
+\cref{lem:aggerrors} show that the truncated expectations
+may be replaced by the full characteristic functions at a cost
+$O(2^{-J_0}+(50e/J_1)^{J_1/2})$, uniformly in $k,p$.
+For $P_0$, independence across primes and the second-moment
+calculation
+$\mathbb E f_r(\Theta_r)^2=(2\pi^2r)^{-1}+O(r^{-2})$
+give, when $p\ge Y$,
+\[
+\left|\mathbb E_{\rm mod}e^{-i\xi_{p,k}P_0}\right|
+\le\exp\left[-\frac{\xi_{p,k}^2}{4\pi^2}
+  (H_0-2H_1+O(1))+O(\xi_{p,k}^3)\right].
+\]
+To justify the logarithm factorwise, each $f_r$ is odd and has
+$|f_r|\ll r^{-1/2}$, while the relevant $\xi$ satisfies
+$0\le\xi\le\pi+o(1)$; the finitely many small primes have
+positive cosine averages, and the large-prime factors follow
+from the Taylor bound with absolutely summable $O(r^{-3/2})$
+remainders.  Now
+$\xi_{p,k}\ge(2\pi\theta_T)(1+o(1))$.
+Using $\theta_T^2H_0=2\pi^2\omega^2$ and
+$\theta_T^2H_1\to0$, the displayed exponential is at most
+$\exp[-2\pi^2\omega^2(1+o(1))]$.
+The $P_1$ characteristic factor has modulus at most one.
+The total prime diagonal mass is at most $L+o(1)$.
+Because $\omega^2=\pi^{-2}\log\log V_0$,
+$L\exp[-2\pi^2\omega^2(1+o(1))]
+\ll H_1(\log V_0)^{-2+o(1)}=o(1)$.
+This proves \eqref{eq:diagdecay}.
+\end{proof}
+
+\begin{theorem}[Deterministic clock correlation]\label{thm:clockcorr}
+For $0<c\le1/2$ fixed,
+\begin{equation}\label{eq:clockcorr}
+\av{S_{X_2}(x_k^{(1)})
+ [S_{T^c}(\tau_k)-S_{T^{\theta_T}}(\tau_k)]}=o(1).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Apply \cref{lem:finitecorr}; expand its right side by
+\cref{lem:aggregated}; bound the two integral remainders by
+\cref{lem:aggerrors}, all nonzero frequencies by
+\cref{lem:aggoffdiag}, and the unique-factorization diagonal
+by \cref{lem:aggdiag}.  Every interchange of sums is over
+finitely supported prime-power polynomials; the only integral
+interchanges are over $v\in[0,1]$, where the uniform majorants
+established in \cref{lem:aggerrors} apply.  The result follows.
+\end{proof}
+
+
+
+\section{Transport energy and varying prime cutoffs}\label{sec:energy}
+The estimates of \cref{sec:twoscale} yield the fixed-cutoff transport
+energy and its dependence on the moving cutoff.  The distinction
+between a cutoff fixed as an exponent and a cutoff fixed as an integer
+is essential.
+
+\begin{theorem}[Transport energy at a fixed power cutoff]\label{thm:energy}
+For every fixed $c\in(0,\tfrac12]$, set $X=T^c$ and let
+$\mathcal I_T$ be the true-ordinate window \eqref{eq:windows}.
+Then, as $T\to\infty$,
+\begin{equation}\label{eq:energy}
+\av{\bigl[S_{T^c}(\gamma_k)-S_{T^c}(\tau_k)\bigr]^2}
+=\frac{\log\log\log T}{2\pi^2}
++O_c\!\left(\sqrt{\log\log\log T\,
+                        \log\log\log\log T}\right),
+\end{equation}
+and the same equivalent, with the same error order, holds for
+$\av{r_k(T^c)^2}$.
+\end{theorem}
+\begin{proof}
+By \cref{prop:reduceA,prop:reduceB,thm:clockcorr},
+\[
+B_c(T)=2L+O_c(\sqrt{H_1H_2})
+\]
+(the product of the $L^2$ replacement error with the band
+norm is already included in \cref{prop:reduceB}).
+The exact choice of scale in \eqref{eq:transparams} gives
+\[
+2L=\frac1{\pi^2}\log\frac c{\theta_T}
+=\frac{H_1}{2\pi^2}+O_c(1+\log H_2).
+\]
+The $O_c(1+\log H_2)$ error is absorbed in
+$O_c(\sqrt{H_1H_2})$ for all sufficiently large $T$.
+This proves \eqref{eq:energy}.
+
+For the second assertion use the exact displacement decomposition
+\eqref{eq:exact_r}.  By \cref{thm:primedefect},
+$\|u(T^c)\|_2=O_c(1)$, and by Taylor's theorem
+$\|e\|_2\ll T^{-1}$ because the bare-clock displacement is bounded.
+The reverse triangle inequality gives
+$|\|r\|_2-\|\mathfrak t\|_2|=O_c(1)$.
+Squaring and using $\|\mathfrak t\|_2\asymp\sqrt{H_1}$ adds
+at most $O_c(\sqrt{H_1})$, smaller than the displayed error.
+\end{proof}
+
+\begin{corollary}[Moving exponents close on the logarithmic scale]
+\label{cor:varenergy}
+If $c=c(T)$ satisfies $0<c\le1/2$ and
+\begin{equation}\label{eq:varcondition}
+\log(1/c)=o(H_1),
+\end{equation}
+then
+\begin{equation}\label{eq:varenergy}
+\av{\mathfrak t_k(T^c)^2}
+\sim\av{r_k(T^c)^2}
+\sim\frac{H_1}{2\pi^2}.
+\end{equation}
+No equivalent is asserted outside \eqref{eq:varcondition}.
+\end{corollary}
+\begin{proof}
+The hypothesis implies $c>\theta_T$ eventually.
+By \cref{thm:primedefect}, $\|u(T^c)\|_2^2=o(H_1)$.
+The short-band phase $u(Y)$ has square norm
+$H_1/(4\pi^2)+o(H_1)$, and therefore
+$\|W(\gamma)\|_2^2=H_1/(4\pi^2)+o(H_1)$.
+The clock-band square norm has the same equivalent by
+\cref{cor:massbands} and the prime-power estimate.
+The deterministic clock correlation estimate
+\cref{thm:clockcorr} is uniform for $\theta_T\le c\le1/2$:
+in \cref{lem:aggoffdiag} the saving is bounded by
+$T^{-1/4+o(1)}$, and all remainder bounds depend only on the
+harmonic mass, at most $O(H_1)$.
+The cross terms involving $u(T^c)$ are $o(H_1)$ by
+Cauchy--Schwarz.  The short transport costs $o(H_1)$ as before.
+Thus $B_c=H_1/(2\pi^2)+o(H_1)$.
+Finally \eqref{eq:exact_r} and $\|u(T^c)\|_2=o(\sqrt{H_1})$
+give the same equivalent for $r$.
+\end{proof}
+
+\begin{corollary}[Mean-square distance in ordinate height]
+\label{cor:heightdistance}
+For fixed $c\in(0,1/2]$,
+\begin{equation}\label{eq:heightdistance}
+\av{\bigl(\tau_k^{T^c}-\gamma_k\bigr)^2}
+=\frac{2H_1+O_c(\sqrt{H_1H_2})}{\log^2T}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+By definition
+$\tau_k^{T^c}-\gamma_k=r_k(T^c)/\Lambda(\tau_k)$.
+The bare-clock bound places $\tau_k\in[T-O(1),2T+O(1)]$,
+so $\Lambda(\tau_k)^{-2}
+=(2\pi/\log T)^2(1+O(1/\log T))$ uniformly
+in the true-ordinate window.  Multiply the second estimate of
+\cref{thm:energy} by this factor; the resulting constant is
+$4\pi^2/(2\pi^2)=2$.
+\end{proof}
+
+\begin{proposition}[A lower bound for intermediate cutoffs]
+\label{prop:intermediate}
+Uniformly for $\theta_T\le c\le1/2$,
+\begin{equation}\label{eq:lowerenergy}
+\av{r_k(T^c)^2}
+\ge\frac1{2\pi^2}\log\frac c{\theta_T}
+ -O(\sqrt{H_1H_2}).
+\end{equation}
+For every fixed $\alpha$ with $0<\alpha<1/2$, the choice
+$c=H_0^{-\alpha}$ satisfies the required range for sufficiently
+large $T$ and yields
+\begin{equation}\label{eq:alphalower}
+\av{r_k(T^{H_0^{-\alpha}})^2}
+\ge\frac{\frac12-\alpha}{2\pi^2}H_1-o(H_1),
+\qquad\av{r_k(T^{H_0^{-\alpha}})^2}\ll_\alpha H_1.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Let $W_{\rm pr}=\sum_{Y<p\le T^c}a_p\sin(t\log p)$
+and $L=(2\pi^2)^{-1}\log(c/\theta_T)\ge0$.
+If $L\ll\sqrt{H_1H_2}$, \eqref{eq:lowerenergy} is trivial
+because the left side is nonnegative.  Otherwise
+$\|W_{\rm pr}(\tau)\|_2^2=L+o(1)$.
+By the replacement argument of \cref{prop:reduceB} and the
+uniform diagonal of \cref{lem:aggdiag},
+$\av{sW_{\rm pr}(\tau)}=O(\sqrt{H_1H_2})$.
+Orthogonality of disjoint clock bands and the $L^2$ boundedness
+of the prime-power part give
+$\av{S_{T^c}(\tau)W_{\rm pr}(\tau)}
+ =L+O(\sqrt L)+o(1)$.
+The exact identity $r=s-S_{T^c}(\tau)+O(T^{-1})$ therefore gives
+$\av{rW_{\rm pr}(\tau)}=-L+O(\sqrt{H_1H_2})$.
+Cauchy--Schwarz gives
+\[
+\av{r^2}\ge
+\frac{|\av{rW_{\rm pr}}|^2}{\av{W_{\rm pr}^2}}
+\ge L-O(\sqrt{H_1H_2}),
+\]
+where the final estimate is applied only in the nontrivial range
+of $L$.  For $c=H_0^{-\alpha}$, the decomposition
+$r=u(T^c)+\mathfrak t(Y)+W(\gamma)-W(\tau)+O(T^{-1})$
+and the established second moments give $\av{r^2}\ll_\alpha H_1$.
+The case $\alpha=0$ is excluded from \eqref{eq:alphalower}:
+it would give $c=1$, outside the proved $c\le1/2$ range.
+\end{proof}
+
+
+\section{Responses to moving primes}\label{sec:responses}
+For any prime $p$, define the response of the bare clock by
+\begin{equation}\label{eq:Rresponse}
+\mathcal R_p^\tau
+=\frac2{a_p}\av{s_k\sin(\tau_k\log p)},
+\end{equation}
+and define the explicitly computable response of the second
+phase by
+\begin{equation}\label{eq:Bresponse}
+\mathcal B_p^{(2)}
+=\frac2{a_p}\av{\bigl(Q(x_k^{(1)})-Q(\tau_k)\bigr)
+\sin(\tau_k\log p)}.
+\end{equation}
+These are signed correlations; no assertion about individual
+moving primes follows from a harmonic-band average alone.
+
+\begin{theorem}[Harmonic cancellation of the clock response]
+\label{thm:response}
+Let $0<c\le1/2$ be fixed and
+$\theta_T\le\theta'<c$ with $\theta'$ allowed to vary with $T$.
+Put
+$\mathcal J=\{p:T^{\theta'}<p\le T^c\}$ and
+$\mu'=\sum_{p\in\mathcal J}p^{-1}$.
+Then, uniformly in this range,
+\begin{equation}\label{eq:response}
+\left|\sum_{p\in\mathcal J}\frac{\mathcal R_p^\tau}{p}\right|
+\ll1+\sqrt{\mu'(1+H_2)}.
+\end{equation}
+In particular, for $\theta'=\theta_T$ the harmonic mean of
+$\mathcal R_p^\tau$ over this entire band tends to zero,
+with bound $O(\sqrt{H_2/H_1})$.
+\end{theorem}
+\begin{proof}
+By the exact finite band identity \eqref{eq:banddual}, the sum
+on the left is $2\pi^2\av{sW_{\mathcal J}(\tau)}$.
+Replace $s$ by $Q(x^{(1)})$ using
+\cref{lem:secondreplacement} and Cauchy--Schwarz.
+The cost is $O((1+\sqrt{H_2})\sqrt{\mu'})$ by
+\cref{cor:massbands}.  The expansion
+\cref{lem:aggregated} applies to the prime subset $\mathcal J$
+uniformly, as shown in \cref{lem:aggerrors,lem:aggoffdiag}.
+Its diagonal is supported only on $p\le X_2$ and is bounded
+by $O(\mu'\exp[-2\pi^2\omega^2(1+o(1))])+o(1)$,
+because all its primes are at least $Y=T^{\theta_T}$.
+Since $\mu'\le O(H_1)$, this is $o(1)$.
+Combining proves \eqref{eq:response}.
+For the full band $\mu'=\log(c/\theta_T)+o(1)
+=\tfrac12H_1+O(1+\log H_2)$, and division by $\mu'$
+gives the stated normalized estimate.
+\end{proof}
+
+\begin{definition}[The characteristic profile of the second clock]
+\label{def:profile}
+Let $P=P_0+P_1$ from \eqref{eq:truncations} and let
+$\mathbb E_{\rm mod}$ denote independent uniform prime phases.
+For $X_1<p\le T^{1/2}$ define
+\begin{equation}\label{eq:profile}
+\Phi_T(p)=\av{\mathbb E_{\rm mod}
+\exp\left(-i\frac{\log p}{\Lambda(\tau_k)}P\right)},
+\quad\theta_p=\frac{\log p}{\log T}.
+\end{equation}
+The profile is a real-valued quantity computed without the actual
+ordinates.
+\end{definition}
+
+\begin{lemma}[Gaussian factor with the arithmetic variance correction]
+\label{lem:profile}
+Uniformly for $X_1<p\le T^{1/2}$,
+\begin{equation}\label{eq:profileasymp}
+\Phi_T(p)
+=\exp\left[-\theta_p^2
+\left(H_0-\frac12H_1+O(1)\right)+O(\theta_p^4)\right]
+\left(1+O\left(\frac{\theta_p^2H_0}{\log T}\right)\right).
+\end{equation}
+All implicit constants are absolute.
+\end{lemma}
+\begin{proof}
+For each prime $r\le X_1$ write its contribution to
+$P$ as $f_r(\Theta_r)$.  This is odd, centered, and has
+$\mathbb E f_r^2=(2\pi^2r)^{-1}+O(r^{-2})$ and
+$\|f_r\|_\infty\ll r^{-1/2}$.  Independence gives
+$\mathbb E e^{-i\xi P}=\prod_{r\le X_1}\mathbb E\cos(\xi f_r)$.
+The geometric-series identity for the Euler phase gives
+$\sup_\vartheta|f_r(\vartheta)|\le
+\pi^{-1}\arcsin(r^{-1/2})\le1/4$.
+Thus for $|\xi|\le\pi+o(1)$ every factor
+$\mathbb E\cos(\xi f_r)$ is strictly positive, uniformly even
+at the smallest prime. Its logarithm may therefore be expanded.
+A fourth-order Taylor expansion yields
+\[
+\log\mathbb E e^{-i\xi P}
+=-\frac{\xi^2}{4\pi^2}\sum_{r\le X_1}\frac1r
+ +O(\xi^2+\xi^4).
+\]
+The convergent prime-by-prime correction to the variance is
+included in the $O(\xi^2)$ term.  Since
+$\log\log X_1=H_0-\frac12H_1$ and
+$\xi=\log p/\Lambda(\tau_k)
+=2\pi\theta_p(1+O(1/\log T))$
+uniformly in the dyadic window, the result follows after averaging
+over $k$.  The variation of $\xi$ in that average has size
+$O(\theta_p/\log T)$ and produces the last relative factor.
+\end{proof}
+
+\begin{theorem}[Second-clock response on arbitrary prime subsets]
+\label{thm:secondresponse}
+For every possibly $T$-dependent set of primes
+$\mathcal J\subset(X_1,T^{1/2}]$, write
+$\mu(\mathcal J)=\sum_{p\in\mathcal J}p^{-1}$.  Uniformly in
+\emph{all} such sets,
+\begin{equation}\label{eq:secondresponse}
+\sum_{p\in\mathcal J}\frac{\mathcal B_p^{(2)}}p
+=\sum_{\substack{p\in\mathcal J\\p\le X_2}}
+\frac{\Phi_T(p)-1}{p}
+ +o\bigl(1+\sqrt{\mu(\mathcal J)}\bigr).
+\end{equation}
+In particular the signed harmonic response of the second step in
+subsets of $(X_2,T^{1/2}]$ has size
+$o(1+\sqrt{\mu(\mathcal J)})$.
+\end{theorem}
+\begin{proof}
+By \eqref{eq:bandb}, the left-hand side equals
+$2\pi^2\av{[Q(x^{(1)})-Q(\tau)]W_{\mathcal J}(\tau)}$.
+For the first term, repeat
+\cref{lem:finitecorr,lem:aggregated,lem:aggerrors,lem:aggoffdiag}
+with $W_{\mathcal J}$ instead of $W_{\rm pr}$.
+Its diagonal is
+\[
+\frac1{2\pi^2}\sum_{\substack{p\in\mathcal J\\p\le X_2}}
+\frac{\Phi_T(p)}p
+ +o(1+\sqrt{\mu(\mathcal J)}).
+\]
+The truncated characteristic averages and the full $\Phi_T$
+differ by at most the factorial remainder estimates of
+\cref{lem:aggerrors}, uniformly for all $p$.
+The total variation of the error across the entire prime range
+is negligible, since $\mu(\mathcal J)\ll H_0$ and the
+factorial remainders decay faster than any power of $H_0$.
+
+For the second term $Q(\tau)$, unique factorization and
+\cref{lem:orthprimes} give the prime diagonal
+$(2\pi^2)^{-1}\sum_{p\in\mathcal J,p\le X_2}p^{-1}$,
+with an error $o(1+\sqrt{\mu(\mathcal J)})$.
+The powers of primes in $Q$ have negligible correlation with
+the prime test polynomial: truncate their frequencies at
+$X_2^2$, apply the separated clock-sampling estimate and
+\eqref{eq:MVinput}, and use the absolute tail
+$O(1/\log X_2)$ for the omitted harmonics.
+Subtract the two formulas and multiply by $2\pi^2$.
+Every bound was obtained using the mass and support of the test
+polynomial, not the contiguity of its primes.  Thus the error
+is uniform over subsets that may depend on the signs of their
+response coefficients.
+\end{proof}
+
+\begin{corollary}[A harmonic total-variation implication]
+\label{cor:variation}
+Suppose a collection $\mathscr P_T\subset(X_1,T^{1/2}]$
+has $\mu(\mathscr P_T)\le C$ for fixed $C$.
+Then the errors in \eqref{eq:secondresponse} satisfy
+\begin{equation}\label{eq:variation}
+\sum_{p\in\mathscr P_T}\frac{1}{p}
+\left|\mathcal B_p^{(2)}
+ -\mathbf1_{p\le X_2}(\Phi_T(p)-1)\right|=o(1).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Apply the same uniform subset estimate to the set of positive
+errors and to the set of negative errors.  They are admissible
+subsets of $\mathscr P_T$, even though the choice depends on
+$T$ and on the responses.  Since both harmonic masses are
+$O(1)$, each signed sum is $o(1)$; their difference equals the
+sum of absolute errors.
+\end{proof}
+
+
+
+\section{Nonlinear spectral transport}\label{sec:spectral}
+Let $a_k,b_k$ be arbitrary finite families of real points and fix $u\in\R$. The correct nonlinear quantity is
+\begin{equation}\label{eq:nonlinear}
+\mathcal V(u)=\sum_k\e^{iua_k}\frac{\e^{iu(b_k-a_k)}-1}{iu},
+\qquad \mathcal V(0)=\sum_k(b_k-a_k).
+\end{equation}
+\begin{proposition}[Exact phase identity and quadratic error]\label{prop:nonlinear}
+For every finite family,
+\begin{equation}\label{eq:nonlinearexact}
+\mathcal V(u)=\sum_k\int_{a_k}^{b_k}\e^{iut}\,dt,
+\qquad
+\left|\mathcal V(u)-\sum_k(b_k-a_k)\e^{iua_k}\right|
+\le\frac{|u|}{2}\sum_k|b_k-a_k|^2.
+\end{equation}
+In particular, with $a_k=\gamma_k$ and $b_k=\tau_k^X$, all the terms in the formula have exact finite-height meaning, irrespective of collisions or ordering.
+\end{proposition}
+\begin{proof}
+The integral identity is direct for $u\ne0$, and follows at $u=0$ by continuity. Write the difference as
+$\sum_k\e^{iua_k}\int_0^{b_k-a_k}(\e^{iuv}-1)\,dv$. The elementary estimate $|\e^{iv}-1|\le|v|$ bounds each term by $|u||b_k-a_k|^2/2$. Add these bounds.
+\end{proof}
+
+\begin{lemma}[Exponential-integral transport]\label{lem:Ei}
+Let $u>0$ and $a,b\in\R$. Along the vertical segment from $\frac12+iau$ to $\frac12+ibu$, the principal exponential integral is analytic, and
+\begin{equation}\label{eq:Ei}
+\operatorname{Ei}((\tfrac12+ib)u)-\operatorname{Ei}((\tfrac12+ia)u)
+=i\int_a^b\frac{\e^{(1/2+it)u}}{1/2+it}\,dt.
+\end{equation}
+Consequently, on a dyadic band, the difference of the two truncated spectral sums is a finite signed oscillatory integral without any exchange of infinite limits.
+\end{lemma}
+\begin{proof}
+The segment lies in the open right half-plane and avoids the branch cut. Differentiate $\operatorname{Ei}((1/2+it)u)$ using $\operatorname{Ei}'(z)=\e^z/z$ and the chain rule. Its derivative in $t$ is $i\e^{(1/2+it)u}/(1/2+it)$. Integrate from $a$ to $b$. Finite summation is legitimate without conditions.
+\end{proof}
+
+\begin{remark}[Infinite reconstruction]
+Passing from \cref{lem:Ei} to an infinite explicit formula involves truncation, the normalization at ordinates and the summability of signed dyadic contributions. Neither a bounded second moment of point displacements nor the local inequality in \cref{prop:nonlinear} alone justifies exchanging $T\to\infty$, $K\to\infty$ and $x\to\infty$. The required global tail estimate is a separate analytic assertion.
+\end{remark}
+
+
+\section{Separation and spectral rigidity}\label{sec:separation}
+\begin{theorem}[A direct adjacent-gap certificate]\label{thm:gap}
+Let $c_1<c_2<\cdots$ be a strictly increasing real sequence and let $\gamma_1\le\gamma_2\le\cdots$ be the full list of positive ordinates of the nontrivial zeros of $\zeta$, counted with multiplicity. If, for all $k$,
+\begin{equation}\label{eq:gap}
+|c_k-\gamma_k|+|c_{k+1}-\gamma_{k+1}|<c_{k+1}-c_k,
+\end{equation}
+then all positive ordinates are distinct. Consequently every nontrivial zero is simple and has real part $1/2$.
+\end{theorem}
+\begin{proof}
+The triangle inequality gives
+$\gamma_{k+1}-\gamma_k\ge c_{k+1}-c_k-|\gamma_{k+1}-c_{k+1}|-|\gamma_k-c_k|>0$.
+If a nontrivial zero $\beta+i\gamma$ had $\beta\ne1/2$, then $1-\beta+i\gamma$ would also be a zero by the functional equation and conjugation symmetry; both appear as distinct entries with the same positive ordinate. A repeated zero on the critical line likewise supplies repeated entries. Both alternatives contradict strict increase.
+\end{proof}
+
+\begin{remark}
+A mean-square bound, even one tending to zero in units of the mean spacing, cannot by itself establish \eqref{eq:gap} for every $k$: exceptional indices require a separate uniform argument. Furthermore sorting a proposed corrected sequence proves only that its sorted values are ordered; it does not prove that the pointwise correction map is monotone or that sorted index labels match the actual ordinates.
+\end{remark}
+
+
+\section{Conclusions}\label{sec:conclusions}
+The construction $\tau_k^X=\tau_k-S_X(\tau_k)/\Lambda(\tau_k)$
+is determined by the smooth ordinal clock and primes.  The exact
+identity for its normalized error separates the residual prime
+information at the actual ordinate from the nonlinear transport of
+the prime phase.  This separation is valid for all nontrivial
+zeta zeros counted with multiplicity and does not assume that their
+real parts equal one half.
+
+The first quantitative conclusion is the uniform ordinal defect law
+\eqref{eq:primedefect}, with endpoint $X=T^{1/2}$ included.  The
+second is the fixed-exponent transport-energy formula
+\eqref{eq:energy}: the transport energy grows like
+$(2\pi^2)^{-1}\log\log\log T$, rather than remaining bounded,
+for every fixed $0<c\le1/2$.  The mean-square error in
+ordinate height has the expansion \eqref{eq:heightdistance}.
+The uniform moving-cutoff equivalent \eqref{eq:varenergy} holds
+under its explicit logarithmic restriction; the intermediate
+lower bound \eqref{eq:lowerenergy} has a distinct, wider range.
+
+The prime-response laws \eqref{eq:response} and
+\eqref{eq:secondresponse} quantify harmonic cancellation on
+moving bands.  The latter remains uniform for arbitrary
+prime subsets, so bounded-mass subsets admit the harmonic
+absolute-value consequence \eqref{eq:variation}.
+The calculated characteristic profile retains the
+$-\frac12\log\log\log T$ variance correction in
+\eqref{eq:profileasymp}; it cannot be replaced uniformly
+by a Gaussian factor having only $\log\log T$ in the exponent.
+
+The finite-band spectral identity \eqref{eq:nonlinearexact}
+identifies the additional signed cancellation needed to compare
+prime-counting or Mertens transforms from distinct ordinate systems.
+A universal adjacent-gap estimate would enforce distinct ordinates
+and, by the functional-equation symmetry of the full zeta zero set,
+both critical-line location and simplicity.  Neither a second-moment
+estimate nor a synthetic zeta with prescribed critical-line zeros
+alone provides that universal adjacent-gap estimate.
+
+\begin{thebibliography}{99}
+\bibitem{GrahamKolesnik1991}
+S. W. Graham and G. Kolesnik, \emph{Van der Corput's Method of Exponential Sums},
+London Mathematical Society Lecture Note Series 126, Cambridge University Press, 1991,
+doi:10.1017/CBO9780511661976.
+\bibitem{Hoeffding1963}
+W. Hoeffding, Probability inequalities for sums of bounded random variables,
+\emph{J. Amer. Statist. Assoc.} \textbf{58} (1963), 13--30,
+doi:10.1080/01621459.1963.10500830.
+\bibitem{Mertens1874}
+F. Mertens, Ein Beitrag zur analytischen Zahlentheorie,
+\emph{J. Reine Angew. Math.} \textbf{78} (1874), 46--62,
+doi:10.1515/crll.1874.78.46.
+\bibitem{Selberg1946}
+A. Selberg, Contributions to the theory of the Riemann zeta-function,
+\emph{Arch. Math. Naturvid.} \textbf{48} (1946), 89--155.
+\bibitem{Kinnunen1997}
+J. Kinnunen, The Hardy--Littlewood maximal function of a Sobolev function,
+\emph{Israel J. Math.} \textbf{100} (1997), 117--124.
+\bibitem{Stein1970}
+E. M. Stein, \emph{Singular Integrals and Differentiability Properties of Functions},
+Princeton University Press, 1970.
+\bibitem{Fujii1974} A. Fujii, On the zeros of Dirichlet $L$-functions. I, \emph{Trans. Amer. Math. Soc.} \textbf{196} (1974), 225--235, doi:10.1090/S0002-9947-1974-0349603-2.
+\bibitem{Fujii1981} A. Fujii, On the zeros of Dirichlet $L$-functions. II (with corrections to \emph{On the zeros of Dirichlet $L$-functions. I} and the subsequent papers), \emph{Trans. Amer. Math. Soc.} \textbf{267} (1981), 33--40.
+\bibitem{MV1974} H. L. Montgomery and R. C. Vaughan, Hilbert's inequality, \emph{J. London Math. Soc.} (2) \textbf{8} (1974), 73--82, doi:10.1112/jlms/s2-8.1.73.
+\bibitem{Korolev2012} M. A. Korolev, Gram's law and the argument of the Riemann zeta function, \emph{Publ. Inst. Math. (Beograd)} \textbf{92}(106) (2012), 53--78, doi:10.2298/PIM1206053K.
+\bibitem{Gonek2012} S. M. Gonek, Finite Euler products and the Riemann hypothesis, \emph{Trans. Amer. Math. Soc.} \textbf{364} (2012), 2157--2191, doi:10.1090/S0002-9947-2011-05546-7.
+\bibitem{Titchmarsh1986} E. C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., revised by D. R. Heath-Brown, Oxford University Press, 1986.
+\end{thebibliography}
+\end{document}

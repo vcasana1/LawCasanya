@@ -1,0 +1,288 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,geometry,microtype,booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{bookmark}
+\geometry{margin=26mm}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\av}[1]{\langle #1\rangle_T}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Pb}{P_b}
+\newcommand{\OO}{\Omega_b}
+\newcommand{\LX}{\mathcal L}
+\title{The Orthogonal Remainder for Genuinely Index-Dependent Prime Cutoffs on the Riemann--von Mangoldt Clock}
+\author{Rotkiv Ayn\"asac}
+\date{24 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+An unconditional stability theorem for the orthogonal remainder in the projection of the error of a one-step prime-corrected Riemann--von Mangoldt clock. The prime cutoff may depend arbitrarily and nonmonotonically on the index within each dyadic window, provided the intervening prime band has sufficiently small harmonic mass. The proof controls a maximal prime sum at clock points, includes all Euler prime powers, and does not require almost orthogonality or the Riemann hypothesis. Explicit nonconstant exponent laws are supplied, including a macroscopic oscillating exponent.
+\end{abstract}
+\tableofcontents
+
+\section{Statement and notation}
+Let
+\begin{equation}
+N_0(t)=\frac{t}{2\pi}\log\frac{t}{2\pi e}+\frac78,
+\qquad \LX(t)=N_0'(t)=\frac1{2\pi}\log\frac{t}{2\pi},
+\qquad N_0(\tau_k)=k-\frac12.
+\end{equation}
+Let $\gamma_k$ denote the true positive ordinates counted with multiplicity and put
+\begin{equation}
+\mathcal I_T=\{k:T\le\tau_k<2T\},\quad M=|\mathcal I_T|\asymp T\log T,
+\quad \av{z_k^2}=\frac1M\sum_{k\in\mathcal I_T}z_k^2.
+\end{equation}
+The prime Euler phase includes \emph{all} powers of each prime below the \emph{prime} cutoff:
+\begin{equation}
+S_X(t)=\sum_{p\le X}\sum_{m\ge1} a_{p^m}\sin(mt\log p),
+\qquad a_{p^m}=-\frac1{\pi m p^{m/2}}.
+\label{eq:fullphase}
+\end{equation}
+The construction uses \emph{no} true ordinate:
+\begin{equation}
+x_k=\tau_k-\frac{S_{X_k}(\tau_k)}{\LX(\tau_k)},
+\quad r_k=\LX(\tau_k)(x_k-\gamma_k),
+\quad s_k=k-\frac12-N_0(\gamma_k).
+\label{eq:construct}
+\end{equation}
+Fix $0<b<1$. Let $E_b(T)\subset\R^M$ be the linear space spanned by $\sin(\tau_k\log p^m)$ with $p^m\le T^b$ and let $P_b$ be the \emph{orthogonal projection} with respect to $M^{-1}\sum$. Define
+\begin{equation}
+\Omega_b[x]=\av{\bigl((I-P_b)r\bigr)^2},\qquad
+\Omega_b[s]=\av{\bigl((I-P_b)s\bigr)^2}.
+\label{eq:Omega}
+\end{equation}
+No invertibility of the Gram matrix is needed for the orthogonal projection.
+
+\begin{theorem}[Arbitrary index dependence within a thin prime band]\label{thm:main}
+Fix $0<c_0<b<1$. For every sufficiently large $T$, choose \emph{arbitrarily}, independently at every index $k\in\mathcal I_T$, cutoffs $X_k$ satisfying
+\begin{equation}
+2\le X_-(T)\le X_k\le X_+(T)\le T^{c_0}.
+\label{eq:band}
+\end{equation}
+Put
+\begin{equation}
+V_T=\sum_{X_-<p\le X_+}\frac1p.
+\label{eq:V}
+\end{equation}
+Then, unconditionally and uniformly in the complete sequence $(X_k)$,
+\begin{align}
+\left|\sqrt{\Omega_b[x]}-\sqrt{\Omega_b[s]}\right|
+&\ll_{b,c_0}\sqrt{V_T}+V_T+T^{-b/4}\log\log(3T)+T^{-1},
+\label{eq:sqrt}\end{align}
+where $V_T=0$ is allowed. In particular, using the unconditional ordinate bound $\av{s^2}\ll\log\log T$,
+\begin{align}
+|\Omega_b[x]-\Omega_b[s]|
+&\ll_{b,c_0}\sqrt{\log\log T}\,\mathcal E_T+\mathcal E_T^2,
+\\
+\mathcal E_T&=\sqrt{V_T}+V_T+T^{-b/4}\log\log(3T)+T^{-1}.
+\label{eq:energy}
+\end{align}
+If $V_T\ll1/\log T$, then
+\begin{equation}
+\boxed{\Omega_b[x]=\Omega_b[s]
+ +O_{b,c_0}\left(\sqrt{\frac{\log\log T}{\log T}}\right).}
+\label{eq:claimed}
+\end{equation}
+Crucially, $k\mapsto X_k$ need not be monotone, continuous, or representable as a smooth function of $\tau_k$.
+\end{theorem}
+
+\section{A maximal estimate at the RvM clock}
+\begin{lemma}[Prime maximal inequality]\label{lem:maximal}
+For any $2\le U<W\le T^{c_0}$, set
+\begin{equation}
+\mathcal Q(t)=\max_{U\le v\le W}
+\left|\sum_{U<p\le v}p^{-1/2}e^{it\log p}\right|,
+\qquad V=\sum_{U<p\le W}\frac1p.
+\end{equation}
+Then
+\begin{equation}
+\av{\mathcal Q(\tau_k)^2}\ll_{c_0}V.
+\label{eq:max}
+\end{equation}
+The bound is independent of the number and positions of primes in the band.
+\end{lemma}
+\begin{proof}
+Let $I=[T-1,2T+2]$. Choose a real nonnegative function
+$W_T(t)=C\operatorname{sinc}^2(\eta(t-3T/2)/T)$ with sufficiently small absolute $\eta>0$ and $C$ sufficiently large. It satisfies $W_T\ge1$ on $I$, $\int_\R W_T^2\ll T$, and $\widehat W_T$ is supported in $[-2\eta/T,2\eta/T]$. Choose $\eta$ so that the support of $\widehat{W_T^2}$ is contained in $[-4\eta/T,4\eta/T]$.
+
+Because consecutive distinct primes $p<q\le W$ satisfy $\log(q/p)\ge1/(2W)\gg T^{-c_0}$, the Fourier packets of
+\[W_T(t)\sum_{U<p\le W}p^{-1/2}e^{it\log p}\]
+are disjoint. Moreover every initial partial sum of these packets is a Fourier half-line truncation at a point between two consecutive packets. The Carleson--Hunt maximal theorem on $L^2(\R)$ therefore yields
+\begin{equation}
+\int_I\mathcal Q(t)^2dt
+\ll\int_\R W_T(t)^2\left|\sum_{U<p\le W}p^{-1/2}e^{it\log p}\right|^2dt
+=\left(\int_\R W_T^2\right)V\ll TV.
+\label{eq:QL2}
+\end{equation}
+The equality uses disjoint frequency support for the cross terms of $W_T^2$; equivalently, its Fourier transform vanishes at $\log(p/q)$ for $p\ne q$.
+
+The function $\mathcal Q$ is the maximum of finitely many Lipschitz moduli. Almost everywhere it satisfies
+\[|\mathcal Q'(t)|\le
+\max_{U\le v\le W}\left|\sum_{U<p\le v}i(\log p)p^{-1/2}e^{it\log p}\right|.
+\]
+Repeating the Fourier-packet argument with coefficients $(\log p)/\sqrt p$ gives
+\begin{equation}
+\int_I|\mathcal Q'(t)|^2dt\ll T(\log W)^2 V.
+\label{eq:Qprime}
+\end{equation}
+Successive RvM points in the window are separated by at least
+$h=2\pi/\log(3T)$; the intervals $[\tau_k,\tau_k+h]$ are disjoint and contained in $I$. For every absolutely continuous $g$ on an interval $[a,a+h]$,
+\begin{equation}
+|g(a)|^2\le\frac2h\int_a^{a+h}|g(t)|^2dt+2h\int_a^{a+h}|g'(t)|^2dt.
+\label{eq:Sobolev}
+\end{equation}
+Sum \eqref{eq:Sobolev} with $g=\mathcal Q$, use $hM\asymp T$, and insert \eqref{eq:QL2}--\eqref{eq:Qprime} to obtain
+\[\av{\mathcal Q(\tau_k)^2}\ll V\left(1+\frac{(\log W)^2}{\log^2T}\right)\ll_{c_0}V.\qedhere\]
+\end{proof}
+
+\section{Euler tails beyond the projected prime powers}
+\begin{lemma}[Unprojected high prime powers]\label{lem:tail}
+Assume $2\le X_-\le T^{c_0}$ and $0<b<1$. Then
+\begin{equation}
+F(t)=\sum_{p\le X_-}\sum_{m\ge2:\,p^m>T^b}a_{p^m}\sin(mt\log p)
+\end{equation}
+satisfies
+\begin{equation}
+\av{F(\tau_k)^2}^{1/2}\ll_{b,c_0}T^{-b/4}\log\log(3T).
+\label{eq:tail}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Fix $A=4$. First remove the terms $p^m>T^A$. For each $p\le T^{c_0}$, the geometric tail of $p^{-m/2}/m$, starting at the first $m$ with $p^m>T^A$, is $O(T^{-A/2})$, uniformly in $p$. Summing over at most $T^{c_0}$ primes, this contributes $O(T^{c_0-A/2})=O(T^{c_0-2})$ pointwise.
+
+For each $m\ge2$, put
+\[F_m(t)=\sum_{\substack{p\le X_-\\T^b<p^m\le T^A}}a_{p^m}\sin(mt\log p).\]
+These polynomials vanish unless $m\le A\log T/\log2$, and all occurring frequencies $m\log p$ are bounded by $A\log T$. Their positive frequencies are separated by at least $m/(2X_-)$, since $m\log(q/p)\ge m/(2X_-)$ for distinct $p,q\le X_-$. The generalized Montgomery--Vaughan/Hilbert inequality for separated frequencies yields, on any interval $J$ of length $T+O(1)$,
+\begin{equation}
+\int_J|F_m|^2dt\ll(T+X_-/m)\sum_p|a_{p^m}|^2,
+\quad
+\int_J|F_m'|^2dt\ll(T+X_-/m)(A\log T)^2\sum_p|a_{p^m}|^2.
+\label{eq:MV}
+\end{equation}
+The same sampling inequality \eqref{eq:Sobolev}, applied to $|F_m|$ (or directly to $F_m$), implies, as $X_-/T\ll T^{c_0-1}$,
+\begin{equation}
+\av{F_m(\tau_k)^2}^{1/2}\ll_A \left(\sum_p|a_{p^m}|^2\right)^{1/2}.
+\label{eq:Fsamp}
+\end{equation}
+For $m=2$, $p^2>T^b$ implies
+$\sum_p|a_{p^2}|^2\ll\sum_{n>T^{b/2}}n^{-2}\ll T^{-b/2}$. For $m\ge3$, use $p^{-m}\le T^{-b/2}p^{-m/2}$ on the summation range and
+$\sup_{m\ge3}\sum_p p^{-m/2}<\infty$, obtaining
+$\sum_p|a_{p^m}|^2\ll m^{-2}T^{-b/2}$.
+Minkowski's inequality in the discrete mean and summation over $2\le m\le A\log T/\log2$ now yield
+\[\av{(\sum_mF_m(\tau_k))^2}^{1/2}
+\ll T^{-b/4}\sum_{m\le A\log T/\log2}\frac1m
+\ll T^{-b/4}\log\log(3T).\]
+The discarded $O(T^{c_0-2})$ term is smaller. This proves \eqref{eq:tail}.
+\end{proof}
+
+\section{Proof of the stability theorem}
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let $y_k=S_{X_k}(\tau_k)$. Split it \emph{exactly} into
+\begin{equation}
+\begin{split}
+y_k={}&y_k^{\mathrm{proj}}+F(\tau_k)+e_k,\\
+y_k^{\mathrm{proj}}={}&\sum_{\substack{p\le X_-\\p^m\le T^b}}a_{p^m}\sin(\tau_k\log p^m),\\
+e_k={}&\sum_{X_-<p\le X_k}\sum_{m\ge1}a_{p^m}\sin(m\tau_k\log p).
+\end{split}
+\label{eq:split}
+\end{equation}
+The vector $y^{\mathrm{proj}}$ belongs to $E_b(T)$ and is \emph{annihilated} by $I-P_b$.
+
+By Lemma~\ref{lem:maximal}, the first harmonics of $e_k$ have discrete $L^2$ norm $O(\sqrt{V_T})$. All higher harmonics in the moving band obey the \emph{pointwise} estimate
+\begin{equation}
+\left|\sum_{X_-<p\le X_k}\sum_{m\ge2}a_{p^m}\sin(m\tau_k\log p)\right|
+\le C\sum_{X_-<p\le X_+}\frac1p=C V_T,
+\end{equation}
+by geometric summation of $\sum_{m\ge2}(mp^{m/2})^{-1}$. Thus
+\begin{equation}
+\av{e_k^2}^{1/2}\ll\sqrt{V_T}+V_T.
+\label{eq:edge}
+\end{equation}
+Lemma~\ref{lem:tail} controls $F$.
+
+For $\delta_k=\tau_k-\gamma_k$, Taylor's formula for $N_0$ gives the \emph{exact} identity
+\begin{equation}
+\LX(\tau_k)\delta_k=s_k+\chi_k,
+\qquad \chi_k=\LX(\tau_k)\delta_k-\bigl(N_0(\tau_k)-N_0(\gamma_k)\bigr).
+\label{eq:chi}
+\end{equation}
+The unconditional estimates $\delta_k=O(1)$ and $\LX'(t)=1/(2\pi t)$ imply $\sup_{\mathcal I_T}|\chi_k|\ll T^{-1}$. (They follow from the classical unconditional bound $S(t)=O(\log t)$ and the Riemann--von Mangoldt count; multiplicities are permitted.) Accordingly,
+\begin{equation}
+r=s-y+\chi,
+\qquad(I-P_b)r=(I-P_b)s-(I-P_b)(F+e-\chi).
+\end{equation}
+An orthogonal projection is a contraction. The reverse triangle inequality, \eqref{eq:edge} and Lemma~\ref{lem:tail} prove \eqref{eq:sqrt}.
+
+Finally the unconditional zero-ordinate second moment $\av{s^2}\ll\log\log T$ gives $\sqrt{\Omega_b[s]}\le\|s\|_2\ll\sqrt{\log\log T}$. Since
+\[|\Omega_b[x]-\Omega_b[s]|\le
+\left|\sqrt{\Omega_b[x]}-\sqrt{\Omega_b[s]}\right|
+\left(2\sqrt{\Omega_b[s]}+
+\left|\sqrt{\Omega_b[x]}-\sqrt{\Omega_b[s]}\right|\right),\]
+we obtain \eqref{eq:energy}--\eqref{eq:claimed}.
+\end{proof}
+
+\section{Genuine index-dependent exponent laws}
+\begin{corollary}[Macroscopic, varying exponent]\label{cor:osc}
+Fix $0<a<c_*$ and $c_*+a<b<1$. Put
+\begin{equation}
+\boxed{c(k)=c_*+a\sin\bigl(\log\log(\tau_k/2\pi)\bigr),\qquad
+X_k=(\tau_k/2\pi)^{c(k)}.}
+\label{eq:osc}
+\end{equation}
+Then $c(k)$ is nonconstant and varies through the fixed interval $[c_*-a,c_*+a]$ as $k\to\infty$. It nevertheless satisfies
+\begin{equation}
+\Omega_b[x]=\Omega_b[s]
++O_{a,c_*,b}\left(\sqrt{\frac{\log\log T}{\log T}}\right).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Write $u=\log(t/2\pi)$ and $F(u)=u(c_*+a\sin\log u)$. Then
+$F'(u)=c_*+a\sin\log u+a\cos\log u$ is bounded uniformly. The values of $u$ on $[T,2T]$ lie in an interval of length $\log2$. Consequently
+$\log(X_+/X_-)\ll_{a,c_*}1$ and $X_-\ge T^{c_*-a+o(1)}$; also $X_+\le T^{c_0}$ for some $c_*+a<c_0<b$. By Chebyshev's upper bound $\pi(y)\ll y/\log y$,
+$V_T\ll (X_+/X_-)/\log X_-\ll1/\log T$. Apply Theorem~\ref{thm:main}.
+\end{proof}
+
+\begin{corollary}[Arbitrarily oscillating index cutoff]\label{cor:wild}
+Fix $0<c<b<1$ and $A>0$, and let $(h_k)$ be \emph{any} sequence satisfying $|h_k|\le A$ (for example $h_k=A(-1)^k$). Put
+\begin{equation}
+\boxed{X_k=(\tau_k/2\pi)^c e^{h_k},\qquad
+c(k)=c+\frac{h_k}{\log(\tau_k/2\pi)}.}
+\end{equation}
+Then the conclusion \eqref{eq:claimed} holds, uniformly in $(h_k)$.
+\end{corollary}
+\begin{proof}
+Over $k\in\mathcal I_T$, $X_+/X_-\le2^ce^{2A}$ and $X_-\ge e^{-A}(T/2\pi)^c$. Choose $c<c_0<b$; for large $T$ the band satisfies \eqref{eq:band}. As before $V_T\ll_{A,c}1/\log T$, independently of all variations of $h_k$.
+\end{proof}
+
+\begin{corollary}[First slowly varying Casa\~na cutoff]\label{cor:slow}
+Let
+\begin{equation}
+X_k=(\tau_k/2\pi)^{(\log\log\tau_k)^{-1/2}}
+\end{equation}
+for sufficiently large $\tau_k$. For every fixed $b\in(0,1)$, the estimate \eqref{eq:claimed} holds.
+\end{corollary}
+\begin{proof}
+The derivative of $\log X(t)$ with respect to $\log t$ is $O((\log\log t)^{-1/2})$, so $\log(X_+/X_-)\ll(\log\log T)^{-1/2}$. Also $\log X_-\asymp\log T/(\log\log T)^{1/2}$. Set $h=X_+-X_-\ll X_-/(\log\log T)^{1/2}$. For large $T$, $\log h\asymp\log X_-$. The unconditional Brun--Titchmarsh estimate $\pi(y+h)-\pi(y)\ll h/\log h$ then gives
+\[
+V_T\le\frac{\pi(X_+)-\pi(X_-)}{X_-}
+\ll\frac{h}{X_-\log h}\ll\frac1{\log T}.
+\]
+Furthermore $X_+\le T^{c_0}$ for any fixed $c_0\in(0,b)$ once $T$ is large. Apply Theorem~\ref{thm:main}.
+\end{proof}
+
+\begin{remark}[The actual hypothesis, and its limitation]
+The conclusion is \emph{uniform for arbitrary index-by-index variation} in the band \eqref{eq:band}. The smallness of the harmonic mass $V_T$, not index monotonicity, is the hypothesis. Merely assuming $X_k\le T^{c_0}$ while permitting $X_k$ to range from $2$ to $T^{c_0}$ gives $V_T\asymp\log\log T$, so this theorem does \emph{not} assert stability for that unrestricted regime. The latter would require a separate cancellation mechanism and is not established here. The statement concerns the one-step construction, not nonlinear multi-step transport.
+\end{remark}
+
+\begin{thebibliography}{9}
+\bibitem{CarlesonHunt} L.~Carleson, On convergence and growth of partial sums of Fourier series, \emph{Acta Math.} 116 (1966), 135--157; R.~Hunt, On the convergence of Fourier series, \emph{Orthogonal Expansions and Their Continuous Analogues} (1968), 235--255. Standard real-line $L^2$ maximal Fourier projection form.
+\bibitem{MV} H.~L.~Montgomery and R.~C.~Vaughan, Hilbert's inequality, \emph{J. London Math. Soc.} (2) 8 (1974), 73--82. Generalized Hilbert inequality for separated frequencies.
+\bibitem{BT} H.~L.~Montgomery and R.~C.~Vaughan, The large sieve, \emph{Mathematika} 20 (1973), 119--134. Brun--Titchmarsh inequality (standard consequence).
+\bibitem{Selberg} A.~Selberg, Contributions to the theory of the Riemann zeta-function, \emph{Arch. Math. Naturvid.} 48 (1946). Mean squares of $S(t)$, coupled with ordinate transfer.
+\end{thebibliography}
+\end{document}

@@ -496,3 +496,13 @@
 - Prueba incondicional de \(B_T\le4\sum_{k\in\mathcal I_T}(k-\tfrac12-F(\gamma_k))^2\) y de \(B_T\le2\#\{|u_k|\ge1/2\}\), sin imponer RH ni emplear ceros en la construcción del reloj.
 - Reconstrucción de la vía M anterior: identidad elemental \(M_X^*(x)=M^*(x)\) para \(x\le X\), comparación Perron \( \varpi_X M_{C,X}=M_X^*+\mathcal R_X\) bajo condición vertical explícita de integrabilidad, y prueba de que estimaciones uniformes en \(X\) implicarían RH; esas estimaciones no se declaran demostradas.
 - Ningún manuscrito versionado, ni archivos de Claude, ni el repositorio LIBRARY TOTAL fueron modificados.
+
+## 2026-10-25 — [chatgpt] — sube git: archive v8-v11, proof sources and review of 9724b05
+- Archived the previously generated source pairs CasanyaLawI_v8..v11 .tex/.txt under chatgpt/manuscripts/; preserved their text and equation labels. No new mathematical version is claimed.
+- Archived the two notes with paired source: casi_ortogonalidad_potencias_primas_RvM and lema_Omega_corte_variable_k under chatgpt/notes/, plus v9/v10 audit reports.
+- Archived the full previous displayed mathematical review as chatgpt/display/2026-10-25_cota_VT_teorema_bloques_revision_0494.{md,txt}, with handoff note under chatgpt/notes/.
+- Critical correction to Claude's exact counting theorem: B_T is <= (not necessarily =) the total size of repeated-ordinate blocks, because a simple on-line zero could share its ordinate with others. Proof and factor 4 remain valid. Threshold for strictly beating 41.73%: <u^2><0.145675.
+- The 0.494 bound is not established as a general barrier by v14; it is an artifact of one Cauchy--Schwarz expression and requires distinguishing dt vs dF weight. For specified index-varying narrow cutoffs, Mertens gives V_T loglog T -> 0 and thus stability of Omega assuming the recorded maximal estimate.
+- This commit does not modify Claude-owned notes, frozen manuscript, or binary datasets. PDF artifacts were already delivered in chat but cannot be uploaded by available text-only GitHub connector; do not report them as pushed.
+→ claude: see chatgpt/display/2026-10-25_cota_VT_teorema_bloques_revision_0494.md for complete corrections.
+

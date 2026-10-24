@@ -1,0 +1,40 @@
+CASANYALAWI_V10 — INFORME DE CORRECCIONES Y COMPROBACIONES
+24 de octubre de 2026
+
+MATERIAL
+CasanyaLawI_v9.tex (2102 líneas); CasanyaLawI_v10.tex (2300 líneas)
+CasanyaLawI_v10.pdf (28 páginas)
+Fuente matemática comparada: notas v7/v14 anteriores y PDF de Fujii, Montgomery–Vaughan y Korolev conservados en LIBRARY TOTAL.
+
+CAMBIOS RESPECTO DE LA V9
+
+1. VENTANAS DE LOCALIZACIÓN (lem:clocklocal, lem:multcorrected, lem:shorttransport):
+Se fija una misma constante C_loc en |tau_k-gamma_k| <= C_loc. Se amplían las ventanas de las estimaciones de derivadas, los soportes del recorte suave y la definición de hat-xi. Se comprueba que los intervalos tienen longitud T+O(C_loc) y que la dependencia es absoluta.
+
+2. COLA DE POTENCIAS PRIMAS (lem:secondreplacement):
+Se inserta la descomposición Q=Q^flat+H_2^flat. Para p<=R, las potencias omitidas son p^m>R². Usando las series geométricas y cotas elementales de primos, se obtiene ||H_2^flat||_infty <<1/logR y ||(H_2^flat)'||_infty <<1. El desplazamiento de los puntos hace que la cola transportada sea o(1) en L². El polinomio finito restante se controla por maximal y muestreo cuadrático.
+
+3. MOMENTOS FIJOS DE FUJII Y EXTREMOS (thm:selberginput, lem:higherordinal):
+Para cada h fijo se especifica x_h=T^{1/(300h)}, R_h=T^{1/(100h)}, Y_h=T^{1/(80h)}, H=T y el requisito T>=2^{300h}. Se descomponen la parte suavizada, la banda prima ampliada, los cuadrados de primos y las potencias mayores, verificando que las longitudes de los polinomios elevados son <T. Se deriva explícitamente el octavo momento continuo y su transferencia al defecto ordinal.
+
+4. CORRELACIÓN DISCRETA PARA R6 (lem:discretepp, thm:secondresponse):
+Se estima cada frecuencia log(p^m/q) y log(p^mq) con el lema exponencial del reloj, con p^m<=X_2²=T^{o(1)}, m>=2 y q primo <=T^{1/2}. No existe diagonal p^m=q. Tras sumar absolutamente los coeficientes, el término de potencias primas truncadas es O(T^{-1/4+o(1)}) de manera uniforme sobre cualquier subconjunto de primos. La cola infinita se controla separadamente por Cauchy–Schwarz y la masa armónica del subconjunto.
+
+CONTROL DE INTEGRIDAD Y EDICIÓN
+- PDF compilado: 28 páginas A4, 22 entradas de índice y enlaces internos.
+- Archivos .tex y .txt: idénticos byte a byte.
+- Referencias LaTeX internas: no quedan avisos de referencias indefinidas en el registro de compilación.
+- Etiquetas duplicadas: ninguna; dependencias internas de teoremas: sin ciclos en el control automatizado.
+- No se ha modificado GitHub.
+
+NOTA SOBRE EL NUEVO TEOREMA S2 COMPARTIDO DESPUÉS DE INICIAR LA V10
+La nota local de S2 no forma parte de la v10. Como está formulada en el mensaje, hay dos problemas matemáticos que requieren corrección:
+
+(a) El vector de respuestas R=V^T s y el vector de coeficientes d de una corrección lineal se relacionan mediante la matriz de Gram G=V^T V. La proyección exacta es d_opt=G^{-1}R, no R. La identidad de Pitágoras precisa es
+||s-Vd||²=||s||²-R^T G^{-1}R+(d-G^{-1}R)^T G(d-G^{-1}R).
+La fórmula sin G^{-1}, con un residuo ortogonal independiente de la construcción, no es exacta y no se vuelve uniformemente una igualdad multiplicativa si R=d y G!=I. La casi ortogonalidad de v10 se demuestra para armónicos de primer orden p<=T^{1/2}; no para todas las potencias primas hasta T^b, b<1. La extensión requiere prueba independiente, especialmente cerca de la resonancia de las frecuencias-producto.
+
+(b) Para I(c)=int_0^c Phi(theta)^2 dtheta/theta+int_c^1 (1-Phi(theta))^2 dtheta/theta,
+I'(c)=[2Phi(c)-1]/c. Si Phi es decreciente, un cruce Phi(c)=1/2 pasa de derivada positiva a negativa: es un máximo local, no un mínimo. Por tanto la afirmación 'c*=0.676 minimiza I' no se desprende de la integral suministrada. También se debe comprobar la convergencia de las integrales en el extremo 0 y el carácter dependiente de T del perfil de la v10.
+
+Estos reparos de S2 no invalidan por sí solos las cuatro reparaciones introducidas en la v10. Tampoco puede considerarse S2 demostrado incondicionalmente solo por la aplicación informal de Pitágoras.

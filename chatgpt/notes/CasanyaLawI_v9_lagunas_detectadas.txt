@@ -1,0 +1,30 @@
+REVISIÓN CRÍTICA DE CasanyaLawI_v9
+24 octubre 2026
+Documento revisado: /mnt/data/CasanyaLawI_v9.tex (2102 líneas)
+
+DICTAMEN
+No se puede certificar íntegramente la demostración de los teoremas R1–R6 con el texto actual. Los problemas siguientes son localizables y subsanables en principio; no equivalen a contraejemplos de las conclusiones asintóticas.
+
+1. LOCALIZACIÓN EN VENTANAS DE TAMAÑO 1 NO JUSTIFICADA (incide en R1–R6)
+Líneas 148–181: lem:clocklocal solo demuestra |tau_k-gamma_k|<=C con C absoluto, sin C<=1.
+Líneas 972–975: lem:shorttransport corta phi=1 en [T-1,2T+1], y afirma que el segmento que une gamma_k a tau_k queda allí para todo k en (T,2T]. No se deduce de |tau-gamma|<=C. Si C>1, el segmento puede salirse del soporte unitario, y no coincide la integral de S'_X con la de phi S'_X.
+Líneas 818–827: lem:multcorrected integra |Pi'|² en [T-1,2T+1] aunque los tau_k pueden estar en [T-C,2T+C].
+Reparación candidata: reemplazar estas ventanas por [T-C-D,2T+C+D] en todas las aplicaciones pertinentes, mostrar que la constante es independiente de T y rehacer las pruebas de Sobolev, maximal y multiplicidad. Alternativamente demostrar una cota explícita C<=1 con una fuente rigurosa.
+
+2. LA SUSTITUCIÓN Q=S_{X2} POR Q^flat NO ESTÁ CONTROLADA EN EL LEMA DEL SEGUNDO RELOJ (incide en R1–R6)
+Líneas 1060–1096: lem:secondreplacement pretende acotar |Q(gamma)-Q(x1)| mediante la maximal de Q', pero invoca lem:maxsample con f=(Q^flat)' (líneas 744–750, 787–796). Q contiene la cola de potencias primas con p^m>X2^2, que no aparece en Q^flat. La proximidad uniforme ||Q-Q^flat||∞=O(1/log X2) se formula solo después (líneas 1334–1342) y no se incorpora al argumento del transporte del lema 1060. Se requiere justificar explícitamente que las derivadas de esa cola contribuyen O(1), o descomponer Q(gamma)-Q(x1) en Q^flat y los dos valores de la cola y cuantificarlo en L². El error uniforme O(1/log X2) sí sería suficiente, pero esta prueba no está escrita ni referenciada al invocar el lema.
+
+3. MOMENTOS DE ORDEN SUPERIOR: ADAPTACIÓN EXTERNA SIN ENUNCIADO PRECISO (afecta segundo paso y R1–R6)
+Líneas 896–956: lem:higherordinal, para cada m fijo, invoca una estimación Selberg–Fujii de orden 4m y una aproximación con corte Y_{2m}=T^{a_m}, pero el teorema externo explicitado antes, thm:selberginput (líneas 385–438), solo formula y deriva el cuarto momento m=2. No se explicitan los valores admisibles de a_m, los factores en m ni la verificación de la ampliación de corte respecto de X=T^c para toda c que admite el lema. Además se utiliza el momento octavo de S(t) para obtener ||s||_8 sin enunciar su fórmula externa precisa. Para una certificación autónoma hay que incorporar y cotejar los enunciados en el rango usado y completar esa adaptación.
+
+4. LA APLICACIÓN DEL LEMA DE MUESTREO A LA DERIVADA COMPLETA REQUIERE ANÁLISIS DE LA COLA (relacionado con 2)
+Líneas 979–989, 1013–1039 y 1060–1096: los momentos de derivadas se obtienen mediante polinomios finitos y control separado de m>=3. En el segundo muestreo se necesita que la cota de la derivada de los armónicos omitidos sea uniforme en los puntos desplazados. La cita a lem:maxsample con (Q^flat)' no alcanza Q' sin demostrar ese control. Este punto puede cerrarse con una cota directa de la cola, pero la versión presente no la demuestra.
+
+5. CORRELACIÓN DE POTENCIAS PRIMAS EN R6 SIN COTA DETALLADA
+Líneas 1939–1947 (demostración de thm:secondresponse): después de calcular la diagonal de Q(tau), el manuscrito afirma que las correlaciones de los armónicos p^m (m>=2) con las pruebas por primos son despreciables citando muestreo separado y Montgomery--Vaughan. Montgomery--Vaughan controla integrales en t, no automáticamente el promedio discreto en los tau_k. Hay que escribir la descomposición y aplicar el test del reloj a las frecuencias log(p^m/q), con p^m<=X2² y q<=T^{1/2}, y cuantificar conjuntamente todos los coeficientes y la cola. Sin esta estimación concreta, R6 no queda cerrado por el texto presentado.
+
+RESULTADOS QUE NO SE DESCARTAN POR ESTOS HALLAZGOS
+Las identidades finitas de Taylor y de conteo cúbico, la dualidad finita de bandas, la identidad de transporte espectral y el criterio condicional de separación son algebraicamente correctos según la comprobación realizada. Las tres dependencias analíticas anteriores impiden, sin embargo, certificar por arrastre las afirmaciones avanzadas R1–R6.
+
+CONDICIÓN PARA CERTIFICACIÓN
+Cerrar las ventanas de localización, el transporte de la cola de Q y la formulación/cotejo de los momentos de orden superior; repetir después todas las dependencias analíticas de R1–R6 sobre los lemas reparados. Hasta entonces el estado correcto es 'demostración incompleta en el manuscrito', no 'teorema refutado'.

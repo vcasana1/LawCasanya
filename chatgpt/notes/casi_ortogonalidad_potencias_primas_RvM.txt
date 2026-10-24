@@ -1,0 +1,271 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\HS}{HS}
+\DeclareMathOperator{\dist}{dist}
+\newcommand{\PP}{\mathcal Q}
+\newcommand{\IT}{\mathcal I_T}
+\newcommand{\cT}{C_T}
+\newcommand{\Nzero}{N_0}
+\title{Unconditional Almost Orthogonality of Prime-Power Phases on the Riemann--von Mangoldt Clock}
+\author{Rotkiv Ayn\"asac}
+\date{24 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+For each fixed $0<b<1$, we prove operator-norm almost orthogonality of the real sine phases $\sin(\tau_k\log n)$ for all prime powers $2\le n\le T^b$, sampled at the synthetic Riemann--von Mangoldt clock. The proof is unconditional. The only potentially stationary product frequencies occur when $nm\asymp T$; their total contribution is controlled by the sparsity of pairs of prime powers. An exact projection identity and its relative approximation follow, without any assumptions about the ordinates of zeta zeros.
+\end{abstract}
+\tableofcontents
+\section{The statement and conventions}
+For $t>2\pi$ put
+\begin{equation}
+\Nzero(t)=\frac{t}{2\pi}\log\frac{t}{2\pi e}+\frac78,
+\qquad \Lambda(t)=\Nzero'(t)=\frac1{2\pi}\log\frac{t}{2\pi}.
+\label{eq:clock}
+\end{equation}
+Let $\tau_k$ be the eventually increasing sequence defined by
+$\Nzero(\tau_k)=k-\tfrac12$ (the finitely many initial values do not affect the theorem). Fix $0<b<1$, let
+\begin{equation}
+\PP_b(T)=\{p^a: p\text{ prime},\ a\in\mathbb N,\ 2\le p^a\le T^b\},\quad
+\IT=\{k:T\le\tau_k<2T\},\quad M=|\IT|,
+\label{eq:sets}
+\end{equation}
+and introduce vectors in $\mathbb R^M$ by
+\begin{equation}
+ v_n(k)=\sqrt{\frac{2}{M}}\sin(\tau_k\log n),\qquad
+ G=(\langle v_n,v_m\rangle)_{n,m\in\PP_b(T)}.
+\label{eq:gram}
+\end{equation}
+All implied constants may depend on the fixed $b$ but not on $T$. The number of points satisfies
+\begin{equation}
+M=\Nzero(2T)-\Nzero(T)+O(1)\asymp T\log T.
+\label{eq:M}
+\end{equation}
+
+\begin{theorem}[Prime-power almost orthogonality]\label{thm:main}
+For every fixed $0<b<1$, the Gram matrix in \eqref{eq:gram} satisfies
+\begin{equation}
+\boxed{\quad\|G-I\|_{\op}
+\ll_b T^{b-1}\log T+(\log T)^{-1/2}.\quad}
+\label{eq:main}
+\end{equation}
+In particular $\|G-I\|_{\op}\ll_b(\log T)^{-1/2}$, and for all sufficiently large $T$ the vectors $(v_n)_{n\in\PP_b(T)}$ are linearly independent.
+\end{theorem}
+
+\begin{remark}[Scope]
+The fixed inequality $b<1$ is essential to the present argument, both in the quotient estimates and in keeping the first derivative of product phases away from the integer $2$. There is no assertion uniform as $b\uparrow1$, nor an assertion at $b=1$. The vectors are normalized with the ordinary Euclidean scalar product, not with a second factor $1/M$.
+\end{remark}
+
+\section{Exponential sums on the clock}
+Set, for $u>0$,
+\begin{equation}
+\cT(u)=\frac1M\sum_{k\in\IT}e^{i\tau_k\log u}.
+\label{eq:C}
+\end{equation}
+For the following estimates we use two standard unconditional exponential-sum inequalities. If a $C^1$ real phase $F$ has monotone derivative whose distance to the nearest integer is at least $\lambda>0$, the Kusmin--Landau bound is $|\sum e^{2\pi i F(k)}|\ll\lambda^{-1}$ (when the derivative remains in one component of $\mathbb R\setminus\mathbb Z$). If $F''$ has constant sign and $\lambda\le |F''|\le A\lambda$, with fixed $A$, the van der Corput second-derivative bound is
+\begin{equation}
+\left|\sum_{k\in J\cap\mathbb Z}e^{2\pi i F(k)}\right|
+\ll_A |J|\sqrt\lambda+\lambda^{-1/2}.
+\label{eq:vdC}
+\end{equation}
+Both estimates hold for any real interval $J$ of consecutive indices.
+
+Extend $k\mapsto\tau_k$ to a smooth increasing inverse $x\mapsto\tau_x$ of $\Nzero$, and for $u>1$ put
+\begin{equation}
+F_u(x)=\frac{\tau_x\log u}{2\pi}.
+\label{eq:F}
+\end{equation}
+Differentiation of $\Nzero(\tau_x)=x-\tfrac12$ gives, uniformly when $\tau_x\in[T,2T]$,
+\begin{equation}
+F_u'(x)=\frac{\log u}{\log(\tau_x/2\pi)},\qquad
+F_u''(x)=-\frac{2\pi\log u}{\tau_x\log^3(\tau_x/2\pi)}.
+\label{eq:derivs}
+\end{equation}
+Thus $F_u'$ is monotone decreasing and $F_u''<0$ for $u>1$.
+
+\begin{lemma}[Quotient frequencies]\label{lem:quotient}
+If $2\le m<n\le T^b$ are integers (not necessarily prime powers), then
+\begin{equation}
+|\cT(n/m)|\ll_b\frac{1}{T\log(n/m)}
+\ll_b\frac{\max(n,m)}{T|n-m|}.
+\label{eq:quotient}
+\end{equation}
+\end{lemma}
+\begin{proof}
+The derivative in \eqref{eq:derivs} with $u=n/m$ obeys
+\[
+0<\frac{\log(n/m)}{\log(T/\pi)}\le F_u'(x)
+\le \frac{b\log T}{\log(T/2\pi)}<\frac{1+b}{2}<1
+\]
+for $T$ large depending on $b$. Hence its distance to an integer is at least a constant depending on $b$ times $\log(n/m)/\log T$. Kusmin--Landau and \eqref{eq:M} give the first bound. Finally
+$\log(n/m)=\int_m^n dt/t\ge(n-m)/n$.
+\end{proof}
+
+\begin{lemma}[Product frequencies]\label{lem:product}
+For integers $n,m\ge2$ with $nm\le T^{2b}$, write $u=nm$. Then
+\begin{align}
+|\cT(u)|&\ll_b T^{-1},&&u\notin[T/(4\pi),4T],\label{eq:nonres}\\
+|\cT(u)|&\ll T^{-1/2},&&u\in[T/(4\pi),4T].\label{eq:res}
+\end{align}
+\end{lemma}
+\begin{proof}
+For $u<T/(4\pi)$, $0<F_u'(x)<1$ and
+\[
+1-F_u'(x)
+=\frac{\log(\tau_x/(2\pi u))}{\log(\tau_x/2\pi)}
+\ge\frac{\log2}{\log(T/\pi)}\gg(\log T)^{-1}.
+\]
+Also $F_u'(x)\ge\log4/\log(T/\pi)\gg(\log T)^{-1}$.
+For $u>4T$, the phase derivative satisfies $F_u'(x)>1$, and
+\[
+ F_u'(x)-1=\frac{\log(2\pi u/\tau_x)}{\log(\tau_x/2\pi)}
+\ge\frac{\log(4\pi)}{\log(T/\pi)}\gg(\log T)^{-1}.
+\]
+Moreover $F_u'(x)\le 2b\log T/\log(T/2\pi)<2-(1-b)$ for $T$ sufficiently large. Thus in both nonresonant regions $F_u'$ stays uniformly at distance $\gg_b1/\log T$ from every integer. Kusmin--Landau bounds the unnormalized sum by $O_b(\log T)$, which gives \eqref{eq:nonres}.
+
+In the resonant region $u\in[T/(4\pi),4T]$, we have $\log u\asymp\log T$. Equation \eqref{eq:derivs} implies
+\[
+\frac{c}{T\log^2T}\le|F_u''(x)|\le\frac{C}{T\log^2T}
+\]
+with absolute constants $c,C>0$, uniformly on the index interval. Apply \eqref{eq:vdC} with $\lambda\asymp(T\log^2T)^{-1}$ and length $M\asymp T\log T$. The unnormalized sum is $O(\sqrt T\log T)$, giving \eqref{eq:res}.
+\end{proof}
+
+\section{Counting potentially resonant prime-power pairs}
+Write
+\begin{equation}
+\mathcal R_b(T)=\#\{(n,m)\in\PP_b(T)^2:\ T/(4\pi)\le nm\le4T\}.
+\label{eq:R}
+\end{equation}
+We use only the elementary prime-count upper bound $\pi(y)\ll y/\log y$ for $y\ge3$ and the bound
+\begin{equation}
+\#\{p^a\le y:a\ge2\}\ll\sqrt y\qquad(y\ge2).
+\label{eq:powercount}
+\end{equation}
+Indeed the $a=2$ contribution is $\le\sqrt y$, and the remaining $a\ge3$ contribute $O(y^{1/3}\log y)=O(\sqrt y)$.
+
+\begin{lemma}[Sparse resonant region]\label{lem:pairs}
+For each fixed $0<b<1$,
+\begin{equation}
+\mathcal R_b(T)\ll_b\frac{T}{\log T}.
+\label{eq:paircount}
+\end{equation}
+\end{lemma}
+\begin{proof}
+For a pair counted in \eqref{eq:R}, the bounds $n,m\le T^b$ force
+\begin{equation}
+ n,m\ge\frac{T^{1-b}}{4\pi}.
+\label{eq:bothlarge}
+\end{equation}
+Partition the possible $n$ into $O(\log T)$ dyadic intervals $[N,2N)$, where $N\gg T^{1-b}$ and $N\ll T^b$. For each such interval, $m$ must lie in
+\begin{equation}
+\frac{T}{8\pi N}\le m\le\frac{4T}{N}.
+\label{eq:mdyad}
+\end{equation}
+Both $N$ and $T/N$ are bounded below by a positive power of $T$ depending on $b$. Thus the number of prime $n$ in the interval is $O_b(N/\log T)$, and the number of prime $m$ in \eqref{eq:mdyad} is $O_b((T/N)/\log T)$. Consequently, prime--prime pairs contribute at most $O_b(T/\log^2T)$ on each dyadic interval, and hence
+\begin{equation}
+\mathcal R_{\mathrm{prime},\mathrm{prime}}\ll_b T/\log T.
+\label{eq:pp}
+\end{equation}
+If $n$ is prime and $m$ a proper prime power, the same dyadic interval contributes at most
+\[
+O_b\left(\frac{N}{\log T}\sqrt{\frac{T}{N}}\right)
+=O_b\left(\frac{\sqrt{TN}}{\log T}\right).
+\]
+Summing the geometric series over dyadic $N\ll T^b$ gives
+$O_b(T^{(1+b)/2}/\log T)$; reverse the roles to handle proper-power--prime pairs. If both are proper prime powers, each dyadic interval contributes at most
+$O(\sqrt N\sqrt{T/N})=O(\sqrt T)$, hence $O(\sqrt T\log T)$ overall. Since $b<1$ is fixed, both bounds are $o(T/\log T)$. Combine these estimates with \eqref{eq:pp}.
+\end{proof}
+
+\section{Operator-norm estimate and projection consequence}
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+The identity $2\sin A\sin B=\cos(A-B)-\cos(A+B)$ gives
+\begin{equation}
+G_{nm}=\Re\cT(n/m)-\Re\cT(nm).
+\label{eq:decomp}
+\end{equation}
+Let $D_{nm}=\mathbf1_{n\ne m}\Re\cT(n/m)$ and $H_{nm}=\Re\cT(nm)$. Since $\cT(1)=1$,
+\begin{equation}
+G-I=D-H.
+\label{eq:DH}
+\end{equation}
+Put $N_b=|\PP_b(T)|\le T^b$. By Lemma \ref{lem:quotient}, summing over all integers $m$ rather than just prime powers,
+\begin{equation}
+\sum_{m\in\PP_b(T):m\ne n}|D_{nm}|
+\ll_b \frac{T^b}{T}\sum_{1\le |d|\le T^b}\frac1{|d|}
+\ll_b T^{b-1}\log T.
+\label{eq:rows}
+\end{equation}
+The matrix $D$ is real symmetric. The Schur row-sum bound therefore gives
+\begin{equation}
+\|D\|_{\op}\ll_b T^{b-1}\log T.
+\label{eq:Dop}
+\end{equation}
+
+By Lemma \ref{lem:product}, separating the $\mathcal R_b(T)$ resonant pairs from the others,
+\begin{equation}
+\|H\|_{\HS}^2=\sum_{n,m\in\PP_b(T)}|\Re\cT(nm)|^2
+\ll_b \frac{N_b^2}{T^2}+\frac{\mathcal R_b(T)}{T}
+\ll_b T^{2b-2}+\frac1{\log T},
+\label{eq:HHS}
+\end{equation}
+where Lemma \ref{lem:pairs} supplies the final estimate. As $\|H\|_{\op}\le\|H\|_{\HS}$,
+\begin{equation}
+\|H\|_{\op}\ll_b T^{b-1}+(\log T)^{-1/2}.
+\label{eq:Hop}
+\end{equation}
+The triangle inequality applied to \eqref{eq:DH}, \eqref{eq:Dop} and \eqref{eq:Hop} proves \eqref{eq:main}. The final claims follow since $T^{b-1}\log T=o((\log T)^{-1/2})$ for fixed $b<1$, and $\|G-I\|_{\op}<1$ implies positive definiteness.
+\end{proof}
+
+\begin{corollary}[Relative Pythagorean decomposition]\label{cor:S2}
+Let $r\in\mathbb R^M$ be arbitrary, let $V$ be the $M\times N_b$ matrix with columns $v_n$, and let $w=V^{\mathsf T}r$. For $T$ large depending on $b$, the orthogonal projection onto $\mathrm{ran}(V)$ is $P=VG^{-1}V^{\mathsf T}$, and
+\begin{equation}
+\boxed{\quad\|r\|_2^2=(1+O_b((\log T)^{-1/2}))\|w\|_2^2
++\|(I-P)r\|_2^2.\quad}
+\label{eq:S2}
+\end{equation}
+The coefficient of $\|w\|_2^2$ lies between $1/(1+\varepsilon_T)$ and $1/(1-\varepsilon_T)$ for $\varepsilon_T=\|G-I\|_{\op}<1$. Consequently the error in \eqref{eq:S2} is genuinely relative, even if $w=0$, and the residual is nonnegative.
+\end{corollary}
+\begin{proof}
+Since $G=V^{\mathsf T}V$ is positive definite, $P$ is an orthogonal projection and
+\[
+\|Pr\|_2^2=w^{\mathsf T}G^{-1}w.
+\]
+The eigenvalues of $G$ lie in $[1-\varepsilon_T,1+\varepsilon_T]$. Therefore
+\[
+\frac{\|w\|_2^2}{1+\varepsilon_T}
+\le w^{\mathsf T}G^{-1}w
+\le\frac{\|w\|_2^2}{1-\varepsilon_T}.
+\]
+Apply Pythagoras $\|r\|_2^2=\|Pr\|_2^2+\|(I-P)r\|_2^2$.
+\end{proof}
+
+\begin{remark}[Relation to an S2 response formula]
+The corollary holds for every error vector $r$, without the Riemann hypothesis, any construction of actual zeros, or an assumption on response coefficients. To rewrite $\|w\|_2^2$ as a prescribed sum $\sum_n a_n^2|R_n^\tau-\mathcal A_n|^2/2$, one must first establish, with precisely the same normalization, the identities $w_n=\sqrt{M/2}\,a_n(R_n^\tau-\mathcal A_n)$. Under those identities, dividing \eqref{eq:S2} by $M$ gives the S2-type formula
+\[
+\frac1M\sum_{k\in\IT}r_k^2=\bigl(1+O_b((\log T)^{-1/2})\bigr)\sum_{n\in\PP_b(T)}\frac{a_n^2}{2}|R_n^\tau-\mathcal A_n|^2+\frac{\|(I-P)r\|_2^2}{M}.
+\]
+This identification is \emph{separate} from almost orthogonality. Likewise, independence of the residual from a particular correction holds only when that correction lies in $\mathrm{ran}(V)$.
+\end{remark}
+
+\section{Window indexed by genuine zero ordinates}
+\begin{corollary}[Change of index window]\label{cor:zeros}
+Theorem \ref{thm:main} and Corollary \ref{cor:S2} remain valid, with the same order of error, if $\IT$ is replaced by the consecutive indices $\IT^\gamma=\{k:T\le\gamma_k<2T\}$ of the positive ordinates of the nontrivial zeros of $\zeta$, counted with multiplicity, while the phases are \emph{still evaluated at the synthetic clock points} $\tau_k$.
+\end{corollary}
+\begin{proof}
+The unconditional Riemann--von Mangoldt count $N(t)=\Nzero(t)+O(\log t)$ implies $k-\tfrac12-\Nzero(\gamma_k)=O(\log\gamma_k)$, with multiplicities included. Since $\Nzero'(t)\asymp\log t$ on dyadic intervals, the mean-value theorem yields $|\tau_k-\gamma_k|\ll1$ for large $k$. Consequently the two index sets differ only at the endpoints, by $O(\log T)$ indices, because $\Nzero$ advances by $O(\log T)$ over any bounded interval near $T$ or $2T$. Their cardinalities are both $\asymp T\log T$ and differ by $O(\log T)$. Every Gram entry changes by $O(1/T)$ (including the normalization), so the operator norm of the change is $\ll N_b/T\ll T^{b-1}$, by the row-sum bound. Absorb this in \eqref{eq:main}.
+\end{proof}
+
+\section{Conclusion}
+For every fixed $0<b<1$, the entire family of prime-power sine phases up to $T^b$ is asymptotically orthonormal on the synthetic Riemann--von Mangoldt clock, in operator norm. The unconditional bound is stronger than $O_b((\log T)^{-1/4})$. No assumption about the real parts of nontrivial zeta zeros is used. The endpoint $b=1$, a uniform theorem as $b\uparrow1$, and any separate law identifying projections with arithmetic response coefficients are not asserted.
+\end{document}

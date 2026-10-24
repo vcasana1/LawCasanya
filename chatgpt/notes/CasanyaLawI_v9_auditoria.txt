@@ -1,0 +1,45 @@
+AUDITORÍA MATEMÁTICA DE CasanyaLawI_v8 Y CORRECCIONES INTEGRADAS EN CasanyaLawI_v9
+24 de octubre de 2026
+
+OBJETO Y ALCANCE
+Se auditan las 25 páginas del archivo LaTeX v8: 44 enunciados de tipo teorema/lema/proposición/corolario, la tabla de símbolos, las pruebas y sus dependencias, las seis consecuencias R1–R6 y las fuentes matemáticas empleadas. Se comprueban las formulaciones originales de Fujii 1974 (págs. 225–235, especialmente 232–233), Fujii 1981 (págs. 33–40), Montgomery–Vaughan 1974, y Kinnunen 1997. El análisis se hace con los PDF originales de la biblioteca, no mediante inferencias basadas únicamente en OCR.
+
+RESULTADO MATEMÁTICO QUE IMPIDE CERTIFICAR v8 TAL COMO ESTABA
+En el lema de perfil gaussiano la prueba afirmaba que, para la fase de Euler TRUNCADA f_r, se tenía sup|f_r| <= arcsin(r^(-1/2))/pi <= 1/4. Es falso para truncaciones finitas. Contraejemplo exacto: para r=2 y truncación en m=2, en θ=π/3, el valor absoluto de la suma de senos es (sqrt(3)/(2*pi))*(1/sqrt(2)+1/4) = 0.263840312..., mayor que 1/4. El máximo de la fase COMPLETA no acota necesariamente todos sus truncamientos.
+
+Corrección incorporada en v9: para cualquier truncación y cualquier r>=2,
+ |f_r(θ)| <= (1/pi) sum_{m>=1} r^{-m/2}/m
+           = -log(1-r^{-1/2})/pi
+           <= -log(1-2^{-1/2})/pi
+           = 0.390867726... < 1/2.
+Para |ξ|<=π+o(1), se sigue |ξ f_r|<π/2 y cada promedio del coseno es estrictamente positivo. Esta desigualdad es válida tanto para las fases completas como para P0 y P1, truncadas, y justifica los logaritmos y expansiones usados en el perfil y en la diagonal de la correlación.
+
+OTRAS REPARACIONES DE LA AUTOSUFICIENCIA
+1. Se incorpora un lema propio: |τ_k−γ_k|=O(1), uniformemente e incluyendo multiplicidades. La demostración utiliza N=N0+S+O(1/t), S(t)=O(log t), el conteo exacto de índices de un cero múltiple y N0'(t)~log t/(2π). Este control era utilizado repetidamente antes de probarse dentro del artículo.
+2. Se desarrolla la reducción desde Fujii 1974 al cuarto momento de S−S^{pr}_{T^{1/160}}. Con k=2, a2=1/5, H=T, x_F=T^{1/600}, se identifica el polinomio suavizado hasta x_F^3=T^{1/200} y se demuestra que la diferencia con el corte no ponderado T^{1/160} tiene cuarto momento O(T); se separan primas y potencias primas y se comprueban las longitudes producto.
+
+COMPROBACIONES DE LOS BLOQUES DE LA PRUEBA
+A. Identidad cúbica: se verificó la fórmula exacta con saltos de multiplicidad, los extremos (T,2T] y el término -M_T/12; también se probó numéricamente sobre un ejemplo con dos saltos múltiples, con coincidencia hasta error de redondeo.
+B. Defecto primo: se distinguieron el resultado externo de Selberg–Fujii y su adaptación a los cortes empleados; se comprobaron las integrales de orden 2 y 4, la intervención de S'_X, los errores de borde y las normalizaciones M_T~T Λ(T).
+C. Ortogonalidad del reloj: se comprobaron por separado los cocientes p/q y los productos pq, con cambio de método en pq>T/log T y rango completo p,q<=T^{1/2}. Se conserva un ahorro T^{-1/2} en la zona resonante.
+D. Muestreo de puntos corregidos: se comprobó el conteo cuadrático de multiplicidad, el solapamiento de intervalos, el reparto entre oscilación y tamaño, el término aditivo T^{-1/4} en el muestreo y el uso efectivo de momentos de orden ocho en el control del maximal.
+E. Segunda escala: se verificaron los cortes X1 y X2, los momentos de transporte del primer paso, el re-muestreo de Q en el punto corregido y la eliminación de las ordenadas verdaderas de la correlación.
+F. Dos escalas de Taylor: se comprobó la identidad finita con los dos restos integrales, las longitudes de los polinomios elevados a las órdenes J0 y J1, el carácter uniforme de los desplazamientos, los errores de truncación de potencias primas, la variación de pesos Λ^{-m} y el ahorro T^{3c/2−1+o(1)} para c<=1/2.
+G. Diagonal: por factorización única, solo sobrevive el primo p común a Q y al polinomio de prueba. La positividad de los factores característicos truncados se repara mediante la nueva desigualdad del perfil.
+H. Consecuencias R1–R6: se recorrieron sus dependencias y restricciones. Para R2 se conservó log(1/c)=o(H1); para R4, c>=θ_T; para el perfil R6, X1<p<=T^{1/2}, con masa armónica y uniformidad sobre subconjuntos arbitrarios. El caso c=1/2 no se deduce por continuidad: queda dentro de la cota efectiva de frecuencias.
+I. Transporte espectral: se comprobaron la integral exacta de fases, el resto O(|u| sum d_k^2) y la derivada de Ei en el semiplano derecho; no se intercambian sumas espectrales infinitas.
+J. Rigidez: el certificado de separación es un resultado condicional directo de desigualdades para TODOS los índices, no una consecuencia de control RMS.
+
+ANÁLISIS DE LOS RESULTADOS DE CORTE VARIABLE PUBLICADOS EN EL TRASPASO
+Se ha leído la nota work/notes/2026-10-24_mertens_sintetico_corte_variable.md, commit e0bd344. Su Teorema A' contiene todavía un paso de aliasing en L^2 cuya estimación (2.7) está descrita por el mecanismo pero no desarrollada con todos los mayores uniformes; el corolario de aproximación en medida necesita además la justificación de la uniformidad vertical, y el argumento de Perron B' reconoce que el intercambio coeficiente a coeficiente no es absolutamente convergente en Re(s)<1. Por ello tales afirmaciones no se incorporan a R1–R6 como consecuencias ya demostradas: constituyen una vía analítica diferente y no una hipótesis necesaria del artículo CasanyaLawI_v9.
+
+COMPROBACIÓN DEL ARTEFACTO
+- 25 páginas, compila con pdflatex, tres pasadas, sin errores ni avisos de referencias no resueltas.
+- Referencias de ecuaciones internas verificadas, sin etiquetas duplicadas y sin ciclos en el grafo de dependencias entre pruebas.
+- Copia .tex y .txt idénticas.
+- La numeración de ecuaciones se mantiene a la derecha y se incluyen TOC, tabla de símbolos y enlaces internos.
+- Los PDF de fuentes se tomaron de LIBRARY TOTAL ZIP en forma original. Ninguna cifra de los ceros de zeta se utilizó en la construcción.
+- No se ha modificado GitHub.
+
+DICTAMEN
+CasanyaLawI_v8 contenía una afirmación matemática falsa en la demostración del perfil y utilizaba al menos una localización esencial del reloj sin demostrarla expresamente. CasanyaLawI_v9 corrige ambos aspectos y aporta el paso detallado de Fujii. La comprobación descrita arriba es una auditoría de las cadenas argumentales, cuantificadores y dominios; no debe confundirse con un certificado formal automático de un sistema de demostración.
