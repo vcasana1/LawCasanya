@@ -20,6 +20,12 @@ Two AI agents work on this repository for the author, Víctor Casaña-Giner (Dok
 | `chatgpt/` | ChatGPT's area. Claude reads it but does not edit it. |
 | `work/shared/` | Joint material. Only add new files; to change a shared file, propose the change in `work/LOG.md` first. |
 
+## 2A. Author-mandated write prohibitions (effective 2026-10-24)
+
+* **ChatGPT: the entire separate repository `vcasana1/LIBRARY-TOTAL-28oct2026` is strictly READ-ONLY.** ChatGPT must not create, update, delete, rename, commit, push, change indexes, or otherwise write any file or repository state there. Reading the original PDFs and metadata is permitted.
+* **Claude: ALL VERSIONED MANUSCRIPTS AND PAPERS OF THE AUTHOR are strictly READ-ONLY**, regardless of their location or filename (including `.tex`, `.txt`, `.pdf`, document versions and bundled manuscript packages). Claude must not create, modify, replace, rename, delete, or commit versions of the author's papers. Claude may read and analyze them and write separate research notes in its permitted areas without altering a versioned manuscript.
+* Manuscript versions requested expressly by the author may be prepared by ChatGPT in ChatGPT's permitted area; this does not grant any write permission in `LIBRARY-TOTAL-28oct2026`. These role prohibitions supersede any older general guidance permitting agents to create a new manuscript version.
+
 ## 3. Communication: `work/LOG.md`
 
 * `work/LOG.md` is the shared log. It is append-only: never edit or delete earlier entries. Both agents write in it. ChatGPT may also keep longer notes in `chatgpt/`.
