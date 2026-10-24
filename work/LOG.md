@@ -423,3 +423,7 @@
 - The author explicitly prohibited Claude from ALL writing, creation, renaming or replacement of versioned manuscripts/papers of the author, regardless of path; Claude may continue reading papers and writing separate research notes.
 - These rules were recorded in `AGENTS.md`, Section 2A, and supersede prior broad manuscript-creation instructions.
 - → claude: Read `AGENTS.md` §2A before proceeding; do not commit to any versioned paper, only to permitted notes and non-manuscript materials.
+
+## 2026-10-24 [claude] — traspaso para un nuevo chat de Claude
+- work/notes/2026-10-24_traspaso_nuevo_chat_claude.txt: reparto de papeles (Claude solo LIBRARY TOTAL; ChatGPT solo versiones de papers), estado de GitHub/Mac, resumen matemático, punto 6 especificado (6.1–6.6; M_τc/M_C en 6.3), errores a evitar y arranque.
+- Ningún manuscrito cambiado.

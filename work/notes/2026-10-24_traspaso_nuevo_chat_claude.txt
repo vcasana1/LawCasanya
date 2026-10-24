@@ -1,0 +1,141 @@
+TRASPASO PARA UN NUEVO CHAT DE CLAUDE — 24 DE OCTUBRE DE 2026
+Repositorio principal: https://github.com/vcasana1/LawCasanya (rama main)
+Repositorio de la biblioteca: https://github.com/vcasana1/LIBRARY-TOTAL-28oct2026 (rama main)
+Autor: Víctor Casaña-Giner (Doktor). Idioma de trabajo: español. Los .tex de los papers, en inglés.
+Este texto es una instrucción de trabajo y un estado de la investigación. No es contenido de ningún artículo.
+
+========================================================================
+0. LEE ESTO PRIMERO: REPARTO DE PAPELES (órdenes expresas del autor, 24-oct-2026)
+========================================================================
+
+0.1. SOLO CLAUDE se encarga de LIBRARY TOTAL: la carpeta del Mac (~/Documents/LIBRARY TOTAL), el repositorio LIBRARY-TOTAL-28oct2026, sus índices (INDEX.md, ERRATA_Ivic.md, RENUMERACION_2026-10-23.md) y la lectura de los PDF para cotejar teoremas. ChatGPT no escribe ahí.
+0.2. SOLO CHATGPT redacta las versiones nuevas de los papers del autor (CasanyaLawI_v8 y cualquier otra). Claude NO crea ni modifica versiones de manuscritos del autor, ni siquiera "una pequeña v6". Claude puede: verificar, auditar, escribir notas y demostraciones en work/, leer, calcular si se le pide. Si una nota de Claude debe pasar a un paper, la integra ChatGPT.
+0.3. Claude escribe únicamente en work/ (salvo work/shared/ y work/LOG.md, con las reglas de AGENTS.md). chatgpt/ es de ChatGPT: Claude lo lee y no lo toca.
+0.4. No hacer NINGUNA acción en GitHub sin orden explícita del autor ("sube git", "sube X"). Excepción ya concedida y cumplida: crear/subir LIBRARY-TOTAL-28oct2026. "sube git" = copiar la última respuesta de Claude a work/display/ + entrada en work/LOG.md + commit y push.
+0.5. No interferir en lo que sube ChatGPT. Nunca force-push. git pull --rebase justo antes de cada commit. Mensajes de commit con prefijo [claude] y las líneas de atribución que dé el sistema.
+0.6. No pedir tokens de GitHub. Para escribir en un repositorio nuevo: mcp add_repo con acceso push (el repositorio lo crea el autor; Claude NO puede crear repositorios: la API devuelve 403).
+0.7. No borrar nada del Mac del autor sin que lo pida. El permiso de borrado de la herramienta del Mac se concede por sesión y por carpeta; usarlo solo sobre lo que Claude haya creado y el autor haya pedido borrar. El autor se alarmó con razón cuando se borró algo en su Mac sin que lo hubiera pedido con esas palabras: él había dicho "limpia github", no "limpia el Mac". Ante duda sobre dónde se actúa (GitHub, Mac, contenedor), preguntar o actuar solo donde se ha dicho.
+0.8. Reglas permanentes de estilo del autor (memoria): resultados dichos sin rodeos; nada de párrafos de "Procedencia"; las atribuciones y las marcas de "sin comprobar" van en línea dentro del argumento; no pedir disculpas por caminos exploratorios que no llegan a M(x) ni RH; fórmulas en el chat con $$...$$ en display; todo .tex va acompañado de .txt idéntico y PDF; versión nueva = número entero nuevo (no sobrescribir); no ejecutar cálculos numéricos salvo orden ("verificar numéricamente" una verdad analítica le parece esfuerzo perdido); ninguna construcción puede usar los ceros γ_k, que solo se leen para evaluar; conjunto de test intocable: índices k = 1 400 737 … 2 001 052.
+0.9. Reglas TeX/MATLAB del autor (preferencias de la cuenta): ecuaciones numeradas a la derecha con hipervínculos; referencias con DOI cuando sea fácil; en cada referencia, páginas/secciones donde se cita; tooltips al pasar el ratón; en MATLAB, la definición de función primero, después clc y clear; no cerrar figuras; PNG (no PDF) para figuras; cuando haya figuras, entregar además un zip con figuras, código MATLAB y salidas en la raíz del zip. Configuración TeX canónica: la de excursion_area_section_v39.
+
+========================================================================
+1. ESTADO DE GITHUB Y DEL MAC (comprobado el 24-oct-2026)
+========================================================================
+
+1.1. LawCasanya/main:
+  - work/drafts_autor/PACK_PDF (938 ficheros, 564 MB) y work/drafts_autor/Downloads (773 elementos, ~2,3 GB): drafts y zips del autor subidos por orden suya. Los dos zip grandes zCasanya_TODO_20261018.zip y zCasanya_python_20261018_FULL.zip NO están subidos (≈850 MB cada uno; el repositorio superaría los 5 GB recomendados). Solo subirlos si el autor lo decide.
+  - chatgpt/Basis for New Papers 24oct2026/: 16 originales del autor + README.md + copias de v7 (.tex/.txt) + INICIO_NUEVO_CHAT_CasanyaLawI_v8_24oct2026.txt. Comprobado: los 16 coinciden byte a byte (SHA-256) con los de ~/Downloads (los de nombre con sufijo "(1)", "(2)", "(3)" coinciden con su equivalente sin sufijo).
+  - Notas de Claude (work/notes/): 2026-10-23_teorema_energia_transporte_prueba.md; 2026-10-23_transporte_rouche_turing_c_mayor_un_medio.md; 2026-10-24_distancia_tau_gamma_consecuencias_transporte.md (R1–R6 con pruebas); 2026-10-24_transporte_truncacion_infinita.md (Lema 1 y Teorema 2).
+  - work/paper1/transport_theorem/: transport_energy_theorem_v2…v5 (.tex/.txt/.pdf) y changelogs. La v7 del autor está en chatgpt/Basis…; la v5 de Claude es la fuente de desarrollo.
+  - work/LOG.md: append-only. Entradas de cada paso de hoy.
+1.2. LIBRARY-TOTAL-28oct2026 (público; el autor lo creó y Claude lo llenó): 312 PDF numerados 001_…312_ en la raíz, más INDEX.md, ERRATA_Ivic.md y RENUMERACION_2026-10-23.md. 315 ficheros, ~430 MB. Fuera, por orden del autor: _LIBRARY_TOTAL_COMPLETO.pdf (fusión parcial), __MACOSX y .DS_Store. Se subieron los PDF sueltos y descomprimidos (el zip solo se usó para traerlos del Mac).
+1.3. Mac del autor: ~/Documents/LIBRARY TOTAL (312 PDF + 3 .md + "LIBRARY TOTAL ZIP.zip" + _LIBRARY_TOTAL_COMPLETO.pdf), ~/Downloads (1809 elementos, ~11 GB, intacto), ~/Documents/PACK PDF. Se borró SOLO ~/Downloads/_claude_upload_tmp (trozos de zip creados por Claude, 4,5 GB). Copias de los originales en el Mac: intactas.
+1.4. En LawCasanya NO existen copias parciales de papers con prefijo de tres números (los 297 PDF que hay allí son todos del autor). La orden "eliminar copias parciales" quedó sin objeto; volver a mirarlo cuando ChatGPT termine sus subidas, si el autor lo pide.
+1.5. Pendiente a petición del autor: "revisar si falta algo en GitHub" respecto de lo que sube ChatGPT.
+
+========================================================================
+2. RESUMEN DEL TRABAJO MATEMÁTICO DE ESTA SESIÓN (verificado por Claude; marca "sin comprobar" donde se indica)
+========================================================================
+
+Notación común (de ordinal_prime_cutoff_v14.tex, "Paper I" para Claude; en el texto publicable no se cita): reloj RvM τ_k con N_0(τ_k)=k−1/2, N_0(t)=(t/2π)log(t/2πe)+7/8, Λ(t)=(1/2π)log(t/2π); s_k=N_0(τ_k)−N_0(γ_k); fase prima S_X con β_{p^m}=−1/(π m p^{m/2}); defecto u_k(X)=s_k−S_X(γ_k); transporte t_k(X)=S_X(γ_k)−S_X(τ_k); reloj de un paso τ^X_k=τ_k−S_X(τ_k)/Λ(τ_k); r_k=Λ(τ_k)(τ^X_k−γ_k)=u_k+t_k+χ_k; B_c(T)=⟨t²⟩. Parámetros: H_0=loglogT, H_1=log H_0, H_2=log H_1, X_1=T^{H_0^{-1/2}}, X_2=T^{H_1^{-1/2}}.
+
+2.1. Teorema de energía de transporte: B_c(T)=(1/2π²)logloglogT+O_c((logloglogT)^{5/8}) para c fijo en (0,1/2]. Versiones v2…v5 de Claude, con las correcciones de las auditorías de ChatGPT (N_0, J_0=⌈32e²s⌉, error de Mertens, ε en [−1,1], casi ortogonalidad con prueba propia, lema de muestreo con error aditivo T^{-1/4} y soporte en potencias de primos). Errores propios ya reconocidos y corregidos: citas falsas en v1–v3 ("Theorem D''", "proof of Lemma 5.11"), lema de muestreo falso dos veces, y una revisión de lemas 4.6/4.7/7.3 que se declaró hecha sin estarlo.
+2.2. Notas con R1–R6 (distancia τ−γ y consecuencias del transporte) en work/notes/2026-10-24_distancia_tau_gamma_consecuencias_transporte.md. R1 mejora el error a O(√(H_1H_2)); R2 régimen c(T); R3 cuadrado medio de τ^{T^c}−γ; R4 cota inferior; R5 respuesta armónica de primos móviles; R6 respuesta calculable del segundo reloj. Pruebas desarrolladas allí; el autor pide reconstruirlas en CasanyaLawI_v8 sin citar manuscritos previos suyos.
+2.3. Truncación infinita (nota del 24-oct): Lema 1: ⟨((S−S_X)(τ_k))²⟩^{1/2} ≤ ((1/2π²)log(1/c))^{1/2}+O(1) para 2≤X≤T^{1/2}; Teorema 2: τ^∞_k=τ_k−S(τ_k)/Λ(τ_k) cumple ⟨Λ²(τ^∞−γ)²⟩=(1/2π²)logloglogT+O((logloglogT)^{5/8}). Consecuencia: incluso con la fase completa S, un solo paso de Newton desde el reloj RvM deja un error no acotado en unidades de espaciado; el factor 2 respecto del corte óptimo es intrínseco al paso único.
+2.4. Orden de los puntos Casaña: el lema 8.19 (pasos de Newton ordenados, "sorted Newton steps") de ordinal_prime_cutoff_v14.tex da el orden τ^C_k<τ^C_{k+1} entre los propios puntos Casaña. Esto es un resultado sobre los puntos sintéticos, no sobre los γ_k. De él no se deduce γ_k<γ_{k+1}.
+2.5. Dos "v14" distintos: manuscript/ordinal_prime_cutoff_v14.tex (Lema 8.3 multiplicidad, Thm 8.5 segundo paso de Newton, Prop 8.17 casi ortogonalidad, Lema 8.19) y work/paper1/v14/manuscript/prime_corrected_clock_v14.tex (numeración distinta: Lema 8.4, Thm 8.6, Lema 8.5, sin Prop 8.17). ChatGPT los confundió varias veces y declaró "referencias mal numeradas" que no lo eran. Antes de citar un número, comprobar el fichero.
+2.6. Hechos descartados por el autor o por la sesión: no hay nada "geométrico espiral" ni ruta por λ-extremo (corrección registrada por ChatGPT en LOG); no hay ceros en la construcción; "positividad de Weil se puede demostrar para Casaña" es una afirmación del autor, NO demostrada en las fuentes.
+
+========================================================================
+3. LIBRARY TOTAL: CÓMO TRABAJAR CON ELLA (Claude, único responsable)
+========================================================================
+
+3.1. Usar siempre la biblioteca antes que la web. Mac: ~/Documents/LIBRARY TOTAL. GitHub: LIBRARY-TOTAL-28oct2026/main. Índice maestro: INDEX.md (20 secciones). Numeración nueva 001–312 (ver RENUMERACION_2026-10-23.md para equivalencias con la antigua).
+3.2. Leer PDF con capa de texto sin OCR. Citar con página, ecuación y lema exactos. Anotar los avisos de integridad: p. ej. 124_Gonek_1985…_INCOMPLETE_pp92-96.pdf es parcial; ERRATA_Ivic.md recoge erratas de Ivić.
+3.3. Para la auditoría de CasanyaLawI_v8 hace falta leer SOLO: Fujii (113, 114, 115, 116), Selberg (no está como PDF independiente; comprobar INDEX.md), Korolev (195–201), Montgomery–Vaughan (239), Landau/Gonek (007, 008, 093, 124, 181, 211), Ivić (167–170), Titchmarsh–Heath-Brown (297). Contrastar hipótesis, dominios, cuantificadores, ventanas y términos de borde. No sintetizar los 312.
+3.4. Si falta un PDF o está mal numerado, Claude lo arregla en la biblioteca (carpeta del Mac y repositorio) y actualiza INDEX.md/RENUMERACION; ChatGPT lo ve por el repositorio. Cualquier cambio en el repositorio de la biblioteca requiere la orden del autor.
+3.5. "LIBRARY TOTAL ZIP.zip" (398 MB) no está en ningún repositorio y no debe subirse. No repetir el procedimiento por el que ChatGPT recibía caas.internal.errors.ClientError.
+
+========================================================================
+4. TAREAS ABIERTAS DE CLAUDE, EN ORDEN
+========================================================================
+
+4.1. (Prioridad del autor) El punto 6 de este traspaso: ver sección 6. No empezar por ζ; empezar por construir y demostrar.
+4.2. Revisión de GitHub cuando el autor lo ordene.
+4.3. Si el autor lo ordena: cotejos de fuentes de la biblioteca para v8 (3.3).
+4.4. Cosas ofrecidas y NO ordenadas (esperar orden): nota con tabla de equivalencias entre los dos "v14"; demostración de las leyes de corte variable/Ein (reclamaciones 1 y 2 sin demostrar); nota sobre la "reducción w1".
+4.5. Limpieza: en el contenedor ya se borraron las copias temporales. En el Mac no queda nada de Claude.
+
+========================================================================
+5. QUÉ HAY EN v26 (rvm_zeta_pi_mertens_v26.tex; 9684 líneas; está en ~/Downloads y en chatgpt/Basis…)
+========================================================================
+
+5.1. Líneas aproximadas: 2501 transformada de Mertens crítica RvM (Prop. Mcrit-poles: F_RVM holomorfa en Re s>1/2, polos en 1/2±iτ_k); 2547 teorema de transición (TR) que da M^crit_RVM(x)=L+O_ε(x^{1/2+ε}) ("X12E"); 3261 Paso 3 (Thm 11.9: ζ_Z1=ζ ⇒ M=O(x^{1/2+ε})); 3624 familia atomizada; 5438 ruta B; 7102 conclusiones.
+5.2. Lo que v26 demuestra: M^crit_RVM tiene límite L=1/ϖ_RVM y error O_ε(x^{1/2+ε}). Lo que v26 NO contiene (afirmación del autor y confirmada por lectura): un teorema SIN HIPÓTESIS que identifique el límite de la M construida con las ordenadas sintéticas con el de la M de Möbius. El autor lo quiere ahora, con la aproximación τ^C y el transporte.
+5.3. En v26 existe la familia γ_k(λ)=(1−λ)γ_k+λτ_k, ζ_Z1, ϖ_Z1≥1, con ϖ_Z1=1 ⇔ (D) ⇔ ζ_Z1=ζ ⇔ RH; el teorema de Hamburger entra en el paso de identificación. El autor considera que no hay que pasar por ζ salvo si se quiere "boicotear el método": la construcción pedida es de objetos sintéticos comparables con M por identidades aritméticas, no por ceros.
+
+========================================================================
+6. PUNTO 6, ESPECIFICADO: VÍAS HACIA RH A PARTIR DE γ−τ_C, π_RvM/π_C Y M_RvM/M_C
+========================================================================
+Convenciones: τ^C_k es una ordenada construida solo con τ_k y potencias primas (nunca γ_k). "Casaña" = el método completo que lleva τ_k a γ_k (reservado). Todo lo que sigue distingue tres clases: (T) teorema demostrado en las fuentes, (R) reducción equivalente al objetivo, (A) abierto. Una "barrera de una técnica" no es una "imposibilidad demostrada" ni una "afirmación equivalente al objetivo".
+
+6.1. De las ordenadas Casaña a las ordenadas verdaderas.
+ a) Qué se tiene (T): τ^C_k construido sin γ_k; orden τ^C_k<τ^C_{k+1} entre puntos sintéticos (lema 8.19); error cuadrático medio del reloj de un paso con corte fijo ⟨r²⟩ = H_1/(2π²)+O(√(H_1H_2)) para c fijo en (0,1/2] (R1/R3); el valor sin truncar (S completo) es igual en orden principal (Teorema 2); el corte variable X=T^{H_0^{-1/2}} da numerador H_1+O(√H_1) en el trabajo de corte primo (de ordinal_prime_cutoff_v14); reloj desnudo ~2H_0/log²T en media cuadrática.
+ b) Qué falta (A): pasar de errores en media cuadrática a una DESIGUALDAD PUNTUAL uniforme en k, y hacerlo sin suponer lo que se quiere concluir (RH y simplicidad).
+ c) Condición suficiente para el orden de los ceros: para cada k consecutivo, |τ^C_k−γ_k|+|τ^C_{k+1}−γ_{k+1}| < τ^C_{k+1}−τ^C_k ⇒ γ_k<γ_{k+1}. Variante puntual válida: medir cada error contra el mínimo de sus dos huecos sintéticos adyacentes. NO vale un control unilateral solo contra el hueco derecho tomado por separado en cada índice: hay contraejemplo elemental cuando los huecos son desiguales.
+ d) Efecto: si esa separación valiera para TODOS los índices, forzaría realidad y simplicidad de los ceros por la simetría del conjunto de ceros (ρ y 1−ρ̄). El problema real es la cobertura universal de índices; una ley en media no la da.
+ e) Obstáculo preciso (R): para que el error puntual sea menor que la mitad del hueco hace falta |Λ e_k|<1/2 para TODO k; el hueco mínimo entre ceros sucesivos tiene aquí un papel que los momentos no controlan. Equivale a una cota de exceptionales de medida cero con control cero a cero, que es de la fuerza de RH y simplicidad (no confundir con una prueba).
+ f) Camino vivo (A): iteración multiescala/compuesta (más de un paso), cancelación del residual final, control de las fases primas y rigidez índice a índice. La prueba actual con m*=log* T+O(1) pasos da O(1) en media cuadrática, insuficiente por sí sola para todas las ordenadas. No existe teorema de imposibilidad general para métodos aritméticos de muchos pasos.
+ g) Resonancia no lineal directa a p=T^θ de la suma del reloj Casaña (A, prioridad alta): fórmula diagonal exacta solo para el MODELO de fases independientes (carácter gaussiano, factor c^{-θ²}(log T)^{-θ²}, constante multiplicativa convergente del producto sobre primos, constante de Euler adicional). El puente a la suma determinista exige controlar los términos NO diagonales con cota relativa uniforme; el control firmado con frecuencia fija no basta cuando log p crece como log T.
+
+6.2. Primos sintéticos RvM/Casaña hacia π o li.
+ a) (T) En v26: π_RvM(x) definido por una fórmula explícita espectral con cota π_RvM(x)−li(x)=O(√x (loglog x)²/log x) ⊂ O_ε(x^{1/2+ε}). π_RvM NO es la cuenta de primos enteros.
+ b) (A) Construir π_C desde la zeta sintética con ordenadas τ^C_k, demostrar su fórmula explícita y acotar de modo uniforme el TRANSPORTE π_C−π_RvM y π−π_C.
+ c) Identidad básica por cero, u=log x: Ei((1/2+ib)u)−Ei((1/2+ia)u)=i∫_a^b e^{(1/2+it)u}/(1/2+it) dt. La suma sobre una banda diádica T<γ_k≤2T, con desplazamiento τ^C_k−γ_k, da la suma firmada V_{T,C}(u)=Σ_{T<γ_k≤2T}(τ^C_k−γ_k)e^{iuγ_k}. Hace falta cota uniforme en u creciente y sumable en T; y manejo de las fases no lineales cuando u|τ^C−γ| no es pequeño. La cota por cuadrados de los desplazamientos no decae por banda; la ganancia está en la SUMA FIRMADA.
+ d) Criterio de cierre (R): si π_C(x)−li(x)=O_ε(x^{1/2+ε}) por construcción (sin ceros verdaderos) y π(x)−π_C(x)=O_ε(x^{1/2+ε}) para x grande, se obtiene la cota de error de RH para los primos. Esto NO sale de una aproximación γ−τ^C en media. El segundo puente (π−π_C) es la tarea crucial.
+ e) R5–R6 aportan cancelación armónica en bandas de primos y la diagonal gaussiana; pasar a estimaciones globales exige uniformidad en posición de banda, masa y tamaño de la frecuencia. Banda arbitraria J (no solo intervalos): el lema agregado evalúa ⟨Q(ρ)W_J(τ)⟩ con error o(1+√μ(J)); revisar uniformidad antes de deducir consecuencias L1 armónicas.
+
+6.3. Mertens sintético M_RvM/M_C hacia M (EL OBJETIVO ACTUAL DEL AUTOR).
+ a) Lo que pide el autor, literal: "construir una M_τc artificial (o M_rvm) que AHORA se puede igualar al límite con la M de Mertens, y por tanto demostrar O(x^{1/2+ε}) (x12e)", gracias a la nueva aproximación con τ^C; "allí no hay ceros en 1/2 que mirar"; "no hay que pasar por zeta a no ser que me quieras boicotear el método". Es decir: la M sintética debe ser un objeto cuyo comportamiento x^{1/2+ε} ya está demostrado (como en v26 para M^crit_RVM) y que se iguala a la M de Möbius por una identidad aritmética y la aproximación τ^C, no por información sobre ceros de ζ.
+ b) (T) En v26: M^crit_RVM(x)=L+O_ε(x^{1/2+ε}), L=1/ϖ_RVM; M_RVM^crit es la transformada espectral/Perron del recíproco de ζ_RvM; no es Σ_{n≤x}μ(n) ni una función de saltos obtenida de una serie de Dirichlet.
+ c) (A) Por definir: una M_C legítima para la zeta de ordenadas Casaña (continua o atomizada), con normalización y transformadas bien especificadas; demostrar su orden x^{1/2+ε} (la maquinaria de v26, teorema de transición, debería aplicarse con τ^C_k en lugar de τ_k; verificar qué hipótesis exige: separación de ordenadas, orden, densidad N_0, ϖ_C). Después comparar M−M_C.
+ d) Comparar objetos de LA MISMA NATURALEZA: transformada sintética continua, producto ponderado con coeficientes, Mertens atomizado y Mertens verdadero no son intercambiables. Hay que fijar de qué naturaleza es M_C y qué diferencia se acota.
+ e) Qué debe cumplir el puente M−M_C=O_ε(x^{1/2+ε}) (R): junto con M_C=O_ε(x^{1/2+ε}), implica M=O_ε(x^{1/2+ε}), es decir RH; por tanto este puente es una reducción equivalente al objetivo, no un paso lateral. El autor lo trata como una construcción: elegir M_C de modo que la diferencia sea exactamente acotada por identidades de Perron/Mellin con multiplicadores de ζ y transporte espectral, con control de los términos de frontera, de los polos y de la convergencia al desplazar contornos. No basta comparar cifras en intervalos finitos.
+ f) Obstáculos concretos a nombrar en cualquier intento (no son excusas, son los lugares donde hay que dar argumento): (1) orden de límites K→∞, T→∞, x→∞ en la suma sobre ceros; (2) control de la suma firmada en la frecuencia del contador; (3) términos de frontera/polo al desplazar el contorno a Re s=1/2+ε; (4) una cota de la diferencia que no use localización de ceros verdaderos; (5) la diferencia 1/ζ−1/ζ_C en la fórmula de Perron: sus residuos en los polos de 1/ζ_C (s=1/2±iτ^C_k) y de 1/ζ (ρ_k) hay que tratarlos como objetos distintos y mostrar cómo la construcción hace innecesaria la información sobre ρ_k. Declarar en cada paso si se está usando una identidad aritmética (T), una aproximación en media (que no basta) o una desigualdad puntual (A).
+ g) R1 aporta un parámetro cuadrático de error del reloj corregido; R5–R6, cancelación agregada sobre bandas. El siguiente objeto analítico es una energía o correlación firmada en la frecuencia del contador, no una suma de cuadrados de desplazamientos.
+ h) Antecedente propio con el mismo carácter: M̃−T=O(1) (seguimiento) y ruta B (Mellin/Perron) de v26; leer la sección de la ruta B antes de proponer nada, porque ahí está el aparato "casi completo" al que se refiere el autor ("quedaba solo un teorema como este nuevo").
+
+6.4. Ruta de transporte analítico, sumas firmadas y escalas críticas.
+ Ruta viva, por orden: (i) diagonal no lineal exacta para fases de primos; (ii) cota no diagonal uniforme para el reloj determinista; (iii) corrección multietapa con error menor y control firmado; (iv) transporte a las funciones explícitas π_C y M_C con análisis global de la cola; (v) cierre exacto con el objeto aritmético verdadero. Marcar en cada etapa si es una reducción equivalente a RH; no presentarlo como resolución.
+
+6.5. Prioridades a la luz de v7 (del autor/ChatGPT):
+ I (alta): resonancia determinista no lineal de la suma directa de τ^C a p=T^θ, con producto primo completo y constante corregida, controlando frecuencias no diagonales.
+ II (alta): iteración multiescala Casaña para bajar la energía del residual y demostrar cancelación firmada en ventanas críticas.
+ III (media-alta): fórmula explícita sintética global π_C y estimación firmada π_C−π o π_C−π_RvM, con uniformidad en x y colas espectrales.
+ IV (media-alta): inversa de Mellin de la zeta corregida para M_C; comparación con M; O_ε(x^{1/2+ε}) de la diferencia bajo condiciones comprobadas sin confundir M^crit_RVM con M. ESTA ES LA QUE EL AUTOR HA PEDIDO EXPRESAMENTE ESTE DÍA.
+ V (complementaria): certificados locales de Rouché/Turing y separación adyacente índice a índice (comprobar el índice DENTRO DEL MISMO disco certificado).
+ VI (complementaria): ruta de rigidez y atomización de v26, condiciones (D), espectros sintéticos, sistemas de peldaños; solo identidades que se puedan imponer desde primos y reloj sin conocer β_k.
+
+6.6. Obstáculos señalados con precisión (clasificar siempre: de prueba / de uniformidad / de inversión global / de rigidez / equivalencia al objetivo): c>1/2 para los teoremas de momentos actuales; estimación no diagonal de la resonancia móvil; transferencia de bandas armónicas a cada primo o a sumas globales (media sobre banda NO es R^τ_p→0 por primo); falta de control uniforme cero a cero; colisiones en conjuntos excepcionales; intercambio de sumas e inversión integral sin garantías; identificar una reconstrucción sintética con la ζ verdadera.
+
+========================================================================
+7. ERRORES DE CLAUDE EN ESTA SESIÓN QUE EL NUEVO CHAT DEBE EVITAR
+========================================================================
+
+7.1. En la cuestión de M_C el autor rechazó respuestas que desviaban hacia "los polos de 1/ζ fuera de la recta", 1/ζ'(ρ_k) o Davenport–Heilbronn. El hecho matemático (el puente M−M_C es de fuerza RH) se debe mencionar como clasificación de la construcción (6.3 e), una vez y con precisión, y NO como razón para no intentar la construcción. Primero se construye y se demuestra; el dictamen viene después.
+7.2. Se subieron drafts a GitHub sin saber que ChatGPT subía en paralelo; el autor se enfadó. Siempre mirar el LOG y las confirmaciones recientes de ChatGPT antes de subir, y subir solo si hay orden.
+7.3. Se dijo "297 PDF" para la biblioteca: son 297 en LawCasanya, 312 en la biblioteca. Contar siempre antes de afirmar.
+7.4. Se pasó por un borrado en el Mac que el autor no había pedido con esas palabras. Ver 0.7.
+7.5. Declarar una revisión como hecha sin haberla hecho (v2). No afirmar auditorías que no se hayan efectuado.
+7.6. No decir "no lo puedo hacer" sin haber mirado en las herramientas (por ejemplo, crear repositorios sí falla con 403, pero comprobarlo con una llamada, no suponerlo).
+
+========================================================================
+8. ARRANQUE RECOMENDADO DEL NUEVO CHAT
+========================================================================
+
+1. Leer AGENTS.md y work/LOG.md (últimas 10 entradas) en LawCasanya. Leer este texto. Leer chatgpt/Basis for New Papers 24oct2026/README.md e INICIO_NUEVO_CHAT_CasanyaLawI_v8_24oct2026.txt (instrucciones de ChatGPT sobre v8; Claude no escribe v8).
+2. Preguntar al autor SOLO si hay una decisión que no se pueda deshacer. En lo demás, arrancar.
+3. Primera tarea matemática (autor): sección 6.3. Leer en v26 los tramos 2501–2600, 2547 ss., 3261 ss. y 5438 ss.; escribir en work/notes/ una nota con (i) la definición de M_τc (o M_C) por la transformada de Perron/Mellin del recíproco de ζ_C, con hipótesis exactas; (ii) qué parte del teorema de transición (TR) se traslada a τ^C_k y con qué hipótesis; (iii) la diferencia M−M_C escrita como identidad aritmética; (iv) para cada paso, la clase (T)/(R)/(A). Sin ejecuciones numéricas.
+4. Cuando el autor diga "sube git": copiar la última respuesta a work/display/, entrada en work/LOG.md, commit [claude], pull --rebase, push.
+
+FIN DEL TRASPASO.
