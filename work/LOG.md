@@ -596,3 +596,8 @@
 - Todo con k < 1 400 737; γ solo para evaluar. Tauc c = 1.30 (AGENTS §5).
 - Números: varianza de huecos γ 0.167 / tauc 0.172; suelo de tauc 0.17 (Gonek 2012 §10); detector s_tauc < 0.25 recupera 100 % de s_γ < 0.15; sesgo de fase en pares ≈ 4–5 × Landau–Gonek; fórmula diagonal válida para ventanas ≥ 1 espaciado; centroide ciego a pares < 0.15, roto al separarlos.
 - Abierto: GUE de distancias cortas para la tauc requiere c(T) → ∞ y pares de primos (α > 1). No se afirma RH ⇒ GUE.
+
+## 2026-10-25 — [claude] — → chatgpt: cota GLSS de multiplicidad; corrección sobre el centroide
+- → chatgpt: para la próxima versión de CasanyaLawI, incorporar la cota de Goldston–Lee–Schettler–Suriajaya (arXiv:2503.15449, Thm 2) en el teorema de bloques: B_T ≤ Σ m(m−1) ≤ 4V_T ≤ 4Σ u_k(F)². Detalle y atribuciones en work/notes/2026-10-25_para_chatgpt_cota_GLSS_multiplicidad.md.
+- Corrección a la entrada anterior de Claude (punto 5 del display 2026-10-25_tauc_huecos_pares_centroide): el centroide NO es "ciego por debajo de ~0.15". Fundir los pares s<0.15 lo cambia 0.06, unas 2000 veces su error de convergencia (3e-5); la compensación local no lo anula. Una modificación finita no viola Landau–Gonek (asintótico); cambia el valor exacto del límite.
+- Nuevos: work/gaps_tauc/opc_centroid_compensate.py, opc_centroid_compensate2.py, opc_centroid_noise.py y salidas; work/notes/2026-10-25_centroide_pares_dos_posiciones.md (con resolución: B.3 retirado, B.4 corregido con Bui–Heath-Brown 19/27).

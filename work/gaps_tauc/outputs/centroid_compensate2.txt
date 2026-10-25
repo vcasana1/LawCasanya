@@ -1,0 +1,20 @@
+merge s<0.15: 4173 pairs -> double zeros + nonlinear compensation (6 neighbours); max shift 4.54e-02 spacings; max per-pair residual on grid 8.7e-03
+   u=0.7000   |dC| merged+compensated 5.76e-03
+   u=0.8000   |dC| merged+compensated 4.42e-03
+   u=0.9163   |dC| merged+compensated 4.75e-03
+   u=1.0000   |dC| merged+compensated 6.02e-03
+   u=1.0500   |dC| merged+compensated 8.94e-03
+   u=1.5000   |dC| merged+compensated 3.04e-03
+   u=2.0000   |dC| merged+compensated 1.32e-02
+   max|S_n|  gamma 4.7341   merged+comp 4.7278;   max_n |S_n(comp)-S_n(gamma)| 8.06e-02
+
+merge s<0.30: 28680 pairs -> double zeros + nonlinear compensation (6 neighbours); max shift 6.17e+02 spacings; max per-pair residual on grid 6.8e+00
+   u=0.7000   |dC| merged+compensated 5.52e+00
+   u=0.8000   |dC| merged+compensated 5.94e+00
+   u=0.9163   |dC| merged+compensated 8.36e+00
+   u=1.0000   |dC| merged+compensated 1.64e+00
+   u=1.0500   |dC| merged+compensated 8.11e-01
+   u=1.5000   |dC| merged+compensated 9.91e+00
+   u=2.0000   |dC| merged+compensated 1.11e+01
+   max|S_n|  gamma 4.7341   merged+comp 8.8006;   max_n |S_n(comp)-S_n(gamma)| 4.98e+00
+
