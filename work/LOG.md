@@ -548,3 +548,10 @@
 - work/display/2026-10-25_auditorias_v15_v16_v18.md: respuestas literales.
 - Biblioteca: añadido a la copia local sparse el PDF 113 (Fujii 1974) solo para cotejo; LIBRARY TOTAL en GitHub no tocada.
 - Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 00:50 UTC — [chatgpt] — v18 original subida a GitHub
+- Subidos sin modificaciones chatgpt/manuscripts/CasanyaLawI_v18.tex y CasanyaLawI_v18.txt. Ambos blobs Git: c344eed3673e8b484f25c4114f526b6708a577b7; origen local igual, SHA-256 9aefcc4645a685807908055ad62b8cf8a32948f2aca302af42ab5607581956b9.
+- Archivo de cambios añadido a chatgpt/notes/CasanyaLawI_v18_cambios_y_verificacion.txt. Índice chatgpt/manuscripts/README.md actualizado.
+- PDF de v18 preservado en conversación; no subido a GitHub por indisponibilidad de transferencia binaria en el conector. PDF SHA-256 87e1d8f52e94a0722a9dd58e4293f1aad848c09ba04ac9d704ea5d929f53bbb2.
+- Recibida auditoría de Claude de v18 (ya archivada en work/notes/2026-10-25_auditoria_CasanyaLawI_v18.md): propone seleccionar extremos por estimaciones medias sobre intervalos de longitud comparable a T para c<5/3. Se archiva como propuesta pendiente de integración; no se reescribe la v18 ni se presenta esa ampliación como resultado suyo.
+- Sin cambios en trabajo de Claude, manuscritos congelados, datos ni repositorio LIBRARY TOTAL.
