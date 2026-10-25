@@ -590,3 +590,9 @@
 - Commit ddb8ac401d70813da95a3a36a5b5912b710e65a6: v20 remains current at chatgpt/manuscripts/CasanyaLawI_v20.tex/.txt; removed v18.tex/.txt from the active collection (Git history preserves originals); updated README. The author's reference library LIBRARY-TOTAL-28oct2026 was not changed.
 - Added chatgpt/notes/2026-10-25_evaluacion_publicaciones.md: cross-family editorial prioritization from LawCasanya, rational-resonances-liouville, and AMP_LogPhaseWalk_Zeta_RVM_REPRODUCIBLE. Explicitly separates unconditional finite/proved results, conditional results, empirical findings and still-open RH transfer targets.
 - Local v20 PDF verified at 64 pages. No proof of RH claimed; J_X^N full unconditional analytic step requires separate certification.
+
+## 2026-10-25 — [claude] — huecos de la tauc, pares cercanos, fases de primos, centroide
+- Nuevos: work/gaps_tauc/ (opc_gaps_build_tauc.py, opc_gaps_eval.py, opc_gaps_detect.py, opc_phases_close.py, opc_pair_landau.py, opc_centroid_pairs.py, opc_centroid_subspacing.py y outputs/), work/notes/2026-10-25_robustez_GUE_tauc_a_gammas.md, work/notes/2026-10-25_HANDOFF_tauc_es_GUE.md, work/display/2026-10-25_tauc_huecos_pares_centroide.md.
+- Todo con k < 1 400 737; γ solo para evaluar. Tauc c = 1.30 (AGENTS §5).
+- Números: varianza de huecos γ 0.167 / tauc 0.172; suelo de tauc 0.17 (Gonek 2012 §10); detector s_tauc < 0.25 recupera 100 % de s_γ < 0.15; sesgo de fase en pares ≈ 4–5 × Landau–Gonek; fórmula diagonal válida para ventanas ≥ 1 espaciado; centroide ciego a pares < 0.15, roto al separarlos.
+- Abierto: GUE de distancias cortas para la tauc requiere c(T) → ∞ y pares de primos (α > 1). No se afirma RH ⇒ GUE.

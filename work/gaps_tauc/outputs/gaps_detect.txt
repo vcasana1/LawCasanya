@@ -1,0 +1,19 @@
+total gaps 59998
+
+PRECISION: among tauc gaps below thr, fraction of true gaps below g
+thr_tauc  count   g<0.10  g<0.15  g<0.20  g<0.30   (base rate g<0.10 / g<0.15: 0.0009 / 0.0033)
+  0.19       23   0.565  0.870  0.957  1.000
+  0.20       97   0.289  0.639  0.918  1.000
+  0.21      221   0.195  0.552  0.846  1.000
+  0.22      412   0.121  0.393  0.694  0.995
+  0.25     1117   0.049  0.178  0.377  0.896
+  0.30     2425   0.023  0.082  0.176  0.569
+
+RECALL: among true gaps below g, fraction with tauc gap below thr
+g_true   count   t<0.20  t<0.22  t<0.25  t<0.30
+  0.050      12   0.417  1.000  1.000  1.000
+  0.075      33   0.515  0.970  1.000  1.000
+  0.100      55   0.509  0.909  1.000  1.000
+  0.150     199   0.312  0.814  1.000  1.000
+
+Spearman-like check: Pearson corr(s_tauc, s_gamma | s_gamma<0.4) = 0.816

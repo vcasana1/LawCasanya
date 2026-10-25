@@ -1,0 +1,28 @@
+Block k = 1380001 ... 1400000  (gamma in [805715, 816393]), 19999 gaps
+  ordinal RMS error (units of zeros): tauc 0.0242   zCasanya 0.0758
+  RMS(s_tauc - s_gamma) 0.0394  max 0.5207   RMS(s_zCas - s_gamma) 0.1366
+  gap variance: gamma 0.1667  tauc 0.1718  zCasanya 0.1921   (GUE surmise 0.1781)
+  inversions (s <= 0): tauc 0  zCasanya 5
+  threshold    0.025   0.050   0.075   0.100   0.150   0.200   0.300   0.500
+  #gamma           0       2       8      17      68     142     476    2047
+  #tauc            0       0       0       0       0      32     804    2432
+  #zCasanya       10      13      17      23      47     105     360    2063
+  GUE exp.       0.3     2.7     9.1    21.4    71.7   167.7   545.1  2239.9
+
+Block k = 300001 ... 340000  (gamma in [201091, 225184]), 39999 gaps
+  ordinal RMS error (units of zeros): tauc 0.0239   zCasanya 0.0768
+  RMS(s_tauc - s_gamma) 0.0392  max 0.4120   RMS(s_zCas - s_gamma) 0.1388
+  gap variance: gamma 0.1651  tauc 0.1700  zCasanya 0.2196   (GUE surmise 0.1781)
+  inversions (s <= 0): tauc 0  zCasanya 15
+  threshold    0.025   0.050   0.075   0.100   0.150   0.200   0.300   0.500
+  #gamma           0      10      25      38     131     284     921    4033
+  #tauc            0       0       0       0       0      65    1621    4832
+  #zCasanya       25      36      61      87     197     405    1210    5377
+  GUE exp.       0.7     5.4    18.2    42.9   143.4   335.5  1090.1  4479.9
+
+25 smallest true gaps (all blocks): s_gamma -> s_tauc
+  0.029->0.195  0.031->0.202  0.034->0.174  0.035->0.177  0.036->0.206  0.040->0.208  0.042->0.194  0.042->0.217  0.043->0.204  0.043->0.188  0.045->0.213  0.050->0.216  0.060->0.204
+  0.064->0.187  0.065->0.206  0.066->0.194  0.066->0.189  0.067->0.197  0.068->0.187  0.068->0.210  0.070->0.203  0.070->0.192  0.070->0.192  0.070->0.195  0.071->0.222
+gaps with s_gamma < 0.15: 199;  RMS(s_tauc - s_gamma) there 0.1004; mean ratio s_tauc/s_gamma 2.081
+two-sample KS distance gamma vs tauc 0.0353; gamma vs zCasanya 0.0491; 5% critical value for these sizes ~ 0.0079
+log-log slope of the empirical CDF on [0.05, 0.3] (GUE: 3): gamma 2.787  tauc 11.840  zCasanya 1.905

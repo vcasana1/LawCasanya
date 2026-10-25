@@ -1,0 +1,23 @@
+RH limit e^{-1/2}V_+(1) = 0.77689426079 + 0.76785566886 i
+
+spread pairs s<0.15: 4256 pairs moved
+  N=   10000  C(gamma)=+0.77777+0.76786i   C(spread)=+1.44931+0.78436i   |diff|=0.6717
+  N=  100000  C(gamma)=+0.77702+0.76803i   C(spread)=+2.75251+1.00095i   |diff|=1.9892
+  N= 1000000  C(gamma)=+0.77690+0.76785i   C(spread)=+2.18167+2.71466i   |diff|=2.4007
+  N= 1400736  C(gamma)=+0.77692+0.76785i   C(spread)=+2.38114+3.20675i   |diff|=2.9192
+  max|partial sum| up to K: gamma 4.734   spread 10.763   final |S_K|: 1.976 vs 6.806
+
+spread pairs s<0.3: 32945 pairs moved
+  N=   10000  C(gamma)=+0.77777+0.76786i   C(spread)=+0.41586-0.12707i   |diff|=0.9653
+  N=  100000  C(gamma)=+0.77702+0.76803i   C(spread)=-0.35314-0.24822i   |diff|=1.5199
+  N= 1000000  C(gamma)=+0.77690+0.76785i   C(spread)=-0.13752-3.58737i   |diff|=4.4502
+  N= 1400736  C(gamma)=+0.77692+0.76785i   C(spread)=-1.80035-5.01779i   |diff|=6.3337
+  max|partial sum| up to K: gamma 4.734   spread 17.003   final |S_K|: 1.976 vs 12.870
+
+Landau-Gonek check on k<K: mean cos(gamma log p) vs -(log p/sqrt p) * (T/2pi)/N(T) over window
+  p= 2  measured -0.0455   predicted -0.0455
+  p= 3  measured -0.0589   predicted -0.0589
+  p= 5  measured -0.0668   predicted -0.0668
+  p= 7  measured -0.0683   predicted -0.0683
+  p=11  measured -0.0671   predicted -0.0671
+  p=13  measured -0.0660   predicted -0.0660
