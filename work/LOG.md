@@ -564,3 +564,9 @@
 - work/notes/2026-10-25_uniformidad_X_igual_x_obstruccion.md: τ'(X) = exp(cX^{1/2+Y}); Teorema E (cota bilateral uniforme en un punto ⇒ semiplano sin ceros); aliasing |w_x| ≥ 1 en medida positiva para |t| ≤ x^{1+ε}; proposición de incompatibilidad (ningún corte fijo ni en altura cierra la vía M por Perron).
 - work/display/2026-10-25_teorema_PerronMfixed_incondicional_X_fijo.md: el teorema completo. work/display/2026-10-25_via_M_JX_uniformidad_respuestas.md: respuestas literales.
 - Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 [claude] — sube git: literatura de la multiplicidad horizontal y del 1/12
+- work/notes/2026-10-25_literatura_multiplicidad_horizontal_y_un_doceavo.md: antecedente directo Goldston–Lee–Schettler–Suriajaya, arXiv:2503.15449 (biblioteca 122): multiplicidad horizontal H(γ) = m_γ (idea de Soundararajan), HMH ⇒ 100 % simples y en la recta (Thm 2, B_T ≤ Σ m(m−1)), PCC sin RH ⇒ HMH (Thm 1, método de Gallagher–Mueller 1978 + Fujii/Tsang). Para m = 2 su cota coincide con la del teorema de bloques; para m ≥ 3 es mejor. Lo nuevo en el programa: la cota con F sin ceros (B_T ≤ 4Σu_k(F)²), la descomposición A_T + V_T y la identidad integral con el 1/12, que es del autor (v14 identity_general, v16 exact-counting-integral). Baluyot et al. 2025 (biblioteca 018): récord PRZZ 41.72 % / 40.75 %; corrección del umbral a 0.1457. La constante de segundo orden de Fujii (O(T√log)) es el mismo muro en ambas rutas.
+- work/display/2026-10-25_literatura_multiplicidad_horizontal.md: respuesta literal.
+- Biblioteca: añadidos a la copia local sparse 018, 114, 116, 122, 241 para cotejo; LIBRARY TOTAL en GitHub no tocada.
+- Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
