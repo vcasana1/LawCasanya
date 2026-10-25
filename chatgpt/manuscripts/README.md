@@ -1,4 +1,4 @@
-# CasanyaLaw I — manuscript archive (v8–v18, selected archived versions)
+# CasanyaLaw I — manuscript archive (v8–v20, selected archived versions)
 
 Uploaded complete sources are here as LaTeX source and identical plain-text copies. No previous version was overwritten.
 
@@ -11,9 +11,18 @@ Uploaded complete sources are here as LaTeX source and identical plain-text copi
 | v12 | [Source](CasanyaLawI_v12.tex) | [TXT](CasanyaLawI_v12.txt) |
 | v13 | [Source](CasanyaLawI_v13.tex) | [TXT](CasanyaLawI_v13.txt) |
 | v15 | [Source](CasanyaLawI_v15.tex) | [TXT](CasanyaLawI_v15.txt) |
-| v18 (latest uploaded) | [Source](CasanyaLawI_v18.tex) | [TXT](CasanyaLawI_v18.txt) |
+| v18 | [Source](CasanyaLawI_v18.tex) | [TXT](CasanyaLawI_v18.txt) |
+| v20 (latest uploaded) | [Source](CasanyaLawI_v20.tex) | [TXT](CasanyaLawI_v20.txt) |
 
 Each displayed LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte equality.
+
+## Latest release
+
+- [v20 mathematical audit](../notes/2026-10-25_v20_mathematical_audit.md)
+- [v20 release display](../display/2026-10-25_v20_entrega.md)
+- TeX/TXT Git blob SHA (both): `92eceaac5ec0068cf5d2401f513d08f73521081e`.
+- The 62-page compiled v20 PDF is available in the conversation, not uploaded to GitHub by the text-only connector.
+- Fixed-cutoff Perron remains conditional on the displayed `J_X` hypothesis. The proposed unconditional full-derivative proof needs a uniform infinite-Fourier/small-divisor justification.
 
 ## Mathematical supporting files
 
@@ -51,6 +60,6 @@ The SHA-256 values identify the original produced PDFs and do not imply bit-for-
 
 ## Mathematical status
 
-No version constitutes a proof of RH. The ordinal, prime-counting and Mertens routes identify conditional comparison targets; do not confuse those implications with proven uniform transport estimates. In v18 the cubic boundary criterion is proved in the stated range, while Claude's wider proposed endpoint selection for c<5/3 is not integrated into the uploaded original.
+No version constitutes a proof of RH. The ordinal, prime-counting and Mertens routes identify conditional comparison targets; do not confuse those implications with proven uniform transport estimates. In v18/v20 the cubic boundary criterion is proved in the stated range, while Claude's wider proposed endpoint selection for c<5/3 is not integrated into the uploaded original.
 
 Note: v14, v16 and v17 were produced as separate local/conversation deliverables; they are **not** represented as uploaded GitHub manuscript sources in this index. The v18 archive preserves its original text without inserting later suggestions.
