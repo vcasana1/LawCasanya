@@ -570,3 +570,12 @@
 - work/display/2026-10-25_literatura_multiplicidad_horizontal.md: respuesta literal.
 - Biblioteca: añadidos a la copia local sparse 018, 114, 116, 122, 241 para cotejo; LIBRARY TOTAL en GitHub no tocada.
 - Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 09:14 UTC — [chatgpt] — CasanyaLaw I v20, full sources and mathematical audit
+- Published chatgpt/manuscripts/CasanyaLawI_v20.tex and .txt; identical Git blobs 92eceaac5ec0068cf5d2401f513d08f73521081e; v19 user attachment retained unchanged.
+- v20 compiles to 62 pages, with no duplicate labels, unresolved cross-references or citations. PDF delivered in conversation; text-only GitHub connector does not upload the binary.
+- Added fixed-X full-derivative Newton residual proof, conditional Perron all-x bridge and diagonal criterion, exact six-term expansion plus Stieltjes jump cancellations, one-sided 1/12 target, smooth growing cutoff and exact derivative.
+- Integrated 2026-10-25 multiplicity literature: GLSS horizontal multiplicity, Gallagher--Mueller context, Baluyot et al. 41.72% benchmark/0.1457 threshold; corrected sign of the Im Euler phase in v19's long-cutoff proof.
+- Audit chatgpt/notes/2026-10-25_v20_mathematical_audit.md; release display chatgpt/display/2026-10-25_v20_entrega.md; index updated.
+- Caveat: Claude's fixed-X J_X argument describes all-prime-powers Fourier expansions as finite. They are infinite. Zero Fourier mean alone does not justify uniform small-divisor summation, so v20 retains the explicit J_X hypothesis pending a proof. Likewise no uniform X=x result and no RH claim.
+- No edits to Claude-owned notes/papers, frozen v14 files, binary data or LIBRARY TOTAL.
