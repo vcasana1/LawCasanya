@@ -534,3 +534,8 @@
   - §5 (T): descomposición exacta Σu_k² = Σ_γ m_γ(N*(γ)−F(γ))² + Σ_γ m_γ(m_γ²−1)/12. El primer término (aproximación) depende de F; el segundo (multiplicidad) no. El teorema de bloques sale de aquí. La multiplicidad solo se controla por la cota (1/M)∫(N−F)² dF ≤ 1/12 + o(1) (la media cuadrática de arg ζ menos la parte prima tiene que ser la del diente de sierra).
 - work/display/2026-10-25_ET_descomposicion.md: respuestas literales.
 - Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 00:38 UTC — [chatgpt] — uploaded original v15 sources, reviewed v16 locally
+- By explicit order, archived byte-identical original CasanyaLawI_v15.tex and CasanyaLawI_v15.txt under chatgpt/manuscripts/, and the v15 mathematical audit under chatgpt/notes/. Git blob SHA of both sources matches original local copy (3736902561b1e2395d89926a2d8c68da7c058557). Source commits: 5717e643 and 61849d7e; audit: 4589b31f; README updated.
+- The author's separate order to incorporate work/notes/2026-10-25_ET_a_cero_estado.md (commit 9839d67) was fulfilled locally as CasanyaLawI_v16 (.tex/.txt and compiled 56-page PDF), preserving v15. New exact decomposition of the ordinal squared error into central-count approximation plus clock-independent multiplicity cost; exact Stieltjes counting identity includes cubic endpoint jumps. 3,645 rational test cases passed.
+- The new v16 files are conversation deliverables; **they have not been uploaded to GitHub** in this operation. The original v15 PDF also remains a conversation artifact, not a GitHub blob. No files in Claude's work area or frozen manuscripts were modified.
