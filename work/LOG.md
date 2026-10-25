@@ -524,3 +524,13 @@
   - contraejemplo y reparación del perfil de v8 (0.2638 frente a 1/4; nueva cota 0.3909).
   - Lagunas de v9 bien detectadas; las reparaciones de v10 no comprobadas sobre el texto.
 - Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 [claude] — sube git: E_T → 0, descomposición exacta aproximación + multiplicidad
+- work/notes/2026-10-25_ET_a_cero_estado.md:
+  - §1: E_T → 0 implica el 100 % asintótico de ceros simples y en la recta.
+  - §2: equivalente exacto (identity_general de v14): (1/M)∫(N−F)² dF = 1/12 + o(1).
+  - §3 (T, v14): con X fijo, con log X/log T → 0 y con X = T^c, c < c_1, E_T no tiende a 0; para c_1 ≤ c ≤ 1/2 está abierto (Pregunta 13.1).
+  - §4 (modelo): hace falta c(k) → ∞.
+  - §5 (T): descomposición exacta Σu_k² = Σ_γ m_γ(N*(γ)−F(γ))² + Σ_γ m_γ(m_γ²−1)/12. El primer término (aproximación) depende de F; el segundo (multiplicidad) no. El teorema de bloques sale de aquí. La multiplicidad solo se controla por la cota (1/M)∫(N−F)² dF ≤ 1/12 + o(1) (la media cuadrática de arg ζ menos la parte prima tiene que ser la del diente de sierra).
+- work/display/2026-10-25_ET_descomposicion.md: respuestas literales.
+- Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
