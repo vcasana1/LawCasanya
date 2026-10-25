@@ -1,6 +1,6 @@
-# CasanyaLaw I — manuscript archive (v8–v20, selected archived versions)
+# CasanyaLaw I — current manuscript and selected historical sources (v8–v20)
 
-Uploaded complete sources are here as LaTeX source and identical plain-text copies. No previous version was overwritten.
+The current version is v20. Older historical sources are retained selectively; v18 has been removed from this collection at the author's request and remains recoverable in Git history.
 
 | Version | LaTeX | Identical TXT |
 |---|---|---|
@@ -11,8 +11,7 @@ Uploaded complete sources are here as LaTeX source and identical plain-text copi
 | v12 | [Source](CasanyaLawI_v12.tex) | [TXT](CasanyaLawI_v12.txt) |
 | v13 | [Source](CasanyaLawI_v13.tex) | [TXT](CasanyaLawI_v13.txt) |
 | v15 | [Source](CasanyaLawI_v15.tex) | [TXT](CasanyaLawI_v15.txt) |
-| v18 | [Source](CasanyaLawI_v18.tex) | [TXT](CasanyaLawI_v18.txt) |
-| v20 (latest uploaded) | [Source](CasanyaLawI_v20.tex) | [TXT](CasanyaLawI_v20.txt) |
+| v20 (current) | [Source](CasanyaLawI_v20.tex) | [TXT](CasanyaLawI_v20.txt) |
 
 Each displayed LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte equality.
 
@@ -31,7 +30,7 @@ Each displayed LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte e
 - [v10 correction report](../notes/CasanyaLawI_v10_informe.txt)
 - [v12 mathematical refutations](../notes/CasanyaLawI_v12_dictamen.txt)
 - [v15 mathematical audit](../notes/CasanyaLawI_v15_auditoria_matematica.txt)
-- [v18 build and change report](../notes/CasanyaLawI_v18_cambios_y_verificacion.txt)
+- [v18 historical review](../notes/CasanyaLawI_v18_cambios_y_verificacion.txt) (v18 removed from collection; history retained)
 - [Claude's v18 audit](../../work/notes/2026-10-25_auditoria_CasanyaLawI_v18.md)
 - [Prime-power near-orthogonality](../notes/casi_ortogonalidad_potencias_primas_RvM.tex)
 - [Index-dependent cutoff and Omega stability](../notes/lema_Omega_corte_variable_k.tex)
@@ -42,7 +41,7 @@ Each displayed LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte e
 
 The original PDF binaries are available in the author's ChatGPT conversation but could not be transferred by the available GitHub text-file connection. **They are not uploaded to this repository.** Rebuild PDFs locally from each LaTeX source, for example:
 
-    latexmk -pdf -interaction=nonstopmode -halt-on-error CasanyaLawI_v18.tex
+    latexmk -pdf -interaction=nonstopmode -halt-on-error CasanyaLawI_v20.tex
 
 Original PDF byte sizes and SHA-256 checksums, for reference:
 
@@ -62,4 +61,4 @@ The SHA-256 values identify the original produced PDFs and do not imply bit-for-
 
 No version constitutes a proof of RH. The ordinal, prime-counting and Mertens routes identify conditional comparison targets; do not confuse those implications with proven uniform transport estimates. In v18/v20 the cubic boundary criterion is proved in the stated range, while Claude's wider proposed endpoint selection for c<5/3 is not integrated into the uploaded original.
 
-Note: v14, v16 and v17 were produced as separate local/conversation deliverables; they are **not** represented as uploaded GitHub manuscript sources in this index. The v18 archive preserves its original text without inserting later suggestions.
+Note: v14, v16 and v17 were produced as separate local/conversation deliverables; they are **not** represented as uploaded GitHub manuscript sources in this index. The v18 source files were withdrawn from this active collection at the author's request; previous commits retain the originals.
