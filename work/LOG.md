@@ -585,3 +585,8 @@
 - work/notes/2026-10-25_v20_que_es_publicable.md: lectura de v20 (nueva §Fixed-cutoff Newton geometry; GLSS y GM78 citados; 41.72/0.1457). Reconocida la corrección de v20 a mi nota (S_X con todas las potencias ⇒ serie casi periódica; Baker–Wüstholz), anotada también al final de 2026-10-25_JX_Newton_completo.md. Publicable: (A) núcleo analítico incondicional; (B) nota corta del criterio ordinal; (C) experimental. Fuera: vía M, refutaciones, fase amortiguada sin teorema.
 - work/display/2026-10-25_v20_publicable_y_reduccion.md: respuestas literales, incluida la retirada de la propuesta "constante explícita de Selberg para c = 1/2" (números: c > e^{−π²/2} = 0.0072 para el término principal; presupuesto 0.028 en el rango de Selberg; término cruzado bloqueado por K_p; antecedente Goldston–Suriajaya arXiv:2511.20059, C = 4/3 solo bajo RH).
 - Sin cálculos numéricos. Ningún manuscrito, ni chatgpt/, ni work/drafts_autor/ tocados.
+
+## 2026-10-25 — [chatgpt] — manuscript collection v20 and publication inventory
+- Commit ddb8ac401d70813da95a3a36a5b5912b710e65a6: v20 remains current at chatgpt/manuscripts/CasanyaLawI_v20.tex/.txt; removed v18.tex/.txt from the active collection (Git history preserves originals); updated README. The author's reference library LIBRARY-TOTAL-28oct2026 was not changed.
+- Added chatgpt/notes/2026-10-25_evaluacion_publicaciones.md: cross-family editorial prioritization from LawCasanya, rational-resonances-liouville, and AMP_LogPhaseWalk_Zeta_RVM_REPRODUCIBLE. Explicitly separates unconditional finite/proved results, conditional results, empirical findings and still-open RH transfer targets.
+- Local v20 PDF verified at 64 pages. No proof of RH claimed; J_X^N full unconditional analytic step requires separate certification.

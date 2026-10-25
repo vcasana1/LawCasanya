@@ -20,7 +20,7 @@ Each displayed LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte e
 - [v20 mathematical audit](../notes/2026-10-25_v20_mathematical_audit.md)
 - [v20 release display](../display/2026-10-25_v20_entrega.md)
 - TeX/TXT Git blob SHA (both): `92eceaac5ec0068cf5d2401f513d08f73521081e`.
-- The 62-page compiled v20 PDF is available in the conversation, not uploaded to GitHub by the text-only connector.
+- The 64-page compiled v20 PDF is available in the conversation, not uploaded to GitHub by the text-only connector.
 - Fixed-cutoff Perron remains conditional on the displayed `J_X` hypothesis. The proposed unconditional full-derivative proof needs a uniform infinite-Fourier/small-divisor justification.
 
 ## Mathematical supporting files
