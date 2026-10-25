@@ -1,0 +1,88 @@
+CASANYALAW I — v18
+REVISIÓN DE LA OBSERVACIÓN DE CLAUDE Y CORRECCIONES
+25 octubre 2026
+
+BASE Y ALCANCE
+La v18 deriva íntegramente de CasanyaLawI_v17.tex (no de v16), de modo que
+conserva la reconstrucción corregida del insumo Selberg–Fujii de v17.
+Se han conservado todas las demostraciones anteriores salvo cambios editoriales
+que se detallan aquí. No se han rehecho los cálculos numéricos ni se pretende
+re-certificar independientemente todo el corpus analítico heredado.
+
+1. CONTRADICCIÓN CON C1 [CORREGIDA]
+La subsección histórica que calificaba de «unproved scalar asymptotics»
+el término de resonancia de productos ha sido renombrada para describir
+correctamente lo que refuta: la aproximación gaussiana completa por
+PRODUCTO individual cerca de los bordes.
+La observación «must be treated as unverified» se sustituyó por una
+referencia directa al teorema C1, que deduce la fórmula de promedio
+mediante sumación agregada de los productos fronterizos.
+No se modificó ni se volvió a demostrar de cero C1 en v18.
+
+2. DOS CRITERIOS DE PORCENTAJE [ACLARADOS]
+Se añadió en thm:goodcount una referencia cruzada a thm:blockcount,
+con previsualización emergente. El criterio de bloque elimina las
+hipótesis sobre separaciones sintéticas de la ruta por d_T, pero los
+dos límites numéricos no están necesariamente ordenados sin comparar
+las magnitudes d_T y E_T(F).
+
+3. EFECTOS DE BORDE: CORRECCIÓN MATEMÁTICA NECESARIA
+Se comprobó que cor:sawtooth-equivalence necesita que
+|G(T)|^3+|G(2T)|^3=o(M_T), M_T=N(2T)-N(T).
+No es consecuencia de una mera media cuadrática global que existan
+puntos con G pequeño en intervalos [T,T+1] y [2T,2T+1]. Se añadió
+contraejemplo abstracto por mesetas de una función suave: una función
+puede ser de tamaño sqrt(T loglog T) en todo [T,T+1] y tener media
+cuadrática global O(loglog T). Esto refuta la INFERENCIA, no un dato
+particular de zeta.
+
+La nueva prop:prime-endpoint-range establece, sin RH, para la fase
+completa finita F_X=N_0+S_X:
+  |N(t)-F_X(t)| << log(T+2) + sqrt(X)/log(2X) + loglog(3X)
+  uniformemente para T<=t<=2T.
+La prueba usa únicamente N(t)-N_0(t)=O(log t), la suma de p^(-1/2)
+hasta X y la suma de los armónicos m>=2 (O(loglog X)). Con
+M_T asintóticamente comparable a T log T, basta 2<=X<=T^(2/3)
+para que la contribución cúbica normalizada sea o(1).
+
+RANGOS QUE NO SE EXTRAPOLAN:
+- La identidad con término cúbico sigue exacta para cualquier corte
+  FINITO X, incluido X>=T, porque F_X es suave.
+- El criterio que suprime el borde queda demostrado, por esta cota
+  puntual, al menos para X<=T^(2/3); no se afirma que ese rango sea
+  necesario ni que suponga fallo para cortes mayores.
+- La estimación asintótica de segundo momento del ordinal, con el
+  método publicado en el artículo, conserva su propio rango c<=1/2.
+- Desplazar los extremos altera la ventana y exige controlar los
+defectos e índices que entran o salen.
+
+4. CONSTANTE ARITMÉTICA DE SEGUNDO ORDEN
+Se aclaró que para calcular E_T hasta o(1) no basta por sí sola una
+estimación precisa de int S(t)^2 dt: el momento cruzado con S_X(t)
+y la integral con peso S_X'(t) también deben controlarse. Se mantiene
+la distinción entre un modelo y una cota asintótica demostrada.
+
+5. BIBLIOGRAFÍA Y PDF
+LaTeX conserva numeración de ecuaciones a la derecha (reqno).
+Se ha activado backref=page; la bibliografía muestra páginas de cita
+cuando las entradas han sido citadas por LaTeX.
+Los siete identificadores DOI que constaban en v17 se han convertido
+en enlaces clicables, sin inventar DOI para las demás entradas.
+Se han incorporado tres controles emergentes PDF (previsualización
+de teoremas y de la fuente principal de C1), dependientes del visor.
+No se afirma que todos los enlaces del documento tengan tooltip.
+
+VALIDACIONES EJECUTADAS
+- Compilación con latexmk/pdfLaTeX: correcta, 57 páginas.
+- No se detectaron referencias internas indefinidas ni errores fatales.
+- Los siete enlaces DOI del PDF apuntan a URL sin puntuación final.
+- Las fuentes .tex y .txt de v18 son idénticas byte a byte.
+- Se han visualizado las páginas con el nuevo teorema de borde y la
+  bibliografía; las fórmulas y la disposición son legibles.
+- No se ha enviado a GitHub ni se han modificado las versiones 8--17.
+
+ESTADO DE RH
+Ningún resultado introducido en v18 demuestra un porcentaje asintótico
+positivo nuevo de ceros simples sobre la recta crítica, ni RH.
+La condición cuantitativa limsup E_T(F)<1/4 continúa pendiente de prueba
+para el reloj aritmético estudiado.
