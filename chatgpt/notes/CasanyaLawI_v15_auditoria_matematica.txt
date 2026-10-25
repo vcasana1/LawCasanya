@@ -1,0 +1,90 @@
+AUDITORÍA MATEMÁTICA INTEGRAL DE CASANYALAW I — v15
+25 de octubre de 2026
+Estado: manuscrito revisado, renombrado como v15 por indicación expresa del autor; v14 se conserva sin modificación.
+Alcance: 54 páginas; 4478 líneas antes de las correcciones; sección nueva de multiplicidad, certificados geométricos, comparación aritmética y tres rutas RH; referencias cruzadas de las secciones anteriores.
+
+I. CONCLUSIÓN EJECUTIVA
+
+1. Las nuevas desigualdades de bloques, momentos altos, separación mínima, frecuencia de huecos pequeños y minimización de coste por particiones están demostradas algebraicamente y son válidas sin RH, sin conocimiento de beta_k y sin monotonicidad del reloj, salvo donde esta se declara.
+2. Las identidades del producto finito de Euler y las comparaciones de Perron son correctas con la condición explícita de integrabilidad vertical; no se ha demostrado dicha condición para la zeta sintética concreta ni la uniformidad necesaria al elegir X>=x. Por tanto, no implican en este momento una cota para M(x) ni para psi(x).
+3. La demostración agregada de C1 supera la objeción de la media gaussiana en los extremos. Se cotejó el Lema 4.7 de Titchmarsh con el PDF original local: la transformación con una sola frecuencia y O(log(beta-alpha+2)) es aplicable porque el intervalo de derivadas es 1+O(1/log T), por lo que su error es O(1). La prueba de fase estacionaria separa los productos junto a los dos bordes y los controla en media.
+4. La estimación de v14 para el defecto ordinal E_T(F_{sqrt T}) sigue siendo 0.035115... + O(1), sin constante numérica demostrada por debajo de 1/4. En consecuencia no hay un nuevo porcentaje positivo incondicional demostrado por el reloj, y no hay prueba de RH.
+5. La revisión detectó y corrigió solapamientos de símbolos que afectaban a la lectura transversal de las pruebas. Se mantienen inalteradas las versiones anteriores.
+
+II. CONFLICTOS Y AMBIGÜEDADES DE VARIABLES CORREGIDOS
+
+C-01, ALTO. B_T en la antigua sección 'correct geometry of a good index' = número de índices que incumplen su celda. En la nueva sección era redefinido como número de ceros fuera de la recta o múltiples. Corregido en la nueva sección a B_T^{zbad}; el B_T anterior conserva su definición. La prueba usa B_T^{zbad} <= tamaño total de los bloques repetidos, NO igualdad en general, porque puede existir en el mismo bloque un cero crítico simple junto a una pareja fuera de la recta.
+
+C-02, ALTO. \mathcal E_T designaba anteriormente la desviación entre las raíces de Omega_b (una cantidad pequeña), y era reutilizado para la suma no normalizada de los errores geométricos de altura. El nuevo coste geométrico es ahora \mathfrak H_T; \mathcal E_T se mantiene únicamente para la estabilidad de Omega_b.
+
+C-03, MEDIO-ALTO. El símbolo e_k denotaba previamente el resto de Taylor de N_0 y más adelante el error de altura \kappa_k-\gamma_k. Este último es ahora \mathfrak e_k en la sección de certificados geométricos; todos los subíndices de vecinos y cuadrados fueron revisados.
+
+C-04, ALTO. E_X designaba el residuo S-S_X en el teorema de momentos y, en la sección de transporte aritmético, se reutilizaba para el Euler product finito. Se ha renombrado exclusivamente el Euler product a \mathscr E_X(s), conservando E_X(t)=S(t)-S_X(t) para los momentos. Su inversa y derivada logarítmica se renombraron consistentemente.
+
+C-05, MEDIO-ALTO. \Lambda(t) denota la pendiente positiva N_0'(t)=log(t/2pi)/(2pi), pero se reutilizaba \Lambda(n) para von Mangoldt. En la sección aritmética se distingue \Lambda_{vM}(n); la pendiente del reloj conserva \Lambda(t). Se han adaptado las referencias a la medida de primos y el ejemplo de corte dependiente de la altura.
+
+C-06, MEDIO. Psi^*(x) se usaba sin escritura explícita de la mitad del peso en su definición. Se declara ahora \psi^*(x)=sum^*_{n<=x}Lambda_{vM}(n), y el producto de Euler finito reproduce exactamente el corte X>=x.
+
+C-07, MEDIO. La conexión del objeto genérico zeta_{C,X} con la realización canónica zeta_{kappa} estaba sólo implícita. Se identifica una candidata precisa construida con kappa^X_k=tau^X_k para X fijo, con corrección de los valores iniciales si es necesario; se explica que eso NO verifica las hipótesis de Perron.
+
+III. COMPROBACIÓN DE PRUEBAS EXACTAS
+
+P-01. Identidad cúbica de conteo: el salto de tamaño r suma (G_+^3-G_-^3)/3 = sum_{j=1}^r (g+j-1/2)^2 + r/12. Integración entre saltos y continuidad F C^1 dan la identidad con -[N(b)-N(a)]/12. Es compatible con saltos múltiples, extremos a excluido/b incluido y cualquier signo de F'.
+
+P-02. Teorema de bloques: para r>=2 y defectos u,u+1,...,u+r-1 se tiene suma cuadrados =r(u+(r-1)/2)^2 +r(r^2-1)/12 >=r/4. El caso r=2, u=-1/2 demuestra la optimalidad 4 para esta cota universal, sin asumir ni usar beta_k=1/2.
+
+P-03. Test de umbrales: si E_T(F)<1/4 con margen asintótico, P_T>0; >41.73% requiere E_T<0.145675, estrictamente; >95% requiere E_T<0.0125; >99% requiere E_T<0.0025. El criterio global de suma no normalizada <1/2 excluye toda ordenada repetida en la ventana; es necesario además cubrir todas las alturas altas y verificar las bajas para concluir RH+simplicidad.
+
+P-04. Momentos altos: por Jensen, 1/r sum |u+j|^{2m} >= (1/r sum (u+j)^2)^m >=4^{-m}. Se deduce B_T^{zbad}/M_T <=4^m <|u|^{2m}>. El factor es óptimo en un bloque doble.
+
+P-05. Geometría: para un bloque de r puntos sintéticos etiquetados, sum (kappa_j-gamma)^2 = sum(kappa_j-media)^2+r(media-gamma)^2. Si la separación mínima es h>0, la suma mínima de cuadrados es >=h^2 r(r^2-1)/12. Con huecos no uniformes la desigualdad B_T^{zbad}<=2Q_T(h)+8 sum |kappa-gamma|^2/h^2 usa sólo que cada índice pertenece a lo sumo a dos pares adyacentes.
+
+P-06. Certificado de particiones: toda partición verdadera en bloques repetidos y singletons tiene energía >= sum C(I), mientras que el número de índices de bloques no triviales domina B_T^{zbad}. Por contraposición, H_T<Q_T(b) implica B_T^{zbad}<b. El cálculo por programación dinámica es finito y usa sólo los kappa para determinar Q_T(b). El valor de H_T requiere una cota externa independiente: no está calculado sin ceros verdaderos.
+
+P-07. Se ejecutaron 62 configuraciones finitas de ordenadas repetidas y listas sintéticas racionales para N=2..6, comprobando algebraicamente por fracciones exactas las desigualdades de momentos, huecos y particiones. Archivo reproducible: v14_certificate_tests.py. No son muestras de ceros zeta ni reemplazan la demostración universal anterior.
+
+P-08. Euler fijo: (mathscr E_X)^{-1}=prod_{p<=X}(1-p^{-s})=sum_{d|P(X)}mu(d)d^{-s}, y -(mathscr E_X)'/mathscr E_X=sum_{p<=X,m>=1}log p p^{-ms}, para Re(s)>0. Para x<=X sus coeficientes hasta x son exactamente mu(n) y Lambda_vM(n), respectivamente, incluyendo el peso de mitad en n=x.
+
+P-09. Perron condicionado: si la diferencia de recíprocos/logaritmos derivados sobre Re(s)=sigma tiene integral absoluta J_X<infinito contra 1/|s|, su transformada de Perron está acotada por J_X x^sigma y la parte de Euler se invierte término a término por convergencia de su serie para X fijo. No hay prueba de J_X<infinito con constantes independientes de X>=x ni de crecimiento adecuado de M_C/X o psi_C/X. La normalización de la zeta canónica no suple estas estimaciones.
+
+P-10. Realización canónica: la hipótesis kappa_k=tau_k+O(tau_k^{sigma0}), sigma0<1, implica sum kappa_k^{-2}<infinito. La normalización Xi(1)=1/2 fija el residuo uno de zeta_kappa en s=1, y la fórmula del logaritmo derivado de Xi_kappa/Xi_tau se obtiene término a término. No proporciona coeficientes de primos ordinarios de zeta_kappa.
+
+IV. DOMINIOS, EXTREMOS Y CONTRASTE DE LAS FUENTES
+
+D-01. El reloj N_0 es creciente y Lambda(t)>0 sólo para t>2pi; los resultados asintóticos comienzan a alturas suficientemente grandes. El teorema de localización usa N(T)=N_0(T)+O(log T), tolera multiplicidades y deriva |gamma_k-tau_k|<=C_loc sin sustituir C_loc por 1.
+
+D-02. La ventana verdadera I_T={k:T<gamma_k<=2T} contiene cada bloque completo de ordenada repetida. No se pierde ningún par al cruzar las fronteras de la ventana definida por gamma; al comparar con el reloj J_T se requiere el O(log T) explícito de índices en diferencia simétrica.
+
+D-03. El teorema de Gram para potencias primas sólo se afirma para b fijo estrictamente menor que 1. Cocientes: Kusmin--Landau con derivadas a distancia >=const_b*log(n/m)/log T de los enteros. Productos: al acercarse a frecuencia 1 se usa segunda derivada con cota de T^{-1/2}, y hay O_b(T/log T) pares resonantes. Hilbert--Schmidt y Schur dan la norma operatorial enunciada. No extender el resultado a b(T)->1 por diagonalización de cuantificadores.
+
+D-04. Estabilidad de Omega para corte variable: usa bandas U<p<=W<=T^{c0}, 0<c0<b<1. Carleson--Hunt se aplica a paquetes de frecuencia separados tras multiplicación por una ventana sinc cuadrada, y la evaluación de puntos sintéticos exige una desigualdad de Sobolev local sobre intervalos disjuntos. No concluye estabilidad de Omega para todo corte X_k<=T^{c0}, sino bajo masa armónica V_T pequeña. Para diferencias de las energías, la condición suficiente demostrada es V_T loglog T->0; sólo V_T->0 controla las raíces.
+
+D-05. C1: se cotejó con el texto original de Titchmarsh, Theory of the Riemann Zeta-Function, 2a ed., Lema 4.7, impreso p.74. Para la fase f(x)=tau_x log(pq)/(2pi), f'(x)=1+O(1/log T), decreciente, el intervalo de derivadas ampliado por eta=1/4 contiene exclusivamente el entero 1 y el error O(log(f'(a)-f'(b)+2))=O(1). El Lema 4.6, impreso p.72-73, separa la fase estacionaria y los errores dependientes de los bordes; la demostración nueva utiliza además una truncación cuadrática local con H=T^{3/5}log T. La zona próxima a los bordes contiene O(T^{3/5}) productos pq, pues un entero admite a lo sumo dos factorizaciones ordenadas en primos. Su contribución normalizada es O(T^{-2/5}), y el error del interior O(T^{-1/10}log^C T) es o(1/log T).
+
+D-06. Para C1 se exige 1/2<c<1 fijo y X=(T/2pi)^c; el conteo asintótico de pares usa el TNP en argumentos >=N^{1-c}, que crecen a una potencia positiva para c fijo. No es una demostración uniforme al acercarse c(T) a 1.
+
+D-07. Se consultó también el PDF original de Fujii 1974, pp.232-233. La representación suavizada de Selberg y los cinco términos de error están impresos allí, con una estimación L^{2h} para h fijo. El manuscrito usa a_2=1/5, H=T y x_h=T^{1/(300h)}; la dependencia en h permanece y no se hace crecer h con T. No se transforma por ello una cota de cuarto momento en una cota de momentos crecientes de orden log T.
+
+D-08. En Perron la serie logarítmica de mathscr E_X para X fijo converge absolutamente cuando Re s>0; M_X es finita. La comparación a X>=x exige otra cota uniforme; el símbolo O_X no puede ocultarse en O_epsilon.
+
+V. AFIRMACIONES QUE SIGUEN ABIERTAS, SIN TRANSFORMARSE EN TEOREMAS
+
+A-01. Una constante numérica de la media E_T(F_{sqrt T}) estrictamente menor que 1/4. El término 0.035115... del modelo no es una cota superior. Tampoco 0.494 es una barrera general demostrada: la sustitución original de una cota inferior de una norma dentro de una expresión de cota superior y el cambio implícito del peso dt al peso dF invalidan esa interpretación.
+
+A-02. Para la mejor construcción experimental c=1.30, el RMS registrado a altura finita no da una cota uniforme en T. Se requiere simultáneamente un límite de energía en unidades de espaciado ordinal y una distribución de huecos sintéticos o un momento ordinal suficientemente pequeño para activar los certificados.
+
+A-03. La correlación entre el residuo verdadero S-S_X y la banda prima usada por la corrección. C1 es un momento escalar del reloj, no una ley individual ni matricial de correlación con ceros verdaderos.
+
+A-04. El régimen c>=1 y su resonancia aritmética; el teorema de ortogonalidad no pasa automáticamente de todo b<1 fijo a b=1.
+
+A-05. La identificación de los coeficientes atómicos de una zeta sintética con los primos ordinarios, o una comparación por Perron con error O_epsilon(x^{1/2+epsilon}) uniforme en X>=x. En la vía M falta además el control cuantitativo de la transformada del recíproco.
+
+A-06. La identificación global de todos los ceros verdaderos mediante una lista de ordenadas independiente. El criterio de defectos menores que 1/2 o la ausencia de colisiones sí implicaría RH+simplicidad, pero no se ha probado que una construcción aritmética satisfaga esa condición en todas las alturas.
+
+VI. VERIFICACIONES DE EDICIÓN Y ALCANCE DE LA AUDITORÍA
+
+- Pares de ambientes begin/end comprobados estructuralmente; ninguna etiqueta duplicada, referencia pendiente ni cita ausente en el manuscrito.
+- Compilación pdflatex con tres pasadas: 54 páginas A4, numeración de ecuaciones a la derecha, TOC y enlaces; sin errores fatales, referencias sin resolver ni cajas desbordadas. Dos avisos inocuos de PDF-string en un encabezado con fórmulas y una advertencia underfull vbox, que no afectan a matemáticas.
+- PDF de páginas de la sección nueva inspeccionado en imagen; ecuaciones legibles, sin solapes.
+- TXT idéntico byte a byte al TEX.
+- El examen verificó de manera directa las identidades y pruebas deterministas añadidas, C1 y las condiciones y pasos de las demostraciones analíticas que sirven de puente. No equivale a una certificación formal por Lean/Coq de las aproximadamente cien demostraciones o a una revisión editorial independiente de toda la bibliografía histórica. Donde hay una hipótesis explícita de transporte o correlación, esa hipótesis sigue abierta.
