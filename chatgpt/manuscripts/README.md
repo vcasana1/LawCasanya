@@ -1,6 +1,6 @@
-# CasanyaLaw I — manuscript archive (v8–v13)
+# CasanyaLaw I — manuscript archive (v8–v15)
 
-All six complete versions are here as LaTeX source and identical plain-text copies. No previous version was overwritten.
+Complete available sources are here as LaTeX source and identical plain-text copies. No previous version was overwritten.
 
 | Version | LaTeX | Identical TXT |
 |---|---|---|
@@ -9,9 +9,10 @@ All six complete versions are here as LaTeX source and identical plain-text copi
 | v10 | [Source](CasanyaLawI_v10.tex) | [TXT](CasanyaLawI_v10.txt) |
 | v11 | [Source](CasanyaLawI_v11.tex) | [TXT](CasanyaLawI_v11.txt) |
 | v12 | [Source](CasanyaLawI_v12.tex) | [TXT](CasanyaLawI_v12.txt) |
-| v13 (latest) | [Source](CasanyaLawI_v13.tex) | [TXT](CasanyaLawI_v13.txt) |
+| v13 | [Source](CasanyaLawI_v13.tex) | [TXT](CasanyaLawI_v13.txt) |
+| v15 (latest in GitHub) | [Source](CasanyaLawI_v15.tex) | [TXT](CasanyaLawI_v15.txt) |
 
-Each LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte equality.
+Each displayed LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte equality.
 
 ## Mathematical supporting files
 
@@ -19,6 +20,7 @@ Each LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte equality.
 - [v9 mathematical gaps](../notes/CasanyaLawI_v9_lagunas_detectadas.txt)
 - [v10 correction report](../notes/CasanyaLawI_v10_informe.txt)
 - [v12 mathematical refutations](../notes/CasanyaLawI_v12_dictamen.txt)
+- [v15 mathematical audit](../notes/CasanyaLawI_v15_auditoria_matematica.txt)
 - [Prime-power near-orthogonality](../notes/casi_ortogonalidad_potencias_primas_RvM.tex)
 - [Index-dependent cutoff and Omega stability](../notes/lema_Omega_corte_variable_k.tex)
 - [Recovered ordinal-defect and conditional Mertens arguments](../notes/2026-10-25_demostraciones_defecto_ordinal_y_M.md)
@@ -26,7 +28,7 @@ Each LaTeX/TXT pair has the same Git blob SHA, proving byte-for-byte equality.
 
 ## Original PDF artifacts
 
-The PDF binaries are available in the author's ChatGPT conversation but could not be transferred by the available GitHub text-file connection. **They are not uploaded to this repository.** Rebuild PDFs locally from each LaTeX source, for example:
+The original PDF binaries are available in the author's ChatGPT conversation but could not be transferred by the available GitHub text-file connection. **They are not uploaded to this repository.** Rebuild PDFs locally from each LaTeX source, for example:
 
     latexmk -pdf -interaction=nonstopmode -halt-on-error CasanyaLawI_v13.tex
 
@@ -46,3 +48,5 @@ The SHA-256 values identify the original produced PDFs and do not imply bit-for-
 ## Mathematical status
 
 No version constitutes a proof of RH. The ordinal, prime-counting and Mertens routes in v13 identify conditional comparison targets; do not confuse those logical implications with proven uniform transport estimates.
+
+Note: v14 was created and audited locally, while v15 was explicitly uploaded by user request. Version v16 incorporating the 25 October multiplicity-energy split is a separate local deliverable and is not represented here as an uploaded GitHub manuscript.
