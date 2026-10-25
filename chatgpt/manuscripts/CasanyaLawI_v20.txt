@@ -4775,6 +4775,209 @@ last difference.  The finitely many low indices do not affect any
 assertion of this lemma.
 \end{proof}
 
+\begin{lemma}[A bounded primitive for the fixed-base odd phases]
+\label{lem:v20FourierPrimitive}
+Fix $X\ge2$.  Each of the real almost-periodic functions
+\[
+ f_{2,X}(u)=S_X(u)^2S_X''(u),\qquad
+ f_{3,X}(u)=S_X(u)^2S_X''(u)S_X'(u)
+\]
+has a bounded continuously differentiable real primitive on $\R$.
+This conclusion concerns fixed $X$ only.
+\end{lemma}
+\begin{proof}
+Write $\mathcal P_X=\{p:p\le X\}$ and introduce independent
+angular variables $\vartheta_p\pmod{2\pi}$.  The finite-base Euler
+phase is the restriction to $\vartheta_p=u\log p$ of
+\[
+ \mathscr S_X(\boldsymbol\vartheta)
+ =-\frac1\pi\sum_{p\in\mathcal P_X}\sum_{m\ge1}
+ \frac{p^{-m/2}}m\sin(m\vartheta_p).
+\]
+On every polystrip $|\Im\vartheta_p|\le a$ with
+$0<a<\frac12\log2$, this series and each fixed derivative
+converge normally.  Consequently the torus functions associated
+to $f_{2,X}$ and $f_{3,X}$ have Fourier expansions
+$\sum_{\boldsymbol j\in\mathbb Z^{\pi(X)}}
+ c_{\boldsymbol j}e^{i\boldsymbol j\cdot\boldsymbol\vartheta}$
+with $|c_{\boldsymbol j}|\ll_{X,a}e^{-a\|\boldsymbol j\|_1}$.
+Their torus means vanish, since both functions are odd under
+$\boldsymbol\vartheta\mapsto-\boldsymbol\vartheta$.
+
+The corresponding real frequencies are
+$\omega_{\boldsymbol j}=\sum_{p\le X}j_p\log p$.
+For $\boldsymbol j\ne0$, unique factorization gives
+$\omega_{\boldsymbol j}\ne0$.  The fixed-algebraic-bases
+lower bound for nonzero linear forms in logarithms
+\cite{BakerWustholz1993} gives constants $c_X,B_X>0$ such that
+\[
+ |\omega_{\boldsymbol j}|\ge
+ c_X(1+\|\boldsymbol j\|_1)^{-B_X}
+ \qquad(\boldsymbol j\ne0).
+\]
+Therefore
+$\sum_{\boldsymbol j\ne0}|c_{\boldsymbol j}/\omega_{\boldsymbol j}|<\infty$.
+Termwise integration now gives the required uniformly convergent,
+bounded primitive
+$\sum_{\boldsymbol j\ne0} c_{\boldsymbol j}
+ e^{i\omega_{\boldsymbol j}u}/(i\omega_{\boldsymbol j})$.
+Its derivative equals the original phase by absolute convergence.
+\end{proof}
+
+\begin{theorem}[A complete fixed-cutoff comparison of the two
+synthetic canonical products]
+\label{thm:v20Ratio}
+For $X\ge2$ fixed, construct the two lists in
+\cref{def:fixed-X-lists} with the same low points, and let
+$\zeta_X^{\mathrm{root}},\zeta_X^{\mathrm{full}}$ be their
+canonical synthetic zeta functions, with the same fixed
+meromorphic gamma factor as in \cref{prop:xiSynthetic}.
+There exists a real constant $\Delta_{0,X}$ such that for every
+compact interval $K\subset(1/2,1)$,
+\begin{equation}\label{eq:v20Ratio}
+\log\frac{\zeta_X^{\mathrm{full}}(\sigma+it)}
+          {\zeta_X^{\mathrm{root}}(\sigma+it)}
+ =\Delta_{0,X}+O_{X,K}((\log|t|)^{-2})
+ \quad(\sigma\in K,\ |t|\to\infty).
+\end{equation}
+The logarithm is taken by continuous continuation in the
+zero-free half-plane $\Re s>1/2$.  The constant may be computed
+from the positive canonical factors and is independent of $\sigma$.
+\end{theorem}
+\begin{proof}
+Put $a_k=\kappa_k^{\mathrm{root}}$,
+$b_k=\kappa_k^{\mathrm{full}}$, $\epsilon_k=b_k-a_k$ and
+$z=s-\tfrac12=i w$, where $w=t-i(\sigma-\tfrac12)$.
+Because the low factors coincide and the gamma factors cancel,
+the defining products give, with an absolutely convergent
+normalization,
+\[
+\Delta_{0,X}=-\sum_{k>k_X}
+\log\frac{b_k^2+\frac14}{a_k^2+\frac14}.
+\]
+Indeed $\sum_k|\epsilon_k|/a_k<\infty$ by
+\cref{lem:v20NewtonResidual} and the RvM density.
+For $t$ large enough, logarithmic expansion of the remaining
+factors gives
+\begin{equation}\label{eq:v20RatioLinear}
+\Delta(s)-\Delta_{0,X}
+=\sum_{k>k_X}\epsilon_k g_w(a_k)+O_{X,K}((\log t)^{-5}),
+\qquad g_w(u)=\frac1{u-w}+\frac1{u+w}.
+\end{equation}
+Here $g_w(u)=2u/(u^2+z^2)$ holds \emph{exactly}.  The error
+is bounded by a constant times
+$\sum_k\epsilon_k^2(|a_k-w|^{-2}+|a_k+w|^{-2})$.
+By the local RvM density and $\epsilon_k\ll_X\Lambda(a_k)^{-3}$,
+the part $a_k\asymp t$ is $O_{X,K}(\Lambda(t)^{-5})$;
+the two tails are smaller.  Finitely many indices where the
+linearization is not initially uniform give $O_{X,K}(t^{-2})$.
+
+By \eqref{eq:v20NewtonLead} and its bounded derivative version,
+\[
+\epsilon_k=\mathcal H_X(a_k)+O_X(\Lambda(a_k)^{-4}),
+\qquad \mathcal H_X(u)=\frac{f_{2,X}(u)}{2\Lambda(u)^3}.
+\]
+Split the sum of the absolute remainders over
+$a_k<t/2$, $t/2\le a_k\le2t$ and $a_k>2t$.
+In the middle range the RvM density is $O(\Lambda(t))$ per
+unit interval, so
+\[
+\sum_{t/2\le a_k\le2t}
+\frac{\Lambda(a_k)^{-4}}{|a_k-w|}
+\ll_{X,K}\Lambda(t)^{-3}\log(3+t)
+\ll_{X,K}\Lambda(t)^{-2}.
+\]
+The lower tail is $O_X(\Lambda(t)^{-3})$ and the upper tail is
+$O_X(\int_{2t}^\infty du/(u\Lambda(u)^3))
+=O_X(\Lambda(t)^{-2})$.  The second kernel $1/(a_k+w)$
+obeys easier estimates.  Therefore
+\begin{equation}\label{eq:v20SumRoot}
+\Delta(s)-\Delta_{0,X}
+=\int_{u_X}^\infty\mathcal H_X(u)g_w(u)\,dn_X^{\mathrm{root}}(u)
+ +O_{X,K}(\Lambda(t)^{-2}),
+\end{equation}
+where $u_X$ is chosen below the first high-index root and
+$n_X^{\mathrm{root}}$ counts only those high roots.
+By eventual strict monotonicity of $N_0+S_X$,
+\[
+ dn_X^{\mathrm{root}}=d(N_0+S_X)-d\rho_X,
+ \qquad\rho_X(u)=N_0(u)+S_X(u)
+  -\left\lfloor N_0(u)+S_X(u)+\tfrac12\right\rfloor.
+\]
+In particular $|\rho_X|\le\tfrac12$.
+Integrating the $d\rho_X$ contribution by parts and using
+$|\mathcal H_X|+|\mathcal H_X'|\ll_X\Lambda^{-3}$,
+\[
+\left|\int_{u_X}^\infty\mathcal H_Xg_w\,d\rho_X\right|
+\ll_{X,K}t^{-1}
+ +\int_{u_X}^\infty
+ \left(\frac{|g_w(u)|}{\Lambda(u)^3}
+       +\frac{|g'_w(u)|}{\Lambda(u)^3}\right)du
+\ll_{X,K}\Lambda(t)^{-2}.
+\]
+The last bound follows by splitting at $t/2$ and $2t$;
+on the middle interval the first integral is
+$O(\Lambda(t)^{-3}\log t)$, the second
+$O_K(\Lambda(t)^{-3})$, and the upper tail of the first is
+$O(\int_{2t}^\infty du/(u\Lambda(u)^3))$.
+
+For the continuous contribution we have the exact identity
+\[
+\mathcal H_X(u)(N_0'(u)+S_X'(u))
+=\frac{f_{2,X}(u)}{2\Lambda(u)^2}
+ +\frac{f_{3,X}(u)}{2\Lambda(u)^3}.
+\]
+By \cref{lem:v20FourierPrimitive}, each numerator has a bounded
+primitive.  Integration by parts bounds the corresponding integrals
+by a constant times
+\[
+\frac{|g_w(u_X)|}{\Lambda(u_X)^m}
++\int_{u_X}^\infty
+ \left|\frac{d}{du}\left(\frac{g_w(u)}{\Lambda(u)^m}\right)\right|du
+\ll_{X,K}\Lambda(t)^{-m}+t^{-1},\qquad m=2,3.
+\]
+Here the only kernel singularities are a fixed distance
+$\sigma-\tfrac12>0$ from the positive real axis; the derivative
+of $1/(u-w)$ has integrable modulus $O_K(1)$ around $u=t$,
+while outside $[t/2,2t]$ the bounds are $O(t^{-1})$.
+Substituting these estimates in \eqref{eq:v20SumRoot}
+proves \eqref{eq:v20Ratio} for $t\to+\infty$;
+complex-conjugate symmetry gives $t\to-\infty$.
+The normalization constant is real because every
+$a_k,b_k$ is positive.
+\end{proof}
+
+\begin{corollary}[Transfer of absolute Perron integrability]
+\label{cor:v20ConditionalJTransfer}
+Fix $X$ and a line $\Re s=\sigma\in(1/2,1)$.
+If $J_X^{\mathrm{root}}(\sigma)<\infty$ for the exact-root list
+with normalization $\varpi_X^{\mathrm{root}}$, then
+\[
+ J_X^{\mathrm{full}}(\sigma)<\infty
+ \quad\text{for}\quad
+ \varpi_X^{\mathrm{full}}
+ =e^{\Delta_{0,X}}\varpi_X^{\mathrm{root}}.
+\]
+The statement does not provide an $X$-uniform bound.
+\end{corollary}
+\begin{proof}
+Put $D_{\mathrm{root}}(s)
+=\varpi_X^{\mathrm{root}}/\zeta_X^{\mathrm{root}}(s)
+ -\mathscr E_X(s)^{-1}$.  By \cref{thm:v20Ratio},
+\[
+\frac{\varpi_X^{\mathrm{full}}}{\zeta_X^{\mathrm{full}}(s)}
+=\left(\mathscr E_X(s)^{-1}+D_{\mathrm{root}}(s)\right)
+\left(1+O_{X,\sigma}((\log|t|)^{-2})\right).
+\]
+The finite Euler reciprocal is bounded on $\Re s=\sigma>0$.
+The error $O((\log|t|)^{-2})$ is integrable against $dt/|s|$
+at infinity, and the other term is integrable by the hypothesis.
+On compact vertical segments both synthetic reciprocals are
+holomorphic because their nontrivial zeros lie on $\Re s=1/2$;
+thus no singularity appears on the chosen line.
+\end{proof}
+
+
 \begin{remark}[Fourier support and the analytic Perron question]
 \label{rem:v20NotFiniteFourier}
 The phase $S_X$ includes \emph{all} powers of every prime $p\le X$.
@@ -4784,13 +4987,12 @@ trigonometric polynomials.  Their nonconstant terms may have
 frequencies $\sum_{p\le X}j_p\log p$ arbitrarily close to zero;
 oddness removes the zero coefficient but does not by itself give a
 uniform bound on the inverses of the nonzero frequencies.
-Accordingly, a passage from \eqref{eq:v20NewtonLead} to an
-$O_X((\log|t|)^{-2})$ estimate for the quotient of two completed
-canonical products requires an additional quantitative
-Fourier/small-divisor argument.  Neither
-$J_X^{\mathrm{full}}(\sigma)<\infty$ nor
-$J_X^{\mathrm{one}}(\sigma)=\infty$ is claimed solely from
-\cref{lem:v20NewtonResidual}.  A divergent absolute perturbation
+The quantitative small-divisor step is supplied for fixed $X$
+by \cref{lem:v20FourierPrimitive,thm:v20Ratio}, using a standard
+linear-forms-in-logarithms input.  Nonetheless this comparison alone
+does not establish $J_X^{\mathrm{root}}(\sigma)<\infty$;
+\cref{cor:v20ConditionalJTransfer} states the exact implication.
+Nor does it establish $J_X^{\mathrm{one}}(\sigma)=\infty$.  A divergent absolute perturbation
 integral, in particular, would not by itself imply failure of a
 \emph{symmetric} Perron limit.
 \end{remark}
@@ -4954,7 +5156,7 @@ For any compact $t$-interval, only finitely many base primes
 contribute and the series in $m$ converges locally uniformly with
 its first derivative.  Thus $P_{W,c,\eta}\in C^1$.
 \end{definition}
-\begin{proposition}[Full derivative of the smooth arithmetic phase]
+\begin{proposition}[Derivative of a smooth prime phase]
 \label{prop:v20SmoothDerivative}
 Writing $z_p(t)=\log p/\log X(t)$, one has exactly
 \begin{align}\label{eq:v20SmoothDerivative}
@@ -5261,6 +5463,10 @@ Princeton University Press, 1970.
 
 \bibitem{Titchmarsh1986} E. C. Titchmarsh, \emph{The Theory of the Riemann Zeta-Function}, 2nd ed., revised by D. R. Heath-Brown, Oxford University Press, 1986.
 
+
+\bibitem{BakerWustholz1993}
+A. Baker and G. Wuestholz, Logarithmic forms and group varieties,
+\emph{J. Reine Angew. Math.} \textbf{442} (1993), 19--62.
 
 \bibitem{GLSS2025}
 D. A. Goldston, J. Lee, K. Schettler and A. I. Suriajaya,
